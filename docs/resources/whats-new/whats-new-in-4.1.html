@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>What&#39;s New in 4.1 | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="What&#39;s New in 4.1 | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=public-documentation/docs/resources/whats-new/whats-new-in-4.1.md&amp;version=GB20290-migrate-public-docs&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="whats-new-in-41">What's New in 4.1</h1>
+
+<h2 id="overview">Overview</h2>
+<p>This page shows a curated selection of features we've released in XMPro version 4.1. For more details on what's in the latest version, please read the <a href="../../release-notes/archived/v4.1.0.html">Release Notes</a>.</p>
+<h2 id="app-designer">App Designer</h2>
+<h3 id="time-series-chart-block">Time Series Chart Block</h3>
+<!-- Image needed: Time Series Chart Block -->
+<p>This new block in the App Designer toolbox allows you to visualize large amounts of time series data to give your engineers and operators a real-time view of your asset health.</p>
+<p>You can use a variety of data sources to populate your Time Series Chart, but a key benefit is that the asset hierarchy can be integrated with Azure Digital Twins and the telemetry data can be loaded from Azure Data Explorer.</p>
+<p>Useful features built into the Time Series Chart block include the ability to drop markers on the chart to denote important events, as well as panning and zooming to change the timescale. You can show or hide assets and parameters via the hierarchy panel. This visualization makes it easy to compare different assets with each other across multiple parameters, like temperature, pressure and vibration.</p>
+<h3 id="grid-block">Grid Block</h3>
+<!-- Image needed: Grids with indicators, select boxes and hyperlinks -->
+<p>We've expanded the functionality of the Grid Block in the App Designer toolbox to include visual indicators, which allow you to show the state of an item in the grid. This is particularly useful if you want to use colours to indicate the health of an asset or the status of a root cause analysis.</p>
+<p>There are also new column options for select boxes and hyperlinks, making it easier to choose from a predefined list or navigate to a subpage from the grid.</p>
+<p>You can set default filters to automatically organize your grid data when you load the page. And we've added support for column reordering, resizing and state persistence.</p>
+<h3 id="notification-templates">Notification Templates</h3>
+<!-- Image needed: Notification Templates -->
+<p>XMPro Recommendations allow you to send automated email and SMS notifications to inform your team about a critical event occurring in your data. You can now create custom templates for those notifications simply by uploading an HTML file for email or adding your text message for SMS.</p>
+<p>Placeholders in your templates enable you to replace static text in your notifications with real-time data about the recommendation alert like its title, how long it has been pending, and the real-time data that triggered the alert.</p>
+<h2 id="data-stream-designer">Data Stream Designer</h2>
+<h3 id="stream-metrics">Stream Metrics</h3>
+<!-- Image needed: Stream Metrics -->
+<p>We've added Stream Metrics to Data Streams to give you more visibility into the health of your Data Streams.</p>
+<p>Once a Data Stream is published, you will be able to see how much data is being processed per minute as well as how many errors were generated by Agents in the Stream. You'll also have better visibility into how many of your Stream Hosts are online.</p>
+<h3 id="error-flow">Error Flow</h3>
+<!-- Image needed: Error Flow -->
+<p>How do you know when your Data Stream health is deteriorating? With the new Error Flow feature you can create a separate set of actions that trigger when your Data Stream encounters errors.</p>
+<p>For example, the Data Stream can send out an email to notify you if the issues if there are more than a certain number of errors occurring per minute.</p>
+<h3 id="connector-documentation">Connector Documentation</h3>
+<p>We've made major updates to our <a href="https://documentation.xmpro.com/resources/integrations">documentation</a> for the growing XMPro connector library. Our team has added more example videos and GIFs to help you confidently configure agents on your own.</p>
+<h2 id="platform-security">Platform Security</h2>
+<p>As part of our continuous commitment to security, we've implemented quarterly scans of our platform. Veracode scans the software and tests it in multiple ways, including using Static Analysis (white-box testing), Dynamic Analysis (black-box testing), and Software Composition Analysis.</p>
+<p>The results and reports from the testing are available for review <a href="../platform-security.html">here</a>.</p>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: June 05, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

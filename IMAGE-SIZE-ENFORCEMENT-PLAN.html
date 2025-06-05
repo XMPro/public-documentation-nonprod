@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Image Size Enforcement Plan for XMPro Documentation | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Image Size Enforcement Plan for XMPro Documentation | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="images/favicon.png">
+      <link rel="stylesheet" href="public/docfx.min.css">
+      <link rel="stylesheet" href="public/main.css">
+      <meta name="docfx:navrel" content="toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=public-documentation/IMAGE-SIZE-ENFORCEMENT-PLAN.md&amp;version=GB20290-migrate-public-docs&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="index.html">
+            <img id="logo" class="svg" src="images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="image-size-enforcement-plan-for-xmpro-documentation">Image Size Enforcement Plan for XMPro Documentation</h1>
+
+<h2 id="overview">Overview</h2>
+<p>This document outlines strategies to maintain low image sizes in the documentation by enforcing MP4s instead of GIFs for animations and implementing automated checks.</p>
+<h2 id="current-state">Current State</h2>
+<ul>
+<li>Documentation reduced from 329MB to 196MB (40% reduction)</li>
+<li>Converted 24 GIFs to MP4 format with 50-95% size reductions</li>
+<li>108 GIFs remaining (9MB total), mostly small UI elements</li>
+</ul>
+<h2 id="proposed-enforcement-strategies">Proposed Enforcement Strategies</h2>
+<h3 id="1-cicd-pipeline-checks">1. CI/CD Pipeline Checks</h3>
+<h4 id="azure-pipeline-yaml">Azure Pipeline YAML</h4>
+<pre><code class="lang-yaml">- name: Check for large GIFs
+  script: |
+    # Fail if any GIF is larger than 100KB
+    large_gifs=$(find docs -name &quot;*.gif&quot; -size +100k)
+    if [ ! -z &quot;$large_gifs&quot; ]; then
+      echo &quot;ERROR: Large GIFs found. Please convert to MP4:&quot;
+      echo &quot;$large_gifs&quot;
+      exit 1
+    fi
+</code></pre>
+<h4 id="github-actions-alternative">GitHub Actions Alternative</h4>
+<pre><code class="lang-yaml">name: Image Size Check
+on:
+  pull_request:
+    paths:
+      - 'public-documentation/docs/**.gif'
+      - 'public-documentation/docs/**.png'
+      - 'public-documentation/docs/**.jpg'
+
+jobs:
+  check-image-sizes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Check GIF sizes
+        run: |
+          large_gifs=$(find public-documentation/docs -name &quot;*.gif&quot; -size +100k)
+          if [ ! -z &quot;$large_gifs&quot; ]; then
+            echo &quot;::error::Large GIF files detected (&gt;100KB). Please convert to MP4:&quot;
+            echo &quot;$large_gifs&quot;
+            exit 1
+          fi
+</code></pre>
+<h3 id="2-pre-commit-hooks">2. Pre-commit Hooks</h3>
+<p>Create <code>.git/hooks/pre-commit</code>:</p>
+<pre><code class="lang-bash">#!/bin/bash
+# Warn about GIF files over 100KB
+for file in $(git diff --cached --name-only | grep '\.gif$'); do
+  size=$(stat -f%z &quot;$file&quot; 2&gt;/dev/null || stat -c%s &quot;$file&quot; 2&gt;/dev/null)
+  if [ $size -gt 102400 ]; then
+    echo &quot;Warning: $file is larger than 100KB. Consider converting to MP4.&quot;
+    echo &quot;Use: ffmpeg -i $file -movflags +faststart -pix_fmt yuv420p -vf \&quot;scale=trunc(iw/2)*2:trunc(ih/2)*2\&quot; -c:v libx264 -preset slow -crf 23 ${file%.gif}.mp4 -y&quot;
+  fi
+done
+</code></pre>
+<h3 id="3-documentation-updates">3. Documentation Updates</h3>
+<p>Add to <code>CONTRIBUTING.md</code>:</p>
+<pre><code class="lang-markdown">## Media Guidelines
+
+### Animations and Screen Recordings
+- **Preferred Format**: MP4 for all animations longer than 2 seconds
+- **Maximum GIF Size**: 100KB (only for simple UI elements)
+- **Conversion Required**: Any GIF over 100KB must be converted to MP4
+
+### How to Convert GIF to MP4
+```bash
+ffmpeg -i input.gif -movflags +faststart -pix_fmt yuv420p \
+  -vf &quot;scale=trunc(iw/2)*2:trunc(ih/2)*2&quot; \
+  -c:v libx264 -preset slow -crf 23 output.mp4 -y
+</code></pre>
+<h3 id="using-mp4s-in-markdown">Using MP4s in Markdown</h3>
+<p>Replace GIF image tags:</p>
+<pre><code class="lang-markdown">![Description](../../images/animation.gif)
+</code></pre>
+<p>With HTML5 video tags:</p>
+<pre><code class="lang-html">&lt;video autoplay loop muted playsinline style=&quot;max-width: 100%; height: auto;&quot;&gt;
+  &lt;source src=&quot;../../images/animation.mp4&quot; type=&quot;video/mp4&quot;&gt;
+&lt;/video&gt;
+</code></pre>
+<h3 id="when-to-keep-gifs">When to Keep GIFs</h3>
+<ul>
+<li>Small UI elements (&lt; 50KB)</li>
+<li>Simple loading spinners</li>
+<li>Status badges</li>
+<li>Icons with animation</li>
+</ul>
+<pre><code>
+### 4. Automated Conversion Service
+
+Create a GitHub Action for automatic conversion:
+```yaml
+name: Auto-Convert Large GIFs
+on:
+  pull_request:
+    paths:
+      - '**.gif'
+
+jobs:
+  convert-gifs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: ${{ github.head_ref }}
+      
+      - name: Install ffmpeg
+        run: sudo apt-get update &amp;&amp; sudo apt-get install -y ffmpeg
+      
+      - name: Convert large GIFs to MP4
+        id: convert
+        run: |
+          converted_files=&quot;&quot;
+          for gif in $(find public-documentation/docs -name &quot;*.gif&quot; -size +100k); do
+            mp4=&quot;${gif%.gif}.mp4&quot;
+            ffmpeg -i &quot;$gif&quot; -movflags +faststart -pix_fmt yuv420p \
+              -vf &quot;scale=trunc(iw/2)*2:trunc(ih/2)*2&quot; \
+              -c:v libx264 -preset slow -crf 23 &quot;$mp4&quot; -y
+            
+            # Store for PR comment
+            converted_files=&quot;${converted_files}\n- ${gif} → ${mp4}&quot;
+            
+            # Remove original GIF
+            rm &quot;$gif&quot;
+          done
+          echo &quot;converted_files&lt;&lt;EOF&quot; &gt;&gt; $GITHUB_OUTPUT
+          echo &quot;$converted_files&quot; &gt;&gt; $GITHUB_OUTPUT
+          echo &quot;EOF&quot; &gt;&gt; $GITHUB_OUTPUT
+      
+      - name: Commit changes
+        run: |
+          git config --local user.email &quot;action@github.com&quot;
+          git config --local user.name &quot;GitHub Action&quot;
+          git add -A
+          git diff --staged --quiet || git commit -m &quot;Auto-convert large GIFs to MP4&quot;
+          git push
+      
+      - name: Comment on PR
+        if: steps.convert.outputs.converted_files != ''
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `## 🤖 Automated GIF Conversion
+              
+              Large GIF files were automatically converted to MP4:
+              ${{ steps.convert.outputs.converted_files }}
+              
+              **Action Required**: Please update your markdown files to use video tags instead of image tags for these files.
+              
+              Example:
+              \`\`\`html
+              &lt;video autoplay loop muted playsinline style=&quot;max-width: 100%; height: auto;&quot;&gt;
+                &lt;source src=&quot;../../images/animation.mp4&quot; type=&quot;video/mp4&quot;&gt;
+              &lt;/video&gt;
+              \`\`\`
+              `
+            })
+</code></pre>
+<h3 id="5-exception-management">5. Exception Management</h3>
+<p>Create <code>.gif-exceptions.yml</code>:</p>
+<pre><code class="lang-yaml"># GIF files that are allowed to exceed size limits
+allowed_large_gifs:
+  - public-documentation/docs/concepts/xmpro-ai/images/AI_Overview_Animation.gif  # Complex animation, MP4 was larger
+  
+# Small GIFs that should remain as GIF
+keep_as_gif:
+  - public-documentation/docs/images/loading-spinner.gif
+  - public-documentation/docs/images/status-badges/*.gif
+  - public-documentation/docs/icons/*.gif
+</code></pre>
+<h3 id="6-monitoring-and-reporting">6. Monitoring and Reporting</h3>
+<p>Add to pipeline:</p>
+<pre><code class="lang-yaml">- name: Generate Image Size Report
+  script: |
+    echo &quot;# Image Size Report&quot; &gt; image-report.md
+    echo &quot;Generated: $(date)&quot; &gt;&gt; image-report.md
+    echo &quot;&quot; &gt;&gt; image-report.md
+    
+    echo &quot;## GIF Files Summary&quot; &gt;&gt; image-report.md
+    echo &quot;Total GIFs: $(find public-documentation/docs -name &quot;*.gif&quot; | wc -l)&quot; &gt;&gt; image-report.md
+    echo &quot;Total Size: $(du -ch $(find public-documentation/docs -name &quot;*.gif&quot;) | tail -1 | cut -f1)&quot; &gt;&gt; image-report.md
+    echo &quot;&quot; &gt;&gt; image-report.md
+    
+    echo &quot;## Large GIFs (&gt;100KB)&quot; &gt;&gt; image-report.md
+    find public-documentation/docs -name &quot;*.gif&quot; -size +100k -exec ls -lh {} \; | awk '{print &quot;- &quot; $9 &quot; (&quot; $5 &quot;)&quot;}' &gt;&gt; image-report.md
+    echo &quot;&quot; &gt;&gt; image-report.md
+    
+    echo &quot;## Image Format Distribution&quot; &gt;&gt; image-report.md
+    echo &quot;- PNG: $(find public-documentation/docs -name &quot;*.png&quot; | wc -l) files&quot; &gt;&gt; image-report.md
+    echo &quot;- JPG: $(find public-documentation/docs -name &quot;*.jpg&quot; -o -name &quot;*.jpeg&quot; | wc -l) files&quot; &gt;&gt; image-report.md
+    echo &quot;- GIF: $(find public-documentation/docs -name &quot;*.gif&quot; | wc -l) files&quot; &gt;&gt; image-report.md
+    echo &quot;- MP4: $(find public-documentation/docs -name &quot;*.mp4&quot; | wc -l) files&quot; &gt;&gt; image-report.md
+    
+- name: Upload report
+  uses: actions/upload-artifact@v3
+  with:
+    name: image-size-report
+    path: image-report.md
+</code></pre>
+<h2 id="implementation-timeline">Implementation Timeline</h2>
+<h3 id="phase-1-documentation-and-guidelines-immediate">Phase 1: Documentation and Guidelines (Immediate)</h3>
+<ul>
+<li>Update CONTRIBUTING.md with image guidelines</li>
+<li>Add conversion instructions</li>
+<li>Create exception list</li>
+</ul>
+<h3 id="phase-2-soft-enforcement-1-2-weeks">Phase 2: Soft Enforcement (1-2 weeks)</h3>
+<ul>
+<li>Add warnings in CI/CD pipeline</li>
+<li>Implement pre-commit hooks</li>
+<li>Generate size reports</li>
+</ul>
+<h3 id="phase-3-hard-enforcement-1-month">Phase 3: Hard Enforcement (1 month)</h3>
+<ul>
+<li>Block PRs with large GIFs</li>
+<li>Implement automated conversion</li>
+<li>Monitor and adjust thresholds</li>
+</ul>
+<h2 id="success-metrics">Success Metrics</h2>
+<ul>
+<li>No new GIFs over 100KB (except approved exceptions)</li>
+<li>Documentation size growth &lt; 5% per quarter</li>
+<li>Average page load time improvement</li>
+<li>Contributor compliance rate &gt; 95%</li>
+</ul>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>Consider WebP format for future optimization</li>
+<li>Investigate AVIF for next-generation image format</li>
+<li>Monitor browser compatibility for video formats</li>
+<li>Consider CDN for media delivery in the future</li>
+</ul>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: June 05, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Debugging an Agent | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Debugging an Agent | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=public-documentation/docs/how-tos/agents/debugging-an-agent.md&amp;version=GB20290-migrate-public-docs&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="debugging-an-agent">Debugging an Agent</h1>
+
+<p>Agents can be traced and debugged once they are added and used in a Data Stream. This is particularly useful when testing if an agent is working as intended and troubleshooting agent issues along the way.</p>
+<h3 id="setup-before-debugging">Setup Before Debugging</h3>
+<ul>
+<li>Package the agent using <a href="packaging-agents.html">this guide</a>. Make sure that the Agent is packaged as non-virtual. If the Agent is required to be virtual, temporarily set it to non-virtual during development and just repackage it to virtual when releasing.</li>
+</ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Only non-virtual agents could trigger all breakpoints inside the Agent's code. This will also allow you to access any local environment (database, server, etc.) that you will use for testing.</p>
+</div>
+<p><img src="../../images/debugging-package-manager.png" alt="Package Manager Configuration"></p>
+<ul>
+<li>Add the Packaged Agent in the Data Stream Designer by following the <a href="manage-agents.html#adding-an-agent">Adding an Agent</a> article.</li>
+<li>Install the XMPro Stream Host by following the <a href="../stream-host.html#how-to-install-a-stream-host">Install a Stream Host</a> article. Within the installation wizard, select Console Application as the Host Type.</li>
+</ul>
+<p><img src="../../images/debugging-install-stream-host.png" alt="Install Stream Host"></p>
+<ul>
+<li>Create a new Data Stream for testing the agent and select the collection profile you used during Installation of Stream Host.</li>
+</ul>
+<p><img src="../../images/debugging-create-data-stream.png" alt="Create Data Stream"></p>
+<ul>
+<li>Add the created Agent in the Data Stream and Save.</li>
+<li>Run the Stream Host as Admin and Publish the Data Stream for the first time. A cache folder will be created inside the Stream Host folder which will be used later on.</li>
+</ul>
+<h3 id="steps-to-debug-an-agent">Steps to Debug an Agent</h3>
+<ul>
+<li>Build the Agent Project to generate a dll. If built using the Debug configuration, the dll usually would be found inside the folder [Project folder]/bin/Debug/netstandard2.1.</li>
+</ul>
+<p><img src="../../images/debugging-build-agent.png" alt="Build Agent"></p>
+<p><img src="../../images/debugging-built-dll.png" alt="Built dll location"></p>
+<ul>
+<li>Replace the Agent dll on the Stream Host installation folder under Cache/[Agent Id]/[Agent Version] with the one generated.</li>
+</ul>
+<p><img src="../../images/debugging-package-manager.png" alt="Destination folder"></p>
+<ul>
+<li>To determine an Agent's id, export a JSON from the XMP file of the agent via Package Manager and determine the value from the <code>Id</code> property.</li>
+</ul>
+<p><img src="../../images/debugging-export-json.png" alt="Export JSON"></p>
+<p><img src="../../images/debugging-json-file.png" alt="JSON file"></p>
+<ul>
+<li>Run Stream Host as Admin.</li>
+<li>Run Visual Studio as Admin and open Agent solution.</li>
+<li>Add a breakpoint in the Agent's code.</li>
+<li>Attach <code>XMPro.StreamHost.Console.exe</code> to process. By default, Visual Studio shortcut is <code>ctrl + alt + p</code>.</li>
+</ul>
+<p><img src="../../images/debugging-attach-process.png" alt="Attach a Process"></p>
+<ul>
+<li>Publish the test Data Stream on the Data Stream Designer to initiate debugging.</li>
+</ul>
+<h3 id="common-issues">Common Issues</h3>
+<h4 id="issue-access-to-path-is-denied-when-publishing-a-data-stream">Issue: 'Access to Path is denied' when publishing a Data Stream</h4>
+<p><img src="../../images/debugging-access-denied.png" alt="Access to path is denied"></p>
+<ul>
+<li>Make sure that Stream Host is ran in Administrator Mode</li>
+</ul>
+<h4 id="issue-breakpoint-doesnt-fire">Issue: Breakpoint doesn't fire</h4>
+<ul>
+<li>Make sure the Agent is packaged as Non-Virtual.</li>
+<li>This can also be an issue with testing out multiple versions of the agent. Ensure that the agent dll is copied to the folder with the correct agent id and version.</li>
+<li>Alternatively, one can refresh the Cache folder by:
+<ul>
+<li>Deleting the Cache folder</li>
+<li>Running Stream Host</li>
+<li>Publishing the Data Stream</li>
+<li>Copying the Agent dll to the appropriate folder</li>
+</ul>
+</li>
+<li>Potential issue can lie in dll not containing the expected changes. Cleaning and rebuilding the agent may solve this issue.</li>
+</ul>
+<h4 id="issue-sorry-something-went-wrong-error-when-configuring-an-agent">Issue: 'Sorry, something went wrong.' error when configuring an agent</h4>
+<p><img src="../../images/debugging-error-configuring.png" alt="Error when configuring agent"></p>
+<ul>
+<li>Make sure that stream host is running for non-virtual agents.</li>
+<li>If the agent is supposedly virtual, repackage the agent as non-virtual temporarily to be able to access your local environment settings</li>
+<li>Ensure that agent settings are configured in line with the agent's code. Things to note for:
+<ul>
+<li>Ensure that the key when packaging agents match the key used in code (case-sensitive)</li>
+<li>Ensure that all key names are unique for both group and variables.</li>
+<li>For value fields (eg. Token Box, Dropdown), ensure that default/configured values match the expected values in code. Take note that this is also case-sensitive</li>
+<li>Alternatively, adding a breakpoint and debugging in <code>GetConfigurationTemplate</code> can help determine the setting/property that is causing the error</li>
+</ul>
+</li>
+</ul>
+<h4 id="issue-could-not-complete-integrity-check-undefined-when-running-integrity-check">Issue: 'Could not complete Integrity check. undefined' when running integrity check</h4>
+<ul>
+<li>This can be caused by missing properties within the settings when packaging an agent. Ensure that the expected configurations within the agent's code are properly configured within the settings in package manager.</li>
+</ul>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: June 05, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Recommendation Alert | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Recommendation Alert | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=public-documentation/docs/concepts/recommendation/recommendation-alert.md&amp;version=GB20290-migrate-public-docs&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="recommendation-alert">Recommendation Alert</h1>
+
+<p>Recommendation Alerts are advanced alerts that are triggered when real-time data meets the criteria defined in a <a href="rule.html">Recommendation Rule</a>. They notify you when certain conditions occur in your data and provide decision support for how to take action.</p>
+<p>The Recommendation Alerts are found by clicking on the Recommendations button in the menu on the left of the App Designer.</p>
+<p><img src="../../images/image-682.png" alt="Fig 1: Access the recommendations menu"></p>
+<p>The grid provides an overview of all the Alerts that you have access to. The rightmost Status column shows whether the Alert is Pending or Resolved.</p>
+<p>You can order, filter by specific values, search the alerts by any of the columns, and search in all columns in the Search bar.</p>
+<p>To see Resolved as well as Pending Alerts, check the &quot;Show Archived&quot; checkbox.</p>
+<p>Click on an Alert in the grid to navigate to the Recommendation Alert details.</p>
+<p><img src="../../images/image-912.png" alt="Fig 2: The recommendation alerts grid"></p>
+<h2 id="finding-recommendation-alerts">Finding Recommendation Alerts</h2>
+<p>The search bar can be used to find any specific Recommendation Alerts that you may be looking for. There is a dropdown option where you can specify to search through everything in App Designer, or only for Recommendation Alerts.</p>
+<p><img src="../../images/search-reco-alerts.png" alt="Search Recommendation Alerts"></p>
+<h2 id="detailed-view">Detailed View</h2>
+<p>The Recommendation Alert page provides details of the alert. It allows you to input information into the Form, view Triage Instructions, have a Discussion with your team, and see the alert Timeline and Analytics.</p>
+<p><img src="../../images/alert-basic-information.png" alt="Fig 4: Recommendation Alert page"></p>
+<h3 id="headline">Headline</h3>
+<p>The headline of the Alert. Generated by the <a href="rule.html#alert-headline--description">Rule Headline</a>.</p>
+<h3 id="recommendation-details">Recommendation Details</h3>
+<p>A paragraph on the details of the Alert. Generated by the <a href="rule.html#alert-headline--description">Rule Description</a>.</p>
+<h3 id="event-data">Event Data</h3>
+<p>The data received by the Data Stream. If &quot;<a href="rule.html#log-data-on">Log Data On All Occurrences</a>&quot; is checked in the Rule, this data will be updated as new data is received.</p>
+<h3 id="notes">Notes</h3>
+<p>An area to write notes and observations.</p>
+<h3 id="actions">Actions</h3>
+<p>This area contains the actions that can be performed on a Recommendation Alert.</p>
+<h4 id="assign-and-reassign">Assign and Reassign</h4>
+<p><em>Reassign added in v4.4.4</em></p>
+<p>Ability to Assign (or Reassign) responsibility for the Recommendation Alert to a user that has run access to the Recommendation. The default selection is the logged-in user.</p>
+<p>When this action is performed, the action is recorded on the <a href="recommendation-alert.html#timeline">Timeline </a>and in the <a href="recommendation-alert.html#discussion-1">Discussion</a> - thus notifying the assignee.</p>
+<p><img src="../../images/alert-reassign-popup.png" alt="Fig 5: Assign a recommendation alert"></p>
+<h4 id="share">Share</h4>
+<p>Ability to share the Recommendation Alert to users that have run access to the Recommendation. Selected users will receive an email with the note and a link to the Recommendation Alert.</p>
+<h4 id="save">Save</h4>
+<p>Saves the changes made on the Recommendation Alert.</p>
+<h4 id="mark-as-false-positive">Mark as False Positive</h4>
+<p>Someone reviewed the issue, determined that the asset doesn't have an issue or it was triggered while in Maintenance/Service mode, and considered the matter closed.</p>
+<h4 id="mark-as-resolved">Mark as Resolved</h4>
+<p>Someone reviewed the issue, took mitigation steps, and considered the matter resolved.</p>
+<h3 id="form">Form</h3>
+<p>A form where relevant information can be entered. It is only available if the Recommendation has an attached Form. Accessed by clicking on the Form tab.</p>
+<p>For more details on how to add actions to a form button, see <a href="action-requests.html">Recommendation Actions</a>.</p>
+<p><img src="../../images/alert-form.png" alt="Alert Form"></p>
+<h3 id="triage-instructions">Triage Instructions</h3>
+<p>An area that provides useful information on actions to take to resolve the Alert and links to relevant resources. It is only available if the Recommendation has Triage Instructions enabled. Accessed by clicking on the Triage Instructions tab.</p>
+<p><img src="../../images/alert-triage-instruction.png" alt="Alert Triage Instructions"></p>
+<h3 id="discussion">Discussion</h3>
+<p>An area in which messages can be posted to collaborate with members of your team. Each discussion is specific to a particular Recommendation Alert. <a href="recommendation-alert.html#discussion">A more detailed explanation can be found below</a>.</p>
+<h3 id="timeline">Timeline</h3>
+<p>All previous alerts created by the same Rule and a list of all the events to happen on this Alert.</p>
+<p><img src="../../images/alert-timeline.png" alt="Alert Timeline"></p>
+<h3 id="analytics">Analytics</h3>
+<p>An area in which the number of Alerts for the Asset (the Entity Identifier specified in the Run Recommendation Agent) can be compared, as well as a breakdown by Generated, Auto Escalated, False Positive, and Resolved alerts over a period of time. <a href="recommendation-alert.html#analytics">A more detailed explanation can be found below</a>.</p>
+<h2 id="discussion-1">Discussion</h2>
+<p>The discussion section is an area in which messages can be sent by anyone who has access to the Recommendation Alert. Messages are displayed with the latest message at the bottom of the list. Any messages which have not been read since the last time you visited the page will be below the &quot;Last Read&quot; line break.</p>
+<p><img src="../../images/alert-discussion.png" alt="Alert Discussion"></p>
+<p>You can search for messages that contain a certain word or phrase by typing in the search bar at the top.</p>
+<p>You can add a message by typing in the editor at the bottom of the discussion section and clicking the button with a paper plane icon at the bottom right corner.</p>
+<p>Advanced text editing can be opened by clicking the button with an underlined letter A icon at the bottom left corner.</p>
+<p><img src="../../images/alert-discussion-search-and-send-message.png" alt="Alert Discussion Search and Send"></p>
+<p>You can mention another user by typing the @ symbol or clicking the button with the @ symbol, which will pop up a list of users. Clicking on a user will mention them in the message and send an email to them when the message is sent.</p>
+<p><img src="../../images/alert-discussion-box-mention-user.png" alt="Alert Discussion Mention User"></p>
+<h2 id="analytics-1">Analytics</h2>
+<p>The analytics section compares the currently viewed period of alerts with the previous period and displays the difference as a percentage. The statistics compared are:</p>
+<ol>
+<li>The number of Alerts generated</li>
+<li>The number of Alerts that were auto-escalated</li>
+<li>The number of Alerts marked as false positive</li>
+<li>The number of Alerts resolved.</li>
+</ol>
+<p>Below the breakdown, there are two charts:</p>
+<ol>
+<li>The number of all Recommendation Alerts for the Asset (the Entity Identifier specified in the Run Recommendation Agent).</li>
+<li>A breakdown of all Recommendation Alerts by Rule for the Asset in the selected period.</li>
+</ol>
+<p><img src="../../images/alert-analytics.png" alt="Alert Analytics"></p>
+<h2 id="further-reading">Further Reading</h2>
+<ul>
+<li><a href="../../how-tos/recommendations/manage-alerts.html">How to Manage Alerts</a></li>
+<li><a href="../../how-tos/recommendations/manage-alerts-on-mobile.html">Manage Alerts on Mobile</a></li>
+</ul>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: June 05, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

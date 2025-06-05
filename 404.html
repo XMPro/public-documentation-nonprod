@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Page Not Found - XMPro Documentation</title>
+    <script>
+        // Extract version from URL if present
+        const path = window.location.pathname;
+        const versionMatch = path.match(/\/(\d+\.\d+)\//);
+        if (versionMatch) {
+            // Already in a version folder, show 404
+            document.addEventListener('DOMContentLoaded', function() {
+                document.getElementById('message').innerHTML = 'Page not found in version ' + versionMatch[1];
+            });
+        } else {
+            // Not in a version folder, redirect to latest
+            window.location.replace('/4.4' + path);
+        }
+    </script>
+</head>
+<body>
+    <h1>404 - Page Not Found</h1>
+    <p id="message">The requested page could not be found.</p>
+    <p><a href="/">Return to documentation home</a></p>
+</body>
+</html>

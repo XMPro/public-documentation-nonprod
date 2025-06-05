@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>XMPro PDF Viewer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/images/favicon.png">
+    <link rel="stylesheet" href="pdf-styles.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+        #pdf-container {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .error-container {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            padding: 50px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .error-container h1 {
+            color: #d32f2f;
+        }
+        .error-container p {
+            margin-top: 20px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <iframe id="pdf-container" src=""></iframe>
+    <script>
+        // Get the PDF filename from the URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const pdfFile = urlParams.get('pdf');
+        
+        if (pdfFile) {
+            // Set the document title to include the PDF name
+            document.title = pdfFile + " | XMPro Documentation";
+            
+            // Set the iframe source to the PDF file
+            document.getElementById('pdf-container').src = pdfFile;
+            
+            // Add event listener to handle iframe load errors
+            document.getElementById('pdf-container').onerror = function() {
+                showError("Could not load the PDF file. Please try again or contact support.");
+            };
+        } else {
+            showError("No PDF file specified. Please check the URL and try again.");
+        }
+        
+        function showError(message) {
+            document.body.innerHTML = `
+                <div class="error-container">
+                    <h1>Error</h1>
+                    <p>${message}</p>
+                    <p><a href="/index.html">Return to Documentation Home</a></p>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>v4.2.0 | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="v4.2.0 | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=public-documentation/docs/release-notes/archived/v4.2.0.md&amp;version=GB20290-migrate-public-docs&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="v420">v4.2.0</h1>
+
+<h2 id="app-designer">App Designer</h2>
+<table>
+<thead>
+<tr>
+<th>Change Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Feature</td>
+<td>The new feature, <a href="../../concepts/recommendation/recommendation-scoring.html">Recommendation Scoring</a>, allows for further fine-tuning of alert rankings to aid in prioritization. <br><br>This feature utilizes a scoring system that takes into account multiple Score Factors that can be configured within:<br>- <a href="../../how-tos/recommendations/manage-recommendations.html#create-a-recommendation">Recommendation</a><br>- <a href="../../how-tos/recommendations/manage-categories.html#create-a-category">Recommendation Category</a><br>- <a href="../../how-tos/recommendations/create-rules.html#create-rules">Recommendation Rule</a>.<br><br>A <a href="../../concepts/recommendation/recommendation-scoring.html#viewing-the-recommendation-scoring">Score Matrix</a> was added to allow you to see the score and the corresponding recommendation, category and rule that comprise of the score. <br><br>This provides greater visibility and understanding of the score composition.</td>
+</tr>
+<tr>
+<td>Feature</td>
+<td>A timeline of events is now available for Recommendations, Rules and Recommendation Categories. This feature enables you to view the changes made to a recommendation or category and the user who performed them. The timeline includes search and filtering options to facilitate the viewing of changes/events.</td>
+</tr>
+<tr>
+<td>Enhancement</td>
+<td>The Recommendation Landing Page has been updated to include sorting by scoring, allowing users to view the calculated score and alert ID. This enhancement facilitates the prioritization of alerts that require more attention.</td>
+</tr>
+<tr>
+<td>Enhancement</td>
+<td>Creating <a href="../../how-tos/recommendations/manage-categories.html#create-a-category">Recommendation Categories</a> has been moved to a new blade to accommodate the addition of the score factor.</td>
+</tr>
+<tr>
+<td>Enhancement</td>
+<td>Recommendation Alerts that are <a href="../../concepts/recommendation/auto-escalate.html">Auto Escalated</a> will now be automatically assigned to the previous owner of the alert.</td>
+</tr>
+<tr>
+<td>Enhancement</td>
+<td>Hyperlinks in <a href="../../blocks-toolbox/basic/tree-grid.html">Tree Grid</a> and <a href="../../blocks-toolbox/basic/data-grid.html">Data Grid</a> now default to opening within the same tab. This is done to make viewing hyperlinks more responsive.</td>
+</tr>
+<tr>
+<td>Enhancement</td>
+<td>General system performance improvements were made to make a more responsive user experience.</td>
+</tr>
+<tr>
+<td>Enhancement</td>
+<td>General security updates were added.</td>
+</tr>
+<tr>
+<td>Fix</td>
+<td>The Time Series Chart's Data Source Parameters were not accessible by its parent Hierarchy.<br><em>This issue has been resolved.</em></td>
+</tr>
+</tbody>
+</table>
+<h2 id="data-stream-designer">Data Stream Designer</h2>
+<table>
+<thead>
+<tr>
+<th>Change Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Enhancement</td>
+<td>Introduced a visual indicator to the Data Stream Designer's <a href="../../concepts/data-stream/index.html">canvas</a> and toolbox to better distinguish the Agent's <a href="../../concepts/agent/index.html#categories">Category</a> using color and text.</td>
+</tr>
+<tr>
+<td>Enhancement</td>
+<td>The Stream Host runtime has been upgraded, taking advantage of the enhanced performance and features of .NET Core 6. For more information on installing Stream Hosts, please visit this <a href="../../installation/complete-installation/install-stream-host/index.html">link</a>.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="subscription-manager">Subscription Manager</h2>
+<table>
+<thead>
+<tr>
+<th>Change Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Enhancement</td>
+<td>The new site setting, <a href="../../how-tos/manage-site-settings.html#hide-users-outside-business-role-branch">Hide Users Outside Business Role Branch</a>, allows you to control whether users can see the details of other users outside of their business role. This is useful when the structure makeup is confidential.</td>
+</tr>
+<tr>
+<td>Enhancement</td>
+<td>General security updates were added.</td>
+</tr>
+</tbody>
+</table>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: June 05, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
