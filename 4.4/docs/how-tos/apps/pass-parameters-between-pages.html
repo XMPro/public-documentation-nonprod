@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Pass Parameters Between Pages | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Pass Parameters Between Pages | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=public-documentation/docs/how-tos/apps/pass-parameters-between-pages.md&amp;version=GB20290-migrate-public-docs&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="pass-parameters-between-pages">Pass Parameters Between Pages</h1>
+
+<p>You can use Parameters if you want to send particular values to another Page. For example, if you have a list of machines, and a user selects one, the Application may open a new Page that displays information for that particular machine. In that case, you may want to pass the ID of the machine the user clicked on to the Page that is being opened.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>It is recommended that you read the article listed below to improve your understanding of Navigating between Pages.</p>
+<ul>
+<li><a href="../../concepts/application/navigation-and-parameters.html">Navigation and Parameters</a></li>
+<li><a href="navigate-between-pages.html">How to Navigate Between Pages</a></li>
+</ul>
+</div>
+<h2 id="adding-a-parameter-to-the-page">Adding a Parameter to the Page</h2>
+<p>A Parameter needs to be added to the Page that is receiving the data. In this example, there are two Pages that exist in the Application: the main Landing Page and the secondary Page. The second page is the Page where the Parameter is made. To add a Parameter to a page, follow the steps below:</p>
+<ol>
+<li>Click on <em>Applications</em> from the left-hand menu.</li>
+<li>Click on the <em>edit</em> button of the Application from the list.</li>
+</ol>
+<p><img src="../../images/apps/apps-2.png" alt="Screenshot of the Applications list view showing multiple application cards with their name, description, and action buttons. An Edit button is highlighted on one of the application cards."></p>
+<p>3. Click on the page where you want to data to be sent to.<br>
+4. Click on <em>Page Data</em>.<br>
+5. Click on the <em>plus</em> to add a Parameter.</p>
+<p><img src="../../images/apps/parameters/params-2.png" alt="Screenshot of the Page Data panel with the plus button highlighted, used to add a new parameter to the page. The panel shows a list of existing parameters and their types."></p>
+<p>6. Add the name and type of the new Parameter.<br>
+7. Click on <em>Create</em>.<br>
+8. Click on <em>Save</em>.</p>
+<p><img src="../../images/apps/parameters/param-create.png" alt="Screenshot of the Create Parameter dialog box where a new parameter named &quot;MachineID&quot; is being created with the type set to &quot;string&quot;. The Create and Cancel buttons are shown at the bottom of the dialog."></p>
+<p>Now that a Parameter has been added, create a textbox or a way to display the value when it is passed to the Page during runtime.</p>
+<ol>
+<li>Add a textbox to the Page so you will be able to display the value when it is passed from the main page to this page.</li>
+</ol>
+<p><img src="../../images/apps/parameters/params-4.png" alt="Screenshot showing a textbox component being added to the page from the Block Components panel. The textbox is being dragged onto the canvas area."></p>
+<p>2. Click on <em>Block Properties</em>.<br>
+3. Click on the '<em>A</em>' button to toggle between static and dynamic text.<br>
+4. Select the Parameter from the dropdown.<br>
+5. Click on <em>Save</em>.</p>
+<p><img src="../../images/apps/parameters/params-5.png" alt="Screenshot of the Block Properties panel for a textbox. The &quot;A&quot; toggle button is highlighted, indicating a switch to dynamic text mode. The MachineID parameter is selected from the dropdown menu."></p>
+<p>The data has to be sent from the main page to the secondary page. To pass data from the main Landing Page using the Parameter you just created, follow the steps below:</p>
+<ol>
+<li>Go to the page you will be sending data from.</li>
+<li>Select the button/link that navigates to the second page.</li>
+<li>Click on <em>Block Properties</em>.</li>
+<li>Click on the <em>Edit</em> button under Pass Page Parameters.</li>
+<li>Configure if the data being passed is dynamic or static.</li>
+<li>Add/Select a value that you would like to pass to the parameter on the second page.</li>
+<li>Click on <em>Apply</em>.</li>
+</ol>
+<p><img src="../../images/apps/parameters/params-6.png" alt="Screenshot of the Block Properties panel showing the Navigate To section with a Page selected. The &quot;Edit&quot; button for Pass Page Parameters is highlighted, indicating where to configure parameters to send to the destination page."></p>
+<p><img src="../../images/apps/parameters/params-7.png" alt="Screenshot of the Pass Page Parameters dialog. A parameter named &quot;MachineID&quot; is configured to receive a static value &quot;Machine123&quot;. The dialog shows options to set the parameter type and value."></p>
+<h2 id="passing-dynamic-data-to-the-page">Passing Dynamic Data to the Page</h2>
+<p>When navigating between pages, you can also pass dynamic data - such as the Chart value - to the next page using page parameters. First, configure the <a href="../../blocks-toolbox/visualizations/chart.html">Chart</a> block then follow the steps below:</p>
+<ol>
+<li>Click on Block Properties.</li>
+<li>Under _'_Appearance' set Show Drilldown to True.</li>
+</ol>
+<p><img src="../../images/apps/chart-drilldown/chart-drilldown-1.png" alt="Screenshot of the Block Properties panel for a Chart component. The Appearance section is expanded, and the &quot;Show Drilldown&quot; toggle is turned on, enabling chart drilldown functionality."></p>
+<p>3. Under 'Action', click on the Navigate To Dropdown and select Page.</p>
+<p>4. Select the page you want to navigate to.</p>
+<p>5. Click Pass Page Parameters.</p>
+<p>6. Pass Page Parameter blade will open.</p>
+<p><img src="../../images/apps/chart-drilldown/chart-drilldown-2.png" alt="Screenshot showing the Pass Page Parameters dialog open for chart drilldown configuration. The dialog displays existing parameters that can receive values when a chart element is clicked."></p>
+<p>7. Type in the name of the parameter and select the type.</p>
+<p>8. Click Add.</p>
+<p><img src="../../images/apps/chart-drilldown/chart-drilldown-3.png" alt="Screenshot of the parameter configuration in the Pass Page Parameters dialog. A new parameter is being created with a name and type specified, and the Add button is highlighted."></p>
+<p>9. Change the field type to Dynamic Value.</p>
+<p>10. Select the Chart value you want to pass on the next page.</p>
+<p>11. Click <em>Apply</em>.</p>
+<p><img src="../../images/apps/chart-drilldown/chart-drilldown-4.png" alt="Screenshot showing the dynamic value configuration for a chart parameter. The dropdown menu shows available chart values like &quot;Category&quot;, &quot;Series&quot;, and &quot;Value&quot; that can be passed to the parameter."></p>
+<h2 id="view-values-passed-to-other-pages-at-runtime">View values passed to other pages at runtime</h2>
+<p>Once the Parameter has been configured, launch the application to see how the data will be passed between Pages at runtime.</p>
+<ol>
+<li>Click on <em>Launch</em>.</li>
+</ol>
+<p><img src="../../images/apps/parameters/params-8.png" alt="Screenshot of the application editor with the Launch button highlighted in the top toolbar. This button is used to preview the application at runtime."></p>
+<p>2. Click on the link that goes to the second page.<br>
+3. The data sent from the first page should reach the second page.</p>
+<p><img src="../../images/apps/parameters/params-9.png" alt="Screenshot showing the application in runtime view with a button labeled &quot;Go to Details Page&quot;. This button will navigate to another page while passing parameters."></p>
+<p><img src="../../images/apps/parameters/params-10.png" alt="Screenshot of the destination page showing the parameter value &quot;Machine123&quot; displayed in a textbox. This demonstrates successful parameter passing between pages."></p>
+<h2 id="edit-a-parameter">Edit a Parameter</h2>
+<p>To edit a Parameter, follow the steps below:</p>
+<ol>
+<li>Click on <em>Page Data</em>.</li>
+<li>Click on the <em>pencil/edit</em> button for the Parameter.</li>
+</ol>
+<p><img src="../../images/apps/parameters/params-11.png" alt="Screenshot of the Page Data panel showing a parameter named &quot;MachineID&quot;. The pencil/edit icon next to the parameter is highlighted, indicating where to click to edit the parameter."></p>
+<p>3. Make changes to the Parameter.<br>
+4. Click on <em>Save</em>.</p>
+<p><img src="../../images/apps/parameters/params-12.png" alt="Screenshot of the Edit Parameter dialog box. The parameter's name and type can be modified, and Save and Cancel buttons are available at the bottom of the dialog."></p>
+<h2 id="delete-a-parameter">Delete a Parameter</h2>
+<p>To delete a Parameter, follow the steps below:</p>
+<ol>
+<li>Click on <em>Page Data</em>.</li>
+<li>Click on the <em>pencil/edit</em> button for the Parameter.</li>
+</ol>
+<p><img src="../../images/apps/parameters/params-11.png" alt="Screenshot of the Page Data panel with the pencil/edit icon highlighted next to a parameter, showing where to click to access parameter deletion options."></p>
+<p>3. Click on <em>Delete.</em></p>
+<p><img src="../../images/apps/parameters/params-14.png" alt="Screenshot of the Edit Parameter dialog with the Delete button highlighted at the bottom. This button will remove the parameter from the page."></p>
+<p>4. Confirm that you would like to delete the Parameter.</p>
+<p><img src="../../images/apps/parameters/params-15.png" alt="Screenshot of the confirmation dialog asking &quot;Are you sure you want to delete this parameter?&quot; with &quot;Yes&quot; and &quot;No&quot; buttons to confirm or cancel the deletion."></p>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: June 05, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

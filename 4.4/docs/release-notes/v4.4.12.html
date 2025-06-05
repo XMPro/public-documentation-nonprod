@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>v4.4.12 | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="v4.4.12 | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      <meta name="description" content="03 September 2024">
+      <link rel="icon" href="../../images/favicon.png">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=public-documentation/docs/release-notes/v4.4.12.md&amp;version=GB20290-migrate-public-docs&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="v4412">v4.4.12</h1>
+
+<h2 id="integrations">Integrations</h2>
+<table><thead><tr><th width="155">Change Type</th><th width="250">Name</th><th>Description</th></tr></thead><tbody><tr><td>Enhancement</td><td><a href="https://xmpro.gitbook.io/calculated-field/">Calculated Field v3.46</a></td><td>Support processing records separately so that an error doesn't stop the execution of a batch.</td></tr><tr><td>Enhancement</td><td><a href="https://xmpro.gitbook.io/mqtt/">MQTT Listener v3.04<br>MQTT Action Agent v3.04</a></td><td>Support message correlation added for parallel processing and synchronization.</td></tr><tr><td>Enhancement</td><td><a href="https://xmpro.gitbook.io/ethereum-smart-contract">Ethereum Smart Contract Listener v1.05<br>Ethereum Smart Contract Action Agent v1.04</a></td><td>Added variable support.<br>Support uint256 data type. <br>Update packages and frameworks.</td></tr><tr><td>Enhancement</td><td><a href="https://xmpro.gitbook.io/tsa-sql-server-connector/">TSA SQL Server Connector v2.0</a></td><td>Implement the new <a href="../how-tos/connectors/building-connectors.html#itsaconnector">ITSAConnector</a> interface and naming aligned to the <a href="../blocks-toolbox/visualizations/time-series-analysis.html">Time Series Analysis</a> block.</td></tr><tr><td>Security</td><td><a href="https://xmpro.gitbook.io/tsa-sql-server-connector/">TSC SQL Server Connector v1.60</a><em>(deprecated)</em></td><td>Applied the <a href="https://msrc.microsoft.com/update-guide/vulnerability/CVE-2024-0056">CVE-2024-0056 </a>security vulnerability update.</td></tr></tbody></table>
+<h2 id="common">Common</h2>
+<table><thead><tr><th width="157">Change Type</th><th>Description</th></tr></thead><tbody><tr><td>Enhancement</td><td>The user profile view shows the language name rather than the two character Isocode.</td></tr></tbody></table>
+<h2 id="app-designer">App Designer</h2>
+<table><thead><tr><th width="157">Change Type</th><th>Description</th></tr></thead><tbody><tr><td>Enhancement</td><td>Introduced the <a href="../how-tos/connectors/building-connectors.html#itsaconnector">ITSAConnector</a> interface (to reflect the <a href="https://documentation.xmpro.com/blocks-toolbox/visualizations/time-series-analysis">Time Series Analysis</a> Block renamed in v4.4.9) and deprecated the ITSCConnector interface.<br>New Connectors have been released for use from v4.4.12+, but the older ones using the deprecated interface are still compatible.</td></tr><tr><td>Fix</td><td><em>I archived an Alert that had an associated</em> <a href="../concepts/recommendation/form.html"><em>Form</em></a> <em>with control values entered, but I noticed the control values weren't cleared.</em> <br>Control values are removed when an alert is archived.</td></tr><tr><td>Fix</td><td><em>I archived an Alert with an associated</em> <a href="../concepts/recommendation/form.html"><em>Form</em></a> <em>from the Recommendations grid, but I noticed the 'ArchivedForm' value is NULL.</em><br>The Form is added to the Archived Form' as a JSON when an Alert with an associated Form is archived.</td></tr><tr><td>Fix</td><td>The <a href="../blocks-toolbox/advanced/metablock.html">Metablock</a>'s border - introduced in v4.4.8 - has been removed.</td></tr></tbody></table>
+<h2 id="stream-host">Stream Host</h2>
+<table><thead><tr><th width="157">Change Type</th><th>Description</th></tr></thead><tbody><tr><td>Feature</td><td>Support a zipped file to be packaged in an Agent.</td></tr></tbody></table>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: June 05, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

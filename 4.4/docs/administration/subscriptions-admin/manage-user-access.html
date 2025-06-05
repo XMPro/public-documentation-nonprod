@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Manage User Access | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Manage User Access | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=public-documentation/docs/administration/subscriptions-admin/manage-user-access.md&amp;version=GB20290-migrate-public-docs&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="manage-user-access">Manage User Access</h1>
+
+<div class="WARNING">
+<h5>Warning</h5>
+<p>Please note that this section is intended for Administrative users. No other type of user is allowed to manage a Company's Subscriptions.</p>
+</div>
+<h2 id="adding-users-to-a-subscription">Adding Users to a Subscription</h2>
+<p>Follow the steps below to give access to a product for a user in a company other than XMPro.</p>
+<ol>
+<li>Open the Subscriptions page from the left-hand menu.</li>
+<li>Click on the product the user needs access to.</li>
+<li>Click the Users button in the command bar.</li>
+<li>Click on <em>Add</em>.</li>
+<li>Select the user from the drop-down.</li>
+<li>Select a role for the user.</li>
+<li>Select the rights the selected user needs on the product.</li>
+<li>Click <em>Save</em>.</li>
+<li>The user will receive an email that access has been granted for the selected product.</li>
+</ol>
+<p><img src="../../images/image-616.png" alt="Adding Users to a Subscription"></p>
+<h2 id="approve-user-access-request">Approve User Access Request</h2>
+<p>If there is <a href="setup-auto-approvals-default-subscriptions.html">no Auto Approval or Default Subscription</a> setup, the Admin needs to approve a user's Access Request.</p>
+<p>If someone in your company lodged an access request for a product, an email will be sent to all Company Administrators within your company. The first available person with an administrative role within the Subscription Manager can approve the request. To approve an access request for a user, please follow the steps below.</p>
+<ol>
+<li>Open the Subscriptions page from the left-hand menu.</li>
+<li>Select the product for which the access request was lodged. A counter next to the product name will indicate the number of pending access requests you have for that product.</li>
+<li>Click on <em>Access Requests</em>.</li>
+<li>Click on the name of the user that lodged the request.</li>
+<li>Select the role that the user should have on the product from the drop-down, for example, &quot;<em>General User</em>&quot;.</li>
+<li>Select the rights the user should have on the product, for example, the <a href="manage-user-access.html#data-stream-designer-rights-and-roles">rights and roles for Data Stream Designer</a> or <a href="manage-user-access.html#app-designer-rights-and-roles">rights and roles for the App Designer</a>.</li>
+<li>Click <em>Save</em>.</li>
+<li>The user who lodged the request will receive an email notifying him/ her that they have been granted access to the product.</li>
+</ol>
+<p><img src="../../images/image-266.png" alt="Approve User Access Request"></p>
+<h2 id="editing-rights-and-access-for-a-user">Editing Rights and Access for a User</h2>
+<p>If you need to edit rights for a user or a user's role on a product, follow the steps below.</p>
+<ol>
+<li>Open the Subscriptions page from the left-hand menu.</li>
+<li>Select the product that you are looking to change a user's rights or access.</li>
+<li>Click Users in the command bar to open the Users page.</li>
+<li>Select the user whose rights or role you would like to change on a product.</li>
+<li>Make any changes to the role of the selected user, as required.</li>
+<li>Make any changes to the rights of the selected user, as required.</li>
+<li>Click <em>Save.</em></li>
+</ol>
+<p><img src="../../images/image-1379.png" alt="Editing Rights and Access for a User"></p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Advise the user to sign out and back in again for the changes to take effect.</p>
+</div>
+<h2 id="removing-access-for-a-user">Removing Access for a User</h2>
+<p>If you need to remove access for a user on a product, follow the steps below.</p>
+<ol>
+<li>Open the Subscriptions page from the left-hand menu.</li>
+<li>Select the product that you are looking to revoke a user's access.</li>
+<li>Click Users in the command bar to open the Users page.</li>
+<li>Select the user whose rights or role you would like to change on a product.</li>
+<li>Click <em>Revoke Access</em>.</li>
+<li>Confirm that you would like to remove access for the selected user on the selected product by clicking <em>Yes.</em></li>
+</ol>
+<p><img src="../../images/image-1103.png" alt="Removing Access for a User"></p>
+<h2 id="data-stream-designer-rights-and-roles">Data Stream Designer Rights and Roles</h2>
+<p>Several rights are maintained in Subscription Manager for Data Stream Designer. Each of these rights represents an aspect of the Data Stream Designer system that a user is allowed to see or access. Persons with administrative rights in Subscription Manager manage all rights.</p>
+<h3 id="data-stream-designer-rights">Data Stream Designer Rights</h3>
+<p>The table below lists the rights that can be assigned to a user.</p>
+<table>
+<thead>
+<tr>
+<th>Right</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CreateAgent</td>
+<td>Allows for an Agent to be uploaded.</td>
+</tr>
+<tr>
+<td>CreateCategory</td>
+<td>Allows for a Category to be created.</td>
+</tr>
+<tr>
+<td>CreateCollection</td>
+<td>Allows for a Collection to be created.</td>
+</tr>
+<tr>
+<td>CreateUseCase</td>
+<td>Allows for a Data Stream to be created, in which a user can create a Data Stream.</td>
+</tr>
+<tr>
+<td>DeleteAgent</td>
+<td>Allows for an Agent to be deleted.</td>
+</tr>
+<tr>
+<td>DeleteCategory</td>
+<td>Allows for a Category to be deleted.</td>
+</tr>
+<tr>
+<td>DeleteCollection</td>
+<td>Allows for a Collection to be deleted.</td>
+</tr>
+<tr>
+<td>DeleteUseCase</td>
+<td>Allows for a Data Stream to be deleted.</td>
+</tr>
+<tr>
+<td>DesignUseCase</td>
+<td>Allows for changes to be made to a Data Stream. This right allows a user to save changes to a Data Stream, as well as configure or delete Agents in a Data Stream. This right also allows for a user to copy a version of the Stream.</td>
+</tr>
+<tr>
+<td>DisconnectCollectionHosts</td>
+<td>Allows for the user to disconnect Stream Hosts.</td>
+</tr>
+<tr>
+<td>EditAgent</td>
+<td>Allows for an Agent to be edited. This includes managing the versions available in Data Stream Designer for the Agent.</td>
+</tr>
+<tr>
+<td>EditBusinessCase</td>
+<td>Allows for a Business Case to be edited.</td>
+</tr>
+<tr>
+<td>EditCategory</td>
+<td>Allows for Categories to be edited.</td>
+</tr>
+<tr>
+<td>EditCollection</td>
+<td>Allows for a Collection to be edited.</td>
+</tr>
+<tr>
+<td>EditNotes</td>
+<td>Allows for Notes to be edited.</td>
+</tr>
+<tr>
+<td>EditUseCase</td>
+<td>Allows for a Data Stream to be edited.</td>
+</tr>
+<tr>
+<td>LiveView</td>
+<td>Allows for Live Data from a published Data Stream to be viewed.</td>
+</tr>
+<tr>
+<td>ManageVariables</td>
+<td>Allows for the management of Variables.</td>
+</tr>
+<tr>
+<td>PublishUseCase</td>
+<td>Allows for a user to publish a Data Stream.</td>
+</tr>
+<tr>
+<td>RevokeCollectionKey</td>
+<td>Allows for a Collection key to be replaced with a new key.</td>
+</tr>
+<tr>
+<td>SetHostLogLevel</td>
+<td>Allows you to change the Host Log Levels between Info or Trace. See the Collection and Stream Host article for more information.</td>
+</tr>
+<tr>
+<td>ShareUseCase</td>
+<td>Allows for Data Streams to be shared.</td>
+</tr>
+<tr>
+<td>ViewAgent</td>
+<td>Allows for a list of Agents to be viewed.</td>
+</tr>
+<tr>
+<td>ViewCategory</td>
+<td>Allows for a Category to be viewed.</td>
+</tr>
+<tr>
+<td>ViewCollection</td>
+<td>Allows for a Collection to be viewed.</td>
+</tr>
+<tr>
+<td>ViewHostLogs</td>
+<td>Allows for the ability to view logs created for Stream Hosts that are running.</td>
+</tr>
+<tr>
+<td>ViewHosts</td>
+<td>Allows for a list of the available Stream Hosts to be viewed.</td>
+</tr>
+<tr>
+<td>ViewUseCase</td>
+<td>Allows for a Data Stream to be viewed.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="data-stream-designer-default-roles">Data Stream Designer Default Roles</h3>
+<p>A user is assigned a role and each role has appropriate rights for that function enabled.</p>
+<p>The table below illustrates which rights are included with each of the default roles. These default roles can be amended by the global administrator - who can also add new roles.</p>
+<table>
+<thead>
+<tr>
+<th>Right</th>
+<th>Administrator</th>
+<th>User</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CreateAgent</td>
+<td>✓</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>CreateCategory</td>
+<td>✓</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>CreateCollection</td>
+<td>✓</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>CreateUseCase</td>
+<td>✓</td>
+<td>✓</td>
+</tr>
+<tr>
+<td>DeleteAgent</td>
+<td>✓</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>DeleteCategory</td>
+<td>✓</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>DeleteCollection</td>
+<td>✓</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>DeleteUseCase</td>
+<td>✓</td>
+<td>✓</td>
+</tr>
+<tr>
+<td>DesignUseCase</td>
+<td>✓</td>
+<td>✓</td>
+</tr>
+<tr>
+<td>DisconnectCollectionHosts</td>
+<td>✓</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>EditAgent</td>
+<td>✓</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>EditBusinessCase</td>
+<td>✓</td>
+<td>✓</td>
+</tr>
+<tr>
+<td>EditCategory</td>
+<td>✓</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>EditCollection</td>
+<td>✓</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>EditNotes</td>
+<td>✓</td>
+<td>✓</td>
+</tr>
+<tr>
+<td>EditUseCase</td>
+<td>✓</td>
+<td>✓</td>
+</tr>
+<tr>
+<td>LiveView</td>
+<td>✓</td>
+<td>✓</td>
+</tr>
+<tr>
+<td>ManageVariables</td>
+<td>✓</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>PublishUseCase</td>
+<td>✓</td>
+<td>✓</td>
+</tr>
+<tr>
+<td>RevokeCollectionKey</td>
+<td>✓</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>SetHostLogLevel</td>
+<td>✓</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>ShareUseCase</td>
+<td>✓</td>
+<td>✓</td>
+</tr>
+<tr>
+<td>ViewAgent</td>
+<td>✓</td>
+<td>✓</td>
+</tr>
+<tr>
+<td>ViewCategory</td>
+<td>✓</td>
+<td>✓</td>
+</tr>
+<tr>
+<td>ViewCollection</td>
+<td>✓</td>
+<td>✓</td>
+</tr>
+<tr>
+<td>ViewHostLogs</td>
+<td>✓</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>ViewHosts</td>
+<td>✓</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>ViewUseCase</td>
+<td>✓</td>
+<td>✓</td>
+</tr>
+</tbody>
+</table>
+<h2 id="app-designer-rights-and-roles">‌App Designer Rights and Roles</h2>
+<p>‌Several App Designer rights are maintained in Subscription Manager. Each of these rights represents an aspect of the App Designer system that a user is allowed to see or access. Persons with administrative rights in Subscription Manager manage all rights.</p>
+<h3 id="app-designer-rights">App Designer Rights</h3>
+<p>The table below lists the rights that can be assigned to a user.</p>
+<table>
+<thead>
+<tr>
+<th>Right</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CreateApp</td>
+<td>Allows for an Application to be created.</td>
+</tr>
+<tr>
+<td>CreateCategory</td>
+<td>Allows for a Category to be created.</td>
+</tr>
+<tr>
+<td>CreateConnector</td>
+<td>Allows for a Connector to be created.</td>
+</tr>
+<tr>
+<td>DeleteApp</td>
+<td>Allows for an Application to be deleted.</td>
+</tr>
+<tr>
+<td>DeleteAppFile</td>
+<td>Allows for an App File to be deleted.</td>
+</tr>
+<tr>
+<td>DeleteCategory</td>
+<td>Allows for a Category to be deleted</td>
+</tr>
+<tr>
+<td>DeleteConnector</td>
+<td>Allows for a Connector to be deleted.</td>
+</tr>
+<tr>
+<td>DesignForm</td>
+<td>Allows for changes to be made to a Form. This right allows a user to add, edit, and delete Forms. If a user has the DesignRecommendation right they are able to select Forms for Rules, but not add, edit, or delete a Form.</td>
+</tr>
+<tr>
+<td>DesignRecommendation</td>
+<td>Allows for changes to be made to a Recommendation. This right allows a user to save changes to a Recommendation.</td>
+</tr>
+<tr>
+<td>EditApp</td>
+<td>Allows for an Application to be edited.</td>
+</tr>
+<tr>
+<td>EditCategory</td>
+<td>Allows for a Category to be edited.</td>
+</tr>
+<tr>
+<td>EditConnector</td>
+<td>Allows for a Connector to be edited.</td>
+</tr>
+<tr>
+<td>ManageAccess</td>
+<td>Allows for Design and Run Access to Apps to be managed.</td>
+</tr>
+<tr>
+<td>ManageAppConnections</td>
+<td>Allows for Connections to be added, edited, and deleted.</td>
+</tr>
+<tr>
+<td>ManageConnectorCategories</td>
+<td>Allows for categories of Connectors to be added, edited, and deleted.</td>
+</tr>
+<tr>
+<td>ManageRecommendationAccess</td>
+<td>Allows for Design and Run Access to Recommendations to be managed.</td>
+</tr>
+<tr>
+<td>ManageRecommendationCategories</td>
+<td>Allows for categories of Recommendations to be added, edited, and deleted.</td>
+</tr>
+<tr>
+<td>ManageTemplate</td>
+<td>Allows for Templates to be added, edited, and deleted.</td>
+</tr>
+<tr>
+<td>ManageVariables</td>
+<td>Allows for Variables to be added, edited, and deleted</td>
+</tr>
+<tr>
+<td>UploadAppFile</td>
+<td>Allows for an App File to be uploaded.</td>
+</tr>
+<tr>
+<td>ViewApp</td>
+<td>Allows for the user to view Applications in runtime mode.</td>
+</tr>
+<tr>
+<td>ViewAppBar</td>
+<td>Allows for the left menu bar to be viewed.</td>
+</tr>
+<tr>
+<td>ViewCategory</td>
+<td>Allows for Categories to be viewed.</td>
+</tr>
+<tr>
+<td>ViewConnector</td>
+<td>Allows for Connectors to be viewed.</td>
+</tr>
+<tr>
+<td>ViewRecommendationAlert</td>
+<td>Allows for Recommendation Alerts to be viewed.</td>
+</tr>
+<tr>
+<td>ViewTemplate</td>
+<td>Allows for Templates to be viewed.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="app-designer-default-roles">App Designer Default Roles</h3>
+<p>A user is assigned a role and each role has appropriate rights for that function enabled.</p>
+<p>The table below illustrates which rights are included with each of the default roles. These default roles can be amended by the global administrator - who can also add new roles.</p>
+<table>
+<thead>
+<tr>
+<th>Right</th>
+<th>Administrator</th>
+<th>Design User</th>
+<th>User</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CreateApp</td>
+<td>✓</td>
+<td>✓</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>CreateCategory</td>
+<td>✓</td>
+<td>✗</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>CreateConnector</td>
+<td>✓</td>
+<td>✗</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>DeleteApp</td>
+<td>✓</td>
+<td>✓</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>DeleteAppFile</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+</tr>
+<tr>
+<td>DeleteCategory</td>
+<td>✓</td>
+<td>✗</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>DeleteConnector</td>
+<td>✓</td>
+<td>✗</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>DesignForm</td>
+<td>✓</td>
+<td>✓</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>DesignRecommendation</td>
+<td>✓</td>
+<td>✓</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>EditApp</td>
+<td>✓</td>
+<td>✓</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>EditCategory</td>
+<td>✓</td>
+<td>✗</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>EditConnector</td>
+<td>✓</td>
+<td>✗</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>ManageAccess</td>
+<td>✓</td>
+<td>✓</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>ManageAppConnections</td>
+<td>✓</td>
+<td>✓</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>ManageConnectorCategories</td>
+<td>✓</td>
+<td>✓</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>ManageRecommendationAccess</td>
+<td>✓</td>
+<td>✓</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>ManageRecommendationCategories</td>
+<td>✓</td>
+<td>✗</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>ManageTemplate</td>
+<td>✓</td>
+<td>✓</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>ManageVariables</td>
+<td>✓</td>
+<td>✗</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>UploadAppFile</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+</tr>
+<tr>
+<td>ViewApp</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+</tr>
+<tr>
+<td>ViewAppBar</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+</tr>
+<tr>
+<td>ViewCategory</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+</tr>
+<tr>
+<td>ViewConnector</td>
+<td>✓</td>
+<td>✓</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>ViewRecommendationAlert</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+</tr>
+<tr>
+<td>ViewTemplate</td>
+<td>✓</td>
+<td>✓</td>
+<td>✗</td>
+</tr>
+</tbody>
+</table>
+<h2 id="ai-rights-and-roles">‌AI Rights and Roles</h2>
+<p>One right is maintained in Subscription Manager for XMPro AI. It represents an aspect of the AI system that a user is allowed to see or access. Persons with administrative rights in Subscription Manager manage it.</p>
+<h3 id="ai-rights">AI Rights</h3>
+<p>The table below lists the right that can be assigned to a user.</p>
+<table>
+<thead>
+<tr>
+<th>Right</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Access Jupyter</td>
+<td>Allows for XMPro Notebook to be accessed.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="ai-default-roles">AI Default Roles</h3>
+<p>A user is assigned a role and each role has appropriate rights for that function enabled.</p>
+<p>The table below illustrates which rights are included with each of the default roles. These default roles can be amended by the global administrator - who can also add new roles.</p>
+<table>
+<thead>
+<tr>
+<th>Right</th>
+<th>Administrator</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Access Jupyter</td>
+<td>✓</td>
+</tr>
+</tbody>
+</table>
+<h2 id="xmpro-notebook-rights-and-roles">‌XMPro Notebook Rights and Roles</h2>
+<p>Access rights for XMPro Notebook are controlled in Jupyter, not Subscription Manager.</p>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: June 05, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

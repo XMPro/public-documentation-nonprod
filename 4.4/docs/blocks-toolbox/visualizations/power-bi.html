@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Power BI | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Power BI | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=public-documentation/docs/blocks-toolbox/visualizations/power-bi.md&amp;version=GB20290-migrate-public-docs&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="power-bi">Power BI</h1>
+
+<p>Power BI is a control that allows you to embed reports inside your application. Power BI is a business analytics service that provides a platform where users can create interactive visualizations of data that can be used on reports or event boards. For more details, visit the <a href="https://powerbi.microsoft.com/en-us/what-is-power-bi/index.md">official Microsoft website</a>.</p>
+<p><img src="../../images/image-686.png" alt=""></p>
+<h2 id="power-bi-properties">Power BI Properties</h2>
+<h3 id="appearance">Appearance</h3>
+<h4 id="common-properties">Common Properties</h4>
+<p>Options for the appearance include its <em>visibility</em>.</p>
+<p><a href="../common-properties.html#appearance">See the Common Properties article for more details on common appearance properties.</a></p>
+<h3 id="behavior">Behavior</h3>
+<h4 id="use-variables">Use Variables</h4>
+<p>This allows you to choose between manually entering a value for the <em>Report ID</em> or selecting from a static variable. If the Application Mode is set to 'Application', Use Variables will also allow you to select a static variable for the <em>Group Id, Tenant Id, Application Id, and Application Secret.</em></p>
+<p><img src="../../images/power-bi-1.gif" alt=""></p>
+<h4 id="report-id">Report Id</h4>
+<p>The report Id can be found inside the URL of the report you want to embed. To find the report's Id:</p>
+<ol>
+<li>Sign in Power BI.</li>
+<li>Open the report you want to embed.</li>
+<li>Copy the GUID from the URL. The GUID is the number between <strong>/reports/</strong> and <strong>/ReportSection.</strong> For example, if the url has <strong>.../reports/de0db6db-232f-b5b5-1abe1d71da76/ReportSection....</strong>, the report Id you would enter is <strong>de0db6db-232f-b5b5-1abe1d71da76.</strong></li>
+</ol>
+<p>The Report Id property is required for the Power BI Block.</p>
+<h4 id="authentication-mode">Authentication Mode</h4>
+<p>There are two options for the authentication mode: <em>user</em> and <em>application</em>.</p>
+<p>User authentication is used when you want to embed the report for your organization. The users will be required to sign in and have a Power BI account. This will also require you to have a Power BI embedded license for this.</p>
+<p>Application authentification will embed the contents of the Power BI report into the page and the user will not be asked to sign in to view the report. In order to set up application authentication, the <em>group Id, tenant Id, Application Id</em>, and <em>Application secret</em> of your report need to be entered. For more information about where to find the value for these fields, <a href="https://docs.microsoft.com/en-us/power-bi/developer/embedded/embed-sample-for-your-organization?tabs=net-core">read the official Microsoft Documentation</a>.</p>
+<p>If the Authentication mode is set to 'Application', the Group Id, Tenant Id, Application Id, and Application Secret properties are required for the Power BI Block.</p>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: June 05, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

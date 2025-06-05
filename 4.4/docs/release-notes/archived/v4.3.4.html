@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>v4.3.4 | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="v4.3.4 | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      <meta name="description" content="31 Aug 2023">
+      <link rel="icon" href="../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=public-documentation/docs/release-notes/archived/v4.3.4.md&amp;version=GB20290-migrate-public-docs&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="v434">v4.3.4</h1>
+
+<h2 id="common">Common</h2>
+<table>
+<thead>
+<tr>
+<th>Change Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Enhancement</td>
+<td>Updated Serilog to the latest stable version.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="stream-hosts">Stream Hosts</h2>
+<table>
+<thead>
+<tr>
+<th>Change Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Enhancement</td>
+<td><a href="../../installation/complete-installation/configure-logging-optional.html">Logging</a> provider support via Serilog, a diagnostic logging library, has been added to <a href="../../installation/complete-installation/configure-logging-optional.html#stream-hosts">Stream Hosts</a> to provide administrators with valuable insights into the behavior and performance of XMPro.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="app-designer">App Designer</h2>
+<table>
+<thead>
+<tr>
+<th>Change Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fix</td>
+<td>Block styling to achieve rounded corners (using Border Radius properties) is ignored at runtime to ensure the child elements are visible.<br><em>The Overflow property was added to <strong>all</strong> Visual and Recommendation Blocks. Designers can determine whether block styling covers the corners of child elements (hidden) or not (visible).</em></td>
+</tr>
+<tr>
+<td>Fix</td>
+<td>The Indicator Block color can be set using a static value, but using a quick expression has no effect at runtime. As a workaround, set a variable using the expression and bind the variable to the Color property.<br><em>The Indicator Block color can be set using a static value or a quick expression.</em></td>
+</tr>
+<tr>
+<td>Fix</td>
+<td>Although users can view all the alerts displayed by a Recommendation Block, they can only drill down into the details of alerts to which they have run access.<br><em>The Recommendation Block displays the alerts to which the user has run access.</em></td>
+</tr>
+</tbody>
+</table>
+<h2 id="data-stream-designer">Data Stream Designer</h2>
+<table>
+<thead>
+<tr>
+<th>Change Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fix</td>
+<td>The Notes text area of an Agent on the canvas is not editable until selecting a font option, such as bold or underline.<br><em>You can start typing in the Notes text area when you select it.</em></td>
+</tr>
+</tbody>
+</table>
+<h2 id="subscription-manager">Subscription Manager</h2>
+<table>
+<thead>
+<tr>
+<th>Change Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fix</td>
+<td>Product Right's blade is stuck loading for guest tenant users. <br><em>The error has been resolved for guest tenant users and anyone with an extra-long username.</em></td>
+</tr>
+<tr>
+<td>Fix</td>
+<td>ARM template's subscription blade is stuck loading for Global Admin (not Company Admin). <br><em>Subscriptions load for all admin users so the existing licenses can be applied during the installation.</em></td>
+</tr>
+</tbody>
+</table>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: June 05, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

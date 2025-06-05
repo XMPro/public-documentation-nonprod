@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Tree Grid | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Tree Grid | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=public-documentation/docs/blocks-toolbox/basic/tree-grid.md&amp;version=GB20290-migrate-public-docs&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="tree-grid">Tree Grid</h1>
+
+<div class="NOTE">
+<h5>Note</h5>
+<p>Some images in this document may be missing and need to be migrated from the original GitBook documentation.</p>
+</div>
+<h2 id="tree-grid-properties">Tree Grid Properties</h2>
+<h3 id="appearance">Appearance</h3>
+<h4 id="common-properties">Common Properties</h4>
+<p>You can change the <em>visibility</em> of the Tree Grid.</p>
+<p><a href="../common-properties.html#appearance">See the Common Properties article for more details on common appearance properties.</a></p>
+<p><a href="data-grid.html#common-properties">See the Data Grid article </a>for details on other common grid appearance properties: Show Borders, Show Headers, Show Column Lines, Show Row Lines, and Enable Paging.</p>
+<p>Define how the scrollbar behaves:</p>
+<ul>
+<li>Virtual: Rows are loaded when they get into the viewport and removed once they leave it.</li>
+<li>Infinite: Each next page is loaded once the scrollbar reaches the end of its scale.</li>
+<li>Standard: The pager informs the main navigation and scrolling is available only if the rows do not fit.</li>
+<li>None: There is no scrollbar. Instead, the control grows to fit the number of rows.</li>
+</ul>
+<h3 id="behavior">Behavior</h3>
+<h4 id="common-properties-1">Common Properties</h4>
+<p>You can <em>disable</em> the Tree Grid.</p>
+<p><a href="../common-properties.html#behavior">See the Common Properties article for more details on common behavior properties.</a></p>
+<p><a href="data-grid.html#common-properties-1">See the Data Grid article </a>for details on other common behavior properties: Allow Selection, Allow Deleting, Allow Updating, Allow Search, Enable Column Filtering, Enable Row Filtering, and Auto-Adjust Column Widths<a href="data-grid.html#common-properties-1">.</a></p>
+<div class="TIP">
+<h5>Tip</h5>
+<p>When searching a Tree Grid, the search results include their parents:</p>
+<ul>
+<li>If your result includes a parent, the children will not be available to expand unless they also meet the search criteria.</li>
+<li>If your result includes a child, the parents are listed for navigation - even if they don't meet the search criteria.</li>
+</ul>
+</div>
+<h4 id="allow-adding">Allow Adding</h4>
+<p>When it's enabled, there are two places where the user can add a new record: an Add button appears at the top of the Tree Grid and in the right-most column.</p>
+<p>The Add button in the top-right corner adds a new record at the root level of the Tree Grid.</p>
+<p><img src="../images/Allow-Adding-Root.png" alt="Allow Adding Root"></p>
+<p>The Add option in the right-most column adds a new child record. For example, if you select 'Add' under 'Arthur', a new record is added as a child of the 'Arthur' record.</p>
+<p><img src="../images/Allow-Adding-Row.png" alt="Allow Adding Row"></p>
+<h4 id="edit-mode">Edit Mode</h4>
+<p>The user can edit the data in several modes. The option is only available when Allow Updating is enabled.</p>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Batch</td>
+<td>A user edits data in cells across multiple rows - indicated by a green border. Changes are not applied until the user clicks the Save button. Click Reset to revert the changes.<br><br><img src="../images/Edit-Mode-Batch-1.png" alt="Edit Mode Batch"></td>
+</tr>
+<tr>
+<td>Batch With External Save</td>
+<td>As with Batch mode, the user edits data in cells across multiple rows - indicated by a green border.<br><br>However, the user must add a separate block (such as a <a href="../actions/button.html">Button</a>) to apply the changes. Manually configure this button's <a href="../common-properties.html#update-data-sources">Update Data Sources</a> section in Block Properties:<br><ul><li>select a Data Source (such as the Tree Grid's Data Source),</li><li>and the action(s) to be taken (update, refresh, or delete).</li></ul><br><img src="../images/Edit-Mode-Batch-External-Save.png" alt="Edit Mode Batch External Save"></td>
+</tr>
+<tr>
+<td>Cell</td>
+<td>A user edits the data cell by cell. Changes are saved once a cell loses focus, or discarded if a user presses Esc.<br><br><img src="../images/Edit-Mode-Cell-2.png" alt="Edit Mode Cell"></td>
+</tr>
+<tr>
+<td>Row</td>
+<td>The user edits data row by row. When a user clicks the Edit button in the right-most column, the corresponding row becomes editable and Save and Cancel buttons appear in the right-most column. Click the Save button to apply the changes.<br><br><img src="../images/Edit-Mode-Row.png" alt="Edit Mode Row"></td>
+</tr>
+</tbody>
+</table>
+<h4 id="allow-drag--drop">Allow Drag &amp; Drop</h4>
+<p>When it's enabled, it will show the drag icon by default in front of the row. The user can change the location of the row by clicking the icon and dragging the row. A row can be dragged inside another row to nest it underneath. If this is disabled, reordering is not available.</p>
+<p><img src="../images/image-1545.png" alt="Allow Drag &amp; Drop"></p>
+<p>The Drag and Drop option is only available when the Edit mode is set to either 'Row' or 'Cell'.</p>
+<p><img src="../images/DragAndDropTooltip.png" alt="Drag and Drop Tooltip"></p>
+<h4 id="show-drag-icons">Show Drag Icons</h4>
+<p>When it's enabled, it will show the drag icon in front of the row. The user can reorder the row by clicking the icon and dragging the row. If this is disabled, the user can click anywhere on the row and drag the row.</p>
+<p><img src="../images/image-1253.png" alt="Show Drag Icons"></p>
+<h4 id="maximum-tree-depth">Maximum Tree Depth</h4>
+<p>The limit for the Maximum Tree Depth determines how many levels of nested records the user will be allowed to expand and view. For example, if there is no Maximum Tree Depth limit set, the user will be able to expand and view all nested records. If the Maximum Tree Depth limit is set to 2, the user can only expand records until the second level, and they will no longer be able to expand any further.</p>
+<p><img src="../images/MaximumTreeDepth.png" alt="Maximum Tree Depth"></p>
+<p>The Maximum Tree Depth limit also applies to adding and updating rows. The option to add a new row is only available for records within the Max Tree Depth limit specified.</p>
+<p><img src="../images/MaxTreeDepth-Add-Delete.png" alt="Maximum Tree Depth Add Delete"></p>
+<h4 id="store-user-selection">Store User Selection</h4>
+<p>When enabled, your selected row is saved at runtime in your browser's local storage, so that you return to the same row when the page reloads without having to re-navigate the tree. This includes re-opening the App and returning from a drill-down.</p>
+<h3 id="value">Value</h3>
+<h4 id="common-properties-2">Common Properties</h4>
+<p>The <em>value</em> property is common to most Blocks.</p>
+<p><a href="../common-properties.html#behavior">See the Common Properties article for more details on common value properties.</a></p>
+<p>If the value is set to the ID of a record in a Data Source, that record will be selected when the application is launched.</p>
+<p><img src="../images/image-1572.png" alt="Value"></p>
+<h3 id="data-source">Data Source</h3>
+<h4 id="common-properties-3">Common Properties</h4>
+<p>Properties that are common to most Blocks include data source, filter, sort, show # of results, and skip # of results.</p>
+<p><a href="../common-properties.html#data-source">See the Common Properties article for more details on common Data Source properties.</a></p>
+<p>The Data Source property is required for the Tree Grid.</p>
+<h3 id="data">Data</h3>
+<h4 id="parent-id">Parent Id</h4>
+<p>The <em>Parent Id</em> tells the component how the fields are connected to each other. The Parent Id refers to the Id of the parent record. For example, in the hierarchy of employees, multiple people could report to one manager, so their parent Ids would be the Id of the person they are listed underneath. If the parent Id of a record is set to null or 0, it will automatically be placed as a root or main parent element on the tree.</p>
+<p>The Parent Id property is required for the Tree Grid.</p>
+<h3 id="columns">Columns</h3>
+<h4 id="common-properties-4">Common Properties</h4>
+<p><a href="data-grid.html#columns">See the Data Grid article</a> for details on common column properties: Format, Currency, Date Time Format, Editor Type - Lookup, Editor Type - Hyperlink, and Editor Type - Indicator, and Open in New Tab/Window.</p>
+<h4 id="order">Order</h4>
+<p>The <em>order</em> allows you to specify the format for the columns. This includes the visibility of the columns, the alignment, the captions, or the width.</p>
+<p><img src="../images/image-1317.png" alt="Column Order"></p>
+<h3 id="action">Action</h3>
+<h4 id="common-properties-5">Common Properties</h4>
+<p>Properties that are common to most Blocks include: <em>Navigate To and Show Confirmation Dialog;</em></p>
+<p><a href="../common-properties.html#action">See the Common Properties article for more details on common action properties.</a></p>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: June 05, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
