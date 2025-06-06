@@ -57,10 +57,19 @@
             const currentPath = window.location.pathname;
             const queryString = window.location.search;
             const hash = window.location.hash;
-            let pathToPreserve = currentPath.substring(1);
-            if (pathToPreserve === "index.html" || pathToPreserve === "") {
-                pathToPreserve = "";
-            } else {
+            // Handle GitHub Pages subdirectory deployment
+            const pathParts = currentPath.split("/").filter(p => p);
+            // Remove repository name if present (e.g., "public-documentation-nonprod")
+            if (pathParts.length > 0 && pathParts[0].includes("public-documentation")) {
+                pathParts.shift(); // Remove first element
+            }
+            // Remove index.html if present
+            if (pathParts[pathParts.length - 1] === "index.html") {
+                pathParts.pop();
+            }
+            // Build the preserved path
+            const pathToPreserve = pathParts.join("/");
+            if (pathToPreserve) {
                 targetUrl += pathToPreserve;
             }
             targetUrl += queryString + hash;
