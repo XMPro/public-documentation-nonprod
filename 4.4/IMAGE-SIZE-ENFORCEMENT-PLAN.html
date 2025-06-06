@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=public-documentation/IMAGE-SIZE-ENFORCEMENT-PLAN.md&amp;version=GB20290-migrate-public-docs&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/IMAGE-SIZE-ENFORCEMENT-PLAN.md&amp;version=GB20290-migrate-public-docs&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -99,9 +99,9 @@
 on:
   pull_request:
     paths:
-      - 'public-documentation/docs/**.gif'
-      - 'public-documentation/docs/**.png'
-      - 'public-documentation/docs/**.jpg'
+      - 'docs/docs/**.gif'
+      - 'docs/docs/**.png'
+      - 'docs/docs/**.jpg'
 
 jobs:
   check-image-sizes:
@@ -111,7 +111,7 @@ jobs:
       
       - name: Check GIF sizes
         run: |
-          large_gifs=$(find public-documentation/docs -name &quot;*.gif&quot; -size +100k)
+          large_gifs=$(find docs/docs -name &quot;*.gif&quot; -size +100k)
           if [ ! -z &quot;$large_gifs&quot; ]; then
             echo &quot;::error::Large GIF files detected (&gt;100KB). Please convert to MP4:&quot;
             echo &quot;$large_gifs&quot;
@@ -188,7 +188,7 @@ jobs:
         id: convert
         run: |
           converted_files=&quot;&quot;
-          for gif in $(find public-documentation/docs -name &quot;*.gif&quot; -size +100k); do
+          for gif in $(find docs/docs -name &quot;*.gif&quot; -size +100k); do
             mp4=&quot;${gif%.gif}.mp4&quot;
             ffmpeg -i &quot;$gif&quot; -movflags +faststart -pix_fmt yuv420p \
               -vf &quot;scale=trunc(iw/2)*2:trunc(ih/2)*2&quot; \
@@ -241,13 +241,13 @@ jobs:
 <p>Create <code>.gif-exceptions.yml</code>:</p>
 <pre><code class="lang-yaml"># GIF files that are allowed to exceed size limits
 allowed_large_gifs:
-  - public-documentation/docs/concepts/xmpro-ai/images/AI_Overview_Animation.gif  # Complex animation, MP4 was larger
+  - docs/docs/concepts/xmpro-ai/images/AI_Overview_Animation.gif  # Complex animation, MP4 was larger
   
 # Small GIFs that should remain as GIF
 keep_as_gif:
-  - public-documentation/docs/images/loading-spinner.gif
-  - public-documentation/docs/images/status-badges/*.gif
-  - public-documentation/docs/icons/*.gif
+  - docs/docs/images/loading-spinner.gif
+  - docs/docs/images/status-badges/*.gif
+  - docs/docs/icons/*.gif
 </code></pre>
 <h3 id="6-monitoring-and-reporting">6. Monitoring and Reporting</h3>
 <p>Add to pipeline:</p>
@@ -258,19 +258,19 @@ keep_as_gif:
     echo &quot;&quot; &gt;&gt; image-report.md
     
     echo &quot;## GIF Files Summary&quot; &gt;&gt; image-report.md
-    echo &quot;Total GIFs: $(find public-documentation/docs -name &quot;*.gif&quot; | wc -l)&quot; &gt;&gt; image-report.md
-    echo &quot;Total Size: $(du -ch $(find public-documentation/docs -name &quot;*.gif&quot;) | tail -1 | cut -f1)&quot; &gt;&gt; image-report.md
+    echo &quot;Total GIFs: $(find docs/docs -name &quot;*.gif&quot; | wc -l)&quot; &gt;&gt; image-report.md
+    echo &quot;Total Size: $(du -ch $(find docs/docs -name &quot;*.gif&quot;) | tail -1 | cut -f1)&quot; &gt;&gt; image-report.md
     echo &quot;&quot; &gt;&gt; image-report.md
     
     echo &quot;## Large GIFs (&gt;100KB)&quot; &gt;&gt; image-report.md
-    find public-documentation/docs -name &quot;*.gif&quot; -size +100k -exec ls -lh {} \; | awk '{print &quot;- &quot; $9 &quot; (&quot; $5 &quot;)&quot;}' &gt;&gt; image-report.md
+    find docs/docs -name &quot;*.gif&quot; -size +100k -exec ls -lh {} \; | awk '{print &quot;- &quot; $9 &quot; (&quot; $5 &quot;)&quot;}' &gt;&gt; image-report.md
     echo &quot;&quot; &gt;&gt; image-report.md
     
     echo &quot;## Image Format Distribution&quot; &gt;&gt; image-report.md
-    echo &quot;- PNG: $(find public-documentation/docs -name &quot;*.png&quot; | wc -l) files&quot; &gt;&gt; image-report.md
-    echo &quot;- JPG: $(find public-documentation/docs -name &quot;*.jpg&quot; -o -name &quot;*.jpeg&quot; | wc -l) files&quot; &gt;&gt; image-report.md
-    echo &quot;- GIF: $(find public-documentation/docs -name &quot;*.gif&quot; | wc -l) files&quot; &gt;&gt; image-report.md
-    echo &quot;- MP4: $(find public-documentation/docs -name &quot;*.mp4&quot; | wc -l) files&quot; &gt;&gt; image-report.md
+    echo &quot;- PNG: $(find docs/docs -name &quot;*.png&quot; | wc -l) files&quot; &gt;&gt; image-report.md
+    echo &quot;- JPG: $(find docs/docs -name &quot;*.jpg&quot; -o -name &quot;*.jpeg&quot; | wc -l) files&quot; &gt;&gt; image-report.md
+    echo &quot;- GIF: $(find docs/docs -name &quot;*.gif&quot; | wc -l) files&quot; &gt;&gt; image-report.md
+    echo &quot;- MP4: $(find docs/docs -name &quot;*.mp4&quot; | wc -l) files&quot; &gt;&gt; image-report.md
     
 - name: Upload report
   uses: actions/upload-artifact@v3

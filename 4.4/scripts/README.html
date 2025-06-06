@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=public-documentation/scripts/README.md&amp;version=GB20290-migrate-public-docs&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/scripts/README.md&amp;version=GB20290-migrate-public-docs&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -80,7 +80,7 @@
 <h4 id="description">Description</h4>
 <p>During the pre-build phase, this script injects Git commit dates into the YAML front matter of markdown files. This allows the documentation to display accurate &quot;last modified&quot; information for each page.</p>
 <h4 id="usage">Usage</h4>
-<pre><code class="lang-bash"># Run from the public-documentation directory
+<pre><code class="lang-bash"># Run from the docs directory
 python3 scripts/update-last-modified.py
 </code></pre>
 <p>This script is automatically executed by the Azure DevOps pipeline during the build process.</p>
@@ -89,7 +89,7 @@ python3 scripts/update-last-modified.py
 <h4 id="description-1">Description</h4>
 <p>After DocFX generates the static HTML files, this script processes them to inject the last modified date information that was previously added to the markdown files. This ensures the dates are visible to users viewing the documentation.</p>
 <h4 id="usage-1">Usage</h4>
-<pre><code class="lang-bash"># Run from the public-documentation directory after DocFX build
+<pre><code class="lang-bash"># Run from the docs directory after DocFX build
 python3 scripts/add-last-modified-to-html.py
 </code></pre>
 <p>This script is automatically executed by the Azure DevOps pipeline during the post-build phase.</p>
