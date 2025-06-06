@@ -1,6 +1,0 @@
-Tag,DataType,Alias,Equipment ID
-Objects.Data Type Examples.16 Bit Device.K Registers.Boolean1,Boolean,Boolean,Asset1
-Objects.Data Type Examples.16 Bit Device.K Registers.Double1,Double,Double,Asset1
-Objects.Data Type Examples.16 Bit Device.K Registers.Integer,Int,Int,Asset2
-Objects.Data Type Examples.16 Bit Device.K Registers.DateTime,DateTime,DateTime,Asset3
-Objects.Data Type Examples.16 Bit Device.K Registers.String,String,String,Asset3

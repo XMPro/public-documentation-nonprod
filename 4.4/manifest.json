@@ -37,16 +37,6 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "PIPELINE-SETUP.md",
-      "output": {
-        ".html": {
-          "relative_path": "PIPELINE-SETUP.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
       "source_relative_path": "docs/administration/administrative-accounts.md",
       "output": {
         ".html": {
