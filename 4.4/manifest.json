@@ -17,26 +17,6 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "GITHUB-PAGES-DEPLOYMENT-PLAN.md",
-      "output": {
-        ".html": {
-          "relative_path": "GITHUB-PAGES-DEPLOYMENT-PLAN.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "IMAGE-SIZE-ENFORCEMENT-PLAN.md",
-      "output": {
-        ".html": {
-          "relative_path": "IMAGE-SIZE-ENFORCEMENT-PLAN.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
       "source_relative_path": "docs/administration/administrative-accounts.md",
       "output": {
         ".html": {
