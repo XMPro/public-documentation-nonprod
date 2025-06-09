@@ -1,0 +1,2055 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.4.1.14562",
+      "templateHash": "10516732518043384973"
+    }
+  },
+  "parameters": {
+    "companyName": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 15
+    },
+    "firstName": {
+      "type": "string",
+      "minLength": 1
+    },
+    "lastName": {
+      "type": "string",
+      "minLength": 1
+    },
+    "emailAddress": {
+      "type": "string",
+      "minLength": 1
+    },
+    "userName": {
+      "type": "string",
+      "minLength": 1,
+      "defaultValue": "firstname.lastname@mycompany.onxmpro.com"
+    },
+    "password": {
+      "type": "secureString",
+      "metadata": {
+        "description": "Password for the company admin account. The following special characters are NOT supported: ` ' \" $ @"
+      }
+    },
+    "adminPassword": {
+      "type": "secureString",
+      "metadata": {
+        "description": "Password for the global admin account i.e. admin@xmpro.onxmpro.com. The following special characters are NOT supported: ` ' \" $ @"
+      }
+    },
+    "skuName": {
+      "type": "string",
+      "defaultValue": "P2V2",
+      "allowedValues": [
+        "P1V2",
+        "P2V2",
+        "P3V2",
+        "P1V3",
+        "P2V3",
+        "P3V3"
+      ],
+      "metadata": {
+        "description": "Describes plan's pricing tier and instance size. Check details at https://azure.microsoft.com/en-us/pricing/details/app-service/"
+      }
+    },
+    "skuCapacity": {
+      "type": "int",
+      "defaultValue": 1,
+      "maxValue": 1,
+      "minValue": 1,
+      "metadata": {
+        "description": "Describes plan's instance count"
+      }
+    },
+    "databaseDTUs": {
+      "type": "int",
+      "defaultValue": 10,
+      "maxValue": 3000,
+      "minValue": 10,
+      "metadata": {
+        "description": "Database DTU units"
+      }
+    },
+    "databaseSize": {
+      "type": "int",
+      "defaultValue": 20,
+      "maxValue": 1024,
+      "minValue": 5,
+      "metadata": {
+        "description": "Database size in GB"
+      }
+    },
+    "sqlAdministratorLogin": {
+      "type": "string",
+      "defaultValue": "xmadmin",
+      "metadata": {
+        "description": "The admin user of the SQL Server"
+      }
+    },
+    "sqlAdministratorLoginPassword": {
+      "type": "secureString",
+      "metadata": {
+        "description": "The password of the admin user of the SQL Server. The following special characters are NOT supported: ` ' \" $ @"
+      }
+    },
+    "EnableEmailNotification": {
+      "type": "bool",
+      "defaultValue": true
+    },
+    "SMTPServer": {
+      "type": "string",
+      "minLength": 1,
+      "defaultValue": "sinprd0310.outlook.com"
+    },
+    "SMTPFromAddress": {
+      "type": "string",
+      "minLength": 1,
+      "defaultValue": "sample@email.com"
+    },
+    "SMTPUsername": {
+      "type": "string",
+      "minLength": 1,
+      "defaultValue": "sample@email.com"
+    },
+    "SMTPPassword": {
+      "type": "SecureString",
+      "minLength": 1,
+      "defaultValue": "newGuid()"
+    },
+    "SMTPPort": {
+      "type": "int",
+      "defaultValue": 25
+    },
+    "EnableSSL": {
+      "type": "bool",
+      "defaultValue": "true"
+    }
+  },
+  "functions": [],
+  "variables": {
+    "location": "[resourceGroup().location]",
+    "sqlserverName": "[format('{0}-sqlserver-{1}', toLower(parameters('companyName')), uniqueString(resourceGroup().id))]",
+    "smWebsiteName": "[format('{0}-SM', parameters('companyName'))]",
+    "dsWebsiteName": "[format('{0}-DS', parameters('companyName'))]",
+    "adWebsiteName": "[format('{0}-AD', parameters('companyName'))]",
+    "aiWebsiteName": "[format('{0}-AI', parameters('companyName'))]",
+    "shWebsiteName": "[format('{0}-SH', variables('dsWebsiteName'))]",
+    "_artifactsLocation": "https://xmmarketplacestorage.blob.core.windows.net/deploymentpackage/",
+    "_artifactsLocationSasToken": "",
+    "releaseVersion": "4.4.13",
+    "filesLocation": "Files-4.4.13",
+    "includeAIProduct": false,
+    "logAnalyticsWorkspace": "[format('{0}-workspace', parameters('companyName'))]",
+    "workspacesLogAnalyticsExternalid": "[format('/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.OperationalInsights/workspaces/{2}', subscription().subscriptionId, resourceGroup().name, variables('logAnalyticsWorkspace'))]",
+    "applicationInsights": "[format('{0}-app-insights', parameters('companyName'))]",
+    "adApplicationInsightsAvailability": "[format('{0}-AD-availability', variables('applicationInsights'))]",
+    "dsApplicationInsightsAvailability": "[format('{0}-DS-availability', variables('applicationInsights'))]",
+    "aiApplicationInsightsAvailability": "[format('{0}-AI-availability', variables('applicationInsights'))]",
+    "xmproNotebookK8sNamespace": "prod",
+    "xmproAcrName": "xmpro.azurecr.io"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Resources/deploymentScripts",
+      "apiVersion": "2020-10-01",
+      "name": "GenerateDeploymentVariables",
+      "location": "[resourceGroup().location]",
+      "kind": "AzureCLI",
+      "properties": {
+        "azCliVersion": "2.53.0",
+        "timeout": "PT30M",
+        "primaryScriptUri": "[uri(variables('_artifactsLocation'), concat(variables('filesLocation'),'/scripts/generate-deployment-vars.sh', variables('_artifactsLocationSasToken')))]",
+        "cleanupPreference": "OnExpiration",
+        "retentionInterval": "P1D",
+        "environmentVariables": [
+          {
+            "name": "RESOURCEGROUP",
+            "value": "[resourceGroup().name]"
+          },
+          {
+            "name": "LOCATION",
+            "value": "[variables('location')]"
+          },
+          {
+            "name": "COMPANY_NAME",
+            "value": "[parameters('companyName')]"
+          },
+          {
+            "name": "XMPRO_NOTEBOOK_K8S_NAMESPACE",
+            "value": "[variables('xmproNotebookK8sNamespace')]"
+          }
+        ]
+      }
+    },
+    {
+      "apiVersion": "2020-06-01",
+      "name": "pid-085dd09a-81e7-486b-8565-ef3ab17e488e-partnercenter",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "resources": []
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Sql/servers",
+      "apiVersion": "2021-02-01-preview",
+      "name": "[variables('sqlserverName')]",
+      "location": "[variables('location')]",
+      "tags": {
+        "displayName": "SQL Server"
+      },
+      "properties": {
+        "administratorLogin": "[parameters('sqlAdministratorLogin')]",
+        "administratorLoginPassword": "[parameters('sqlAdministratorLoginPassword')]",
+        "version": "12.0"
+      }
+    },
+    {
+      "type": "Microsoft.Sql/servers/databases",
+      "apiVersion": "2021-02-01-preview",
+      "name": "[format('{0}/{1}', variables('sqlserverName'), 'SM')]",
+      "location": "[variables('location')]",
+      "tags": {
+        "displayName": "SM Database"
+      },
+      "sku": {
+        "name": "Standard",
+        "tier": "Standard",
+        "capacity": "[parameters('databaseDTUs')]"
+      },
+      "properties": {
+        "collation": "SQL_Latin1_General_CP1_CI_AS",
+        "maxSizeBytes": "[mul(parameters('databaseSize'), 1073741824)]"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Sql/servers', variables('sqlserverName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Resources/deploymentScripts",
+      "apiVersion": "2020-10-01",
+      "name": "UpgradeDatabase",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deploymentScripts', 'GenerateDeploymentVariables')]",
+        "[resourceId('Microsoft.Sql/servers/databases', variables('sqlserverName'), 'SM')]",
+        "[resourceId('Microsoft.Web/sites', variables('dsWebsiteName'))]",
+        "[resourceId('Microsoft.Web/sites', variables('adWebsiteName'))]"
+      ],
+      "kind": "AzurePowerShell",
+      "properties": {
+        "azPowerShellVersion": "7.2.1",
+        "timeout": "PT30M",
+        "arguments": "[format(' -targetServerName {0} -targetUser {1} -targetPassword {2} -smDbMigrationsExeUri {3} -dsDbMigrationsExeUri {4} -adDbMigrationsExeUri {5} -aiDbMigrationsExeUri {6} -DSUrl {7} -ADUrl {8} -AIUrl {9} -NBUrl {10} -CompanyName {11} -FirstName {12} -LastName {13} -UserName {14} -Email {15} -CompanyAdminPassword {16} -SiteAdminPassword {17} -EnableAi {18}' , reference(variables('sqlserverName')).fullyQualifiedDomainName , parameters('sqlAdministratorLogin') , parameters('sqlAdministratorLoginPassword') , uri(variables('_artifactsLocation'), concat(variables('filesLocation'),'/XMIdentity.Database.Console', variables('_artifactsLocationSasToken'))) , uri(variables('_artifactsLocation'), concat(variables('filesLocation'),'/XMIoT.Database.Console', variables('_artifactsLocationSasToken'))) , uri(variables('_artifactsLocation'), concat(variables('filesLocation'),'/AppDesigner.Database.Console', variables('_artifactsLocationSasToken'))) , uri(variables('_artifactsLocation'), concat(variables('filesLocation'),'/AIDesigner.Database.Console', variables('_artifactsLocationSasToken'))), concat('https://', reference(resourceId('Microsoft.Web/sites', variables('dsWebsiteName')), '2018-02-01').defaultHostName) , concat('https://', reference(resourceId('Microsoft.Web/sites', variables('adWebsiteName')), '2018-02-01').defaultHostName), if(variables('includeAIProduct'),concat('https://', reference(resourceId('Microsoft.Web/sites', variables('aiWebsiteName')), '2018-02-01').defaultHostName),'ai-not-available') , if(variables('includeAIProduct'), reference('GenerateDeploymentVariables').outputs.xmproNotebookOAuthCallbackUrl, 'xmproNotebook-not-available'), parameters('companyName') , parameters('firstName') , parameters('lastName') , parameters('userName') , parameters('emailAddress') , parameters('password') , parameters('adminPassword'), variables('includeAIProduct'))]",
+        "primaryScriptUri": "[uri(variables('_artifactsLocation'), concat(variables('filesLocation'),'/UpgradeDatabase.ps1', variables('_artifactsLocationSasToken')))]",
+        "cleanupPreference": "OnExpiration",
+        "retentionInterval": "P1D"
+      }
+    },
+    {
+      "type": "Microsoft.Sql/servers/databases",
+      "apiVersion": "2021-02-01-preview",
+      "name": "[format('{0}/{1}', variables('sqlserverName'), 'DS')]",
+      "location": "[variables('location')]",
+      "tags": {
+        "displayName": "DS Database"
+      },
+      "sku": {
+        "name": "Standard",
+        "tier": "Standard",
+        "capacity": "[parameters('databaseDTUs')]"
+      },
+      "properties": {
+        "collation": "SQL_Latin1_General_CP1_CI_AS",
+        "maxSizeBytes": "[mul(parameters('databaseSize'), 1073741824)]"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Sql/servers', variables('sqlserverName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Sql/servers/databases",
+      "apiVersion": "2021-02-01-preview",
+      "name": "[format('{0}/{1}', variables('sqlserverName'), 'AD')]",
+      "location": "[variables('location')]",
+      "tags": {
+        "displayName": "AD Database"
+      },
+      "sku": {
+        "name": "Standard",
+        "tier": "Standard",
+        "capacity": "[parameters('databaseDTUs')]"
+      },
+      "properties": {
+        "collation": "SQL_Latin1_General_CP1_CI_AS",
+        "maxSizeBytes": "[mul(parameters('databaseSize'), 1073741824)]"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Sql/servers', variables('sqlserverName'))]"
+      ]
+    },
+    {
+      "condition": "[equals(variables('includeAIProduct'),true())]",
+      "type": "Microsoft.Sql/servers/databases",
+      "apiVersion": "2021-02-01-preview",
+      "name": "[format('{0}/{1}', variables('sqlserverName'), 'AI')]",
+      "location": "[variables('location')]",
+      "tags": {
+        "displayName": "AI Database"
+      },
+      "sku": {
+        "name": "Standard",
+        "tier": "Standard",
+        "capacity": "[parameters('databaseDTUs')]"
+      },
+      "properties": {
+        "collation": "SQL_Latin1_General_CP1_CI_AS",
+        "maxSizeBytes": "[mul(parameters('databaseSize'), 1073741824)]"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Sql/servers', variables('sqlserverName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Sql/servers/firewallRules",
+      "apiVersion": "2021-02-01-preview",
+      "name": "[format('{0}/{1}', variables('sqlserverName'), 'AllowAllWindowsAzureIps')]",
+      "properties": {
+        "startIpAddress": "0.0.0.0",
+        "endIpAddress": "0.0.0.0"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Sql/servers', variables('sqlserverName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Web/serverfarms",
+      "apiVersion": "2020-12-01",
+      "name": "[format('{0}-Plan', variables('smWebsiteName'))]",
+      "location": "[variables('location')]",
+      "tags": {
+        "displayName": "SM HostingPlan"
+      },
+      "sku": {
+        "name": "[parameters('skuName')]",
+        "capacity": "[parameters('skuCapacity')]"
+      },
+      "properties": {}
+    },
+    {
+      "type": "Microsoft.Web/serverfarms",
+      "apiVersion": "2020-12-01",
+      "name": "[format('{0}-Plan', variables('dsWebsiteName'))]",
+      "location": "[variables('location')]",
+      "tags": {
+        "displayName": "DS HostingPlan"
+      },
+      "sku": {
+        "name": "[parameters('skuName')]",
+        "capacity": "[parameters('skuCapacity')]"
+      },
+      "properties": {}
+    },
+    {
+      "type": "Microsoft.Web/serverfarms",
+      "apiVersion": "2020-12-01",
+      "name": "[format('{0}-Plan', variables('shWebsiteName'))]",
+      "location": "[variables('location')]",
+      "tags": {
+        "displayName": "DS SH HostingPlan"
+      },
+      "sku": {
+        "name": "[parameters('skuName')]",
+        "capacity": 1
+      },
+      "properties": {}
+    },
+    {
+      "type": "Microsoft.Web/serverfarms",
+      "apiVersion": "2020-12-01",
+      "name": "[format('{0}-Plan', variables('adWebsiteName'))]",
+      "location": "[variables('location')]",
+      "tags": {
+        "displayName": "AD HostingPlan"
+      },
+      "sku": {
+        "name": "[parameters('skuName')]",
+        "capacity": "[parameters('skuCapacity')]"
+      },
+      "properties": {}
+    },
+    {
+      "condition": "[equals(variables('includeAIProduct'),true())]",
+      "type": "Microsoft.Web/serverfarms",
+      "apiVersion": "2020-12-01",
+      "name": "[format('{0}-Plan', variables('aiWebsiteName'))]",
+      "location": "[variables('location')]",
+      "tags": {
+        "displayName": "AI HostingPlan"
+      },
+      "sku": {
+        "name": "[parameters('skuName')]",
+        "capacity": "[parameters('skuCapacity')]"
+      },
+      "properties": {}
+    },
+    {
+      "apiVersion": "2019-08-01",
+      "location": "[variables('location')]",
+      "name": "SM-SigningCert",
+      "type": "Microsoft.Web/certificates",
+      "properties": {
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', format('{0}-Plan', variables('smWebsiteName')))]",
+        "pfxBlob": "[reference('GenerateCertificate').outputs.pfxBlob]",
+        "password": ""
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', format('{0}-Plan', variables('smWebsiteName')))]",
+        "[resourceId('Microsoft.Resources/deploymentScripts', 'GenerateCertificate')]"
+      ]
+    },
+    {
+      "type": "Microsoft.OperationalInsights/workspaces",
+      "apiVersion": "2021-12-01-preview",
+      "name": "[variables('logAnalyticsWorkspace')]",
+      "location": "[variables('location')]",
+      "properties": {
+        "sku": {
+          "name": "PerGB2018"
+        },
+        "retentionInDays": 30,
+        "features": {
+          "enableLogAccessUsingOnlyResourcePermissions": true
+        },
+        "workspaceCapping": {
+          "dailyQuotaGb": -1
+        },
+        "publicNetworkAccessForIngestion": "Enabled",
+        "publicNetworkAccessForQuery": "Enabled"
+      }
+    },
+    {
+      "type": "microsoft.insights/components",
+      "apiVersion": "2020-02-02",
+      "name": "[variables('applicationInsights')]",
+      "location": "[variables('location')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.OperationalInsights/workspaces', variables('logAnalyticsWorkspace'))]"
+      ],
+      "kind": "web",
+      "properties": {
+        "Application_Type": "web",
+        "Flow_Type": "Redfield",
+        "RetentionInDays": 90,
+        "WorkspaceResourceId": "[variables('workspacesLogAnalyticsExternalid')]",
+        "IngestionMode": "LogAnalytics",
+        "publicNetworkAccessForIngestion": "Enabled",
+        "publicNetworkAccessForQuery": "Enabled"
+      }
+    },
+    {
+      "type": "microsoft.insights/webtests",
+      "apiVersion": "2022-06-15",
+      "name": "[variables('adApplicationInsightsAvailability')]",
+      "location": "[variables('location')]",
+      "dependsOn": [
+        "[resourceId('microsoft.insights/components', variables('applicationInsights'))]"
+      ],
+      "tags": {
+        "[format('hidden-link:/subscriptions/{0}/resourceGroups/{1}/providers/microsoft.insights/components/{2}', subscription().subscriptionId, resourceGroup().name, variables('applicationInsights'))]": "Resource"
+      },
+      "properties": {
+        "SyntheticMonitorId": "[variables('adApplicationInsightsAvailability')]",
+        "Name": "[variables('adApplicationInsightsAvailability')]",
+        "Enabled": true,
+        "Frequency": 300,
+        "Timeout": 120,
+        "Kind": "standard",
+        "RetryEnabled": true,
+        "Locations": [
+          {
+            "Id": "emea-gb-db3-azr"
+          },
+          {
+            "Id": "emea-au-syd-edge"
+          },
+          {
+            "Id": "emea-ru-msa-edge"
+          },
+          {
+            "Id": "latam-br-gru-edge"
+          },
+          {
+            "Id": "apac-jp-kaw-edge"
+          }
+        ],
+        "Request": {
+          "RequestUrl": "[format('https://{0}.azurewebsites.net/health', variables('adWebsiteName'))]",
+          "HttpVerb": "GET",
+          "ParseDependentRequests": false
+        },
+        "ValidationRules": {
+          "ExpectedHttpStatusCode": 200,
+          "IgnoreHttpStatusCode": false,
+          "ContentValidation": {
+            "ContentMatch": "Unhealthy",
+            "IgnoreCase": true,
+            "PassIfTextFound": false
+          },
+          "SSLCheck": false
+        }
+      }
+    },
+    {
+      "type": "microsoft.insights/webtests",
+      "apiVersion": "2022-06-15",
+      "name": "[variables('dsApplicationInsightsAvailability')]",
+      "location": "[variables('location')]",
+      "dependsOn": [
+        "[resourceId('microsoft.insights/components', variables('applicationInsights'))]"
+      ],
+      "tags": {
+        "[format('hidden-link:/subscriptions/{0}/resourceGroups/{1}/providers/microsoft.insights/components/{2}', subscription().subscriptionId, resourceGroup().name, variables('applicationInsights'))]": "Resource"
+      },
+      "properties": {
+        "SyntheticMonitorId": "[variables('dsApplicationInsightsAvailability')]",
+        "Name": "[variables('dsApplicationInsightsAvailability')]",
+        "Enabled": true,
+        "Frequency": 300,
+        "Timeout": 120,
+        "Kind": "standard",
+        "RetryEnabled": true,
+        "Locations": [
+          {
+            "Id": "emea-gb-db3-azr"
+          },
+          {
+            "Id": "emea-au-syd-edge"
+          },
+          {
+            "Id": "emea-ru-msa-edge"
+          },
+          {
+            "Id": "latam-br-gru-edge"
+          },
+          {
+            "Id": "apac-jp-kaw-edge"
+          }
+        ],
+        "Request": {
+          "RequestUrl": "[format('https://{0}.azurewebsites.net/health', variables('dsWebsiteName'))]",
+          "HttpVerb": "GET",
+          "ParseDependentRequests": false
+        },
+        "ValidationRules": {
+          "ExpectedHttpStatusCode": 200,
+          "IgnoreHttpStatusCode": false,
+          "ContentValidation": {
+            "ContentMatch": "Unhealthy",
+            "IgnoreCase": true,
+            "PassIfTextFound": false
+          },
+          "SSLCheck": false
+        }
+      }
+    },
+    {
+      "condition": "[equals(variables('includeAIProduct'),true())]",
+      "type": "microsoft.insights/webtests",
+      "apiVersion": "2022-06-15",
+      "name": "[variables('aiApplicationInsightsAvailability')]",
+      "location": "[variables('location')]",
+      "dependsOn": [
+        "[resourceId('microsoft.insights/components', variables('applicationInsights'))]"
+      ],
+      "tags": {
+        "[format('hidden-link:/subscriptions/{0}/resourceGroups/{1}/providers/microsoft.insights/components/{2}', subscription().subscriptionId, resourceGroup().name, variables('applicationInsights'))]": "Resource"
+      },
+      "properties": {
+        "SyntheticMonitorId": "[variables('aiApplicationInsightsAvailability')]",
+        "Name": "[variables('aiApplicationInsightsAvailability')]",
+        "Enabled": true,
+        "Frequency": 300,
+        "Timeout": 120,
+        "Kind": "standard",
+        "RetryEnabled": true,
+        "Locations": [
+          {
+            "Id": "emea-gb-db3-azr"
+          },
+          {
+            "Id": "emea-au-syd-edge"
+          },
+          {
+            "Id": "emea-ru-msa-edge"
+          },
+          {
+            "Id": "latam-br-gru-edge"
+          },
+          {
+            "Id": "apac-jp-kaw-edge"
+          }
+        ],
+        "Request": {
+          "RequestUrl": "[format('https://{0}.azurewebsites.net/health', variables('aiWebsiteName'))]",
+          "HttpVerb": "GET",
+          "ParseDependentRequests": false
+        },
+        "ValidationRules": {
+          "ExpectedHttpStatusCode": 200,
+          "IgnoreHttpStatusCode": false,
+          "ContentValidation": {
+            "ContentMatch": "Unhealthy",
+            "IgnoreCase": true,
+            "PassIfTextFound": false
+          },
+          "SSLCheck": false
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deploymentScripts",
+      "apiVersion": "2020-10-01",
+      "name": "GenerateCertificate",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Sql/servers/databases', variables('sqlserverName'), 'SM')]"
+      ],
+      "kind": "AzurePowerShell",
+      "properties": {
+        "azPowerShellVersion": "7.2.1",
+        "timeout": "PT30M",
+        "arguments": "[format(' -smWebsiteName {0}', variables('smWebsiteName'))]",
+        "primaryScriptUri": "[uri(variables('_artifactsLocation'), concat(variables('filesLocation'),'/GenerateCertificate.ps1', variables('_artifactsLocationSasToken')))]",
+        "cleanupPreference": "OnExpiration",
+        "retentionInterval": "P1D"
+      }
+    },
+    {
+      "type": "Microsoft.Web/sites",
+      "apiVersion": "2020-12-01",
+      "name": "[variables('smWebsiteName')]",
+      "location": "[variables('location')]",
+      "identity": {
+        "type": "SystemAssigned"
+      },
+      "tags": {
+        "[format('hidden-related:{0}', resourceId('Microsoft.Web/serverfarms', format('{0}-Plan', variables('smWebsiteName'))))]": "empty",
+        "displayName": "SM Website"
+      },
+      "properties": {
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', format('{0}-Plan', variables('smWebsiteName')))]",
+        "siteConfig": {
+          "webSocketsEnabled": true,
+          "use32BitWorkerProcess": false,
+          "http20Enabled": true,
+          "appSettings": [
+            {
+              "name": "WEBSITE_LOAD_CERTIFICATES",
+              "value": "*"
+            }
+          ]
+        },
+        "httpsOnly": true
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', format('{0}-Plan', variables('smWebsiteName')))]",
+        "[resourceId('Microsoft.Sql/servers/databases', variables('sqlserverName'), 'SM')]"
+      ],
+      "resources": [
+        {
+          "name": "[concat(variables('smWebsiteName'), '/MSDeploy')]",
+          "type": "Microsoft.Web/sites/extensions",
+          "apiVersion": "2015-08-01",
+          "properties": {
+            "packageUri": "[uri(variables('_artifactsLocation'), concat(variables('filesLocation'),'/SM.zip', variables('_artifactsLocationSasToken')))]",
+            "setParameters": {
+              "Vault Name": "[concat(variables('smWebsiteName'), '-vault')]"
+            }
+          },
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/sites', variables('smWebsiteName'))]",
+            "[resourceId('Microsoft.Resources/deploymentScripts', 'UpgradeDatabase')]"
+          ]
+        }
+      ]
+    },
+    {
+      "apiVersion": "2018-02-14",
+      "name": "[concat(variables('smWebsiteName'), '-vault')]",
+      "location": "[resourceGroup().location]",
+      "type": "Microsoft.KeyVault/vaults",
+      "properties": {
+        "accessPolicies": [
+          {
+            "objectId": "[reference(resourceId('Microsoft.Web/sites', variables('smWebsiteName')),'2019-08-01', 'full').identity.principalId]",
+            "tenantId": "[subscription().tenantId]",
+            "permissions": {
+              "keys": [ "Get", "List" ],
+              "secrets": [ "Get", "List" ]
+            }
+          }
+        ],
+        "tenantId": "[subscription().tenantId]",
+        "sku": {
+          "name": "Standard",
+          "family": "A"
+        },
+        "networkAcls": {
+          "defaultAction": "Allow",
+          "bypass": "AzureServices"
+        }
+      },
+      "tags": {
+        "displayName": "xmpro-sm-vault"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites', variables('smWebsiteName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('smWebsiteName'), '-vault', '/', 'SQLSERVER')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('smWebsiteName'), '-vault'))]",
+        "[resourceId('Microsoft.Sql/servers', variables('sqlserverName'))]"
+      ],
+      "tags": {
+        "displayName": "sm-secret-sqlserver"
+      },
+      "properties": {
+        "value": "[concat('Data Source=tcp:',reference(variables('sqlserverName')).fullyQualifiedDomainName,';Initial Catalog=SM;User ID=',reference(variables('sqlserverName')).administratorLogin,';Password=',parameters('sqlAdministratorLoginPassword'))]"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('smWebsiteName'), '-vault', '/', 'ServerUUID')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('smWebsiteName'), '-vault'))]",
+        "[resourceId('Microsoft.Resources/deploymentScripts', 'UpgradeDatabase')]"
+      ],
+      "tags": {
+        "displayName": "sm-secret-productid"
+      },
+      "properties": {
+        "value": "[reference('UpgradeDatabase').outputs.SMProductId]"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('smWebsiteName'), '-vault', '/', 'DNSName')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('smWebsiteName'), '-vault'))]",
+        "[resourceId('Microsoft.Web/sites', variables('smWebsiteName'))]"
+      ],
+      "tags": {
+        "displayName": "sm-secret-dns"
+      },
+      "properties": {
+        "value": "[concat('https://', reference(resourceId('Microsoft.Web/sites', variables('smWebsiteName')), '2018-02-01').defaultHostName)]"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('smWebsiteName'), '-vault', '/', 'CERT')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/certificates', 'SM-SigningCert')]",
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('smWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "sm-secret-cert"
+      },
+      "properties": {
+        "value": "[reference('GenerateCertificate').outputs.pfxName]"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('smWebsiteName'), '-vault', '/', 'SALT')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('smWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "sm-secret-salt"
+      },
+      "properties": {
+        "value": "[uniqueString(resourceGroup().id, 'sm-secret-salt')]"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('smWebsiteName'), '-vault', '/', 'AutoScaleEnable')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('smWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "sm-secret-enable-autoscale"
+      },
+      "properties": {
+        "value": "false"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('smWebsiteName'), '-vault', '/', 'REDIS')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('smWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "sm-secret-redis"
+      },
+      "properties": {
+        "value": "-"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('smWebsiteName'), '-vault', '/', 'SMTPENABLE')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('smWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "sm-email-enable"
+      },
+      "properties": {
+        "value": "[parameters('EnableEmailNotification')]"
+      }
+    },
+    {
+      "condition": "[equals(parameters('EnableEmailNotification'), true())]",
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('smWebsiteName'), '-vault', '/', 'SMTPSERVER')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('smWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "sm-email-server"
+      },
+      "properties": {
+        "value": "[parameters('SMTPServer')]"
+      }
+    },
+    {
+      "condition": "[equals(parameters('EnableEmailNotification'), true())]",
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('smWebsiteName'), '-vault', '/', 'SMTPFrom')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('smWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "sm-email-from"
+      },
+      "properties": {
+        "value": "[parameters('SMTPFromAddress')]"
+      }
+    },
+    {
+      "condition": "[equals(parameters('EnableEmailNotification'),true())]",
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('smWebsiteName'), '-vault', '/', 'SMTPUSER')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('smWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "sm-email-username"
+      },
+      "properties": {
+        "value": "[parameters('SMTPUsername')]"
+      }
+    },
+    {
+      "condition": "[equals(parameters('EnableEmailNotification'),true())]",
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('smWebsiteName'), '-vault', '/', 'SMTPPASS')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('smWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "sm-email-password"
+      },
+      "properties": {
+        "value": "[parameters('SMTPPassword')]"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('smWebsiteName'), '-vault', '/', 'SMTPPORT')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('smWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "sm-email-port"
+      },
+      "properties": {
+        "value": "[parameters('SMTPPort')]"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('smWebsiteName'), '-vault', '/', 'SMTPENABLESSL')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('smWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "sm-email-ssl"
+      },
+      "properties": {
+        "value": "[parameters('EnableSSL')]"
+      }
+    },
+    {
+      "type": "Microsoft.Web/sites",
+      "apiVersion": "2020-12-01",
+      "name": "[variables('dsWebsiteName')]",
+      "location": "[variables('location')]",
+      "identity": {
+        "type": "SystemAssigned"
+      },
+      "tags": {
+        "[format('hidden-related:{0}', resourceId('Microsoft.Web/serverfarms', format('{0}-Plan', variables('dsWebsiteName'))))]": "empty",
+        "displayName": "DS Website"
+      },
+      "properties": {
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', format('{0}-Plan', variables('dsWebsiteName')))]",
+        "siteConfig": {
+          "webSocketsEnabled": true,
+          "use32BitWorkerProcess": false,
+          "http20Enabled":true,
+          "appSettings": [
+            {
+              "name": "xm:xmpro:keyVault:name",
+              "value": "[concat(variables('dsWebsiteName'), '-vault')]"
+            },
+            {
+              "name": "xm:xmpro:keyVault:provider",
+              "value": "Azure"
+            },
+            {
+              "name": "xm:xmpro:dataStreamDesigner:featureFlags:enableApplicationInsightsTelemetry",
+              "value": "true"
+            },
+            {
+              "name": "xm:xmpro:dataStreamDesigner:featureFlags:enableAIAssistant",
+              "value": "[variables('includeAIProduct')]"
+            },
+            {
+              "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
+              "value": "[reference(resourceId('Microsoft.Insights/components', variables('applicationInsights')), '2015-05-01').InstrumentationKey]"
+            },
+            {
+              "name": "APPLICATIONINSIGHTS_CONNECTION_STRING",
+              "value": "[reference(resourceId('Microsoft.Insights/components', variables('applicationInsights')), '2015-05-01').ConnectionString]"
+            },
+            {
+              "name": "ApplicationInsightsAgent_EXTENSION_VERSION",
+              "value": "~2"
+            },
+            {
+              "name": "XDT_MicrosoftApplicationInsights_Mode",
+              "value": "recommended"
+            } 
+          ]
+        },
+        "httpsOnly": true
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', format('{0}-Plan', variables('dsWebsiteName')))]",
+        "[resourceId('Microsoft.Sql/servers/databases', variables('sqlserverName'), 'DS')]",
+        "[resourceId('Microsoft.Insights/components', variables('applicationInsights'))]"
+      ],
+      "resources": [
+        {
+          "name": "[concat(variables('dsWebsiteName'), '/ZipDeploy')]",
+          "type": "Microsoft.Web/sites/extensions",
+          "apiVersion": "2015-08-01",
+          "properties": {
+            "packageUri": "[uri(variables('_artifactsLocation'), concat(variables('filesLocation'),'/DS.zip', variables('_artifactsLocationSasToken')))]"
+          },
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/sites', variables('dsWebsiteName'))]",
+            "[resourceId('Microsoft.Resources/deploymentScripts', 'UpgradeDatabase')]"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "Microsoft.Web/sites",
+      "apiVersion": "2020-12-01",
+      "name": "[variables('shWebsiteName')]",
+      "location": "[variables('location')]",
+      "identity": {
+        "type": "SystemAssigned"
+      },
+      "tags": {
+        "[format('hidden-related:{0}', resourceId('Microsoft.Web/serverfarms', format('{0}-Plan', variables('shWebsiteName'))))]": "empty",
+        "displayName": "DS SH Website"
+      },
+      "properties": {
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', format('{0}-Plan', variables('shWebsiteName')))]",
+        "siteConfig": {
+          "webSocketsEnabled": true,
+          "use32BitWorkerProcess": false,
+          "alwaysOn": true,
+          "http20Enabled": true,
+          "appSettings": [
+            {
+              "name": "xm:xmpro:gateway:serverurl",
+              "value": "[concat('https://', reference(resourceId('Microsoft.Web/sites', variables('dsWebsiteName')), '2018-02-01').defaultHostName)]"
+            },
+            {
+              "name": "xm:xmpro:gateway:collectionid",
+              "value": "[reference('UpgradeDatabase').outputs.CollectionId]"
+            },
+            {
+              "name": "xm:xmpro:gateway:secret",
+              "value": "[reference('UpgradeDatabase').outputs.CollectionSecret]"
+            },
+            {
+              "name": "xm:xmpro:gateway:featureFlags:enableApplicationInsightsTelemetry",
+              "value": "true"
+            },
+            {
+              "name": "xm:xmpro:xmcryptography:tripleDES:key",
+              "value": "[reference('UpgradeDatabase').outputs.DSEncryptionKey]"
+            },
+            {
+              "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
+              "value": "[reference(resourceId('Microsoft.Insights/components', variables('applicationInsights')), '2015-05-01').InstrumentationKey]"
+            },
+            {
+              "name": "APPLICATIONINSIGHTS_CONNECTION_STRING",
+              "value": "[reference(resourceId('Microsoft.Insights/components', variables('applicationInsights')), '2015-05-01').ConnectionString]"
+            },
+            {
+              "name": "ApplicationInsightsAgent_EXTENSION_VERSION",
+              "value": "~2"
+            },
+            {
+              "name": "XDT_MicrosoftApplicationInsights_Mode",
+              "value": "recommended"
+            } 
+          ]
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', format('{0}-Plan', variables('shWebsiteName')))]",
+        "[resourceId('Microsoft.Resources/deploymentScripts', 'UpgradeDatabase')]",
+        "[resourceId('Microsoft.Insights/components', variables('applicationInsights'))]"
+      ],
+      "resources": [
+        {
+          "name": "[concat(variables('shWebsiteName'), '/ZipDeploy')]",
+          "type": "Microsoft.Web/sites/extensions",
+          "apiVersion": "2015-08-01",
+          "properties": {
+            "packageUri": "[uri(variables('_artifactsLocation'), concat(variables('filesLocation'),'/SH.zip', variables('_artifactsLocationSasToken')))]"
+          },
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/sites', variables('shWebsiteName'))]",
+            "[resourceId('Microsoft.Resources/deploymentScripts', 'UpgradeDatabase')]"
+          ]
+        }
+      ]
+    },
+    {
+      "apiVersion": "2018-02-14",
+      "name": "[concat(variables('dsWebsiteName'), '-vault')]",
+      "location": "[resourceGroup().location]",
+      "type": "Microsoft.KeyVault/vaults",
+      "properties": {
+        "accessPolicies": [
+          {
+            "objectId": "[reference(resourceId('Microsoft.Web/sites', variables('dsWebsiteName')),'2019-08-01', 'full').identity.principalId]",
+            "tenantId": "[subscription().tenantId]",
+            "permissions": {
+              "keys": [ "Get", "List" ],
+              "secrets": [ "Get", "List" ]
+            }
+          }
+        ],
+        "tenantId": "[subscription().tenantId]",
+        "sku": {
+          "name": "Standard",
+          "family": "A"
+        },
+        "networkAcls": {
+          "defaultAction": "Allow",
+          "bypass": "AzureServices"
+        }
+      },
+      "tags": {
+        "displayName": "xmpro-ds-vault"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites', variables('dsWebsiteName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('dsWebsiteName'), '-vault', '/', 'xmpro--xmidentity--client--baseUrl')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('dsWebsiteName'), '-vault'))]",
+        "[resourceId('Microsoft.Web/sites', variables('dsWebsiteName'))]"
+      ],
+      "tags": {
+        "displayName": "ds-secret-dns"
+      },
+      "properties": {
+        "value": "[concat('https://', reference(resourceId('Microsoft.Web/sites', variables('dsWebsiteName')), '2018-02-01').defaultHostName)]"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('dsWebsiteName'), '-vault', '/', 'xmpro--xmidentity--server--baseUrl')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('dsWebsiteName'), '-vault'))]",
+        "[resourceId('Microsoft.Web/sites', variables('smWebsiteName'))]"
+      ],
+      "tags": {
+        "displayName": "ds-secret-identityserver"
+      },
+      "properties": {
+        "value": "[concat('https://', reference(resourceId('Microsoft.Web/sites', variables('smWebsiteName')), '2018-02-01').defaultHostName)]"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('dsWebsiteName'), '-vault', '/', 'xmpro--xmidentity--client--id')]",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "displayName": "ds-secret-productid"
+      },
+      "properties": {
+        "value": "[reference('UpgradeDatabase').outputs.DSProductId]"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('dsWebsiteName'), '-vault', '/', 'xmpro--xmidentity--client--sharedkey')]",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "displayName": "ds-secret-sharedkey"
+      },
+      "properties": {
+        "value": "[reference('UpgradeDatabase').outputs.DSProductKey]"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('dsWebsiteName'), '-vault', '/', 'xmpro--xmsettings--adminRole')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('dsWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "ds-secret-adminrole"
+      },
+      "properties": {
+        "value": "Administrator"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('dsWebsiteName'), '-vault', '/', 'xmpro--data--connectionString')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('dsWebsiteName'), '-vault'))]",
+        "[resourceId('Microsoft.Sql/servers', variables('sqlserverName'))]"
+      ],
+      "tags": {
+        "displayName": "ds-secret-sqlserver"
+      },
+      "properties": {
+        "value": "[concat('Server=tcp:',reference(variables('sqlserverName')).fullyQualifiedDomainName,';Initial Catalog=DS;persist security info=True;User ID=',reference(variables('sqlserverName')).administratorLogin,';Password=',parameters('sqlAdministratorLoginPassword'))]"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('dsWebsiteName'), '-vault', '/', 'xmpro--xmsettings--data--connectionString')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('dsWebsiteName'), '-vault'))]",
+        "[resourceId('Microsoft.Sql/servers', variables('sqlserverName'))]"
+      ],
+      "tags": {
+        "displayName": "ds-secret-settingssqlserver"
+      },
+      "properties": {
+        "value": "[concat('Server=tcp:',reference(variables('sqlserverName')).fullyQualifiedDomainName,';Initial Catalog=DS;persist security info=True;User ID=',reference(variables('sqlserverName')).administratorLogin,';Password=',parameters('sqlAdministratorLoginPassword'))]"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('dsWebsiteName'), '-vault', '/', 'xmpro--autoScale--enabled')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('dsWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "ds-secret-autoscale"
+      },
+      "properties": {
+        "value": "false"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('dsWebsiteName'), '-vault', '/', 'xmpro--autoScale--connectionString')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('dsWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "ds-secret-autoscaleconnection"
+      },
+      "properties": {
+        "value": "-"
+      }
+    },
+    {
+      "type": "Microsoft.Web/sites",
+      "apiVersion": "2020-12-01",
+      "name": "[variables('adWebsiteName')]",
+      "location": "[variables('location')]",
+      "identity": {
+        "type": "SystemAssigned"
+      },
+      "tags": {
+        "[format('hidden-related:{0}', resourceId('Microsoft.Web/serverfarms', format('{0}-Plan', variables('adWebsiteName'))))]": "empty",
+        "displayName": "AD Website"
+      },
+      "properties": {
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', format('{0}-Plan', variables('adWebsiteName')))]",
+        "siteConfig": {
+          "webSocketsEnabled": true,
+          "use32BitWorkerProcess": false,
+          "alwaysOn": true,
+          "http20Enabled": true,
+          "appSettings": [
+            {
+              "name": "xm:xmpro:keyVault:name",
+              "value": "[concat(variables('adWebsiteName'), '-vault')]"
+            },
+            {
+              "name": "xm:xmpro:keyVault:provider",
+              "value": "Azure"
+            },
+            {
+              "name": "xm:xmpro:appDesigner:featureFlags:enableApplicationInsightsTelemetry",
+              "value": "true"
+            },
+            {
+              "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
+              "value": "[reference(resourceId('Microsoft.Insights/components', variables('applicationInsights')), '2015-05-01').InstrumentationKey]"
+            },
+            {
+              "name": "APPLICATIONINSIGHTS_CONNECTION_STRING",
+              "value": "[reference(resourceId('Microsoft.Insights/components', variables('applicationInsights')), '2015-05-01').ConnectionString]"
+            },
+            {
+              "name": "ApplicationInsightsAgent_EXTENSION_VERSION",
+              "value": "~2"
+            },
+            {
+              "name": "XDT_MicrosoftApplicationInsights_Mode",
+              "value": "recommended"
+            }
+          ]
+        },
+        "httpsOnly": true
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', format('{0}-Plan', variables('adWebsiteName')))]",
+        "[resourceId('Microsoft.Sql/servers/databases', variables('sqlserverName'), 'AD')]",
+        "[resourceId('Microsoft.Insights/components', variables('applicationInsights'))]"
+      ],
+      "resources": [
+        {
+          "name": "[concat(variables('adWebsiteName'), '/ZipDeploy')]",
+          "type": "Microsoft.Web/sites/extensions",
+          "apiVersion": "2015-08-01",
+          "properties": {
+            "packageUri": "[uri(variables('_artifactsLocation'), concat(variables('filesLocation'),'/AD.zip', variables('_artifactsLocationSasToken')))]"
+          },
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/sites', variables('adWebsiteName'))]",
+            "[resourceId('Microsoft.KeyVault/vaults/secrets', concat(variables('adWebsiteName'), '-vault'), 'xmpro--data--connectionString')]",
+            "[resourceId('Microsoft.Resources/deploymentScripts', 'UpgradeDatabase')]"
+          ]
+        }
+      ]
+    },
+    {
+      "apiVersion": "2018-02-14",
+      "name": "[concat(variables('adWebsiteName'), '-vault')]",
+      "location": "[resourceGroup().location]",
+      "type": "Microsoft.KeyVault/vaults",
+      "properties": {
+        "accessPolicies": [
+          {
+            "objectId": "[reference(resourceId('Microsoft.Web/sites', variables('adWebsiteName')),'2019-08-01', 'full').identity.principalId]",
+            "tenantId": "[subscription().tenantId]",
+            "permissions": {
+              "keys": [ "Get", "List" ],
+              "secrets": [ "Get", "List" ]
+            }
+          }
+        ],
+        "tenantId": "[subscription().tenantId]",
+        "sku": {
+          "name": "Standard",
+          "family": "A"
+        },
+        "networkAcls": {
+          "defaultAction": "Allow",
+          "bypass": "AzureServices"
+        }
+      },
+      "tags": {
+        "displayName": "xmpro-ad-vault"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites', variables('adWebsiteName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('adWebsiteName'), '-vault', '/', 'xmpro--appDesigner--encryptionKey')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('adWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "ad-secret-encryptionKey"
+      },
+      "properties": {
+        "value": "[uniqueString(resourceGroup().id, 'ad-secret-encryptionkey')]"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('adWebsiteName'), '-vault', '/', 'xmpro--xmidentity--client--baseUrl')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('adWebsiteName'), '-vault'))]",
+        "[resourceId('Microsoft.Web/sites', variables('adWebsiteName'))]"
+      ],
+      "tags": {
+        "displayName": "ad-secret-dns"
+      },
+      "properties": {
+        "value": "[concat('https://', reference(resourceId('Microsoft.Web/sites', variables('adWebsiteName')), '2018-02-01').defaultHostName)]"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('adWebsiteName'), '-vault', '/', 'xmpro--xmidentity--server--baseUrl')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('adWebsiteName'), '-vault'))]",
+        "[resourceId('Microsoft.Web/sites', variables('smWebsiteName'))]"
+      ],
+      "tags": {
+        "displayName": "ad-secret-identityserver"
+      },
+      "properties": {
+        "value": "[concat('https://', reference(resourceId('Microsoft.Web/sites', variables('smWebsiteName')), '2018-02-01').defaultHostName)]"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('adWebsiteName'), '-vault', '/', 'xmpro--xmidentity--client--id')]",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "displayName": "ad-secret-productid"
+      },
+      "properties": {
+        "value": "[reference('UpgradeDatabase').outputs.ADProductId]"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('adWebsiteName'), '-vault', '/', 'xmpro--xmidentity--client--sharedkey')]",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "displayName": "ad-secret-sharedkey"
+      },
+      "properties": {
+        "value": "[reference('UpgradeDatabase').outputs.ADProductKey]"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('adWebsiteName'), '-vault', '/', 'xmpro--xmsettings--adminRole')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('adWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "ad-secret-adminrole"
+      },
+      "properties": {
+        "value": "Administrator"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('adWebsiteName'), '-vault', '/', 'xmpro--data--connectionString')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('adWebsiteName'), '-vault'))]",
+        "[resourceId('Microsoft.Sql/servers', variables('sqlserverName'))]"
+      ],
+      "tags": {
+        "displayName": "ad-secret-sqlserver"
+      },
+      "properties": {
+        "value": "[concat('Server=tcp:',reference(variables('sqlserverName')).fullyQualifiedDomainName,';Initial Catalog=AD;persist security info=True;User ID=',reference(variables('sqlserverName')).administratorLogin,';Password=',parameters('sqlAdministratorLoginPassword'))]"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('adWebsiteName'), '-vault', '/', 'xmpro--xmsettings--data--connectionString')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('adWebsiteName'), '-vault'))]",
+        "[resourceId('Microsoft.Sql/servers', variables('sqlserverName'))]"
+      ],
+      "tags": {
+        "displayName": "ad-secret-settingssqlserver"
+      },
+      "properties": {
+        "value": "[concat('Server=tcp:',reference(variables('sqlserverName')).fullyQualifiedDomainName,';Initial Catalog=AD;persist security info=True;User ID=',reference(variables('sqlserverName')).administratorLogin,';Password=',parameters('sqlAdministratorLoginPassword'))]"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('adWebsiteName'), '-vault', '/', 'xmpro--autoScale--enabled')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('adWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "ad-secret-autoscale"
+      },
+      "properties": {
+        "value": "false"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('adWebsiteName'), '-vault', '/', 'xmpro--autoScale--connectionString')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('adWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "ad-secret-autoscaleconnection"
+      },
+      "properties": {
+        "value": "-"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('adWebsiteName'), '-vault', '/', 'xmpro--xmnotification--email--enable')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('adWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "ad-email-enable"
+      },
+      "properties": {
+        "value": "[parameters('EnableEmailNotification')]"
+      }
+    },
+    {
+      "condition": "[equals(parameters('EnableEmailNotification'),true())]",
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('adWebsiteName'), '-vault', '/', 'xmpro--xmnotification--email--smtpServer')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('adWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "ad-email-server"
+      },
+      "properties": {
+        "value": "[parameters('SMTPServer')]"
+      }
+    },
+    {
+      "condition": "[equals(parameters('EnableEmailNotification'),true())]",
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('adWebsiteName'), '-vault', '/', 'xmpro--xmnotification--email--fromAddress')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('adWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "ad-email-fromAddress"
+      },
+      "properties": {
+        "value": "[parameters('SMTPFromAddress')]"
+      }
+    },
+    {
+      "condition": "[equals(parameters('EnableEmailNotification'),true())]",
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('adWebsiteName'), '-vault', '/', 'xmpro--xmnotification--email--userName')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('adWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "ad-email-usernane"
+      },
+      "properties": {
+        "value": "[parameters('SMTPUsername')]"
+      }
+    },
+    {
+      "condition": "[equals(parameters('EnableEmailNotification'),true())]",
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('adWebsiteName'), '-vault', '/', 'xmpro--xmnotification--email--password')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('adWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "ad-email-password"
+      },
+      "properties": {
+        "value": "[parameters('SMTPPassword')]"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('adWebsiteName'), '-vault', '/', 'xmpro--xmnotification--email--port')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('adWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "ad-email-port"
+      },
+      "properties": {
+        "value": "[parameters('SMTPPort')]"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('adWebsiteName'), '-vault', '/', 'xmpro--xmnotification--email--enableSsl')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('adWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "ad-email-ssl"
+      },
+      "properties": {
+        "value": "[parameters('EnableSSL')]"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('adWebsiteName'), '-vault', '/', 'xmpro--xmnotification--email--useDefaultCredentials')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('adWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "ad-email-useDefaultCredentials"
+      },
+      "properties": {
+        "value": "false"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('adWebsiteName'), '-vault', '/', 'xmpro--xmnotification--email--webApplication')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('adWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "ad-email-webApplication"
+      },
+      "properties": {
+        "value": "true"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('adWebsiteName'), '-vault', '/', 'xmpro--xmnotification--email--templateFolder')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('adWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "ad-email-templateFolder"
+      },
+      "properties": {
+        "value": "Templates"
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2022-09-01",
+      "name": "StaticSiteStorage",
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deploymentScripts', 'GenerateDeploymentVariables')]",
+        "[resourceId('Microsoft.Web/sites', variables('adWebsiteName'))]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[uri(variables('_artifactsLocation'), concat(variables('filesLocation'),'/LinkedTemplates/storage-account-site.json'))]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "_artifactsLocation": {
+            "value": "[variables('_artifactsLocation')]"
+          },
+          "_artifactsLocationSasToken": {
+            "value": "[variables('_artifactsLocationSasToken')]"
+          },
+          "location": {
+            "value": "[variables('location')]"
+          },
+          "filesLocation": {
+            "value": "[variables('filesLocation')]"
+          },
+          "unityzip": {
+            "value": "metablock-unity.zip"
+          },
+          "unityzipLegacy": {
+            "value": "metablock-unity2019.zip"
+          },
+          "adwebapp": {
+            "value": "[variables('adWebsiteName')]"
+          },
+          "xmproStorageName": {
+            "value": "[reference('GenerateDeploymentVariables').outputs.xmprostoragename]"
+          }
+        }
+      }
+    },
+    {
+      "condition": "[equals(variables('includeAIProduct'),true())]",
+      "type": "Microsoft.Web/sites",
+      "apiVersion": "2020-12-01",
+      "name": "[variables('aiWebsiteName')]",
+      "location": "[variables('location')]",
+      "identity": {
+        "type": "SystemAssigned"
+      },
+      "tags": {
+        "[format('hidden-related:{0}', resourceId('Microsoft.Web/serverfarms', format('{0}-Plan', variables('aiWebsiteName'))))]": "empty",
+        "displayName": "AI Website"
+      },
+      "properties": {
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', format('{0}-Plan', variables('aiWebsiteName')))]",
+        "siteConfig": {
+          "webSocketsEnabled": true,
+          "use32BitWorkerProcess": false,
+          "alwaysOn": true,
+          "http20Enabled": true,
+          "appSettings": [
+            {
+              "name": "xm:xmpro:keyVault:name",
+              "value": "[concat(variables('aiWebsiteName'), '-vault')]"
+            },
+            {
+              "name": "xm:xmpro:keyVault:provider",
+              "value": "Azure"
+            },
+            {
+              "name": "xm:xmpro:aIDesigner:featureFlags:enableApplicationInsightsTelemetry",
+              "value": "true"
+            },
+            {
+              "name": "xmpro:aidesigner:jupyterUrl:url",
+              "value": "[reference('GenerateDeploymentVariables').outputs.xmproNotebookBaseUrl]"
+            },
+            {
+              "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
+              "value": "[if(equals(variables('includeAIProduct'), true()), reference(resourceId('Microsoft.Insights/components', variables('applicationInsights')), '2015-05-01').InstrumentationKey, 'instrumentationKey')]"
+            },
+            {
+              "name": "APPLICATIONINSIGHTS_CONNECTION_STRING",
+              "value": "[if(equals(variables('includeAIProduct'), true()), reference(resourceId('Microsoft.Insights/components', variables('applicationInsights')), '2015-05-01').ConnectionString, 'connectionString')]"
+            },
+            {
+              "name": "ApplicationInsightsAgent_EXTENSION_VERSION",
+              "value": "~2"
+            },
+            {
+              "name": "XDT_MicrosoftApplicationInsights_Mode",
+              "value": "recommended"
+            } 
+          ]
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deploymentScripts', 'GenerateDeploymentVariables')]",
+        "[resourceId('Microsoft.Web/serverfarms', format('{0}-Plan', variables('aiWebsiteName')))]",
+        "[resourceId('Microsoft.Sql/servers/databases', variables('sqlserverName'), 'AI')]",
+        "[resourceId('Microsoft.Insights/components', variables('applicationInsights'))]"
+      ],
+      "resources": [
+        {
+          "condition": "[equals(variables('includeAIProduct'),true())]",
+          "name": "[concat(variables('aiWebsiteName'), '/ZipDeploy')]",
+          "type": "Microsoft.Web/sites/extensions",
+          "apiVersion": "2015-08-01",
+          "properties": {
+            "packageUri": "[uri(variables('_artifactsLocation'), concat(variables('filesLocation'),'/AI.zip', variables('_artifactsLocationSasToken')))]"
+          },
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/sites', variables('aiWebsiteName'))]",
+            "[resourceId('Microsoft.Resources/deploymentScripts', 'UpgradeDatabase')]"
+          ]
+        }
+      ]
+    },
+    {
+      "condition": "[equals(variables('includeAIProduct'),true())]",
+      "apiVersion": "2018-02-14",
+      "name": "[concat(variables('aiWebsiteName'), '-vault')]",
+      "location": "[resourceGroup().location]",
+      "type": "Microsoft.KeyVault/vaults",
+      "properties": {
+        "accessPolicies": [
+          {
+            "objectId": "[if(variables('includeAIProduct'), reference(resourceId('Microsoft.Web/sites', variables('aiWebsiteName')),'2019-08-01', 'full').identity.principalId, '')]",
+            "tenantId": "[subscription().tenantId]",
+            "permissions": {
+              "keys": [ "Get", "List" ],
+              "secrets": [ "Get", "List" ]
+            }
+          }
+        ],
+        "tenantId": "[subscription().tenantId]",
+        "sku": {
+          "name": "Standard",
+          "family": "A"
+        },
+        "networkAcls": {
+          "defaultAction": "Allow",
+          "bypass": "AzureServices"
+        }
+      },
+      "tags": {
+        "displayName": "xmpro-ai-vault"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites', variables('aiWebsiteName'))]"
+      ]
+    },
+    {
+      "condition": "[equals(variables('includeAIProduct'),true())]",
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('aiWebsiteName'), '-vault', '/', 'xmpro--xmidentity--client--baseUrl')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('aiWebsiteName'), '-vault'))]",
+        "[resourceId('Microsoft.Web/sites', variables('aiWebsiteName'))]"
+      ],
+      "tags": {
+        "displayName": "ai-secret-dns"
+      },
+      "properties": {
+        "value": "[if(variables('includeAIProduct'), concat('https://', reference(resourceId('Microsoft.Web/sites', variables('aiWebsiteName')), '2018-02-01').defaultHostName), '')]"
+      }
+    },
+    {
+      "condition": "[equals(variables('includeAIProduct'),true())]",
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('aiWebsiteName'), '-vault', '/', 'xmpro--xmidentity--server--baseUrl')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('aiWebsiteName'), '-vault'))]",
+        "[resourceId('Microsoft.Web/sites', variables('aiWebsiteName'))]"
+      ],
+      "tags": {
+        "displayName": "ai-secret-identityserver"
+      },
+      "properties": {
+        "value": "[concat('https://', reference(resourceId('Microsoft.Web/sites', variables('smWebsiteName')), '2018-02-01').defaultHostName)]"
+      }
+    },
+    {
+      "condition": "[equals(variables('includeAIProduct'),true())]",
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('aiWebsiteName'), '-vault', '/', 'xmpro--xmidentity--client--id')]",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "displayName": "ai-secret-productid"
+      },
+      "properties": {
+        "value": "[reference('UpgradeDatabase').outputs.AIProductId]"
+      }
+    },
+    {
+      "condition": "[equals(variables('includeAIProduct'),true())]",
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('aiWebsiteName'), '-vault', '/', 'xmpro--xmidentity--client--sharedkey')]",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "displayName": "ai-secret-sharedkey"
+      },
+      "properties": {
+        "value": "[reference('UpgradeDatabase').outputs.AIProductKey]"
+      }
+    },
+    {
+      "condition": "[equals(variables('includeAIProduct'),true())]",
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('aiWebsiteName'), '-vault', '/', 'xmpro--xmsettings--adminRole')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('aiWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "ai-secret-adminrole"
+      },
+      "properties": {
+        "value": "Administrator"
+      }
+    },
+    {
+      "condition": "[equals(variables('includeAIProduct'),true())]",
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('aiWebsiteName'), '-vault', '/', 'xmpro--data--connectionString')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('aiWebsiteName'), '-vault'))]",
+        "[resourceId('Microsoft.Sql/servers', variables('sqlserverName'))]"
+      ],
+      "tags": {
+        "displayName": "ai-secret-sqlserver"
+      },
+      "properties": {
+        "value": "[concat('Server=tcp:',reference(variables('sqlserverName')).fullyQualifiedDomainName,';Initial Catalog=AI;persist security info=True;User ID=',reference(variables('sqlserverName')).administratorLogin,';Password=',parameters('sqlAdministratorLoginPassword'))]"
+      }
+    },
+    {
+      "condition": "[equals(variables('includeAIProduct'),true())]",
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('aiWebsiteName'), '-vault', '/', 'xmpro--xmsettings--data--connectionString')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('aiWebsiteName'), '-vault'))]",
+        "[resourceId('Microsoft.Sql/servers', variables('sqlserverName'))]"
+      ],
+      "tags": {
+        "displayName": "ai-secret-settingssqlserver"
+      },
+      "properties": {
+        "value": "[concat('Server=tcp:',reference(variables('sqlserverName')).fullyQualifiedDomainName,';Initial Catalog=AI;persist security info=True;User ID=',reference(variables('sqlserverName')).administratorLogin,';Password=',parameters('sqlAdministratorLoginPassword'))]"
+      }
+    },
+    {
+      "condition": "[equals(variables('includeAIProduct'),true())]",
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('aiWebsiteName'), '-vault', '/', 'xmpro--autoScale--enabled')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('aiWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "ai-secret-autoscale"
+      },
+      "properties": {
+        "value": "false"
+      }
+    },
+    {
+      "condition": "[equals(variables('includeAIProduct'),true())]",
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('aiWebsiteName'), '-vault', '/', 'xmpro--autoScale--connectionString')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('aiWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "ai-secret-autoscaleconnection"
+      },
+      "properties": {
+        "value": "-"
+      }
+    },
+    {
+      "condition": "[equals(variables('includeAIProduct'),true())]",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2022-09-01",
+      "name": "ConfigureAks",
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deploymentScripts', 'GenerateDeploymentVariables')]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[uri(variables('_artifactsLocation'), concat(variables('filesLocation'),'/LinkedTemplates/configure-aks.json'))]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "location": {
+            "value": "[variables('location')]"
+          },
+          "companyNameAbbrv": {
+            "value": "[reference('GenerateDeploymentVariables').outputs.companyNameAbbrv]"
+          }
+        }
+      }
+    },
+    {
+      "condition": "[equals(variables('includeAIProduct'),true())]",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2022-09-01",
+      "name": "HelmDeployNotebook",
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deploymentScripts', 'GenerateDeploymentVariables')]",
+        "[resourceId('Microsoft.Web/sites', variables('aiWebsiteName'))]",
+        "[resourceId('Microsoft.Resources/deployments', 'ConfigureAks')]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[uri(variables('_artifactsLocation'), concat(variables('filesLocation'),'/LinkedTemplates/helm-deploy-notebook.json'))]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "_artifactsLocation": {
+            "value": "[variables('_artifactsLocation')]"
+          },
+          "_artifactsLocationSasToken": {
+            "value": "[variables('_artifactsLocationSasToken')]"
+          },
+          "location": {
+            "value": "[variables('location')]"
+          },
+          "filesLocation": {
+            "value": "[variables('filesLocation')]"
+          },
+          "clusterName": {
+            "value": "[if(equals(variables('includeAIProduct'),true()), reference(resourceId('Microsoft.Resources/deployments', 'ConfigureAks'), '2022-09-01').outputs.clusterName.value, '')]"
+          },
+          "xmproNotebookXmIdentityClientId": {
+            "value": "[reference('UpgradeDatabase').outputs.NBProductId]"
+          },
+          "xmproNotebookXmIdentityClientSharedKey": {
+            "value": "[reference('UpgradeDatabase').outputs.NBProductKey]"
+          },
+          "xmproNotebookXmIdentityServerBaseUrl": {
+            "value": "[concat('https://', reference(resourceId('Microsoft.Web/sites', variables('smWebsiteName')), '2018-02-01').defaultHostName)]"
+          },
+          "xmproNotebookK8sNamespace": {
+            "value": "[variables('xmproNotebookK8sNamespace')]"
+          },
+          "xmproNotebookFqdn": {
+            "value": "[reference('GenerateDeploymentVariables').outputs.xmproNotebookFqdn]"
+          },
+          "xmproNotebookOAuthCallbackUrl": {
+            "value": "[reference('GenerateDeploymentVariables').outputs.xmproNotebookOAuthCallbackUrl]"
+          },
+          "xmproNotebookAzureDnsLabelName": {
+            "value": "[reference('GenerateDeploymentVariables').outputs.xmproNotebookAzureDnsLabelName]"
+          },
+          "xmproAiUrl": {
+            "value": "[if(variables('includeAIProduct'), concat('https://', reference(resourceId('Microsoft.Web/sites', variables('aiWebsiteName')), '2018-02-01').defaultHostName), '')]"
+          },
+          "xmproVersionPlatform": {
+            "value": "[variables('releaseVersion')]"
+          },
+          "xmproUsersCompanyAdminUsername": {
+            "value": "[parameters('userName')]"
+          },
+          "xmproAcrName": {
+            "value": "[variables('xmproAcrName')]"
+          }
+        }
+      }
+    }
+  ]
+}

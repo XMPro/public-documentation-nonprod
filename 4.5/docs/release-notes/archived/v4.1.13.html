@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>v4.1.13 | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="v4.1.13 | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/docs/release-notes/archived/v4.1.13.md&amp;version=GB20290-migrate-public-docs&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="v4113">v4.1.13</h1>
+
+<h2 id="app-designer">App Designer</h2>
+<table>
+<thead>
+<tr>
+<th>Change Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Feature</td>
+<td>New Blocks added:<ul><li><a href="../../blocks-toolbox/visualizations/azure-digital-twin-hierarchy.html">Azure Digital Twin Hierarchy</a> - An interactive UI component that visualizes a large amount of time-oriented data. It allows the user to compare data at run-time based on asset ID by dropping markers on the chart, as well as panning and zooming, and can show or hide specific assets or parameters via the hierarchy panel.</li><li><a href="../../blocks-toolbox/visualizations/image-map.html">Image Map</a> - allows you to render dynamic and static content onto an Image. You can drag on content such as indicators or text and these render on top of the image at runtime, at the specified coordinates.</li><li>A new <a href="../../blocks-toolbox/visualizations/unity.html">Unity Block</a> was added to support Unity 2020 and above. The previous Unity Block was renamed Unity (Legacy) and continues to support Unity 2019.</li></ul></td>
+</tr>
+<tr>
+<td>Feature</td>
+<td><a href="../../how-tos/apps/check-connector-logs.html">Connector Logs</a> allow the composer of an App, the developer writing a new Connector, or an Administrator to view messages generated by a Connector when it is in use as a Connection in an App.</td>
+</tr>
+<tr>
+<td>Feature</td>
+<td>Alerts for selected Recommendations can be added as markers to time series data:<ul><li><a href="../../blocks-toolbox/visualizations/azure-digital-twin-hierarchy.html#recommendations">Azure Digital Twin Hierarchy</a></li><li><a href="../../blocks-toolbox/visualizations/time-series-analysis.html#recommendations">Time Series Chart</a></li><li>Time Series Insights (Edit: subsequently deprecated)</li></ul></td>
+</tr>
+<tr>
+<td>Enhancement</td>
+<td>A new property, Store User Selection, has been added to the <a href="../../blocks-toolbox/basic/dropdown-grid.html#store-user-selection">Dropdown Grid</a> and <a href="../../blocks-toolbox/basic/select-box.html#store-user-selection">Select Box</a> Blocks. Enable it to remember the user's selection when the page loads on these blocks that take more than one value.</td>
+</tr>
+<tr>
+<td>Enhancement</td>
+<td>Extend the <a href="../../blocks-toolbox/basic/tree-grid.html">Tree Grid</a> with the following:<ul><li><a href="../../blocks-toolbox/basic/tree-grid.html#allow-drag--drop">Allow Drag &amp; Drop</a> is now independent of Allow Updating, so you can choose whether users can amend the hierarchy, the data, or both.</li><li>Added <a href="../../blocks-toolbox/basic/data-grid.html#editor-type---hyperlink">Hyperlink, Lookup, and Indicator</a> column types</li><li>Added <a href="../../blocks-toolbox/basic/tree-grid.html#store-user-selection">Store User Selection</a>, to remember the user's selection when the page loads</li></ul></td>
+</tr>
+<tr>
+<td>Enhancement</td>
+<td><a href="../../blocks-toolbox/basic/data-grid.html#format">Format</a> numeric output in the Data Grid and Tree Grid as currency or percentage.</td>
+</tr>
+<tr>
+<td>Enhancement</td>
+<td>Extend the Tab Block to allow for App page reuse with the new <a href="../../blocks-toolbox/layout/tabs.html#hide-tab-navigation">Hide Tab Navigation</a> property</td>
+</tr>
+<tr>
+<td>Enhancement</td>
+<td><a href="../../blocks-toolbox/visualizations/time-series-analysis.html#hierarchy">Time Series Chart</a> hierarchy selection pop-up widened to avoid truncating parameter names.</td>
+</tr>
+<tr>
+<td>Enhancement</td>
+<td>Consolidated <a href="../../how-tos/apps/manage-apps.html#importing-an-app-with-data-stream-connections">Data Stream Connection mapping</a> added the App Import to simplify moving Apps between environments.</td>
+</tr>
+<tr>
+<td>Enhancement</td>
+<td>SVG file types are supported for all image properties. See <a href="../../blocks-toolbox/basic/image.html#image">here</a> for a full list of supported image file types.</td>
+</tr>
+<tr>
+<td>Enhancement</td>
+<td>The current app page URL parameters (appId, appVersion, pageId, categoryId and categoryName) were added to the expression editor so that a <a href="../../how-tos/apps/navigate-between-pages.html#navigating-using-back-url">back URL</a> can be passed to a drill-down when using the <a href="../../blocks-toolbox/common-properties.html#navigate-to">Navigate To</a> property.</td>
+</tr>
+<tr>
+<td>Enhancement</td>
+<td>Renamed 'Open in New Window' to '<a href="../../blocks-toolbox/common-properties.html#open-in-new-tabwindow">Open in New Tab/Window</a>' under <a href="../../blocks-toolbox/common-properties.html#navigate-to">Navigate To</a> property and expanded the documentation.</td>
+</tr>
+<tr>
+<td>Enhancement</td>
+<td>Add a tooltip to the <a href="../../blocks-toolbox/basic/text.html#common-properties">Text</a> Block and the Fieldset Block's <a href="../../blocks-toolbox/layout/field-and-fieldset.html#common-properties-2">Field Label</a>. This is useful to keep the text short and use a tooltip for longer descriptions.<br><br>The Fieldset's padding and margin now default to 0 (previously 20 and 30px). The styling is now consistent with other Blocks with the padding coming from the container e.g. Stacked Layout.</td>
+</tr>
+<tr>
+<td>Enhancement</td>
+<td>Extend the Map Block to <a href="../../blocks-toolbox/visualizations/map.html#overlay">overlay</a> an image or Geo Json pattern on Google Maps.</td>
+</tr>
+<tr>
+<td>Enhancement</td>
+<td>The height of the <a href="../../concepts/application/variables-and-expressions.html#quick-expressions">Quick Expression Editor</a> was increased from 1 to 4 lines and scrollbars were added too.</td>
+</tr>
+<tr>
+<td>Enhancement</td>
+<td>Added <a href="../../concepts/application/block-styling.html#typography">font-size</a> support for relative css units vh and vw to the Typography option.</td>
+</tr>
+<tr>
+<td>Fix</td>
+<td>Recommendation Block not refreshing results when using dynamic Entity Id.<br><em>Implement auto refresh when using a dynamic</em> <em>Entity Id</em>.</td>
+</tr>
+<tr>
+<td>Fix</td>
+<td>Unable to Navigate To URL from Chart Block.<br><em>Exposed Chart's</em> <a href="../../blocks-toolbox/visualizations/chart.html#show-drilldown"><em>Show Drilldown</em></a> <em>property. Enable this when using Actions such as Navigate To.</em></td>
+</tr>
+<tr>
+<td>Fix</td>
+<td>Keyboard input is disabled at runtime after rendering <a href="../../blocks-toolbox/visualizations/unity.html">Unity</a>.<br><em>Follow</em> <a href="https://docs.unity3d.com/ScriptReference/WebGLInput-captureAllKeyboardInput.html"><em>this guide</em></a> <em>to prevent the keyboard input from being locked to the Unity model.</em></td>
+</tr>
+<tr>
+<td>Fix</td>
+<td>Time Series Chart fixes:<ul><li>The timestamp dropdown doesn't scroll when there are more than 30 columns and can no longer be filtered with text.<br><em>The cause was 2 columns with the same name, but different capitalization. A Connector configuration now warns about case sensitivity and prevents duplicated column names.</em></li><li>Clicking the Internal Size unit dropdown caused a logic dialog to open too<br><em>Only the unit dialog opens</em></li><li>When specifying many selections, the header does not wrap so not all of the series names are visible and long names are truncated.<br><em>A scrollbar has been added to the individual names as well as the chart header.</em></li><li>The Pan &amp; Zoom mode affects this panel only.<br><em>The displayed data now expands to fill space created by a compacted Pan &amp; Zoom panel.</em></li><li>Parameters are not passed when reading the max timestamp.<br><em>Parameters defined on the data source are now passed for both the min and max timestamps.</em></li><li>A hidden chart (<em>Visible</em> is dynamically bound) makes an unexpected data call.<br><em>This affects all Blocks: the data source is now refreshed when the control becomes visible rather than on initialization.</em></li></ul></td>
+</tr>
+<tr>
+<td>Fix</td>
+<td>Tree Grid is stuck loading once expanded and several levels are clicked.<br><em>There may be a delay while the controls are refreshed, but the App will not freeze.</em></td>
+</tr>
+</tbody>
+</table>
+<h2 id="data-stream-designer">Data Stream Designer</h2>
+<table>
+<thead>
+<tr>
+<th>Change Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Enhancement</td>
+<td>A visual indicator that a Data Stream has <a href="../../how-tos/data-streams/use-stream-metrics.html#started-on">started successfully</a> has been added to the Stream Metrics. In the past, you would've had to publish your Data Stream and wait for events in the Live View - or utilize a console Stream Host and view its log - as confirmation there were no errors when publishing.</td>
+</tr>
+<tr>
+<td>Enhancement</td>
+<td>The Agent single and <a href="../../how-tos/agents/manage-agents.html#bulk-adding-agents">bulk upload</a> now prepopulates the Agent category - when specified in the <em>.xmp</em> file. <br><br>The Agent upload process is now a single file per tier because the category is clear for Agent families like CSV and SQL.</td>
+</tr>
+<tr>
+<td>Fix</td>
+<td>Cannot upload Tier 5 Agents<br><em>The Agent bulk upload file size was increased.</em></td>
+</tr>
+<tr>
+<td>Fix</td>
+<td>The Refresh button on the Logs blade clears the table but doesn't reload the logs.<br><em>The Refresh button reloads the logs.</em></td>
+</tr>
+</tbody>
+</table>
+<h2 id="subscription-manager">Subscription Manager</h2>
+<table>
+<thead>
+<tr>
+<th>Change Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Enhancement</td>
+<td>Optional functionality to <a href="../../concepts/manage-access.html#sync-business-roles-from-azure-ad">sync the user's Business Role to a corresponding Azure AD Claim</a> each time they log in. SSO using Azure AD is a pre-requisite.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="package-manager">Package Manager</h2>
+<table>
+<thead>
+<tr>
+<th>Change Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Enhancement</td>
+<td>You can run multiple instances of Package Manager at the same time. This side-by-side comparison is helpful when developing a new Agent or Connector that is similar to another or different versions of the same Agent.</td>
+</tr>
+<tr>
+<td>Enhancement</td>
+<td>When packaging an Agent or Connector, you can opt to export the configuration as a JSON file too. This is useful either to compare packages or for source control and version management.</td>
+</tr>
+<tr>
+<td>Enhancement</td>
+<td>You can package the Agent's <a href="../../how-tos/agents/packaging-agents.html#category">Category</a> so that it is prepopulated when uploading to Data Stream Designer. The Agent name defaults to the preferred format [Category]_[Name]_v[Version]<em>.xmp</em></td>
+</tr>
+<tr>
+<td>Fix</td>
+<td>Package Manager crashes when adding a Group with no contents.<br><em>An empty Group type caused the issue and is now defaulted.</em></td>
+</tr>
+<tr>
+<td>Fix</td>
+<td>Package Manager crashes when adding an option to a Drop Down for a Connector.<br><em>Drop Down options can now be added to Connectors too.</em></td>
+</tr>
+</tbody>
+</table>
+<h2 id="common">Common</h2>
+<table>
+<thead>
+<tr>
+<th>Change Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Enhancement</td>
+<td>The App Designer and Data Stream Designer <a href="../../concepts/landing-pages.html#default-landing-page">landing page</a> styling has been refreshed, including labeling the category card statistics.<ul><li>When selecting a category in App Designer, the Applications can be filtered by status and tag. Yes, you can now tag Applications too.</li><li>When selecting a category in Data Stream Designer, the Data Streams can be filtered by status, tag, and/or collection; and Stream Metrics can be switched on for those which are published.</li></ul></td>
+</tr>
+<tr>
+<td>Enhancement</td>
+<td>The description text height on Application and Data Stream imports has been increased so that it can be read without scrolling.</td>
+</tr>
+<tr>
+<td>Fix</td>
+<td>Special characters broke the <a href="../../installation/deployment/azure.html#install">Azure</a> deployment script.<br><em>The Azure deployment script was updated to specify the few unsupported special characters for passwords.</em></td>
+</tr>
+<tr>
+<td>Fix</td>
+<td>Single Sign Out Issue when a user signs out of one company to switch to another company, the previous company name and categories were still visible in tabs open for other products.<br><em>Signing out of one product completely signs a user out of all products.</em></td>
+</tr>
+</tbody>
+</table>
+<h2 id="v41131">v4.1.13.1</h2>
+<table>
+<thead>
+<tr>
+<th>Change Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fix</td>
+<td><a href="../../how-tos/connectors/packaging-connectors.html#settings">Optional properties</a> were treated as required when adding or upgrading a Connector.<br><em>Optional properties behave as expected and don't require values.</em></td>
+</tr>
+<tr>
+<td>Fix</td>
+<td>The tab selection was not caching correctly on the first tab of a <a href="../../blocks-toolbox/layout/tabs.html#selected-index">Tab Block</a>. So another tab stayed selected, even after refreshing - or navigating away and returning to the App page.<br><em>The first tab would fail to cache, this has now been resolved.</em></td>
+</tr>
+<tr>
+<td>Fix</td>
+<td>Widening the <a href="../../blocks-toolbox/visualizations/time-series-analysis.html#hierarchy">Time Series Chart</a> hierarchy selection pop-up in v4.1.13 - to avoid truncating parameter names - caused the list to shift out of view if a resource icon is clicked.<br><em>Reverted the hierarchy prompt to its original size, but made the size adjustable. You can now click on either the resource icon or name.</em></td>
+</tr>
+</tbody>
+</table>
+<h2 id="v41132">v4.1.13.2</h2>
+<table>
+<thead>
+<tr>
+<th>Change Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Enhancement</td>
+<td>The Beta tag indicates incremental functionality, added to prepare for a future feature.<br><img src="../../images/beta-icon.png" alt=""><br>For example, the factors added to Recommendations in preparation for a future Scoring enhancement.</td>
+</tr>
+<tr>
+<td>Enhancement</td>
+<td>The Time Series Chart now supports <a href="../../blocks-toolbox/visualizations/time-series-analysis.html#range---dynamic-start">dynamic range</a> and <a href="../../blocks-toolbox/visualizations/time-series-analysis.html#initial-selection">initial selection</a>, which determines the starting date for the Pan &amp; Zoom and the time interval that is initially selected.</td>
+</tr>
+<tr>
+<td>Enhancement</td>
+<td>Azure AD SSO now allows for <a href="../../installation/complete-installation/configure-sso-optional/sso-azure-ad.html#guest-user-access-across-tenants">Guest User access across tenants</a>.</td>
+</tr>
+<tr>
+<td>Fix</td>
+<td>Data Source expressions were not available for selection in the Time Series Chart configuration.<br><em>Data stream expressions now appear correctly in the Time Series Chart.</em></td>
+</tr>
+<tr>
+<td>Fix</td>
+<td>Alerts were navigable without run access.<br><em>Restricted access to alerts for which the user does not have run access.</em></td>
+</tr>
+</tbody>
+</table>
+<h2 id="v41133">v4.1.13.3</h2>
+<table>
+<thead>
+<tr>
+<th>Change Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Enhancement</td>
+<td>Released an early access Database Migration tool for automating new database installs and upgrades.</td>
+</tr>
+<tr>
+<td>Fix</td>
+<td>Time Series Chart fix: the <a href="../../blocks-toolbox/visualizations/time-series-analysis.html#initial-selection">Initial Selection</a>'s Unit of Time was using hours when dynamic, despite being set as another option in the static value.<br><em>The Initial Selection's Unit of Time is correctly applied.</em></td>
+</tr>
+</tbody>
+</table>
+<h2 id="v41134">v4.1.13.4</h2>
+<div class="NOTE">
+<h5>Note</h5>
+<p>XMPro has changed its product URLs. A redirect is in place for the sign-in page, but we recommend that you bookmark the new URLs for future reference:</p>
+<ul>
+<li><a href="https://xmpro-sm.azurewebsites.net/index.md">https://xmpro-sm.azurewebsites.net/</a></li>
+<li><a href="https://xmpro-sm.azurewebsites.net/index.md">https://xmpro-ds.azurewebsites.net/</a></li>
+<li><a href="https://xmpro-sm.azurewebsites.net/index.md">https://xmpro-ad.azurewebsites.net/</a></li>
+</ul>
+</div>
+<table>
+<thead>
+<tr>
+<th>Change Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Enhancement</td>
+<td><a href="../../blocks-toolbox/basic/data-grid.html#editor-type---hyperlink">Hyperlink columns</a> in a Data or Tree Grid now have the option to open in the same or a new tab/window.<br>We recommend opening XMPro URLs in the same tab/browser if the app design means it is likely a user will drill down into multiple tabs in a single sitting. A large number of XMPro tabs open at the same time is likely to cause performance-related issues.</td>
+</tr>
+<tr>
+<td>Enhancement</td>
+<td>The Time Series Chart's <a href="../../blocks-toolbox/visualizations/time-series-analysis.html#initial-selection">initial selection</a>'s unit of time is now a standalone property (<a href="../../blocks-toolbox/visualizations/time-series-analysis.html#initial-selection-unit-of-time">here</a>) for intuitive configuration.</td>
+</tr>
+<tr>
+<td>Update</td>
+<td>We've reduced our Linux-based Stream Host offering to support Ubuntu only, to increase our test coverage and ability to release often. <br>Linux RHEL and Debian Stream Hosts are no longer supported.</td>
+</tr>
+<tr>
+<td>Fix</td>
+<td>The detailed view of a <a href="../../concepts/recommendation/recommendation-alert.html#detailed-view">Recommendation Alert</a> - including its event data - is visible to users with run access, whether it was accessed through manipulation of URL string parameters or not. An error message advising they do not have access is displayed.</td>
+</tr>
+<tr>
+<td>Fix</td>
+<td>The parent blade name (or menu item on primary blades) was used as the default tooltip in blades across all products.<br><em>Tooltips are only showing where intended.</em></td>
+</tr>
+</tbody>
+</table>
+<h2 id="v41135">v4.1.13.5</h2>
+<table>
+<thead>
+<tr>
+<th>Change Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fix</td>
+<td>The Help blade across all products showed the major version i.e. 4.1.0.0.<br><em>The Help blade now shows the public release version e.g. 4.1.13.5.</em></td>
+</tr>
+<tr>
+<td>Fix</td>
+<td>An issue was introduced in 4.1.13.4, where Recommendation Category names were not editable. <br><em>Recommendation Category names can be amended.</em></td>
+</tr>
+</tbody>
+</table>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: June 09, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

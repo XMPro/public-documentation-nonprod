@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Manage Agents | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Manage Agents | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/docs/how-tos/agents/manage-agents.md&amp;version=GB20290-migrate-public-docs&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="manage-agents">Manage Agents</h1>
+
+<p>Agents create the foundation for Data Streams, and they can be connected to other Agents to create the flow of data. Each Agent performs a specific function. They are useful as they can be used to either retrieve data in real-time, display data, filter or sort the data, or save them to another database, depending on the function of that individual Agent.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>It is recommended that you read the article listed below to improve your understanding of Agents.</p>
+<ul>
+<li><a href="../../concepts/agent/index.html">Agent</a></li>
+</ul>
+</div>
+<h2 id="creating-agents">Creating Agents</h2>
+<p>Creating an Agent can be divided into two parts:</p>
+<h3 id="writing-the-code-for-an-agent">Writing the code for an Agent</h3>
+<p>Agents are generally written in C# as library projects that make use of the <a href="https://www.nuget.org/packages/XMPro.IOT.Framework/index.md">XMPro.IoT.Framework</a> NuGet package.</p>
+<p>XMPro.IoT.Framework requires your project to be written using a predefined structure. This structure requires you to implement certain interfaces, depending on the type of Agent you are creating.</p>
+<p>To learn more about how to use this framework, refer to <a href="building-agents.html">these</a> instructions.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Code for some Agents has been made available on <a href="https://github.com/XMPro/index.md">GitHub.</a> It might be useful to use these resources as an example when writing your own Agents.</p>
+</div>
+<h3 id="packaging-the-agent">Packaging the Agent</h3>
+<p>After writing your code, you need to use the <a href="https://apps.microsoft.com/store/detail/xmpro-package-manager/9N3F4WNSLGZK?hl=en-us&amp;gl=us&amp;activetab=pivot%3Aoverviewtab">XMPro Package Manager</a> Windows 10 desktop application to package your Agent.</p>
+<p>This application allows you to specify all the properties your Agent requires, add the user settings in the form of controls, and allows you to upload the DLL of the Agent you've written. Finally, it will create a file with a &quot;.xmp&quot; extension, which you can upload to Data Stream Designer and start to use to build Streams.</p>
+<p>To package the Agent, refer to <a href="packaging-agents.html">these</a> instructions.</p>
+<h2 id="adding-an-agent">Adding an Agent</h2>
+<p>After writing a new Agent and packaging it, you can upload it to Data Stream Designer by following the steps below:</p>
+<ol>
+<li>Open the <em>Agents</em> page from the left-hand menu.</li>
+<li>Click <em>Add</em>.</li>
+<li>Click the <em>Select File</em> button and browse to the <em>.xmp</em> file you've packaged.</li>
+<li>If the .<em>xmp</em> file is valid, some of the details contained in the file, such as the name of the Agent, will automatically be listed on the form.</li>
+<li>Select the category of the Agent (prepopulated if contained in the file)</li>
+<li>Click <em>Save</em>.</li>
+</ol>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The <em>Metadata</em> field allows you to add tags for the Agent. You can either select a value from the drop-down that appears when you click in the field or type a new value and press <em>Enter</em>.</p>
+</div>
+<p><img src="../../images/agent-add.png" alt="Adding an Agent"></p>
+<p><img src="../../images/agent-details.png" alt="Agent details"></p>
+<p>Additional information that forms part of the Agent's details will be displayed on the form, such as the version and Metadata.</p>
+<p><img src="../../images/agent-metadata.png" alt="Agent metadata"></p>
+<p>The newly uploaded Agent will now be available in the toolbox on the Use Case canvas page. To add an Agent to the canvas, follow the steps below:</p>
+<ol>
+<li>Open the Data Streams page from the left-hand menu.</li>
+<li>Select your Data Stream.</li>
+</ol>
+<p><img src="../../images/data-streams.png" alt="Data Streams page"></p>
+<ol start="3">
+<li>Expand the category in the toolbox where your Agent is located.</li>
+<li>Click on your Agent and drag the Agent to the canvas.</li>
+<li>Click <em>Save</em>.</li>
+</ol>
+<p><img src="../../images/agent-canvas.png" alt="Adding Agent to canvas"></p>
+<h2 id="bulk-adding-agents">Bulk Adding Agents</h2>
+<p>Uploading multiple Agents begins like a single Agent (see <a href="#adding-an-agent">Adding an Agent</a> above), except a compressed (.zip) file is selected.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>A 100 MB limit applies to the decompressed file size, not the compressed one.</p>
+</div>
+<p>If the <em>.zip</em> file is valid, a data grid is populated with the Agent name, version, ID, category, and file size. Complete the upload by following the steps below:</p>
+<ol>
+<li>Select the category of the Agents (prepopulated if contained in the respective <em>.xmp</em> file)</li>
+<li>Click on <em>Save</em></li>
+</ol>
+<p><img src="../../images/bulk-upload-save.png" alt="Bulk upload save"></p>
+<p>If any Agents fail the initial validation due to a missing category, a status column appears to identify them. To fix this, (1) select the category and (2) click on <em>Save</em>. Or <em>Discard</em> to exit the blade.</p>
+<p><img src="../../images/bulk-upload-category-fail.png" alt="Bulk upload category fail"></p>
+<p>The status column will advise which Agents were uploaded successfully, and which were ignored as the version already exists.</p>
+<p><img src="../../images/bulk-upload-version-fail.png" alt="Bulk upload version fail"></p>
+<h2 id="upgrading-agents">Upgrading Agents</h2>
+<p>To upgrade Agents in the Data Stream, visit <a href="../data-streams/upgrade-a-stream-object-version.html">How To Upgrade a Stream Object Version.</a></p>
+<h2 id="deleting-agent-versions">Deleting Agent Versions</h2>
+<p>To remove one or more versions of a specific Agent, first, make sure that the versions of the Agent that you're planning to remove are not being used anymore. Then, open the <em>Agents</em> page from the left-hand menu and follow the steps below:</p>
+<ol>
+<li>On the Agents page, select the Agent.</li>
+<li>Click on &quot;<em>Delete Versions</em>&quot;.</li>
+<li>Select the versions you would like to delete.</li>
+<li>Click <em>Delete</em>.</li>
+</ol>
+<p><img src="../../images/agent-delete-versions.png" alt="Deleting Agent versions"></p>
+<h2 id="deleting-agents">Deleting Agents</h2>
+<p>When planning to remove multiple Agents completely at the same time, make sure they are not being used anymore. Open the <em>Agents</em> page from the left-hand menu and follow the steps below:</p>
+<ol>
+<li>Click on &quot;<em>Select</em>&quot;.</li>
+<li>Select all the Agents you would like to remove.</li>
+<li>Click on &quot;<em>Delete</em>&quot;.</li>
+</ol>
+<div class="NOTE">
+<h5>Note</h5>
+<p>To cancel the selection, click on &quot;<em>Select</em>&quot; again.</p>
+</div>
+<p><img src="../../images/agent-delete.png" alt="Deleting Agents"></p>
+<ol start="4">
+<li>Confirm that you would like to delete all versions of the selected Agents.</li>
+</ol>
+<p><img src="../../images/agent-delete-confirm.png" alt="Confirm deletion"></p>
+<h2 id="finding-help-for-agents">Finding Help for Agents</h2>
+<p>Help documentation is available for every Agent. These pages provide context, configuration definitions, an example, and release notes to help if you are unsure of anything related to the Agent you are configuring.</p>
+<p><a href="https://documentation.xmpro.com/resources/integrations">See the Integrations article for the list of Agent documentation links.</a></p>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: June 09, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

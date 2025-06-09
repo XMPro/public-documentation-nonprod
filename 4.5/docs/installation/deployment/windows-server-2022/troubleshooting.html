@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Troubleshooting | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Troubleshooting | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      <meta name="description" content="Common issues and solutions for Windows Server 2022 deployment">
+      <link rel="icon" href="../../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../../toc.html">
+      <meta name="docfx:tocrel" content="../../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/docs/installation/deployment/windows-server-2022/troubleshooting.md&amp;version=GB20290-migrate-public-docs&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../../index.html">
+            <img id="logo" class="svg" src="../../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="troubleshooting">Troubleshooting</h1>
+
+<h2 id="certificate-issues">Certificate Issues</h2>
+<p><strong>Problem</strong>: Certificate errors when accessing XMPro components</p>
+<ol>
+<li>Verify certificates are properly installed in IIS and trusted by the browser</li>
+<li>Check that certificate paths in XMPro configuration are correct</li>
+</ol>
+<h2 id="sql-connection-issues">SQL Connection Issues</h2>
+<p><strong>Problem</strong>: &quot;Cannot connect to SQL Server&quot; during installation</p>
+<ol>
+<li>Verify SQL Server is running and accessible</li>
+<li>Check SQL credentials and authentication mode</li>
+<li>Ensure SQL Server allows remote connections if not installed locally</li>
+</ol>
+<h2 id="iis-configuration-issues">IIS Configuration Issues</h2>
+<p><strong>Problem</strong>: &quot;HTTP Error 500.19&quot; when accessing XMPro components</p>
+<ol>
+<li>Verify IIS modules are correctly installed</li>
+<li>Check application pool configuration</li>
+<li>Ensure correct .NET version is enabled for the application pool</li>
+</ol>
+<h2 id="data-stream-designer-db-errors">Data Stream Designer DB Errors</h2>
+<p><strong>Problem</strong>: &quot;Violation of PRIMARY KEY constraint&quot; errors during Data Stream Designer startup</p>
+<ol>
+<li>Restart IIS using <code>iisreset /restart</code></li>
+<li>If errors persist, check SQL database for corruption or manually resolve conflicts</li>
+</ol>
+<h2 id="http-error-40415">HTTP Error 404.15</h2>
+<p><strong>Problem</strong>: Request URL too long error when accessing XMPro applications</p>
+<ol>
+<li>You need to make two changes to fix this issue:
+<ol>
+<li><p>Increase the httpRuntime maxQueryStringLength and maxUrlLength in the system.web section</p>
+</li>
+<li><p>Add requestFiltering settings in the system.webServer section</p>
+</li>
+<li><p>Here's how to modify your web.config file:</p>
+<ol>
+<li>Navigate to <code>C:\inetpub\wwwroot\xmprosubscriptionmanager</code> and open web.config in a text editor</li>
+<li>Update the httpRuntime line in the system.web section</li>
+</ol>
+<pre><code class="lang-xml">&lt;!-- Find this line --&gt;
+&lt;httpRuntime targetFramework=&quot;4.8&quot; maxUrlLength=&quot;1024&quot; /&gt;
+
+&lt;!-- Change it to this --&gt;
+&lt;httpRuntime targetFramework=&quot;4.8&quot; maxUrlLength=&quot;8192&quot; maxQueryStringLength=&quot;8192&quot; /&gt;    
+</code></pre>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="stream-host-service-issues">Stream Host Service Issues</h2>
+<p><strong>Problem</strong>: Stream Host service stops unexpectedly</p>
+<ol>
+<li>Check Windows Event Logs for error details</li>
+<li>Verify service recovery options are set to restart automatically</li>
+<li>Ensure proper permissions for the service account</li>
+</ol>
+<h2 id="http-error-400-bad-request---request-too-long">HTTP Error 400: Bad Request - Request Too Long</h2>
+<ol>
+<li>Open Registry Editor by pressing Win+R, typing &quot;regedit&quot; and pressing Enter</li>
+<li>Navigate to: <code>HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\HTTP\Parameters</code></li>
+<li>Look for these two registry keys:
+<ol>
+<li><code>MaxFieldLength</code></li>
+<li><code>MaxRequestBytes</code></li>
+<li>If they don't exist, create them as DWORD (32-bit) values</li>
+<li>Right-click in the right pane and select:
+<ol>
+<li>&quot;New&quot; → &quot;DWORD (32-bit) Value&quot;</li>
+</ol>
+</li>
+<li>Name the first value <code>MaxFieldLength</code>
+<ol>
+<li>Double-click it to edit</li>
+<li>Select &quot;Decimal&quot; as the base</li>
+<li>Enter a value of 65536 (or higher if needed)</li>
+<li>Click OK</li>
+</ol>
+</li>
+<li>Right-click again and add a second DWORD value
+<ol>
+<li>Name it <code>MaxRequestBytes</code></li>
+<li>Double-click to edit</li>
+<li>Select &quot;Decimal&quot; as the base</li>
+<li>Enter a value of 65536 (or higher if needed)</li>
+<li>Click OK</li>
+</ol>
+</li>
+<li>After adding or modifying these values, close Registry Editor</li>
+<li>Open Command Prompt as Administrator and type:
+<pre><code class="lang-cmd">net stop http /y
+</code></pre>
+<pre><code class="lang-cmd">net start http
+</code></pre>
+<pre><code class="lang-cmd">iisreset
+</code></pre>
+</li>
+</ol>
+</li>
+</ol>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>Always back up configuration files before making any changes to avoid unintended consequences. Contact XMPro Support if issues persist after attempting these solutions.</p>
+</div>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: June 09, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

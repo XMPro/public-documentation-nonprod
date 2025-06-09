@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Range Slider | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Range Slider | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/docs/blocks-toolbox/basic/range-selector.md&amp;version=GB20290-migrate-public-docs&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="range-slider">Range Slider</h1>
+
+<p>A Range Slider is an input field that can be used to select a numeric value within a given range. This is useful when there is a limited number of options the user should select from and eases the validation for the user's input.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Some images in this document may be missing and need to be migrated from the original GitBook documentation.</p>
+</div>
+<h2 id="range-slider-properties">Range Slider Properties</h2>
+<h3 id="appearance">Appearance</h3>
+<h4 id="common-properties">Common Properties</h4>
+<p>The Range Slider has the option to change its <em>visibility</em> and to show <em>tooltips</em>.</p>
+<p><a href="../common-properties.html#appearance">See the Common Properties article for more details on common appearance properties.</a></p>
+<p>Options that are specific to Range Sliders include the ability to change the <em>mode, range,</em> or <em>labels</em>. The appearance of the labels such as the positioning and format of the labels can also be configured.</p>
+<h4 id="mode">Mode</h4>
+<p>In point mode, only the single point that the user selected will be visible. When in range mode, the Range Slider allows you to specify whether or not to show the range line between the two selected values.</p>
+<p><img src="../../images/blocks-toolbox/image-170.png" alt="Mode"></p>
+<h4 id="show-range">Show Range</h4>
+<p>When the show range option is set to true, the range that is selected will be highlighted.</p>
+<p><img src="../../images/blocks-toolbox/image-272.png" alt="Show Range"></p>
+<h4 id="show-labels">Show Labels</h4>
+<p>Show labels will add a value on both sides of the slider so the user will know the numeric range.</p>
+<p><img src="../../images/blocks-toolbox/image-1808.png" alt="Show Labels"></p>
+<h4 id="label-position">Label Position</h4>
+<p>This gives you the option to add the labels either above the slider or underneath the slider.</p>
+<p><img src="../../images/blocks-toolbox/image-1841.png" alt="Label Position"></p>
+<h4 id="label-format">Label Format</h4>
+<p>The label format option allows you to choose what type of numeric range the slider is. Some of the options that are available include but are not limited to currency, decimal, fixed point, seconds, minutes, days, or hours.</p>
+<p><img src="../../images/blocks-toolbox/image-1173.png" alt="Label Format"></p>
+<h3 id="behavior">Behavior</h3>
+<h4 id="common-properties-1">Common Properties</h4>
+<p>Properties that are common to most Blocks include: <em>read-only</em> and <em>disabled</em>.</p>
+<p><a href="../common-properties.html#behavior">See the Common Properties article for more details on common behavior properties.</a></p>
+<h4 id="min-and-max">Min and Max</h4>
+<p>This affects the minimum and maximum values for where the range starts.</p>
+<p><img src="../../images/blocks-toolbox/image-865.png" alt="Min and Max"></p>
+<h4 id="step">Step</h4>
+<p>This affects the intervals that are allowed between the values that can be chosen. For example, if the step interval is set to 50, and the user selects 45, the slider value will automatically be set to 50.</p>
+<p><img src="../../images/blocks-toolbox/gwemoVRcpa.gif" alt="Step"></p>
+<h3 id="value">Value</h3>
+<p>If the <em>point</em> option is selected as the <em>mode</em>, there will only be one value. However, if the <em>range</em> option is selected as the mode, you can choose a <em>start value</em> or an <em>end value</em>.</p>
+<h4 id="point-value">Point Value</h4>
+<p>This determines what the selected value is when the mode is set to the <em>point</em> option.</p>
+<h4 id="range-start-and-end-value">Range Start and End value</h4>
+<p>This determines the range that is selected from the start value to the end value. This is available when the <em>range</em> option is selected for the mode.</p>
+<p><img src="../../images/blocks-toolbox/image-855.png" alt="Range Start and End Value"></p>
+<h3 id="action">Action</h3>
+<h4 id="common-properties-2">Common Properties</h4>
+<p>Properties that are common to most Blocks include: <em>Navigate To and Show Confirmation Dialog;</em></p>
+<p><a href="../common-properties.html#action">See the Common Properties article for more details on common action properties.</a></p>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: June 09, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

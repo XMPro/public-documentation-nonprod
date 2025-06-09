@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Image Path Standardization Plan | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Image Path Standardization Plan | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="images/favicon.png">
+      <link rel="stylesheet" href="public/docfx.min.css">
+      <link rel="stylesheet" href="public/main.css">
+      <meta name="docfx:navrel" content="toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/image-migration-plan.md&amp;version=GB20290-migrate-public-docs&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="index.html">
+            <img id="logo" class="svg" src="images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="image-path-standardization-plan">Image Path Standardization Plan</h1>
+
+<h2 id="current-situation">Current Situation</h2>
+<ul>
+<li><strong>2,072 images</strong> across 26 different directories</li>
+<li><strong>112 duplicate filenames</strong> that need unique handling</li>
+<li>Images scattered in:
+<ul>
+<li><code>/docs/docs/images/</code> (995 images)</li>
+<li><code>/docs/docs/resources/images/</code> (418 images)</li>
+<li><code>/docs/docs/blocks-toolbox/images/</code> (185 images)</li>
+<li>Various local <code>images/</code> subdirectories</li>
+</ul>
+</li>
+</ul>
+<h2 id="migration-strategy">Migration Strategy</h2>
+<h3 id="goal">Goal</h3>
+<p>Consolidate all images to <code>/docs/docs/images/</code> with proper organization and no broken references.</p>
+<h3 id="approach">Approach</h3>
+<h4 id="1-handle-duplicates-safely">1. Handle Duplicates Safely</h4>
+<p>For duplicate filenames, use directory-based prefixes:</p>
+<ul>
+<li><code>blocks-toolbox/recommendations/alert-form.png</code> → <code>blocks-toolbox-recommendations-alert-form.png</code></li>
+<li><code>concepts/recommendation/alert-form.png</code> → <code>concepts-recommendation-alert-form.png</code></li>
+</ul>
+<h4 id="2-directory-structure-in-target">2. Directory Structure in Target</h4>
+<p>Create subdirectories in <code>/docs/docs/images/</code> to maintain organization:</p>
+<pre><code>/docs/docs/images/
+├── blocks-toolbox/
+│   ├── actions/
+│   ├── basic/
+│   ├── visualizations/
+│   └── ...
+├── concepts/
+│   ├── application/
+│   ├── data-stream/
+│   └── ...
+└── [main images]
+</code></pre>
+<h4 id="3-migration-process">3. Migration Process</h4>
+<h5 id="step-1-analysis-and-inventory">Step 1: Analysis and Inventory</h5>
+<pre><code class="lang-bash"># Already completed - see analyze-images.py output
+</code></pre>
+<h5 id="step-2-dry-run">Step 2: Dry Run</h5>
+<pre><code class="lang-bash">python3 scripts/migrate-images-safely.py --dry-run
+</code></pre>
+<p>This will:</p>
+<ul>
+<li>Show all planned file moves</li>
+<li>Show all markdown files that will be updated</li>
+<li>Identify any potential issues</li>
+</ul>
+<h5 id="step-3-backup">Step 3: Backup</h5>
+<pre><code class="lang-bash"># Create backup of current state
+tar -czf docs-images-backup-$(date +%Y%m%d_%H%M%S).tar.gz docs/
+</code></pre>
+<h5 id="step-4-execute-migration">Step 4: Execute Migration</h5>
+<pre><code class="lang-bash">python3 scripts/migrate-images-safely.py
+</code></pre>
+<p>This will:</p>
+<ul>
+<li>Move/copy all images to standardized location</li>
+<li>Update all markdown references automatically</li>
+<li>Create a migration log</li>
+</ul>
+<h5 id="step-5-verification">Step 5: Verification</h5>
+<pre><code class="lang-bash"># Build and check for errors
+cd docs
+docfx --serve
+
+# Check migration log for any issues
+cat migration-log.txt
+
+# Run link checker
+python3 scripts/verify-image-links.py
+</code></pre>
+<h5 id="step-6-cleanup">Step 6: Cleanup</h5>
+<pre><code class="lang-bash"># After verification, remove old image directories
+python3 scripts/migrate-images-safely.py --cleanup
+</code></pre>
+<h2 id="safety-features">Safety Features</h2>
+<h3 id="1-no-data-loss">1. No Data Loss</h3>
+<ul>
+<li>All operations use copy-then-verify before deletion</li>
+<li>Full backup created before migration</li>
+<li>Migration log tracks every change</li>
+</ul>
+<h3 id="2-reference-integrity">2. Reference Integrity</h3>
+<ul>
+<li>Script updates all markdown files automatically</li>
+<li>Handles various reference patterns:
+<ul>
+<li><code>../images/file.png</code></li>
+<li><code>../../images/file.png</code></li>
+<li><code>images/file.png</code></li>
+<li><code>./images/file.png</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="3-duplicate-resolution">3. Duplicate Resolution</h3>
+<ul>
+<li>Automatic renaming for conflicts</li>
+<li>Maintains mapping file for troubleshooting</li>
+<li>No manual intervention required</li>
+</ul>
+<h3 id="4-rollback-capability">4. Rollback Capability</h3>
+<ul>
+<li>Backup allows full restoration</li>
+<li>Migration log enables targeted fixes</li>
+<li>Can be run incrementally</li>
+</ul>
+<h2 id="expected-outcomes">Expected Outcomes</h2>
+<h3 id="before">Before</h3>
+<ul>
+<li>Images in 26 different locations</li>
+<li>Inconsistent reference patterns</li>
+<li>Difficult to maintain</li>
+</ul>
+<h3 id="after">After</h3>
+<ul>
+<li>All images in <code>/docs/docs/images/</code> with logical subdirectories</li>
+<li>Consistent reference pattern: <code>../../images/[subfolder/]filename.png</code></li>
+<li>Easy to manage and find images</li>
+</ul>
+<h2 id="command-summary">Command Summary</h2>
+<pre><code class="lang-bash"># 1. Analyze current state
+python3 scripts/analyze-images.py
+
+# 2. Test with a single file first
+python3 scripts/migrate-images-safely.py --dry-run --test-file docs/docs/blocks-toolbox/actions/images/button-text.png
+python3 scripts/migrate-images-safely.py --test-file docs/docs/blocks-toolbox/actions/images/button-text.png
+
+# 3. Dry run to preview full changes
+python3 scripts/migrate-images-safely.py --dry-run
+
+# 4. Create backup
+tar -czf docs-backup-$(date +%Y%m%d_%H%M%S).tar.gz docs/
+
+# 5. Execute full migration
+python3 scripts/migrate-images-safely.py
+
+# 6. Verify
+cd docs &amp;&amp; docfx --serve
+python3 scripts/verify-image-links.py
+
+# 7. Cleanup old directories (after verification)
+python3 scripts/migrate-images-safely.py --cleanup
+</code></pre>
+<h2 id="enhanced-safety-features">Enhanced Safety Features</h2>
+<h3 id="sha256-verification">SHA256 Verification</h3>
+<ul>
+<li>Every image is checksummed before and after copy</li>
+<li>Ensures byte-perfect copies</li>
+<li>Reports any mismatches immediately</li>
+</ul>
+<h3 id="docfx-build-integration">DocFX Build Integration</h3>
+<ul>
+<li>Automatically runs <code>docfx</code> after migration</li>
+<li>Verifies no broken image references</li>
+<li>Reports warnings/errors immediately</li>
+</ul>
+<h3 id="single-file-test-mode">Single File Test Mode</h3>
+<ul>
+<li>Test the process with one file first</li>
+<li>Verify SHA, references, and build success</li>
+<li>Build confidence before full migration</li>
+</ul>
+<h2 id="risk-mitigation">Risk Mitigation</h2>
+<ul>
+<li><p><strong>Risk</strong>: Broken image references</p>
+<ul>
+<li><strong>Mitigation</strong>: Automated reference updates, verification script</li>
+</ul>
+</li>
+<li><p><strong>Risk</strong>: Lost images</p>
+<ul>
+<li><strong>Mitigation</strong>: Copy operations, full backup, no deletions until verified</li>
+</ul>
+</li>
+<li><p><strong>Risk</strong>: Name conflicts</p>
+<ul>
+<li><strong>Mitigation</strong>: Automatic prefixing system, conflict resolution</li>
+</ul>
+</li>
+<li><p><strong>Risk</strong>: Build failures</p>
+<ul>
+<li><strong>Mitigation</strong>: Dry run first, rollback capability</li>
+</ul>
+</li>
+</ul>
+<h2 id="timeline">Timeline</h2>
+<ul>
+<li>Analysis: ✅ Complete</li>
+<li>Dry run: 5 minutes</li>
+<li>Backup: 2 minutes</li>
+<li>Migration: 10-15 minutes</li>
+<li>Verification: 10 minutes</li>
+<li>Total: ~30 minutes</li>
+</ul>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: June 09, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Lookup | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Lookup | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/docs/blocks-toolbox/basic/lookup.md&amp;version=GB20290-migrate-public-docs&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="lookup">Lookup</h1>
+
+<p>The Lookup is a UI component that allows a user to search for an item in a collection shown in a drop-down menu. This is useful when there are many options or items to select from and it may be hard for the user to find one particular item. This UI control allows the user to navigate to the item faster.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Some images in this document may be missing and need to be migrated from the original GitBook documentation.</p>
+</div>
+<h2 id="lookup-properties">Lookup Properties</h2>
+<h3 id="appearance">Appearance</h3>
+<h4 id="common-properties">Common Properties</h4>
+<p>Properties that are common to most Blocks include <em>visible, styling mode, placeholder, tooltip</em> and <em>show clear button;</em></p>
+<p><a href="../common-properties.html#appearance">See the Common Properties article for more details on common appearance properties.</a></p>
+<h4 id="styling-mode">Styling Mode</h4>
+<p><img src="../../images/blocks-toolbox/image-493.png" alt="Styling Mode"></p>
+<h4 id="placeholder-and-show-clear-button">Placeholder and Show Clear Button</h4>
+<p>Placeholder is the text that will be displayed before a value is selected.<br>
+Show Clear Button will add a button to clear the selected item.</p>
+<p><img src="../../images/blocks-toolbox/image-748.png" alt="Placeholder and Clear Button"></p>
+<h4 id="dropdown-title">Dropdown Title</h4>
+<p>Title of the Lookup when it's open for selection.</p>
+<p><img src="../../images/blocks-toolbox/image-993.png" alt="Dropdown Title"></p>
+<h3 id="behavior">Behavior</h3>
+<h4 id="common-properties-1">Common Properties</h4>
+<p>The <em>disabled</em> property is common to most Blocks;</p>
+<p><a href="../common-properties.html#behavior">See the Common Properties article for more details on common behavior properties.</a></p>
+<h4 id="enable-search">Enable Search</h4>
+<p>It will add a search bar where the user can search the items in the Lookup.</p>
+<p><img src="../../images/blocks-toolbox/image-1653.png" alt="Enable Search"></p>
+<h3 id="value">Value</h3>
+<h4 id="common-properties-2">Common Properties</h4>
+<p>This option is used to select the default value and must match a value from the Data Source.</p>
+<p><a href="../common-properties.html#value">See the Common Properties article for more details on common value properties.</a></p>
+<p><img src="../../images/blocks-toolbox/image-676.png" alt="Value"></p>
+<h3 id="data-source">Data Source</h3>
+<p>‌Data sources can be Static or Dynamic. Static values have to be entered manually while Dynamic will get the value from the provided Data Source.</p>
+<p>The Data Source property is required for the Lookup Block.</p>
+<h4 id="static-items">Static Items</h4>
+<p>If a dynamic data source is not used, you can enter key dates to display manually under the Data section.</p>
+<h4 id="dynamic-data-source">Dynamic Data Source</h4>
+<p>This option allows you to connect the control to a specific data source such as a database to pull data dynamically. This will give you additional options to sort, filter, show, or skip certain records.</p>
+<p><a href="../common-properties.html#data-source">See the Common Properties article for more details on common data source properties.</a></p>
+<h2 id="data">Data</h2>
+<p>This is only available if the Data Source is Dynamic. Here we have the option to set the values of the buttons as well as what text will be displayed. ‌</p>
+<p><a href="../common-properties.html">See the Common Properties article for more details on common data properties.</a></p>
+<h4 id="display-expression">Display Expression</h4>
+<p>The expression is a user-friendly name for what the user can see. For example, the text that is displayed to the user.</p>
+<p>The Display Expression property is required for the Lookup Block.</p>
+<h4 id="value-expression">Value Expression</h4>
+<p>This is the actual value stored in the background of the application in the code. For example, instead of true or false, it would be 0 or 1.</p>
+<p>The Value Expression property is required for the Lookup Block.</p>
+<h3 id="grouping">Grouping</h3>
+<p>This is only available if the Data Source is Dynamic. Here we have the option to set how the items in the Lookup will be grouped.</p>
+<p>If grouping is enabled, the Group By Expression property is required for the Lookup Block.</p>
+<h3 id="action">Action</h3>
+<h4 id="common-properties-3">Common Properties</h4>
+<p>Properties that are common to most Blocks include: <em>Navigate To and Show Confirmation Dialog;</em></p>
+<p><a href="../common-properties.html#action">See the Common Properties article for more details on common action properties.</a></p>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: June 09, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

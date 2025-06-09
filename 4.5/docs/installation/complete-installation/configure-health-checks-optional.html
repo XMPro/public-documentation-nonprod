@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Configure Health Checks (Optional) | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Configure Health Checks (Optional) | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/docs/installation/complete-installation/configure-health-checks-optional.md&amp;version=GB20290-migrate-public-docs&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="configure-health-checks-optional">Configure Health Checks (Optional)</h1>
+
+<div class="video-container">
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/W1LWcSUrgTs" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+<h2 id="overview">Overview</h2>
+<p><a href="https://learn.microsoft.com/en-us/aspnet/core/host-and-deploy/health-checks?view=aspnetcore-6.0">Health checks</a> are the industry standard for the initial diagnostic step of the troubleshooting process, which provides information about the health and readiness of XMPro services. The health checks achieve this by performing periodic evaluations of connected services - each of which returns a status of healthy or unhealthy.</p>
+<p>The health checks are disabled by default. Once the health checks are turned on, you can opt to view them in the <a href="#health-ui">Health UI</a> or add the <a href="#health-endpoints">endpoints</a> to your existing business application health monitoring IT solution.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>It is also possible to include <a href="#adding-third-party-endpoints">third-party endpoints</a> - enabling you to monitor all of your health checks in a central location.</p>
+</div>
+<h2 id="health-endpoints">Health Endpoints</h2>
+<p>Each XMPro service has an endpoint that can be accessed to determine its overall health. The following health checks are performed to test different dependencies:</p>
+<ol>
+<li>Connection to other XMPro services</li>
+<li>Connection to the databases</li>
+<li>Connection to Redis Cache</li>
+</ol>
+<p>The raw JSON of the results can be accessed through the health path of the service's URL. For example, <em><a href="https://xmpro-ad-sample.azurewebsites.net/health">https://xmpro-ad-sample.azurewebsites.net/health</a></em></p>
+<p><img src="../../images/health-endpoint-result.png" alt="Fig 1: Healthy JSON output using Postman"></p>
+<p>Below is the description for each entry in the health check:</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Data</td>
+<td>Additional data provided by the health check. By default, this is <em>empty</em>.</td>
+</tr>
+<tr>
+<td>Description</td>
+<td>An optional explanation of the health check.</td>
+</tr>
+<tr>
+<td>Duration</td>
+<td>The amount of time that the health check took to run.</td>
+</tr>
+<tr>
+<td>Status</td>
+<td>The health check status options are:<ul><li>Healthy (the connection succeeds)</li><li>Unhealthy (the connection fails or times out)</li></ul></td>
+</tr>
+<tr>
+<td>Tags</td>
+<td>Labels that are used to group or describe the kind of health check being done.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="health-ui">Health UI</h2>
+<p>The UI provides a user-friendly display of the responses from the health endpoints.</p>
+<p>To access the health checks performed, visit the health UI of any of the services using the health-ui path. For example, <em><a href="https://xmpro-ad-sample.azurewebsites.net/health-ui.">https://xmpro-ad-sample.azurewebsites.net/health-ui.</a></em></p>
+<p><em>The health check for XMPro AI was added in v4.4.5.</em></p>
+<p><img src="../../images/health-ui.png" alt="Fig 2: The Health Checks interface"></p>
+<h2 id="configure-health-checks">Configure Health Checks</h2>
+<p>The following steps describe how to turn on the health check functionality.</p>
+<h3 id="application-designer">Application Designer</h3>
+<ol>
+<li>Navigate to the IIS location where Application Designer has been installed.</li>
+<li>Open the App Designer  <em>appsettings.json</em> file.</li>
+<li>Set <code>enableHealthCheck</code> in the <code>featureFlags</code> object to <em>true</em>.</li>
+</ol>
+<div class="NOTE">
+<h5>Note</h5>
+<p>This feature flag turns on both the <code>/health</code> and <code>/health-ui</code> endpoints.</p>
+</div>
+<p><img src="../../images/configure-health-check-setup-step-1.png" alt="Fig 3: Step 3"></p>
+<ol start="4">
+<li>Configure the URLs you want to include in the health checks within the <code>healthChecks</code> object. The standard endpoint for each XMPro service is <code>/health/ping</code>.</li>
+</ol>
+<pre><code class="lang-json">&quot;healthChecks&quot;: {
+      &quot;urls&quot;: [
+        {
+          &quot;url&quot;: &quot;&lt;subscription manager url&gt;/health/ping&quot;,
+          &quot;name&quot;: &quot;Subscription Manager API&quot;,
+          &quot;tags&quot;: [ &quot;api&quot; ]
+        },
+        {
+          &quot;url&quot;: &quot;&lt;data stream designer url&gt;/health/ping&quot;,
+          &quot;name&quot;: &quot;Data Stream Designer API&quot;,
+          &quot;tags&quot;: [ &quot;api&quot; ]
+        },
+        {
+          &quot;url&quot;: &quot;&lt;xmpro ai url&gt;/health/ping&quot;,
+          &quot;name&quot;: &quot;XMPro AI API&quot;,
+          &quot;tags&quot;: [ &quot;api&quot; ]
+        }
+      ]
+    }
+</code></pre>
+<ol start="5">
+<li>Configure the <code>/health</code> endpoints you want to include in the UI within the <code>HealthChecksUI</code> object.</li>
+</ol>
+<pre><code class="lang-json">&quot;HealthChecksUI&quot;: {
+  &quot;HealthChecks&quot;: [
+    {
+      &quot;name&quot;: &quot;Application Designer&quot;,
+      &quot;Uri&quot;: &quot;&lt;application designer url&gt;/health&quot;
+    },
+    {
+      &quot;name&quot;: &quot;Data Stream Designer&quot;,
+      &quot;Uri&quot;: &quot;&lt;data stream designer url&gt;/health&quot;
+    },
+    {
+      &quot;name&quot;: &quot;XMPro AI&quot;,
+      &quot;Uri&quot;: &quot;&lt;xmpro ai url&gt;/health&quot;
+    }
+  ]
+}
+</code></pre>
+<p><img src="../../images/configure-health-check-setup-step-2.png" alt="Fig 4: Step 4 and 5"></p>
+<ol start="6">
+<li>Save the file.</li>
+<li>Restart the Application Designer service.</li>
+</ol>
+<h3 id="data-stream-designer">Data Stream Designer</h3>
+<p>Repeat the above steps for Data Stream Designer, using these values for step 4:</p>
+<pre><code class="lang-json">&quot;healthChecks&quot;: {
+  &quot;urls&quot;: [
+    {
+      &quot;url&quot;: &quot;&lt;subscription manager url&gt;/health/ping&quot;,
+      &quot;name&quot;: &quot;Subscription Manager API&quot;,
+      &quot;tags&quot;: [ &quot;api&quot; ]
+    },
+    {
+      &quot;url&quot;: &quot;&lt;application designer url&gt;/health/ping&quot;,
+      &quot;name&quot;: &quot;Application Designer API&quot;,
+      &quot;tags&quot;: [ &quot;api&quot; ]
+    },
+    {
+      &quot;url&quot;: &quot;&lt;xmpro ai url&gt;/health/ping&quot;,
+      &quot;name&quot;: &quot;XMPro AI API&quot;,
+      &quot;tags&quot;: [ &quot;api&quot; ]
+    }
+  ]
+}
+</code></pre>
+<h3 id="xmpro-ai">XMPro AI</h3>
+<p>Repeat the above steps for XMPro AI, using these values for step 4:</p>
+<pre><code class="lang-json">&quot;healthChecks&quot;: {
+  &quot;urls&quot;: [
+    {
+      &quot;url&quot;: &quot;&lt;subscription manager url&gt;/health/ping&quot;,
+      &quot;name&quot;: &quot;Subscription Manager API&quot;,
+      &quot;tags&quot;: [ &quot;api&quot; ]
+    },
+    {
+      &quot;url&quot;: &quot;&lt;application designer url&gt;/health/ping&quot;,
+      &quot;name&quot;: &quot;Application Designer API&quot;,
+      &quot;tags&quot;: [ &quot;api&quot; ]
+    },
+    {
+      &quot;url&quot;: &quot;&lt;data stream designer url&gt;/health/ping&quot;,
+      &quot;name&quot;: &quot;Data Stream Designer API&quot;,
+      &quot;tags&quot;: [ &quot;api&quot; ]
+    }
+  ]
+}
+</code></pre>
+<h2 id="adding-third-party-endpoints">Adding Third-Party Endpoints</h2>
+<p>Third-party endpoints are supported and can be included as part of the health check. These are added in the same place as the XMPro service health checks.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Only endpoints that do not need additional authorization are currently supported for the health checks.</p>
+</div>
+<ol>
+<li>Open the <em>appsettings.json</em> file.</li>
+<li>Add third-party endpoints to the <code>healthChecks</code> object.</li>
+<li>Save the file and restart the XMPro product service.</li>
+</ol>
+<p><img src="../../images/configure-health-check-setup-step-3.png" alt="Fig 5: Step 3"></p>
+<p>Below are the properties in this configuration when including other URLs in the health check:</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>url</td>
+<td>Determines the URL to check.</td>
+</tr>
+<tr>
+<td>name</td>
+<td>Determines the name/identifier of the health check to be performed.</td>
+</tr>
+<tr>
+<td>tags</td>
+<td>Determines the tag for the health check. This is useful for tagging/grouping health checks.</td>
+</tr>
+<tr>
+<td>timeout</td>
+<td>The amount of time to wait for a response from the site. The health check will return as <code>Unhealthy</code> if the timeout is reached while waiting for the URL. <br>By default, this is empty and will wait for the URL indefinitely.</td>
+</tr>
+</tbody>
+</table>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: June 09, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

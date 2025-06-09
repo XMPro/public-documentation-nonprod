@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>v4.4.5 | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="v4.4.5 | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      <meta name="description" content="29 May 2024">
+      <link rel="icon" href="../../images/favicon.png">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/docs/release-notes/v4.4.5.md&amp;version=GB20290-migrate-public-docs&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="v445">v4.4.5</h1>
+
+<h2 id="integrations">Integrations</h2>
+<table><thead><tr><th width="155">Change Type</th><th width="250">Name</th><th>Description</th></tr></thead><tbody><tr><td>Enhancement</td><td><a href="https://xmpro.gitbook.io/azure-openai/">Azure OpenAI AI &#x26; ML v1.04</a></td><td>Support dynamic messages and token counting</td></tr><tr><td>Enhancement</td><td><a href="https://xmpro.gitbook.io/ollama/">Ollama AI &#x26; ML v1.04</a></td><td>Support single quotes in the input text.</td></tr></tbody></table>
+<h2 id="common">Common</h2>
+<table><thead><tr><th width="157">Change Type</th><th>Description</th></tr></thead><tbody><tr><td>Enhancement</td><td>All logged-out state pages, such as the sign-in, will show in dark mode if a device's dark mode is activated.</td></tr><tr><td>Enhancement</td><td>The user profile menu is activated by mouse click rather than on hover - to avoid accidentally triggering it when interacting with items at the top right of the page. <br>This was introduced to App Designer in <a href="v4.4.4.html#app-designer">v4.4.4</a> and now applies to all products.</td></tr><tr><td>Enhancement</td><td>The <a href="../installation/complete-installation/configure-health-checks-optional.html">health checks</a> were extended to include XMPro AI.</td></tr></tbody></table>
+<h2 id="app-designer">App Designer</h2>
+<table><thead><tr><th width="157">Change Type</th><th>Description</th></tr></thead><tbody><tr><td>Enhancement</td><td>A new advanced styling option, <a href="../concepts/application/block-styling.html#extra-advanced-styling">Cursor</a>, has been added to Block Styling. This allows you to choose the pointer icon for a block, such as to show that a Hyperlink Box is clickable.</td></tr><tr><td>Enhancement</td><td>The Navigate To Action's option to Open in New Tab/Window is now available for a Page too.</td></tr><tr><td>Enhancement</td><td>The default App Designer product role was amended from 'DesignUser' to 'Design User' for new installations for greater legibility and accessibility.<br>For existing installations, the global administrator is encouraged to amend the spelling. </td></tr><tr><td>Fix</td><td><em>I cannot update a page parameter when a user clicks a Hyperlink.</em><br>The Indicator, Templated List, and Hyperlink Box can pass a parameter to another page using an expression</td></tr><tr><td>Fix</td><td><em>When I select Library for a Button's</em> <a href="../blocks-toolbox/common-properties.html#icon"><em>icon mode</em></a><em>, there is no spacing between the Icon's image and description in the dropdown.</em><br>Padding was added between the Icon's image and description for accessibility.</td></tr><tr><td>Fix</td><td><em>My</em> <a href="../blocks-toolbox/basic/indicator.html#label"><em>Indicator label</em></a> <em>only shows if the X-Axis and Y-Axis position is configured - even though the visibility is set to "On Hover" or "Always".</em><br>The Indicator label visibility of Never, On Hover, and Always work as expected.<br>This fix applies to newly added blocks. For indicator blocks added before v4.4.5, change the position in advanced styling from static to relative.</td></tr><tr><td>Fix</td><td>The v4.4.4 change to move the edit pencil, visible to designers on an App at runtime, was reverted to its original position.</td></tr></tbody></table>
+<h2 id="data-stream-designer">Data Stream Designer</h2>
+<table><thead><tr><th width="157">Change Type</th><th>Description</th></tr></thead><tbody><tr><td>Fix</td><td><em>I've filled out my data stream's</em> <a href="../how-tos/data-streams/use-business-case-and-notes.html#adding-a-business-case"><em>business case</em></a><em>, but I get an error 'Unable to save business case changes' when trying to save it.</em><br>A red outline has been added to indicate that the business use case text is a required input.</td></tr></tbody></table>
+<h2 id="subscription-manager">Subscription Manager</h2>
+<table><thead><tr><th width="157">Change Type</th><th>Description</th></tr></thead><tbody><tr><td>Fix</td><td><em>Users who have registered, but have not yet been approved by an administrator, can be added to a product subscription.</em><br>Only approved users are available for selection to add to a product subscription.</td></tr></tbody></table>
+<h2 id="stream-host">Stream Host</h2>
+<table><thead><tr><th width="157">Change Type</th><th>Description</th></tr></thead><tbody><tr><td>Enhancement</td><td>Python-capable <a href="../installation/complete-installation/install-stream-host/docker-legacy.html#image-flavors">Docker Stream Host images</a> were added for Ubuntu and Alpine - and Python was removed from the default Stream Host images to keep them lightweight.    </td></tr></tbody></table>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: June 09, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

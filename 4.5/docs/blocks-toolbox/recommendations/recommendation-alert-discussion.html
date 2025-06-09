@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Alert Discussion | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Alert Discussion | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/docs/blocks-toolbox/recommendations/recommendation-alert-discussion.md&amp;version=GB20290-migrate-public-docs&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="alert-discussion">Alert Discussion</h1>
+
+<p>The Alert Discussion is an area in which messages can be posted to collaborate with members of your team about an Alert. Messages can be sent or read by anyone who has access to the Recommendation Alert.</p>
+<p>Messages are displayed with the latest message at the bottom of the list. Any messages which have not been read since the last time you visited the page will be below the &quot;Last Read&quot; line break.</p>
+<p>You can search for messages that contain a certain word or phrase by typing in the search bar at the top.</p>
+<p>You can add a message by typing in the editor at the bottom of the discussion section and clicking the button with a paper plane icon at the bottom right corner.</p>
+<p>Advanced text editing can be opened by clicking the button with an underlined letter A icon at the bottom left corner.</p>
+<p>You can mention another user by typing the @ symbol or clicking the button with the @ symbol, which will pop up a list of users. Clicking on a user will mention them in the message and send them a notification email when the message is sent.</p>
+<p><img src="../../images/blocks-toolbox/recommendations/alert-discussion-functionality.png" alt="Discussion functionality">
+<em>Fig 1: Discussion functionality.</em></p>
+<h3 id="summary">Summary</h3>
+<p>Although each discussion is specific to a particular Recommendation Alert, you have the option to include a summary at the top for easy navigation to all alert discussions related to a specific Identifier.</p>
+<p>Alert discussions most recently contributed to will appear at the top. At runtime, you can sort by a different column, add a filter, or use the column chooser to change the columns displayed.</p>
+<p>The discussions on archived alerts are hidden by default. Tick <em>Show Archived</em> to see all alert discussions, for this entity, to which you have access.</p>
+<video autoplay loop muted playsinline style="max-width: 100%; height: auto;">
+  <source src="../../images/alert-discussion-summary.mp4" type="video/mp4">
+</video>
+*Fig 2: Summary navigation.*
+<h2 id="alert-discussion-properties">Alert Discussion Properties</h2>
+<h3 id="behavior">Behavior</h3>
+<h4 id="type">Type</h4>
+<p>The Identifier options are Asset, Process, KPI, Work Order, Work Request, Entity, and None (default).</p>
+<h4 id="id">ID</h4>
+<p>Supply an Identifier to show a filtered summary grid of Alerts that match the given Identifier. It is required when Type is not None.</p>
+<h4 id="alert-id">Alert ID</h4>
+<p>The <em>Alert ID</em> is optional. Supply a value to default the alert discussion displayed when the Page is opened.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>If an <em>ID</em> is provided without an <em>Alert ID</em>, the bottom of the block will be empty when the Page is opened. In this case, the user should select a Recommendation Alert from the grid to see its alert discussion.</p>
+</div>
+<h3 id="action">Action</h3>
+<p>Configure actions to be triggered when the user clicks the <em>Alert ID</em> of a row in the summary grid. For example, enable the user to navigate to the alert page.</p>
+<p><a href="../common-properties.html#action">For detailed instructions see the Common Properties article for more details</a></p>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: June 09, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

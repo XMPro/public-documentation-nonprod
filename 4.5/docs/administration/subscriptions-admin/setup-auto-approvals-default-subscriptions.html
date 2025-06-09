@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Setup Auto Approval/Default Subscriptions | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Setup Auto Approval/Default Subscriptions | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/docs/administration/subscriptions-admin/setup-auto-approvals-default-subscriptions.md&amp;version=GB20290-migrate-public-docs&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="setup-auto-approvaldefault-subscriptions">Setup Auto Approval/Default Subscriptions</h1>
+
+<div class="WARNING">
+<h5>Warning</h5>
+<p>Please note that this section is intended for Administrative users. No other type of user is allowed to manage a Company's Subscriptions.</p>
+</div>
+<h2 id="auto-approval">Auto Approval</h2>
+<p>Company Administrators in the Subscription Manager can set up Auto Approval for any users who sign up using the Company name. If Auto Approval is enabled, the Company Administrator does not need to approve access requests individually, instead, the user will automatically gain access to XMPro.</p>
+<p>To enable Auto Approval, first log in to XMPro Subscription Manager as a Company Administrator. Then:</p>
+<ol>
+<li>Click Users in the left menu to open the Users page.</li>
+<li>Open the Access Requests page by clicking the Registration Requests button in the command bar.</li>
+<li>Open the Auto Approve page by clicking the Setup Auto Approve button in the command bar.</li>
+<li>Check the <em>Enable auto approve</em> checkbox.</li>
+<li>Choose a Default Role that will be given to new users.</li>
+<li>Click Save.</li>
+</ol>
+<p><img src="../../images/image-143.png" alt="Auto Approval Setup"></p>
+<h2 id="default-subscriptions">Default Subscriptions</h2>
+<p>Company Administrators in the Subscription Manager have the ability to determine if users signing up to the Subscription Manager are given access to products by default. They can also assign users a default specific role, according to what they have configured.</p>
+<p>For example, if a Company Administrator set the Data Stream Designer to be a default product and set the default role for this product to &quot;General User&quot;, any new person signing up will be given access to the Data Stream Designer as a general user when the Company Administrator approves their request for access to Subscription Manager. Thus, there is no need to have every user signing up request a subscription to every product they need access to, on top of Subscription Manager, and approve every request individually. To set this up, follow the steps below:</p>
+<ol>
+<li>Click on <em>Subscriptions</em> from the left-hand menu.</li>
+<li>Select the product you would like to be a default product.</li>
+<li>Select the &quot;<em>Is default?</em>&quot; check box.</li>
+<li>Select the role that the new users should hold on this product after they have been automatically been given access from the &quot;<em>Default Role</em>&quot; drop-down.</li>
+<li>Click <em>Save.</em></li>
+</ol>
+<p><img src="../../images/image-278.png" alt="Default Subscriptions Setup"></p>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: June 09, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

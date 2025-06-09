@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Manage Connectors | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Manage Connectors | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/docs/how-tos/connectors/manage-connectors.md&amp;version=GB20290-migrate-public-docs&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="manage-connectors">Manage Connectors</h1>
+
+<p>Connectors allow you to connect to third-party sources of data. Examples of these Data Sources include databases, Data Streams, or Recommendations, which can be integrated into the Application and are needed if you want to display any real-time or context data to the user on a Page of an Application.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>It is recommended that you read the article listed below to improve your understanding of Connectors.</p>
+<ul>
+<li><a href="../../concepts/connector.html">Connector</a></li>
+</ul>
+</div>
+<h2 id="creating-connectors">Creating Connectors</h2>
+<p>Creating a Connector can be divided into two parts:</p>
+<h3 id="writing-the-code-for-a-connector">Writing the code for a Connector</h3>
+<p>Connectors are generally written in C# as library projects that make use of the <a href="https://www.nuget.org/packages/XMPro.Integration.Framework">XMPro.Integration.Framework</a> NuGet package.</p>
+<p>XMPro.Integration.Framework requires your project to be written using a predefined structure. This structure requires you to implement certain interfaces.</p>
+<p>To learn more about how to use this framework, refer to <a href="building-connectors.html">these</a> instructions.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Code for some Connectors has been made available on <a href="https://github.com/XMPro/index.md">GitHub.</a> It might be useful to use these resources as an example when writing your own Connectors.</p>
+</div>
+<h3 id="packaging-the-connector">Packaging the Connector</h3>
+<p>After writing your code, you need to use the <a href="https://apps.microsoft.com/store/detail/xmpro-package-manager/9N3F4WNSLGZK?hl=en-us&amp;gl=us&amp;activetab=pivot%3Aoverviewtab">XMPro Package Manager</a> Windows 10 desktop application to package your Connector.</p>
+<p>This application allows you to specify all the properties your Connector requires, add the user settings in the form of controls, and allows you to upload the DLL of the Connector you’ve written. Finally, it will create a file with a “.xmp” extension, which you can upload to App Designer and start to use to build Applications.</p>
+<p>To package the Connector, refer to <a href="packaging-connectors.html">these</a> instructions.</p>
+<h2 id="adding-a-connector">Adding a Connector</h2>
+<p>Connectors can be added via the Connectors page before being used in any of the Applications.</p>
+<ol>
+<li>Click on the <em>Connectors</em> page from the left-hand menu.</li>
+<li>Click on <em>Add</em>.</li>
+<li>Upload the <em>xmp file</em> of the Connector.</li>
+<li>The unique ID, name, version, and description are re-filled based on details from the file uploaded.</li>
+<li>Add the category.</li>
+<li>Click on <em>Save</em>.</li>
+</ol>
+<p><img src="../../images/connectors-2.png" alt="Add new connector dialog"></p>
+<p><img src="../../images/image-1247.png" alt="Connector details form"></p>
+<p>Selecting an existing Connector opens the configuration panel where details for the Connector can be viewed. The category can also be changed here.</p>
+<p><img src="../../images/image-1824.png" alt="Connector configuration panel"></p>
+<h2 id="deleting-connectors">Deleting Connectors</h2>
+<p>Connectors can be removed via the Connectors page. To remove Connectors:</p>
+<ol>
+<li>Open the <em>Connectors</em> page from the left-hand menu.</li>
+<li>Click <em>Select</em>.</li>
+<li>Select the Connectors that you would like to remove.</li>
+<li>Click <em>Delete</em>.</li>
+</ol>
+<p><img src="../../images/connectors-5-1.png" alt="Select and delete connectors"></p>
+<p>5. Confirm that you would like to delete the Connectors selected.</p>
+<p><img src="../../images/connectors-6.png" alt="Confirm connector deletion dialog"></p>
+<h2 id="versions-of-a-connector">Versions of a Connector</h2>
+<p>When a new <a href="../../concepts/version.html">version</a> of a Connector is added, the Connector will be updated to the new version. The old version will remain and Applications using the old version of the Connector will continue to use that version until it is upgraded manually.</p>
+<ol>
+<li>Open the Connectors page from the left-hand menu.</li>
+<li>Select a Connector to view its information.</li>
+<li>Each version is shown along with the number of Applications still using that version.</li>
+<li>Select the version to view the complete list of Applications still using that version.</li>
+</ol>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Users with <a href="../../administration/subscriptions-admin/manage-user-access.html#app-designer-rights-and-roles">DeleteConnector</a> rights and Admins see the usage count for all Applications, whereas other users see the usage count of Applications to which they have access.</p>
+</div>
+<p><img src="../../images/image-246.png" alt="Connector versions and usage"></p>
+<h2 id="categories">Categories</h2>
+<p>Connectors can be organized into categories. These categories are separate from the <a href="../../concepts/category.html">App and Data Stream Categories</a>.</p>
+<ol>
+<li>Click on the Connectors page from the left-hand menu.</li>
+<li>Click on Manage Categories.</li>
+<li>The list of existing categories is shown.</li>
+<li>Click on Add.</li>
+</ol>
+<p><img src="../../images/connectors-8.png" alt="Manage connector categories"></p>
+<p>5. Name the category.<br>
+6. Click on Add.</p>
+<p><img src="../../images/connectors-9.png" alt="Add new category dialog"></p>
+<p>Categories for Connectors can also be edited or removed. To edit or remove a category for Connectors, select the category from the list of existing categories to enable the edit and remove options.</p>
+<p><img src="../../images/connectors-10.png" alt="Edit or remove category options"></p>
+<h2 id="finding-help-for-connectors">Finding Help for Connectors</h2>
+<p>Help documentation is available for every Connector. These pages provide context, configuration definitions, an example, and release notes to help if you are unsure of anything related to the Connector you are configuring.</p>
+<p><a href="https://documentation.xmpro.com/resources/integrations#connectors">See the Integrations article for the list of Connector documentation links.</a></p>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: June 09, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

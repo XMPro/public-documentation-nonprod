@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Setup Input Mappings | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Setup Input Mappings | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/docs/how-tos/data-streams/setup-input-mappings.md&amp;version=GB20290-migrate-public-docs&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="setup-input-mappings">Setup Input Mappings</h1>
+
+<p>Input Mappings allow you to specify that an Agent receives its input in a specific structure. This is possible by configuring the arrows between the two Agents, which allow the user to map the inputs of the Agent to incoming attributes.</p>
+<p>This functionality is beneficial if you want to map any incoming data from a preceding Agent to specific attributes that can be saved in rows or columns in a database using an Action Agent, such as an SQL Server Writer.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>It is recommended that you read the article listed below to improve your understanding of Input Mappings.</p>
+<ul>
+<li><a href="../../concepts/data-stream/stream-object-configuration.html">Stream Object Configuration</a></li>
+<li><a href="manage-data-streams.html">How to Manage Data Streams</a></li>
+</ul>
+</div>
+<h2 id="adding-input-mappings">Adding Input Mappings</h2>
+<p>To add Input Mappings between two Agents, follow the steps below:</p>
+<ol>
+<li>Click on the arrow between the two Agents you want to map.</li>
+<li>Click on <em>Configure</em>. The left side lists all the properties the first Agent is sending. The right side is listing all the inputs the receiving Agent is expecting.</li>
+<li>Select the property you want to map for each field. If the value is greyed out, it means it does not match the type (number, text, etc) that the receiving Agent is expecting for that field.</li>
+</ol>
+<p><img src="../../images/data-streams/mappings/aim-1.png" alt="Selecting the arrow between agents to configure input mapping"></p>
+<p><img src="../../images/data-streams/mappings/aim-2.png" alt="Configure screen showing source and target properties"></p>
+<ol start="4">
+<li>Click on <em>Apply</em>.</li>
+</ol>
+<p><img src="../../images/data-streams/mappings/aim-3.png" alt="Applying the input mapping configuration"></p>
+<h2 id="automap">Automap</h2>
+<p>To map via Automap, follow the steps below:</p>
+<ol>
+<li>Click on the arrow between the two Agents you want to map.</li>
+<li>Click on <em>Configure</em>.</li>
+<li>Click on <em>Automap</em>.</li>
+<li>Click on <em>Apply</em>.</li>
+</ol>
+<p><img src="../../images/data-streams/mappings/am-1.png" alt="Selecting the Automap option in the configuration screen"></p>
+<h2 id="match-by-expression">Match by Expression</h2>
+<p>To map via Match by Expression, follow the steps below:</p>
+<ol>
+<li>Click on the arrow between the two Agents you want to map.</li>
+<li>Click on <em>Configure</em>.</li>
+<li>Click on <em>Match by Expression</em>.</li>
+<li>Enter a prefix, postfix, or Expression. For example, 'num' as a prefix will match 'numApples' with 'Apples'.</li>
+</ol>
+<p><img src="../../images/data-streams/mappings/am-2.png" alt="Selecting Match by Expression option"></p>
+<p><img src="../../images/data-streams/mappings/am-3.png" alt="Entering prefix or expression for matching fields"></p>
+<ol start="5">
+<li>Click on <em>Apply</em>.</li>
+</ol>
+<p><img src="../../images/data-streams/mappings/am-4.png" alt="Applying the match by expression mapping"></p>
+<h2 id="show-unmapped">Show Unmapped</h2>
+<p>To show Unmapped fields, follow the steps below:</p>
+<ol>
+<li>Click on the arrow between the two Agents you want to map.</li>
+<li>Click on <em>Configure</em>.</li>
+<li>Click on <em>Show Unmapped</em>.</li>
+</ol>
+<p><img src="../../images/data-streams/mappings/su-1-1.png" alt="Selecting the Show Unmapped option"></p>
+<p>The list will change to only show the list of fields that have not yet been mapped.</p>
+<p><img src="../../images/data-streams/mappings/su-2-1.png" alt="Display showing only unmapped fields"></p>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: June 09, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

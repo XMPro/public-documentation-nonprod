@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Troubleshoot a Data Stream | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Troubleshoot a Data Stream | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/docs/how-tos/data-streams/troubleshoot-a-data-stream.md&amp;version=GB20290-migrate-public-docs&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="troubleshoot-a-data-stream">Troubleshoot a Data Stream</h1>
+
+<p>When creating and configuring a Data Stream, there is a chance it may not be working as expected, and you may have to find out more information as to why it is not behaving the way it should. There are a few options available on how to troubleshoot a Data Stream. Troubleshooting is required if you want to make sure the flow of data is accurate.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>It is recommended that you read the article listed below to improve your understanding of Data Streams.</p>
+<ul>
+<li><a href="../../concepts/data-stream/index.html">Data Stream</a></li>
+<li><a href="manage-data-streams.html">How to Manage Data Streams</a></li>
+</ul>
+</div>
+<h2 id="troubleshoot-using-live-view">Troubleshoot using Live View</h2>
+<p>To troubleshoot using the Live View, follow the steps below:</p>
+<ol>
+<li>Click on <em>Publish</em>.</li>
+</ol>
+<p><img src="../../images/data-streams/troubleshooting/ts-1-1.png" alt="Click Publish button to publish the data stream"></p>
+<ol start="2">
+<li>Click on <em>Live View</em>.</li>
+<li>Select the Agent/s to view the Live Data for.</li>
+<li>Click <em>Save</em>.</li>
+</ol>
+<p><img src="../../images/data-streams/troubleshooting/ts-2-1.png" alt="Select agents in Live View to monitor data flow"></p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>If data is not being displayed when it should be, or if the values are not being displayed as expected, something may be going wrong with the Agent.</p>
+</div>
+<p><img src="../../images/data-streams/troubleshooting/manage-ds-howtoopen2.png" alt="Live View interface showing data stream monitoring"></p>
+<p><img src="../../images/data-streams/troubleshooting/ts-4.png" alt="Example of live data being displayed"></p>
+<h2 id="troubleshooting-using-error-endpoints">Troubleshooting using Error Endpoints</h2>
+<p>To Troubleshoot using the Error Endpoints, follow the steps below:</p>
+<ol>
+<li>Drag an <em>Event Printer</em> agent onto the canvas. They can be found under 'Action Agents.'</li>
+<li>Add an arrow from the error endpoint connected to the Event Printer.</li>
+<li>Click on <em>Publish</em>.</li>
+</ol>
+<p><img src="../../images/data-streams/troubleshooting/ts-5-1.png" alt="Using Event Printer to capture errors from error endpoints"></p>
+<ol start="4">
+<li>Click on <em>Live View</em>.</li>
+<li>Select the <em>Event Printer</em>.</li>
+<li>Click <em>Save</em>.</li>
+</ol>
+<p><img src="../../images/data-streams/troubleshooting/ts-6.png" alt="Viewing error output in Event Printer"></p>
+<h2 id="troubleshooting-when-there-is-no-data-visible">Troubleshooting when there is no data visible</h2>
+<p>In some cases, the Event Printer does not show any data when trying to troubleshoot the Data Stream. If this is the case, the Collections Stream Host may be able to give some information.</p>
+<ol>
+<li>Open the <em>Collections</em> page from the left-hand menu.</li>
+<li>Click on the <em>Collection</em>.</li>
+<li>Click on <em>Stream Hosts</em>.</li>
+<li>Select the Stream Host.</li>
+<li>View the logs from the Stream Host.</li>
+</ol>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Any errors that are generated from an Agent which are printed from the error endpoint are also printed in the Stream Host logs.</p>
+</div>
+<p><img src="../../images/data-streams/troubleshooting/image-1005.png" alt="Accessing Stream Host logs from Collections page"></p>
+<h2 id="troubleshooting-when-there-are-no-stream-hosts">Troubleshooting when there are no Stream Hosts</h2>
+<p>If the Stream Host is not running at all, you can view the logs from the install directory of the Stream Host on your computer. The install folder is named <em>XMPro Stream Host</em> and is usually found in the <em>Program Files</em> in the <em>C Drive</em>.</p>
+<p><img src="../../images/data-streams/troubleshooting/image-1333.png" alt="Stream Host installation directory location"></p>
+<p><img src="../../images/data-streams/troubleshooting/troubleshoot-9.png" alt="Navigating to Stream Host logs in Program Files"></p>
+<p><img src="../../images/data-streams/troubleshooting/troubleshoot-10.png" alt="Stream Host logs directory structure"></p>
+<p><img src="../../images/data-streams/troubleshooting/troubleshoot-11.png" alt="Viewing Stream Host log files for troubleshooting"></p>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: June 09, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
