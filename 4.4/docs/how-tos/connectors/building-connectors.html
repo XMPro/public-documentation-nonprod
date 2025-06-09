@@ -116,7 +116,7 @@ A template is a JSON representation of all the controls and their layout that wi
 </ul>
 <p><img src="../../images/connector-configuration-packager.png" alt="Connector Configuration Packager"></p>
 <p>Each control has a <em>Key</em>, which uniquely identifies it in the template and allows the Connector code to access its value at any time. To get the value contained in a setting, use the following code:</p>
-<pre><code class="lang-csharp">string mySetting = parameters[&quot;myUniqueKey&quot;];
+<pre><code class="lang-csharp">string mySetting = parameters[“myUniqueKey”];
 </code></pre>
 <p>Before a template is rendered on the screen, or if a postback occurs on any control in the template, the method below would be called to allow the Connector an opportunity to make any necessary runtime changes to the template, for example, verifying user credentials, displaying all tables of a selected database in a drop-down list, etc. In this example, no changes are being made to the template, but they can be added to the <em><strong>todo</strong></em> section if needed.</p>
 <p>{% hint style=&quot;info&quot; %}
@@ -206,7 +206,7 @@ this.config = configuration;
 <pre><code class="lang-csharp">void Destroy()
 </code></pre>
 <h3 id="decrypting-values">Decrypting Values</h3>
-<p>If a Connector's configuration contains a Secure/Password Textbox, its value will automatically be encrypted. To decrypt the value, use the following set of instructions:</p>
+<p>If a Connector’s configuration contains a Secure/Password Textbox, its value will automatically be encrypted. To decrypt the value, use the following set of instructions:</p>
 <pre><code class="lang-csharp">var request = new OnDecryptRequestArgs(value);
 this.OnDecryptRequestArgs?.Invoke(this, request);
 var decryptedVal = request.DecryptedValue;
