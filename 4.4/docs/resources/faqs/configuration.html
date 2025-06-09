@@ -138,7 +138,7 @@
 <h3 id="how-are-the-stream-load-metrics-calculated">How are the Stream Load Metrics calculated?</h3>
 <p><em>&quot;I'm trying to reconcile the Stream Load metric in Data Stream designer with what I'm expecting based on the listeners. Is the metric calculated on the stream outputs or the inputs?</em></p>
 <p><em>I have 3 listeners, each running at a 1 second interval, so I expect a 180/min metric. Is the ~360/min metric because there are double the number of outputs (action agents) per listener?&quot;</em></p>
-<p><img src="images/faq-run-recommendation.png" alt="Stream Load Metrics"></p>
+<p><img src="../../images/resources/faqs/faq-run-recommendation.png" alt="Stream Load Metrics"></p>
 <p>Stream load is different from ingestion rate. The Stream load represents the total number of events published by all Stream Objects on the canvas. In this case, 60 x the total number of agents on the screen (assuming your Listeners bring back 1 record on every poll).</p>
 <p>You would notice the actual number is much less because although you want it to run every second, the calls to dependencies like SQL etc do not return its data as quickly and hence the actual rate is less.</p>
 <p>Generally, the number of events published per Agent decreases as you work through your data stream, because the intention is to work towards a smaller payload focused on the event in which you're interested.</p>
@@ -146,7 +146,7 @@
 <p>We advise you to only have one recommendation agent on a data stream.</p>
 <p>A recommendation rule is configured against a single Data Stream, not a given Stream Object in a Stream. It will find the first Run Recommendation in the selected Data Stream and let you define your Recommendation Rule against the output payload of that Agent. If the payload differs at runtime, you may get weird results when triggering a recommendation alert.</p>
 <p>If the data cannot be merged (using a join or union transformation) and used in the different recommendations, then consider creating 3 different data streams. Remember you can have one <strong>data stream</strong> feed data to as many <strong>recommendations</strong> as you want to, BUT you should only have one <em>run recommendation agent</em> on a data stream canvas.</p>
-<p><img src="images/faq-run-recommendation.png" alt="Run Recommendation"></p>
+<p><img src="../../images/resources/faqs/faq-run-recommendation.png" alt="Run Recommendation"></p>
 <h3 id="my-data-stream-connector-can-do-everything-why-use-the-other-connectors">My Data Stream Connector can do everything. Why use the other Connectors?</h3>
 <p>Although a wide variety of data can be surfaced from a Data Stream into your Application using the Data Stream Connector, there is a downside. The Data Stream is constantly pushing data, which can lead to out-of-resource errors - which appear as XMPro product errors. If your data requirement is ad-hoc, consider the other Connectors.</p>
 <h4 id="further-reading-4">Further Reading</h4>

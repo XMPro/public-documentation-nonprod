@@ -120,9 +120,9 @@
 <h4 id="allow-adding">Allow Adding</h4>
 <p>When it's enabled, there are two places where the user can add a new record: an Add button appears at the top of the Tree Grid and in the right-most column.</p>
 <p>The Add button in the top-right corner adds a new record at the root level of the Tree Grid.</p>
-<p><img src="../images/Allow-Adding-Root.png" alt="Allow Adding Root"></p>
+<p><img src="../../images/blocks-toolbox/Allow-Adding-Root.png" alt="Allow Adding Root"></p>
 <p>The Add option in the right-most column adds a new child record. For example, if you select 'Add' under 'Arthur', a new record is added as a child of the 'Arthur' record.</p>
-<p><img src="../images/Allow-Adding-Row.png" alt="Allow Adding Row"></p>
+<p><img src="../../images/blocks-toolbox/Allow-Adding-Row.png" alt="Allow Adding Row"></p>
 <h4 id="edit-mode">Edit Mode</h4>
 <p>The user can edit the data in several modes. The option is only available when Allow Updating is enabled.</p>
 <table>
@@ -135,43 +135,43 @@
 <tbody>
 <tr>
 <td>Batch</td>
-<td>A user edits data in cells across multiple rows - indicated by a green border. Changes are not applied until the user clicks the Save button. Click Reset to revert the changes.<br><br><img src="../images/Edit-Mode-Batch-1.png" alt="Edit Mode Batch"></td>
+<td>A user edits data in cells across multiple rows - indicated by a green border. Changes are not applied until the user clicks the Save button. Click Reset to revert the changes.<br><br><img src="../../images/blocks-toolbox/Edit-Mode-Batch-1.png" alt="Edit Mode Batch"></td>
 </tr>
 <tr>
 <td>Batch With External Save</td>
-<td>As with Batch mode, the user edits data in cells across multiple rows - indicated by a green border.<br><br>However, the user must add a separate block (such as a <a href="../actions/button.html">Button</a>) to apply the changes. Manually configure this button's <a href="../common-properties.html#update-data-sources">Update Data Sources</a> section in Block Properties:<br><ul><li>select a Data Source (such as the Tree Grid's Data Source),</li><li>and the action(s) to be taken (update, refresh, or delete).</li></ul><br><img src="../images/Edit-Mode-Batch-External-Save.png" alt="Edit Mode Batch External Save"></td>
+<td>As with Batch mode, the user edits data in cells across multiple rows - indicated by a green border.<br><br>However, the user must add a separate block (such as a <a href="../actions/button.html">Button</a>) to apply the changes. Manually configure this button's <a href="../common-properties.html#update-data-sources">Update Data Sources</a> section in Block Properties:<br><ul><li>select a Data Source (such as the Tree Grid's Data Source),</li><li>and the action(s) to be taken (update, refresh, or delete).</li></ul><br><img src="../../images/blocks-toolbox/Edit-Mode-Batch-External-Save.png" alt="Edit Mode Batch External Save"></td>
 </tr>
 <tr>
 <td>Cell</td>
-<td>A user edits the data cell by cell. Changes are saved once a cell loses focus, or discarded if a user presses Esc.<br><br><img src="../images/Edit-Mode-Cell-2.png" alt="Edit Mode Cell"></td>
+<td>A user edits the data cell by cell. Changes are saved once a cell loses focus, or discarded if a user presses Esc.<br><br><img src="../../images/blocks-toolbox/Edit-Mode-Cell-2.png" alt="Edit Mode Cell"></td>
 </tr>
 <tr>
 <td>Row</td>
-<td>The user edits data row by row. When a user clicks the Edit button in the right-most column, the corresponding row becomes editable and Save and Cancel buttons appear in the right-most column. Click the Save button to apply the changes.<br><br><img src="../images/Edit-Mode-Row.png" alt="Edit Mode Row"></td>
+<td>The user edits data row by row. When a user clicks the Edit button in the right-most column, the corresponding row becomes editable and Save and Cancel buttons appear in the right-most column. Click the Save button to apply the changes.<br><br><img src="../../images/blocks-toolbox/Edit-Mode-Row.png" alt="Edit Mode Row"></td>
 </tr>
 </tbody>
 </table>
 <h4 id="allow-drag--drop">Allow Drag &amp; Drop</h4>
 <p>When it's enabled, it will show the drag icon by default in front of the row. The user can change the location of the row by clicking the icon and dragging the row. A row can be dragged inside another row to nest it underneath. If this is disabled, reordering is not available.</p>
-<p><img src="../images/image-1545.png" alt="Allow Drag &amp; Drop"></p>
+<p><img src="../../images/blocks-toolbox/image-1545.png" alt="Allow Drag &amp; Drop"></p>
 <p>The Drag and Drop option is only available when the Edit mode is set to either 'Row' or 'Cell'.</p>
-<p><img src="../images/DragAndDropTooltip.png" alt="Drag and Drop Tooltip"></p>
+<p><img src="../../images/blocks-toolbox/DragAndDropTooltip.png" alt="Drag and Drop Tooltip"></p>
 <h4 id="show-drag-icons">Show Drag Icons</h4>
 <p>When it's enabled, it will show the drag icon in front of the row. The user can reorder the row by clicking the icon and dragging the row. If this is disabled, the user can click anywhere on the row and drag the row.</p>
-<p><img src="../images/image-1253.png" alt="Show Drag Icons"></p>
+<p><img src="../../images/blocks-toolbox/image-1253.png" alt="Show Drag Icons"></p>
 <h4 id="maximum-tree-depth">Maximum Tree Depth</h4>
 <p>The limit for the Maximum Tree Depth determines how many levels of nested records the user will be allowed to expand and view. For example, if there is no Maximum Tree Depth limit set, the user will be able to expand and view all nested records. If the Maximum Tree Depth limit is set to 2, the user can only expand records until the second level, and they will no longer be able to expand any further.</p>
-<p><img src="../images/MaximumTreeDepth.png" alt="Maximum Tree Depth"></p>
+<p><img src="../../images/blocks-toolbox/MaximumTreeDepth.png" alt="Maximum Tree Depth"></p>
 <p>The Maximum Tree Depth limit also applies to adding and updating rows. The option to add a new row is only available for records within the Max Tree Depth limit specified.</p>
-<p><img src="../images/MaxTreeDepth-Add-Delete.png" alt="Maximum Tree Depth Add Delete"></p>
+<p><img src="../../images/blocks-toolbox/MaxTreeDepth-Add-Delete.png" alt="Maximum Tree Depth Add Delete"></p>
 <h4 id="store-user-selection">Store User Selection</h4>
 <p>When enabled, your selected row is saved at runtime in your browser's local storage, so that you return to the same row when the page reloads without having to re-navigate the tree. This includes re-opening the App and returning from a drill-down.</p>
 <h3 id="value">Value</h3>
 <h4 id="common-properties-2">Common Properties</h4>
 <p>The <em>value</em> property is common to most Blocks.</p>
-<p><a href="../common-properties.html#behavior">See the Common Properties article for more details on common value properties.</a></p>
+<p><a href="../common-properties.html#value">See the Common Properties article for more details on common value properties.</a></p>
 <p>If the value is set to the ID of a record in a Data Source, that record will be selected when the application is launched.</p>
-<p><img src="../images/image-1572.png" alt="Value"></p>
+<p><img src="../../images/blocks-toolbox/image-1572.png" alt="Value"></p>
 <h3 id="data-source">Data Source</h3>
 <h4 id="common-properties-3">Common Properties</h4>
 <p>Properties that are common to most Blocks include data source, filter, sort, show # of results, and skip # of results.</p>
@@ -186,7 +186,7 @@
 <p><a href="data-grid.html#columns">See the Data Grid article</a> for details on common column properties: Format, Currency, Date Time Format, Editor Type - Lookup, Editor Type - Hyperlink, and Editor Type - Indicator, and Open in New Tab/Window.</p>
 <h4 id="order">Order</h4>
 <p>The <em>order</em> allows you to specify the format for the columns. This includes the visibility of the columns, the alignment, the captions, or the width.</p>
-<p><img src="../images/image-1317.png" alt="Column Order"></p>
+<p><img src="../../images/blocks-toolbox/image-1317.png" alt="Column Order"></p>
 <h3 id="action">Action</h3>
 <h4 id="common-properties-5">Common Properties</h4>
 <p>Properties that are common to most Blocks include: <em>Navigate To and Show Confirmation Dialog;</em></p>

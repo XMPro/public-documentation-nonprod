@@ -91,15 +91,15 @@
 <ol>
 <li>Start the installation process by running the <em>Subscription Manager.exe</em> file, received from your XMPro.</li>
 </ol>
-<p><img src="../../images/windows-server-2022-install-2.png" alt="Subscription Manager Setup"></p>
+<p><img src="../../../images/installation/windows-server-2022-install-2.png" alt="Subscription Manager Setup"></p>
 <ol start="2">
 <li>Click the &quot;I Agree&quot; button and press &quot;Next&quot;</li>
 </ol>
-<p><img src="../../images/windows-server-2022-install-3.png" alt="License Agreement"></p>
+<p><img src="../../../images/installation/windows-server-2022-install-3.png" alt="License Agreement"></p>
 <ol start="3">
 <li>Follow the instructions and when the installation is finished click &quot;Close&quot;</li>
 </ol>
-<p><img src="../../images/windows-server-2022-install-4.png" alt="Installation Complete"></p>
+<p><img src="../../../images/installation/windows-server-2022-install-4.png" alt="Installation Complete"></p>
 <div class="NOTE">
 <h5>Note</h5>
 <p>This &quot;Setup&quot; will install the installer you will use to install the database and website</p>
@@ -108,12 +108,12 @@
 <li>When this initial installation is complete, open the start menu</li>
 <li>Search for &quot;XMPro Subscription Manager&quot; and click on Run as Administrator</li>
 </ol>
-<p><img src="../../images/windows-server-2022-install-5.png" alt="Run Subscription Manager"></p>
+<p><img src="../../../images/installation/windows-server-2022-install-5.png" alt="Run Subscription Manager"></p>
 <h3 id="component-choice">Component Choice</h3>
 <ol start="6">
 <li>When the installer launches, choose &quot;Install&quot; and click &quot;Next&quot;</li>
 </ol>
-<p><img src="../../images/windows-server-2022-install-6.png" alt="Choose Install"></p>
+<p><img src="../../../images/installation/windows-server-2022-install-6.png" alt="Choose Install"></p>
 <ol start="7">
 <li>Select the components that you would like to install and click &quot;Next&quot;</li>
 </ol>
@@ -121,7 +121,7 @@
 <h5>Note</h5>
 <p>If this is the first time you are installing Subscription Manager select both &quot;Database&quot; and &quot;Web Application&quot;</p>
 </div>
-<p><img src="../../images/windows-server-2022-install-7.png" alt="Select Components"></p>
+<p><img src="../../../images/installation/windows-server-2022-install-7.png" alt="Select Components"></p>
 <h3 id="database">Database</h3>
 <h4 id="server">Server</h4>
 <ol start="8">
@@ -131,7 +131,7 @@
 <h5>Note</h5>
 <p>If you already know the server instance name, it can be entered manually. Otherwise, use the refresh button on the right to load all available servers. Selecting the &quot;Local Servers&quot; check box will limit the search to the local network.</p>
 </div>
-<p><img src="../../images/windows-server-2022-install-8.png" alt="Server Selection"></p>
+<p><img src="../../../images/installation/windows-server-2022-install-8.png" alt="Server Selection"></p>
 <h4 id="authentication-method">Authentication Method</h4>
 <ol start="9">
 <li>Specify the authentication method that should be used: Windows or SQL</li>
@@ -151,7 +151,7 @@
 <h5>Warning</h5>
 <p>The SQL user must have permission to create databases on the server.</p>
 </div>
-<p><img src="../../images/windows-server-2022-install-9.png" alt="SQL Authentication"></p>
+<p><img src="../../../images/installation/windows-server-2022-install-9.png" alt="SQL Authentication"></p>
 <p><strong>Database</strong></p>
 <div class="NOTE">
 <h5>Note</h5>
@@ -163,7 +163,7 @@
 <li>Make the changes needed by selecting the correct option</li>
 <li>Specify the name of the new database or select an existing database from the drop-down</li>
 </ol>
-<p><img src="../../images/windows-server-2022-install-10.png" alt="Database Configuration"></p>
+<p><img src="../../../images/installation/windows-server-2022-install-10.png" alt="Database Configuration"></p>
 <h3 id="web-application">Web Application</h3>
 <p><strong>DNS Name</strong></p>
 <ol start="13">
@@ -234,7 +234,7 @@
 <h5>Note</h5>
 <p>If you choose &quot;Create a new Application Pool&quot;, give it an appropriate name. If you choose &quot;Use an existing Application Pool&quot;, select an existing application pool from the drop-down.</p>
 </div>
-<p><img src="../../images/windows-server-2022-install-11.png" alt="Application Pool Configuration"></p>
+<p><img src="../../../images/installation/windows-server-2022-install-11.png" alt="Application Pool Configuration"></p>
 <h4 id="security-account">Security Account</h4>
 <ol start="18">
 <li>Select a security account that can be used</li>
@@ -243,7 +243,7 @@
 <h5>Note</h5>
 <p>The default option is &quot;Local System&quot;, which is a built-in security account. You can either change it by selecting a different built-in security account from the drop-down or by specifying your own security account.</p>
 </div>
-<p><img src="../../images/windows-server-2022-install-12.png" alt="Security Account Configuration"></p>
+<p><img src="../../../images/installation/windows-server-2022-install-12.png" alt="Security Account Configuration"></p>
 <div class="WARNING">
 <h5>Warning</h5>
 <p>If you selected Windows authentication to connect to the database, you must choose &quot;Specify your own Security Account&quot; and provide the correct credentials. The service account must have batch logon rights enabled. More Information on how to set up a custom application pool in IIS as well as steps on how to enable batch logon rights can be found in this <a href="https://docs.xmpro.com/knowledge-base-2/setting-up-a-custom-application-pool-so-that-windows-authentication-can-be-used-when-installing-xmpro-enabling-batch-logon-rights-for-a-user/index.md">link</a>.</p>
@@ -257,7 +257,7 @@ By default, the &quot;Enable Email Notification&quot; is checked.</li>
 <h5>Note</h5>
 <p>SMTP can be disabled by unchecking the &quot;Enable Email Notification&quot; checkbox if you don't want to receive email notifications. If at a later stage email notifications are needed, the installer can be run again to add SMTP functionality.</p>
 </div>
-<p><img src="../../images/windows-server-2022-install-13.png" alt="SMTP Configuration"></p>
+<p><img src="../../../images/installation/windows-server-2022-install-13.png" alt="SMTP Configuration"></p>
 <div class="WARNING">
 <h5>Warning</h5>
 <p>You are required to set up an SMTP account. Failing to do so will make registering new users very cumbersome.</p>
@@ -274,7 +274,7 @@ By default, the &quot;Enable Email Notification&quot; is checked.</li>
 <h5>Note</h5>
 <p>It is recommended that you choose &quot;LocalMachine&quot; as the Location for the signing certificate.</p>
 </div>
-<p><img src="../../images/windows-server-2022-install-14.png" alt="Signing Certificate"></p>
+<p><img src="../../../images/installation/windows-server-2022-install-14.png" alt="Signing Certificate"></p>
 <h4 id="encryption-certificate">Encryption Certificate</h4>
 <ol start="22">
 <li>Start by browsing to a suitable <em>.pfx</em> certificate file. Specify the password for the certificate</li>
@@ -284,7 +284,7 @@ By default, the &quot;Enable Email Notification&quot; is checked.</li>
 <h5>Note</h5>
 <p>It is recommended that you choose &quot;LocalMachine&quot; as the Location for the encryption certificate.</p>
 </div>
-<p><img src="../../images/windows-server-2022-install-15.png" alt="Encryption Certificate"></p>
+<p><img src="../../../images/installation/windows-server-2022-install-15.png" alt="Encryption Certificate"></p>
 <div class="WARNING">
 <h5>Warning</h5>
 <p>Both certificates must contain a private key.</p>
@@ -293,7 +293,7 @@ By default, the &quot;Enable Email Notification&quot; is checked.</li>
 <ol start="24">
 <li>Continue through the wizard, confirm the installation and the components will be installed</li>
 </ol>
-<p><img src="../../images/windows-server-2022-install-16.png" alt="Installation Progress"></p>
+<p><img src="../../../images/installation/windows-server-2022-install-16.png" alt="Installation Progress"></p>
 <div class="WARNING">
 <h5>Warning</h5>
 <p>Note the username and password on the last screen of the installer. This user has been created during installation as Subscription Manager itself needs at least one user in the system. Without it, you cannot add other users.</p>
@@ -308,18 +308,18 @@ By default, the &quot;Enable Email Notification&quot; is checked.</li>
 <h5>Note</h5>
 <p>The format of the URL will be as follows: &quot;https://yourdnsname/virtualdirectoryname/&quot;</p>
 </div>
-<p><img src="../../images/windows-server-2022-install-17.png" alt="Website Access"></p>
+<p><img src="../../../images/installation/windows-server-2022-install-17.png" alt="Website Access"></p>
 <h3 id="obtaining-an-installation-profile">Obtaining an Installation Profile</h3>
 <p>To install the Data Stream Designer and App Designer, you will need an Installation Profile.</p>
 <ol start="26">
 <li>Navigate to the XMPro Subscription Manager site as above using the Global Admin Login Details</li>
 <li>Go to the Subscription Manager page</li>
 </ol>
-<p><img src="../../images/windows-server-2022-install-18.png" alt="Home Page"></p>
+<p><img src="../../../images/installation/windows-server-2022-install-18.png" alt="Home Page"></p>
 <ol start="28">
 <li>Click Products in the menu and click the Installation Profile button</li>
 </ol>
-<p><img src="../../images/windows-server-2022-install-19.png" alt="Installation Profile Button"></p>
+<p><img src="../../../images/installation/windows-server-2022-install-19.png" alt="Installation Profile Button"></p>
 <ol start="29">
 <li>Enter a File Key and press OK to download the file</li>
 </ol>
@@ -327,7 +327,7 @@ By default, the &quot;Enable Email Notification&quot; is checked.</li>
 <h5>Warning</h5>
 <p>Remember the file key as it is needed when installing Data Stream Designer and App Designer.</p>
 </div>
-<p><img src="../../images/windows-server-2022-install-20.png" alt="File Key Entry"></p>
+<p><img src="../../../images/installation/windows-server-2022-install-20.png" alt="File Key Entry"></p>
 <h3 id="optional-iis-user-permissions">Optional: IIS User Permissions</h3>
 <p>If you've chosen to use a <strong>custom service account</strong> during installation, you may have to perform an extra step. An error may be shown after logging into Subscription Manager, even after giving the <em>IIS_USRS</em> group permission on the signing certificate private keys. The error would be as follow: &quot;<em>We could not grant you access to the requested subscription. There was an unexpected error</em>&quot;. The logs would also contain the following error: &quot;<em>System.Security.Cryptography.CryptographicException: Keyset does not exist</em>&quot;.</p>
 <p>To solve this issue, use this <a href="https://docs.xmpro.com/knowledge-base-2/how-to-grant-permission-to-iis-user-on-xmpro-identity-service-signing-certificate/index.md">article</a> as a guideline to grant access for the Application Pool Identity (in some cases a domain account) on the signing certificate private keys.</p>
@@ -335,25 +335,25 @@ By default, the &quot;Enable Email Notification&quot; is checked.</li>
 <ol>
 <li>Start the installation process by running the <em>Data Stream Designer.exe</em> that you've received from XMPro.</li>
 </ol>
-<p><img src="../../images/windows-server-2022-install-21.png" alt="Data Stream Designer Setup"></p>
+<p><img src="../../../images/installation/windows-server-2022-install-21.png" alt="Data Stream Designer Setup"></p>
 <ol start="2">
 <li>Click the &quot;I Agree&quot; button and press &quot;Next&quot;</li>
 </ol>
-<p><img src="../../images/windows-server-2022-install-22.png" alt="License Agreement"></p>
+<p><img src="../../../images/installation/windows-server-2022-install-22.png" alt="License Agreement"></p>
 <ol start="3">
 <li>Follow the instructions and when the installation is finished click &quot;Close&quot;</li>
 </ol>
-<p><img src="../../images/windows-server-2022-install-23.png" alt="Installation Complete"></p>
+<p><img src="../../../images/installation/windows-server-2022-install-23.png" alt="Installation Complete"></p>
 <ol start="4">
 <li>When this initial installation is complete, open the start menu</li>
 <li>Search for &quot;Data Stream Designer&quot; and click on Run as Administrator</li>
 </ol>
-<p><img src="../../images/windows-server-2022-install-24.png" alt="Run Data Stream Designer"></p>
+<p><img src="../../../images/installation/windows-server-2022-install-24.png" alt="Run Data Stream Designer"></p>
 <h3 id="component-choice-1">Component Choice</h3>
 <ol start="6">
 <li>When the installer launches, choose &quot;Install&quot;</li>
 </ol>
-<p><img src="../../images/windows-server-2022-install-25.png" alt="Choose Install"></p>
+<p><img src="../../../images/installation/windows-server-2022-install-25.png" alt="Choose Install"></p>
 <ol start="7">
 <li>Select the components that you would like to install</li>
 </ol>
@@ -361,7 +361,7 @@ By default, the &quot;Enable Email Notification&quot; is checked.</li>
 <h5>Note</h5>
 <p>If this is the first time you are installing the Data Stream Designer, it is highly recommended that you select both &quot;Database&quot; and &quot;Web Application&quot;.</p>
 </div>
-<p><img src="../../images/windows-server-2022-install-26.png" alt="Select Components"></p>
+<p><img src="../../../images/installation/windows-server-2022-install-26.png" alt="Select Components"></p>
 <h3 id="database-1">Database</h3>
 <h4 id="server-1">Server</h4>
 <ol start="8">
@@ -371,7 +371,7 @@ By default, the &quot;Enable Email Notification&quot; is checked.</li>
 <h5>Note</h5>
 <p>If you already know the server instance name, it can be entered manually. Otherwise, use the refresh button on the right to load all available servers. Selecting the &quot;Local Servers&quot; check box will limit the search to the local network.</p>
 </div>
-<p><img src="../../images/windows-server-2022-install-27.png" alt="Server Selection"></p>
+<p><img src="../../../images/installation/windows-server-2022-install-27.png" alt="Server Selection"></p>
 <h4 id="authentication-method-1">Authentication Method</h4>
 <ol start="9">
 <li>Specify the authentication method that should be used: Windows or SQL</li>
@@ -391,7 +391,7 @@ By default, the &quot;Enable Email Notification&quot; is checked.</li>
 <h5>Warning</h5>
 <p>The SQL user must have permission to create databases on the server.</p>
 </div>
-<p><img src="../../images/windows-server-2022-install-28.png" alt="SQL Authentication"></p>
+<p><img src="../../../images/installation/windows-server-2022-install-28.png" alt="SQL Authentication"></p>
 <p><strong>Database</strong></p>
 <div class="NOTE">
 <h5>Note</h5>
@@ -402,7 +402,7 @@ By default, the &quot;Enable Email Notification&quot; is checked.</li>
 <li>Click the &quot;Change&quot; button and select the appropriate option</li>
 <li>Specify the name of the new database or select an existing database from the drop-down</li>
 </ol>
-<p><img src="../../images/windows-server-2022-install-29.png" alt="Database Configuration"></p>
+<p><img src="../../../images/installation/windows-server-2022-install-29.png" alt="Database Configuration"></p>
 <h3 id="encryption-upgrade">Encryption Upgrade</h3>
 <p>If you are upgrading from 4.0 to 4.1+, you will be shown the Encryption Upgrade Settings page. This will assist you in migrating existing Server Variables to the new method of encryption.</p>
 <div class="WARNING">
@@ -414,7 +414,7 @@ By default, the &quot;Enable Email Notification&quot; is checked.</li>
 <li>Tick to automatically upgrade the Server Variables. It is recommended, but not required.
 None of the other settings on this page are required if you choose not to upgrade.</li>
 </ol>
-<p><img src="../../images/windows-server-2022-install-30.png" alt="Encryption Upgrade"></p>
+<p><img src="../../../images/installation/windows-server-2022-install-30.png" alt="Encryption Upgrade"></p>
 <h4 id="server-2">Server</h4>
 <ol start="13">
 <li>Select the server instance you want to connect to</li>
@@ -497,7 +497,7 @@ None of the other settings on this page are required if you choose not to upgrad
 <h5>Note</h5>
 <p>If you choose &quot;Create a new Application Pool&quot;, give it an appropriate name. If you choose &quot;Use an existing Application Pool&quot;, select an existing application pool from the drop-down.</p>
 </div>
-<p><img src="../../images/windows-server-2022-install-31.png" alt="Application Pool Configuration"></p>
+<p><img src="../../../images/installation/windows-server-2022-install-31.png" alt="Application Pool Configuration"></p>
 <h4 id="security-account-1">Security Account</h4>
 <ol start="21">
 <li>Select &quot;Local System&quot; as the security account.</li>
@@ -506,7 +506,7 @@ None of the other settings on this page are required if you choose not to upgrad
 <h5>Note</h5>
 <p>The two options available to choose from are using a built-in security account or specifying your own security account.</p>
 </div>
-<p><img src="../../images/windows-server-2022-install-32.png" alt="Security Account Configuration"></p>
+<p><img src="../../../images/installation/windows-server-2022-install-32.png" alt="Security Account Configuration"></p>
 <div class="WARNING">
 <h5>Warning</h5>
 <p>If you selected Windows authentication to connect to the database, you must choose &quot;Specify your own Security Account&quot; and provide the correct credentials. The service account must have batch logon rights enabled. More Information on how to set up a custom application pool in IIS as well as steps on how to enable batch logon rights can be found in this <a href="https://docs.xmpro.com/knowledge-base-2/setting-up-a-custom-application-pool-so-that-windows-authentication-can-be-used-when-installing-xmpro-enabling-batch-logon-rights-for-a-user/index.md">link</a>.</p>
@@ -520,11 +520,11 @@ None of the other settings on this page are required if you choose not to upgrad
 <h5>Note</h5>
 <p>This file ensures the Data Stream Designer contains the correct details for the Subscription Manager instance you would like to use. The file can be obtained through the <a href="#obtaining-an-installation-profile">steps outlined previously in this tutorial</a>.</p>
 </div>
-<p><img src="../../images/windows-server-2022-install-33.png" alt="Installation Profile"></p>
+<p><img src="../../../images/installation/windows-server-2022-install-33.png" alt="Installation Profile"></p>
 <ol start="24">
 <li>After you press &quot;Next&quot;, authenticate yourself using Subscription Manager credentials</li>
 </ol>
-<p><img src="../../images/windows-server-2022-install-34.png" alt="Authentication"></p>
+<p><img src="../../../images/installation/windows-server-2022-install-34.png" alt="Authentication"></p>
 <div class="WARNING">
 <h5>Warning</h5>
 <p>If you are unable to sign in at this step, please follow this <a href="prerequisites.html">link</a> to disable Internet Explorer Enhanced Security Configuration.</p>
@@ -537,15 +537,15 @@ None of the other settings on this page are required if you choose not to upgrad
 <ol>
 <li>Start the installation process by running the <em>App Designer.exe</em> file that you've received from XMPro.</li>
 </ol>
-<p><img src="../../images/windows-server-2022-install-35.png" alt="App Designer Setup"></p>
+<p><img src="../../../images/installation/windows-server-2022-install-35.png" alt="App Designer Setup"></p>
 <ol start="2">
 <li>Click the &quot;I Agree&quot; button and press &quot;Next&quot;</li>
 </ol>
-<p><img src="../../images/windows-server-2022-install-36.png" alt="License Agreement"></p>
+<p><img src="../../../images/installation/windows-server-2022-install-36.png" alt="License Agreement"></p>
 <ol start="3">
 <li>Follow the instructions and click &quot;Close&quot; when the installation is finished</li>
 </ol>
-<p><img src="../../images/windows-server-2022-install-37.png" alt="Installation Complete"></p>
+<p><img src="../../../images/installation/windows-server-2022-install-37.png" alt="Installation Complete"></p>
 <div class="NOTE">
 <h5>Note</h5>
 <p>This &quot;Setup&quot; will install the installer you will use to install the database and website</p>
@@ -554,12 +554,12 @@ None of the other settings on this page are required if you choose not to upgrad
 <li>When this initial installation is complete, open the start menu</li>
 <li>Search for &quot;App Designer&quot; and click on Run as Administrator</li>
 </ol>
-<p><img src="../../images/windows-server-2022-install-38.png" alt="Run App Designer"></p>
+<p><img src="../../../images/installation/windows-server-2022-install-38.png" alt="Run App Designer"></p>
 <h3 id="component-choice-2">Component Choice</h3>
 <ol start="6">
 <li>When the installer launches, choose &quot;Install&quot; and click &quot;Next&quot;</li>
 </ol>
-<p><img src="../../images/windows-server-2022-install-39.png" alt="Choose Install"></p>
+<p><img src="../../../images/installation/windows-server-2022-install-39.png" alt="Choose Install"></p>
 <ol start="7">
 <li>Select the components that you would like to install and click &quot;Next&quot;</li>
 </ol>
@@ -567,7 +567,7 @@ None of the other settings on this page are required if you choose not to upgrad
 <h5>Note</h5>
 <p>If this is the first time you are installing Subscription Manager, it is highly recommended that you select both &quot;Database&quot; and &quot;Web Application&quot;.</p>
 </div>
-<p><img src="../../images/windows-server-2022-install-40.png" alt="Select Components"></p>
+<p><img src="../../../images/installation/windows-server-2022-install-40.png" alt="Select Components"></p>
 <h3 id="database-3">Database</h3>
 <h4 id="server-3">Server</h4>
 <ol start="8">
@@ -577,7 +577,7 @@ None of the other settings on this page are required if you choose not to upgrad
 <h5>Note</h5>
 <p>If you already know the server instance name, it can be entered manually. Otherwise, use the refresh button on the right to load all available servers. Selecting the &quot;Local Servers&quot; check box will limit the search to the local network.</p>
 </div>
-<p><img src="../../images/windows-server-2022-install-41.png" alt="Server Selection"></p>
+<p><img src="../../../images/installation/windows-server-2022-install-41.png" alt="Server Selection"></p>
 <h4 id="authentication-method-3">Authentication Method</h4>
 <ol start="9">
 <li>Specify the authentication method that should be used: Windows or SQL</li>
@@ -597,7 +597,7 @@ None of the other settings on this page are required if you choose not to upgrad
 <h5>Warning</h5>
 <p>The SQL user must have permission to create databases on the server.</p>
 </div>
-<p><img src="../../images/windows-server-2022-install-42.png" alt="SQL Authentication"></p>
+<p><img src="../../../images/installation/windows-server-2022-install-42.png" alt="SQL Authentication"></p>
 <p><strong>Database</strong></p>
 <div class="NOTE">
 <h5>Note</h5>
@@ -608,7 +608,7 @@ None of the other settings on this page are required if you choose not to upgrad
 <li>Click the &quot;Change&quot; button and select the appropriate option</li>
 <li>Specify the name of the new database or select an existing database from the drop-down</li>
 </ol>
-<p><img src="../../images/windows-server-2022-install-43.png" alt="Database Configuration"></p>
+<p><img src="../../../images/installation/windows-server-2022-install-43.png" alt="Database Configuration"></p>
 <h3 id="encryption-upgrade-1">Encryption Upgrade</h3>
 <p>If you are upgrading from 4.0 to 4.1 or greater, you will be shown the Encryption Upgrade Settings page. This will assist you in migrating existing Server Variables and Connector settings to the new method of encryption.</p>
 <div class="WARNING">
@@ -625,7 +625,7 @@ None of the other settings on this page are required if you choose not to upgrad
 <p>If that path does not exist, it is stored in a cloud-service key vault. Search for the &quot;xmpro.keyVault&quot; JSON object for the details required to find the encryption key.</p>
 <p>Documentation for the <a href="#server">Azure</a> and <a href="https://docs.aws.amazon.com/kms/latest/developerguide/overview.html">Amazon</a> key vaults have been linked for convenience.</p>
 </div>
-<p><img src="../../images/windows-server-2022-install-44.png" alt="App Designer Encryption Key"></p>
+<p><img src="../../../images/installation/windows-server-2022-install-44.png" alt="App Designer Encryption Key"></p>
 <h4 id="upgrade-server-variables-1">Upgrade Server Variables?</h4>
 <ol start="13">
 <li>Tick to automatically upgrade the Server Variables. It is recommended, but not required.
@@ -713,7 +713,7 @@ None of the other settings on this page are required if you choose not to upgrad
 <h5>Note</h5>
 <p>If you choose &quot;Create a new Application Pool&quot;, give it an appropriate name. If you choose &quot;Use an existing Application Pool&quot;, select an existing application pool from the drop-down.</p>
 </div>
-<p><img src="../../images/windows-server-2022-install-45.png" alt="Application Pool Configuration"></p>
+<p><img src="../../../images/installation/windows-server-2022-install-45.png" alt="Application Pool Configuration"></p>
 <h4 id="security-account-2">Security Account</h4>
 <ol start="22">
 <li>Select &quot;Local System&quot; as the security account</li>
@@ -722,7 +722,7 @@ None of the other settings on this page are required if you choose not to upgrad
 <h5>Note</h5>
 <p>You can either change it by selecting a different built-in security account from the drop-down or by specifying your own security account.</p>
 </div>
-<p><img src="../../images/windows-server-2022-install-46.png" alt="Security Account Configuration"></p>
+<p><img src="../../../images/installation/windows-server-2022-install-46.png" alt="Security Account Configuration"></p>
 <div class="WARNING">
 <h5>Warning</h5>
 <p>If you selected Windows authentication to connect to the database, you must choose &quot;Specify your own Security Account&quot; and provide the correct credentials. The service account must have batch logon rights enabled. More Information on how to set up a custom application pool in IIS as well as steps on how to enable batch logon rights can be found in this <a href="https://docs.xmpro.com/knowledge-base-2/setting-up-a-custom-application-pool-so-that-windows-authentication-can-be-used-when-installing-xmpro-enabling-batch-logon-rights-for-a-user/index.md">link</a>.</p>
@@ -731,7 +731,7 @@ None of the other settings on this page are required if you choose not to upgrad
 <ol start="23">
 <li>Type in the URL of Data Stream designer in the text box</li>
 </ol>
-<p><img src="../../images/windows-server-2022-install-47.png" alt="Integration Details"></p>
+<p><img src="../../../images/installation/windows-server-2022-install-47.png" alt="Integration Details"></p>
 <h3 id="smtp-1">SMTP</h3>
 <ol start="24">
 <li>Enter the SMTP settings referenced in the <a href="../../install.html#smtp-account">1. Preparation</a> guide.
@@ -741,7 +741,7 @@ By default, the &quot;Enable Email Notification&quot; is checked.</li>
 <h5>Note</h5>
 <p>SMTP can be disabled by unchecking the &quot;Enable Email Notification&quot; checkbox if you don't want to receive email notifications. If at a later stage email notifications are needed, the installer can be run again to add SMTP functionality.</p>
 </div>
-<p><img src="../../images/windows-server-2022-install-48.png" alt="SMTP Configuration"></p>
+<p><img src="../../../images/installation/windows-server-2022-install-48.png" alt="SMTP Configuration"></p>
 <div class="WARNING">
 <h5>Warning</h5>
 <p>You are required to set up an SMTP account. Failing to do so will make registering new users very cumbersome.</p>
@@ -751,7 +751,7 @@ By default, the &quot;Enable Email Notification&quot; is checked.</li>
 <ol start="25">
 <li>Enter the Twilio details referenced in the <a href="../../install.html#twilio-account-optional">1. Preparation</a> guide. If you don't want SMS notifications you can select &quot;None&quot; from the &quot;Select Provider&quot; dropdown.</li>
 </ol>
-<p><img src="../../images/windows-server-2022-install-49.png" alt="Twilio Configuration"></p>
+<p><img src="../../../images/installation/windows-server-2022-install-49.png" alt="Twilio Configuration"></p>
 <h3 id="installation-profile-1">Installation Profile</h3>
 <ol start="26">
 <li>Click the Browse button to upload an installation profile for Subscription Manager</li>
@@ -762,11 +762,11 @@ By default, the &quot;Enable Email Notification&quot; is checked.</li>
 <p>This file ensures the App Designer contains the correct details for the Subscription Manager instance you would like to use. The file used can be obtained through the <a href="#obtaining-an-installation-profile">steps outlined previously in this tutorial</a>.</p>
 <p>The Installation Profile generated for Data Stream Installer can be used in this step.</p>
 </div>
-<p><img src="../../images/windows-server-2022-install-50.png" alt="Installation Profile"></p>
+<p><img src="../../../images/installation/windows-server-2022-install-50.png" alt="Installation Profile"></p>
 <ol start="28">
 <li>After you press &quot;Next&quot;, authenticate yourself using Subscription Manager credentials</li>
 </ol>
-<p><img src="../../images/windows-server-2022-install-51.png" alt="Authentication"></p>
+<p><img src="../../../images/installation/windows-server-2022-install-51.png" alt="Authentication"></p>
 <div class="WARNING">
 <h5>Warning</h5>
 <p>If you are unable to sign in at this step, please follow this <a href="prerequisites.html">link</a> to disable Internet Explorer Enhanced Security Configuration.</p>

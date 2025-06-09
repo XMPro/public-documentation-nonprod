@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Code Rabbit PR Comments - Action Plan | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Code Rabbit PR Comments - Action Plan | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="images/favicon.png">
+      <link rel="stylesheet" href="public/docfx.min.css">
+      <link rel="stylesheet" href="public/main.css">
+      <meta name="docfx:navrel" content="toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/code-rabbit-fixes.md&amp;version=GB20290-migrate-public-docs&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="index.html">
+            <img id="logo" class="svg" src="images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="code-rabbit-pr-comments---action-plan">Code Rabbit PR Comments - Action Plan</h1>
+
+<h2 id="overview">Overview</h2>
+<p>This document tracks all Code Rabbit comments from the documentation migration PR and our plan to address them.</p>
+<h2 id="status-legend">Status Legend</h2>
+<ul>
+<li>🔴 <strong>Critical</strong> - Breaks functionality, must fix</li>
+<li>🟡 <strong>Important</strong> - Affects quality/standards, should fix</li>
+<li>🟢 <strong>Nice to have</strong> - Improvements, optional</li>
+<li>⚫ <strong>Out of scope</strong> - Original content issues, ignore</li>
+</ul>
+<h2 id="issues-by-category">Issues by Category</h2>
+<h3 id="1-image-path-corrections--completed">1. Image Path Corrections ✅ COMPLETED</h3>
+<h4 id="migration-summary">Migration Summary</h4>
+<p>Successfully migrated all images to standardized structure on 2025-06-09:</p>
+<ul>
+<li><strong>Total images migrated</strong>: 2,909 files</li>
+<li><strong>Markdown files updated</strong>: 74 files</li>
+<li><strong>Filename conflicts resolved</strong>: 25 (automatically prefixed)</li>
+<li><strong>SHA256 verification</strong>: 100% match (no data corruption)</li>
+<li><strong>DocFX build</strong>: 0 warnings, 0 errors</li>
+</ul>
+<h4 id="new-structure">New Structure</h4>
+<ul>
+<li>All images consolidated to <code>/docs/docs/images/</code> with subdirectories</li>
+<li>Consistent path pattern: <code>../../images/[subfolder/]filename.png</code></li>
+<li>Conflicts resolved with directory prefixes (e.g., <code>blocks-toolbox-alert-form.png</code>)</li>
+</ul>
+<h4 id="migration-process-used">Migration Process Used</h4>
+<ol>
+<li>Created comprehensive migration script with SHA verification</li>
+<li>Tested with single file first (button-text.png)</li>
+<li>Full backup created before migration</li>
+<li>Automated reference updates in all markdown files</li>
+<li>DocFX build verification after migration</li>
+</ol>
+<h4 id="result">Result</h4>
+<ul>
+<li>✅ All images successfully migrated</li>
+<li>✅ All references updated</li>
+<li>✅ DocFX builds without errors</li>
+<li>✅ Backup available at <code>docs-backup-20250609_102849.tar.gz</code></li>
+</ul>
+<h3 id="2-broken-link-anchors--completed">2. Broken Link Anchors ✅ COMPLETED</h3>
+<h4 id="fix-summary">Fix Summary</h4>
+<p>Successfully fixed anchor links on 2025-06-09:</p>
+<ul>
+<li><strong>Files fixed</strong>: 23 total
+<ul>
+<li>22 files with <code>#behavior</code> → <code>#value</code> corrections</li>
+<li>1 file with <code>#data-source-1</code> → <code>#data-source</code> correction</li>
+</ul>
+</li>
+<li><strong>Pattern fixed</strong>: Links to &quot;common value properties&quot; incorrectly pointing to <code>#behavior</code></li>
+<li><strong>DocFX build</strong>: 0 warnings, 0 errors after fixes</li>
+</ul>
+<h4 id="files-fixed">Files Fixed</h4>
+<ul>
+<li>✅ 20 files in <code>/docs/docs/blocks-toolbox/basic/</code></li>
+<li>✅ 1 file in <code>/docs/docs/blocks-toolbox/device-input/</code></li>
+<li>✅ 1 file in <code>/docs/docs/blocks-toolbox/visualizations/</code></li>
+<li>✅ 1 file in <code>/docs/docs/blocks-toolbox/layout/</code></li>
+</ul>
+<h3 id="3-external-link-corrections--partial">3. External Link Corrections 🟡 PARTIAL</h3>
+<h4 id="fix-summary-1">Fix Summary</h4>
+<p>Fixed external links on 2025-06-09:</p>
+<ul>
+<li><strong>Fixed</strong>: 2 external URLs with <code>.md</code> extensions
+<ul>
+<li>✅ Jupyter link in xmpro-notebook.md</li>
+<li>✅ Power BI link in power-bi.md</li>
+</ul>
+</li>
+<li><strong>Pending</strong>: 5 files with GitBook URLs for agent documentation
+<ul>
+<li>These link to external agent documentation not in this repository</li>
+<li>Recommendation: Leave as-is until agent docs are migrated</li>
+</ul>
+</li>
+</ul>
+<h4 id="gitbook-urls-found">GitBook URLs Found</h4>
+<ul>
+<li><code>/docs/docs/concepts/recommendation/form.md</code> - Update Recommendation Agent</li>
+<li><code>/docs/docs/concepts/recommendation/action-requests.md</code> - Action Request Agents</li>
+<li><code>/docs/docs/concepts/insights/data-delivery-insights.md</code> - Agent documentation</li>
+<li><code>/docs/docs/release-notes/v4.4.1.md</code> - TSC SQL Connector</li>
+<li><code>/docs/docs/release-notes/v4.4.2.md</code> - Python Agent</li>
+</ul>
+<h4 id="status">Status</h4>
+<ul>
+<li>Downgraded to 🟡 as main issues are fixed, GitBook links are external dependencies</li>
+</ul>
+<h3 id="4-docfx-migration-issues-">4. DocFX Migration Issues 🟡</h3>
+<h4 id="frontmatter">Frontmatter</h4>
+<ul>
+<li>[ ] <code>/docs/docs/concepts/xmpro-ai/xmpro-notebook.md</code> - Add missing title in frontmatter</li>
+</ul>
+<h4 id="admonition-syntax--false-positive">Admonition Syntax ✅ FALSE POSITIVE</h4>
+<ul>
+<li>[x] <del><code>/docs/docs/concepts/recommendation/action-requests.md</code> - Convert <code>[!NOTE]</code> to DocFX syntax</del></li>
+<li>[x] <del>Multiple other files using GitBook <code>[!NOTE]</code> syntax</del></li>
+</ul>
+<p><strong>Investigation Result</strong>: The <code>[!NOTE]</code> syntax is already in the correct DocFX format. DocFX 2.78.3 supports GitHub-style alerts and renders them properly. All 166 files using this syntax build without warnings and generate correct HTML output. No changes needed.</p>
+<h4 id="heading-hierarchy">Heading Hierarchy</h4>
+<ul>
+<li>[ ] <code>/docs/docs/concepts/application/app-files.md</code> - Fix H2 to H4 jump (should be H3)</li>
+</ul>
+<h4 id="hardcoded-versions">Hardcoded Versions</h4>
+<ul>
+<li>[ ] <code>/docs/docfx.json</code> - Remove hardcoded &quot;v4.4&quot; from sitemap.baseUrl (⚠️ DO NOT CHANGE - Required for deployment process)</li>
+</ul>
+<h3 id="5-content-quality-">5. Content Quality 🟡</h3>
+<h4 id="typos-and-grammar">Typos and Grammar</h4>
+<ul>
+<li>[ ] <code>/docs/docs/blocks-toolbox/visualizations/power-bi.md</code> - Fix &quot;authentification&quot; → &quot;authentication&quot;</li>
+<li>[ ] <code>/docs/docs/blocks-toolbox/layout/toolbar.md</code> - Fix &quot;tollbar&quot; → &quot;toolbar&quot;, remove extra &quot;is&quot;</li>
+<li>[ ] <code>/docs/docs/blocks-toolbox/basic/file-uploader.md</code> - Change &quot;Behaviour&quot; → &quot;Behavior&quot;</li>
+<li>[ ] <code>/docs/docs/blocks-toolbox/basic/switch.md</code> - Capitalize &quot;Switch On Text and Switch Off Text&quot;</li>
+<li>[ ] <code>/docs/docs/concepts/recommendation/index.md</code> - Fix &quot;Recommentaion&quot; → &quot;Recommendation&quot;</li>
+<li>[ ] <code>/docs/docs/concepts/recommendation/notification.md</code> - SMS section says &quot;receive an email&quot; should be &quot;receive an SMS&quot;</li>
+<li>[ ] <code>/docs/docs/getting-started/browser-requirements.md</code> - Fix misleading cookie instructions</li>
+</ul>
+<h4 id="formatting">Formatting</h4>
+<ul>
+<li>[ ] <code>/docs/docs/blocks-toolbox/layout/toolbar.md</code> - Remove stray backslashes</li>
+<li>[ ] <code>/docs/docs/concepts/application/metablocks.md</code> - Fix &quot;AutoDesk&quot; → &quot;Autodesk&quot;, improve use cases list</li>
+</ul>
+<h3 id="6-accessibility-improvements-">6. Accessibility Improvements 🟢</h3>
+<h4 id="missing-alt-text">Missing Alt Text</h4>
+<ul>
+<li>[ ] <code>/docs/docs/blocks-toolbox/visualizations/circular-gauge.md</code> - Add alt text for all images</li>
+<li>[ ] <code>/docs/docs/concepts/application/app-files.md</code> - Add alt text for images</li>
+<li>[ ] <code>/docs/docs/concepts/application/devices.md</code> - Add alt text for all Device*.png images</li>
+<li>[ ] <code>/docs/docs/concepts/data-stream/verifying-stream-integrity.md</code> - Add descriptive alt text</li>
+</ul>
+<h4 id="html-improvements">HTML Improvements</h4>
+<ul>
+<li>[ ] <code>/docs/docs/assets/images/image-viewer.html</code> - Add basePath guard for empty string</li>
+<li>[ ] <code>/docs/docs/assets/pdfs/pdf-viewer.html</code> - Add lang=&quot;en&quot; attribute, iframe title</li>
+</ul>
+<h3 id="7-videomedia-paths-">7. Video/Media Paths 🟡</h3>
+<ul>
+<li>[ ] <code>/docs/docs/concepts/xmpro-ai/xmpro-notebook.md</code> - Fix video path to <code>../../resources/videos/</code></li>
+</ul>
+<h3 id="8-css-improvements-">8. CSS Improvements 🟢</h3>
+<ul>
+<li>[ ] <code>/docs/docs/assets/pdfs/pdf-styles.css</code> - Rename generic <code>.loading</code> class to avoid conflicts</li>
+</ul>
+<h3 id="9-out-of-scope-">9. Out of Scope ⚫</h3>
+<ul>
+<li>Content restructuring suggestions</li>
+<li>Feature additions</li>
+<li>Style preferences that don't break functionality</li>
+<li>Pre-existing content issues from GitBook</li>
+</ul>
+<h2 id="implementation-plan">Implementation Plan</h2>
+<h3 id="phase-1-automated-fixes">Phase 1: Automated Fixes</h3>
+<ol>
+<li>Create script to fix image paths</li>
+<li>Create script to fix common anchor issues</li>
+<li>Create script to remove <code>.md</code> from external links</li>
+</ol>
+<h3 id="phase-2-manual-fixes">Phase 2: Manual Fixes</h3>
+<ol>
+<li>Fix broken anchors that need verification</li>
+<li>Update GitBook URLs to local paths</li>
+<li>Fix heading hierarchies</li>
+<li>Add frontmatter where missing</li>
+</ol>
+<h3 id="phase-3-content-quality">Phase 3: Content Quality</h3>
+<ol>
+<li>Fix typos and grammar</li>
+<li>Add alt text to images</li>
+<li>Update admonition syntax</li>
+</ol>
+<h3 id="phase-4-testing">Phase 4: Testing</h3>
+<ol>
+<li>Run DocFX build to verify no warnings</li>
+<li>Test all internal links</li>
+<li>Verify all images load correctly</li>
+<li>Check accessibility</li>
+</ol>
+<h2 id="progress-tracking">Progress Tracking</h2>
+<ul>
+<li>Total Issues: ~80</li>
+<li>Fixed: 5 (Image Paths, Broken Anchors, External Links, Admonition Syntax - False Positive)</li>
+<li>In Progress: 0</li>
+<li>Remaining: ~75</li>
+</ul>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>Some issues may be duplicates across multiple files</li>
+<li>Priority should be given to breaking issues (🔴)</li>
+<li>Out of scope items (⚫) can be ignored unless we're already editing the file</li>
+</ul>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: June 09, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

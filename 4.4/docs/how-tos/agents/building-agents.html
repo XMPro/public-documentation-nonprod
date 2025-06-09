@@ -97,7 +97,7 @@
 <p>Context Providers are created by implementing the <em>IAgent</em>, <em>IPollingAgent</em> interfaces. They are very similar to Listeners; however, Context Providers publish all available records/events when polled instead of only publishing the newer/changed ones.</p>
 <h3 id="transformations">Transformations</h3>
 <p>Transformations are implemented in a similar way as Action Agents, except that all Transformations should have the <em>Require Input Map</em> flag set to <em>false</em> and must not implement the <em>GetInputAttributes</em> method, hence it should be:</p>
-<pre><code class="lang-csharp">public IEnumerable&lt;XMIoT.Framework.Attribute&gt; GetIntputAttributes(string endpoint, IDictionary&lt;string, string&gt; parameters)
+<pre><code class="lang-csharp">public IEnumerable&lt;XMIoT.Framework.Attribute&gt; GetInputAttributes(string endpoint, IDictionary&lt;string, string&gt; parameters)
 {
 
 throw new NotImplementedException();
@@ -172,7 +172,7 @@ throw new NotImplementedException();
 <p>The <em>IPollingAgent</em> interface is not strictly required for <em>Listeners</em> or <em>Context Providers</em>, however, it is generally used in most cases. Not implementing <em>IPollingAgent</em> for a <em>Listener</em> or <em>Context Provider</em> should be considered an advanced option.</p>
 </div>
 <h2 id="iagent">IAgent</h2>
-<p><img src="images/building-agents-1.png" alt="Config Blade"></p>
+<p><img src="../../images/how-tos/agents/building-agents-1.png" alt="Config Blade"></p>
 <p><em>IAgent</em> is the primary interface that must be implemented by all Agents as it provides the structure for the workings of the Agent. After implementing this interface, there are several methods you have to add to your project that forms part of this predefined structure.</p>
 <h3 id="settingsconfigurations">Settings/Configurations</h3>
 <p>Some Agents need to be provided with configurations by the user, for example, for a CSV listener Agent to get records from a CSV file, it needs the following:</p>
@@ -323,7 +323,7 @@ var pOuts = args.ParentOutputs;
 </div>
 <h2 id="ipublisherror">IPublishError</h2>
 <p>An Agent can publish messages to an error endpoint by implementing the <em>IPublishesError</em> interface. An unhandled error in an Agent will be captured and error information will be published to the error endpoint.</p>
-<p><img src="images/building-agents-3.png" alt="Add On Error Endpoint Config Checkbox"></p>
+<p><img src="../../images/how-tos/agents/building-agents-3.png" alt="Add On Error Endpoint Config Checkbox"></p>
 <p>Implement the interface member:</p>
 <pre><code class="lang-csharp">public event EventHandler&lt;OnErrorArgs&gt; OnPublishError;
 </code></pre>

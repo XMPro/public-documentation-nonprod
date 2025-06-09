@@ -277,7 +277,7 @@
 <li>The APM system will provide linkage from the analysis of recommendation alerts to the resulting work order.</li>
 <li>The APM system will provide integration to a maintenance management / paper free work order process.</li>
 </ul>
-<p><img src="../images/practice-note_unified_01.png" alt="Figure 1 - Example Recommendation Alerts detail page"></p>
+<p><img src="../../images/resources/practice-note_unified_01.png" alt="Figure 1 - Example Recommendation Alerts detail page"></p>
 <h3 id="4-categorization-of-recommendation-alerts">4. Categorization of Recommendation Alerts</h3>
 <p>A Recommendation Meta Tag App uses the Decorator Pattern to dynamically enhance asset data without altering the original schema. By assigning meta tags such as performance metrics, maintenance recommendations, and operational statuses to assets, the app enriches contextual data, enabling more informed decision-making. This approach allows for flexible and scalable data enhancement, improving predictive maintenance, performance monitoring, and overall asset management within the APM framework.</p>
 <p><strong>APM capability</strong></p>
@@ -338,9 +338,9 @@
 <li>Generic querying, reporting, graphing, and searching capabilities for all asset types, alert histories, and work orders.</li>
 </ul>
 <p>Users have a high-level unified view to assist in their workflow process by providing the ability to see XMPro alerts filtered by criticality and status as well as associated WO's.</p>
-<p><img src="../images/practice-note_unified_02.png" alt="Figure 2 - Workbench Landing Page – Unassigned Alerts"></p>
+<p><img src="../../images/resources/practice-note_unified_02.png" alt="Figure 2 - Workbench Landing Page – Unassigned Alerts"></p>
 <p>In the above example the first three tabs focus on the status of Recommendation Alerts – Open, Assigned without WO and Assigned with WO. The landing page alert tabs will include all unassigned alerts. The last three tabs focus on linked WO and the appropriate status; Open, Complete WO and Closed WO. The filtering, tabs, actions, and various status would be set for your circumstance.</p>
-<p><img src="../images/practice-note_unified_03.png" alt="Figure 3 - Workbench – Create WO Page"></p>
+<p><img src="../../images/resources/practice-note_unified_03.png" alt="Figure 3 - Workbench – Create WO Page"></p>
 <p>The aim is to give the user situational awareness to all the elements of the Recommendation Alert. The above example page provides the relevant information on an alert to allow users to:</p>
 <ul>
 <li>See a holistic view of a piece of equipment (ability to see all alerts related to that asset)</li>
@@ -349,9 +349,9 @@
 <li>Relevant metrics (schematics, score history)</li>
 </ul>
 <p>In the Figure 3 this shows an example of assigning many Alerts to one WO.</p>
-<p><img src="../images/practice-note_unified_04.png" alt="Figure 4 - Workbench – Open Work Orders"></p>
+<p><img src="../../images/resources/practice-note_unified_04.png" alt="Figure 4 - Workbench – Open Work Orders"></p>
 <p>This page shows all open work orders and associated Recommendation Alerts.</p>
-<p><img src="../images/practice-note_unified_05.png" alt="Figure 5 – Workbench – Custom Alert Page"></p>
+<p><img src="../../images/resources/practice-note_unified_05.png" alt="Figure 5 – Workbench – Custom Alert Page"></p>
 <p>Additionally, users can create custom recommendation pages which display relevant data to the alert including:</p>
 <ul>
 <li>Other alerts associated with the Asset ID</li>
@@ -384,38 +384,38 @@ XMPro capability on Recommendation scoring [4].</li>
 <p>We suggest the initial default values be 1. We would expect that there will be several cycles as the various score settings are fine tuned.</p>
 </div>
 <p>[4] <a href="https://documentation.xmpro.com/concepts/recommendation/recommendation-scoring#how-is-the-scoring-calculated">How is the scoring calculated</a></p>
-<p><img src="../images/practice-note_unified_06.png" alt="Figure 6 - Assigned score is visible for each Recommendation Alert."></p>
-<p><img src="../images/practice-note_unified_07.png" alt="Figure 7 - Each Recommendation contains the Recommendation Factor, Rule factor and Optional Factor."></p>
-<p><img src="../images/practice-note_unified_08.png" alt="Figure 8 - Recommendation Category Factor"></p>
+<p><img src="../../images/resources/practice-note_unified_06.png" alt="Figure 6 - Assigned score is visible for each Recommendation Alert."></p>
+<p><img src="../../images/resources/practice-note_unified_07.png" alt="Figure 7 - Each Recommendation contains the Recommendation Factor, Rule factor and Optional Factor."></p>
+<p><img src="../../images/resources/practice-note_unified_08.png" alt="Figure 8 - Recommendation Category Factor"></p>
 <h3 id="3-design-pattern-asset-shutdown">3. Design Pattern: Asset Shutdown</h3>
 <p>The purpose of the app is to allow users to silence alert generation for specific assets in recommendations while still maintaining the published state of the recommendation. This activation/deactivation will take place automatically based on predefined start/stop dates. The application will also notify users when the shutdown will start and end to determine if a modification is necessary and as a verification step.</p>
 <p>In the examples below we have explained the concept detailing a shutdown by asset. However, we strongly suggest that the first iteration allows for shutdown by a level in the asset hierarchy or some other mechanism the sites may have. Example you may wish to shut assets within a certain location.</p>
 <p>If your organization analyses Recommendation Alerts across the organization, the analysis is not clouded by the need to omit alerts triggered during a shutdown and the subsequent start up.</p>
-<p><img src="../images/practice-note_unified_09.png" alt="Figure 9 - Shutdown Master – Shutdown Creation Page"></p>
+<p><img src="../../images/resources/practice-note_unified_09.png" alt="Figure 9 - Shutdown Master – Shutdown Creation Page"></p>
 <p>This page will be used to create new shutdowns and edit existing shutdowns. For existing shutdowns, assigned assets will appear below the shutdown grid.</p>
-<p><img src="../images/practice-note_unified_10.png" alt="Figure 10 - Shutdown Master – Asset Assignment Page"></p>
+<p><img src="../../images/resources/practice-note_unified_10.png" alt="Figure 10 - Shutdown Master – Asset Assignment Page"></p>
 <p>This page will be used to assign Assets to an existing shutdown. The &quot;Previously Selected&quot; column tells shutdown planners what Assets are already assigned to a shutdown.</p>
 <h3 id="4-design-pattern-recommendation-meta-tags-administration">4. Design Pattern: Recommendation Meta Tags Administration</h3>
 <p>The Recommendation Meta Tag Application enriches asset data by dynamically adding meta tags with maintenance recommendations, operational statuses, and performance metrics. This contextual information aids in making informed maintenance decisions and optimizing asset performance. By enhancing data without altering the original asset schema, the application supports predictive maintenance and improves overall asset management, leading to increased operational efficiency and reliability.</p>
-<p><img src="../images/practice-note_unified_11.png" alt="Figure 11 - Recommendation Meta Tag Administration – Reference Grid"></p>
+<p><img src="../../images/resources/practice-note_unified_11.png" alt="Figure 11 - Recommendation Meta Tag Administration – Reference Grid"></p>
 <p>In this page we have opted to distinguish between 'Not Allocated', or 'Not Reviewed'.</p>
 <p>'Not Allocated' means that the Meta Tag is not relevant to the Recommendation (In the above this is the preferred allocation as not blank) and 'Not Reviewed' means that no selection has been decided for this asset.</p>
-<p><img src="../images/practice-note_unified_12.png" alt="Figure 12 - Recommendation Meta Tag Administration – Recommendation Assignment Page"></p>
+<p><img src="../../images/resources/practice-note_unified_12.png" alt="Figure 12 - Recommendation Meta Tag Administration – Recommendation Assignment Page"></p>
 <p>In the page above we have assigned Meta Tag Values to a Recommendation.</p>
-<p><img src="../images/practice-note_unified_13.png" alt="Figure 13 - Recommendation Meta Tag Administration – Meta Tag Value"></p>
+<p><img src="../../images/resources/practice-note_unified_13.png" alt="Figure 13 - Recommendation Meta Tag Administration – Meta Tag Value"></p>
 <p>This page creates or edits the Meta Tag Values. The Meta Tag column will populate a dropdown of existing options from the list of available options Created on the Meta Tags page.</p>
-<p><img src="../images/practice-note_unified_14.png" alt="Figure 14 - Recommendation Meta Tag Administration – Meta Tag"></p>
+<p><img src="../../images/resources/practice-note_unified_14.png" alt="Figure 14 - Recommendation Meta Tag Administration – Meta Tag"></p>
 <p>This page contains a grid where the user can create or edit the Meta Tags.</p>
 <h3 id="5-design-pattern-asset-meta-tags-administration">5. Design Pattern: Asset Meta Tags Administration</h3>
 <p>The Asset Meta Tag Application enhances asset management by dynamically adding meta tags to asset data. These tags include performance metrics, maintenance recommendations, and operational statuses, providing enriched contextual information. This additional data helps in predictive maintenance, performance monitoring, and informed decision-making without altering the original asset schema. The application enables better tracking and management of assets, leading to improved operational efficiency and reliability.</p>
-<p><img src="../images/practice-note_unified_15.png" alt="Figure 15 - Asset Meta Tag Administration – Reference Grid"></p>
+<p><img src="../../images/resources/practice-note_unified_15.png" alt="Figure 15 - Asset Meta Tag Administration – Reference Grid"></p>
 <p>In this page we have opted to distinguish between 'Not Allocated', or 'Not Reviewed'.</p>
 <p>'Not Allocated' means that the Meta Tag is not relevant to the Asset (A preferred allocation rather than blank) and 'Not Reviewed' means that no selection has been made for this asset.</p>
-<p><img src="../images/practice-note_unified_16.png" alt="Figure 16 - Asset Meta Tag Administration – Asset Assignment Page"></p>
+<p><img src="../../images/resources/practice-note_unified_16.png" alt="Figure 16 - Asset Meta Tag Administration – Asset Assignment Page"></p>
 <p>This page will be used to assign Meta Tag Values to an Asset. Each Meta Tag will populate a row with the corresponding Meta Tag Values for selection from the dropdown.</p>
-<p><img src="../images/practice-note_unified_17.png" alt="Figure 17 - Asset Meta Tag Administration – Meta Tag Value"></p>
+<p><img src="../../images/resources/practice-note_unified_17.png" alt="Figure 17 - Asset Meta Tag Administration – Meta Tag Value"></p>
 <p>This page contains a grid where the user can create or edit the Meta Tag Values. The Meta Tag column will populate a dropdown of existing options from the list of available options Created on the Meta Tags page.</p>
-<p><img src="../images/practice-note_unified_18.png" alt="Figure 18 - Asset Meta Tag Administration – Meta Tags"></p>
+<p><img src="../../images/resources/practice-note_unified_18.png" alt="Figure 18 - Asset Meta Tag Administration – Meta Tags"></p>
 <p>This page contains a grid where the user can create or edit the Meta Tags.</p>
 <h2 id="appendix-1--calculation-of-recommendation-alert-and-asset-priority-scores">Appendix 1 – Calculation of Recommendation Alert and Asset Priority Scores</h2>
 <h3 id="definitions">Definitions</h3>
@@ -716,7 +716,7 @@ If we had the following data for the alerts:</p>
 <h3 id="2-priority-by-asset-for-multiple-recommendation-alert-types">2. Priority by Asset for Multiple Recommendation Alert Types</h3>
 <p><strong>Outcome</strong> – Priority score by Asset</p>
 <p>For the various recommendation alert types for an asset, we need to calculate individual occurrence scores for each Recommendation Alert type and then aggregate them into a single asset-level occurrence score. This approach ensures that we consider all alert types while maintaining a single score for use in the RPN (Risk Priority Number) calculation.</p>
-<p><img src="../images/practice-note_unified_19.png" alt="Figure 19 - Priority Calculation"></p>
+<p><img src="../../images/resources/practice-note_unified_19.png" alt="Figure 19 - Priority Calculation"></p>
 <p><strong>Step 1: Calculate Individual Occurrence Scores</strong></p>
 <p>Calculated as per Section 1 or Section 2</p>
 <p><strong>Step 2: Aggregate Occurrence Scores</strong></p>
