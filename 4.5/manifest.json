@@ -27,6 +27,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "PIPELINE-MIGRATION.md",
+      "output": {
+        ".html": {
+          "relative_path": "PIPELINE-MIGRATION.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "code-rabbit-fixes.md",
       "output": {
         ".html": {
@@ -33094,6 +33104,16 @@
       "output": {
         ".html": {
           "relative_path": "scripts/README.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "templates/README.md",
+      "output": {
+        ".html": {
+          "relative_path": "templates/README.html"
         }
       },
       "version": ""
