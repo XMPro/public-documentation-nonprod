@@ -97,7 +97,7 @@
 <p>Context Providers are created by implementing the <em>IAgent</em>, <em>IPollingAgent</em> interfaces. They are very similar to Listeners; however, Context Providers publish all available records/events when polled instead of only publishing the newer/changed ones.</p>
 <h3 id="transformations">Transformations</h3>
 <p>Transformations are implemented in a similar way as Action Agents, except that all Transformations should have the <em>Require Input Map</em> flag set to <em>false</em> and must not implement the <em>GetInputAttributes</em> method, hence it should be:</p>
-<pre><code class="lang-csharp">public IEnumerable&lt;XMIoT.Framework.Attribute&gt; GetIntputAttributes(string endpoint, IDictionary&lt;string, string&gt; parameters)
+<pre><code class="lang-csharp">public IEnumerable&lt;XMIoT.Framework.Attribute&gt; GetInputAttributes(string endpoint, IDictionary&lt;string, string&gt; parameters)
 {
 
 throw new NotImplementedException();
@@ -559,7 +559,7 @@ using XMIoT.Framework.Settings.Enums;namespace XMPro.MQTTAgents
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: June 09, 2025</em></small></p>
+    <p><small><em>Last modified: June 10, 2025</em></small></p>
   </div>
 </article>
 

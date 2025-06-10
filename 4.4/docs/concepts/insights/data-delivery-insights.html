@@ -102,7 +102,7 @@
 <p>If there is a single batch, data is split into 80 separate messages by an agent within the Data Stream, however, the next agent processes the data significantly more slowly than the previous agent which causes buffering to occur, with 80 messages coming through almost immediately the SH is unable to buffer some messages and therefore drops them.</p>
 <h3 id="recent-improvement">Recent Improvement</h3>
 <p>The v4.4.0 release includes a Stream Host with superior &quot;buffer&quot; functionality.</p>
-<p>The new <a href="https://app.gitbook.com/o/-MZASoMaVZCmWsNG58Xo/s/NrWOGXQC2OUEEXXok1fY/index.md">Window</a> Agent supports a delay in transmitting events to the next Agent in a Data Stream. This enhancement aims to mitigate the risk of excessive event data buffering within the Stream Host. The flow of events can be regulated to prevent potential overload scenarios, ensuring smoother data processing and system stability.</p>
+<p>The new <a href="https://xmpro.gitbook.io/window">Window</a> Agent supports a delay in transmitting events to the next Agent in a Data Stream. This enhancement aims to mitigate the risk of excessive event data buffering within the Stream Host. The flow of events can be regulated to prevent potential overload scenarios, ensuring smoother data processing and system stability.</p>
 <h2 id="data-stream-design-considerations-and-patterns">Data Stream Design Considerations and Patterns</h2>
 <p>When discussing the Data Stream design there are other considerations that, by way of example, point to how patterns could be applied as the design depends on the data profile and orchestrating the data.</p>
 <h3 id="not-all-ingested-messages-are-processed">Not all ingested messages are processed</h3>
@@ -118,12 +118,11 @@
 <p>When the polling interval of the listener is small (e.g. 5 or 10 seconds), the short time frame usually results in a Data Stream that is less performant.</p>
 <p>Consider a longer polling interval.</p>
 <p>A general observation is that when event intelligence monitors for asset failure, subject to certain use cases, a polling interval of 3600 seconds (i.e. one hour) is sufficient to timeously perceive degradation.</p>
-<p><em>Meta tags: Data Stream.</em></p>
 
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: June 09, 2025</em></small></p>
+    <p><small><em>Last modified: June 10, 2025</em></small></p>
   </div>
 </article>
 

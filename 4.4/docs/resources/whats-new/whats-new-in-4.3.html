@@ -91,7 +91,7 @@
 <h2 id="overview">Overview</h2>
 <p>Introducing the XMPro 4.3 release, where we continue to prioritize initiatives aligned with our higher goals of achieving faster time to value, distributed intelligence, and secure deployments.  Our <a href="https://youtu.be/XeEpso-ykMI">product roadmap</a> outlines how each initiative serves a specific purpose within these categories.</p>
 <p>We have concentrated our efforts on two key initiatives: the cloud-to-edge continuum and AI &amp; engineering excellence. These areas reflect our commitment to delivering cutting-edge solutions and ensuring excellence in artificial intelligence and engineering practices.</p>
-<p><img src="../../images/whats-new-1.png" alt="Fig 1: The areas in focus this release."></p>
+<p><img src="../../images/whats-new-1.jpg" alt="Fig 1: The areas in focus this release."></p>
 <h2 id="cloud-to-edge-continuum">Cloud-to-Edge Continuum</h2>
 <p>The XMPro platform needs to be performant, scalable, and monitored in order to be fully cloud agnostic. We strive to implement industry best practices to achieve this.</p>
 <h3 id="auto-scale---distributed-caching">Auto Scale - Distributed Caching</h3>
@@ -104,7 +104,7 @@
 <p>Health check endpoints play a crucial role by allowing easy identification of problems without requiring extensive technical knowledge or login credentials. They provide a snapshot of each XMPro product's health, including its interconnected components and overall system status.</p>
 <p>Administrators can <a href="../../installation/complete-installation/configure-health-checks-optional.html">configure health checks</a> and add additional systems to monitor, further enhancing the product's stability and performance.</p>
 <p>The output can be consumed by your preferred provider, such as Azure's Application Insights, or use the default Health UI.</p>
-<p><img src="../../images/whats-new-2.png" alt="Fig 2: The default Health UI with example health checks on App Designer and Data Stream Designer."></p>
+<p><img src="../../images/whats-new-2.jpg" alt="Fig 2: The default Health UI with example health checks on App Designer and Data Stream Designer."></p>
 <h3 id="logging-provider-support">Logging Provider Support</h3>
 <p><a href="../../installation/complete-installation/configure-logging-optional.html">Logging Provider Support</a> is a new feature that introduces the implementation of Serilog, a diagnostic logging library for .NET applications. This library enables the capture of log events with structured data. Providing administrators with valuable insights into the behavior and performance of XMPro.</p>
 <p>Three logging outputs are supported: <a href="../../installation/complete-installation/configure-logging-optional.html#logging-to-file">Logging to file</a> support has been added for all XMPro products, whereas <a href="../../installation/complete-installation/configure-logging-optional.html#application-insights">Application Insights</a> and <a href="../../installation/complete-installation/configure-logging-optional.html#datadog">Datadog</a> support has been added for all products aside from Subscription Manager. These are cloud-based application monitoring and analytics services.</p>
@@ -118,17 +118,20 @@
 <p>This release introduces the <a href="../../concepts/xmpro-ai/xmpro-notebook.html">XMPro Notebook</a>, which is an embedded version of <a href="https://jupyter.org/hub">Jupyterhub</a> and will be available for evaluation on new XMPro Freemium accounts.</p>
 <p>XMPro Notebook provides an intuitive and flexible interface for data analysis, scientific computing, machine learning, and more. Users can write code and execute cells independently, which facilitates step-by-step exploration and experimentation with real-time data.</p>
 <p>Existing customers and Freemium users can <a href="https://xmpro.com/contact-us/index.md">contact us</a> for access and licensing options. Please visit <a href="https://xmpro.com/xmpro-ai/index.md">XMPro AI</a> for more information about XMPro AI and XMPro's Intelligent Digital Twin Suite.</p>
-<p><img src="../../images/whats-new-3.png" alt="Fig 3: XMPro Notebook and the quick start landing page."></p>
+<p><img src="../../images/whats-new-3.jpg" alt="Fig 3: XMPro Notebook and the quick start landing page."></p>
 <h3 id="application-designers-time-series-chart-performance">Application Designer's Time Series Chart Performance</h3>
 <p>Performance of the <a href="../../blocks-toolbox/visualizations/time-series-analysis.html">Time Series Chart</a> Block, when using the new <a href="https://xmpro.gitbook.io/tsc-sql-server-connector/index.md">TSC SQL Connector</a>, has been significantly enhanced due to optimized client-side querying.</p>
 <p>The advantage of this Connector is that it is optimized for server-side processing of the required grouping into buckets needed for the Time Series Chart data points, reducing the response time and size, and enabling quicker retrieval of data for longer periods.</p>
 <p>Look out for the future release of TSC-optimized Azure Data Explorer and Historian Connectors.</p>
-<p><img src="../../images/whats-new-4.png" alt="Fig 4: XMPro Integration: TSC SQL Server Connector."></p>
+<video autoplay loop muted playsinline style="max-width: 100%; height: auto;">
+  <source src="../../images/whats-new-4.mp4" type="video/mp4">
+  *Fig 4: XMPro Integration: TSC SQL Server Connector.*
+</video>
 
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: June 09, 2025</em></small></p>
+    <p><small><em>Last modified: June 10, 2025</em></small></p>
   </div>
 </article>
 

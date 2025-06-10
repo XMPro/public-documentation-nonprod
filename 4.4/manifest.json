@@ -1,6 +1,6 @@
 {
   "sitemap": {
-    "baseUrl": "https://xmpro.github.io/public-docs-v4.4/",
+    "baseUrl": "https://xmpro.github.io/public-documentation/",
     "changefreq": "daily",
     "priority": 0.5
   },
@@ -14,26 +14,6 @@
           "relative_path": "index.json"
         }
       }
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "MIGRATION_PLAN.md",
-      "output": {
-        ".html": {
-          "relative_path": "MIGRATION_PLAN.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "code-rabbit-fixes.md",
-      "output": {
-        ".html": {
-          "relative_path": "code-rabbit-fixes.html"
-        }
-      },
-      "version": ""
     },
     {
       "type": "Conceptual",
@@ -1377,30 +1357,10 @@
     },
     {
       "type": "Resource",
-      "source_relative_path": "docs/blocks-toolbox/images/image-1012.png",
-      "output": {
-        "resource": {
-          "relative_path": "docs/blocks-toolbox/images/image-1012.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
       "source_relative_path": "docs/blocks-toolbox/images/image-1013.png",
       "output": {
         "resource": {
           "relative_path": "docs/blocks-toolbox/images/image-1013.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "docs/blocks-toolbox/images/image-103.png",
-      "output": {
-        "resource": {
-          "relative_path": "docs/blocks-toolbox/images/image-103.png"
         }
       },
       "version": ""
@@ -1501,16 +1461,6 @@
       "output": {
         "resource": {
           "relative_path": "docs/blocks-toolbox/images/image-1128.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "docs/blocks-toolbox/images/image-1137.png",
-      "output": {
-        "resource": {
-          "relative_path": "docs/blocks-toolbox/images/image-1137.png"
         }
       },
       "version": ""
@@ -1857,16 +1807,6 @@
     },
     {
       "type": "Resource",
-      "source_relative_path": "docs/blocks-toolbox/images/image-1612.png",
-      "output": {
-        "resource": {
-          "relative_path": "docs/blocks-toolbox/images/image-1612.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
       "source_relative_path": "docs/blocks-toolbox/images/image-1615.png",
       "output": {
         "resource": {
@@ -2011,16 +1951,6 @@
       "output": {
         "resource": {
           "relative_path": "docs/blocks-toolbox/images/image-1795.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "docs/blocks-toolbox/images/image-1803.png",
-      "output": {
-        "resource": {
-          "relative_path": "docs/blocks-toolbox/images/image-1803.png"
         }
       },
       "version": ""
@@ -5887,16 +5817,6 @@
     },
     {
       "type": "Resource",
-      "source_relative_path": "docs/images/11.png",
-      "output": {
-        "resource": {
-          "relative_path": "docs/images/11.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
       "source_relative_path": "docs/images/12-hour-clock-1-line.png",
       "output": {
         "resource": {
@@ -6477,10 +6397,10 @@
     },
     {
       "type": "Resource",
-      "source_relative_path": "docs/images/add-adfs-credentials.png",
+      "source_relative_path": "docs/images/add-adfs-credentials.jpg",
       "output": {
         "resource": {
-          "relative_path": "docs/images/add-adfs-credentials.png"
+          "relative_path": "docs/images/add-adfs-credentials.jpg"
         }
       },
       "version": ""
@@ -6567,20 +6487,10 @@
     },
     {
       "type": "Resource",
-      "source_relative_path": "docs/images/adfs-button.png",
+      "source_relative_path": "docs/images/adfs-button.jpg",
       "output": {
         "resource": {
-          "relative_path": "docs/images/adfs-button.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "docs/images/administration-companies-rego.png",
-      "output": {
-        "resource": {
-          "relative_path": "docs/images/administration-companies-rego.png"
+          "relative_path": "docs/images/adfs-button.jpg"
         }
       },
       "version": ""
@@ -8857,10 +8767,10 @@
     },
     {
       "type": "Resource",
-      "source_relative_path": "docs/images/autodesk-forge-viewer-img.png",
+      "source_relative_path": "docs/images/autodesk-forge-viewer-img.jpg",
       "output": {
         "resource": {
-          "relative_path": "docs/images/autodesk-forge-viewer-img.png"
+          "relative_path": "docs/images/autodesk-forge-viewer-img.jpg"
         }
       },
       "version": ""
@@ -9067,30 +8977,10 @@
     },
     {
       "type": "Resource",
-      "source_relative_path": "docs/images/blocks-toolbox-recommendations-alert-action-mark-as-resolved.png",
-      "output": {
-        "resource": {
-          "relative_path": "docs/images/blocks-toolbox-recommendations-alert-action-mark-as-resolved.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
       "source_relative_path": "docs/images/blocks-toolbox-recommendations-alert-analytics.png",
       "output": {
         "resource": {
           "relative_path": "docs/images/blocks-toolbox-recommendations-alert-analytics.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "docs/images/blocks-toolbox-recommendations-alert-event-data.png",
-      "output": {
-        "resource": {
-          "relative_path": "docs/images/blocks-toolbox-recommendations-alert-event-data.png"
         }
       },
       "version": ""
@@ -9647,10 +9537,40 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "docs/images/blocks-toolbox/allow-delete-2.png",
+      "output": {
+        "resource": {
+          "relative_path": "docs/images/blocks-toolbox/allow-delete-2.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "docs/images/blocks-toolbox/allowed-ext-1.gif",
+      "output": {
+        "resource": {
+          "relative_path": "docs/images/blocks-toolbox/allowed-ext-1.gif"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "docs/images/blocks-toolbox/bfpUHWGGCl.gif",
       "output": {
         "resource": {
           "relative_path": "docs/images/blocks-toolbox/bfpUHWGGCl.gif"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "docs/images/blocks-toolbox/button.png",
+      "output": {
+        "resource": {
+          "relative_path": "docs/images/blocks-toolbox/button.png"
         }
       },
       "version": ""
@@ -9721,6 +9641,16 @@
       "output": {
         "resource": {
           "relative_path": "docs/images/blocks-toolbox/e7gAx9pD7Y.gif"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "docs/images/blocks-toolbox/file-size.png",
+      "output": {
+        "resource": {
+          "relative_path": "docs/images/blocks-toolbox/file-size.png"
         }
       },
       "version": ""
@@ -10611,16 +10541,6 @@
       "output": {
         "resource": {
           "relative_path": "docs/images/blocks-toolbox/image-404.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "docs/images/blocks-toolbox/image-42.png",
-      "output": {
-        "resource": {
-          "relative_path": "docs/images/blocks-toolbox/image-42.png"
         }
       },
       "version": ""
@@ -11587,76 +11507,6 @@
     },
     {
       "type": "Resource",
-      "source_relative_path": "docs/images/concepts-alert-analytics.png",
-      "output": {
-        "resource": {
-          "relative_path": "docs/images/concepts-alert-analytics.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "docs/images/concepts-alert-discussion-box-mention-user.png",
-      "output": {
-        "resource": {
-          "relative_path": "docs/images/concepts-alert-discussion-box-mention-user.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "docs/images/concepts-alert-discussion-search-and-send-message.png",
-      "output": {
-        "resource": {
-          "relative_path": "docs/images/concepts-alert-discussion-search-and-send-message.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "docs/images/concepts-alert-discussion.png",
-      "output": {
-        "resource": {
-          "relative_path": "docs/images/concepts-alert-discussion.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "docs/images/concepts-alert-form.png",
-      "output": {
-        "resource": {
-          "relative_path": "docs/images/concepts-alert-form.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "docs/images/concepts-alert-timeline.png",
-      "output": {
-        "resource": {
-          "relative_path": "docs/images/concepts-alert-timeline.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "docs/images/concepts-alert-triage-instruction.png",
-      "output": {
-        "resource": {
-          "relative_path": "docs/images/concepts-alert-triage-instruction.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
       "source_relative_path": "docs/images/concepts-data-stream-IC_1.png",
       "output": {
         "resource": {
@@ -11681,76 +11531,6 @@
       "output": {
         "resource": {
           "relative_path": "docs/images/concepts-landing-page.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "docs/images/concepts-recommendation-alert-analytics.png",
-      "output": {
-        "resource": {
-          "relative_path": "docs/images/concepts-recommendation-alert-analytics.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "docs/images/concepts-recommendation-alert-discussion-box-mention-user.png",
-      "output": {
-        "resource": {
-          "relative_path": "docs/images/concepts-recommendation-alert-discussion-box-mention-user.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "docs/images/concepts-recommendation-alert-discussion-search-and-send-message.png",
-      "output": {
-        "resource": {
-          "relative_path": "docs/images/concepts-recommendation-alert-discussion-search-and-send-message.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "docs/images/concepts-recommendation-alert-discussion.png",
-      "output": {
-        "resource": {
-          "relative_path": "docs/images/concepts-recommendation-alert-discussion.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "docs/images/concepts-recommendation-alert-form.png",
-      "output": {
-        "resource": {
-          "relative_path": "docs/images/concepts-recommendation-alert-form.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "docs/images/concepts-recommendation-alert-timeline.png",
-      "output": {
-        "resource": {
-          "relative_path": "docs/images/concepts-recommendation-alert-timeline.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "docs/images/concepts-recommendation-alert-triage-instruction.png",
-      "output": {
-        "resource": {
-          "relative_path": "docs/images/concepts-recommendation-alert-triage-instruction.png"
         }
       },
       "version": ""
@@ -13667,6 +13447,16 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "docs/images/embedded-page.jpg",
+      "output": {
+        "resource": {
+          "relative_path": "docs/images/embedded-page.jpg"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "docs/images/enable-toolbar.png",
       "output": {
         "resource": {
@@ -13741,6 +13531,16 @@
       "output": {
         "resource": {
           "relative_path": "docs/images/esri-markers.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "docs/images/execution-order-rules-example.png",
+      "output": {
+        "resource": {
+          "relative_path": "docs/images/execution-order-rules-example.png"
         }
       },
       "version": ""
@@ -14027,6 +13827,16 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "docs/images/form-actions-menu.png",
+      "output": {
+        "resource": {
+          "relative_path": "docs/images/form-actions-menu.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "docs/images/fsvl8qu8vl.gif",
       "output": {
         "resource": {
@@ -14091,126 +13901,6 @@
       "output": {
         "resource": {
           "relative_path": "docs/images/horasd8ebk.gif"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "docs/images/how-tos-agents-error-1.png",
-      "output": {
-        "resource": {
-          "relative_path": "docs/images/how-tos-agents-error-1.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "docs/images/how-tos-attempt3.png",
-      "output": {
-        "resource": {
-          "relative_path": "docs/images/how-tos-attempt3.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "docs/images/how-tos-data-streams-collection-delete.png",
-      "output": {
-        "resource": {
-          "relative_path": "docs/images/how-tos-data-streams-collection-delete.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "docs/images/how-tos-manage-access-5.png",
-      "output": {
-        "resource": {
-          "relative_path": "docs/images/how-tos-manage-access-5.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "docs/images/how-tos-manage-access-6.png",
-      "output": {
-        "resource": {
-          "relative_path": "docs/images/how-tos-manage-access-6.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "docs/images/how-tos-manage-access-7.png",
-      "output": {
-        "resource": {
-          "relative_path": "docs/images/how-tos-manage-access-7.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "docs/images/how-tos-manage-categories-6.png",
-      "output": {
-        "resource": {
-          "relative_path": "docs/images/how-tos-manage-categories-6.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "docs/images/how-tos-manage-landing-pages-3.png",
-      "output": {
-        "resource": {
-          "relative_path": "docs/images/how-tos-manage-landing-pages-3.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "docs/images/how-tos-manage-variables-1.png",
-      "output": {
-        "resource": {
-          "relative_path": "docs/images/how-tos-manage-variables-1.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "docs/images/how-tos-notifications1.png",
-      "output": {
-        "resource": {
-          "relative_path": "docs/images/how-tos-notifications1.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "docs/images/how-tos-olRa9jDFBz.gif",
-      "output": {
-        "resource": {
-          "relative_path": "docs/images/how-tos-olRa9jDFBz.gif"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "docs/images/how-tos-stream-host-log-level.png",
-      "output": {
-        "resource": {
-          "relative_path": "docs/images/how-tos-stream-host-log-level.png"
         }
       },
       "version": ""
@@ -16977,16 +16667,6 @@
     },
     {
       "type": "Resource",
-      "source_relative_path": "docs/images/image-379.png",
-      "output": {
-        "resource": {
-          "relative_path": "docs/images/image-379.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
       "source_relative_path": "docs/images/image-385.png",
       "output": {
         "resource": {
@@ -17007,10 +16687,10 @@
     },
     {
       "type": "Resource",
-      "source_relative_path": "docs/images/image-388.png",
+      "source_relative_path": "docs/images/image-388.jpg",
       "output": {
         "resource": {
-          "relative_path": "docs/images/image-388.png"
+          "relative_path": "docs/images/image-388.jpg"
         }
       },
       "version": ""
@@ -19717,10 +19397,10 @@
     },
     {
       "type": "Resource",
-      "source_relative_path": "docs/images/live-feed-block.png",
+      "source_relative_path": "docs/images/live-feed-block.jpg",
       "output": {
         "resource": {
-          "relative_path": "docs/images/live-feed-block.png"
+          "relative_path": "docs/images/live-feed-block.jpg"
         }
       },
       "version": ""
@@ -20547,20 +20227,20 @@
     },
     {
       "type": "Resource",
-      "source_relative_path": "docs/images/open-sub-mgr-app.png",
+      "source_relative_path": "docs/images/open-sub-mgr-app.jpg",
       "output": {
         "resource": {
-          "relative_path": "docs/images/open-sub-mgr-app.png"
+          "relative_path": "docs/images/open-sub-mgr-app.jpg"
         }
       },
       "version": ""
     },
     {
       "type": "Resource",
-      "source_relative_path": "docs/images/open-web-config.png",
+      "source_relative_path": "docs/images/open-web-config.jpg",
       "output": {
         "resource": {
-          "relative_path": "docs/images/open-web-config.png"
+          "relative_path": "docs/images/open-web-config.jpg"
         }
       },
       "version": ""
@@ -21181,16 +20861,6 @@
       "output": {
         "resource": {
           "relative_path": "docs/images/reset-password2-3.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "docs/images/resources-health-ui.png",
-      "output": {
-        "resource": {
-          "relative_path": "docs/images/resources-health-ui.png"
         }
       },
       "version": ""
@@ -26357,40 +26027,40 @@
     },
     {
       "type": "Resource",
-      "source_relative_path": "docs/images/whats-new-1.png",
+      "source_relative_path": "docs/images/whats-new-1.jpg",
       "output": {
         "resource": {
-          "relative_path": "docs/images/whats-new-1.png"
+          "relative_path": "docs/images/whats-new-1.jpg"
         }
       },
       "version": ""
     },
     {
       "type": "Resource",
-      "source_relative_path": "docs/images/whats-new-2.png",
+      "source_relative_path": "docs/images/whats-new-2.jpg",
       "output": {
         "resource": {
-          "relative_path": "docs/images/whats-new-2.png"
+          "relative_path": "docs/images/whats-new-2.jpg"
         }
       },
       "version": ""
     },
     {
       "type": "Resource",
-      "source_relative_path": "docs/images/whats-new-3.png",
+      "source_relative_path": "docs/images/whats-new-3.jpg",
       "output": {
         "resource": {
-          "relative_path": "docs/images/whats-new-3.png"
+          "relative_path": "docs/images/whats-new-3.jpg"
         }
       },
       "version": ""
     },
     {
       "type": "Resource",
-      "source_relative_path": "docs/images/whats-new-4.png",
+      "source_relative_path": "docs/images/whats-new-4.mp4",
       "output": {
         "resource": {
-          "relative_path": "docs/images/whats-new-4.png"
+          "relative_path": "docs/images/whats-new-4.mp4"
         }
       },
       "version": ""
@@ -29207,10 +28877,10 @@
     },
     {
       "type": "Resource",
-      "source_relative_path": "docs/resources/images/autodesk-forge-viewer-img.png",
+      "source_relative_path": "docs/resources/images/autodesk-forge-viewer-img.jpg",
       "output": {
         "resource": {
-          "relative_path": "docs/resources/images/autodesk-forge-viewer-img.png"
+          "relative_path": "docs/resources/images/autodesk-forge-viewer-img.jpg"
         }
       },
       "version": ""
@@ -33009,26 +32679,6 @@
       "version": ""
     },
     {
-      "type": "Conceptual",
-      "source_relative_path": "image-migration-analysis.md",
-      "output": {
-        ".html": {
-          "relative_path": "image-migration-analysis.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "image-migration-plan.md",
-      "output": {
-        ".html": {
-          "relative_path": "image-migration-plan.html"
-        }
-      },
-      "version": ""
-    },
-    {
       "type": "Resource",
       "source_relative_path": "images/beta-icon.png",
       "output": {
@@ -33094,6 +32744,16 @@
       "output": {
         ".html": {
           "relative_path": "scripts/README.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "templates/README.md",
+      "output": {
+        ".html": {
+          "relative_path": "templates/README.html"
         }
       },
       "version": ""

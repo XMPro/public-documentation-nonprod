@@ -118,7 +118,7 @@
             // Create and load the image
             const img = document.createElement('img');
             // Handle the image path - it might already include the base path
-            if (imageFile.startsWith(basePath)) {
+            if (basePath && imageFile.startsWith(basePath)) {
                 img.src = imageFile;
             } else if (imageFile.startsWith('/')) {
                 img.src = basePath + imageFile;

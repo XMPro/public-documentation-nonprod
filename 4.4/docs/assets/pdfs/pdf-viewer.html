@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <title>XMPro PDF Viewer</title>
@@ -35,7 +35,9 @@
     </style>
 </head>
 <body>
-    <iframe id="pdf-container" src=""></iframe>
+    <iframe id="pdf-container" src="" title="PDF content">
+        <p>Your browser does not support iframes. Please <a href="#" id="pdf-direct-link">click here to view the PDF directly</a>.</p>
+    </iframe>
     <script>
         // Get the PDF filename from the URL parameters
         const urlParams = new URLSearchParams(window.location.search);
@@ -47,6 +49,12 @@
             
             // Set the iframe source to the PDF file
             document.getElementById('pdf-container').src = pdfFile;
+            
+            // Also update the direct link in the fallback content
+            const directLink = document.getElementById('pdf-direct-link');
+            if (directLink) {
+                directLink.href = pdfFile;
+            }
             
             // Add event listener to handle iframe load errors
             document.getElementById('pdf-container').onerror = function() {

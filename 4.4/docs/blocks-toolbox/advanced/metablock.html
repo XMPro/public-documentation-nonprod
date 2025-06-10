@@ -131,15 +131,15 @@
 <p>Common properties include: <em>filter, sort, show # of results,</em> and <em>skip # of results</em>;</p>
 <p><a href="../common-properties.html#data-source">See the Common Properties article for more details on common Data Source properties.</a></p>
 <p>To use the Data Source property, include these predefined JavaScript functions in your <a href="metablock.html#script-file-javascript">Script File</a>:</p>
-<pre class="language-javascript"><code class="lang-javascript"><strong>// Access data source when the metablcok is loaded (optional) 
-</strong><strong>function onDataLoaded(data){
-</strong>  //Access a value from the data source
-  const foo = data.find(obj => 'foo' in obj).foo;
+<pre><code class="lang-javascript">// Access data source when the metablock is loaded (optional) 
+function onDataLoaded(data) {
+    // Access a value from the data source
+    const foo = data.find(obj =&gt; 'foo' in obj).foo;
 }
 
 // Access live updates on the data source after the metablock has been loaded (optional)
-function onDataChanged(data, changes){
-  
+function onDataChanged(data, changes) {
+    
 }
 </code></pre>
 <details>
@@ -256,7 +256,7 @@ function onValueMappingLoaded(data){
 <p>Access and visualize your engineering data and designs from the cloud using <a href="https://aps.autodesk.com/index.md">Autodesk Platform Services</a> (APS, formerly Forge).</p>
 <p>Leverage <a href="metablock.html#value-mapping">Value Mapping</a> when embedding the <a href="https://aps.autodesk.com/en/docs/viewer/v7/developers_guide/overview/index.md">APS Viewer</a> in XMPro App Pages to display interactive 2D and 3D views of your designs.</p>
 <p><strong>Note</strong>: This is a simple example to demonstrate the APS Viewer API using an unauthenticated repository. Refer to the authenticated use case for a more complex example that includes security measures for credentials.</p>
-<p><img src="../../images/autodesk-forge-viewer-img.png" alt="Autodesk Platform Services Viewer example without authentication"></p>
+<p><img src="../../images/autodesk-forge-viewer-img.jpg" alt="Autodesk Platform Services Viewer example without authentication"></p>
 <p><em>Fig 3: Autodesk Platform Services Viewer example without authentication</em></p>
 <div class="NOTE">
 <h5>Note</h5>
@@ -604,7 +604,7 @@ app.listen(port, () =&gt; {
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: June 09, 2025</em></small></p>
+    <p><small><em>Last modified: June 10, 2025</em></small></p>
   </div>
 </article>
 
