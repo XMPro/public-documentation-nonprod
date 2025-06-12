@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>v4.4.2 | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="v4.4.2 | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      <meta name="description" content="15 April 2024">
+      <link rel="icon" href="../../images/favicon.png">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/release-notes/v4.4.2.md&amp;version=GBmain&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="v442">v4.4.2</h1>
+
+<h2 id="integrations">Integrations</h2>
+<p>An issue was discovered with <a href="https://xmpro.gitbook.io/python">Python Agent</a> v1.61 in where certain combinations of agents resulted in all data streams failing to startup on a Stream Host. This version of the agent was incorrectly packaged and has since been rectified. Upgrading the Python Agent to v1.65 and using the latest Stream Host (v4.4.2) is recommended. <br>
+<br>
+An issue was discovered with <a href="https://xmpro.gitbook.io/calculated-field">Calculated Field Agent</a> v3.44 where it was not compatible with pre v4.4.0 of the Stream Host. This version of the agent was incorrectly packaged and has since been rectified. Upgrading the Calculated Field agent to v4.45 and using the latest Stream Host (v4.4.2) is recommended.</p>
+<table><thead><tr><th width="155">Change Type</th><th width="250">Name</th><th>Description</th></tr></thead><tbody><tr><td>New</td><td><a href="https://xmpro.gitbook.io/http-connector/">HTTP Connector v1.00</a></td><td>Include data from an HTTP endpoint in your Application.</td></tr><tr><td>New</td><td><a href="https://xmpro.gitbook.io/neo4j-connector/">Neo4J Connector v1.00</a></td><td>Include graph data in your Application. </td></tr><tr><td>New</td><td><a href="https://xmpro.gitbook.io/neo4j/">Neo4j Listener v1.00<br>Neo4j Context Provider v1.00<br>Neo4j Action Agent v1.00</a></td><td>Fetch data from, insert, update, create or merge data into, a Neo4j graph database.</td></tr><tr><td>New</td><td><a href="https://xmpro.gitbook.io/sparkplug-b/">Sparkplug B Listener v1.01</a><br><a href="https://xmpro.gitbook.io/sparkplug-b/">Sparkplug B Action Agent v1.01</a></td><td>Receive and publish Sparkplug B-compliant messages to and from an external MQTT broker.</td></tr><tr><td>New</td><td><a href="https://xmpro.gitbook.io/tsc-azure-data-explorer-connector">TSC Azure Data Explorer Connector v1.00</a></td><td>Utilize an optimized query that enhances the Time Series Chart performance.</td></tr><tr><td>Enhancement</td><td><a href="https://xmpro.gitbook.io/window/">Email Action Agent v4.29</a></td><td><p>Support CC and BCC.</p><p>Support variables for the From address.</p></td></tr><tr><td>Enhancement</td><td><a href="https://xmpro.gitbook.io/ethereum-smart-contract/">Ethereum Smart Contract Listener v1.04</a></td><td>Updated Nethereum Nuget to 4.19.0.</td></tr><tr><td>Enhancement</td><td><a href="https://xmpro.gitbook.io/mlflow#v1.06-2-apr-2024">MLflow AI ML Agent v1.06</a></td><td>Support a Staging model or a specific version.<br>Validate the model signature.</td></tr><tr><td>Fix</td><td><a href="https://xmpro.gitbook.io/calculated-field#v3.45-10-apr-2024">Calculated Field Transformation v3.45</a></td><td>Replacement for v3.44 released in <a href="v4.4.0.html#integrations">v4.4.0</a>, which was not backward compatible with older Stream Hosts (pre v4.40).</td></tr><tr><td>Fix</td><td><a href="https://xmpro.gitbook.io/run-recommendation#v2.64-12-apr-2024">Run Recommendation v2.64</a></td><td><em>Collection was modified error.</em><br>Fixed a rare concurrent access exception when fetching updated rules.</td></tr><tr><td>Fix</td><td><a href="https://app.gitbook.com/o/-MZASoMaVZCmWsNG58Xo/s/uwoxg8zhiTgdyYBb3g1k/">Python Agent v1.65</a></td><td>Fixed a rare issue where the python agent when used in certain combinations of agents in a data stream would cause the SH to stop, subsequentially stopping all Data Streams that SH runs. The issue was introduced in <a href="https://app.gitbook.com/o/-MZASoMaVZCmWsNG58Xo/s/uwoxg8zhiTgdyYBb3g1k/">v1.61</a> of the agent where it was packaged incorrectly.</td></tr></tbody></table>
+<h2 id="app-designer">App Designer</h2>
+<table><thead><tr><th width="157">Change Type</th><th>Description</th></tr></thead><tbody><tr><td>Enhancement</td><td>The <a href="../blocks-toolbox/device-input/visual-media-capture.html">Visual Media Capture</a> Block's App File storage has been <strong>replaced</strong> with external storage providers, i.e. Azure Blob and Amazon S3.<br><strong>Note:</strong> this is not backward compatible and you will need to update the block configuration if you used it in v4.4.1.</td></tr><tr><td>Fix</td><td><em>My lightweight App or App Page fails to export.</em><br>We've optimized how we store grid filter properties, reducing the exported App size.</td></tr></tbody></table>
+<h2 id="subscription-manager">Subscription Manager</h2>
+<table><thead><tr><th width="157">Change Type</th><th>Description</th></tr></thead><tbody><tr><td>Enhancement</td><td>Microsoft .NET Framework upgrade from 4.7.2 to 4.8.1</td></tr><tr><td>Fix</td><td><em>The default Subscription Manager log to file path is accessible through a web browser.</em><br>The default log to file location is App_Data, which is hidden by default globally on IIS and therefore not public.   </td></tr></tbody></table>
+<h2 id="stream-host">Stream Host</h2>
+<table><thead><tr><th width="157">Change Type</th><th>Description</th></tr></thead><tbody><tr><td>Feature</td><td>A <a href="../installation/complete-installation/install-stream-host/docker.html">Docker Stream Host</a> image is now supported. </td></tr><tr><td>Enhancement</td><td>New free trial Stream Hosts will be <a href="../installation/complete-installation/install-stream-host/docker.html">deployed as docker containers</a>, rather than Azure Webjobs. In the future, this will become the recommended Stream Host deployment.</td></tr><tr><td>Enhancement</td><td>Utilize <a href="../how-tos/stream-host.html#using-environment-variables">environment variables</a> to override variables for a Stream Host, best suited when running the Stream Host in Docker.  <br>Note: the prefix changed from <code>xm:</code> to <code>xmvariable__</code>.</td></tr><tr><td>Enhancement</td><td><p>We've improved the encryption of agent parameters and variables. A new enableLegacyCrypto feature flag, which defaults to false, allows you to revert to the historic encryption method. We recommend sticking with the new method as the legacy method will eventually be deprecated.</p><p></p><p>If you're running Data Stream Designer v4.2.2+, no action is necessary. If <code>xmpro:XMCryptography:TripleDES:Key</code> is specified in the configuration, a warning log will inform this is obsolete and can be removed.</p><p> </p><p>If you're running Data Stream Designer older than v4.4.2, you must:</p><ul><li>add <code>xmpro:Gateway:FeatureFlags:EnableLegacyCrypto=true</code> to the config</li><li>specify the <code>xmpro:XMCryptography:TripleDES:Key</code> configuration (go to Data Stream Designer's site settings and copy the <a href="../how-tos/manage-site-settings.html#encryption-key">Encryption Key</a>)</li></ul><p>If you don't, the Stream Host will fail at start-up and the resulting log will remind you to take the above actions.</p><p></p><p>An older Stream Host with an older Data Stream Designer will continue functioning as usual.</p></td></tr><tr><td>Fix</td><td><em>The required assembly is missing when using the Calculated Agent v1.65 with an older Stream Host.</em><br>When an Agent and the Stream Host supply the same assembly, the correct one is selected. <br>In addition, detailed debug information is now logged when loading agent assemblies to better troubleshoot Agent and Stream Host issues. There is a check for certain agent assembly loading conditions, which will be visible in the Data Stream log viewer.</td></tr><tr><td>Fix</td><td><em>The configuration blade for any SQL Server Agent v5.0 is blank when using the latest Stream Host (v4.4.2).</em><br>Added error handling for Agents packaged with a 'null' configuration key. </td></tr><tr><td>Fix</td><td><em>Encountered a 'Collection Modified' error on the Run Recommendation Agent.</em><br>This was fixed in v4.4.1. </td></tr></tbody></table>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: June 12, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

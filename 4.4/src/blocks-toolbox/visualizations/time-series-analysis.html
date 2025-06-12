@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Time Series Analysis | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Time Series Analysis | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      <meta name="description" content="v4.4.9: renamed from &#39;Time Series Chart&#39;.">
+      <link rel="icon" href="../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/blocks-toolbox/visualizations/time-series-analysis.md&amp;version=GBmain&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="time-series-analysis">Time Series Analysis</h1>
+
+<p>The Time Series Analysis is an interactive UI component that visualizes large amounts of time-oriented data. The Time Series Analysis empowers</p>
+<ul>
+<li>comparing data at run-time based on asset ID by dropping markers on the chart</li>
+<li>panning and zooming</li>
+<li>showing and hiding specific assets or parameters via the hierarchy panel</li>
+</ul>
+<p><img src="../../images/image-1772.png" alt=""></p>
+<h2 id="performance">Performance</h2>
+<p>The Time Series Analysis is a specialized graphing tool that addresses the time series of asset attributes.  By its nature, it will process many data points (in some cases millions); thus, extracting and processing this complex data can take time. Large data sets can place a strain on your computing resources.</p>
+<p>There is no expectation that a time series analysis will perform to the same level as bar charts in a Business Intelligence product like PowerBI. The approach to computational capability is no different than having a massive single Excel sheet or multiple sheets.</p>
+<p>We have chosen not to implement hard limits like similar products e.g. Microsoft ADX, as the data sources our customers use are wide and varied.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Read the article below to improve your understanding of factors that impact performance.</p>
+<ul>
+<li><a href="../../resources/faqs/implementation.html#a-look-beneath-the-hood-of-xmpro-charts-and-time-series-analysis-charts">A look beneath the hood of XMPro Charts and Time Series Analysis</a></li>
+</ul>
+</div>
+<h3 id="connector-selection">Connector Selection</h3>
+<p>Choose either a Connector designed for large volumes of data (e.g. <a href="https://xmpro.gitbook.io/tsc-sql-server-connector/index.md">TSC SQL Server Connector</a>) - or one that does not reload with each interaction (e.g. <a href="https://xmpro.gitbook.io/sql-server-connector/index.md">SQL Server Connector</a>).</p>
+<p>If there isn't a specialized TSC Connector available for your data source yet, you can utilize the <a href="../../how-tos/connectors/building-connectors.html#itsaconnector">ITSAConnector</a> interface to build one.</p>
+<p><a href="https://youtu.be/Sm5plue7P2A">Link to resource</a></p>
+<h2 id="time-series-analysis-properties">Time Series Analysis Properties</h2>
+<h3 id="appearance">Appearance</h3>
+<h4 id="common-properties">Common Properties</h4>
+<p>The <em>visibility</em> property is common to most Blocks;</p>
+<p><a href="../common-properties.html#appearance">See the Common Properties article for more details on common appearance properties.</a></p>
+<h4 id="show-legend">Show Legend</h4>
+<p>Determines if the legend is displayed or not.</p>
+<p><img src="../../images/show-legend.png" alt=""></p>
+<p><img src="../../images/hide-legend.png" alt=""></p>
+<h4 id="x-axis-label-format">X Axis Label Format</h4>
+<p>Determines how the date is formatted on the x-axis of the chart and pan &amp; zoom panel.</p>
+<table>
+<thead>
+<tr>
+<th>Label Format</th>
+<th style="text-align: center;">Image</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>12-Hour Clock (2 Lines)</td>
+<td style="text-align: center;"><img src="../../images/12-hour-clock-2-lines.png" alt=""></td>
+</tr>
+<tr>
+<td>12-Hour Clock (1 Line)</td>
+<td style="text-align: center;"><img src="../../images/12-hour-clock-1-line.png" alt=""></td>
+</tr>
+<tr>
+<td>24-Hour Clock (2 Lines)</td>
+<td style="text-align: center;"><img src="../../images/24-hour-clock-2-lines.png" alt=""></td>
+</tr>
+<tr>
+<td>24-Hour Clock (1 Line)</td>
+<td style="text-align: center;"><img src="../../images/24-hour-clock-1-line.png" alt=""></td>
+</tr>
+</tbody>
+</table>
+<h4 id="enable-toolbar">Enable Toolbar</h4>
+<p>Determines whether the toolbar is displayed or not. The toolbar contains the button to change the y-axis type and the ellipsis menu.</p>
+<p><img src="../../images/enable-toolbar.png" alt=""></p>
+<p><img src="../../images/disable-toolbar.png" alt=""></p>
+<h4 id="enable-display-grid">Enable Display Grid</h4>
+<p>Determines whether the ellipsis menu contains the Display Grid option, which shows the selected data in a grid.</p>
+<h4 id="enable-download-as-csv">Enable Download as CSV</h4>
+<p>Determines whether the ellipsis menu contains the Download as CSV option, which allows you to download the selected data as a CSV file.</p>
+<h4 id="pan--zoom-mode">Pan &amp; Zoom Mode</h4>
+<p>This determines how the Pan &amp; Zoom panel is displayed. Setting it to &quot;Hidden&quot; will remove the panel entirely, while &quot;Compact&quot; is a single-line component, and &quot;Full&quot; will display a Pan &amp; Zoom with secondary panning and zooming for fine-tuning the selection.</p>
+<table>
+<thead>
+<tr>
+<th>Pan &amp; Zoom Mode</th>
+<th style="text-align: center;">Image</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Full</td>
+<td style="text-align: center;"><img src="../../images/pan-and-zoom-full.png" alt=""></td>
+</tr>
+<tr>
+<td>Compact</td>
+<td style="text-align: center;"><img src="../../images/pan-and-zoom-compact.png" alt=""></td>
+</tr>
+<tr>
+<td>Hidden</td>
+<td style="text-align: center;"><img src="../../images/pan-and-zoom-hidden.png" alt=""></td>
+</tr>
+</tbody>
+</table>
+<h4 id="pan--zoom-color">Pan &amp; Zoom Color</h4>
+<p>This determines the color of the Pan &amp; Zoom component.</p>
+<h4 id="interval-size">Interval Size</h4>
+<p>This determines the default value for the Interval Size slider. The slider allows you to fine-tune the granularity of the displayed data. The displayed line chart data will be averaged over this interval.</p>
+<video autoplay loop muted playsinline style="max-width: 100%; height: auto;">
+  <source src="../../images/lwr-recording.mp4" type="video/mp4">
+</video>
+<h4 id="range---static">Range - Static</h4>
+<p>This determines the starting date for the Pan &amp; Zoom. The end date of the Time Series Chart is determined by the row with the latest timestamp. The Pan &amp; Zoom range will update automatically with live data.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The static range is used unless <a href="time-series-analysis.html#range---dynamic-start">Dynamic Start</a> and <a href="time-series-analysis.html#range---dynamic-end">Dynamic End</a> are not zero.</p>
+</div>
+<h4 id="range---dynamic-start">Range - Dynamic Start</h4>
+<p>This determines the starting date for the Pan &amp; Zoom. If changed dynamically at runtime, the Pan &amp; Zoom range will reload to reflect the new start.</p>
+<p>The Dynamic Start date must be before the Dynamic End date.</p>
+<h4 id="range---dynamic-end">Range - Dynamic End</h4>
+<p>Unlike the Static Range where the end date is determined by the row with the latest timestamp, this value specifies the end date for the Pan &amp; Zoom. If changed dynamically at runtime, the Pan &amp; Zoom range will reload to reflect the new end.</p>
+<h4 id="initial-selection">Initial Selection</h4>
+<p>This determines the time interval initially selected in the Pan &amp; Zoom component and, correspondingly, the line chart. The selection will always start at the right side of the Pan &amp; Zoom component.</p>
+<h4 id="initial-selection-unit-of-time">Initial Selection Unit of Time</h4>
+<p>This determines which unit of time measurement is applied to the <a href="time-series-analysis.html#initial-selection">initial selection</a> value. The options are Minutes, Days, or Hours.</p>
+<p><img src="../../images/initial-selection-unit-of-time.png" alt=""></p>
+<p>Upon launching the application, the initial selection and the unit of time can be observed on the interval timeline.</p>
+<p><img src="../../images/image-1117.png" alt=""></p>
+<h4 id="display-avg-min-max-and-envelope">Display Avg, Min, Max, and Envelope</h4>
+<p>This determines whether the line chart will display only the average values as a plain line, or the minimum, maximum, and envelope over the selected Interval Size.</p>
+<p><img src="../../images/display-avg-min-max-and-envelope.png" alt=""></p>
+<h4 id="show-tooltip-on-hover">Show Tooltip On Hover</h4>
+<p>This determines whether a tooltip will appear when the cursor hovers over a line. The tooltip will display the values of the hovered point on the line.</p>
+<p><img src="../../images/tooltip.png" alt=""></p>
+<h4 id="enable-zoom">Enable Zoom</h4>
+<p>Determines whether you can click and select on the chart to zoom into the selection.</p>
+<h4 id="show-x-axis">Show X Axis</h4>
+<p>This determines whether the x-axis line and labels for the line chart are shown.</p>
+<h4 id="show-y-axis">Show Y Axis</h4>
+<p>This determines whether the y-axis line and labels for the line chart are shown.</p>
+<p><img src="../../images/axes.png" alt=""></p>
+<h4 id="default-y-axis-type">Default Y Axis Type</h4>
+<p>This determines the default Y Axis type, which can be changed at run-time using the button at the top-left corner of the line chart.</p>
+<p>If set to &quot;Stacked&quot; the selected parameters will be separated into different panes stacked vertically. If set to &quot;Shared&quot; the selected parameters will share a single pane with a single y-axis from the lowest to highest values in any line. If set to &quot;Overlap&quot;, the selected parameters will share a single pane with multiple y-axes, with the lowest and highest value of each line chart displayed on the axis at the bottom and top.</p>
+<video autoplay loop muted playsinline style="max-width: 100%; height: auto;">
+  <source src="../../images/y-axis-type.mp4" type="video/mp4">
+</video>
+<h4 id="show-dots">Show Dots</h4>
+<p>Determines whether the points on the lines will display as dots.</p>
+<p><img src="../../images/show-dots.png" alt=""></p>
+<h4 id="interpolation-function">Interpolation Function</h4>
+<p>This property allows you to define how the lines behave in the line charts.</p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th style="text-align: center;">Line</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Monotone X</td>
+<td style="text-align: center;"><img src="../../images/monotonex.png" alt=""></td>
+</tr>
+<tr>
+<td>Linear</td>
+<td style="text-align: center;"><img src="../../images/linear.png" alt=""></td>
+</tr>
+<tr>
+<td>Step</td>
+<td style="text-align: center;"><img src="../../images/step.png" alt=""></td>
+</tr>
+<tr>
+<td>Step Before</td>
+<td style="text-align: center;"><img src="../../images/stepbefore.png" alt=""></td>
+</tr>
+<tr>
+<td>Step After</td>
+<td style="text-align: center;"><img src="../../images/stepafter.png" alt=""></td>
+</tr>
+<tr>
+<td>Basis</td>
+<td style="text-align: center;"><img src="../../images/basis.png" alt=""></td>
+</tr>
+<tr>
+<td>Cardinal</td>
+<td style="text-align: center;"><img src="../../images/cardinal.png" alt=""></td>
+</tr>
+<tr>
+<td>Catmull-Rom</td>
+<td style="text-align: center;"><img src="../../images/catmull-rom.png" alt=""></td>
+</tr>
+</tbody>
+</table>
+<h4 id="palette">Palette</h4>
+<p>You can specify a custom color for each parameter in the line chart. If the number of parameters is greater than the number of colors specified, the colors will repeat.</p>
+<h3 id="behavior">Behavior</h3>
+<h4 id="recommendations">Recommendations</h4>
+<p>The Alerts for selected Recommendations will be displayed at run-time as markers on the chart: the Alert's created time is used as the timestamp and its title as the text.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Known limitations:</p>
+<ul>
+<li>The marker title space is limited and the Alert title may be truncated.</li>
+<li>Some HTML special characters (e.g.<code>&lt;</code>) used in the Alert title will be encoded.</li>
+</ul>
+</div>
+<h4 id="entity-id">Entity ID</h4>
+<p>Specify an <em>Entity ID</em> field to filter the Recommendation Alerts.</p>
+<h3 id="data-source">Data Source</h3>
+<h4 id="common-properties-1">Common Properties</h4>
+<p>A Data Source can be connected to a Time Series Chart. This will allow you to display data on the Time Series Chart.</p>
+<p>‌<a href="../common-properties.html#data-source">See the Common Properties article for more details on common data source properties.</a></p>
+<p>The Data Source property is required for the Time Series Chart.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Known limitations:</p>
+<ul>
+<li>SQL is not advised because large volumes of data may cause read issues and/or performance issues. Azure Data Explorer is the recommended time series data source.</li>
+<li>When adding a new field or expression to a Data Source already connected to a Time Series Chart, follow these steps for them to appear in the Time Series Chart configuration options:
+<ul>
+<li>Save the Data Source.</li>
+<li>Open the Time Series Chart's Block Properties.</li>
+<li>Save the Application.</li>
+</ul>
+</li>
+</ul>
+</div>
+<h3 id="data">Data</h3>
+<h4 id="timestamp-expression">Timestamp Expression</h4>
+<p>This is the column that the data will base its x-axis on. It must be a Date Time type column. For efficient performance, it is recommended to have an index in descending order on this column in your database.</p>
+<p>The Timestamp Expression property is required for the Time Series Chart.</p>
+<h4 id="default-selection">Default Selection</h4>
+<p>You can choose the line charts that the Time Series Chart will start with. If Group By Asset is disabled, you can select which parameters will be selected by default. If Group By Asset is enabled and a Hierarchy Data Source is selected, you will be able to select which Hierarchy items will be selected by default for each parameter.</p>
+<h3 id="hierarchy">Hierarchy</h3>
+<h4 id="group-by-asset">Group By Asset</h4>
+<p>This determines whether the data is to be grouped by an Asset Id column on the Data Source. If not enabled, the line chart will display a single line for each parameter selected.</p>
+<p><strong>Asset Id Expression</strong></p>
+<p>This is the column by which data will be grouped into separate lines. Each unique value in this column will have a line. If you choose to enable Hierarchy, this is also the Foreign Key that provides a link to the Id Expression of the Hierarchy Data Source.</p>
+<p>When Group By Asset is true, the Asset Id Expression property is required for the Time Series Chart.</p>
+<h4 id="show-hierarchy">Show Hierarchy</h4>
+<p>This determines whether the Hierarchy is displayed. The hierarchy is the left panel containing a tree grid that allows you to modify the selected assets and parameters.</p>
+<video autoplay loop muted playsinline style="max-width: 100%; height: auto;">
+  <source src="../../images/hierarchy.mp4" type="video/mp4">
+</video>
+<h4 id="data-source-1">Data Source</h4>
+<p>A Hierarchy Data Source can be connected to a Time Series Chart. This will allow you to display data in the Hierarchy of the Time Series Chart.</p>
+<p><a href="../common-properties.html#data-source">See the Common Properties article for more details on common data source properties.</a></p>
+<h4 id="id-expression">Id Expression</h4>
+<p>The Id Expression is the identifying column for the Hierarchy. The values in this column are linked to the Asset Id Expression of the line charts, and the Parent Id Expression.</p>
+<p>If the Hierarchy Data Source is selected, the Id Expression property is required for the Time Series Chart.</p>
+<h4 id="name-expression">Name Expression</h4>
+<p>The Name Expression is a user-friendly name for what the user can see. For example, the text that is showing in the List.</p>
+<p>If the Hierarchy Data Source is selected, the Name Expression property is required for the Time Series Chart.</p>
+<h4 id="parent-id-expression">Parent Id Expression</h4>
+<p>The Parent Id Expressions determine how the Hierarchy knows which rows are connected to each other as parent and child. The Parent Id refers to the Id of the parent row.</p>
+<p>If the Parent Id expression is not defined, the Hierarchy will have a flat structure.</p>
+<h4 id="resource-expression">Resource Expression</h4>
+<p>The Resource Expression determines whether a row is a Resource Row and can have parameters selected for it. For example, each area in a mine may have many pumps, but only the pumps are Resources and have a Motor Current, etc.</p>
+<p>If Resource Expression is not defined, only the leaf nodes in the tree will be Resources.</p>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: June 12, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

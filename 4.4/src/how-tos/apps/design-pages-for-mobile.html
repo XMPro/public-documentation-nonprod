@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Design Pages for Mobile | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Design Pages for Mobile | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/how-tos/apps/design-pages-for-mobile.md&amp;version=GBmain&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="design-pages-for-mobile">Design Pages for Mobile</h1>
+
+<p>When designing Pages, you may want to use responsive web design principles to support different screen sizes with the same App. This is easily accomplished with Block Styling and Devices. The default Page Layouts that you can choose from when creating a page have built-in responsive styling applied to the cards. For an example of this, see the <a href="../../concepts/application/page.html#responsive-page-layout-example">Responsive Page Layout Example</a>.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>It is recommended that you read the article listed below to improve your understanding of how to design pages for mobile.</p>
+<ul>
+<li><a href="use-block-styling-and-devices.html">How to Use Block Styling and Devices</a></li>
+<li><a href="manage-pages.html">How to Manage Pages</a></li>
+<li><a href="use-flex.html">How to Use Flex</a></li>
+</ul>
+</div>
+<h2 id="how-to-make-responsive-card-layout">How to Make Responsive Card Layout</h2>
+<p>To create a responsive card layout just like the default page layouts, follow the steps below:</p>
+<ol>
+<li>Create a Page with the first, single-card layout.</li>
+<li>Clone the Horizontal Stacked Layout, Vertical Stacked Layout, and Card until you have the layout that you desire. Please note that the order in the Page Layers will also be the order, from top to bottom, that items appear in mobile.</li>
+<li>If you want rows and columns to take up a different ratio on the page, adjust the Flex Grow of the relevant items. Make sure to uncheck <a href="use-block-styling-and-devices.html#adding-a-style-group">Style Groups</a> when applying styles to a specific element if you do not want the style to apply to the Style Group. <a href="use-flex.html">More info on Flex can be found here</a>.</li>
+<li>Switch to Mobile view with the middle Devices section of the command buttons.</li>
+<li>Adjust the heights of the elements. Any styles added in Mobile mode will apply only when the device's screen width is smaller than a threshold. In this case, change the first Horizontal Stacked Layout's Min height to 200%.</li>
+</ol>
+<video autoplay loop muted playsinline style="max-width: 100%; height: auto;">
+  <source src="../../images/mobile-design-clone.mp4" type="video/mp4">
+</video>
+<video autoplay loop muted playsinline style="max-width: 100%; height: auto;">
+  <source src="../../images/mobile-design-flex-grow.mp4" type="video/mp4">
+</video>
+<p><img src="../../images/apps/mobile/mobile-design-switch-view.png" alt="Screenshot of switching to Mobile View in the Devices section"></p>
+<p><img src="../../images/apps/mobile/mobile-design-adjust-heights.png" alt="Screenshot showing how to adjust element heights in Mobile View"></p>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: June 12, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

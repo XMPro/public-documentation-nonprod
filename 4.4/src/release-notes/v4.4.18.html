@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>v4.4.18 | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="v4.4.18 | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      <meta name="description" content="Mar 2025">
+      <link rel="icon" href="../../images/favicon.png">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/release-notes/v4.4.18.md&amp;version=GBmain&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="v4418">v4.4.18</h1>
+
+<h2 id="common">Common</h2>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Security update: Mitigate a high-severity vulnerability by upgrading certain Agents.</p>
+</div>
+<table><thead><tr><th width="157">Change Type</th><th>Description</th></tr></thead><tbody><tr><td>Security</td><td>We've replaced the deprecated System.Data.SqlClient library with Microsoft.Data.SqlClient, which is the recommended SQL Server data provider for all .NET applications. This update mitigates the risk of security vulnerabilities in the deprecated library while providing improved security, performance, and ongoing support. Refer to Integrations below for affected Agents.</td></tr><tr><td>Security</td><td>This release focuses on enhancing platform security and automated test coverage. Key improvements include endpoint authorization updates and significant platform engineering work to improve system stability and performance.</td></tr><tr><td>Fix</td><td><p><em>When upgrading using an ARM Template, there is a hard failure on the Data Stream Designer (DS) database upgrade. Later, I cannot retrieve the DS values needed to configure a Stream Host.</em></p><p>Fixed the Azure ARM Template not populating Data Stream/Stream Host Environment Variables.</p></td></tr><tr><td>Fix</td><td><p><em>When installing in AWS, there is an IIS error when I log into XMPro.</em></p><p>AWS .ebextensions script assigns iis_user read access to the certificate used by Subscription Manager.</p></td></tr></tbody></table>
+<h2 id="integrations">Integrations</h2>
+<table><thead><tr><th width="155">Change Type</th><th width="250">Name</th><th>Description</th></tr></thead><tbody><tr><td>New</td><td><p><a href="https://xmpro.gitbook.io/hivemq/">HiveMQ Listener v1.00</a></p><p><a href="https://xmpro.gitbook.io/hivemq/">HiveMQ Action Agent v1.00</a></p></td><td>HiveMQ ensures efficient real-time data exchange in environments with limited bandwidth or high network traffic.</td></tr><tr><td>Security</td><td><p><a href="https://xmpro.gitbook.io/data-streams-connector/">Data Streams Connector v2.01</a></p><p><a href="https://xmpro.gitbook.io/action-request-agents/">Read Action Request v2.07</a></p><p><a href="https://xmpro.gitbook.io/read-recommendation/">Read Recommendation v3.01</a></p><p><a href="https://xmpro.gitbook.io/resolve-recommendation/">Resolve Recommendation v2.48</a></p><p><a href="https://xmpro.gitbook.io/run-recommendation">Run Recommendation v3.04</a></p><p><a href="https://xmpro.gitbook.io/update-recommendation/">Update Recommendation v3.01</a></p><p><a href="https://xmpro.gitbook.io/action-request-agents/">Close Action Request v1.02</a></p></td><td>Replaced deprecated System.Data.SqlClient library to avoid security vulnerabilities.</td></tr></tbody></table>
+<p>The following Agents were repackaged to translate the configuration properties:</p>
+<table><thead><tr><th width="153">Change Type</th><th>Name</th></tr></thead><tbody><tr><td>Translation</td><td><a href="https://xmpro.gitbook.io/azure-sql">Azure SQL Listener v5.51<br>Azure SQL Context Provider v5.51<br>Azure SQL Action Agent v5.51</a></td></tr><tr><td>Translation</td><td><a href="https://xmpro.gitbook.io/boon-amber/">Boon Amber Action Agent v1.01</a></td></tr><tr><td>Translation</td><td><a href="https://xmpro.gitbook.io/convert-flow-units/">Convert Flow Units Function v1.07</a></td></tr><tr><td>Translation</td><td><a href="https://xmpro.gitbook.io/coupa">Coupa Context Provider v1.01<br>Coupa Action Agent v2.01</a></td></tr><tr><td>Translation</td><td><a href="https://xmpro.gitbook.io/crc16/">CRC16 Function v1.02</a></td></tr><tr><td>Translation</td><td><p><a href="https://xmpro.gitbook.io/csv/">CSV Listener v3.52</a></p><p><a href="https://xmpro.gitbook.io/csv/">CSV Context Provider v1.13</a></p><p><a href="https://xmpro.gitbook.io/csv/">CSV Writer (Action Agent) v1.02</a></p></td></tr><tr><td>Translation</td><td><p><a href="https://xmpro.gitbook.io/erbessd/">Erbessd Context Provider v2.06</a></p><p><a href="https://xmpro.gitbook.io/erbessd/">Erbessd Listener v3.41</a></p></td></tr><tr><td>Translation</td><td><a href="https://xmpro.gitbook.io/fft/">FFT Function v1.32</a></td></tr><tr><td>Translation</td><td><a href="https://xmpro.gitbook.io/finops/">FinOps Action Agent v6.83<br>FinOps Context Provider v5.63</a></td></tr><tr><td>Translation</td><td><a href="https://xmpro.gitbook.io/fixed-width-file-reader/">Fixed Width File Reader Action Agent v1.01</a></td></tr><tr><td>Translation</td><td><a href="https://xmpro.gitbook.io/goal-seek/">Goal Seek Function v1.41</a></td></tr><tr><td>Translation</td><td><a href="https://xmpro.gitbook.io/ifm/">ifm Listener v1.03</a></td></tr><tr><td>Translation</td><td><a href="https://xmpro.gitbook.io/influxdb/">InfluxDB Listener v1.26<br>InfluxDB Context Provider v1.03<br>InfluxDB Action Agent v.1.44</a></td></tr><tr><td>Translation</td><td><a href="https://xmpro.gitbook.io/ipos/">iPOS Action Agent v1.81</a></td></tr><tr><td>Translation</td><td><a href="https://xmpro.gitbook.io/json/">JSON File Reader Context Provider v1.22<br>JSON Serializer Transformation v1.12<br>JSON Deserializer Transformation v1.32</a></td></tr><tr><td>Translation</td><td><a href="https://xmpro.gitbook.io/linear-interpolation/">Linear Interpolation Function v1.13</a></td></tr><tr><td>Translation</td><td><a href="https://xmpro.gitbook.io/mlflow/">MLflow AI &#x26; ML Agent v1.08</a></td></tr><tr><td>Translation</td><td><a href="https://xmpro.gitbook.io/mqtt/">MQTT Listener v3.05<br>MQTT Action Agent v3.05</a></td></tr><tr><td>Translation</td><td><p><a href="https://xmpro.gitbook.io/nanoprecise/">Nanoprecise Listener v2.04<br>Nanoprecise Context Provider v2.05</a></p><p><a href="https://xmpro.gitbook.io/nanoprecise/">Nanoprecise Data Reader v1.02<br>Nanoprecise Action Agent v2.04</a></p></td></tr><tr><td>Translation</td><td><a href="https://xmpro.gitbook.io/odata/">OData Context Provider v1.33<br>OData Action Agent v1.63</a></td></tr><tr><td>Translation</td><td><a href="https://xmpro.gitbook.io/odbc/">ODBC Listener v1.12<br>ODBC Context Provider v1.03</a></td></tr><tr><td>Translation</td><td><a href="https://xmpro.gitbook.io/osisoft-pi">OSIsoft PI Listener v4.05<br>OSIsoft PI Context Provider v4.31<br>OSIsoft PI Action Agent v3.11</a></td></tr><tr><td>Translation</td><td><a href="https://xmpro.gitbook.io/pdf-converter/">PDF Converter Action Agent v5.11</a></td></tr><tr><td>Translation</td><td><a href="https://xmpro.gitbook.io/python/">Python AI &#x26; ML Agent v1.66</a></td></tr><tr><td>Translation</td><td><p><a href="https://xmpro.gitbook.io/read-recommendation/">Read Recommendation v3.01</a></p><p><a href="https://xmpro.gitbook.io/resolve-recommendation/">Resolve Recommendation v2.48</a></p><p><a href="https://xmpro.gitbook.io/run-recommendation">Run Recommendation v3.04</a></p><p><a href="https://xmpro.gitbook.io/update-recommendation/">Update Recommendation v3.01</a></p><p><a href="https://xmpro.gitbook.io/action-request-agents/">Close Action Request v1.02</a></p><p><a href="https://xmpro.gitbook.io/action-request-agents/">Read Action Request v2.07</a></p></td></tr><tr><td>Translation</td><td><a href="https://xmpro.gitbook.io/rest-api/">Rest API Context Provider v3.14<br>Rest API Action Agent v3.39</a></td></tr><tr><td>Translation</td><td><a href="https://xmpro.gitbook.io/rounding/">Rounding Function v1.03</a></td></tr><tr><td>Translation</td><td><a href="https://xmpro.gitbook.io/rscript/">RScript AI &#x26; ML Agent v3.08</a></td></tr><tr><td>Translation</td><td><a href="https://xmpro.gitbook.io/salesforce/">Salesforce Listener Agent v1.21<br>Salesforce Context Provider v3.01<br>Salesforce Action Agent v1.18</a></td></tr><tr><td>Translation</td><td><a href="https://xmpro.gitbook.io/sap">SAP Context Provider v5.21<br>SAP Action Agent v6.09</a></td></tr><tr><td>Translation</td><td><p><a href="https://xmpro.gitbook.io/sap-hana/">SAP HANA Context Provider v2.23</a></p><p><a href="https://xmpro.gitbook.io/sap-hana/">SAP HANA Action Agent v2.23</a></p></td></tr><tr><td>Translation</td><td><a href="https://xmpro.gitbook.io/signal-filter/">Signal Filter v4.03</a></td></tr><tr><td>Translation</td><td><a href="https://xmpro.gitbook.io/sparkplug-b/">Sparkplug B Listener v2.01<br>Sparkplug B Action Agent v2.01</a></td></tr><tr><td>Translation</td><td><a href="https://xmpro.gitbook.io/sql-server">SQL Server Listener v5.51<br>SQL Server Context Provider v5.51<br>SQL Server Action Agent v5.51</a></td></tr><tr><td>Translation</td><td><a href="https://xmpro.gitbook.io/streaming-data-platform/">Streaming Data Platform Listener v1.01<br>Streaming Data Platform Context Provider v1.01</a></td></tr><tr><td>Translation</td><td><a href="https://xmpro.gitbook.io/tango/">Tango Listener v1.25<br>Tango Context Provider v1.16</a></td></tr><tr><td>Translation</td><td><a href="https://xmpro.gitbook.io/telit-devicewise/">Telit deviceWise Listener v1.22<br>Telit deviceWise Context Provider v1.01<br>Telit deviceWise Action Agent v1.11</a></td></tr><tr><td>Translation</td><td><a href="https://xmpro.gitbook.io/telit-mqtt/">Telit MQTT Listener v2.01<br>Telit MQTT Action Agent v2.01</a></td></tr><tr><td>Translation</td><td><a href="https://xmpro.gitbook.io/telit-opc-ua/">Telit OPC UA Listener v1.01<br>Telit OPC UA Action Agent v1.01</a></td></tr><tr><td>Translation</td><td><a href="https://xmpro.gitbook.io/webscraper/">WebScraper Context Provider v1.02</a></td></tr><tr><td>Translation</td><td><a href="https://xmpro.gitbook.io/xml-file-reader/">XML File Reader Action Agent v1.19</a></td></tr><tr><td>Translation</td><td><a href="https://xmpro.gitbook.io/xmq/">XMQ Listener v1.05<br>XMQ Action Agent v1.05</a></td></tr></tbody></table>
+<p>The following Connectors were repackaged to translate the configuration properties:</p>
+<table><thead><tr><th width="153">Change Type</th><th>Name</th></tr></thead><tbody><tr><td>Translation</td><td><a href="https://xmpro.gitbook.io/azure-data-explorer-connector/">Azure Data Explorer Connector v1.98</a></td></tr><tr><td>Translation</td><td><a href="https://xmpro.gitbook.io/azure-digital-twin-connector/">Azure Digital Twin Connector v1.11</a></td></tr><tr><td>Translation</td><td><a href="https://xmpro.gitbook.io/azure-sql-connector/">Azure SQL Connector v2.01</a></td></tr><tr><td>Translation</td><td><a href="https://xmpro.gitbook.io/data-streams-connector/">Data Streams Connector v2.01</a></td></tr><tr><td>Translation</td><td><a href="https://xmpro.gitbook.io/erbessd-connector/">Erbessd Connector v3.01</a></td></tr><tr><td>Translation</td><td><a href="https://xmpro.gitbook.io/http-connector/">HTTP Connector v1.01</a></td></tr><tr><td>Translation</td><td><a href="https://xmpro.gitbook.io/json-connector/">JSON Connector v1.01</a></td></tr><tr><td>Translation</td><td><a href="https://xmpro.gitbook.io/nanoprecise-connector/">Nanoprecise Connector v1.03</a></td></tr><tr><td>Translation</td><td><a href="https://xmpro.gitbook.io/neo4j-connector/">Neo4j Connector v1.03</a></td></tr><tr><td>Translation</td><td><a href="https://xmpro.gitbook.io/osisoft-pi-connector/">OSIsoft PI Connector v2.27</a></td></tr><tr><td>Translation</td><td><a href="https://xmpro.gitbook.io/osisoft-pi-histogram-connector/">OSIsoft PI Histogram Connector v1.11</a></td></tr><tr><td>Translation</td><td><a href="https://xmpro.gitbook.io/rest-api-connector/">REST API Connector v1.02</a></td></tr><tr><td>Translation</td><td><a href="https://xmpro.gitbook.io/snowflake-connector/">Snowflake Connector v1.01</a></td></tr><tr><td>Translation</td><td><a href="https://xmpro.gitbook.io/sql-server-connector/">SQL Server Connector v2.01</a></td></tr><tr><td>Translation</td><td><a href="https://xmpro.gitbook.io/tsa-azure-data-explorer-connector/">TSA Azure Data Explorer Connector v1.11</a></td></tr><tr><td>Translation</td><td><a href="https://xmpro.gitbook.io/tsa-sql-server-connector/">TSA SQL Connector v2.01</a></td></tr></tbody></table>
+<h2 id="app-designer">App Designer</h2>
+<table><thead><tr><th width="157">Change Type</th><th>Description</th></tr></thead><tbody><tr><td>Enhancement</td><td><p>We've made security and usability enhancements to the <a href="../blocks-toolbox/advanced/metablock.html">Metablock</a>:</p><p></p><p><strong>Intercept encrypted server variables when used inside a WebSocket.</strong></p><p>Requests are proxied so that credentials inside the Metablock are not exposed when sending messages via WebSockets. </p><p>You can now authenticate securely and simply using encrypted server variable <a href="../blocks-toolbox/advanced/metablock.html#value-mapping">value mappings</a> in a WebSocket/MQTT message.</p><p></p><p><strong>Allowed Downloads</strong> <a href="../blocks-toolbox/advanced/metablock.html#security-features"><strong>security feature</strong></a><strong>.</strong></p><p>We've enabled this security feature so that you can build a Metablock that includes file download functionality.</p><p></p><p><strong>Utilize multiple script files using App Files.</strong></p><p>Although the Metablock supports a single HTML, CSS, and JavaScript file, you can now reference App Files as a source for additional resource files. This means you can have <a href="../blocks-toolbox/advanced/metablock.html#how-can-i-load-multiple-script-files">multiple files</a> rather than consolidating into a single file.</p></td></tr><tr><td>Fix</td><td><em>I was able to mark an Alert as resolved, even though there was a required Form field.</em><br>Resolve <a href="../blocks-toolbox/recommendations/alert-action.html">Alert Action</a> Block respect required Form fields as expected (i.e. a False Positive can be used without filling in required Form fields.</td></tr><tr><td>Fix</td><td><em>I configured a Time Series Analytics Block with a range of 12 hours, initial selection of 3 hours. When I launch the App, the range is 3 hours and the initial selection is 3 minutes.</em><br>An error introduced in v4.4.17 has been corrected and the <a href="../blocks-toolbox/visualizations/time-series-analysis.html">Time Series Analysis</a> Block filter works as expected.</td></tr></tbody></table>
+<h2 id="data-stream-designer">Data Stream Designer</h2>
+<table><thead><tr><th width="157">Change Type</th><th>Description</th></tr></thead><tbody><tr><td>Enhancement</td><td><a href="../how-tos/manage-landing-pages.html#favorite-a-block">Favorite</a> your commonly used Agents to visually identify them with a star. In future, we'll add a new Favorites category so you can access them more easily.</td></tr></tbody></table>
+<h2 id="nuget-packages">NuGet Packages</h2>
+<h3 id="common-1">Common</h3>
+<table><thead><tr><th width="151">Change Type</th><th>Description</th></tr></thead><tbody><tr><td>Enhancement</td><td>Modernize and enable publishing of NuGet packages. This enriches NuGet package metadata and introduces SourceLink capabilities to enhance the Developer experience.</td></tr><tr><td>Maintenance</td><td>Implement <a href="https://lng-consultancy.com/unleashing-the-power-of-editorconfig-in-visual-studio/">EditorConfig</a> and apply Whitespace and Usings rules, ensuring uniformity in internal coding style.</td></tr></tbody></table>
+<h3 id="agent-development">Agent Development</h3>
+<h4 id="xmproxmiotframework">XMPro.XMIoT.Framework</h4>
+<table><thead><tr><th width="154">Change Type</th><th>Description</th></tr></thead><tbody><tr><td>Security</td><td>Updated third-party dependencies to maintain optimal security standards.</td></tr><tr><td>Enhancement</td><td>Support Agent property translations with a new property, TranslationMap.</td></tr><tr><td>Enhancement</td><td>Support a zipped file to be packaged in an Agent.</td></tr><tr><td>Enhancement</td><td>When an Agent and the Stream Host supply the same assembly, the correct one is selected. In addition, detailed debug information is now logged when loading agent assemblies to better troubleshoot Agent and Stream Host issues. There is a check for certain agent assembly loading conditions, which will be visible in the Data Stream log viewer.</td></tr><tr><td>Enhancement</td><td>The <a href="../how-tos/agents/building-agents.html#ipolling-agent">IPollingAgent</a> interface was changed from required to recommended with the addition of a RequiresPolling property. This gives greater flexibility as typically non-polling agents can also poll.</td></tr><tr><td>Maintenance</td><td>Remove redundant <em>Hybrid</em> and <em>Cloud</em> Agent types - only Edge is supported.</td></tr><tr><td>Maintenance</td><td>Remove redundant Java references - only Agents written in C# or using the Meta Agent are supported.</td></tr><tr><td>Maintenance</td><td>Remove SCC references from csproj files - redundant in current source control.</td></tr></tbody></table>
+<h3 id="connector-development">Connector Development</h3>
+<h4 id="xmprointegrationframework">XMPro.Integration.Framework</h4>
+<table><thead><tr><th width="154">Change Type</th><th>Description</th></tr></thead><tbody><tr><td>Enhancement</td><td><p>Added parameters to the Connector's <a href="../how-tos/connectors/building-connectors.html#subscribe">Subscribe</a> method, used to implement live updates on <a href="../concepts/application/data-integration.html#data-source">data sources</a>.</p><p>Connector creators can implement the same pre-defined filtering and sorting applied when an App Page is refreshed.</p></td></tr><tr><td>Enhancement</td><td>The new <a href="../how-tos/connectors/building-connectors.html#itsaconnector">ITSCConnector</a> interface instructs the Time Series Chart to use optimized client-side querying. Use it when building new TSC Connectors that pre-process large volumes of data and return it in buckets.<br><br>Later, the <a href="../how-tos/connectors/building-connectors.html#itsaconnector">ITSAConnector</a> interface was added (to reflect the <a href="../blocks-toolbox/visualizations/time-series-analysis.html">Time Series Analysis</a> Block renamed in v4.4.9) and the ITSCConnector interface deprecated.</td></tr></tbody></table>
+<h4 id="xmprointegrationhelpers">XMPro.Integration.Helpers</h4>
+<p>No additional changes.</p>
+<h4 id="xmprointegrationsettings">XMPro.Integration.Settings</h4>
+<table><thead><tr><th width="151">Change Type</th><th>Description</th></tr></thead><tbody><tr><td>Enhancement</td><td>Support Agent property translations with a new property, TranslationMap.</td></tr></tbody></table>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: June 12, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

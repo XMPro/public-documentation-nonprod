@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Calendar | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Calendar | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/blocks-toolbox/basic/calendar.md&amp;version=GBmain&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="calendar">Calendar</h1>
+
+<p>The Calendar is a Block that displays a Calendar and allows the user to select the required date within a specified date range. This is useful to use on forms where the user needs to enter a date for a particular field. It is also useful for displaying certain important dates to the user.</p>
+<video autoplay loop muted playsinline style="max-width: 100%; height: auto;">
+  <source src="../images/Zoom-all-things.mp4" type="video/mp4">
+</video>
+<h2 id="calendar-properties">Calendar Properties</h2>
+<h3 id="appearance">Appearance</h3>
+<h4 id="common-properties">Common Properties</h4>
+<p>You can specify if the Calendar is <em>visible</em>, or if <em>tooltips</em> are enabled.</p>
+<p><a href="../common-properties.html#appearance">See the Common Properties article for more details on common appearance properties.</a></p>
+<h4 id="show-today-button">Show Today Button</h4>
+<p>This specifies if the button that takes the user back to the current date is displayed.</p>
+<p><img src="../../images/blocks-toolbox/image-765.png" alt="Show Today Button"></p>
+<h4 id="zoom-levels">Zoom Levels</h4>
+<p>This specifies the time frame of selectable dates. Options include month, year, decade, and century.</p>
+<p><img src="../../images/blocks-toolbox/image-887.png" alt="Zoom Levels"></p>
+<h4 id="min-and-max-zoom-levels">Min and Max Zoom Levels</h4>
+<p>This specifies the limit on where the user can zoom in and out of the dates. For example, they can zoom until they reach the page that shows the yearly view, and can only zoom out to see decades.</p>
+<p><img src="../../images/blocks-toolbox/rl16vHRad9.gif" alt="Min and Max Zoom Levels"></p>
+<h3 id="behavior">Behavior</h3>
+<h4 id="common-properties-1">Common Properties</h4>
+<p>The <em>read-only</em> and <em>disabled</em> properties are common to most Blocks;</p>
+<p><a href="../common-properties.html#behavior">See the Common Properties article for more details on common behavior properties.</a></p>
+<h4 id="min-and-max">Min and Max</h4>
+<p>This only lets the user select dates within a limited range.</p>
+<p><img src="../../images/blocks-toolbox/image-488.png" alt="Min and Max"></p>
+<h4 id="first-day-of-the-week">First Day of the Week</h4>
+<p>Changes the day of the week that the Calendar starts on.</p>
+<p><img src="../../images/blocks-toolbox/image-792.png" alt="First Day of the Week"></p>
+<h3 id="value">Value</h3>
+<h4 id="common-properties-2">Common Properties</h4>
+<p>The Value property is common to most Blocks;</p>
+<p><a href="../common-properties.html#value">See the Common Properties article for more details on common value properties.</a></p>
+<p>The accepted values for the Calendar include the selected date or time that the user clicks on. This can either be a date, number, or sequence of characters. The <em>Date</em> option will accept the date directly. The <em>number</em> option will accept the date using a timestamp. The <em>string</em> option will accept the date as a sequence of characters provided they are in the correct format:</p>
+<ul>
+<li>&quot;yyyy-MM-dd&quot; (for example, &quot;2017-03-06&quot;)</li>
+<li>&quot;yyyy-MM-ddTHH:mm:ss&quot; (for example, &quot;2017-03-27T16:54:48&quot;)</li>
+<li>&quot;yyyy-MM-ddTHH:mm:ssZ&quot; (for example, &quot;2017-03-27T13:55:41Z&quot;)</li>
+<li>&quot;yyyy-MM-ddTHH:mm:ssx&quot; (for example, &quot;2017-03-27T16:54:10+03&quot;)</li>
+</ul>
+<h3 id="disabled-dates-data-source">Disabled Dates Data Source</h3>
+<h4 id="common-properties-3">Common Properties</h4>
+<p>If set to the <em>Dynamic Data Source</em> option, additional options include <em>filtering, sorting, showing a number of results,</em> and <em>skipping a number of results</em>.</p>
+<p><a href="../common-properties.html#data-source">See the Common Properties article for more details on common Data Source properties.</a></p>
+<h4 id="static-items">Static Items</h4>
+<p>If a Dynamic Data Source is not used, you can enter key dates to display manually under the Data section.</p>
+<h4 id="dynamic-data-source">Dynamic Data Source</h4>
+<p>This option allows you to connect the control to a specific Data Source such as a database to pull data dynamically. This will give you additional options to sort, filter, show, or skip certain records.</p>
+<h3 id="data">Data</h3>
+<p>The data allows you to choose a <em>date</em> based on the connected Data Source. This can be configured when using static items for disabled dates Data Sources.</p>
+<h3 id="action">Action</h3>
+<h4 id="common-properties-4">Common Properties</h4>
+<p>Properties that are common to most Blocks include: <em>Navigate To and Show Confirmation Dialog;</em></p>
+<p><a href="../common-properties.html#action">See the Common Properties article for more details on common action properties.</a></p>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: June 12, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

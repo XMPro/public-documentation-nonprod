@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Upgrade | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Upgrade | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      <meta name="description" content="How to upgrade XMPro Platform on Windows Server 2022">
+      <link rel="icon" href="../../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../../toc.html">
+      <meta name="docfx:tocrel" content="../../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/deployment/windows-server-2022/upgrade.md&amp;version=GBmain&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../../index.html">
+            <img id="logo" class="svg" src="../../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="upgrade">Upgrade</h1>
+
+<p>It is necessary to first uninstall the installers on the host server before proceeding with the upgrade installers. Once you have removed the installers, the procedure for the upgrade is the same as the original install.</p>
+<p>This section aims to provide step-by-step instructions on how to safely uninstall only the XMPro installers and not the on-premises deployed XMPro solution.</p>
+<p>The process of uninstalling the XMPro installer must be repeated for each application individually. The steps are the same for each application installer and the sequence is not significant.</p>
+<h2 id="subscription-manager">Subscription Manager</h2>
+<h3 id="uninstall-subscription-manager-installer">Uninstall Subscription Manager Installer</h3>
+<ol>
+<li>Log on to the instance where the XMPro installers are installed.</li>
+<li>From the start menu select XMPro Subscription Manager and right-click it.</li>
+<li>Click Uninstall.</li>
+<li>Select XMPro Subscription Manager from the list of programs displayed.</li>
+<li>Click Uninstall.</li>
+<li>When prompted to confirm uninstall click Yes.</li>
+<li>Click Next.</li>
+</ol>
+<p><img src="../../../images/installation/windows-server-2022-1.png" alt="Uninstall Progress"></p>
+<ol start="8">
+<li>When prompted to select the install to modify click Cancel.
+<strong>We do not want to remove the installed XMPro site, only the installer.</strong></li>
+</ol>
+<p><img src="../../../images/installation/windows-server-2022-2.png" alt="Cancel Setup"></p>
+<ol start="9">
+<li>Click on Yes to cancel the setup.</li>
+</ol>
+<p><img src="../../../images/installation/windows-server-2022-3.png" alt="Confirm Cancel"></p>
+<h2 id="data-stream-designer">Data Stream Designer</h2>
+<h3 id="uninstall-data-stream-designer-installer">Uninstall Data Stream Designer Installer</h3>
+<ol>
+<li>Log on to the instance where the XMPro installers are installed.</li>
+<li>From the start menu select XMPro Data Stream Designer and right-click it.</li>
+<li>Click Uninstall.</li>
+<li>Select XMPro Data Stream Designer from the list of programs displayed.</li>
+<li>Click Uninstall.</li>
+<li>When prompted to confirm uninstall click Yes.</li>
+<li>Click Next.</li>
+</ol>
+<p><img src="../../../images/installation/windows-server-2022-4.png" alt="Data Stream Designer Uninstall"></p>
+<ol start="8">
+<li>When prompted to select the install to modify click Cancel.
+<strong>We do not want to remove the installed XMPro site, only the installer.</strong></li>
+</ol>
+<p><img src="../../../images/installation/windows-server-2022-5.png" alt="Cancel Data Stream Setup"></p>
+<ol start="9">
+<li>Click on Yes to cancel the setup.</li>
+</ol>
+<p><img src="../../../images/installation/windows-server-2022-6.png" alt="Confirm Cancel Data Stream"></p>
+<h2 id="app-designer">App Designer</h2>
+<h3 id="uninstall-application-designer-installer">Uninstall Application Designer Installer</h3>
+<ol>
+<li>Log on to the instance where the XMPro installers are installed.</li>
+<li>From the start menu select XMPro Application Designer and right-click it.</li>
+<li>Click Uninstall.</li>
+<li>Select XMPro Application Designer from the list of programs displayed.</li>
+<li>Click Uninstall.</li>
+<li>When prompted to confirm uninstall click Yes.</li>
+<li>Click Next.</li>
+</ol>
+<p><img src="../../../images/installation/windows-server-2022-7.png" alt="App Designer Uninstall"></p>
+<ol start="8">
+<li>When prompted to select the install to modify click Cancel.
+<strong>We do not want to remove the installed XMPro site, only the installer.</strong></li>
+</ol>
+<p><img src="../../../images/installation/windows-server-2022-8.png" alt="Cancel App Designer Setup"></p>
+<ol start="9">
+<li>Click on Yes to cancel the setup.</li>
+</ol>
+<p><img src="../../../images/installation/windows-server-2022-9.png" alt="Confirm Cancel App Designer"></p>
+<p>You have now successfully uninstalled the XMPro installers. You can proceed to the instructions by navigating to <a href="install.html">Installing XMPro</a> and perform an upgrade with the new installers.</p>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>Make sure to select the Upgrade option on the installers when proceeding.</p>
+</div>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: June 12, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

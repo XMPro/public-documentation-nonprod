@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Configure Logging (Optional) | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Configure Logging (Optional) | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/complete-installation/configure-logging-optional.md&amp;version=GBmain&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="configure-logging-optional">Configure Logging (Optional)</h1>
+
+<p><a href="https://youtu.be/N5f1_4F6g84">Watch the video tutorial</a></p>
+<h2 id="overview">Overview</h2>
+<p>Application logging refers to recording and storing information about the events and activities that occur within a software application. It involves capturing relevant data, such as error messages, warnings, user interactions, and system events, and storing them in a log file or database.</p>
+<p>Application logging is essential for troubleshooting and debugging, as it helps identify and analyze issues that may arise during the application's execution. It also provides valuable insights into the application's performance, usage patterns, and security.</p>
+<p><a href="https://serilog.net/index.md">Serilog</a> is the diagnostic logging library used in the XMPro suite, and the following logging outputs are supported:</p>
+<ul>
+<li><a href="#logging-to-file">Logging to file</a></li>
+<li><a href="#application-insights">Application Insights</a></li>
+<li><a href="#application-insights-plus-telemetry">Application Insights plus Telemetry</a> <em>(Added v4.3.6)</em></li>
+<li><a href="#datadog">Datadog</a></li>
+</ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Subscription Manager currently only supports logging to file.</p>
+</div>
+<h2 id="enable-logging">Enable Logging</h2>
+<div class="NOTE">
+<h5>Note</h5>
+<p>From v4.4.4., logging for all products is always enabled and the feature flag does not need to be enabled. Lightweight logging to file is active by default and we recommend that it is reviewed.</p>
+</div>
+<p>Repeat these steps for any of the XMPro products (Application Designer, Data Stream Designer, and AI XMPro) - except Subscription Manager and Stream Hosts.</p>
+<ol>
+<li>Navigate to the IIS location where the XMPro product has been installed.</li>
+<li>Open the <em>appsettings.json</em> file.</li>
+<li>Set <code>enableLogging</code> in the <code>featureFlags</code> object to <em>true</em>.</li>
+<li>Save the file.</li>
+<li>Restart the XMPro product service.</li>
+</ol>
+<pre><code class="lang-json">&quot;xmpro&quot;: {
+  &quot;appDesigner&quot;: {
+    &quot;featureFlags&quot;: {
+      &quot;enableLogging&quot;: true
+    }
+  }
+}
+</code></pre>
+<h2 id="logging-to-file">Logging to File</h2>
+<p>This utilizes the Serilog file sink. See <a href="https://github.com/serilog/serilog-sinks-file">Serilog sinks file documentation</a> for a complete set of configuration options.</p>
+<p>Below are examples for each XMPro Product.</p>
+<h3 id="subscription-manager">Subscription Manager</h3>
+<ol>
+<li>Open the <em>web.config</em> file.</li>
+<li>Add the Serilog keys to the <code>appSettings</code> element.</li>
+<li>Save the file and restart the Subscription Manager service.</li>
+</ol>
+<pre><code class="lang-json">&lt;appSettings&gt;
+    &lt;add key=&quot;serilog:using:File&quot; value=&quot;Serilog.Sinks.File&quot; /&gt;
+    &lt;add key=&quot;serilog:using:Expressions&quot; value=&quot;Serilog.Expressions&quot; /&gt;
+    &lt;add key=&quot;serilog:write-to:File.path&quot; value=&quot;%BASEDIR%/App_Data/logs/sm-log-.txt&quot;/&gt;
+    &lt;add key=&quot;serilog:write-to:File.rollingInterval&quot; value=&quot;&lt;rollingInterval&gt; &quot; /&gt;
+    &lt;add key=&quot;serilog:write-to:File.rollOnFileSizeLimit&quot; value=&quot;true&quot; /&gt;
+    &lt;add key=&quot;serilog:write-to:File.outputTemplate&quot; value=&quot;{Timestamp} [{Level}] ({Name}) Company: {Company} UserId: {UserId} {NewLine}{Message}{NewLine}{Exception}&quot;/&gt;
+&lt;/appSettings&gt;
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>It might be encrypted, which will require you to decrypt it first. For instructions, please refer to the <a href="https://docs.xmpro.com/knowledge-base-2/how-to-encrypt-and-decrypt-a-web-config-file/index.md">How to encrypt and decrypt a web.config file</a> Knowledge Base article.</p>
+</div>
+<h3 id="stream-hosts">Stream Hosts</h3>
+<p><em>Changed in v4.4.0</em></p>
+<h4 id="using-appsettingsjson">Using appsettings.json</h4>
+<ol>
+<li>Close or stop the Stream Host.</li>
+<li>Navigate to the file location where the Stream Host has been installed.</li>
+<li>Open the <em>appsettings.json</em> file.</li>
+<li>Add the &quot;File Logging&quot; Serilog configuration.</li>
+<li>Save the file and restart or reopen the Stream Host.</li>
+</ol>
+<pre><code class="lang-json">{
+  &quot;FileLogging&quot;: {
+    &quot;MinimumLevel&quot;: {
+      &quot;Default&quot;: &quot;Information&quot;,
+      &quot;Override&quot;: {
+        &quot;Microsoft&quot;: &quot;Warning&quot;
+      }
+    },
+    &quot;WriteTo&quot;: [
+      {
+        &quot;Name&quot;: &quot;File&quot;,
+        &quot;Args&quot;: {
+          &quot;path&quot;: &quot;C:\\some\\path\\to\\logs\\log.txt&quot;,
+          &quot;rollingInterval&quot;: &quot;Day&quot;,
+          &quot;outputTemplate&quot;: &quot;{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level:u3}] {SourceContext} Message: {Message:lj}{NewLine}{Properties}{NewLine}{Exception}{NewLine}&quot;
+        }
+      }
+    ]
+  }
+}
+</code></pre>
+<h4 id="using-environment-variables">Using Environment Variables</h4>
+<div class="NOTE">
+<h5>Note</h5>
+<p>This is the preferred approach for our Stream Host Docker Images (Linux). The environment variables will take precedence over the same configuration in the appsettings.json file.</p>
+</div>
+<ol>
+<li>Add the environment variables to the platform / service running the Stream Host.</li>
+<li>Restart the Stream Host.</li>
+</ol>
+<pre><code class="lang-yaml"># Example taken from a Docker Compose file.
+environment:
+  # Other environment variables
+  - xm__filelogging__writeto__1__name=File
+  - xm__filelogging__minimumlevel__default=Information
+  - xm__filelogging__writeto__1__args__path=/app/logs/sh-log-.txt
+  - xm__filelogging__writeto__1__args__rollinginterval=Day
+  - xm__filelogging__writeto__1__args__outputtemplate=[{Timestamp:yyyy-MM-dd HH:mm:ss} {Level:u3} ({TraceId}:{SpanId})]{NewLine}  {Message:j}{NewLine}  {Properties:j}{NewLine}  {Exception}{NewLine}
+</code></pre>
+<h3 id="other-xmpro-products">Other XMPro Products</h3>
+<p>Repeat these steps for all the XMPro products except Subscription Manager and Stream Hosts: App Designer, Data Stream Designer, and AI XMPro.</p>
+<ol>
+<li>Open the <em>appsettings.json</em> file.</li>
+<li>Add the &quot;File&quot; Serilog configuration inside the WriteTo array.</li>
+<li>Save the file and restart the XMPro product service</li>
+</ol>
+<pre><code class="lang-json">{
+  &quot;Serilog&quot;: {
+    &quot;WriteTo&quot;: [
+      {
+        &quot;Name&quot;: &quot;File&quot;,
+        &quot;Args&quot;: {
+          &quot;path&quot;: &quot;./App_Data/Logs/log_.txt&quot;,
+          &quot;rollingInterval&quot;: &quot;Day&quot;,
+          &quot;fileSizeLimitBytes&quot;: 1048576,
+          &quot;rollOnFileSizeLimit&quot;: true,
+          &quot;outputTemplate&quot;: &quot;{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level:u3}] {Message:j}{NewLine}{Properties:j}{NewLine}{Exception}{NewLine}&quot;
+        }
+      }
+    ]
+  }
+}
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The above example provides for the following:</p>
+<ul>
+<li>Log files will now be added to the &quot;Logs&quot; folder located within the &quot;App_Data&quot; directory in the site's root folder.</li>
+<li>Log files are stored in the &quot;App_Data&quot; folder because it is a protected directory in IIS, preventing access via direct web links. This ensures the security of the log data.</li>
+<li>It rolls over to a new file daily, or when the file size exceeds 1MB (this helps to prevent large log files and also gives an easy way to calculate the maximum storage consumption when combined with the retention setting</li>
+<li>It retains only the last 14 log files</li>
+<li>File names will have the format log_{Date}.txt with an extra sequence number appended if it rolls over due to the size limit, for example:
+<ul>
+<li>log_20240321.txt</li>
+<li>log_20240321_001.txt</li>
+<li>log_20240321_002.txt</li>
+<li>log_20240322.txt</li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="application-insights">Application Insights</h2>
+<p>This utilizes the Serilog application insights sink. See <a href="https://github.com/serilog-contrib/serilog-sinks-applicationinsights">Serilog sinks file for Application Insights</a> for a complete set of configuration options.</p>
+<p>Below are the steps for an <em><strong>example</strong></em> of how it can be used in App Designer, Data Stream Designer, Stream Hosts, and AI XMPro:</p>
+<ol>
+<li>Open the <em>appsettings.json</em> file.</li>
+<li>Add the &quot;ApplicationInsights&quot; Serilog configuration inside the WriteTo array.</li>
+<li>Save the file and restart the XMPro product service or Stream Host.</li>
+</ol>
+<pre><code class="lang-json">{
+  &quot;Serilog&quot;: {
+    &quot;WriteTo&quot;: [
+      {
+        &quot;Name&quot;: &quot;ApplicationInsights&quot;,
+        &quot;Args&quot;: {
+          &quot;connectionString&quot;: &quot;&lt;connection string&gt;&quot;,
+          &quot;telemetryConverter&quot;: &quot;Serilog.Sinks.ApplicationInsights.TelemetryConverters.TraceTelemetryConverter, Serilog.Sinks.ApplicationInsights&quot;
+        }
+      }
+    ]
+  }
+}
+</code></pre>
+<h2 id="application-insights-plus-telemetry">Application Insights plus Telemetry</h2>
+<p>This utilizes the Serilog application insights sink to write events to Microsoft Azure Application Insights and collect valuable Telemetry data.</p>
+<p>Below are the steps for an <em><strong>example</strong></em> of how it can be used in App Designer, Data Stream Designer, Stream Hosts, and AI XMPro:</p>
+<ol>
+<li>Set <code>enableApplicationInsightsTelemetry</code> in the <code>featureFlags</code> object to <em>true -</em> the same as you already did <a href="#enable-logging">here</a> for <code>enableLogging</code>.</li>
+<li>Open the <em>appsettings.json</em> file.</li>
+<li>Add the &quot;ApplicationInsights&quot; configuration.</li>
+<li>Save the file and restart the XMPro product service or Stream Host.</li>
+</ol>
+<pre><code class="lang-json">{
+  &quot;ApplicationInsights&quot;: {
+    &quot;ConnectionString&quot; : &quot;InstrumentationKey=&lt;Instrumentation Key here&gt;&quot;;
+  }
+}
+</code></pre>
+<h2 id="datadog">Datadog</h2>
+<p>This utilizes the Serilog datadog sink. See <a href="https://github.com/DataDog/serilog-sinks-datadog-logs">Serilog Sinks File for Datadog</a> for a complete set of configuration options.</p>
+<p>Below are the steps for an <em><strong>example</strong></em> of how it can be used in App Designer, Data Stream Designer, Stream Hosts, and AI:</p>
+<ol>
+<li>Open the <em>appsettings.json</em> file.</li>
+<li>Determine the site parameter by checking <a href="https://docs.datadoghq.com/getting_started/site/#access-the-datadog-site">here</a>.</li>
+<li>Get the endpoint/URL and port number by checking <a href="https://docs.datadoghq.com/logs/log_collection/?tab=host#supported-endpoints">here</a>.</li>
+<li>Add the &quot;DatadogLogs&quot; Serilog configuration inside the WriteTo array.</li>
+<li>Save the file and restart the XMPro product service or Stream Host.</li>
+</ol>
+<pre><code class="lang-json">{
+  &quot;Serilog&quot;: {
+    &quot;WriteTo&quot;: [
+      {
+        &quot;Name&quot;: &quot;DatadogLogs&quot;,
+        &quot;Args&quot;: {
+          &quot;apiKey&quot;: &quot;&lt;api key&gt;&quot;,
+          &quot;source&quot;: &quot;&lt;source&gt;&quot;,
+          &quot;host&quot;: &quot;&lt;host&gt;&quot;,
+          &quot;configuration&quot;: {
+            &quot;url&quot;: &quot;&lt;url&gt;&quot;,
+            &quot;port&quot;: port
+          }
+        }
+      }
+    ]
+  }
+}
+</code></pre>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: June 12, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Variable | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Variable | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../images/favicon.png">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/concepts/variable.md&amp;version=GBmain&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="variable">Variable</h1>
+
+<p>Variables are placeholders used to maintain integration keys and secrets. They can be used by IT administrators, engineers, or other users to store and use credentials or passwords in a safe and secure manner.</p>
+<p>They provide a central point to maintain credentials that can improve security. Engineers and other users can reference and use these credentials without knowing the actual value they contain. More secure credentials such as passwords can be encrypted to add an extra layer of security.</p>
+<div class="embeddedvideo"><iframe src="https://www.youtube-nocookie.com/embed/-yx_YXT_1bM?rel=0" frameborder="0" allowfullscreen="true"></iframe></div>
+<p>Variables can be added in both the App Designer and the Data Stream Designer. The value of the Variable is only available in the environment it is created in. For example, if the Variable is created in the Data Stream Designer, both the name and value of the Variable will be available in the Data Stream Designer. However, in the App Designer, only the name will be available and the value will be left empty.</p>
+<h2 id="finding-variables">Finding Variables</h2>
+<p>The search bar can be used to find any specific Variables that you may be looking for. There is a dropdown option where you can specify to search through everything in App Designer, or only for Variables.</p>
+<p><img src="../images/search-variables.png" alt="Search Variables"></p>
+<h2 id="category">Category</h2>
+<p>Variables can be grouped into categories. This category is separate from the <a href="category.html">App and Data Stream Categories</a>.</p>
+<h2 id="encrypt-value">Encrypt Value</h2>
+<p>If selected, the value of a Variable will be encrypted. This way the value cannot be seen by any user. If not selected, the value can be seen when the Variable is selected and configured.</p>
+<p>If a value is not encrypted, and you select <em>encrypt value</em>, the value that is already in the input field will be cleared automatically.</p>
+<p>Similarly, if the value is already encrypted, and you deselect <em>encrypt value,</em> the value already entered will be cleared.</p>
+<p><img src="../images/encrypt-value.png" alt="Encrypt Value"></p>
+<h2 id="value">Value</h2>
+<p>The value of the Variable, for example, the <em>username, server name,</em> or <em>password</em>.</p>
+<h2 id="using-a-variable">Using a Variable</h2>
+<p>Once a Variable has been saved, the Variable can be selected from a dropdown list when you are required to fill in forms or credentials. For example, in order to connect to a database to display data on your App, you will need to connect to it using a server name, username, and password.</p>
+<p><img src="../images/using-a-variable-1.png" alt="Using a Variable 1"></p>
+<p><img src="../images/using-a-variable-2.png" alt="Using a Variable 2"></p>
+<h2 id="actions-on-the-variable">Actions on the Variable</h2>
+<table>
+<thead>
+<tr>
+<th><strong>Action</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Add</td>
+<td>Adds a new Variable.</td>
+</tr>
+<tr>
+<td>Select</td>
+<td>Selects multiple Variables.</td>
+</tr>
+<tr>
+<td>Manage Categories</td>
+<td>Creates and edits categories to organize the variables. These categories are separate from the <a href="category.html">App and Data Stream Categories</a>.</td>
+</tr>
+<tr>
+<td>Save and Close</td>
+<td>Saves any changes made to the Variable up to this point.</td>
+</tr>
+<tr>
+<td>Discard</td>
+<td>Discards any changes made to the Variable up to this point.</td>
+</tr>
+<tr>
+<td>Delete</td>
+<td>Deletes the Variable.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="further-reading">Further Reading</h2>
+<ul>
+<li><a href="../how-tos/manage-variables.html">How to Create and Manage Variables</a></li>
+</ul>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: June 12, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

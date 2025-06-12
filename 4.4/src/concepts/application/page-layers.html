@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Page Layers | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Page Layers | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/concepts/application/page-layers.md&amp;version=GBmain&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="page-layers">Page Layers</h1>
+
+<p>Blocks are organized on the canvas in a hierarchy. The Page Layers tab in the toolbox displays a tree list representation of the hierarchy. This can make selecting blocks simpler and easier as some applications may have many nested layers and it can be difficult to select them on the canvas itself. This allows you to find the exact block you need to manipulate.</p>
+<p>Parent Blocks can be expanded to view their nested Child blocks underneath. <a href="canvas.html">See the Canvas article for more details on the canvas hierarchy.</a> The visibility of the block and the location of the blocks on the canvas can also be moved using this Page Layers list.</p>
+<p><img src="../../images/concepts/application/Layers_1-2.png" alt=""></p>
+<p>A Block on the canvas will be outlined if it is selected. If the Page Layers tab is opened, the list will also update to show where the block is on the hierarchy.</p>
+<video autoplay loop muted playsinline style="max-width: 100%; height: auto;">
+  <source src="images/PageLayers.mp4" type="video/mp4">
+</video>
+<p>The number on the right shows how many children blocks the selected block has.</p>
+<p><img src="../../images/concepts/application/Layers_2.png" alt=""></p>
+<h2 id="actions-on-the-page-layers">Actions on the Page Layers</h2>
+<table>
+<thead>
+<tr>
+<th><strong>Action</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Change visibility</td>
+<td>Changes the visibility of the selected Block. If changed to hidden, the Block will not be seen on the canvas or when the page is launched.</td>
+</tr>
+<tr>
+<td>Expand</td>
+<td>Expands a selected Block to see the children.</td>
+</tr>
+<tr>
+<td>Collapse</td>
+<td>Collapses a selected Block's children.</td>
+</tr>
+<tr>
+<td>Select</td>
+<td>Selects a Block. The selected block will be outlined on the canvas.</td>
+</tr>
+<tr>
+<td>Drag/Move</td>
+<td>Moves the Block to a different location. This will also change the Block's location on the canvas.</td>
+</tr>
+<tr>
+<td>Rename</td>
+<td>Renames the outline surrounding the Block. The Block's name is not shown anywhere when in view mode, it is purely for the sake of clarity in edit mode.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="further-reading">Further Reading</h2>
+<ul>
+<li><a href="../../how-tos/apps/use-page-layers.html">How to use Page Layers</a></li>
+</ul>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: June 12, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

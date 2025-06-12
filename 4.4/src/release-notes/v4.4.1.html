@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>v4.4.1 | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="v4.4.1 | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      <meta name="description" content="27 Mar 2024">
+      <link rel="icon" href="../../images/favicon.png">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/release-notes/v4.4.1.md&amp;version=GBmain&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="v441">v4.4.1</h1>
+
+<h2 id="integrations">Integrations</h2>
+<table><thead><tr><th width="155">Change Type</th><th width="250">Name</th><th>Description</th></tr></thead><tbody><tr><td>New</td><td><a href="https://xmpro.gitbook.io/rest-api-connector/">REST API Connector v1.0</a></td><td>Bring data from REST API into your App. </td></tr><tr><td>New</td><td><a href="https://xmpro.gitbook.io/xmq/">XMQ Listener v1.0<br>XMQ Action Agent v1.0</a></td><td>Lightweight, self-healing, frictionless messaging Agents.</td></tr><tr><td>New</td><td><a href="https://xmpro.gitbook.io/coupa/">Coupa Context Provider v1.0<br>Coupa Action Agent v2.0</a></td><td>Read and update <a href="https://www.coupa.com/">Coupa</a> invoices from within your Data Stream.</td></tr><tr><td>Enhancement</td><td><a href="https://xmpro.gitbook.io/opc-da#v1.46-06-mar-2024">OPC DA Listener v1.46</a><br><a href="https://xmpro.gitbook.io/opc-da#v1.33-06-mar-2024">OPC DA Action Agent v1.33</a></td><td>Support variables and standardize property names.</td></tr><tr><td>Enhancement</td><td><a href="https://xmpro.gitbook.io/window#v3.08-07-mar-2024">Window Transformation v3.08</a></td><td>Support combining the count and delay buffer options into Count with Delay.</td></tr></tbody></table>
+<h2 id="app-designer">App Designer</h2>
+<table><thead><tr><th width="157">Change Type</th><th>Description</th></tr></thead><tbody><tr><td>Feature</td><td><p>New Blocks added:</p><ul><li><a href="../blocks-toolbox/device-input/visual-media-capture.html">Visual Media Capture</a> - enrich your events with an image or video captured using your device input.</li><li><a href="../blocks-toolbox/device-input/location-capture.html">Location Capture</a> - capture the precise geographical coordinates of an asset or incident using your device.</li><li><a href="../blocks-toolbox/ai/chatgpt-copilot.html">ChatGPT Copilot</a> - bring ChatGPT into your App.</li><li><a href="../blocks-toolbox/ai/azure-copilot.html">Azure Copilot</a> - bring Azure's OpenAI into your App.</li></ul></td></tr><tr><td>Enhancement</td><td>Recommendation names are auto-populated during import (when exported using v4.4.1+).</td></tr><tr><td>Enhancement</td><td>When using the <a href="https://app.gitbook.com/o/-MZASoMaVZCmWsNG58Xo/s/BAJZpMV4srQJyRnAmEml/">TSC SQL Connector</a>, the <a href="../blocks-toolbox/visualizations/time-series-analysis.html#connector-selection">Time Series Chart</a>'s performance is enhanced with optimized client-side querying (v4.3.2).  <br>The new <a href="../how-tos/connectors/building-connectors.html#itsaconnector">ITSAConnector</a> interface instructs the Time Series Chart to use optimized client-side querying. Use it when building new TSC Connectors that pre-process large volumes of data and return it in buckets. </td></tr><tr><td>Fix</td><td><p><em>When using the</em> <a href="../blocks-toolbox/visualizations/image-map.html"><em>Image Map</em></a><em>, clicking on a hyperlink in either Dynamic or Static content does not work - the navigation on action is not working.</em><br>I can navigate to the configured action for both Dynamic and Static content in an Image Map.</p><p> <br>Note that the Dynamic Template's Data Source and Data must be configured for dynamic content to appear at runtime.</p></td></tr></tbody></table>
+<h2 id="data-stream-designer">Data Stream Designer</h2>
+<table><thead><tr><th width="157">Change Type</th><th>Description</th></tr></thead><tbody><tr><td>Enhancement</td><td>Data Stream names are auto-populated during import (when exported using v4.4.1+).</td></tr></tbody></table>
+<h2 id="stream-host">Stream Host</h2>
+<table><thead><tr><th width="157">Change Type</th><th>Description</th></tr></thead><tbody><tr><td>Enhancement</td><td><p>The "Enable Luigi Preview" feature flag, introduced in <a href="archived/v4.3.9.html#stream-hosts">v4.3.9</a> for beta testing of the new Stream Host core, has been replaced with the "Enable Legacy Core" feature flag. The new, improved Stream Host core is now the default in all new installations, in line with the recommendation made in <a href="v4.4.0.html">v4.4.0</a>. </p><p>Please reach out should you want to revert to the old core as we'd like to understand why and guide you through the process. </p></td></tr></tbody></table>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: June 12, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

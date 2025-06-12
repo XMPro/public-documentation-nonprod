@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>v4.3.0 | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="v4.3.0 | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/release-notes/archived/v4.3.0.md&amp;version=GBmain&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="v430">v4.3.0</h1>
+
+<h2 id="xmpro-ai">XMPro AI</h2>
+<table>
+<thead>
+<tr>
+<th>Change Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Feature</td>
+<td>This feature infuses the Digital Twin Platform with XMPro AI. <br><br>This introduces the <a href="../../concepts/xmpro-ai/xmpro-notebook.html">XMPro Notebook</a>, which is an embedded version of <a href="https://jupyter.org/hub">Jupyterhub</a> and will be available for evaluation on new XMPro Freemium accounts. <br><br>Existing customers and Freemium users can <a href="https://xmpro.com/contact-us/">contact us</a> for access and licensing options. Please visit <a href="https://xmpro.com/xmpro-ai/">XMPro AI</a> for more information about XMPro AI and XMPro's Intelligent Digital Twin Suite.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="app-designer">App Designer</h2>
+<table>
+<thead>
+<tr>
+<th>Change Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Enhancement</td>
+<td>The number format displayed in the <a href="../../blocks-toolbox/basic/data-grid.html#columns">Data Grid</a>, <a href="../../blocks-toolbox/basic/tree-grid.html">Tree Grid</a>, and <a href="../../blocks-toolbox/visualizations/pivot-grid.html">Pivot Grid</a> now supports the comma format, providing improved readability and ease of data interpretation.</td>
+</tr>
+<tr>
+<td>Fix</td>
+<td>An issue has been addressed where the <a href="../../concepts/recommendation/recommendation-scoring.html#viewing-the-recommendation-scoring">Score Matrix</a> did not open.</td>
+</tr>
+<tr>
+<td>Fix</td>
+<td>An issue where an &quot;Encryption Key&quot; error was displayed when updating the &quot;Enable Audit trail&quot; and &quot;Landing Page for Desktop/Mobile&quot; Application Designer settings has been resolved.</td>
+</tr>
+<tr>
+<td>Fix</td>
+<td>The <a href="../../blocks-toolbox/recommendations/recommendation-chart.html">Recommendation Chart</a> block included all recommendations when not configured.<br><em>If it is not configured, it will now state &quot;This control is not yet configured. Please use the block properties to configure it&quot;.</em></td>
+</tr>
+<tr>
+<td>Fix</td>
+<td>The XMPro logo was displayed in the XMPro mobile app.<br><em>The mobile app correctly displays the company logo configured in Subscription Manager.</em></td>
+</tr>
+</tbody>
+</table>
+<h2 id="data-stream-designer">Data Stream Designer</h2>
+<table>
+<thead>
+<tr>
+<th>Change Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fix</td>
+<td>When navigating to the connectors page and selecting a connector's version, all previous versions of the selected connector were highlighted.<br><em>The selected version is the only row highlighted and the Applications blade opens correctly.</em></td>
+</tr>
+</tbody>
+</table>
+<h2 id="subscription-manager">Subscription Manager</h2>
+<table>
+<thead>
+<tr>
+<th>Change Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Enhancement</td>
+<td>The Subscription page now shows the <a href="../../administration/companies/manage-license.html#update-a-license">license</a> expiry date and the number of days remaining. Previously, the global or company admin would have to open each subscription to view the expiration date of a license.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="common">Common</h2>
+<table>
+<thead>
+<tr>
+<th>Change Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Feature</td>
+<td><a href="../../installation/complete-installation/configure-logging-optional.html">Logging</a> provider support via Serilog, a diagnostic logging library, enhances system logging functionality to provide administrators with valuable insights into the behavior and performance of XMPro.<br><br>Three logging outputs are supported: <a href="../../installation/complete-installation/configure-logging-optional.html#logging-to-file">Logging to file</a> support has been added for all XMPro products, whereas <a href="../../installation/complete-installation/configure-logging-optional.html#application-insights">Application Insights</a> and <a href="../../installation/complete-installation/configure-logging-optional.html#datadog">Datadog</a> support has been added for all products aside from Subscription Manager. These are cloud-based application monitoring and analytics services.</td>
+</tr>
+<tr>
+<td>Enhancement</td>
+<td>Standard logging has been improved across all products with the addition of more contextual information. Users can now access important details such as CompanyId, CompanyName, UserId, Username, and more, enabling efficient issue investigation.</td>
+</tr>
+<tr>
+<td>Enhancement</td>
+<td>We've changed the way our database installs and upgrades are applied. For new installs, our products will automatically install the required database changes. For upgrades, our products will detect what database changes are needed and make these.<br><br>We are moving away from doing database installs and upgrades from the desktop installer, with all database installs and upgrades happening automatically from within the products.<br><br>Accelerate time to value by choosing to automatically deploy the regular, smaller releases to your pre-prod environment, rather than less frequent, larger upgrades.</td>
+</tr>
+<tr>
+<td>Fix</td>
+<td>SignalR displayed errors in the browser console.<br><em>These errors have been rectified.</em></td>
+</tr>
+<tr>
+<td>Fix</td>
+<td>An issue has been resolved where the on-premise installer failed to create an AWS package.</td>
+</tr>
+<tr>
+<td>Fix</td>
+<td>Access token vulnerabilities have been addressed.<br><em>XMPro has masked logging of sensitive data like access_tokens used in SignalR connections to align with best practices.</em></td>
+</tr>
+<tr>
+<td>Fix</td>
+<td>When assigning Run Access to XMPro Objects, selection changes were lost if you scrolled out of sight (further down) in the user list.<br><em>Selections are retained through scrolling and saved as expected.</em></td>
+</tr>
+<tr>
+<td>Fix</td>
+<td>The link in the Help Blades' &quot;Release Notes&quot; section did not direct users to the version number that matched the release version of XMPro when they tried to navigate to it.<br><em>The link now directs the user to the documentation version number corresponding with the release version of XMPro.</em></td>
+</tr>
+</tbody>
+</table>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: June 12, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

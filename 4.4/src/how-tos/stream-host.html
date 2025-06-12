@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Stream Host | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Stream Host | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../images/favicon.png">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/how-tos/stream-host.md&amp;version=GBmain&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="stream-host">Stream Host</h1>
+
+<p>A Stream Host is an application that can either be installed as a Docker container, a Windows Service, or a Console Application. Stream Hosts enable Data Streams to run and execute actions and are also responsible for getting the configurations of <a href="../concepts/agent/virtual-vs-non-virtual-agents.html#non-virtual-agents">Non-Virtual Agents</a>.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>It is recommended that you read the article listed below to improve your understanding of Stream Host.</p>
+<ul>
+<li><a href="../concepts/collection.html#stream-hosts">Stream Host</a></li>
+</ul>
+</div>
+<h2 id="how-to-install-a-stream-host">How to Install a Stream Host</h2>
+<p>The recommended Stream Host deployment is as a Docker container - see the <a href="../installation/complete-installation/install-stream-host/docker.html">Docker</a> instructions.</p>
+<p>Alternate methods can be found at <a href="../installation/complete-installation/install-stream-host/index.html">Install Stream Host</a>.</p>
+<h2 id="logs">Logs</h2>
+<h3 id="how-to-check-logs">How to Check Logs</h3>
+<p>To check the logs for a Steam Host,  follow the steps below:</p>
+<ol>
+<li>Open the Collection page.</li>
+<li>Select the Collection.</li>
+<li>Click the Stream Hosts button.</li>
+<li>Select the desired Stream Host.</li>
+</ol>
+<p><img src="../images/stream-host-logs.png" alt="Stream Host Logs"></p>
+<h3 id="how-to-set-the-log-level">How to Set the Log Level</h3>
+<p>You can change the Log level to either Info or Trace. To change the Log Level, follow the steps below:</p>
+<ol>
+<li>Open the Collection page.</li>
+<li>Select the Collection.</li>
+<li>Click the Stream Hosts button.</li>
+<li>Select the desired Stream Host.</li>
+</ol>
+<div class="NOTE">
+<h5>Note</h5>
+<p><a href="../concepts/collection.html#set-log-level">See the Collection and Stream Hosts article for more information on the Log Level.</a></p>
+</div>
+<p><img src="../images/stream-host-log-level.png" alt="Stream Host Log Level"></p>
+<p>5. Click on Set Log level.<br>
+6. From the dropdown, select either Info or Trace.</p>
+<p><img src="../images/stream-host-log-level-select.png" alt="Stream Host Log Level Select"></p>
+<p>7. Click on OK.</p>
+<p><img src="../images/stream-host-log-level-ok.png" alt="Stream Host Log Level OK"></p>
+<h3 id="how-to-filter-log-levels">How to Filter Log Levels</h3>
+<p>You can filter and narrow down the errors and messages that have already been logged in the table. For example, if you filter for <em>Info</em> errors, only info level errors will be displayed. To filter the log level for a Steam Host,  follow the steps below:</p>
+<ol>
+<li>Open the Collection page.</li>
+<li>Select the Collection.</li>
+<li>Click the Stream Hosts button.</li>
+<li>Select the desired Stream Host.</li>
+</ol>
+<p><img src="../images/stream-host-filter-logs.png" alt="Stream Host Filter Logs"></p>
+<p>5. Click the icon next to the Level column.<br>
+6. Select the Log Level.<br>
+7. Click OK.</p>
+<p><img src="../images/stream-host-filter-logs-select.png" alt="Stream Host Filter Logs Select"></p>
+<h3 id="how-to-clean-the-logs">How to Clean the Logs</h3>
+<p>To clean the logs for a Steam Host,  follow the steps below:</p>
+<ol>
+<li>Open the Collection page.</li>
+<li>Select the Collection.</li>
+<li>Click the Stream Hosts button.</li>
+<li>Select the desired Stream Host.</li>
+</ol>
+<p><img src="../images/stream-host-filter-logs.png" alt="Stream Host Clean Logs"></p>
+<p>5. Click the Delete Logs button.<br>
+6. Confirm your action.</p>
+<p><img src="../images/stream-host-clean-logs-confirm.png" alt="Stream Host Clean Logs Confirm"></p>
+<h3 id="how-to-export-logs">How to Export Logs</h3>
+<p>To export the logs for a Steam Host,  follow the steps below:</p>
+<ol>
+<li>Open the Collection page.</li>
+<li>Select the Collection.</li>
+<li>Click the Stream Hosts button.</li>
+<li>Select the desired Stream Host.</li>
+<li>Click the &quot;three dots&quot; button.</li>
+<li>Click Export all data or Export Selected rows.</li>
+</ol>
+<p><img src="../images/stream-host-export-logs.png" alt="Stream Host Export Logs"></p>
+<h2 id="how-to-find-online-hosts">How to Find Online Hosts</h2>
+<p>To find online Stream Hosts, follow the steps below:</p>
+<ol>
+<li>Open the Collection page.</li>
+<li>Select the Collection.</li>
+<li>Click the Stream Hosts button.</li>
+</ol>
+<p><img src="../images/stream-host-find-online.png" alt="Stream Host Find Online"></p>
+<h2 id="how-to-override-variables">How to Override Variables</h2>
+<p>Although each Stream Host in a given Collection downloads the same definition of a Data Stream, the <a href="manage-variables.html">Variables</a> defined in Data Stream Designer can be overridden by the individual Stream Host to provide the unique configuration e.g. per Asset, site, or OPC IP Address.</p>
+<p>The options to override variables for a Stream Host are:</p>
+<ul>
+<li><a href="stream-host.html#using-environment-variables">Using Environment Variables</a> - enables the scalable and efficient creation of multiple Docker Stream Hosts through scripting.</li>
+<li><a href="stream-host.html#using-variablesxv-files">Using Variables.xv files</a> - requires manual edits for each Stream Host.</li>
+</ul>
+<p>In practice you'd use one or the other, but it may be helpful that the Stream Host</p>
+<p>The Stream Host retrieves variable values in the following order:</p>
+<ol>
+<li>Environment Variable, if no match then...</li>
+<li>Variables.xv File, if no match then...</li>
+<li>Variables (i.e. as detailed in <a href="../concepts/variable.html#using-a-variable">Using a Variable</a>)</li>
+</ol>
+<h3 id="using-environment-variables">Using Environment Variables</h3>
+<p><em>v4.4.2</em></p>
+<p>This option can be applied to any Stream Host install scenario, although it is better suited for when running <a href="../installation/complete-installation/install-stream-host/docker.html">Stream Host on Docker</a>.</p>
+<p>Create an environment variable that is applied to a running Stream Host instance, prefixing the name of the variable that should be overridden with <code>xmvariable__</code></p>
+<pre><code>xmvariable__NameOfVariable1=foo
+xmvariable__NameOfVariable2=bar
+xmvariable__NameOfVariable3=noop
+</code></pre>
+<h3 id="using-variablesxv-files">Using Variables.xv files</h3>
+<div class="NOTE">
+<h5>Note</h5>
+<p>This option is not supported when running Stream Host on Docker.</p>
+</div>
+<ol>
+<li>Open the Collection page.</li>
+<li>Select the Collection.</li>
+<li>Hover on More.</li>
+<li>Click Variables.</li>
+<li>Click Select file and upload the encrypted variables.xv file, found in the Data folder of the Stream Host's installation directory e.g. &quot;<em>C:\Program Files\XMPro Stream Host\Data</em>&quot;.</li>
+<li>You can enter overrides for any Variables.</li>
+<li>Click Download to get the updated file.</li>
+<li>Replace the original file in your Stream Host folder with the new one.</li>
+<li>Restart your Stream Host to load the updated variables.</li>
+</ol>
+<p><img src="../images/stream-host-variables-1.png" alt="Stream Host Variables 1"></p>
+<p><img src="../images/stream-host-variables-2.png" alt="Stream Host Variables 2"></p>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: June 12, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
