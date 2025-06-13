@@ -57,6 +57,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "pipeline-scripts/README.md",
       "output": {
         ".html": {
@@ -25991,16 +26001,6 @@
       "output": {
         "resource": {
           "relative_path": "src/images/zoom.mp4"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "src/index.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/index.html"
         }
       },
       "version": ""
