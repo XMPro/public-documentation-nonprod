@@ -17,6 +17,16 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": ".nojekyll",
+      "output": {
+        "resource": {
+          "relative_path": ".nojekyll"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "images/beta-icon.png",
       "output": {
         "resource": {
@@ -9017,16 +9027,6 @@
     },
     {
       "type": "Resource",
-      "source_relative_path": "src/images/blocks-toolbox/Allow-Delete-2.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/images/blocks-toolbox/Allow-Delete-2.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
       "source_relative_path": "src/images/blocks-toolbox/Allow-Delete.png",
       "output": {
         "resource": {
@@ -9057,30 +9057,10 @@
     },
     {
       "type": "Resource",
-      "source_relative_path": "src/images/blocks-toolbox/Allowed-ext-1.gif",
-      "output": {
-        "resource": {
-          "relative_path": "src/images/blocks-toolbox/Allowed-ext-1.gif"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
       "source_relative_path": "src/images/blocks-toolbox/Allowed-ext-2.gif",
       "output": {
         "resource": {
           "relative_path": "src/images/blocks-toolbox/Allowed-ext-2.gif"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "src/images/blocks-toolbox/Button.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/images/blocks-toolbox/Button.png"
         }
       },
       "version": ""
@@ -9161,16 +9141,6 @@
       "output": {
         "resource": {
           "relative_path": "src/images/blocks-toolbox/Fieldset2-3.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "src/images/blocks-toolbox/File-Size.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/images/blocks-toolbox/File-Size.png"
         }
       },
       "version": ""
