@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Use Remote Receivers and Publishers | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Use Remote Receivers and Publishers | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/how-tos/data-streams/remote-receivers-and-publishers.md&amp;version=GB20537-docs-proper-versioning&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="use-remote-receivers-and-publishers">Use Remote Receivers and Publishers</h1>
+
+<p>Sometimes it is necessary to run the same Data Stream on two or more different systems. It may be that one system is low-powered and does not have enough resources to handle the integrations or analytical tasks of the Data Stream, or some integrations may not even be accessible on a system that is outside a corporate network or behind a firewall.</p>
+<p>The solution to these problems is found by using Remote Receivers and Publishers. Two Collections are set up, and half of the Data Stream is run on one Collection while the other half runs on the other Collection. The Stream Host can automatically detect where data has to flow from one Collection to the other (a Collection Hop).</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>It is recommended that you read the article listed below to improve your understanding of Live Data.</p>
+<ul>
+<li><a href="../../concepts/collection.html#remote-receivers-and-publishers">Remote Receivers and Publishers</a></li>
+<li><a href="manage-data-streams.html">How to Manage Data Streams</a></li>
+<li><a href="manage-collections.html">How to Manage Collections</a></li>
+</ul>
+</div>
+<p>Each Collection allows you to configure a Remote Publisher and a Remote Receiver. Every time a Collection Hop is detected the Stream Hosts will automatically set up the configured Remote Publisher, which will put the data on a central store. The receiving Collection will also automatically set up a Remote Receiver which will receive data from the store and pass it on to the Data Stream on the other side.</p>
+<p>It is also possible to set up multiple Stream Hosts to funnel data from tens or hundreds of devices into the data store, which will then be redirected to a single Stream Host with a Remote Receiver.</p>
+<h2 id="set-up-remote-receivers-and-publishers">Set Up Remote Receivers and Publishers</h2>
+<p>To set up a Remote Receiver and a Remote Publisher, follow the steps below:</p>
+<ol>
+<li>Create two collections, one for each system.</li>
+<li>Click the Collection that will be sending data.</li>
+<li>Choose a Remote Publisher Agent and Version.</li>
+<li>Configure the Remote Publisher. Each Agent has specific configuration settings.</li>
+<li>For the MQTT Agent as a Remote Publisher, set up a broker.</li>
+<li>Click on Apply.</li>
+<li>Save the Collection.</li>
+<li>Click the Collection that will be receiving data.</li>
+<li>Choose a Remote Receiver Agent and Version.</li>
+<li>Configure the Remote Receiver. Each Agent has specific configuration settings.</li>
+<li>For the MQTT Agent as a Remote Publisher, Set up a broker and payload definition.</li>
+<li>In your Data Stream, set the Stream Objects' Collections to the desired Stream Host's Collection.</li>
+</ol>
+<p><img src="../../images/remote-receivers-1.png" alt="Remote Receivers and Publishers"></p>
+<p><img src="../../images/remote-receivers-2.png" alt="Remote Receivers and Publishers Configuration"></p>
+<p><img src="../../images/remote-receivers-3.png" alt="Remote Receivers and Publishers Setup"></p>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: June 19, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

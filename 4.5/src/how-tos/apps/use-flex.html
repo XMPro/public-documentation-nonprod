@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Use Flex | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Use Flex | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/how-tos/apps/use-flex.md&amp;version=GB20537-docs-proper-versioning&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="use-flex">Use Flex</h1>
+
+<p>Flex styles are a way of changing the layout of the page so it is responsive. When using Flex, the layout and position of the Blocks will respond to fit the screen, which is important in ensuring that users have a good user experience regardless of the screen size they are viewing your Application on.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>It is recommended that you read the article listed below to improve your understanding of Devices and the Style Manager.</p>
+<ul>
+<li><a href="../../concepts/application/devices.html">Device</a></li>
+<li><a href="../../concepts/application/block-styling.html">Style Manager</a></li>
+<li><a href="use-block-styling-and-devices.html">How to Use Style Manager and Devices</a></li>
+</ul>
+</div>
+<h2 id="enabling-flex-styles">Enabling Flex Styles</h2>
+<p>To enable Flex styles, follow the steps below:</p>
+<ol>
+<li>Select the parent Block of the Blocks you want to configure the position for.</li>
+<li>Click on <em>Block Styling</em>.</li>
+<li>Choose <em>Flex</em> for the display or <em>enable</em> the flex container.</li>
+</ol>
+<p><img src="../../images/apps/flex/flex-1.png" alt="Screenshot of the Block Styling panel showing the Display dropdown set to &quot;Flex&quot;. The Flex Container checkbox is checked, activating additional flex properties below it including Direction, Justify, and Align items options."></p>
+<h2 id="flex-container">Flex Container</h2>
+<h3 id="direction">Direction</h3>
+<p>The direction determines which direction the content will go. It can either be:</p>
+<ol>
+<li>Row - Left to right</li>
+<li>Reverse row - right to left</li>
+<li>Column – Top to Bottom</li>
+<li>Reverse column – Bottom to Top</li>
+</ol>
+<p><img src="../../images/apps/flex/flex-2.png" alt="Screenshot showing a flex container with Direction set to &quot;Row&quot;. Three colored blocks are arranged horizontally from left to right in a single row within the container."></p>
+<p><img src="../../images/apps/flex/flex-3.png" alt="Screenshot showing a flex container with Direction set to &quot;Row Reverse&quot;. Three colored blocks are arranged horizontally from right to left (reversed) in a single row within the container."></p>
+<p><img src="../../images/apps/flex/flex-4.png" alt="Screenshot showing a flex container with Direction set to &quot;Column&quot;. Three colored blocks are stacked vertically from top to bottom in a single column within the container."></p>
+<p><img src="../../images/apps/flex/flex-5.png" alt="Screenshot showing a flex container with Direction set to &quot;Column Reverse&quot;. Three colored blocks are stacked vertically from bottom to top (reversed) in a single column within the container."></p>
+<h3 id="justify">Justify</h3>
+<p>Justify determines the way the contents are laid out. It can either be:</p>
+<ol>
+<li>Start</li>
+<li>End</li>
+<li>Space Between (puts spaces between the Blocks)</li>
+<li>Space Around (puts an equal amount of space around each Block)</li>
+<li>Center</li>
+</ol>
+<p><img src="../../images/apps/flex/flex-6.png" alt="Screenshot showing a flex container with Justify set to &quot;Start&quot;. Multiple blocks are aligned at the beginning of the container with no space between them and the starting edge."></p>
+<p><img src="../../images/apps/flex/flex-7.png" alt="Screenshot showing a flex container with Justify set to &quot;End&quot;. Multiple blocks are aligned at the end of the container with no space between them and the ending edge."></p>
+<p><img src="../../images/apps/flex/flex-8.png" alt="Screenshot showing a flex container with Justify set to &quot;Space Between&quot;. Blocks are distributed evenly across the container with the first block at the start and the last block at the end, with equal spacing between blocks."></p>
+<p><img src="../../images/apps/flex/flex-9.png" alt="Screenshot showing a flex container with Justify set to &quot;Space Around&quot;. Blocks are distributed with equal space around each block, including half-spaces at the beginning and end of the container."></p>
+<p><img src="../../images/apps/flex/flex-10.png" alt="Screenshot showing a flex container with Justify set to &quot;Center&quot;. Multiple blocks are centered in the container with equal space on both left and right sides of the group."></p>
+<h3 id="align-items">Align-Items</h3>
+<p>Determines the vertical alignment of the Blocks. It can either be:</p>
+<ol>
+<li>Start</li>
+<li>End</li>
+<li>Stretch</li>
+<li>Center</li>
+</ol>
+<p><img src="../../images/apps/flex/flex-11.png" alt="Screenshot showing a flex container with Align-Items set to &quot;Start&quot;. Blocks of different heights are aligned at the top of the container, regardless of their individual heights."></p>
+<p><img src="../../images/apps/flex/flex-12.png" alt="Screenshot showing a flex container with Align-Items set to &quot;End&quot;. Blocks of different heights are aligned at the bottom of the container, regardless of their individual heights."></p>
+<p><img src="../../images/apps/flex/flex-13.png" alt="Screenshot showing a flex container with Align-Items set to &quot;Stretch&quot;. All blocks are stretched vertically to fill the entire height of the container regardless of their content."></p>
+<p><img src="../../images/apps/flex/flex-14.png" alt="Screenshot showing a flex container with Align-Items set to &quot;Center&quot;. Blocks of different heights are centered vertically in the container, with equal space above and below each block."></p>
+<h2 id="blocks-inside-the-flex-container">Blocks inside the Flex Container</h2>
+<h3 id="grow">Grow</h3>
+<p>Grow will grow the item to fit the container.</p>
+<p><img src="../../images/apps/flex/flex-15.png" alt="Screenshot showing the Block Styling panel with the Flex Grow property set to 1 for a selected block. The block expands to fill available space in the flex container."></p>
+<p>If multiple Blocks have a grow value greater than 0, they will take up a ratio of the available space.</p>
+<p><img src="../../images/apps/flex/flex-16.png" alt="Screenshot showing multiple blocks with different Flex Grow values. The blocks with higher grow values take proportionally more space than those with lower values, demonstrating the ratio-based distribution."></p>
+<h3 id="shrink">Shrink</h3>
+<p>Shrink determines whether an item is allowed to shrink if the screen is too small or if other Blocks take up too much space. Shrink will not work if the Block has a minimum width or height.</p>
+<p><img src="../../images/apps/flex/flex-17.png" alt="Screenshot showing the Block Styling panel with the Flex Shrink property set to 1 for a selected block. The block is allowed to shrink when there's not enough space in the container."></p>
+<h3 id="basis">Basis</h3>
+<p>This determines the default size of the object along its direction axis.</p>
+<p><img src="../../images/apps/flex/flex-18.png" alt="Screenshot showing the Block Styling panel with the Flex Basis property being configured. The property is set to a specific pixel value, establishing the initial main size of the flex item."></p>
+<h3 id="order">Order</h3>
+<p>The order will change the order of the Blocks. Blocks with no order will be displayed first, followed by the ordered Blocks going in ascending order.</p>
+<p><img src="../../images/apps/flex/flex-19.png" alt="Screenshot showing the Block Styling panel with the Order property set to a specific number. Blocks are visibly arranged in a different order than their DOM sequence due to the order property."></p>
+<h3 id="align-item">Align-Item</h3>
+<p>Aligns the individual Blocks. They can either be:</p>
+<ol>
+<li>Start</li>
+<li>End</li>
+<li>Stretch</li>
+<li>Center</li>
+</ol>
+<p><img src="../../images/apps/flex/flex-20.png" alt="Screenshot showing a flex container where a single highlighted block has Align-Self set to &quot;Start&quot;. This block is aligned to the top of the container while other blocks follow the container's alignment rules."></p>
+<p><img src="../../images/apps/flex/flex-21.png" alt="Screenshot showing a flex container where a single highlighted block has Align-Self set to &quot;End&quot;. This block is aligned to the bottom of the container while other blocks follow the container's alignment rules."></p>
+<p><img src="../../images/apps/flex/flex-22.png" alt="Screenshot showing a flex container where a single highlighted block has Align-Self set to &quot;Stretch&quot;. This block is stretched to fill the container's height while other blocks maintain their original dimensions."></p>
+<p><img src="../../images/apps/flex/flex-23.png" alt="Screenshot showing a flex container where a single highlighted block has Align-Self set to &quot;Center&quot;. This block is vertically centered in the container while other blocks follow the container's alignment rules."></p>
+<h2 id="further-reading">Further Reading</h2>
+<ul>
+<li><a href="design-pages-for-mobile.html">How to Design Pages for Mobile</a></li>
+</ul>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: June 19, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

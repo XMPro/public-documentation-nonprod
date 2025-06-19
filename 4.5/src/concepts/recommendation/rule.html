@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Rule | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Rule | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/concepts/recommendation/rule.md&amp;version=GB20537-docs-proper-versioning&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="rule">Rule</h1>
+
+<p>A Rule defines the conditions for triggering a <a href="recommendation-alert.html">Recommendation Alert</a> and what the created Recommendation Alert should look like. Multiple Rules can also be grouped into one <a href="index.html">Recommendation</a>.</p>
+<p><img src="../../images/image-20.png" alt="Rule Configuration"></p>
+<h2 id="rule-logic">Rule Logic</h2>
+<p>Data sent from the selected Data Stream is passed through the Rule Logic and if the conditions created are met by the data, a new Recommendation Alert will be created.</p>
+<p>You can add new conditions or groups by clicking the + button. Groups can be nested within each other to create advanced logic. In an &quot;And&quot; group, all the conditions must be true, and in an &quot;Or&quot; group, only one of the conditions must be true to trigger an Alert.</p>
+<p>As an example, in the following Rule Logic, both of the following must be true to trigger an Alert:</p>
+<ul>
+<li>Average must be greater than 50,</li>
+<li>And V1, V2, or V3 must be greater than 60.</li>
+</ul>
+<p><img src="../../images/image-309.png" alt="Rule Logic Builder"></p>
+<h2 id="alert-headline--description">Alert Headline &amp; Description</h2>
+<p>This refers to the headline and description that the Recommendation Alert will be created with. Any tag (starting with @) will be replaced with the value output from the Data Stream.</p>
+<h2 id="alert-ranking">Alert Ranking</h2>
+<p>The priority level that the Recommendation Alert will be created with. Priority level determines the order in which the Alerts will be displayed.</p>
+<h2 id="impact-metric">Impact Metric</h2>
+<p>The measurable impact of the business event detected by the Recommendation Rule. This will be shown on Alerts in the Recommendation Block in App Pages.</p>
+<h2 id="enable-form">Enable Form</h2>
+<p>A flag that determines whether the Recommendation Alert will be created with a <a href="form.html">Form</a>.</p>
+<h2 id="select-form">Select Form</h2>
+<p>The <a href="form.html">Form </a>that the Recommendation Alert will be created with.</p>
+<h2 id="form-version">Form Version</h2>
+<p>The <a href="../version.html">Version</a> of the <a href="form.html">Form</a> that the Recommendation Alert will be created with.</p>
+<h2 id="additional-recommendation-management-column">Additional Recommendation Management Column</h2>
+<p>An additional column in the Recommendation Alerts grid. Any tag (starting with @) will be replaced with the value entered in the corresponding field in the Form.</p>
+<h2 id="resolution">Resolution</h2>
+<p>Resolution determines whether new data from the Data Stream will automatically resolve the Recommendation Alert if the Rule Logic is no longer true.</p>
+<p><strong>Manual Resolution:</strong> A user must manually resolve each Recommendation.</p>
+<p><strong>Automatic Resolution:</strong> Recommendation auto resolves when trigger conditions are no longer true. This may impact performance, as it might continuously trigger and resolve a large number of Recommendations at a time if the data fluctuates frequently.</p>
+<h2 id="recurrence">Recurrence</h2>
+<p>Recurrence determines whether new data from the Data Stream will create new Recommendation Alerts if a Pending Recommendation Alert already exists and the Rule Logic is true.</p>
+<p>If the conditions created by the Rule Logic are met by the data, and if Recurrence is set to All Occurrences or First Occurrence and no Pending Alert exists, a new Recommendation Alert will be created.</p>
+<p><strong>First Occurrence:</strong> The current recommendation must be resolved before others can be triggered for the same rule.</p>
+<p><strong>All Occurrences:</strong> A new recommendation will be triggered every time the rule conditions are true.</p>
+<p>Recurrence will be disabled and be considered to be the <strong>First Occurrence</strong> if the Recommendation has <strong>Execution Order</strong> enabled.</p>
+<h2 id="log-data-on">Log Data On</h2>
+<p>Determines whether new data from the Data Stream will log new data in the Event Data grid if the Rule Logic is true.</p>
+<p><strong>First Occurrence:</strong> Current recommendation will only log data on the first occurrence.</p>
+<p><strong>All Occurrences:</strong> New alert data will be triggered every time the rule conditions are true.</p>
+<h2 id="triage-instructions">Triage Instructions</h2>
+<p>Instructions to help whoever is resolving the Recommendation Alert.</p>
+<p><em>Enable Triage Instructions</em> is a flag that determines whether the Recommendation Alert will be created with Triage Instructions.</p>
+<h2 id="resources">Resources</h2>
+<p>A list of links on the Recommendation Alert to help whoever is resolving the Recommendation Alert.</p>
+<p><em>Enable Resources</em> is a flag that determines whether the Recommendation Alert will be created with Resources.</p>
+<h2 id="notifications">Notifications</h2>
+<p>This refers to the list of <a href="notification.html">Notifications </a>that will be sent out to everyone who is subscribed.</p>
+<h2 id="view-related-alerts">View Related Alerts</h2>
+<p>You can view Alerts that are directly related to a Rule. To do this, open the Rule's page and click on <em>Alerts</em> at the top. This will take you directly to the Alerts list table, which will be filtered to only display the Alerts related to the specific rule you are viewing.</p>
+<p><img src="../../images/image-111.png" alt="Rule Properties"></p>
+<p><img src="../../images/image-1559.png" alt="Rule Management"></p>
+<h2 id="actions-on-the-rule">Actions on the Rule</h2>
+<table>
+<thead>
+<tr>
+<th><strong>Action</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Save</td>
+<td>Saves any changes made to the Rule up to this point.</td>
+</tr>
+<tr>
+<td>Discard</td>
+<td>Discards any changes made to the Rule up to this point.</td>
+</tr>
+<tr>
+<td><a href="../../how-tos/import-export-and-clone.html">Clone</a></td>
+<td>Clones the Rule as a new Rule in this Recommendation.</td>
+</tr>
+<tr>
+<td>Delete</td>
+<td>Deletes the Rule from this Recommendation.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="further-reading">Further Reading</h2>
+<ul>
+<li><a href="../../how-tos/recommendations/create-rules.html">How to Create and Manage Rules</a></li>
+</ul>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: June 19, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

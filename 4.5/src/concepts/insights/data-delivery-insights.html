@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Data Delivery Insights | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Data Delivery Insights | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/concepts/insights/data-delivery-insights.md&amp;version=GB20537-docs-proper-versioning&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="data-delivery-insights">Data Delivery Insights</h1>
+
+<h2 id="stream-hosts-foundational-premise-streaming-signals-for-event-intelligence">Stream Hosts Foundational Premise: Streaming Signals for Event Intelligence</h2>
+<h3 id="back-to-basics">Back to Basics</h3>
+<p>The premise of a Stream Host is to ingest streaming signals as messages into the Data Stream.</p>
+<p>The premise for a Data Stream is the capability to ingest a fire hose and achieve the desired outcome even if not all the data elements are delivered. Consider how this contrasts with an ETL system.</p>
+<p>Neither has a primary goal of guaranteed delivery.</p>
+<h3 id="what-this-means">What this means</h3>
+<p>If a value (e.g. a temperature reading) in the Data Stream is measured against a rule value and a call to action is created when a threshold is reached, there is no impact if the Data Stream misses some readings. These misses could occur for several reasons, one of which is buffering.</p>
+<p>There are buffers in the Data Stream, but if they overflow and values are missed, the premise is intact.</p>
+<p>In scenarios where multiple transactions occur concurrently, the Stream Host processes the first transaction and buffers the next. However, if the buffer reaches maximum capacity and another transaction is received, the Stream Host will drop the subsequent transaction to prevent potential bottlenecks.</p>
+<h2 id="guaranteed-delivery--processing-files">Guaranteed Delivery – Processing Files</h2>
+<p>There are circumstances where there needs to be a guarantee for the delivery of the data and the ‘dropping’ of data is unsuitable for the use case.  In these circumstances, the design should adopt a pattern that ensures auditable delivery.</p>
+<h3 id="explanation">Explanation</h3>
+<p>If there is a single batch, data is split into 80 separate messages by an agent within the Data Stream, however, the next agent processes the data significantly more slowly than the previous agent which causes buffering to occur, with 80 messages coming through almost immediately the SH is unable to buffer some messages and therefore drops them.</p>
+<h3 id="recent-improvement">Recent Improvement</h3>
+<p>The v4.4.0 release includes a Stream Host with superior &quot;buffer&quot; functionality.</p>
+<p>The new <a href="https://xmpro.gitbook.io/window">Window</a> Agent supports a delay in transmitting events to the next Agent in a Data Stream. This enhancement aims to mitigate the risk of excessive event data buffering within the Stream Host. The flow of events can be regulated to prevent potential overload scenarios, ensuring smoother data processing and system stability.</p>
+<h2 id="data-stream-design-considerations-and-patterns">Data Stream Design Considerations and Patterns</h2>
+<p>When discussing the Data Stream design there are other considerations that, by way of example, point to how patterns could be applied as the design depends on the data profile and orchestrating the data.</p>
+<h3 id="not-all-ingested-messages-are-processed">Not all ingested messages are processed</h3>
+<p>Introduce a mechanism to allocate batch IDs to ensure a message is processed. This relies on tracking individual messages outside the Data Stream (e.g. in a SQL table). If configured correctly, this can avoid duplication if a message is re-processed.</p>
+<p>Another consideration could be to split the Data Stream and use storage (e.g. SQL) to process each message/record individually:</p>
+<ul>
+<li>Data Stream 1 ingests the message and saves it as a record in a table.</li>
+<li>Data Stream 2 then processes each record row by row.</li>
+</ul>
+<h3 id="introduce-a-delay">Introduce a delay</h3>
+<p>Introduce a delay in the Data Stream by including a “delay” Agent during processing to ensure messages are completely processed before a new message is received.</p>
+<h3 id="small-polling-interval">Small polling interval</h3>
+<p>When the polling interval of the listener is small (e.g. 5 or 10 seconds), the short time frame usually results in a Data Stream that is less performant.</p>
+<p>Consider a longer polling interval.</p>
+<p>A general observation is that when event intelligence monitors for asset failure, subject to certain use cases, a polling interval of 3600 seconds (i.e. one hour) is sufficient to timeously perceive degradation.</p>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: June 19, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

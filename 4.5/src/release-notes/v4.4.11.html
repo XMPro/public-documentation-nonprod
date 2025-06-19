@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>v4.4.11 | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="v4.4.11 | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      <meta name="description" content="21 August 2024">
+      <link rel="icon" href="../../images/favicon.png">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/release-notes/v4.4.11.md&amp;version=GB20537-docs-proper-versioning&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="v4411">v4.4.11</h1>
+
+<h2 id="integrations">Integrations</h2>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Security update: Mitigate a high-severity vulnerability by upgrading Azure SQL and SQL Connectors.</p>
+</div>
+<table><thead><tr><th width="155">Change Type</th><th width="250">Name</th><th>Description</th></tr></thead><tbody><tr><td>Security</td><td><a href="https://xmpro.gitbook.io/azure-sql-connector/">Azure SQL Connector v2.00</a></td><td>Applied the <a href="https://msrc.microsoft.com/update-guide/vulnerability/CVE-2024-0056">CVE-2024-0056 </a>security vulnerability update</td></tr><tr><td>Security</td><td><a href="https://xmpro.gitbook.io/sql-server-connector/">SQL Server Connector v2.00</a></td><td>Applied the <a href="https://msrc.microsoft.com/update-guide/vulnerability/CVE-2024-0056">CVE-2024-0056 </a>security vulnerability update</td></tr><tr><td>Enhancement</td><td><a href="https://xmpro.gitbook.io/neo4j-connector/">Neo4J Connector v1.02</a></td><td>Support CRUD operations on tables<br>Support Live Updates</td></tr><tr><td>Enhancement</td><td><a href="https://xmpro.gitbook.io/osisoft-pi-connector/">OSIsoft PI Connector v2.26</a></td><td>Added error logging<br>Fixed ReturnAll error</td></tr><tr><td>Enhancement</td><td><a href="https://xmpro.gitbook.io/rest-api/">REST API Context Provider v3.13<br></a></td><td><p>Support nested JArray response.</p><p>Support auth token via another REST call.</p></td></tr><tr><td>Enhancement</td><td><a href="https://xmpro.gitbook.io/rest-api/">REST API Action Agent v3.38</a></td><td><p>Support nested Jarray response.</p><p>Support auth token via another REST call.</p><p>Support entering parameters manually.</p></td></tr><tr><td>Enhancement</td><td><a href="https://xmpro.gitbook.io/twilio">Twilio Action Agent v2.15</a></td><td>Support a message prefix - useful to differentiate between environments</td></tr><tr><td>Fix</td><td><a href="https://xmpro.gitbook.io/mongodb">MongoDB Listener v1.15<br>MongoDB Context Provider v1.15<br>MongoDB Action Agent v1.15</a></td><td>Updated a reference to resolve an error on Stream Host v4.4+</td></tr></tbody></table>
+<h2 id="common">Common</h2>
+<table><thead><tr><th width="157">Change Type</th><th>Description</th></tr></thead><tbody><tr><td>Fix</td><td><em>I ran the on-prem installers for App Designer and Data Stream Designer using the Installation Profile, but an "invalid_grant" error is thrown.</em><br>This error, introduced with v4.4.7's package upgrades, has been resolved.</td></tr></tbody></table>
+<h2 id="app-designer">App Designer</h2>
+<table><thead><tr><th width="157">Change Type</th><th>Description</th></tr></thead><tbody><tr><td>Enhancement</td><td><a href="../how-tos/manage-landing-pages.html#favorite-a-block">Favorite</a> your commonly used Blocks to access them more easily from a new Block category, Favorites.</td></tr><tr><td>Enhancement</td><td>The Metablock supports <a href="../blocks-toolbox/advanced/metablock.html#value-mapping">Value Mappings</a> so that static, data source of expression values can be passed into the Metablock on page load.</td></tr><tr><td>Fix</td><td><em>I tried splitting my script into 3 and using the new Metablock, but my App is throwing 500 errors for the styling and script files. The single script file works as expected.</em><br>The Metablock handles CSS and JavaScript injection at runtime, so explicit import code isn’t needed and will result in the 500 error. See <a href="../blocks-toolbox/advanced/metablock.html#why-is-the-metablock-throwing-500-errors-related-to-styling-and-script-files">here</a> for more.</td></tr><tr><td>Fix</td><td><em>I created a new expression on my new App. I did something else and when I returned to Page Data, the expression was missing. I tried to add it again, but observed an error that the name was in use.</em><br>The display has been corrected so that newly created expressions remain on the list of data source columns until deleted.</td></tr><tr><td>Fix</td><td><em>I opened Manage Access on my App to grant Design Access to one user, but clicking one user selects them all.</em><br>Clicking an individual user only selects that user and no others.</td></tr><tr><td>Fix</td><td><em>I clicked Edit Templates after adding a new notification to a Recommendation Rule, but clicking one template selects them all.</em><br>Clicking an individual template only selects that one and no others.</td></tr></tbody></table>
+<h2 id="data-stream-designer">Data Stream Designer</h2>
+<table><thead><tr><th width="157">Change Type</th><th>Description</th></tr></thead><tbody><tr><td>Fix</td><td><em>I cannot upload a</em> <a href="../how-tos/agents/manage-agents.html#bulk-adding-agents"><em>bulk agent</em></a> <em>file even though it meets the requirements - the compressed size is 29MB and the pre-compression contents are 90MB.</em><br>The internal API limit was increased to the bulk Agent file limit of 100MB.</td></tr></tbody></table>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: June 19, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

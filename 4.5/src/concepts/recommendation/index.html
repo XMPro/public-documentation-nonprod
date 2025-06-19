@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Recommendation | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Recommendation | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/concepts/recommendation/index.md&amp;version=GB20537-docs-proper-versioning&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="recommendation">Recommendation</h1>
+
+<p>Recommendations enable engineers or employees of an organization to respond to critical events based on expert knowledge in the organization before the opportunity expires, while managers can close the loop by monitoring that it is done in a timely and appropriate manner.</p>
+<p>Recommendation Alerts are advanced alerts that are triggered when a critical event occurs. Alerts get created when real-time data meets the conditions of recommendation rules. The Alerts are then discovered by employees through email or SMS notifications and the monitoring of systems.</p>
+<p>Discussions allow users to message each other about the particular event that triggered the alert. Other people who view the alert can also view those discussions to be up-to-date with any new information. Triage Instructions are instructions given to help whoever is resolving the Recommendation Alert. Custom Forms can also be shown to the user when they view an alert. Users can use the forms to enter relevant information over the course of resolving the Alert.</p>
+<div class="embeddedvideo"><iframe src="https://www.youtube-nocookie.com/embed/Rh9G1qR6X5o?rel=0" frameborder="0" allowfullscreen="true"></iframe></div>
+<p>In practical terms, Recommendations observe live data from a <a href="../data-stream/index.html">Data Stream</a> with a Run Recommendation Agent and evaluate the data against conditions defined in their <a href="rule.html">Rules</a>. If a Rule's condition is met, a <a href="recommendation-alert.html">Recommendation Alert</a> is created from the Rule.</p>
+<p>Recommendations are created and managed in the App Designer. To manage Recommendations, click the Recommendations button in the menu on the left, and then click on the Manage Recommendations button.</p>
+<p><img src="../../images/fig-6-step-1-of-3-where-to-find-open-manage-recommendations.png" alt="Recommendations Menu"></p>
+<p><img src="../../images/manage-recommendations.png" alt="Manage Recommendations"></p>
+<h2 id="finding-recommendations">Finding Recommendations</h2>
+<p>The search bar can be used to find any specific Recommendations that you may be looking for. There is a dropdown option where you can specify to search through everything in App Designer, or only for Recommendations.</p>
+<p><img src="../../images/search-reco-alerts.png" alt="Search Recommendations"></p>
+<h2 id="category">Category</h2>
+<p>Recommendations can be grouped into <a href="../../how-tos/recommendations/manage-categories.html">categories</a>. This refers to the category under which the Recommendation is found in the Recommendations list.</p>
+<h2 id="data-stream">Data Stream</h2>
+<p>This is <a href="../data-stream/index.html">Data Stream</a> from which the Recommendation will receive data from.</p>
+<h2 id="enable-execution-order">Enable Execution Order</h2>
+<p>A flag that determines whether the Rules will be evaluated in ascending order or all at once. <a href="execution-order.html">See the Execution Order article to read more about the Execution Order.</a></p>
+<h2 id="auto-escalate">Auto-Escalate</h2>
+<p>A flag that determines whether an existing pending Recommendation Alert should be resolved and escalated to a newly created Alert. This would occur when new data is received that meets a Rule's Logic further up the Execution Order of the current Recommendation Alert's Rule. <a href="auto-escalate.html">See the Auto-Escalate article to read more about the Auto-Escalate.</a></p>
+<h2 id="rules">Rules</h2>
+<p><a href="rule.html">Rules</a> determine the conditions for creating Recommendation Alerts, and what created alerts should look like.</p>
+<h2 id="variables">Variables</h2>
+<p>Variables are a way to transform the data received from the Data Stream before applying it to the Rule Logic.</p>
+<h2 id="actions-on-the-recommendation">Actions on the Recommendation</h2>
+<table>
+<thead>
+<tr>
+<th><strong>Action</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Save</td>
+<td>Saves any changes made to the Recommendation up to this point.</td>
+</tr>
+<tr>
+<td>Discard</td>
+<td>Discards any changes made to the Recommendation up to this point.</td>
+</tr>
+<tr>
+<td><a href="../../how-tos/publish/index.html">Publish/Unpublish</a></td>
+<td>Publishes or unpublishes the Recommendation, which makes it start listening for data from the Data Stream.</td>
+</tr>
+<tr>
+<td><a href="../manage-access.html">Manage Access</a></td>
+<td>Allows you to manage which users are allowed to view or modify this Recommendation and the Recommendation Alerts created by this Recommendation.</td>
+</tr>
+<tr>
+<td>Timeline</td>
+<td>Upcoming feature.</td>
+</tr>
+<tr>
+<td><a href="../version.html">Versions</a></td>
+<td>Versioning for the Recommendation.</td>
+</tr>
+<tr>
+<td>Delete</td>
+<td>Deletes the Recommendation.</td>
+</tr>
+<tr>
+<td><a href="../../how-tos/import-export-and-clone.html">Clone</a></td>
+<td>Clones the Recommendation as a new Recommendation.</td>
+</tr>
+<tr>
+<td><a href="../../how-tos/import-export-and-clone.html">Export</a></td>
+<td>Export the Recommendation as an encrypted file.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="further-reading">Further Reading</h2>
+<ul>
+<li><a href="../../how-tos/recommendations/manage-recommendations.html">How to Create and Manage Recommendations</a></li>
+<li><a href="../../how-tos/recommendations/manage-variables.html">How to Create and Manage Variables</a></li>
+</ul>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: June 19, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

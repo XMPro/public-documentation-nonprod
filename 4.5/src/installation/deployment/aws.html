@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>AWS | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="AWS | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/deployment/aws.md&amp;version=GB20537-docs-proper-versioning&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="aws">AWS</h1>
+
+<h2 id="architecture">Architecture</h2>
+<p>The following deployment diagram shows an example architecture and the necessary resources for the XMPro platform in AWS.</p>
+<p><img src="../../images/aws-architecture-as-of-march-1-2024x1.png" alt="Fig 1: Example XMPro architecture in AWS"></p>
+<p><em>Fig 1: Example XMPro architecture in AWS</em></p>
+<p>The solution is deployed as an auto-scaling Elastic Beanstalk Application with 3 environments:</p>
+<ul>
+<li>SM – Subscription Manager</li>
+<li>AD – Application Designer</li>
+<li>DS – Data Stream Designer &amp; API</li>
+</ul>
+<p>These environments use Redis for a centralized Cache and RDS for database storage.</p>
+<p>All data transfers are done via HTTPS and the SSL certificates are managed in AWS Certificate Manager.</p>
+<p>There are two accounts set up: one for production and one for non-production. Both of these environments follow the above architecture and deployment.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>In order to proceed with the deployment, you are required to complete the steps in the <strong>1. Preparation</strong> guide:</p>
+<ol>
+<li>Meet the <a href="../install.html#hardware-requirements"><strong>hardware</strong> requirements</a></li>
+<li>Install the <a href="../install.html#software-requirements"><strong>software</strong> requirements</a></li>
+<li>Follow the <a href="../install.html#certificate-and-communication-steps">certificate and communication steps</a></li>
+</ol>
+<div class="NOTE">
+<h5>Note</h5>
+<p><strong>Two SSL Certificates are required</strong></p>
+<ol>
+<li>An SSL Certificate in AWS Certificate Manager, used by IIS (See the <a href="#ssl-certificate-in-certificate-manager">Appendix</a> guide).\</li>
+<li>An SSL Certificate, used by the SM instance (added to the <a href="#create-s3-bucket">S3 Bucket</a> during the installation).<br>
+Create or ask your administrator for an SSL certificate with the correct DNS name. A self-signed certificate is good enough. There are many ways to generate this certificate, one of which is described in the above <a href="../install.html#httpsssl-certificate">1. Preparation</a> guide. Please note the file names <strong>must</strong> be called <strong>ssl.pfx</strong> and <strong>ssl.password.txt</strong>.</li>
+</ol>
+</div>
+<p><strong>Resources</strong></p>
+<p>We are going to be deploying the following resources, please ensure you have the desired domain names ready.</p>
+<ol>
+<li>SQL RDS</li>
+<li>Parameter Store</li>
+<li>Elastic Beanstalk Application</li>
+<li>Elastic Beanstalk Environment – Subscription Manager</li>
+<li>Elastic Beanstalk Environment – App Designer</li>
+<li>Elastic Beanstalk Environment – Data Stream Designer &amp; API</li>
+</ol>
+<p>An example of preferred domain names is as follows; each set is for a specific account as per the architecture diagram.</p>
+<p>For production:</p>
+<ul>
+<li>https://sm-xmpro․<em><strong>domain</strong></em>․com</li>
+<li>https://ad-xmpro․<em><strong>domain</strong></em>․com</li>
+<li>https://ds-xmpro․<em><strong>domain</strong></em>․com</li>
+</ul>
+<p>For non-production:</p>
+<ul>
+<li>https://sm-nonprod-xmpro․<em><strong>domain</strong></em>․com</li>
+<li>https://ad-nonprod-xmpro․<em><strong>domain</strong></em>․com</li>
+<li>https://ds-nonprod-xmpro․<em><strong>domain</strong></em>․com</li>
+</ul>
+<p>Log on to the <a href="https://console.aws.amazon.com/index.md">AWS Management Console</a> and switch to the region you want to deploy the solution in, you will need Administrative rights to the subscription to complete the deployment.</p>
+<h2 id="install">Install</h2>
+<h3 id="elasticache">ElastiCache</h3>
+<p>In the <strong>AWS Management Console</strong>, search for <strong>ElastiCache</strong> and navigate to it</p>
+<ol>
+<li>Click <em>Create</em> (or <em>Get Started Now</em> if visible).</li>
+<li>Select <strong>Redis</strong>, and click <em>Create</em></li>
+<li>Configure Redis Cache:
+<ol>
+<li>Provide a <strong>name</strong> for the cache.</li>
+<li>Select the <strong>node type</strong> based on workload requirements.</li>
+<li>Configure <strong>replication</strong> and p<strong>arameter groups</strong> if needed.</li>
+<li>Leave other Redis options as defaults unless specific tuning is required.</li>
+</ol>
+</li>
+<li>Network Configuration:
+<ol>
+<li>Provide <strong>Subnet</strong> details.</li>
+<li>Select the VPC where Redis will be deployed.</li>
+<li>Ensure <strong>security group settings</strong> allow necessary access.</li>
+</ol>
+</li>
+<li>Finalize Creation:
+<ol>
+<li>Click <em>Create</em> to deploy the Redis cache</li>
+</ol>
+</li>
+<li>Security Group Configuration:
+<ol>
+<li>Navigate to <strong>EC2</strong> in AWS Services.</li>
+<li>Under <strong>Network &amp; Security</strong>, select <strong>Security Groups</strong>.</li>
+<li>Edit the relevant security group and <em>add inbound rule</em> for <strong>Redis Port</strong>
+<br>
+<strong>6379</strong>.</li>
+</ol>
+</li>
+<li>Retrieve Redis Endpoint
+<ol>
+<li>Once the cache is created, locate the Redis endpoint.</li>
+<li>This will be used later in the Redis Connection String.</li>
+</ol>
+</li>
+</ol>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Note:</p>
+<ul>
+<li>SignalR Compatibility:
+<ul>
+<li>Currently, SignalR doesn’t support Redis Clusters (<a href="https://docs.microsoft.com/en-us/aspnet/signalr/overview/performance/scaleout-with-redis">Microsoft Docs</a>)</li>
+<li>Sticky Sessions must be used for SignalR (<a href="https://learn.microsoft.com/en-us/aspnet/core/signalr/scale?view=aspnetcore-6.0">Microsoft Docs</a>)</li>
+</ul>
+</li>
+<li>Security Best Practices:
+<ul>
+<li>Restrict access to Redis only to necessary sources.</li>
+<li>Consider enabling <strong>TLS encryption</strong> for secure communication.</li>
+</ul>
+</li>
+<li>Performance Optimization:
+<ul>
+<li>If scaling is required, consider <strong>Cluster Mode enabled</strong> for Redis (<a href="https://community.aws/content/2sJeZRfAryEvMZK4omV3wzLanR6/setting-up-amazon-elasticache-redis-cluster-using-aws-cdk">AWS
+<br>
+Guide</a>).</li>
+</ul>
+</li>
+</ul>
+</div>
+<h3 id="domain-name-dns-route-53hosting-zones">Domain name DNS (Route 53/Hosting Zones)</h3>
+<ol>
+<li>Log into Your Domain Registrar
+<ol>
+<li>Access the DNS management section for your domain.</li>
+</ol>
+</li>
+<li>Create a CNAME Record (For Subdomains)
+<ol>
+<li>If you're pointing a subdomain (e.g., app.example.com), create a <strong>CNAME</strong>
+<br>
+<strong>record</strong>.</li>
+<li>Set the <strong>CNAME value</strong> to your ALB’s DNS name (e.g., dualstack.albname.region.elb.amazonaws.com).</li>
+</ol>
+</li>
+<li>Create an A Record (For Root Domains, If Supported)
+<ol>
+<li>Some registrars allow <strong>A records</strong> to point to AWS ALBs, but many do not.</li>
+<li>If supported, create an <strong>A record</strong> and set it to the IP address of your ALB
+<br>
+(not always recommended due to dynamic IP changes).</li>
+</ol>
+</li>
+<li>Update Nameservers (If Needed)
+<ol>
+<li>If your registrar requires external DNS management, you may need to
+<br>
+update nameservers to AWS or another provider.</li>
+</ol>
+</li>
+<li>Wait for DNS Propagation
+<ol>
+<li>Changes may take a <strong>few minutes to 24 hours</strong> to fully propagate.</li>
+</ol>
+</li>
+</ol>
+<h4 id="considerations">Considerations</h4>
+<ul>
+<li><strong>CNAME records</strong> work best for ALBs since AWS load balancers don’t have static
+<br>
+IPs.</li>
+<li>If your registrar doesn’t support <strong>CNAME at the root domain</strong>, you may need a
+<br>
+third-party DNS provider like Cloudflare or Route 53.</li>
+</ul>
+<h3 id="amazon-rds-creation">Amazon RDS Creation</h3>
+<p>In the <strong>AWS Management Console</strong> navigate to <strong>Aurora and RDS</strong>.</p>
+<ol>
+<li>In the navigation pane, click <strong>Databases</strong> and then click <em>Create database.</em></li>
+<li>Select <em>Standard create</em>, <em>SQL Server,</em> and the desired <em>Template</em> for the database instance.</li>
+<li>Provide the <em>DB instance Identifier</em>, <em>Username,</em> and <em>Password</em> for the RDS database instance</li>
+<li>Click create.</li>
+<li>Once created, under Connectivity &amp; Security, take note of the DB Identifier created.</li>
+</ol>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Make a note of the following:</p>
+<ul>
+<li><em>Endpoint</em> - for example: <em>aero-sql.cug4m2yk6h94.ap-south-1.rds.amazonaws.com</em></li>
+<li>User - as specified earlier</li>
+<li>Password - as specified earlier</li>
+</ul>
+</div>
+<p>6. The security group will need to be modified to allow inbound traffic this is done as follows:</p>
+<p>6.1. Click the <em>VPC security groups</em>.</p>
+<p><img src="../../images/image-1513.png" alt=""></p>
+<p>6.2. Select the <em>Default</em> security group, click <em>Inbound</em> then click <em>Edit</em>.</p>
+<p><img src="../../images/image-1049.png" alt=""></p>
+<p>6.3. Add a new rule called <strong>MS SQL</strong>, with <em>Protocol</em> as <strong>TCP</strong> and <em>Port Range</em> as <strong>1433</strong>; and click Save.</p>
+<p><img src="../../images/image-689.png" alt=""></p>
+<h3 id="parameter-store-identity-and-access">Parameter Store Identity and Access</h3>
+<p>In the <strong>AWS Management Console</strong> navigate to <strong>IAM</strong>.</p>
+<ol>
+<li>Create a New IAM Policy:
+<ol>
+<li><em>Click</em> <strong>Policies</strong>, then select <em>Create Policy</em>.</li>
+<li>Select <strong>Import managed policy</strong>.</li>
+</ol>
+</li>
+<li>Import a Managed Policy for SSM Access:
+<ol>
+<li>Search for <strong>AmazonSSMManagedInstanceCore</strong> and select it.</li>
+<li>Click <em>Import</em>.</li>
+</ol>
+</li>
+<li>Add Additional Permissions for Parameter Store Access:
+<ol>
+<li>Click <strong>Add additional permission</strong>.</li>
+<li>Choose <strong>Systems Manager</strong> as the service.</li>
+<li>Under <strong>Actions</strong>, select the following Read permissions:
+<ol>
+<li>ssm:GetParameter</li>
+<li>ssm:GetParameters</li>
+<li>ssm:GetParametersByPath</li>
+</ol>
+</li>
+<li>If write access is needed, also select ssm:PutParameter.</li>
+<li>Click <strong>Review Policy</strong>.</li>
+</ol>
+</li>
+<li>Specify Resources to Limit Access Scope:
+<ol>
+<li>Expand <strong>Resources</strong>.</li>
+<li>Instead of selecting <strong>All Resources</strong>, specify exact <strong>ARNs</strong> for the
+<br>
+parameters needing access to ensure least privilege.</li>
+</ol>
+</li>
+<li>Finalize the Policy Creation:
+<ol>
+<li>Enter a <strong>Name</strong> and <strong>Description</strong> for the policy.</li>
+<li>Click <strong>Create Policy</strong>.</li>
+</ol>
+</li>
+<li>Attach the Policy to the Appropriate Role:
+<ol>
+<li>Search for the newly created policy.</li>
+<li>Select it and click <strong>Policy Actions</strong>.</li>
+<li>Choose <strong>Attach</strong> from the dropdown menu.</li>
+<li>Attach the policy to <strong>aws-elasticbeanstalk-service-role</strong> or another
+<br>
+appropriate IAM role.</li>
+<li>Click <strong>Attach Policy</strong>.</li>
+</ol>
+</li>
+</ol>
+<p>By following these refined steps, you ensure that access to AWS Systems Manager
+<br>
+Parameter Store is both controlled and optimized while maintaining security best
+<br>
+practices.</p>
+<h3 id="create-elastic-beanstalk-application">Create Elastic Beanstalk Application</h3>
+<p>The first step in using AWS Elastic Beanstalk is to create an application, which represents your web application in AWS. In Elastic Beanstalk an application serves as a container for the environments that run your web app and for versions of your web app's source code, saved configurations, logs, and other artifacts that you create while using Elastic Beanstalk.</p>
+<ol>
+<li>Open the <strong>Elastic Beanstalk</strong> console, and then, in the <em>regions</em> drop-down list, select your region.</li>
+<li>In the navigation pane, choose <strong>Applications</strong>, and then click <em>Create Application</em>.</li>
+<li>Use the on-screen form to provide an <em>application name</em> and click Create.</li>
+</ol>
+<div class="NOTE">
+<h5>Note</h5>
+<p>You have successfully created the application. Next, we'll create the application's environments for each product: Subscription Manager, Data Stream Designer, and App Designer.</p>
+</div>
+<h2 id="subscription-manager">Subscription Manager</h2>
+<h3 id="create-environment">Create Environment</h3>
+<ol>
+<li>Select the Application, click on Actions then click Create environment.</li>
+<li>Configure environment:
+<ol>
+<li>Select <em>Web server environment</em> as the <em>Environment tier.</em></li>
+<li>Provide the <em>Environment name</em> for Subscription Manager.</li>
+<li>Select <em>.NET on Windows Server</em> and select the supported version.</li>
+<li>Select <em>Sample Application</em> and under <em>Presets</em>, select <em>Custom configuration.</em></li>
+<li>Click <em>Next.</em></li>
+</ol>
+</li>
+<li>Configure service access:
+<ol>
+<li>Configure and click <em>Next.</em></li>
+</ol>
+</li>
+<li>Setup networking, database, and tags - optional:
+<ol>
+<li>Configure and click <em>Next.</em></li>
+</ol>
+</li>
+<li>Configure <em>Instance traffic and scaling:</em>
+<ol>
+<li>For the <em>Capacity</em> section, select <strong>Load Balanced</strong> under Environment Type and set the required Instance Min and Max to <strong>1</strong>. (More information can be found <a href="https://docs.aws.amazon.com/autoscaling/ec2/userguide/asg-capacity-limits.html">here</a>).</li>
+<li>For the <em>Listener</em> Section, add a new listener with the following configure:
+<ol>
+<li>Port: 443</li>
+<li>Protocol: HTTPS</li>
+<li>SSL certificate: Select the SSL certificate you added in the Certificate Manager earlier.</li>
+</ol>
+</li>
+<li>For the <em>Processes</em> Section, select the <em>default</em> Process and under Actions click <em>Edit</em> and update to: 
+<ol>
+<li>Port: 443</li>
+<li>Protocol: HTTPS</li>
+<li>Health check\Path: /favicon.ico</li>
+<li>Sessions\Stickiness policy enabled: True</li>
+</ol>
+</li>
+<li>Click Next</li>
+</ol>
+</li>
+<li>Configure updates, monitoring, and logging – optional:
+<ol>
+<li>Configure and click <em>Next.</em></li>
+</ol>
+</li>
+<li>Review:
+<ol>
+<li>Review the previous configuration and click <em>Submit.</em></li>
+</ol>
+</li>
+<li>While the environment is created, take note of the load balancer created in the logs.
+<ol>
+<li>e.g Created Load Balancer listener named: <br>
+arn:aws:elasticloadbalancing:us-west-1:142725982179:listener/app/awseb-- AWSEB-<br>
+itYC8AXwyswd/a0e5dc6a6ad0a418/fcd8ccc52761bd5d.</li>
+</ol>
+</li>
+</ol>
+<h3 id="hosting-zone-configuration">Hosting Zone Configuration</h3>
+<p>In the AWS Management Console navigate to <strong>Route 53</strong>.</p>
+<ol>
+<li>In the navigation pane, click <strong>Hosted Zones</strong> and find the one created for SM.</li>
+<li>Create a new record with the following configuration.
+<ol>
+<li>Record name: keep blank</li>
+<li>Record type: A – Routes traffic to an IPv4 address and some AWS resources</li>
+<li>Alias: True</li>
+<li>Route trafic to:
+<ol>
+<li>Endpoint: Alias to Application and Classic Load Balancer</li>
+<li>Region: <em>The region of where the Environment was deployed</em>
+<ol>
+<li><em>Now</em> supply the load balance created when Environment was deployed earlier.</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="create-s3-bucket">Create S3 Bucket</h3>
+<h4 id="create-the-s3-bucket">Create the S3 Bucket</h4>
+<p>In the <strong>AWS Management Console</strong>, navigate to <strong>S3</strong></p>
+<ol>
+<li>Click <em><strong>Create Bucket</strong>.</em></li>
+<li>Enter a <strong>unique bucket name</strong> and select your <strong>AWS region</strong>.</li>
+<li>Scroll down to the Block Public Access settings section.</li>
+<li><em>Uncheck</em> &quot;Block all public access&quot; (AWS strongly recommends keeping this
+<br>
+enabled for security reasons).</li>
+<li>Click <strong>Create bucket</strong>.</li>
+</ol>
+<h4 id="configure-public-access">Configure Public Access</h4>
+<ol>
+<li>Open your <strong>newly created bucket</strong>.
+<br>
+2. Go to the <strong>Permissions</strong> tab.
+<br>
+3. Under <strong>Bucket policy</strong>, click <strong>Edit</strong> and enter this policy:
+<ol>
+<li>replace <em>your-bucket-name</em> with your actual bucket name.</li>
+</ol>
+</li>
+</ol>
+<pre><code class="lang-json">{
+    &quot;Version&quot;: &quot;2012-10-17&quot;, 
+    &quot;Statement&quot;: [
+        {
+            &quot;Sid&quot;: &quot;PublicReadGetObject&quot;,
+            &quot;Effect&quot;: &quot;Allow&quot;,
+            &quot;Principal&quot;: &quot;*&quot;,
+            &quot;Action&quot;: &quot;s3:GetObject&quot;,
+            &quot;Resource&quot;: &quot;arn:aws:s3:::your-bucket-name/*&quot;
+        }
+    ]
+}
+</code></pre>
+<ol start="2">
+<li>Click <strong>Save changes</strong>.</li>
+</ol>
+<h4 id="-set-public-object-permissions"> Set Public Object Permissions</h4>
+<ol>
+<li>Navigate to the <strong>Objects</strong> tab inside your bucket.</li>
+<li>Upload a file and select it.</li>
+<li>Click <strong>Permissions</strong> and set <strong>Public access</strong>.</li>
+<li>Confirm changes.</li>
+</ol>
+<p><strong>Security Considerations</strong></p>
+<ul>
+<li>AWS strongly discourages making entire buckets publicly accessible due to
+<br>
+security risks.</li>
+</ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The signing certificate is between the end user and the load balancer. The instance SSL certificate is used between the instances and the load balancer.</p>
+</div>
+<h3 id="install-subscription-manager">Install Subscription Manager</h3>
+<ol>
+<li><p>Run the installation wizard for Subscription Manager.<br>
+\</p>
+<p><img src="../../images/sm.png" alt=""></p>
+</li>
+<li><p>Run the Subscription Manager installer as Administrator.</p>
+</li>
+</ol>
+<p><img src="../../images/image-1797.png" alt=""></p>
+<ol start="3">
+<li>Follow the instruction in the installation wizard: click <em>Next</em>.</li>
+</ol>
+<p><img src="../../images/image-1304.png" alt=""></p>
+<ol start="4">
+<li>Select the Install option (1) and click <em>Next</em> (2).</li>
+</ol>
+<p><img src="../../images/image-410.png" alt=""></p>
+<ol start="5">
+<li>Tick Database (1), Web Application (2), select AWS Package (3), and click Next (4).</li>
+</ol>
+<p><img src="../../images/image-1382.png" alt=""></p>
+<ol start="6">
+<li>Enter the secret store prefix (1), the S3 Bucket name from earlier (2), and click Next (3).</li>
+</ol>
+<p><img src="../../images/image-1260.png" alt=""></p>
+<ol start="7">
+<li>Provide the Database connection details noted in the database creation steps:
+<ol>
+<li>Provide the SQL endpoint (1)</li>
+<li>Change the SQL user to SQL Authentication and provide credentials (2)</li>
+<li>Optional: provide a new DB name or use the one provided (3)</li>
+</ol>
+</li>
+</ol>
+<p><img src="../../images/aws-db.png" alt=""></p>
+<ol start="7">
+<li>Select the installation path (1), the DNS name for the site (2), and click Next (3).</li>
+</ol>
+<p><img src="../../images/image-1642.png" alt=""></p>
+<ol start="9">
+<li>Enter the SMTP details referenced in the <a href="../install.html#smtp-account">1. Preparation</a> guide and click Test SMTP settings (1), If successful, click Next (2).</li>
+</ol>
+<p><img src="../../images/image-1374.png" alt=""></p>
+<ol start="10">
+<li><p>Enter the Signing Certificate details:</p>
+<ol>
+<li>Browse to the certificate created earlier</li>
+<li>Enter the certificate password</li>
+<li>Select the subject name</li>
+<li>Select Local Machine</li>
+<li>Click Next </li>
+</ol>
+<p><img src="../../images/signing-certificate-resized.png" alt=""></p>
+</li>
+<li><p>Enter the Encryption Certificate details</p>
+<ol>
+<li>Browse to the certificate created earlier</li>
+<li>Enter the certificate password</li>
+<li>Select the subject name</li>
+<li>Select Local Machine</li>
+<li>Click Next</li>
+</ol>
+<p><img src="../../images/encryption-certificate-resized.png" alt=""></p>
+</li>
+<li><p>Click Next once the installation has completed.</p>
+</li>
+</ol>
+<p><img src="../../images/image-578.png" alt=""></p>
+<ol start="13">
+<li>Make a note of the Username and password, and click Finish.</li>
+</ol>
+<p><img src="../../images/image-1846.png" alt=""></p>
+<h3 id="parameter-store-configuration">Parameter Store Configuration</h3>
+<p>In the AWS Management Console navigate to <strong>AWS Systems Manager</strong></p>
+<ol>
+<li>In the navigation pane, click <em>Parameter Store</em>, under <em>Application Tools</em></li>
+<li>Click <strong>Create parameter</strong></li>
+<li>Provide the name found in the <strong>App Secrets.xml</strong> file in the <strong>SM AWS Package</strong> previously created</li>
+<li>Set the Type as a SecureString</li>
+<li>For the value, provide the one found in <strong>App Secrets.xml</strong></li>
+<li>Click <em>Create Parameter</em></li>
+<li>Repeat for all values in the file</li>
+</ol>
+<h3 id="preparing-ssl-certificate-files-for-s3-deployment">Preparing SSL Certificate Files for S3 Deployment</h3>
+<ol>
+<li>Browse to the folder where SM was installed.</li>
+<li>Find the S3 Deployment Folder inside SM.</li>
+<li>Duplicate the Certificate Files
+<ol>
+<li>Make a copy of the <code>sign.pfx</code> file and rename it to <code>ssl.pfx</code>.</li>
+<li>Make a copy of the <code>sign.password.txt</code> file and rename it to <code>ssl.password.txt</code>.</li>
+</ol>
+</li>
+<li>Upload both <code>ssl.pfx</code> and <code>ssl.password.txt</code> to the S3 bucket you created earlier.</li>
+</ol>
+<h3 id="deploy-the-subscription-manager">Deploy the Subscription Manager</h3>
+<p>Navigate back to <strong>Elastic Beanstalk</strong> and open the <strong>Environment</strong> page</p>
+<ol>
+<li>Click and navigate to the SM Environment you created earlier</li>
+<li>Click <em>Upload and deploy</em> </li>
+<li>Use the on-screen form to upload the zip file found in the <strong>SM AWS Package</strong>.</li>
+<li>Update the Version label if needed and click <strong>Deploy</strong></li>
+<li>Navigate to the URL and log in using the following credentials:
+<ol>
+<li>admin@xmpro․onxmpro․com</li>
+<li>Pass@word1</li>
+</ol>
+</li>
+</ol>
+<p><img src="../../images/image-1505.png" alt=""></p>
+<p>6. Reset the administrator password and store it securely in a password vault.</p>
+<p>7. Click SM.</p>
+<p><img src="../../images/sm1.png" alt=""></p>
+<p>8. Click Products in the menu and click the Installation Profile button</p>
+<p><img src="../../images/sm2.png" alt=""></p>
+<ol start="9">
+<li>Enter a File Key and press OK to download the file</li>
+</ol>
+<p><img src="../../images/sm3.png" alt=""></p>
+<h2 id="data-stream-designer">Data Stream Designer</h2>
+<h3 id="create-environment-1">Create Environment</h3>
+<p>In the AWS Management Console, navigate to <strong>Elastic Beanstalk</strong>.</p>
+<ol>
+<li>In the navigation pane, choose <em>Applications</em></li>
+<li>Select the previously created application, expand <em>Actions</em> and choose <em>Create environment.</em></li>
+<li>Follow the same instructions on environment creation as done for the Subscription Manager.
+<ol>
+<li>Including the <a href="#hosting-zone-configuration" title="mention">#hosting-zone-configuration</a> section after the <strong>Load Balancer</strong> is created</li>
+</ol>
+</li>
+</ol>
+<h3 id="install--data-stream-designer">Install  Data Stream Designer</h3>
+<ol>
+<li><p>Run the installation wizard for Data Stream Designer.<br>
+\</p>
+<p><img src="../../images/ds.png" alt=""></p>
+</li>
+<li><p>Run the Data Stream Designer installer as Administrator. </p>
+<p><img src="../../images/image-907.png" alt=""></p>
+</li>
+<li><p>Follow the instruction in the installation wizard: click <em>Next</em>. </p>
+<p><img src="../../images/image-74.png" alt=""></p>
+</li>
+<li><p>Select Install (1) and click Next (2).</p>
+</li>
+</ol>
+<p><img src="../../images/image-314.png" alt=""></p>
+<ol start="3">
+<li>Select the items as shown below and click Next.</li>
+</ol>
+<p><img src="../../images/image-925.png" alt=""></p>
+<ol start="4">
+<li>Provide a Prefix and the S3 Bucket name</li>
+</ol>
+<p><img src="../../images/image-1286.png" alt=""></p>
+<ol start="5">
+<li>Provide the Database Details noted in the database creation steps:
+<ol>
+<li>Provide the SQL endpoint</li>
+<li>Change the SQL user to SQL Authentication and provide credentials</li>
+<li>Optional: provide a new DB name or use the one provided</li>
+</ol>
+</li>
+</ol>
+<p><img src="../../images/image-846.png" alt=""></p>
+<ol start="6">
+<li>Select the installation path (1), the DNS name for the site (2), and click Next (3).</li>
+</ol>
+<p><img src="../../images/image-1446.png" alt=""></p>
+<ol start="7">
+<li>Browse to the downloaded installation profile and select it</li>
+</ol>
+<p><img src="../../images/image-1210.png" alt=""></p>
+<ol start="8">
+<li>Login using the credentials for SM</li>
+</ol>
+<p><img src="../../images/image-1200.png" alt=""></p>
+<ol start="9">
+<li>Click Next</li>
+</ol>
+<p><img src="../../images/image-852.png" alt=""></p>
+<ol start="10">
+<li>Once the installation completes, click Next</li>
+</ol>
+<p><img src="../../images/image-140.png" alt=""></p>
+<ol start="11">
+<li>Click Finish</li>
+</ol>
+<p><img src="../../images/image-696.png" alt=""></p>
+<h3 id="deploy-data-stream-designer">Deploy Data Stream Designer</h3>
+<ol>
+<li>Repeat same steps as SM for the <a href="#parameter-store-configuration">Parameter Store Configuration</a></li>
+<li>Repeat steps 1 - 4 as SM for <a href="#deploy-the-subscription-manager">Deploy the Subscription Manager</a></li>
+</ol>
+<h2 id="app-designer">App Designer</h2>
+<h3 id="create-environment-2">Create Environment</h3>
+<p>In the AWS Management Console, navigate to <strong>Elastic Beanstalk.</strong></p>
+<ol>
+<li>In the navigation pane, choose <em>Applications</em></li>
+<li>Select the previously created application, expand Actions and choose Create environment.</li>
+<li>Follow the same instructions on environment creation as done for the Subscription Manager.
+<ol>
+<li>Including the <a href="#hosting-zone-configuration" title="mention">#hosting-zone-configuration</a> section after the <strong>Load Balancer</strong> is created</li>
+</ol>
+</li>
+</ol>
+<h3 id="install-app-designer">Install App Designer</h3>
+<ol>
+<li><p>Run the installation wizard for App Designer.<br>
+\</p>
+<p><img src="../../images/ad.png" alt=""></p>
+</li>
+<li><p>Run the App Designer installer as Administrator. \</p>
+<p><img src="../../images/image-222.png" alt=""></p>
+</li>
+<li><p>Follow the instruction in the installation wizard: click <em>Next</em>.</p>
+</li>
+</ol>
+<p><img src="../../images/image-1694.png" alt=""></p>
+<ol start="2">
+<li><p>Select Install and click Next.\</p>
+<p><img src="../../images/aws-ad-install-1.png" alt=""></p>
+</li>
+<li><p>Select the items as below and click Next.</p>
+</li>
+</ol>
+<p><img src="../../images/image-1700.png" alt=""></p>
+<ol start="4">
+<li>Provide a Prefix and the S3 Bucket name</li>
+</ol>
+<p><img src="../../images/ad-s3bucket.png" alt=""></p>
+<ol start="4">
+<li>Provide the Database connection details noted in the database creation steps:
+<ol>
+<li>Provide the SQL endpoint</li>
+<li>Change the SQL user to SQL Authentication and provide credentials</li>
+<li>Optional: provide a new DB name or use the one provided</li>
+</ol>
+</li>
+</ol>
+<p><img src="../../images/image-8-2.png" alt=""></p>
+<ol start="6">
+<li>Select the installation path (1), the DNS name for the site (2), and click Next (3).</li>
+</ol>
+<p><img src="../../images/image-1749.png" alt=""></p>
+<ol start="7">
+<li>Provide the URL for the Data Stream Designer installed earlier, and click Next.</li>
+</ol>
+<p><img src="../../images/image-320.png" alt=""></p>
+<ol start="8">
+<li>Enter the SMTP details referenced in the <a href="../install.html#smtp-account">1. Preparation</a> guide and click Next.</li>
+</ol>
+<p><img src="../../images/image-374.png" alt=""></p>
+<ol start="9">
+<li>Enter the Twilio details referenced in the <a href="../install.html#twilio-account-optional">1. Preparation</a> guide and click Next. If you don't want SMS notifications you can select &quot;None&quot; from the &quot;Select Provider&quot; dropdown.</li>
+</ol>
+<p><img src="../../images/image-1532.png" alt=""></p>
+<ol start="10">
+<li>Browse to the downloaded installation profile and select it. Click Next.</li>
+</ol>
+<p><img src="../../images/image-406.png" alt=""></p>
+<ol start="11">
+<li>Login with SM credentials to authenticate.</li>
+</ol>
+<p><img src="../../images/image-1835.png" alt=""></p>
+<ol start="12">
+<li>Click Next.</li>
+</ol>
+<p><img src="../../images/image-962.png" alt=""></p>
+<ol start="13">
+<li>Click Next after the installation is complete.</li>
+</ol>
+<p><img src="../../images/image-385.png" alt=""></p>
+<ol start="14">
+<li>Click Finish.</li>
+</ol>
+<p><img src="../../images/image-210.png" alt=""></p>
+<h3 id="deploy-app-designer">Deploy App Designer</h3>
+<ol>
+<li>Repeat same steps as SM for the <a href="#parameter-store-configuration">Parameter Store Configuration</a></li>
+<li>Repeat steps 1 - 4 as SM for <a href="#deploy-the-subscription-manager">Deploy the Subscription Manager</a></li>
+</ol>
+<p><em>See troubleshooting if failed deployment</em></p>
+<h4 id="troubleshooting">Troubleshooting</h4>
+<p>If the zip file created exceeds AWS 500mb upload limit, then the following steps can be taken:</p>
+<ol>
+<li>Open the unzipped file of the AWS Package</li>
+<li>Navigate to the following path, Package\ClientApp\dist</li>
+<li>Delete additional language packs that are not required.</li>
+<li>Navigate back to within the Package folder</li>
+<li>Select all files within the folder and create a new Package.zip</li>
+<li>Confirm size is less than the limit and redeploy with the new zip.</li>
+</ol>
+<h2 id="upgrade">Upgrade</h2>
+<p>The following steps relate to upgrading an existing AWS deployment</p>
+<h3 id="uninstall-existing-wizards">Uninstall Existing Wizards</h3>
+<p>This only applies if the machine used to generate the AWS package has older versions of the wizard installed.</p>
+<ol>
+<li><p>From the start menu select one of the XMPro Products and right-click it.</p>
+</li>
+<li><p>Click Uninstall.</p>
+</li>
+<li><p>Select XMPro Subscription Manager from the list of programs displayed.</p>
+</li>
+<li><p>Click Uninstall.</p>
+</li>
+<li><p>When prompted to confirm uninstall click Yes.</p>
+</li>
+<li><p>Click Next<br>
+\</p>
+<p><img src="../../images/image-1196.png" alt=""></p>
+</li>
+<li><p>When prompted to select the install to modify click Cancel. <br>
+<strong>We do not want to remove the installed XMPro site, only the installer.</strong><br>
+\</p>
+<p><img src="../../images/image-1195.png" alt=""></p>
+</li>
+<li><p>Repeat for all the installers.</p>
+</li>
+</ol>
+<h3 id="create-a-snapshot">Create a Snapshot</h3>
+<p>In AWS Console navigate to <strong>Aurora and RDS</strong></p>
+<ol>
+<li>In the navigation pane, click <em>Databases</em></li>
+<li>Select the existing instance, expand <em>Actions</em> and click <em>Take snapshot</em></li>
+<li>Provide a <em>Snapshot name</em> and click <em>Take snapshot.</em></li>
+</ol>
+<h3 id="subscription-manager-1">Subscription Manager</h3>
+<h4 id="aws-package-creation">AWS Package Creation</h4>
+<ol>
+<li><p>Run the installation wizard for Subscription Manager.<br>
+\</p>
+<p><img src="../../images/sm.png" alt=""></p>
+</li>
+<li><p>Run Subscription manager as Administrator. \</p>
+<p><img src="../../images/image-1797.png" alt=""></p>
+</li>
+<li><p>Follow the instruction in the installation wizard: click Next. \</p>
+<p><img src="../../images/image-1304.png" alt=""></p>
+</li>
+<li><p>Select the Install option (1) and click Next (2).</p>
+<ol>
+<li><p><em><strong>Do not select Upgrade</strong></em> \</p>
+<p><img src="../../images/image-410.png" alt=""></p>
+</li>
+</ol>
+</li>
+<li><p>Tick Web Application(1), select AWS Package (2), and click Next (3)</p>
+<ol>
+<li><em><strong>Exclude the Database component</strong></em>  \</li>
+</ol>
+<p><img src="../../images/aws-db-1.png" alt=""></p>
+</li>
+<li><p>Enter the secret store prefix (1), the S3 Bucket name from earlier (2), and click Next (3) \</p>
+<p><img src="../../images/image-1260.png" alt=""></p>
+</li>
+<li><p>Provide the Database connection details noted in the database creation steps:</p>
+<ol>
+<li>Provide the SQL endpoint (1)</li>
+<li>Change the SQL user to SQL Authentication and provide credentials (2)</li>
+<li>Select existing SM database created earlier (3)</li>
+<li>Click Next (4)\</li>
+</ol>
+<p><img src="../../images/db-config-1.png" alt=""></p>
+</li>
+<li><p>Select the installation path (1), the DNS name for the site (2), and click Next (3). \</p>
+<p><img src="../../images/image-1642.png" alt=""></p>
+</li>
+<li><p>Enter the SMTP details referenced in the <a href="../install.html#smtp-account">1. Preparation</a> guide and click Test SMTP settings (1), If successful, click Next (2). \</p>
+<p><img src="../../images/image-1374.png" alt=""></p>
+</li>
+<li><p>Enter the Signing Certificate details:</p>
+<ol>
+<li>Browse to the certificate created earlier</li>
+<li>Enter the certificate password</li>
+<li>Select the subject name</li>
+<li>Select Local Machine</li>
+<li>Click Next \</li>
+</ol>
+<p><img src="../../images/signing-certificate-resized.png" alt=""></p>
+</li>
+<li><p>Enter the Encryption Certificate details</p>
+<ol>
+<li>Browse to the certificate created earlier</li>
+<li>Enter the certificate password</li>
+<li>Select the subject name</li>
+<li>Select Local Machine</li>
+<li>Click Next\</li>
+</ol>
+<p><img src="../../images/encryption-certificate-resized.png" alt=""></p>
+</li>
+<li><p>Click Next once the installation has completed. \</p>
+<p><img src="../../images/image-578.png" alt=""></p>
+</li>
+<li><p>Click Finish \</p>
+<p><img src="../../images/image-1846.png" alt=""></p>
+</li>
+</ol>
+<h4 id="deploy-subscription-manager">Deploy Subscription Manager</h4>
+<p>Navigate back to <strong>Elastic Beanstalk</strong> and open the <strong>Environment</strong> page</p>
+<ol>
+<li>Click and navigate to the SM Environment you created earlier</li>
+<li>Click <em>Upload and deploy</em> </li>
+<li>Use the on-screen form to upload the zip file found in the <strong>SM AWS Package</strong>.</li>
+<li>Update the Version label if needed and click <strong>Deploy</strong></li>
+</ol>
+<h4 id="troubleshooting-1">Troubleshooting</h4>
+<p>If deployment fails due to locked SM log files, follow these steps:</p>
+<ol>
+<li>Open the configuration of the Subscription Manager environment</li>
+<li>Click and navigate to <em>Service access</em>.</li>
+<li>Add <strong>EC2 key pair</strong> and click <em>Apply</em></li>
+<li>Wait for the environment to complete auto-healing - the load balancer will automatically start a new app service.</li>
+<li>In AWS Console, navigate to <strong>EC2</strong> and click <em>Instances</em> in the navigation pane</li>
+<li>Observe the Environment may appear twice, select the one with a <em>Running</em> for its <em>Instance state</em>.
+<ol>
+<li>as mentioned in Step 4, the duplicate is because of the termination.</li>
+</ol>
+</li>
+<li>Click the RDP client tab and click <em>Download remote desktop file</em></li>
+<li>Now click <em>Get password</em></li>
+<li>On the <em>Get Windows password</em> page
+<ol>
+<li>Upload a private key file paired with that EC2 Key pair</li>
+<li>Click <em>Decrypt password</em></li>
+</ol>
+</li>
+<li>Now copy the now visible password, where <em>Get password</em> was previously</li>
+<li>Connect to the service using the downloaded RDP file</li>
+<li>Open IIS, and click <em>Stop</em> on the server level</li>
+<li>Repeat Deployment steps (IIS will restart after deployment)</li>
+</ol>
+<h3 id="data-stream-designer-1">Data Stream Designer</h3>
+<h4 id="aws-package-creation-1">AWS Package Creation</h4>
+<ol>
+<li><p>Run the installation wizard for Data Stream Designer.\</p>
+<p><img src="../../images/ds.png" alt=""></p>
+</li>
+<li><p>Run Data Stream Designer as Administrator.\</p>
+<p>![</p>
+<p><img src="../../images/image-907.png" alt=""></p>
+</li>
+<li><p>Follow the instruction in the installation wizard: click Next.  \</p>
+<p><img src="../../images/image-74.png" alt=""></p>
+</li>
+<li><p>Select the Install option (1) and click Next (2).</p>
+<ol>
+<li><em><strong>Do not select Upgrade</strong></em>\</li>
+</ol>
+<p><img src="../../images/image-314.png" alt=""></p>
+</li>
+<li><p>Tick Web Application(1), select AWS Package (2), and click Next (3)</p>
+<ol>
+<li><em><strong>Exclude the Database component</strong></em> </li>
+<li>Also, Leave Configure Subscription Manager </li>
+</ol>
+<p><img src="../../images/aws-upgrade-ds-db.png" alt=""></p>
+</li>
+<li><p>Enter the secret store prefix (1), the S3 Bucket name from earlier (2), and click Next (3).  \</p>
+<p><img src="../../images/image-1286.png" alt=""></p>
+</li>
+<li><p>Select the installation path (1), the DNS name for the site (2), and click Next (3). \</p>
+<p><img src="../../images/aws-upgrade-package-dns.png" alt=""></p>
+</li>
+<li><p>Click Next once the installation has completed. \</p>
+<p><img src="../../images/image-140.png" alt=""></p>
+</li>
+<li><p>Click Finish \</p>
+<p><img src="../../images/ds-installation-finish.png" alt=""></p>
+</li>
+</ol>
+<h4 id="deploy-data-stream-designer-1">Deploy Data Stream Designer</h4>
+<p>Navigate back to <strong>Elastic Beanstalk</strong> and open the <strong>Environment</strong> page</p>
+<ol>
+<li>Click and navigate to the DS Environment you created earlier</li>
+<li>Click <em>Upload and deploy</em> </li>
+<li>Use the on-screen form to upload the zip file found in the <strong>DS AWS Package</strong>.</li>
+<li>Update the Version label if needed and click <strong>Deploy</strong></li>
+</ol>
+<h3 id="app-designer-1">App Designer</h3>
+<h4 id="aws-package-creation-2">AWS Package Creation</h4>
+<ol>
+<li><p>Run the installation wizard for App Designer.<br>
+\</p>
+<p><img src="../../images/ad.png" alt=""></p>
+</li>
+<li><p>Run the App Designer installer as Administrator. \</p>
+<p><img src="../../images/image-222.png" alt=""></p>
+</li>
+<li><p>Follow the instruction in the installation wizard: click Next.\</p>
+<p><img src="../../images/image-1694.png" alt=""></p>
+</li>
+<li><p>Select the Install option (1) and click Next (2).</p>
+<ol>
+<li><p><em><strong>Do not select Upgrade</strong></em>\</p>
+<p><img src="../../images/aws-ad-install-1.png" alt=""></p>
+</li>
+</ol>
+</li>
+<li><p>Tick Web Application(1), select AWS Package (2), and click Next (3)</p>
+<ol>
+<li><em><strong>Exclude the Database component and</strong></em>** Configure Subscription Manager**</li>
+</ol>
+<p><img src="../../images/aws-ad-options.png" alt=""></p>
+</li>
+<li><p>Enter the secret store prefix (1), the S3 Bucket name from earlier (2), and click Next (3).\</p>
+<p><img src="../../images/ad-s3bucket.png" alt=""></p>
+</li>
+<li><p>Select the installation path (1), the DNS name for the site (2), and click Next (3).\</p>
+<p><img src="../../images/ad-upgrade-pathdns.png" alt=""></p>
+</li>
+<li><p>Enter the SMTP details referenced in the <a href="../install.html#smtp-account">1. Preparation</a> guide and click Test SMTP settings (1), If successful, click Next (2).\</p>
+<p><img src="../../images/image-374.png" alt=""></p>
+</li>
+<li><p>Enter the Twilio details referenced in the <a href="../install.html#twilio-account-optional">1. Preparation</a> guide and click Next. If you don't want SMS notifications you can select &quot;None&quot; from the &quot;Select Provider&quot; dropdown.\</p>
+<p><img src="../../images/image-1532.png" alt=""></p>
+</li>
+<li><p>Click Next once the installation has completed.\</p>
+<p><img src="../../images/image-385.png" alt=""></p>
+</li>
+<li><p>Click Finish.\</p>
+</li>
+</ol>
+<p><img src="../../images/installation-finish-ad.png" alt=""></p>
+<h4 id="deploy-app-designer-1">Deploy App Designer</h4>
+<p>Navigate back to <strong>Elastic Beanstalk</strong> and open the <strong>Environment</strong> page</p>
+<ol>
+<li>Click and navigate to the AD Environment you created earlier</li>
+<li>Click <em>Upload and deploy</em> </li>
+<li>Use the on-screen form to upload the zip file found in the <strong>AD AWS Package</strong>.</li>
+<li>Update the Version label if needed and click <strong>Deploy</strong></li>
+</ol>
+<p><a href="#troubleshooting" title="mention">#troubleshooting</a></p>
+<h2 id="appendix">Appendix</h2>
+<h3 id="ssl-certificate-in-certificate-manager">SSL certificate in Certificate Manager</h3>
+<p>In the AWS console go to the Certificate Manager</p>
+<ul>
+<li>Select the region the SSL Certificate is required in</li>
+<li>The certificate can be either imported or a new certificate can be requested.</li>
+</ul>
+<h4 id="to-request-a-new-certificate">To request a new certificate</h4>
+<p>z-1.png)</p>
+<ol>
+<li>Click <em><strong>Get started</strong></em> under Provision Certificate</li>
+</ol>
+<p>{-1.png)</p>
+<p>2. Click <em><strong>Request a certificate</strong></em></p>
+<p><img src="../../images/66.png" alt=""></p>
+<p>3. Enter the certificate domain name and click <em><strong>Next</strong></em></p>
+<p><img src="../../images/67.png" alt=""></p>
+<p>4. Select the DNS validation method and click <em><strong>Next</strong></em></p>
+<p><img src="../../images/68-1.png" alt=""></p>
+<p>5. Review your settings and click <em><strong>Confirm and request</strong></em> if correct</p>
+<p><img src="../../images/69-1.png" alt=""></p>
+<p>6. Once the DNS configuration file becomes available, click <em><strong>Continue</strong></em></p>
+<p><img src="../../images/70-1.png" alt=""></p>
+<p>7. Contact your IT administrator to complete the DNS verification by adding the CNAME record to your website DNS</p>
+<p><img src="../../images/71.png" alt=""></p>
+<p>8. Once the DNS verification is complete the SSL certificate is added to your certificate manager for the specified region</p>
+<h4 id="to-import-a-certificate">To import a certificate</h4>
+<p><img src="../../images/72-1.png" alt=""></p>
+<ol>
+<li>Click <em><strong>Get started</strong></em> under Provision Certificate</li>
+</ol>
+<p><img src="../../images/73-1.png" alt=""></p>
+<p>2. Click <em><strong>Import a certificate</strong></em></p>
+<p><img src="../../images/74.png" alt=""></p>
+<p>3. Complete the certificate detail and click <em><strong>Next</strong></em> to import the certificate</p>
+<h3 id="create-the-eb-application-urls">Create the EB Application URLs</h3>
+<ol>
+<li>Search for <strong>ElastiCache</strong> in the <em><strong>Services</strong></em> dropdown and select it.</li>
+</ol>
+<p><img src="../../images/75.png" alt=""></p>
+<p>2. In the left-hand panel, click <em>Hosted Zones.</em></p>
+<p><img src="../../images/76.png" alt=""></p>
+<p>3. Click <em>Create Hosted Zone.</em></p>
+<p><img src="../../images/77-1.png" alt=""></p>
+<ol>
+<li>In the right-hand panel complete the <em>Domain Name</em> using the domain name you created the SSL certificate for and click <em>Create</em>.</li>
+</ol>
+<p><img src="../../images/78-1.png" alt=""></p>
+<p>5. Click <em>Create Record Set.</em></p>
+<p><img src="../../images/79.png" alt=""></p>
+<p>6. Change <em>Alias</em> to <em><strong>Yes</strong></em>, then go to EC2 in AWS services and scroll down to Load Balancing and click Load Balancers.</p>
+<p><img src="../../images/80.png" alt=""></p>
+<p>7. Select a Load Balancer and click <em>Tags</em> to identify what Application is serviced by the selected Load Balancer.</p>
+<p><img src="../../images/81.png" alt=""></p>
+<p>8. When the correct Load Balancer for the Application is identified, click the <em>Description</em> Tab.</p>
+<p><img src="../../images/82-1.png" alt=""></p>
+<p>9. Copy the <em>DNS Name</em> for the Load Balancer. Go back to the Record Set you created in Route 53.</p>
+<p><img src="../../images/83-1.png" alt=""></p>
+<p>10. Paste the Load Balancer DNS address in the Alias Target field and click Create.</p>
+<p>This needs to be completed for each ELB Application.</p>
+<p><img src="../../images/84-1.png" alt=""></p>
+<p>11. The NS values must be provided to you by the DNS Administrator to create the NS records in the Domain DNS records. This needs to be completed for each ELB Application.</p>
+<h3 id="configure-the-security-groups">Configure the security groups</h3>
+<ol>
+<li>In the AWS Management Console, choose <strong>EC2</strong> under <em>Compute</em> in the <em><strong>Services</strong></em> drop-down.</li>
+<li>Click <em>Security Groups</em> under the NETWORK &amp; SECURITY option.</li>
+</ol>
+<p><img src="../../images/85-1.png" alt=""></p>
+<p>3. Click <em>Create security group.</em></p>
+<p><img src="../../images/86-1.png" alt=""></p>
+<p>4. Create the <em><strong>RDS_security_group</strong></em> and select the <em>VPC</em>.</p>
+<p><img src="../../images/87-1.png" alt=""></p>
+<p>5. Add the following rules and replace the source with the security groups assigned to the environments you created earlier.</p>
+<p>6. Create an additional security group called <em><strong>REDIS_Cache_security_group.</strong></em></p>
+<p><img src="../../images/88-1.png" alt=""></p>
+<p>7. Add these rules again using the security groups for the environments created earlier as the source.</p>
+<p><img src="../../images/89-1.png" alt=""></p>
+<p>8. In Elastic Beanstalk, select the environment you want to change.</p>
+<p><img src="../../images/90-1.png" alt=""></p>
+<p>9. Click Configuration in the left pane</p>
+<p><img src="../../images/91.png" alt=""></p>
+<p>10. Remove the <em>default</em> security group and click <em>Apply.</em> Do this for all the environments.</p>
+<p><img src="../../images/92.png" alt=""></p>
+<p>11. In Services, selects <em><strong>RDS</strong></em> and click <em>Databases.</em></p>
+<p><img src="../../images/93-1.png" alt=""></p>
+<p>12. Select your RDS database and click <em>Modify.</em></p>
+<p><img src="../../images/94.png" alt=""></p>
+<p>13. Scroll down to <em>Network and Security</em>. Select the RDS security group you created earlier and remove the <em>default</em> security group.</p>
+<p><img src="../../images/95.png" alt=""></p>
+<p>14. Scroll down and click <em>Continue.</em></p>
+<p><img src="../../images/96-1.png" alt=""></p>
+<p>15. Select <em><strong>Apply Immediately</strong></em> and click <em>Modify DB Instance.</em></p>
+<p><img src="../../images/97-1.png" alt=""></p>
+<p>16. Select <em><strong>ElastCache</strong></em> from <em>Services</em> and click <strong>Redis.</strong></p>
+<p><img src="../../images/98.png" alt=""></p>
+<p>17. Select the Redis Cache you created earlier and from <em>Actions</em> click <em><strong>Modify.</strong></em></p>
+<p><img src="../../images/99.png" alt=""></p>
+<p>18. Edit the Security Groups</p>
+<p><img src="../../images/100-1.png" alt=""></p>
+<p>19. Remove the default security groups and add the Redis Cache security group created earlier. Click save and modify.</p>
+<h2 id="next-step-complete-installation">Next Step: Complete Installation</h2>
+<p>The installation of the XMPro Platform is now complete, but there are some environment setup steps before you can use the platform. Please click the below link for further instructions:</p>
+<p><a href="../complete-installation/index.html">complete-installation</a></p>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: June 19, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

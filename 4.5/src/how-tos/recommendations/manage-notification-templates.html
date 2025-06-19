@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Manage Notification Templates | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Manage Notification Templates | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/how-tos/recommendations/manage-notification-templates.md&amp;version=GB20537-docs-proper-versioning&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="manage-notification-templates">Manage Notification Templates</h1>
+
+<p>When a <a href="../../concepts/recommendation/recommendation-alert.html">Recommendation Alert</a> is triggered by a critical event, the user can receive a notification via text message or email. The notification contains a message that notifies the user of the Recommendation Alert. You can choose to create a custom message template for when a notification is triggered, or use a default template provided.</p>
+<p>{% hint style=&quot;info&quot; %}
+It is recommended that you read the articles listed below to improve your understanding of Recommendations:</p>
+<ul>
+<li><a href="../../concepts/recommendation/notification.html">Notification</a></li>
+<li><a href="manage-notifications.html">Manage Notifications</a>
+{% endhint %}</li>
+</ul>
+<h2 id="add-a-recommendation-notification-template">Add a Recommendation Notification Template</h2>
+<p>To change what message template is used when users are notified to a Recommendation Alert, follow the steps below:</p>
+<ol>
+<li>Click on Manage Recommendations.</li>
+</ol>
+<p><img src="../../images/template1.png" alt="template1.png"></p>
+<p>2. Click on a Recommendation.<br>
+3. Select a Rule.<br>
+4. Scroll down and select a Notification.</p>
+<p><img src="../../images/template2.png" alt="template2.png"></p>
+<p>5. Select a Notification channel (Email or SMS).<br>
+6. Click on Edit Templates.<br>
+7. Choose from the list of notification templates.<br>
+8. Choose between Default or Custom.<br>
+9. Press Save.</p>
+<p><img src="../../images/notifications1.png" alt="notifications1.png"></p>
+<h2 id="add-custom-html-templates-for-email">Add Custom HTML Templates for Email</h2>
+<p>By default, each notification template is set to 'default'. You can add a custom email template instead that includes different styling. The HTML file can also include placeholders for certain data that you would like to show on the notification.</p>
+<p>Here is an example of an HTML Template file:</p>
+<p><a href="../../files/recommendation-notification-template.zip">Download Recommendation Notification Template</a></p>
+<p>To upload a custom email template, follow the steps below:</p>
+<p>1. Click on Edit Templates on any selected notification.<br>
+2. Choose from the list of notification templates for Email.<br>
+3. Choose Custom.</p>
+<p><img src="../../images/time-pending-configuration.png" alt="notifications2.png"></p>
+<p>4. Upload an HTML template file. <br>
+5. If you have any custom placeholders, select the values that will be in those fields.<br>
+6. Press Save.</p>
+<p>{% hint style=&quot;info&quot; %}
+Add capitalized placeholders for data within the HTML file between curly bracket symbols. For example, {{ALERTID}}.
+{% endhint %}</p>
+<p><img src="../../images/reworknotiftemplates1.png" alt="ReworkNotifTemplates1.png"></p>
+<p>{% hint style=&quot;info&quot; %}
+This list of predefined placeholders can be used in the template without mapping:</p>
+<ul>
+<li>ALERTID</li>
+<li>HREF</li>
+<li>TITLE</li>
+<li>DESCRIPTION</li>
+<li>NOTE</li>
+<li>PENDINGTIME</li>
+<li>RULENAME</li>
+<li>RECNAME (Recommendation Name)
+{% endhint %}</li>
+</ul>
+<p>Click the link to see a preview of the email.</p>
+<p><img src="../../images/reworknotiftemplates2.png" alt="ReworkNotifTemplates2.png"></p>
+<h2 id="custom-templates-for-sms">Custom Templates for SMS</h2>
+<p>By default, each notification template is set to 'default'. To use a custom SMS template instead, follow the steps below:</p>
+<p>1. Click on Edit Templates on any selected notification.<br>
+2. Choose from the list of notification templates for SMS.<br>
+3. Choose Custom.<br>
+4. Enter a custom notification message.<br>
+5. Press Save.</p>
+<p>{% hint style=&quot;info&quot; %}
+Use the '@' symbol to choose tags from your Data Stream.
+{% endhint %}</p>
+<p><img src="../../images/notifications5.png" alt="notifications5.png"></p>
+<p><img src="../../images/notifications6.png" alt="notifications6.png"></p>
+<h2 id="examples">Examples</h2>
+<h3 id="default-template-example">Default Template Example</h3>
+<p>If ‘Default’ is selected, a default notification message will be sent to your email address or mobile. This is an example of an email notification using a Default Template:</p>
+<p><img src="../../images/template5.png" alt="template5.png"></p>
+<h3 id="custom-template-example">Custom Template Example</h3>
+<p>This is an example of an email notification using a Custom Template:</p>
+<p><img src="../../images/template6.png" alt="template6.png"></p>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: June 19, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

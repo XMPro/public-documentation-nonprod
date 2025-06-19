@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Menu | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Menu | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/blocks-toolbox/layout/menu.md&amp;version=GB20537-docs-proper-versioning&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="menu">Menu</h1>
+
+<p>A Menu is a list of options, commands, or pages presented to the user that they can select. This can be used for navigation purposes, such as separating the app or page into sections that the user can be directed to.</p>
+<p><img src="../../images/image-395.png" alt="Menu"></p>
+<h2 id="adding-menu-items">Adding Menu Items</h2>
+<p>Once a Menu Block has been added to the screen, menu items can be added by using the Items property under <em>Behavior</em> in <em>Block Properties</em>. A separate area will open that will allow you to add items to your Menu. Here you can specify the text that will display on the link, and the page the app will navigate to when the user clicks on the link.</p>
+<p><img src="../../images/image-1471.png" alt="Adding menu items"></p>
+<p>To edit an item, click the item on the grid, and edit mode will be enabled.</p>
+<p>Menu items can be reordered and moved inside to create a submenu by clicking the left icon and dragging it into position.</p>
+<video autoplay loop muted playsinline style="max-width: 100%; height: auto;">
+  <source src="../../images/menu-submenu.mp4" type="video/mp4">
+</video>
+<h2 id="menu-properties">Menu Properties</h2>
+<h3 id="appearance">Appearance</h3>
+<h4 id="common-properties">Common Properties</h4>
+<p>The menu has properties that are common to most Blocks: <em>visibility</em> and <em>tooltips</em>,</p>
+<p><a href="../common-properties.html#appearance">See the Common Properties article for more details on common appearance properties.</a></p>
+<p>Options that are specific to the Menu include <em>collapse when space is limited</em>, <em>orientation</em>, and <em>submenu direction</em>.</p>
+<h4 id="collapse-when-space-is-limited">Collapse When Space is Limited</h4>
+<p>If the width of the menu is longer than the screen, it will collapse. Applies only if the <a href="menu.html#orientation">orientation </a>is &quot;horizontal&quot;.</p>
+<p><img src="../../images/menu-collapse.gif" alt="Collapse when space is limited"></p>
+<h4 id="orientation">Orientation</h4>
+<p><img src="../../images/image-450.png" alt="Orientation property"></p>
+<p><img src="../../images/image-845.png" alt="Menu orientation example"></p>
+<h3 id="behavior">Behavior</h3>
+<h4 id="common-properties-1">Common Properties</h4>
+<p>The <em>disabled</em> property is common to most Blocks;</p>
+<p><a href="../common-properties.html#behavior">See the Common Properties article for more details on common behavior properties.</a></p>
+<h4 id="items">Items</h4>
+<p>The Items section is used to configure the menu items. If Menu is left unconfigured, by default it will display all the pages of the app.</p>
+<h4 id="hide-submenu-on-mouse-leave">Hide Submenu on Mouse Leave</h4>
+<p><em>Hide submenu on mouse leave</em> is when we have a submenu and if this option is enabled it will collapse the menu, otherwise, a click is required to close the menu.</p>
+<p><img src="../../images/menu-hide-on-mouse-leave.gif" alt="Hide submenu on mouse leave"></p>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: June 19, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

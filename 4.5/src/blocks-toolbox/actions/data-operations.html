@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Data Operations | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Data Operations | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/blocks-toolbox/actions/data-operations.md&amp;version=GB20537-docs-proper-versioning&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="data-operations">Data Operations</h1>
+
+<p>A Data Operation Block is a button with additional functionality that allows you to Insert or Delete records from a <a href="../layout/box-and-data-repeater-box.html">Data Repeater Block</a> that is bound to a Data Source.</p>
+<h2 id="data-operation-properties">Data Operation Properties</h2>
+<h3 id="appearance">Appearance</h3>
+<h4 id="common-properties">Common Properties</h4>
+<p>Properties that are common to most Blocks include <em>Visibility, Styling Mode, Tooltip, and Icon.</em> The <em>Styling Mode, Tooltip, and Icon</em> properties are only available for the Data Operations Block if the <em>Display Mode</em> property is set to 'Button';</p>
+<p><a href="../common-properties.html#appearance">See the Common Properties article for more details on common appearance properties.</a></p>
+<h4 id="text">Text</h4>
+<p>The text that shows on top of the Button.</p>
+<p><img src="../../images/blocks-toolbox/actions/data-operations-text.png" alt="Data Operations text property"></p>
+<p>If the Display Mode is set to 'Hyperlink', the default text will either be 'Add' or 'Delete', depending on what Mode is selected under Behaviors.</p>
+<p><img src="../../images/blocks-toolbox/actions/data-operations-hyperlink.png" alt="Data Operations hyperlink display mode"></p>
+<h4 id="display-mode">Display Mode</h4>
+<p>The Display Mode of a Data Operations Block can either be a Button or a Hyperlink.</p>
+<p><img src="../../images/blocks-toolbox/actions/data-operations-display-mode.png" alt="Data Operations display mode options"></p>
+<p>By default, the Block is configured with either an 'Add' or 'Delete' icon if the 'Button' Display Mode is selected.</p>
+<p><img src="../../images/blocks-toolbox/actions/data-operations-icon.png" alt="Data Operations icon"></p>
+<h4 id="type">Type</h4>
+<p>The type of the button can be changed depending on its purpose. Options include Danger, Normal, Success, and Default. This is only available if the Display Mode property is set to 'Button'.</p>
+<p><img src="../../images/blocks-toolbox/actions/button-type.png" alt="Button type options"></p>
+<h3 id="behavior">Behavior</h3>
+<h4 id="common-properties-1">Common Properties</h4>
+<p>The <em>Disabled</em> property is common to most Blocks. The <em>Disabled</em> property is only available for the Data Operations Block if the <em>Display Mode</em> property is set to 'Button';</p>
+<p><a href="../common-properties.html#behavior">See the Common Properties article for more details on common behavior properties.</a></p>
+<h4 id="mode">Mode</h4>
+<p>There are two modes that you can choose from: Insert and Delete. The Mode determines what operation will be performed on the Data Source and records.</p>
+<p>'Insert' will add a new row to the list:</p>
+<p><img src="../../images/blocks-toolbox/actions/data-operations-insert.gif" alt="Data Operations insert mode demonstration"></p>
+<p>'Delete' will delete a record from the list:</p>
+<p><img src="../../images/blocks-toolbox/actions/data-operations-delete.gif" alt="Data Operations delete mode demonstration"></p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>When a record is inserted or deleted, it does not immediately update the Data Source. To do this, you will need to add a regular Button with 'Update Data Sources' selected.</p>
+<p><a href="../common-properties.html#action">See the Common Properties article for more details on common action properties.</a></p>
+</div>
+<h4 id="data-source">Data Source</h4>
+<p>The Data Source that you would like to add a new record to. This is only available if the Mode property is set to 'Insert'.</p>
+<p>If the Mode property is set to 'Insert', the Data Source property is required for the Data Operations Block.</p>
+<h4 id="enable-focus">Enable Focus</h4>
+<p>This determines if the user can navigate to the Button by using the keyboard. This includes using the tab button to switch between text boxes on a form, and then clicking the tab button at the end to highlight and select the Button. Buttons will also be focused on when you click on them. If a Button is clicked, and no action occurs, the Button will also remain in focus.</p>
+<p>This is only available if the Display Mode property is set to 'Button'.</p>
+<p><img src="../../images/blocks-toolbox/actions/button-enable-focus.gif" alt="Button enable focus demonstration"></p>
+<p><img src="../../images/blocks-toolbox/actions/data-operations-enable-focus-false.gif" alt="Button with enable focus set to false"></p>
+<h4 id="show-confirmation-dialog">Show Confirmation Dialog</h4>
+<p>This can either be set to 'True' or 'False'. If True, a dialog box will appear asking the user if they are sure they want to delete that particular record.</p>
+<p>This is only available if the Mode property is set to 'Delete'.</p>
+<p><img src="../../images/blocks-toolbox/actions/data-operations-confirm-dialog.png" alt="Data Operations confirmation dialog"></p>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: June 19, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
