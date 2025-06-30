@@ -89,21 +89,81 @@
 
 <p>Find answers to some of the most frequently asked configuration questions.</p>
 <h2 id="app-designer">App Designer</h2>
+<h3 id="what-should-i-do-when-my-sql-stored-procedure-exceeds-the-30-second-timeout">What should I do when my SQL stored procedure exceeds the 30-second timeout?</h3>
+<p>It is not possible to change the 30-second timeout limit. First optimize your stored procedure with the help of a tool like Claude. If it still times out, use this asynchronous approach with Data Streams to ensure users don't wait:</p>
+<ol>
+<li><strong>Create a Queue Table</strong></li>
+</ol>
+<pre><code class="lang-sql">CREATE TABLE StoredProcQueue (
+  ID BIGINT IDENTITY(1,1) PRIMARY KEY,
+  Parameters NVARCHAR(MAX),
+  Status TINYINT NOT NULL DEFAULT 0, -- 0=Pending, 1=Processing, 2=Completed, 3=Failed
+  CreatedDate DATETIME2 DEFAULT GETDATE(),
+  CompletedDate DATETIME2 NULL
+);
+
+-- Critical indexes for performance
+CREATE INDEX IX_StoredProcQueue_Status_Created
+ON StoredProcQueue (Status, CreatedDate)
+WHERE Status IN (0,1); -- Only index active records
+
+CREATE INDEX IX_StoredProcQueue_Cleanup
+ON StoredProcQueue (Status, CompletedDate)
+WHERE Status IN (2,3); -- For cleanup operations
+</code></pre>
+<ol start="2">
+<li><p>Modify Your App's <strong>button action to insert a record</strong> into the queue table with input parameters</p>
+</li>
+<li><p><strong>Create a Data Stream</strong></p>
+<ul>
+<li>a. <strong>SQL Listener Agent</strong> to trigger the data stream when new records are inserted into <code>StoredProcQueue</code></li>
+<li>b. <strong>SQL Action Agent</strong> to execute your stored procedure using the parameters from the queue record, with an appropriate execution timeout.</li>
+</ul>
+</li>
+<li><p>Optionally, <strong>update the queue record status</strong> when processing completes. Your App can query the table to display progress to users.</p>
+</li>
+</ol>
+<h4 id="further-reading">Further Reading</h4>
+<ul>
+<li><a href="https://xmpro.gitbook.io/sql-server">SQL Server Listener and Action Agents</a></li>
+</ul>
+<h3 id="how-do-i-pass-selected-grid-rows-to-a-stored-procedure">How do I pass selected grid rows to a stored procedure?</h3>
+<p>You can accomplish this by linking the grid's selection to a variable, then using that variable as input to your stored procedure. Follow these steps:</p>
+<ol>
+<li><p><strong>Create</strong> a <strong>String Variable</strong> <code>SelectedWorkOrderIDs</code> to store the comma-delimited list of selected primary key values</p>
+</li>
+<li><p><strong>Configure</strong> the <strong>Data Grid</strong> to <strong>allow multiple selection</strong> and bind the <strong>Value</strong> property to <code>Variables &gt; SelectedWorkOrderIDs</code> so that the variable is automatically updated when a user selects/deselects rows</p>
+</li>
+<li><p><strong>Add</strong> a <strong>Box</strong> to hold the button. <strong>Connect</strong> the <strong>Data Source</strong> to your <strong>stored procedure</strong> and <strong>bind the stored procedure input parameter</strong> to the variable using &quot;Dynamic Properties&quot;.</p>
+</li>
+<li><p><strong>Add</strong> a <strong>Button</strong> within the Box. Set the <strong>Action</strong> to <strong>Refresh Data Source</strong> (the parent Box's stored procedure), so that when clicked it will execute the stored procedure with the selected primary key values as input.</p>
+</li>
+</ol>
+<h4 id="important-considerations">Important Considerations</h4>
+<ul>
+<li>To avoid errors when the button executes on page load or when clicked without any orders selected, ensure the stored procedure handles null or empty string parameters gracefully.</li>
+<li>You could return a value from the stored procedure, e.g. status message.</li>
+<li>If your stored procedure takes longer than 30 seconds to execute, see <a href="configuration.html#what-should-i-do-when-my-sql-stored-procedure-exceeds-the-30-second-timeout">What should I do when my SQL stored procedure exceeds the 30-second timeout?</a></li>
+</ul>
+<h4 id="further-reading-1">Further Reading</h4>
+<ul>
+<li><a href="../../blocks-toolbox/basic/data-grid.html#behavior">Data Grid Properties</a></li>
+<li><a href="../../concepts/application/variables-and-expressions.html#variables">Page Variables</a></li>
+</ul>
+<h3 id="why-cant-i-de-select-3000-rows-in-my-data-grid-i-have-enabled-paging-and-multi-select">Why can't I de-select 3000+ rows in my Data Grid? I have enabled paging and multi-select.</h3>
+<p>You are likely using the <a href="../../blocks-toolbox/basic/data-grid.html#allow-multiple-selection">Multiple Selection Mode</a> &quot;All Pages&quot; option - which will have difficulty with such dataset over 200 records. Rather use &quot;Pages&quot; option, which selects and de-selects rows on the current page, removing performance issues regardless of the size of your dataset.</p>
+<p>If you need cross-page selection, evaluate whether filtering could reduce your dataset before selection. Or perhaps you could include a &quot;Process All&quot; button.</p>
 <h3 id="how-do-i-rotate-text-in-app-designer">How do I rotate text in App Designer?</h3>
 <p>In the video below, we demonstrate how to rotate text -90 degrees around the z-axis using block styling's transform option.</p>
 <div class="video-container">
     <iframe width="560" height="315" src="https://www.youtube.com/embed/3eQHzy5nAy0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
-<h4 id="further-reading">Further Reading</h4>
-<ul>
-<li><a href="../../concepts/application/block-styling.html#extra-advanced-styling">Block Styling - Extra</a></li>
-</ul>
 <h3 id="how-do-i-export-grid-data-from-my-app-to-microsoft-excel">How do I export Grid Data from my App to Microsoft Excel?</h3>
 <p>In the video below, we demonstrate how to toggle on your Data Grid's export button so that at runtime the grid contents can be exported to Excel.</p>
 <div class="video-container">
     <iframe width="560" height="315" src="https://www.youtube.com/embed/KrUothBHQVg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
-<h4 id="further-reading-1">Further Reading</h4>
+<h4 id="further-reading-2">Further Reading</h4>
 <ul>
 <li><a href="../../blocks-toolbox/basic/data-grid.html#allow-export-to-excel">Data Grid Properties - Allow Export To Excel</a></li>
 </ul>
@@ -115,12 +175,24 @@
 <li>When the browser display language is set to English (United States), the format will be MM/DD/YYYY.</li>
 </ul>
 <p>You should adjust your browser's display language settings - rather than your computer's local settings - to change the date format in XMPro.</p>
+<h3 id="ive-added-a-new-recommendation---why-cant-i-see-the-triggered-alerts-in-the-recommendation-grid-view">I've added a new recommendation - why can't I see the triggered alerts in the recommendation grid view?</h3>
+<p>You, as the owner of the recommendation, will not see the recommendation alerts unless you give yourself Run Access to your own recommendations.</p>
+<ul>
+<li><a href="../../concepts/manage-access.html#manage-run-access">How to manage run access</a></li>
+</ul>
+<h3 id="how-do-i-drill-down-with-data-from-a-chart">How do I drill down with data from a chart?</h3>
+<p>You can achieve this by combining navigating between pages and passing data to the Page by configuring the Pass Page Parameters. The data passed can be static, an expression, or dynamic. Please refer to the how-to article below for step-by-step instructions.</p>
+<h4 id="further-reading-3">Further Reading</h4>
+<ul>
+<li><a href="../../concepts/application/navigation-and-parameters.html">Navigation and parameters</a></li>
+<li><a href="../../how-tos/apps/pass-parameters-between-pages.html#passing-dynamic-data-to-the-page">How to pass dynamic data to the page</a></li>
+</ul>
 <h2 id="data-stream-designer">Data Stream Designer</h2>
 <h3 id="can-i-use-an-older-version-of-an-agent-in-a-data-stream">Can I use an older version of an Agent in a Data Stream?</h3>
 <p><em>&quot;I'm copying the same pattern used in another Data Stream and I want to use the same version of a specific Agent (v2.7) when a newer version is available (v2.8).&quot;</em></p>
 <p>No, using an older version of an Agent when a newer version is available is not possible. The latest Agent should incorporate all of the functionalities of the previous version as well as any further modifications made.</p>
 <p>However, you could clone the original Data Stream and choose not to upgrade the Agent to the latest version.</p>
-<h4 id="further-reading-2">Further Reading</h4>
+<h4 id="further-reading-4">Further Reading</h4>
 <ul>
 <li><a href="../../how-tos/import-export-and-clone.html#cloning">Cloning</a></li>
 <li><a href="../../how-tos/data-streams/upgrade-a-stream-object-version.html#upgrading-agents">Upgrade a Stream Object Version</a></li>
@@ -130,7 +202,7 @@
 <div class="video-container">
     <iframe width="560" height="315" src="https://www.youtube.com/embed/_HYBmBCug2I" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
-<h4 id="further-reading-3">Further Reading</h4>
+<h4 id="further-reading-5">Further Reading</h4>
 <ul>
 <li><a href="../../how-tos/stream-host.html">Stream Host Logs</a></li>
 <li><a href="../../how-tos/data-streams/check-data-stream-logs.html">How to check Data Stream Logs</a></li>
@@ -149,23 +221,10 @@
 <p><img src="../../images/resources/faqs/faq-run-recommendation.png" alt="Run Recommendation"></p>
 <h3 id="my-data-stream-connector-can-do-everything-why-use-the-other-connectors">My Data Stream Connector can do everything. Why use the other Connectors?</h3>
 <p>Although a wide variety of data can be surfaced from a Data Stream into your Application using the Data Stream Connector, there is a downside. The Data Stream is constantly pushing data, which can lead to out-of-resource errors - which appear as XMPro product errors. If your data requirement is ad-hoc, consider the other Connectors.</p>
-<h4 id="further-reading-4">Further Reading</h4>
+<h4 id="further-reading-6">Further Reading</h4>
 <ul>
 <li><a href="../../concepts/application/data-integration.html#app-designer-connector">List of App Designer Connectors</a></li>
 <li><a href="../../concepts/connector.html">Connector</a></li>
-</ul>
-<h3 id="ive-added-a-new-recommendation---why-cant-i-see-the-triggered-alerts-in-the-recommendation-grid-view">I've added a new recommendation - why can't I see the triggered alerts in the recommendation grid view?</h3>
-<p>You, as the owner of the recommendation, will not see the recommendation alerts unless you give yourself <em>Run Access</em> to your own recommendations.</p>
-<h4 id="further-reading-5">Further Reading</h4>
-<ul>
-<li><a href="../../concepts/manage-access.html#manage-run-access">How to manage run access</a></li>
-</ul>
-<h3 id="how-do-i-drill-down-with-data-from-a-chart">How do I drill down with data from a chart?</h3>
-<p>You can achieve this by combining navigating between pages and passing data to the Page by configuring the Pass Page Parameters. The data passed can be static, an expression, or dynamic. Please refer to the how-to article below for step-by-step instructions.</p>
-<h4 id="further-reading-6">Further Reading</h4>
-<ul>
-<li><a href="../../concepts/application/navigation-and-parameters.html">Navigation and parameters</a></li>
-<li><a href="../../how-tos/apps/pass-parameters-between-pages.html#passing-dynamic-data-to-the-page">How to pass dynamic data to the page</a></li>
 </ul>
 <h3 id="how-do-i-set-up-stream-host-variablesprovide-unique-asset-configuration">How do I set up Stream Host Variables/provide unique Asset configuration?</h3>
 <p>Although each Stream Host in a given Collection downloads the same definition of a Data Stream, the <a href="../../how-tos/manage-variables.html">Variables</a> defined in Data Stream Designer can be overridden by the individual Stream Host to provide the unique configuration per Asset e.g. OPC IP Address. Please refer to the how-to articles below for step-by-step instructions.</p>
@@ -193,7 +252,7 @@
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: June 19, 2025</em></small></p>
+    <p><small><em>Last modified: June 30, 2025</em></small></p>
   </div>
 </article>
 
