@@ -5017,6 +5017,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "src/how-tos/apps/navigate-between-apps.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/how-tos/apps/navigate-between-apps.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "src/how-tos/apps/navigate-between-pages.md",
       "output": {
         ".html": {
@@ -7841,6 +7851,16 @@
       "output": {
         "resource": {
           "relative_path": "src/images/apps/navigation/nav-9.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/images/apps/navigation/navigate-apps-copy-link.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/apps/navigation/navigate-apps-copy-link.png"
         }
       },
       "version": ""
@@ -20611,6 +20631,36 @@
       "output": {
         "resource": {
           "relative_path": "src/images/release-notes/v4.4.10-free-trial-fix.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/images/remote-collection-config-1.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/remote-collection-config-1.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/images/remote-collection-config-2.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/remote-collection-config-2.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/images/remote-collection-config-3.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/remote-collection-config-3.png"
         }
       },
       "version": ""
