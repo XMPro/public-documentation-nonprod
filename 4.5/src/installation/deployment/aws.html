@@ -491,6 +491,27 @@ security risks.</li>
 <p>The signing certificate is between the end user and the load balancer. The instance SSL certificate is used between the instances and the load balancer.</p>
 </div>
 <h3 id="install-subscription-manager">Install Subscription Manager</h3>
+<div class="NOTE">
+<h5>Note</h5>
+<p><strong>Where to Obtain XMPro Installers</strong></p>
+<p>XMPro installers are available through:</p>
+<ul>
+<li>Your XMPro account manager</li>
+<li>XMPro support team via the <a href="http://xmpro.com/support/">support portal</a></li>
+<li>Customer portal (if you have access)</li>
+</ul>
+<p>Contact <a href="http://xmpro.com/support/">XMPro support</a> if you need assistance obtaining the installation files.</p>
+</div>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p><strong>Installer Execution Requirements</strong></p>
+<p>The installer must be executed on a machine that has:</p>
+<ul>
+<li>Network access to the RDS (AWS database) server instance</li>
+<li>Appropriate security groups configured to allow database connections</li>
+<li>Administrative privileges on the target machine</li>
+</ul>
+</div>
 <ol>
 <li><p>Run the installation wizard for Subscription Manager.<br>
 \</p>
@@ -529,6 +550,16 @@ security risks.</li>
 <ol start="7">
 <li>Select the installation path (1), the DNS name for the site (2), and click Next (3).</li>
 </ol>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p><strong>DNS Name Format</strong></p>
+<p>Enter only the DNS name without the protocol prefix. Do NOT include &quot;https://&quot; in the DNS name field.</p>
+<ul>
+<li>✅ Correct: <code>example.xmpro.com</code></li>
+<li>❌ Incorrect: <code>https://example.xmpro.com</code></li>
+</ul>
+<p>Including &quot;https://&quot; will cause validation errors during installation.</p>
+</div>
 <p><img src="../../images/image-1642.png" alt=""></p>
 <ol start="9">
 <li>Enter the SMTP details referenced in the <a href="../install.html#smtp-account">1. Preparation</a> guide and click Test SMTP settings (1), If successful, click Next (2).</li>
@@ -1061,7 +1092,7 @@ security risks.</li>
 <p>3. Complete the certificate detail and click <em><strong>Next</strong></em> to import the certificate</p>
 <h3 id="create-the-eb-application-urls">Create the EB Application URLs</h3>
 <ol>
-<li>Search for <strong>ElastiCache</strong> in the <em><strong>Services</strong></em> dropdown and select it.</li>
+<li>Search for <strong>Route 53</strong> in the <em><strong>Services</strong></em> dropdown and select it.</li>
 </ol>
 <p><img src="../../images/75.png" alt=""></p>
 <p>2. In the left-hand panel, click <em>Hosted Zones.</em></p>
