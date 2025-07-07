@@ -172,28 +172,55 @@ openssl pkcs12 -export -out sign.pfx -inkey sign.key -in sign.crt -certfile sign
 <h4 id="creating-self-signed-certificate-through-powershell">Creating Self-Signed Certificate through PowerShell</h4>
 <p>If you need to create a self-signed certificate, open Windows PowerShell as administrator and follow the instructions below:</p>
 <ol>
-<li>Run the New-SelfSignedCertificate cmdlet as shown below to add a certificate to the local store on your PC, replacing the fully qualified domain name (FQDN).</li>
+<li>Create SSL certificate with proper extensions, replacing &quot;yourdomain.com&quot; with your actual domain:</li>
 </ol>
-<pre><code class="lang-powershell">$cert = New-SelfSignedCertificate -certstorelocation cert:\localmachine\my -dnsname &lt;FQDN&gt;
+<pre><code class="lang-powershell"># Create SSL certificate with proper extensions
+$cert = New-SelfSignedCertificate `
+    -Subject &quot;CN=yourdomain.com&quot; `
+    -DnsName @(&quot;yourdomain.com&quot;, &quot;www.yourdomain.com&quot;, &quot;localhost&quot;) `
+    -KeyLength 4096 `
+    -KeyAlgorithm RSA `
+    -HashAlgorithm SHA256 `
+    -KeyExportPolicy Exportable `
+    -KeyUsage DigitalSignature, KeyEncipherment `
+    -TextExtension @(&quot;2.5.29.37={text}1.3.6.1.5.5.7.3.1,1.3.6.1.5.5.7.3.2&quot;) `
+    -NotAfter (Get-Date).AddYears(1)
 </code></pre>
 <ol start="2">
-<li>Create a password as shown below, used for the export in the following step.</li>
+<li>Export to PFX with a strong password:</li>
 </ol>
-<pre><code>$pwd = ConvertTo-SecureString -String 'Enter Strong Password' -Force -AsPlainText
+<pre><code class="lang-powershell"># Export to PFX
+$password = ConvertTo-SecureString -String &quot;YourStrongPassword&quot; -Force -AsPlainText
+Export-PfxCertificate -Cert $cert -FilePath &quot;c:\ssl-cert.pfx&quot; -Password $password
 </code></pre>
 <ol start="3">
-<li>Export the self-signed certificate using the Export-PfxCertificate cmdlet as shown below.</li>
+<li>Clean up the certificate from the local store (optional):</li>
 </ol>
-<pre><code>$path = 'cert:\localMachine\my\' + $cert.thumbprint 
-Export-PfxCertificate -cert $path -FilePath c:\cert.pfx -Password $pwd
+<pre><code class="lang-powershell"># Clean up
+Remove-Item -Path &quot;Cert:\LocalMachine\My\$($cert.Thumbprint)&quot;
 </code></pre>
 <div class="NOTE">
 <h5>Note</h5>
-<p>The directory you specify in step 3's <code>-FilePath</code> parameter must already exist.</p>
+<p>The directory you specify in step 2's <code>-FilePath</code> parameter must already exist.</p>
 </div>
 <ol start="4">
 <li>Create a txt file with the name <em>cert.password.txt</em> and add the certificate password to this file.</li>
 </ol>
+<div class="WARNING">
+<h5>Warning</h5>
+<p><strong>Troubleshooting Self-Signed Certificate Issues</strong></p>
+<p>If the Subscription Manager installer reports certificate validation errors with PowerShell-generated certificates:</p>
+<ol>
+<li><strong>Enhanced Security Parameters</strong>: The updated certificate command includes improved security settings (4096-bit RSA, SHA256 hash, proper key usage) that resolve most compatibility issues with the SM installer.</li>
+<li><strong>Extended Key Usage</strong>: The certificate includes both Server Authentication (<code>1.3.6.1.5.5.7.3.1</code>) and Client Authentication (<code>1.3.6.1.5.5.7.3.2</code>) extensions as shown in the command above.</li>
+<li><strong>Certificate Validation</strong>: Verify the certificate was created correctly by running:
+<pre><code class="lang-powershell">Get-ChildItem -Path cert:\LocalMachine\My | Where-Object {$_.Subject -like &quot;*yourdomain.com*&quot;}
+</code></pre>
+</li>
+<li><strong>File Permissions</strong>: Ensure the exported <code>.pfx</code> file and <code>.password.txt</code> file have appropriate read permissions.</li>
+<li><strong>Certificate Store</strong>: If you didn't run the cleanup command in step 3, the certificate will remain in the LocalMachine\My store, which is normal and expected.</li>
+</ol>
+</div>
 <h4 id="creating-self-signed-certificate-through-iis">Creating Self-Signed Certificate through IIS</h4>
 <p>The self-signed certificate can also be generated through IIS, following the instructions below:</p>
 <ol>
@@ -232,7 +259,7 @@ Export-PfxCertificate -cert $path -FilePath c:\cert.pfx -Password $pwd
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: June 30, 2025</em></small></p>
+    <p><small><em>Last modified: July 07, 2025</em></small></p>
   </div>
 </article>
 

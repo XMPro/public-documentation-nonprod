@@ -94,9 +94,10 @@
 <p><strong>Alert Scoring</strong> is an alternate fine-tuning of the alert ranking by specific factors such as recommendation, category, rule, and an optional value from the Data Stream.</p>
 <p>By allowing the author to assign a calculated score to an Alert instead of a ranking, you can have even more detailed control over its importance level.</p>
 <p>This Score also helps the alert recipient to understand its relative importance.</p>
-<p>{% hint style=&quot;info&quot; %}
-Authors still have the option to use Alert Ranking instead of Alert Scoring if they prefer.
-{% endhint %}</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Authors still have the option to use Alert Ranking instead of Alert Scoring if they prefer.</p>
+</div>
 <h2 id="how-is-the-scoring-calculated">How is the scoring calculated?</h2>
 <p>This feature allows recommendation authors to assign numerical values (1-10) to various aspects during configuration. These values are then multiplied, resulting in an alert score.</p>
 <pre><code>score = recommendation factor * category factor * rule factor * optional factor
@@ -132,9 +133,10 @@ Authors still have the option to use Alert Ranking instead of Alert Scoring if t
 <p><img src="../../images/fig-6-step-1-of-3-where-to-find-open-manage-recommendations.png" alt="Fig 6. Step 1 of 3 - Where to find &quot;Open Manage Recommendations&quot;"></p>
 <p><img src="../../images/fig-7-step-2-of-3-where-to-find-and-step-3-of-3-where-to-find-score-factor-matrix.png" alt="Fig 7. Step 2 of 3 - Where to find &quot;...&quot; and Step 3 of 3 - Where to find &quot;Score Factor Matrix&quot;"></p>
 <p><img src="../../images/fig-8-score-factor-matrix.png" alt="Fig 8. Score Factor Matrix"></p>
-<p>{% hint style=&quot;info&quot; %}
-This table only shows an estimate as the Optional Factor of the Recommendation could not be determined until the Alert is generated.
-{% endhint %}</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>This table only shows an estimate as the Optional Factor of the Recommendation could not be determined until the Alert is generated.</p>
+</div>
 <h2 id="viewing-the-score-factor-history-on-a-timeline">Viewing the Score Factor history on a timeline</h2>
 <p>The changes made on a Score Factor Recommendation can be viewed on a timeline in the following areas:</p>
 <ul>
@@ -149,7 +151,7 @@ This table only shows an estimate as the Optional Factor of the Recommendation c
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: June 30, 2025</em></small></p>
+    <p><small><em>Last modified: July 07, 2025</em></small></p>
   </div>
 </article>
 
