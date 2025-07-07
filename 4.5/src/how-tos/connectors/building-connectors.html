@@ -102,9 +102,10 @@
 <li>Database</li>
 </ul>
 <p>Each of these settings should be referenced in the code and must correspond to the settings template created when <a href="packaging-connectors.html">packaging your Connector</a>.</p>
-<p>{% hint style=&quot;info&quot; %}
-A template is a JSON representation of all the controls and their layout that will be used to capture the settings from a user.
-{% endhint %}</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>A template is a JSON representation of all the controls and their layout that will be used to capture the settings from a user.</p>
+</div>
 <p>An example of the settings template (generated using the <a href="https://www.microsoft.com/en-au/p/xmpro-package-manager/9n3f4wnslgzk">XMPro Package Manager</a>) is shown in the image below. The settings in this example consist of the following controls:</p>
 <ul>
 <li>Group (Server)</li>
@@ -119,9 +120,10 @@ A template is a JSON representation of all the controls and their layout that wi
 <pre><code class="lang-csharp">string mySetting = parameters[&quot;myUniqueKey&quot;];
 </code></pre>
 <p>Before a template is rendered on the screen, or if a postback occurs on any control in the template, the method below would be called to allow the Connector an opportunity to make any necessary runtime changes to the template, for example, verifying user credentials, displaying all tables of a selected database in a drop-down list, etc. In this example, no changes are being made to the template, but they can be added to the <em><strong>todo</strong></em> section if needed.</p>
-<p>{% hint style=&quot;info&quot; %}
-For a postback to occur after a user navigates out of a setting field, the <em>Postback</em> property needs to be set to <em>true</em> when packaging the Connector.
-{% endhint %}</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>For a postback to occur after a user navigates out of a setting field, the <em>Postback</em> property needs to be set to <em>true</em> when packaging the Connector.</p>
+</div>
 <pre><code class="lang-csharp">public string GetConfigurationTemplate(string template, IDictionary&lt;string, string&gt; parameters)
 {
 
@@ -142,30 +144,27 @@ return settings.ToString();
 <p>This method returns a collection of Entities, which represent an object or a function of the Connector. For example, an Entity can be a Table within the configured Database in the SQL Connector.</p>
 <p>Each Entity contains the following:</p>
 <table><thead><tr><th width="285">Name</th><th>Description</th><th data-hidden></th></tr></thead><tbody><tr><td>EntityId</td><td>A unique identifier for the Entity.</td><td></td></tr><tr><td>Name</td><td>The name of the entity.</td><td></td></tr><tr><td>IsLive</td><td>Indicate if the Entity supports Live Updates.</td><td></td></tr><tr><td>Operations</td><td><p>The operations which the Entity supports.</p><ul><li><a href="#read">Read</a></li><li><a href="#insert">Insert</a></li><li><a href="#update">Update</a></li><li><a href="#delete">Delete</a></li></ul></td><td></td></tr></tbody></table>
-<p>{% code overflow=&quot;wrap&quot; %}</p>
 <pre><code class="lang-csharp">new Entity(&quot;OpenRecommendation&quot;) { IsLive = True, Name = &quot;Open Recommendation&quot;, Operations = Operation.Read };
 </code></pre>
-<p>{% endcode %}</p>
 <h3 id="entity-properties">Entity Properties</h3>
 <p>The Connector must provide a list of the Entity's properties, which describe its key, output schema, and optional inputs. To achieve this, implement the following method:</p>
 <pre><code class="lang-csharp">public Entity GetEntity(string entityId, IDictionary&lt;string, string&gt; parameters)
 </code></pre>
 <p>This method returns the Entity with a collection of properties for the selected Entity's entityId, which is passed as a parameter to this method.</p>
 <p>Most properties will be Output properties, which describe the Entity's data, and are indicated by setting <strong>key</strong> and <strong>isParameter</strong> to <strong>false</strong>. For example, this String property named <em>OutputString:</em></p>
-<p>{% code overflow=&quot;wrap&quot; %}</p>
 <pre><code class="lang-csharp">new Property(&quot;OutputString&quot;, Settings.Enums.Types.String, key: false, isParameter: false) 
 </code></pre>
-<p>{% endcode %}</p>
 <p>At least one property should be marked as the Entity's Key, indicated by setting <strong>key</strong> to <strong>true</strong>. The key uniquely identifies records when performing Update or Delete tasks, and for Application Blocks such as Grids that require a unique key per record. For example, this Long property named <em>Id:</em></p>
 <pre><code class="lang-csharp">new Property(&quot;Id&quot;, Settings.Enums.Types.String, key: true, isParameter: false) 
 </code></pre>
 <p>Finally, we have the optional Parameter properties, indicated by setting <strong>isParameter</strong> to <strong>true</strong>. They are included in the output schema, but also exposed to the App Page as optional input to the Read operation - retrieved from its <em>options</em> parameter to modify the results. For example, this Int property named <em>Input</em>:</p>
 <pre><code class="lang-csharp">new Property(&quot;Input&quot;, Settings.Enums.Types.Int, key: false, isParameter: true);
 </code></pre>
-<p>{% hint style=&quot;info&quot; %}
-Few Connectors need Parameter properties - they are used when the desired outcome is not achievable through the regular Configuration settings or the data source filter.</p>
-<p>For example, the Azure Digital Twins Connector's Time Series entity includes an optional input parameter, &quot;$ts&quot;, which shows up in the output as well as a Timestamp for that specific record/event.
-{% endhint %}</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Few Connectors need Parameter properties - they are used when the desired outcome is not achievable through the regular Configuration settings or the data source filter.</p>
+<p>For example, the Azure Digital Twins Connector's Time Series entity includes an optional input parameter, &quot;$ts&quot;, which shows up in the output as well as a Timestamp for that specific record/event.</p>
+</div>
 <h3 id="create">Create</h3>
 <p>The Connector must implement a method called <em>Create,</em> which is invoked when your Connector is hosted. User-defined configuration is passed as a parameter to this method and should be stored in a class variable for later use. This is a good point to provide any resources needed for the working of your Connector.</p>
 <pre><code class="lang-csharp">void Create(Configuration configuration)
@@ -178,10 +177,8 @@ this.config = configuration;
 </code></pre>
 <h3 id="read">Read</h3>
 <p>The <em>Read</em> method is one of the Entities' operations and is expected to return a JToken back to the <em>Engine</em>. This method is invoked when a Read/Refresh Action is called from a Block within an App Page.</p>
-<p>{% code overflow=&quot;wrap&quot; %}</p>
 <pre><code class="lang-csharp">public IQueryable&lt;JToken&gt; Read(string entityId, OperationOptions options, out long count, JObject extraOptions = null)
 </code></pre>
-<p>{% endcode %}</p>
 <p>This method contains a list of parameters being passed from the <em>Engine.</em></p>
 <table><thead><tr><th width="201">Name</th><th>Description</th><th data-hidden></th></tr></thead><tbody><tr><td>entityId</td><td>A unique identifier for the Entity</td><td></td></tr><tr><td>OperationOptions</td><td><p>The operation options as configured by a user:</p><ul><li>Parameters: a JObject containing the input parameters' value</li><li>Filter: the data filter criteria</li><li>TransactionName: the name of the transaction </li></ul></td><td></td></tr><tr><td>count</td><td>The number of records</td><td></td></tr><tr><td>extraOptions</td><td><p>A JObject contains the following:</p><ul><li>Sort: the data sorting criteria</li><li>Skip: the number of records to skip</li><li>Take: the number of records to return</li></ul></td><td></td></tr></tbody></table>
 <h3 id="insert">Insert</h3>
@@ -191,10 +188,8 @@ this.config = configuration;
 <table><thead><tr><th width="198">Name</th><th>Description</th><th data-hidden></th></tr></thead><tbody><tr><td>entityId</td><td>A unique identifier for the Entity</td><td></td></tr><tr><td>values</td><td>A JObject of values to be inserted</td><td></td></tr><tr><td>OperationOptions</td><td><p>The operation options as configured by a user:</p><ul><li>Parameters: a JObject containing the input parameters' value</li><li>Filter: the data filter criteria</li><li>TransactionName: the name of the transaction </li></ul></td><td></td></tr></tbody></table>
 <h3 id="update">Update</h3>
 <p>The <em>Update</em> method is one of the Entities' operations and is expected to return a JObject back to the <em>Engine</em> with the updated record Id. This method will be invoked when an Update Action is called from a Block within an App Page.</p>
-<p>{% code overflow=&quot;wrap&quot; %}</p>
 <pre><code class="lang-csharp">public JObject Update(string entityName, JObject key, JObject values, OperationOptions options)
 </code></pre>
-<p>{% endcode %}</p>
 <table><thead><tr><th width="205">Name</th><th>Description</th><th data-hidden></th></tr></thead><tbody><tr><td><em>entityId</em></td><td>A unique identifier for the Entity</td><td></td></tr><tr><td>key</td><td>A JObject containing the primary key of the record to be updated</td><td></td></tr><tr><td>values</td><td>A JObject of values to be updated</td><td></td></tr><tr><td>OperationOptions</td><td><p>The operation options as configured by a user:</p><ul><li>Parameter: a JObject containing the input parameters' value</li><li>Filter: the data filter criteria.</li><li>TransactionName: the name of the transaction </li></ul></td><td></td></tr></tbody></table>
 <h3 id="delete">Delete</h3>
 <p>The <em>Delete</em> method is one of the Entities' operations and is expected to return back to the <em>Engine</em> with the number of records deleted. This method will be invoked when a Delete Action is called from a Block within an App Page.</p>
@@ -227,9 +222,10 @@ var decryptedVal = request.DecryptedValue;
 </ol>
 <pre class="language-csharp"><code class="lang-csharp"><strong>public void Subscribe(string entityId, OperationOptions options, JObject extraOptions)
 </strong></code></pre>
-<p>{% hint style=&quot;warning&quot; %}
-The second overload is supported on App Designer v4.3.5 and XMPro.Integration.Framework v4.2 and above.
-{% endhint %}</p>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>The second overload is supported on App Designer v4.3.5 and XMPro.Integration.Framework v4.2 and above.</p>
+</div>
 <h3 id="unsubscribe">UnSubscribe</h3>
 <p>Unsubscribe is called by the Engine to inform the Connector that all AppPages that use Live Data from a given Entity have been closed, and should be used to stop listening for changes to that entity.</p>
 <pre><code class="lang-csharp">public void UnSubscribe(string entityId)
@@ -240,17 +236,13 @@ The second overload is supported on App Designer v4.3.5 and XMPro.Integration.Fr
 </code></pre>
 <h3 id="onchange">OnChange</h3>
 <p>To push the changes of entities to an App Page that subscribed to the live update, your Connector should invoke the <em>OnChange</em> event with the values of changes as arguments:</p>
-<p>{% code overflow=&quot;wrap&quot; %}</p>
 <pre><code class="lang-csharp">this.OnChange?.Invoke(this, new OnChangeArgs() { EntityId = entityId, Changes = changes.ToArray() });
 </code></pre>
-<p>{% endcode %}</p>
 <h2 id="iconnectorerror">IConnectorError</h2>
 <p>A Connector can publish messages to the <a href="../apps/check-connector-logs.html">Connector Logs</a> by implementing the <em>IConnectorError</em> interface.</p>
 <p>To log the error, your Connector should invoke the <em>OnConnectorError</em> event with the error information passed as arguments:</p>
-<p>{% code overflow=&quot;wrap&quot; %}</p>
 <pre><code class="lang-csharp">this.OnConnectorError?.Invoke(this, new OnErrorArgs(ConnectionId, Timestamp, Source, Error, DetailedError, Data));
 </code></pre>
-<p>{% endcode %}</p>
 <h2 id="itsaconnector">ITSAConnector</h2>
 <p>v4.4.12: replaced the ITSCConnector interface, which is now deprecated.</p>
 <p>The <em>ITSAConnector</em> interface notifies the <a href="../../blocks-toolbox/visualizations/time-series-analysis.html#connector-selection">Time Series Analysis</a> to use optimized client-side querying to increase its performance. The Connector will pre-process the large volumes of data and return it in buckets.</p>
@@ -263,9 +255,10 @@ The second overload is supported on App Designer v4.3.5 and XMPro.Integration.Fr
 <li>Replace the Original Timestamp with the Bucketed Timestamp value for final results. For example:</li>
 </ol>
 <table><thead><tr><th>Original Timestamp</th><th width="90">Sensor1</th><th width="95">Sensor2</th><th width="96">Sensor3</th></tr></thead><tbody><tr><td>2024-03-28 08:00:00</td><td>25.4</td><td>18.2</td><td>32.7</td></tr><tr><td>2024-03-28 08:00:00</td><td>24.8</td><td>18.5</td><td>33.2</td></tr><tr><td>2024-03-28 08:00:00</td><td>25.1</td><td>18.9</td><td>34.0</td></tr><tr><td>2024-03-28 10:00:00</td><td>25.6</td><td>19.2</td><td>34.5</td></tr><tr><td>2024-03-28 10:00:00</td><td>26.2</td><td>19.6</td><td>34.8</td></tr><tr><td>2024-03-28 10:00:00</td><td>26.5</td><td>19.8</td><td>35.1</td></tr><tr><td>2024-03-28 12:00:00</td><td>27.0</td><td>20.1</td><td>35.3</td></tr><tr><td>2024-03-28 12:00:00</td><td>27.3</td><td>20.5</td><td>35.7</td></tr><tr><td>2024-03-28 12:00:00</td><td>27.7</td><td>20.8</td><td>36.0</td></tr><tr><td>2024-03-28 14:00:00</td><td>27.9</td><td>21.2</td><td>36.3</td></tr></tbody></table>
-<p>{% hint style=&quot;info&quot; %}
-SQL and ADX have a native function to achieve this, DATE_BUCKET() for SQL and bin() for ADX.
-{% endhint %}</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>SQL and ADX have a native function to achieve this, DATE_BUCKET() for SQL and bin() for ADX.</p>
+</div>
 <p>Use the interface and implement buckets on any Connector to access the Time Series Analysis Block optimizations for your Data Source.</p>
 <h2 id="example">Example</h2>
 <p>The code below is an example of an empty connector. Take note of how the interfaces and methods have been implemented.</p>
@@ -387,7 +380,7 @@ namespace XMPro.Integration.NewConnector
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: June 30, 2025</em></small></p>
+    <p><small><em>Last modified: July 07, 2025</em></small></p>
   </div>
 </article>
 
