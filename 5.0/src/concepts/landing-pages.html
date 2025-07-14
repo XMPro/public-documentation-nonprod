@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Landing Pages &amp; Favorites | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Landing Pages &amp; Favorites | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../images/favicon.png">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/concepts/landing-pages.md&amp;version=GBmain&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="landing-pages--favorites">Landing Pages &amp; Favorites</h1>
+
+<h2 id="overview">Overview</h2>
+<p>A list of categories is displayed by default when you open App Designer or Data Stream Designer. In App Designer, this can be changed to display a custom landing page instead. When a custom landing page is set for a company, any user from that specific company will see that landing page when they first open App Designer. An App can be used as a landing page as long as it is published. This is useful if a company has a main App that they access and prevents them from continuously navigating to that App.</p>
+<p>Apps and Data Streams can be favorited. This is useful for Apps or Data Streams that are frequently used, and favoriting them will allow them to appear on the main page of Subscription Manager for quick and easy access.</p>
+<p>Blocks can also be favorited. This is useful for Blocks that are frequently used by a designer, and favoriting them will allow them to appear on the Favorites category of App Designer's Blocks for quick and easy access.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>It is recommended that you read this documentation along with the articles listed below to improve your understanding of how Apps and Data Streams work.</p>
+<ul>
+<li><a href="application/index.html">Application</a></li>
+<li><a href="data-stream/index.html">Data Stream</a></li>
+</ul>
+</div>
+<h2 id="default-landing-page">Default Landing Page</h2>
+<p>When you load Data Stream Designer or App Designer, the default landing page lists the categories that contain Data Streams or Apps respectively.</p>
+<p>Indicators at the bottom of each category card inform how many Data Streams/Apps are:</p>
+<ol>
+<li>Published</li>
+<li>Draft</li>
+<li>Errors (published Data Streams with errors)</li>
+</ol>
+<p>Click the category card to view all the contents, or on the counter for a filtered view.</p>
+<p><img src="../images/landing-page.png" alt="Default Landing Page"></p>
+<h2 id="favoriting-apps-and-data-streams">Favoriting Apps and Data Streams</h2>
+<p>Apps and Data Streams can be favorited for quick and easy access. When you favorite an App or Data Stream, they will appear on the main page in Subscription Manager.</p>
+<p><img src="../images/landing-pages-fave-1.png" alt="Favoriting Apps and Data Streams"></p>
+<p>If there are no favorited Apps or Data Streams, Subscription Manager will display a list of published Apps and Data Streams instead, if there are any.</p>
+<p><img src="../images/landing-pages-fave-2.png" alt="Favoriting Apps and Data Streams - No Favorites"></p>
+<p><img src="../images/landing-pages-fave-3.png" alt="Favoriting Apps and Data Streams - Published List"></p>
+<p>If there are no Favorited or published Apps or Data Streams, no Apps or Data Streams will show.</p>
+<p><img src="../images/landing-pages-fave-4.png" alt="Favoriting Apps and Data Streams - Empty"></p>
+<p>There are also direct links to allow you to create an App, Data Stream, or Recommendation by clicking on the 'Create New' button.</p>
+<p><img src="../images/landing-pages-fave-5.png" alt="Create New Button"></p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>To learn more about how to Favourite Apps or Data Streams, visit the <a href="../how-tos/manage-landing-pages.html#favorite-an-app">How to Manage Landing Pages article</a>.</p>
+</div>
+<h2 id="company-landing-page">Company Landing Page</h2>
+<p>You can choose to set an App as the Landing Page, which overrides the default landing page. The landing page for the App selected will be the first page all users in the company see when opening App Designer.</p>
+<p>You can select different Apps for Desktop and Mobile.</p>
+<p><img src="../images/concepts-landing-page.png" alt="Company Landing Page"></p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>You can only choose from published Apps to be a landing page.</p>
+<p>To learn more about how to set a Company Landing Page, visit the <a href="../how-tos/manage-landing-pages.html#set-a-landing-page">How to Manage Landing Pages article</a>.</p>
+</div>
+<h3 id="desktop">Desktop</h3>
+<p>To view the Landing Page for Desktop, open App Designer on a Desktop computer. You can also click on the company icon in the top-left corner.</p>
+<p><img src="../images/landing-page-3.png" alt="Desktop Landing Page"></p>
+<h3 id="mobile">Mobile</h3>
+<p>To view the Landing Page for Mobile, open App Designer on a Mobile device. You can also click on the company icon in the top-left corner.</p>
+<p><img src="../images/landing-page-4.png" alt="Mobile Landing Page"></p>
+<h2 id="further-reading">Further Reading</h2>
+<ul>
+<li><a href="../how-tos/manage-landing-pages.html">How to Manage Landing Pages &amp; Favorites</a></li>
+</ul>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: July 14, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

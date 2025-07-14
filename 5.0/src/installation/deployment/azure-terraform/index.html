@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Azure Terraform Deployment | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Azure Terraform Deployment | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../../toc.html">
+      <meta name="docfx:tocrel" content="../../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/deployment/azure-terraform/index.md&amp;version=GBmain&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../../index.html">
+            <img id="logo" class="svg" src="../../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="azure-terraform-deployment">Azure Terraform Deployment</h1>
+
+<h2 id="introduction">Introduction</h2>
+<p>This guide covers deploying XMPro on Azure using Terraform Infrastructure as Code (IaC). The Terraform deployment creates a complete XMPro industrial IoT platform with all supporting Azure services configured for production use.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>This guide covers Terraform deployment for XMPro v4.5 and later. For ARM template deployment, see <a href="../azure.html">Azure ARM Template</a>.</p>
+</div>
+<h2 id="prerequisites">Prerequisites</h2>
+<h3 id="software-requirements">Software Requirements</h3>
+<ul>
+<li><a href="https://www.terraform.io/downloads.html">Terraform CLI</a> (&gt;= 1.5.0)</li>
+<li><a href="https://docs.microsoft.com/en-us/cli/azure/install-azure-cli">Azure CLI</a> (&gt;= 2.50.0)</li>
+</ul>
+<h3 id="azure-resource-requirements">Azure Resource Requirements</h3>
+<p>The Terraform deployment uses configurable resource SKUs that can be adjusted based on your requirements:</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Default SKU</th>
+<th>Configurable Via</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>App Service Plans</td>
+<td>B1 (1 CPU, 1.75GB RAM)</td>
+<td><code>*_service_plan_sku</code> variables</td>
+</tr>
+<tr>
+<td>SQL Database</td>
+<td>Configurable per database</td>
+<td><code>databases</code> variable <code>sku_name</code></td>
+</tr>
+<tr>
+<td>Storage Account</td>
+<td>Standard LRS</td>
+<td>Terraform module configuration</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Container Instances:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Container</th>
+<th>CPU</th>
+<th>Memory</th>
+<th>Purpose</th>
+<th>Policy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stream Host</td>
+<td>1.0</td>
+<td>4.0GB</td>
+<td>Data stream execution</td>
+<td>Always (persistent)</td>
+</tr>
+<tr>
+<td>Licenses</td>
+<td>0.25</td>
+<td>0.5GB</td>
+<td>License setup</td>
+<td>Never (run-once)</td>
+</tr>
+<tr>
+<td>SM DB Migration</td>
+<td>0.2</td>
+<td>0.5GB</td>
+<td>Database initialization</td>
+<td>Never (run-once)</td>
+</tr>
+<tr>
+<td>SM Prep Container</td>
+<td>0.25</td>
+<td>0.5GB</td>
+<td>Deployment preparation</td>
+<td>Never (run-once)</td>
+</tr>
+<tr>
+<td>AD/DS/AI DB Migration</td>
+<td>0.2</td>
+<td>0.5GB</td>
+<td>Database initialization</td>
+<td>Never (run-once)</td>
+</tr>
+</tbody>
+</table>
+<div class="NOTE">
+<h5>Note</h5>
+<ul>
+<li><strong>App Service Plans</strong> are configurable via <code>*_service_plan_sku</code> variables</li>
+<li><strong>Stream Host</strong> resources are configurable via <code>stream_host_cpu</code> and <code>stream_host_memory</code> variables</li>
+<li><strong>Migration containers</strong> are ephemeral and only run during initial deployment</li>
+<li>Default configurations are suitable for development and testing. For production deployments, evaluate your specific performance requirements and adjust SKUs accordingly.</li>
+</ul>
+</div>
+<h3 id="configuration">Configuration</h3>
+<p><strong>Azure Authentication (Required for Terraform):</strong></p>
+<p><strong>Option 1: Azure CLI Authentication (Recommended for Local Development):</strong></p>
+<pre><code class="lang-bash"># Login to Azure CLI (simplest approach)
+az login
+
+# Set the subscription (if you have multiple)
+az account set --subscription &quot;your-subscription-name-or-id&quot;
+</code></pre>
+<p><strong>Option 2: Service Principal Authentication:</strong></p>
+<pre><code class="lang-bash"># Only needed if not using Azure CLI authentication
+export ARM_CLIENT_ID=&quot;your-service-principal-client-id&quot;
+export ARM_CLIENT_SECRET=&quot;your-service-principal-client-secret&quot;
+export ARM_SUBSCRIPTION_ID=&quot;your-azure-subscription-id&quot;
+export ARM_TENANT_ID=&quot;your-azure-tenant-id&quot;
+</code></pre>
+<p><strong>Local Development: Using terraform.tfvars (Recommended)</strong></p>
+<p>Create a <code>terraform.tfvars</code> file in your environment directory:</p>
+<pre><code class="lang-hcl"># terraform.tfvars
+company_name = &quot;mycompany&quot;
+environment  = &quot;dev&quot;
+location     = &quot;eastus&quot;
+
+# Change default passwords for security
+db_admin_password = &quot;MySecureDbPassword123!&quot;
+company_admin_password = &quot;MySecureAdminPassword123!&quot;
+site_admin_password = &quot;MySecureSitePassword123!&quot;
+
+# Only needed for private container registries
+# is_private_registry = true
+# acr_username = &quot;your-acr-username&quot;
+# acr_password = &quot;your-acr-password&quot;
+</code></pre>
+<p><strong>CI/CD Pipeline: Using Environment Variables</strong></p>
+<p>The Azure DevOps pipeline uses environment variables for security:</p>
+<table>
+<thead>
+<tr>
+<th>Environment Variable</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TF_VAR_company_name</td>
+<td>&quot;evaluation&quot;</td>
+<td>Company name for resource naming</td>
+</tr>
+<tr>
+<td>TF_VAR_environment</td>
+<td>&quot;dev&quot;</td>
+<td>Environment name</td>
+</tr>
+<tr>
+<td>TF_VAR_location</td>
+<td>&quot;australiaeast&quot;</td>
+<td>Azure region</td>
+</tr>
+<tr>
+<td>TF_VAR_acr_username</td>
+<td>&quot;&quot;</td>
+<td>Container registry username (only needed for private registries)</td>
+</tr>
+<tr>
+<td>TF_VAR_acr_password</td>
+<td>&quot;&quot;</td>
+<td>Container registry password (only needed for private registries)</td>
+</tr>
+<tr>
+<td>TF_VAR_db_admin_password</td>
+<td>&quot;P@ssw0rd1234!&quot;</td>
+<td>Database administrator password</td>
+</tr>
+<tr>
+<td>TF_VAR_company_admin_password</td>
+<td>&quot;P@ssw0rd1234!&quot;</td>
+<td>Company administrator password</td>
+</tr>
+<tr>
+<td>TF_VAR_site_admin_password</td>
+<td>&quot;P@ssw0rd1234!&quot;</td>
+<td>Site administrator password</td>
+</tr>
+</tbody>
+</table>
+<div class="NOTE">
+<h5>Note</h5>
+<ul>
+<li><strong>For local development</strong>: Use <code>terraform.tfvars</code> files (recommended)</li>
+<li><strong>For CI/CD pipelines</strong>: Use <code>TF_VAR_</code> environment variables with Azure DevOps variable groups</li>
+<li>Most variables have sensible defaults and can be used as-is for evaluation</li>
+<li>ACR credentials are only required when <code>is_private_registry = true</code></li>
+<li>The module uses public container images by default (<code>xmprononprod.azurecr.io</code>)</li>
+</ul>
+</div>
+<h2 id="architecture">Architecture</h2>
+<p>The following deployment diagram shows the Azure infrastructure architecture deployed by Terraform for the XMPro platform:</p>
+<p><img src="../../../images/azure-architecture-as-of-nov-11-2024x1.png" alt="XMPro Azure Terraform Architecture"></p>
+<h3 id="core-components">Core Components</h3>
+<p>The Terraform deployment creates the following Azure resources:</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Purpose</th>
+<th>Resource Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>App Designer (AD)</strong></td>
+<td>Visual application builder</td>
+<td>App Service (Linux Container)</td>
+</tr>
+<tr>
+<td><strong>Data Stream Designer (DS)</strong></td>
+<td>Real-time data processing</td>
+<td>App Service (Linux Container)</td>
+</tr>
+<tr>
+<td><strong>Subscription Manager (SM)</strong></td>
+<td>Identity and access management</td>
+<td>App Service (Windows)</td>
+</tr>
+<tr>
+<td><strong>AI Services</strong></td>
+<td>Machine learning integration</td>
+<td>App Service (Linux Container)</td>
+</tr>
+<tr>
+<td><strong>Stream Host</strong></td>
+<td>Data stream execution</td>
+<td>Container Instance</td>
+</tr>
+<tr>
+<td><strong>Database</strong></td>
+<td>Application data storage</td>
+<td>Azure SQL Database</td>
+</tr>
+<tr>
+<td><strong>Storage</strong></td>
+<td>File storage and artifacts</td>
+<td>Storage Account</td>
+</tr>
+<tr>
+<td><strong>Security</strong></td>
+<td>Secrets management</td>
+<td>Key Vault</td>
+</tr>
+<tr>
+<td><strong>Monitoring</strong></td>
+<td>Performance and logging</td>
+<td>Application Insights</td>
+</tr>
+</tbody>
+</table>
+<h3 id="infrastructure-layout">Infrastructure Layout</h3>
+<p>The Terraform modules create a complete Azure infrastructure stack:</p>
+<pre><code>Resource Group: rg-{companyname}-{environment}-xmpro
+├── App Service Plan (Linux)
+│   ├── AD Container Service
+│   ├── DS Container Service
+│   └── AI Container Service (optional)
+├── App Service Plan (Windows)
+│   └── SM Web Application
+├── Azure SQL Server
+│   ├── AD Database
+│   ├── DS Database
+│   ├── SM Database
+│   └── AI Database (optional)
+├── Storage Account
+│   ├── File Shares
+│   └── Blob Storage
+├── Key Vault
+│   ├── Database Passwords
+│   ├── Connection Strings
+│   └── API Keys
+├── Application Insights
+└── DNS Zone (optional)
+</code></pre>
+<h3 id="resource-dependencies">Resource Dependencies</h3>
+<p>The Terraform deployment follows these dependency relationships:</p>
+<ol>
+<li><strong>Foundation Layer</strong>: Resource Group, Key Vault, Storage Account</li>
+<li><strong>Database Layer</strong>: SQL Server and databases (depends on Key Vault for secrets)</li>
+<li><strong>Compute Layer</strong>: App Service Plans (depends on database layer)</li>
+<li><strong>Application Layer</strong>: App Services and Container Instances (depends on compute layer)</li>
+<li><strong>Monitoring Layer</strong>: Application Insights (integrates with application layer)</li>
+</ol>
+<h3 id="optional-components">Optional Components</h3>
+<p>Set up of Cloud Stream Host, Master Data, <a href="https://docs.microsoft.com/en-us/azure/azure-cache-for-redis/cache-dotnet-how-to-use-azure-redis-cache">Azure Cache</a>, or Twilio integration is optional and depends on client requirements. These components can be enabled through Terraform variables but are excluded from the standard deployment template.</p>
+<h2 id="available-environments">Available Environments</h2>
+<h3 id="development-environment">Development Environment</h3>
+<p>Pre-configured for cost-effective development and testing:</p>
+<pre><code class="lang-hcl"># Key configuration
+environment = &quot;dev&quot;
+app_service_sku_name = &quot;B2&quot;
+sql_sku_name = &quot;S0&quot;
+enable_backup = false
+</code></pre>
+<p><strong>Location:</strong> <code>deploy/terraform-v4.5/environments/dev/</code></p>
+<h3 id="qa-environment">QA Environment</h3>
+<p>Production-like environment for testing:</p>
+<pre><code class="lang-hcl"># Key configuration
+environment = &quot;qa&quot;
+app_service_sku_name = &quot;S2&quot;
+sql_sku_name = &quot;S2&quot;
+enable_backup = true
+enable_dns_zone = true
+</code></pre>
+<p><strong>Location:</strong> <code>deploy/terraform-v4.5/environments/qa/</code></p>
+<h3 id="sandbox-environment">Sandbox Environment</h3>
+<p>Full-featured environment for demonstrations:</p>
+<pre><code class="lang-hcl"># Key configuration
+environment = &quot;sandbox&quot;
+enable_ai = true
+enable_dns_zone = true
+enable_stream_host = true
+</code></pre>
+<p><strong>Location:</strong> <code>deploy/terraform-v4.5/environments/sandbox/</code></p>
+<h3 id="sm-only-environment">SM-Only Environment</h3>
+<p>Minimal deployment with only Subscription Manager:</p>
+<pre><code class="lang-hcl"># Key configuration
+enable_ad = false
+enable_ds = false
+enable_ai = false
+enable_stream_host = false
+</code></pre>
+<p><strong>Location:</strong> <code>deploy/terraform-v4.5/environments/sandbox-sm-only/</code></p>
+<h2 id="deployment-methods">Deployment Methods</h2>
+<h3 id="local-deployment">Local Deployment</h3>
+<p>For development and testing environments:</p>
+<ol>
+<li><p><strong>Navigate to environment directory:</strong></p>
+<pre><code class="lang-bash">cd deploy/terraform-v4.5/environments/dev
+</code></pre>
+</li>
+<li><p><strong>Initialize Terraform:</strong></p>
+<pre><code class="lang-bash">terraform init
+</code></pre>
+</li>
+<li><p><strong>Configure variables:</strong></p>
+<pre><code class="lang-bash"># Create terraform.tfvars
+cat &gt; terraform.tfvars &lt;&lt;EOF
+prefix = &quot;xmpro&quot;
+environment = &quot;dev&quot;
+location = &quot;eastus&quot;
+companyname = &quot;mycompany&quot;
+acr_url_product = &quot;xmprocontainers.azurecr.io&quot;
+acr_username = &quot;your-username&quot;
+acr_password = &quot;your-password&quot;
+db_admin_password = &quot;SecurePassword123!&quot;
+company_admin_password = &quot;AdminPassword123!&quot;
+site_admin_password = &quot;SitePassword123!&quot;
+masterkey = &quot;YourMasterKey123!&quot;
+EOF
+</code></pre>
+</li>
+<li><p><strong>Deploy infrastructure:</strong></p>
+<pre><code class="lang-bash">terraform plan -out=tfplan
+terraform apply tfplan
+</code></pre>
+</li>
+</ol>
+<h3 id="cicd-pipeline-deployment">CI/CD Pipeline Deployment</h3>
+<p>For automated production deployments:</p>
+<p><strong>Pipeline File:</strong> <code>/deploy/terraform-deploy.yml</code></p>
+<p><strong>Variable Groups:</strong></p>
+<ul>
+<li><code>terraform-dev-v4.5</code>: Development environment secrets</li>
+<li><code>terraform-qa-v4.5</code>: QA environment secrets</li>
+<li><code>terraform-prod</code>: Production environment secrets</li>
+</ul>
+<p><strong>Deployment Flow:</strong></p>
+<ol>
+<li>Version generation</li>
+<li>Terraform validation</li>
+<li>Environment deployment (dev → qa → prod)</li>
+</ol>
+<h2 id="configuration-options">Configuration Options</h2>
+<h3 id="basic-configuration">Basic Configuration</h3>
+<pre><code class="lang-hcl"># Core settings
+prefix = &quot;xmpro&quot;
+environment = &quot;dev&quot;
+location = &quot;eastus&quot;
+companyname = &quot;mycompany&quot;
+
+# Container registry
+acr_url_product = &quot;xmprocontainers.azurecr.io&quot;
+acr_username = &quot;registry-username&quot;
+acr_password = &quot;registry-password&quot;
+
+# Image version (optional)
+imageversion = &quot;4.5.0-main-abc123&quot;
+</code></pre>
+<h3 id="feature-toggles">Feature Toggles</h3>
+<pre><code class="lang-hcl"># Optional components
+enable_ai = true
+enable_dns_zone = false
+enable_stream_host = true
+enable_backup = true
+</code></pre>
+<h3 id="custom-domain">Custom Domain</h3>
+<pre><code class="lang-hcl"># DNS configuration
+enable_dns_zone = true
+dns_zone_name = &quot;xmpro.yourdomain.com&quot;
+</code></pre>
+<h3 id="smtp-configuration">SMTP Configuration</h3>
+<pre><code class="lang-hcl"># Email settings
+smtp_username = &quot;notifications@yourdomain.com&quot;
+smtp_password = &quot;smtp-password&quot;
+smtp_fromemail = &quot;noreply@yourdomain.com&quot;
+smtp_host = &quot;smtp.sendgrid.net&quot;
+smtp_port = 587
+smtp_usessl = true
+</code></pre>
+<h2 id="quick-start">Quick Start</h2>
+<p>The fastest way to deploy XMPro on Azure:</p>
+<ol>
+<li><p><strong>Set up authentication:</strong></p>
+<pre><code class="lang-bash">az login
+az account set --subscription &quot;Your Subscription&quot;
+</code></pre>
+</li>
+<li><p><strong>Set environment variables:</strong></p>
+<pre><code class="lang-bash">export ARM_CLIENT_ID=&quot;your-client-id&quot;
+export ARM_CLIENT_SECRET=&quot;your-client-secret&quot;
+export ARM_SUBSCRIPTION_ID=&quot;your-subscription-id&quot;
+export ARM_TENANT_ID=&quot;your-tenant-id&quot;
+export TF_VAR_acr_username=&quot;your-acr-username&quot;
+export TF_VAR_acr_password=&quot;your-acr-password&quot;
+</code></pre>
+</li>
+<li><p><strong>Deploy sandbox environment:</strong></p>
+<pre><code class="lang-bash">cd deploy/terraform-v4.5/environments/sandbox
+terraform init
+terraform plan -out=tfplan
+terraform apply tfplan
+</code></pre>
+</li>
+<li><p><strong>Get deployment outputs:</strong></p>
+<pre><code class="lang-bash">terraform output -json &gt; deployment-info.json
+</code></pre>
+</li>
+</ol>
+<h2 id="post-deployment">Post-Deployment</h2>
+<h3 id="initial-access">Initial Access</h3>
+<p>After deployment, retrieve your application URLs and credentials:</p>
+<pre><code class="lang-bash"># Application URLs
+echo &quot;App Designer: $(terraform output -raw ad_url)&quot;
+echo &quot;Data Stream Designer: $(terraform output -raw ds_url)&quot;
+echo &quot;Subscription Manager: $(terraform output -raw sm_url)&quot;
+
+# Admin credentials
+echo &quot;Admin Email: $(terraform output -raw company_admin_email)&quot;
+echo &quot;Admin Password: $(terraform output -raw company_admin_password)&quot;
+</code></pre>
+<h3 id="service-verification">Service Verification</h3>
+<pre><code class="lang-bash"># Check service health
+curl -f &quot;$(terraform output -raw ad_url)/health&quot;
+curl -f &quot;$(terraform output -raw ds_url)/health&quot;
+curl -f &quot;$(terraform output -raw sm_url)/health&quot;
+
+# Verify database connectivity
+az sql db show \
+  --resource-group $(terraform output -raw resource_group_name) \
+  --server $(terraform output -raw sql_server_name) \
+  --name &quot;AD&quot;
+</code></pre>
+<h3 id="initial-configuration">Initial Configuration</h3>
+<ol>
+<li>Navigate to Subscription Manager URL</li>
+<li>Login with admin credentials</li>
+<li>Configure company settings</li>
+<li>Set up additional users and roles</li>
+<li>Configure license keys</li>
+</ol>
+<h2 id="restarting-app-services">Restarting App Services</h2>
+<p>After deployment, you may need to restart your app services in the Azure Portal:</p>
+<ol>
+<li>Navigate to &quot;Resource groups&quot; in the Azure Portal</li>
+<li>Select your resource group (e.g., <code>rg-{companyname}-{environment}-xmpro</code>)</li>
+<li>Select the App Services (SM, AD, DS, and AI if enabled)</li>
+<li>Click &quot;Restart&quot; for each service</li>
+</ol>
+<div class="NOTE">
+<h5>Note</h5>
+<p>App Services may need to be restarted after initial deployment to ensure all configurations are properly loaded.</p>
+</div>
+<h2 id="admin-logins">Admin Logins</h2>
+<p>After deployment, you can access the platform with these accounts:</p>
+<table>
+<thead>
+<tr>
+<th>User</th>
+<th>Type</th>
+<th>Password</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>admin@xmpro.onxmpro.com</td>
+<td>Super Admin</td>
+<td>Value from <code>site_admin_password</code> variable</td>
+</tr>
+<tr>
+<td>{firstname}.{lastname}@{companyname}.onxmpro.com</td>
+<td>Company Admin</td>
+<td>Value from <code>company_admin_password</code> variable</td>
+</tr>
+</tbody>
+</table>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>The username format is critical: <code>firstname.lastname@companyname.onxmpro.com</code></p>
+</div>
+<h2 id="license-management">License Management</h2>
+<h3 id="evaluation-mode-default">Evaluation Mode (Default)</h3>
+<p>When <code>is_evaluation_mode = true</code> (default), the deployment includes:</p>
+<ul>
+<li>Automatic license provisioning via licenses container</li>
+<li>Pre-configured evaluation product IDs and keys</li>
+<li>No manual license requests required</li>
+</ul>
+<h3 id="production-mode">Production Mode</h3>
+<p>When <code>is_evaluation_mode = false</code>, you need to manually request licenses:</p>
+<ol>
+<li>Login using the Super Admin account <code>admin@xmpro.onxmpro.com</code></li>
+<li>Navigate to Company → Subscriptions</li>
+<li>Click &quot;Update License&quot; for each product (AD, DS, AI)</li>
+<li>Generate license requests and submit to XMPro support</li>
+<li>Upload received licenses</li>
+</ol>
+<div class="NOTE">
+<h5>Note</h5>
+<p>License requests require SMTP configuration to be enabled during deployment.</p>
+</div>
+<h2 id="upgrade">Upgrade</h2>
+<p>To upgrade an existing XMPro Terraform deployment:</p>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>Before upgrading, back up your databases using Azure SQL Database export functionality.</p>
+</div>
+<ol>
+<li><p><strong>Update your Terraform configuration:</strong></p>
+<pre><code class="lang-bash">cd deploy/terraform-v4.5/environments/{your-environment}
+
+# Update the imageversion variable to the new version
+terraform plan -var imageversion=&quot;new-version-tag&quot;
+terraform apply
+</code></pre>
+</li>
+<li><p><strong>Restart App Services</strong> after upgrade completion</p>
+</li>
+<li><p><strong>Verify the upgrade:</strong></p>
+<pre><code class="lang-bash"># Check application URLs
+terraform output -json
+
+# Verify service health
+curl -f &quot;$(terraform output -raw ad_url)/health&quot;
+curl -f &quot;$(terraform output -raw ds_url)/health&quot;
+curl -f &quot;$(terraform output -raw sm_url)/health&quot;
+</code></pre>
+</li>
+</ol>
+<h2 id="uninstall">Uninstall</h2>
+<p>To completely remove the XMPro platform:</p>
+<ol>
+<li><p><strong>Destroy Terraform resources:</strong></p>
+<pre><code class="lang-bash">cd deploy/terraform-v4.5/environments/{your-environment}
+terraform destroy
+</code></pre>
+</li>
+<li><p><strong>Manual cleanup (if needed):</strong></p>
+<ul>
+<li>Remove the resource group from Azure Portal</li>
+<li>Clean up any remaining DNS records</li>
+<li>Remove Terraform state files (if using local state)</li>
+</ul>
+</li>
+</ol>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>This will permanently delete all data. Ensure you have backups before proceeding.</p>
+</div>
+<h2 id="next-steps">Next Steps</h2>
+<ul>
+<li><a href="prerequisites.html">Prerequisites and Setup</a> - Detailed setup instructions</li>
+<li><a href="infrastructure.html">Infrastructure Configuration</a> - Advanced configuration options</li>
+<li><a href="troubleshooting.html">Troubleshooting</a> - Common issues and solutions</li>
+</ul>
+<h2 id="support">Support</h2>
+<p>For deployment issues:</p>
+<ul>
+<li>Check the <a href="troubleshooting.html">Troubleshooting Guide</a></li>
+<li>Review Azure DevOps pipeline logs</li>
+<li>Use Application Insights for debugging</li>
+<li>Contact XMPro support with deployment details</li>
+</ul>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: July 14, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

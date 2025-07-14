@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>v4.4.8 | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="v4.4.8 | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      <meta name="description" content="15 July 2024">
+      <link rel="icon" href="../../images/favicon.png">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/release-notes/v4.4.8.md&amp;version=GBmain&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="v448">v4.4.8</h1>
+
+<h2 id="integrations">Integrations</h2>
+<table><thead><tr><th width="155">Change Type</th><th width="250">Name</th><th>Description</th></tr></thead><tbody><tr><td>Enhancement</td><td><a href="https://xmpro.gitbook.io/mqtt/">MQTT Listener v3.0<br>MQTT Action Agent v3.0</a></td><td>Support MQTT Protocol v5</td></tr><tr><td>Enhancement</td><td><a href="https://xmpro.gitbook.io/read-recommendation/">Read Recommendation v3.0</a></td><td>Support optional classification, assign, and score</td></tr><tr><td>Enhancement</td><td><a href="https://xmpro.gitbook.io/run-recommendation">Run Recommendation v3.0</a></td><td>Support optional classification by asset, process, and KPI</td></tr><tr><td>Enhancement</td><td><a href="https://xmpro.gitbook.io/update-recommendation">Update Recommendation v3.0</a></td><td>Update optional classification by asset, process, and KPI</td></tr></tbody></table>
+<h2 id="app-designer">App Designer</h2>
+<table><thead><tr><th width="157">Change Type</th><th>Description</th></tr></thead><tbody><tr><td>Feature</td><td><p>Classify your Recommendation Alerts to better group for action or analyze for trends. </p><ul><li>The classification options are Asset, Process, KPI, Work Order, or Work Request.</li><li>Set the classification using new versions of the existing <a href="https://xmpro.gitbook.io/run-recommendation">Run</a> and <a href="https://xmpro.gitbook.io/update-recommendation">Update Recommendation</a> Agents.</li><li>Use the extended classification identifiers as filters in these enhanced Blocks: <a href="../blocks-toolbox/recommendations/recommendation-analytics.html">Alert Analytics</a>, <a href="../blocks-toolbox/recommendations/recommendation-alert-discussion.html">Alert Discussion</a>, and <a href="../blocks-toolbox/recommendations/alert-list.html">Alert List</a>.</li></ul></td></tr><tr><td>Feature</td><td><p>The last of the new Blocks to make your interactions with <a href="../concepts/recommendation/recommendation-alert.html">Recommendation Alerts</a> composable:</p><ul><li><a href="../blocks-toolbox/recommendations/alert-action.html">Alert Action</a> - add buttons to take actions on an alert, such as Share</li><li><a href="../blocks-toolbox/recommendations/alert-survey.html">Alert Survey</a> - add buttons for feedback from users on a Recommendation</li></ul></td></tr><tr><td>Enhancement</td><td>The <a href="../blocks-toolbox/advanced/metablock.html">Metablock</a> Block has added security attributes to prevent malicious code from being introduced.</td></tr><tr><td>Fix</td><td><em>I have a drilldown configured on an Indicator Block. The drilldown page doesn't load if I navigate before the page is fully loaded.</em><br>I can navigate using any navigation link before all the indicators load.</td></tr></tbody></table>
+<h2 id="data-stream-designer">Data Stream Designer</h2>
+<table><thead><tr><th width="157">Change Type</th><th>Description</th></tr></thead><tbody><tr><td>Enhancement</td><td>Along with the distinct notes per version introduced in v4.4.7, you can also add a version title to add context of why the version was created.</td></tr></tbody></table>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: July 14, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

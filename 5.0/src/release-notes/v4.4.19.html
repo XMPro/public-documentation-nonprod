@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>v4.4.19 | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="v4.4.19 | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      <meta name="description" content="May 2025">
+      <link rel="icon" href="../../images/favicon.png">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/release-notes/v4.4.19.md&amp;version=GBmain&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="v4419">v4.4.19</h1>
+
+<h2 id="common">Common</h2>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Security update: Mitigate a high-severity vulnerability by upgrading all products.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Change Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Security</td>
+<td>As part of our ongoing commitment to product security and stability, we've implemented several improvements in this release:<br>• Mitigated high-severity <a href="https://nvd.nist.gov/vuln/detail/CVE-2025-27598">CVE-2025-27598</a> in App Designer, Data Stream Designer, and AI Designer by upgrading SixLabors.ImageSharp from 3.1.5 to 3.1.7.<br>• Expanded the automated test coverage for Recommendations.</td>
+</tr>
+<tr>
+<td>Security</td>
+<td><a href="https://ubuntu.com/about/release-cycle">Ubuntu 20.04 LTS</a> will reach its end of standard support on 31 May 2025. Running the XMPro Stream Host on an unsupported operating system may expose your environment to security vulnerabilities and compliance risks.<br><br>XMPro strongly recommends using the <a href="../installation/complete-installation/install-stream-host/docker.html">Docker-based Stream Host</a> as the preferred method for all new installations and upgrades, and is supported on a wide range of modern platforms, including newer Ubuntu LTS releases.</td>
+</tr>
+<tr>
+<td>Fix</td>
+<td>A change in v4.4.18 caused SSO integration with Azure AD to behave differently for guest accounts, and users are requested to link them again.<br>This has been resolved without requiring any changes to the guest username.</td>
+</tr>
+<tr>
+<td>Documentation</td>
+<td>The installation content for <a href="../installation/deployment/aws.html">AWS</a> and <a href="../installation/deployment/windows-server-2022/index.html">Windows Server 2022</a> (previously known as &quot;On-Prem&quot;) have been updated.<br><br>When upgrading XMPro instances that use AI Notebooks installed via ARM deployments, you may encounter known issues with the automated upgrade process. The <a href="../installation/deployment/azure.html#notebook-upgrades-with-arm-deployments">Azure</a> installation has been updated with manual workarounds.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="integrations">Integrations</h2>
+<h3 id="agents">Agents</h3>
+<table>
+<thead>
+<tr>
+<th>Change Type</th>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>New</td>
+<td><a href="https://xmpro.gitbook.io/timeseries-logger">Timeseries Logger v1.00</a></td>
+<td>Allows you to capture timeseries data for selected parameters.</td>
+</tr>
+<tr>
+<td>Enhancement</td>
+<td><a href="https://xmpro.gitbook.io/ollama/">Ollama GenAI v2.02</a></td>
+<td>Replaced Python backend with REST API.</td>
+</tr>
+<tr>
+<td>Enhancement</td>
+<td><a href="https://xmpro.gitbook.io/binary-classification">Binary Classification ML v1.08</a></td>
+<td>Support Linux Stream Hosts &amp; upgrade the Microsoft.ML NuGet package.</td>
+</tr>
+<tr>
+<td>Fix</td>
+<td><a href="https://xmpro.gitbook.io/meta-action-agent">Meta Action Agent v1.14</a></td>
+<td>Fixed backward compatibility issue introduced in v1.12. However, logging to the <a href="../how-tos/data-streams/check-data-stream-logs.html">Data Stream Logs</a> will take effect when used with Stream Host v4.4.19+.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="package-manager">Package Manager</h3>
+<p>v4.4.19. From this release onwards, the Package Manager version will align with the product version.</p>
+<table>
+<thead>
+<tr>
+<th>Change Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fix</td>
+<td>Several errors introduced in <a href="v4.4.17.html#package-manager">v1.13.18</a> were addressed:<br>• Crashes when saving new Connector<br>• Empty XMP files generated when saving an Agent</td>
+</tr>
+</tbody>
+</table>
+<h2 id="app-designer">App Designer</h2>
+<table>
+<thead>
+<tr>
+<th>Change Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Documentation</td>
+<td>The Metablock documentation was updated to clarify that only plain text values are supported for encrypted Server Variables <a href="../blocks-toolbox/advanced/metablock.html#value-mapping">value mapping</a>.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="stream-host">Stream Host</h2>
+<table>
+<thead>
+<tr>
+<th>Change Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Enhancement</td>
+<td><strong>Configuration Simplification</strong> Gateway ID and Gateway Name are now optional parameters. If not provided, the system will auto-generate a GUID for Gateway ID and use the format <code>[Image-Version]-[Gateway Id]</code> for Gateway Name, reducing required configuration steps.</td>
+</tr>
+<tr>
+<td>Enhancement</td>
+<td><strong>Unified Container Repository</strong> All Stream Host images are now consolidated under the single <code>xmpro.azurecr.io/stream-host</code> repository. The previous separate <code>xmprocontrib.azurecr.io</code> repository has been eliminated for simplified image management.</td>
+</tr>
+<tr>
+<td>Enhancement</td>
+<td><strong>Streamlined Image Variants</strong> Reduced image complexity from 4+ variants to 3 clear options with version-specific tagging that includes base OS and Python version, making it easier to choose the right container image for your deployment:<br>• <code>4.4.19-bookworm-slim</code> (Debian)<br>• <code>4.4.19-bookworm-slim-python3.12</code> (Debian with Python)<br>• <code>4.4.19-alpine3.21</code> (Alpine)</td>
+</tr>
+<tr>
+<td>Enhancement</td>
+<td><strong>Simplified Deployment Experience</strong> Minimum required environment variables reduced from 6 to 3 for basic setup. Basic deployment examples no longer require separate <code>.env</code> files, making initial configuration more straightforward.</td>
+</tr>
+<tr>
+<td>Documentation</td>
+<td><strong>Improved Documentation and Examples</strong> Added hardware requirements sizing guidelines, shell-specific examples for PowerShell and Bash/Terminal, improved Docker Compose YAML structure with better commenting, and Git Bash compatibility support with <code>MSYS_NO_PATHCONV=1</code> for Windows users, providing clearer setup guidance and reducing deployment troubleshooting time.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="nuget-packages">NuGet Packages</h2>
+<h3 id="agent-development">Agent Development</h3>
+<h4 id="xmproxmiotframework">XMPro.XMIoT.Framework</h4>
+<table>
+<thead>
+<tr>
+<th>Change Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Enhancement</td>
+<td>The <a href="../how-tos/agents/building-agents.html#iagentlogger">IAgentLogger</a> interface was added so that Agents can log errors, information, and warning messages to the <a href="../how-tos/data-streams/check-data-stream-logs.html">Data Stream Logs</a>, whereas the existing <a href="../how-tos/agents/building-agents.html#ipublisherror">IPublishError</a> publishes to the output error endpoint.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="connector-development">Connector Development</h3>
+<p>No changes.</p>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: July 14, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

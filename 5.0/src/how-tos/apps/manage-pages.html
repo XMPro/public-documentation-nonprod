@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Manage Pages | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Manage Pages | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/how-tos/apps/manage-pages.md&amp;version=GBmain&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="manage-pages">Manage Pages</h1>
+
+<p>A Page is a web page built with XMPro's App Designer. Pages allow you to separate the Application into sections, navigate between the Pages, and pass data between Pages using Parameters.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>It is recommended that you read the article listed below to improve your understanding of Pages.</p>
+<ul>
+<li><a href="../../concepts/application/page.html">Page</a></li>
+<li><a href="../../concepts/application/canvas.html">Canvas</a></li>
+<li><a href="manage-apps.html">How to Manage Apps</a></li>
+</ul>
+</div>
+<h2 id="creating-a-page">Creating a Page</h2>
+<p>To create a Page within an existing application, follow the steps below:</p>
+<ol>
+<li>Click on <em>Applications</em> from the left-hand menu.</li>
+<li>Click on the <em>edit</em> button of the Application from the list.</li>
+</ol>
+<p><img src="../../images/apps/apps-2.png" alt="Applications list with edit button highlighted"></p>
+<ol start="3">
+<li>Click on the <em>plus</em> button to add a new Page.</li>
+<li>Enter the details of the new Page.</li>
+<li>Choose the layout of the new Page.</li>
+<li>Click on <em>Save</em>.</li>
+</ol>
+<p><img src="../../images/apps/pages/pages-2.png" alt="New page creation dialog with fields for name, title, and layout"></p>
+<p>The new Page will show in the list of pages for the Application.</p>
+<p><img src="../../images/apps/pages/pages-3.png" alt="Page list showing the newly created page"></p>
+<h2 id="designing-a-page">Designing a Page</h2>
+<p>Once a Page has been created, you can design your Page to meet your specifications. There are many Blocks or controls that can be added from the Blocks tab such as Text, Number, and Date Boxes, Grids, Charts, Gauges, Accordions, and Tabs. <a href="../../concepts/application/block.html#list-of-blocks">The full list of Blocks can be found here</a>.</p>
+<h3 id="adding-new-blocks">Adding New Blocks</h3>
+<p>Blocks are accessed through the Blocks tab in the page designer and can be added to the page by dragging them into the Canvas. Blocks can also be searched by typing in the search bar at the top.</p>
+<p><img src="../../images/apps/pages/pages-4.png" alt="Blocks tab with different block categories and search bar"></p>
+<h3 id="moving-blocks-in-the-canvas">Moving Blocks in the Canvas</h3>
+<p>Blocks can be rearranged within the Canvas in a few ways:</p>
+<h4 id="moving-blocks-using-the-canvas">Moving Blocks using the Canvas</h4>
+<ol>
+<li>Click and drag the Block you want to move.</li>
+<li>Hover over where you want to move the Block to. A green line and an orange outline will appear to show where the Block will end up.</li>
+<li>Release the mouse to drop the Block.</li>
+</ol>
+<video autoplay loop muted playsinline style="max-width: 100%; height: auto;">
+  <source src="../../images/apps/pages/pages-5.mp4" type="video/mp4">
+</video>
+<!-- Note: Image pages_5.gif is missing and needs to be sourced -->
+<h4 id="moving-blocks-using-the-toolbar">Moving Blocks using the Toolbar</h4>
+<p>Sometimes the Block you want to move may be hard to click or behind other Blocks. In this case, you can move the Block by its drag handle button in the blue toolbar.</p>
+<ol>
+<li>Select the Block by clicking one of its children and clicking the Select Parent button in the blue toolbar or by selecting it in the Page Layers.</li>
+<li>Click and drag the drag handle button in the blue toolbar.</li>
+<li>Hover over where you want to move the Block to. A green line and an orange outline will appear to show where the Block will end up.</li>
+<li>Release the mouse to drop the Block.</li>
+</ol>
+<video autoplay loop muted playsinline style="max-width: 100%; height: auto;">
+  <source src="../../images/apps/pages/pages-6.mp4" type="video/mp4">
+</video>
+<!-- Note: Image pages_6.gif is missing and needs to be sourced -->
+<h4 id="moving-blocks-by-the-page-layers">Moving Blocks by the Page Layers</h4>
+<p>Sometimes you may need to be more precise in dragging a Block. In this case, you can move the Block by rearranging it in the Page Layers. <a href="use-page-layers.html">See the Page Layers article for more information on how to use Page Layers.</a></p>
+<ol>
+<li>Expand the Block you want to move and the Block you want to put in the Page Layers.</li>
+<li>Click and drag the drag handle in the Page Layers.</li>
+<li>Hover over where you want to move the block to. A green line and an orange outline will appear to show where the block will end up.</li>
+<li>Release the mouse to drop the block.</li>
+</ol>
+<video autoplay loop muted playsinline style="max-width: 100%; height: auto;">
+  <source src="../../images/apps/pages/pages-7.mp4" type="video/mp4">
+</video>
+<!-- Note: Image pages_7.gif is missing and needs to be sourced -->
+<h2 id="launching-a-page">Launching a Page</h2>
+<p>Once a Page has been designed, you can view the finished product of the designed Page by launching it.</p>
+<ol>
+<li>Click on the page you want to preview.</li>
+<li>Click on <em>Launch</em>.</li>
+</ol>
+<p><img src="../../images/apps/pages/pages-8.png" alt="Page list with Launch button highlighted"></p>
+<p><img src="../../images/apps/pages/pages-9.png" alt="Preview of the launched page"></p>
+<h2 id="deleting-a-page">Deleting a Page</h2>
+<p>To delete the Page, open the Page itself and delete it via the settings menu. Follow the steps below to delete the Page:</p>
+<ol>
+<li>Open the Page you would like to delete.</li>
+</ol>
+<p><img src="../../images/apps/pages/pages-10.png" alt="Page editor with page opened"></p>
+<ol start="2">
+<li>Click on <em>Settings</em>.</li>
+<li>Click on <em>Delete</em>.</li>
+<li>Confirm that you want to delete the Page.</li>
+</ol>
+<p><img src="../../images/apps/pages/pages-11.png" alt="Settings menu with Delete option highlighted"></p>
+<h2 id="further-reading">Further Reading</h2>
+<ul>
+<li><a href="import-an-app-page.html">How to Import an App Page</a></li>
+<li><a href="design-pages-for-mobile.html">How to Design Pages for Mobile</a></li>
+<li><a href="navigate-between-pages.html">How to Navigate between Pages</a></li>
+<li><a href="manage-connections.html">How to Manage Connections</a></li>
+<li><a href="use-dynamic-properties.html">How to Use Dynamic Properties</a></li>
+<li><a href="use-expression-properties.html">How to Use Expression Properties</a></li>
+<li><a href="use-page-layers.html">How to Use the Page Layers</a></li>
+<li><a href="use-block-styling-and-devices.html">How to Use Block Styling and Devices</a></li>
+<li><a href="use-validation.html">How to Use Validation</a></li>
+<li><a href="use-variables-and-expressions.html">How to Use Variables &amp; Expressions</a></li>
+<li><a href="manage-widgets.html">How to Manage Widgets</a></li>
+</ul>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: July 14, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

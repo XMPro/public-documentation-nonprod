@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Sizing Guideline | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Sizing Guideline | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../images/favicon.png">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/resources/sizing-guideline.md&amp;version=GBmain&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="sizing-guideline">Sizing Guideline</h1>
+
+<p>This is a guideline for the compute resources needed for the different components in a deployment.</p>
+<p>Small, medium, and large sizing estimates are provided. The small option starts with the minimum recommended resources and, generally, each subsequent size doubles the number of CPU cores and available RAM. Not all components experience the same increase in load, so the estimates may not increase at the same rate for all components.</p>
+<p>Many factors influence the number of Apps and Data Streams a deployment can effectively run. These factors include:</p>
+<ul>
+<li>the number of data streams,</li>
+<li>how frequently the streams process data,</li>
+<li>the size of the data payload,</li>
+<li>the number of recommendations to be monitored,</li>
+<li>the number of apps and event boards being served,</li>
+<li>the complexity of apps and event boards (the number of elements and integration points),</li>
+<li>and the number of concurrent users accessing the apps and event boards.</li>
+</ul>
+<p>As a rough guide, an example workload for a <em>Medium</em>-sized deployment would be:</p>
+<ul>
+<li>~200 Data Streams running across</li>
+<li>~15 Stream Hosts,</li>
+<li>serving data and triggering recommendations for ~10 Apps</li>
+</ul>
+<h2 id="on-premise">On-Premise</h2>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Small</th>
+<th>Medium</th>
+<th>Large</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Subscription Manager (SM) <br><strong>1</strong><br></td>
+<td>2 CPU<br>8GB RAM</td>
+<td>2 CPU<br>8GB RAM</td>
+<td>4 CPU<br>16GB RAM</td>
+</tr>
+<tr>
+<td>Application Designer (AD)<br><br></td>
+<td>2 CPU<br>8GB RAM</td>
+<td>4 CPU<br>16GB RAM</td>
+<td>8 CPU<br>32GB RAM</td>
+</tr>
+<tr>
+<td>Data Stream Designer (DS)<br><br></td>
+<td>2 CPU<br>8GB RAM</td>
+<td>4 CPU<br>16GB RAM</td>
+<td>8 CPU<br>32GB RAM</td>
+</tr>
+<tr>
+<td>Stream Host Server (SH) <br><strong>2,3</strong><br></td>
+<td>2 CPU<br>8GB RAM</td>
+<td>4 CPU<br>16GB RAM</td>
+<td>8 CPU<br>32GB RAM</td>
+</tr>
+<tr>
+<td>SQL Database Server <br>(Combined for SM, AD, DS) <br><strong>4</strong></td>
+<td>2 CPU<br>8GB RAM</td>
+<td>4 CPU<br>16GB RAM</td>
+<td>8 CPU<br>32GB RAM</td>
+</tr>
+</tbody>
+</table>
+<div class="NOTE">
+<h5>Note</h5>
+<h4 id="footnotes">Footnotes</h4>
+<p><strong>1</strong> High volumes of concurrent users may require additional compute.</p>
+<p><strong>2</strong> Multiple Stream Hosts can be deployed to the Stream Host Server.</p>
+<p><strong>3</strong> If the Stream Host needs more resources, consider increasing the RAM before adding additional CPU cores as Stream Hosts perform in-memory processing of events.</p>
+<p><strong>4</strong> High volumes of recommendations may require additional compute and storage.</p>
+</div>
+<h2 id="azure">Azure</h2>
+<p>Estimates for Azure target the Premium v3 service plan for applications, and Azure SQL Database for the databases.</p>
+<p>Azure SQL database estimates are based on the General-Purpose service tier and use the DTU-based purchasing model (a blended measure of compute, storage, and IO resources).</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Small</th>
+<th>Medium</th>
+<th>Large</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Subscription Manager (SM) App Service Plan<br><strong>1</strong></td>
+<td>P1v3</td>
+<td>P1v3</td>
+<td>P2v3</td>
+</tr>
+<tr>
+<td>Application Designer (AD) App Service Plan<br></td>
+<td>P1v3</td>
+<td>P2v3</td>
+<td>P3v3</td>
+</tr>
+<tr>
+<td>Data Stream Designer (DS) App Service Plan<br></td>
+<td>P1v3</td>
+<td>P1v3</td>
+<td>P2v3</td>
+</tr>
+<tr>
+<td>Stream Host Server (SH) App Service Plan<br><strong>2,3</strong></td>
+<td>P1v3</td>
+<td>P2v3</td>
+<td>P3v3</td>
+</tr>
+<tr>
+<td>Azure SQL Database <br>(For each of SM, AD, DS) <br><strong>4</strong></td>
+<td>Standard – 20 DTUs</td>
+<td>Standard – 50 DTUs</td>
+<td>Standard – 100 DTUs</td>
+</tr>
+</tbody>
+</table>
+<div class="NOTE">
+<h5>Note</h5>
+<p><strong>Footnotes</strong></p>
+<p><strong>1</strong> High volumes of concurrent users may require additional compute.</p>
+<p><strong>2</strong> Multiple Stream Hosts can be deployed to the Stream Host App Service Plan.</p>
+<p><strong>3</strong> If the Stream Host needs more resources, consider increasing the RAM before adding additional CPU cores as Stream Hosts perform in-memory processing of events.</p>
+<p><strong>4</strong> High volumes of recommendations may require additional compute and storage.</p>
+</div>
+<p>For additional details please see <a href="https://azure.microsoft.com/en-au/pricing/details/app-service/windows/">Azure App Service Pricing</a> and <a href="https://azure.microsoft.com/en-au/pricing/details/azure-sql-database/single/#pricing">Azure SQL Database Pricing</a>.</p>
+<h2 id="aws">AWS</h2>
+<p>Estimates for AWS target Amazon EC2 T3 instances for applications, and an Amazon RDS T3 instance for the databases.</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Small</th>
+<th>Medium</th>
+<th>Large</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Subscription Manager (SM) EC2 Instance<br><strong>1</strong></td>
+<td>t3.large</td>
+<td>t3.large</td>
+<td>t3.xlarge</td>
+</tr>
+<tr>
+<td>Application Designer (AD) EC2 Instance<br></td>
+<td>t3.large</td>
+<td>t3.xlarge</td>
+<td>t3.2xlarge</td>
+</tr>
+<tr>
+<td>Data Stream Designer (DS) EC2 Instance<br></td>
+<td>t3.large</td>
+<td>t3.large</td>
+<td>t3.xlarge</td>
+</tr>
+<tr>
+<td>Stream Host Server (SH) EC2 Instance<br><strong>2,3</strong></td>
+<td>t3.large</td>
+<td>t3.xlarge</td>
+<td>t3.2xlarge</td>
+</tr>
+<tr>
+<td>Amazon RDS for SQL <br>(Combined for SM, AD, DS) <br><strong>4</strong></td>
+<td>t3.large</td>
+<td>t3.xlarge</td>
+<td>t3.2xlarge</td>
+</tr>
+</tbody>
+</table>
+<div class="NOTE">
+<h5>Note</h5>
+<h4 id="footnotes-1">Footnotes</h4>
+<p><strong>1</strong> High volumes of concurrent users may require additional compute.</p>
+<p><strong>2</strong> Multiple Stream Hosts can be deployed to the Stream Host Server.</p>
+<p><strong>3</strong> If the Stream Host needs more resources, consider increasing the RAM before adding additional CPU cores as Stream Hosts perform in-memory processing of events.</p>
+<p><strong>4</strong> High volumes of recommendations may require additional compute and storage.</p>
+</div>
+<p>For additional details please see <a href="https://aws.amazon.com/ec2/instance-types/">AWS EC2</a> and <a href="https://aws.amazon.com/rds/instance-types/">RDS instance types</a>.</p>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: July 14, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

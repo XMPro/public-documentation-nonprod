@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>1. Preparation | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="1. Preparation | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../images/favicon.png">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/install.md&amp;version=GBmain&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="1-preparation">1. Preparation</h1>
+
+<p>Before attempting any of the supported XMPro deployment options (e.g. Cloud, On-Premise), these are the server prerequisites:</p>
+<ul>
+<li><a href="install.html#hardware-requirements">Hardware Requirements</a></li>
+<li><a href="install.html#software-requirements">Software Requirements</a></li>
+<li><a href="install.html#signing-certificate">Signing Certificate</a></li>
+<li><a href="install.html#httpsssl-certificate">HTTPS/SSL Certificate</a></li>
+<li><a href="install.html#smtp-account">SMTP Account</a></li>
+<li><a href="install.html#twilio-account-optional">Twilio Account (Optional)</a></li>
+</ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p><a href="../getting-started/browser-requirements.html"><strong>Browser Requirements</strong></a></p>
+<ul>
+<li>Supported Browsers</li>
+<li>Supported Operating Systems</li>
+<li>Third-Party Cookies</li>
+</ul>
+</div>
+<p><img src="../images/installation-preparation.png" alt="Fig 1: The sequence of the 'Prepare to Install XMPro' step within the overall process"></p>
+<h2 id="hardware-and-software-requirements">Hardware and Software Requirements</h2>
+<h3 id="hardware-requirements">Hardware Requirements</h3>
+<p>For each environment, refer to the <a href="../resources/sizing-guideline.html">Sizing Guideline</a> guideline to compute resources needed for small, medium, and large deployments:</p>
+<ul>
+<li>Azure</li>
+<li>AWS</li>
+<li>On-Prem</li>
+</ul>
+<h3 id="software-requirements">Software Requirements</h3>
+<p>This section describes the software that must be installed on the server before installing XMPro (refer <a href="deployment/index.html">Deploy XMPro</a> section), as well as the software required for the post-installation step of installing a Stream Host.</p>
+<h4 id="web-application-servers-and-sql-database-server">Web Application Servers and SQL Database Server</h4>
+<p>The following software must be installed on the web application server per product:</p>
+<table><thead><tr><th width="466">Software Requirements</th><th width="92">Azure 1</th><th width="74">AWS</th><th>On-Prem</th></tr></thead><tbody><tr><td><strong>Windows Installers</strong></td><td></td><td></td><td></td></tr><tr><td><a href="https://dotnet.microsoft.com/en-us/download/dotnet-framework/net481">Microsoft .NET Framework 4.8.1 Runtime</a></td><td>No</td><td>No</td><td>Yes</td></tr><tr><td><strong>Subscription Manager (SM) Web Application Server</strong></td><td></td><td></td><td></td></tr><tr><td>Windows Server 2022</td><td>Yes</td><td>Yes</td><td>Yes</td></tr><tr><td><a href="https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48">Microsoft .NET Framework 4.8 Runtime</a></td><td>Yes</td><td>Yes</td><td>Yes</td></tr><tr><td>Microsoft Internet Information Services (IIS) 10</td><td>Yes</td><td>Yes</td><td>Yes</td></tr><tr><td><a href="https://www.iis.net/downloads/microsoft/url-rewrite">IIS URL Rewrite 2.1</a></td><td>Yes</td><td>Yes</td><td>Yes</td></tr><tr><td><strong>Application Designer (AD) Web Application Server</strong></td><td></td><td></td><td></td></tr><tr><td>Windows Server 2022</td><td>Yes</td><td>Yes</td><td>Yes</td></tr><tr><td><a href="https://dotnet.microsoft.com/en-us/download/dotnet/8.0">Microsoft ASP.NET Core Runtime 8 (Hosting Bundle)</a></td><td>No</td><td>No</td><td>Yes</td></tr><tr><td>Microsoft Internet Information Services (IIS) 10</td><td>Yes</td><td>Yes</td><td>Yes</td></tr><tr><td><a href="https://www.iis.net/downloads/microsoft/url-rewrite">IIS URL Rewrite 2.1</a></td><td>Yes</td><td>Yes</td><td>Yes</td></tr><tr><td><strong>Data Stream Designer (DS)</strong> <strong>Web Application Server</strong></td><td></td><td></td><td></td></tr><tr><td>Windows Server 2022</td><td>Yes</td><td>Yes</td><td>Yes</td></tr><tr><td><a href="https://dotnet.microsoft.com/en-us/download/dotnet/8.0">Microsoft ASP.NET Core Runtime 8 (Hosting Bundle)</a></td><td>No</td><td>No</td><td>Yes</td></tr><tr><td>Microsoft Internet Information Services (IIS) 10</td><td>Yes</td><td>Yes</td><td>Yes</td></tr><tr><td><a href="https://www.iis.net/downloads/microsoft/url-rewrite">IIS URL Rewrite 2.1</a></td><td>Yes</td><td>Yes</td><td>Yes</td></tr><tr><td><strong>SQL Database Server (Combined SM, AD, DS)</strong></td><td></td><td></td><td></td></tr><tr><td>Windows Server 2019 or 2022</td><td>Yes</td><td>Yes</td><td>Yes</td></tr><tr><td>Microsoft SQL Server 2019 or 2022</td><td>Yes</td><td>Yes</td><td>Yes</td></tr></tbody></table>
+<div class="NOTE">
+<h5>Note</h5>
+<p><strong>Footnotes</strong></p>
+<p><strong>1</strong> As per the ARM template for your Azure instance.</p>
+</div>
+<h4 id="stream-host-server">Stream Host Server</h4>
+<p>The following software must be installed on the Stream Host server:</p>
+<table data-full-width="false"><thead><tr><th width="266">Software Requirements</th><th width="122">Windows</th><th width="141">Azure Web Job</th><th width="111">Ubuntu </th><th>Docker</th></tr></thead><tbody><tr><td><a href="https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-aspnetcore-8.0.3-windows-x64-installer">ASP.NET Core Runtime 8.0.3</a></td><td>No <strong>1</strong></td><td>Yes <strong>2</strong></td><td>Yes <strong>3</strong></td><td>No</td></tr><tr><td><a href="https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-8.0.3-windows-x64-installer">.NET Runtime 8.0.3</a></td><td>No <strong>1</strong></td><td>Yes <strong>2</strong></td><td>Yes <strong>3</strong></td><td>No</td></tr></tbody></table>
+<div class="NOTE">
+<h5>Note</h5>
+<p><strong>Footnotes</strong></p>
+<p><strong>1</strong> Not a prerequisite from v4.4.1+.<br>
+<strong>2</strong> As per the ARM template for your Azure instance.<br>
+<strong>3</strong> See the Ubuntu software install commands <a href="complete-installation/install-stream-host/ubuntu-16.04%2B-x64.html#software-install-commands">here</a>.</p>
+</div>
+<h2 id="certificate-and-communication-steps">Certificate and Communication Steps</h2>
+<h3 id="signing-certificate">Signing Certificate</h3>
+<p>Subscription Manager manages Identity and access for the whole XMPro Platform. To do this, it regularly issues authentication tokens to the users as they log into the system. The server must sign these tokens to ensure their validity, hence a signing certificate is required.</p>
+<p>A PKCS 12 archived certificate .pfx file is required. The minimum length of the accepted private key is 2048. Follow the instructions below to generate a Signing certificate:</p>
+<ul>
+<li>Download and install <a href="http://www.slproweb.com/products/Win32OpenSSL.html">OpenSSL for Windows</a></li>
+<li>Open a command prompt as administrator and navigate to the OpenSSL install directory. The default location is <code>C:\Program Files\OpenSSL-Win64</code></li>
+<li>Run the following commands</li>
+</ul>
+<pre><code>cd C:\Program Files\OpenSSL-Win64
+cd bin
+openssl genrsa -out sign.pem 2048
+openssl req -x509 -newkey rsa:4096 -sha256 -nodes -keyout sign.key -out sign.crt -subj &quot;/CN={YourMachine}&quot; -days 3650
+openssl pkcs12 -export -out sign.pfx -inkey sign.key -in sign.crt -certfile sign.crt
+</code></pre>
+<ul>
+<li>Follow the prompts on the screen and complete the certificate request</li>
+<li>Make a note of the <em>Common Name (&quot;/CN='')</em> and <em>Password</em> you choose</li>
+<li>Create a file called <em>sign.password.txt</em> and add the password to the file</li>
+</ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The resulting <em>sign.pfx</em> and <em>sign.password.txt</em> files will be required during the installation.</p>
+</div>
+<h3 id="httpsssl-certificate">HTTPS/SSL Certificate</h3>
+<p>The XMPro Platform enforces secure communication using HTTPS/SSL. This means the server it is deployed to must have HTTPS configured. Depending on the deployment option you choose, you may have the following options:</p>
+<ul>
+<li>Order a certificate from a certificate authority (CA)</li>
+<li>Create a certificate in AWS (AWS deployment only)</li>
+<li>Create a self-signed certificate (On-Premise only)</li>
+</ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The DNS or hostname that users are expected to use to browse to the XMPro Platform must correspond to the SSL Certificate Common Name.</p>
+</div>
+<h4 id="creating-self-signed-certificate-through-powershell">Creating Self-Signed Certificate through PowerShell</h4>
+<p>If you need to create a self-signed certificate, open Windows PowerShell as administrator and follow the instructions below:</p>
+<ol>
+<li>Create SSL certificate with proper extensions, replacing &quot;yourdomain.com&quot; with your actual domain:</li>
+</ol>
+<pre><code class="lang-powershell"># Create SSL certificate with proper extensions
+$cert = New-SelfSignedCertificate `
+    -Subject &quot;CN=yourdomain.com&quot; `
+    -DnsName @(&quot;yourdomain.com&quot;, &quot;www.yourdomain.com&quot;, &quot;localhost&quot;) `
+    -KeyLength 4096 `
+    -KeyAlgorithm RSA `
+    -HashAlgorithm SHA256 `
+    -KeyExportPolicy Exportable `
+    -KeyUsage DigitalSignature, KeyEncipherment `
+    -TextExtension @(&quot;2.5.29.37={text}1.3.6.1.5.5.7.3.1,1.3.6.1.5.5.7.3.2&quot;) `
+    -NotAfter (Get-Date).AddYears(1)
+</code></pre>
+<ol start="2">
+<li>Export to PFX with a strong password:</li>
+</ol>
+<pre><code class="lang-powershell"># Export to PFX
+$password = ConvertTo-SecureString -String &quot;YourStrongPassword&quot; -Force -AsPlainText
+Export-PfxCertificate -Cert $cert -FilePath &quot;c:\ssl-cert.pfx&quot; -Password $password
+</code></pre>
+<ol start="3">
+<li>Clean up the certificate from the local store (optional):</li>
+</ol>
+<pre><code class="lang-powershell"># Clean up
+Remove-Item -Path &quot;Cert:\LocalMachine\My\$($cert.Thumbprint)&quot;
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The directory you specify in step 2's <code>-FilePath</code> parameter must already exist.</p>
+</div>
+<ol start="4">
+<li>Create a txt file with the name <em>cert.password.txt</em> and add the certificate password to this file.</li>
+</ol>
+<div class="WARNING">
+<h5>Warning</h5>
+<p><strong>Troubleshooting Self-Signed Certificate Issues</strong></p>
+<p>If the Subscription Manager installer reports certificate validation errors with PowerShell-generated certificates:</p>
+<ol>
+<li><strong>Enhanced Security Parameters</strong>: The updated certificate command includes improved security settings (4096-bit RSA, SHA256 hash, proper key usage) that resolve most compatibility issues with the SM installer.</li>
+<li><strong>Extended Key Usage</strong>: The certificate includes both Server Authentication (<code>1.3.6.1.5.5.7.3.1</code>) and Client Authentication (<code>1.3.6.1.5.5.7.3.2</code>) extensions as shown in the command above.</li>
+<li><strong>Certificate Validation</strong>: Verify the certificate was created correctly by running:
+<pre><code class="lang-powershell">Get-ChildItem -Path cert:\LocalMachine\My | Where-Object {$_.Subject -like &quot;*yourdomain.com*&quot;}
+</code></pre>
+</li>
+<li><strong>File Permissions</strong>: Ensure the exported <code>.pfx</code> file and <code>.password.txt</code> file have appropriate read permissions.</li>
+<li><strong>Certificate Store</strong>: If you didn't run the cleanup command in step 3, the certificate will remain in the LocalMachine\My store, which is normal and expected.</li>
+</ol>
+</div>
+<h4 id="creating-self-signed-certificate-through-iis">Creating Self-Signed Certificate through IIS</h4>
+<p>The self-signed certificate can also be generated through IIS, following the instructions below:</p>
+<ol>
+<li>Open IIS Manager and click &quot;Server Certificates&quot;</li>
+</ol>
+<p><img src="../images/iis-manager.png" alt="Fig 2: Creating a Self-Signed Certificate through IIS"></p>
+<ol start="2">
+<li>Click &quot;Create Self-Signed Certificate&quot;</li>
+</ol>
+<p><img src="../images/installation-preparation-server-cert2.png" alt="Fig 3: Click &quot;Create Self-Signed Certificate&quot;"></p>
+<ol start="3">
+<li>Enter &quot;cert&quot; for the Certificate name, select &quot;Personal&quot; for the certificate store, and click OK</li>
+</ol>
+<p><img src="../images/installation-preparation-server-cert3.png" alt="Fig 4: Enter a friendly name"></p>
+<ol start="4">
+<li>Confirm the certificate is generated and listed on 'Server Certificates'</li>
+<li>Right click on the certificate and Export, taking note of the location and password entered for later use</li>
+</ol>
+<h3 id="smtp-account">SMTP Account</h3>
+<p>XMPro components use emails to notify users of certain events, for instance, a new User signed up, or your account is ready. Please set up an SMTP account and have the necessary server details, as these are required for the notifications to work.</p>
+<ol>
+<li><strong>TLS/SSL Security</strong>
+<ul>
+<li>TLS encryption is required for secure email transmission</li>
+<li>Use port 587 (STARTTLS) for modern secure email delivery</li>
+<li>Enable SSL must be set to &quot;true&quot; in configuration</li>
+</ul>
+</li>
+<li><strong>Account Configuration</strong> You will need the following details from your email provider:</li>
+</ol>
+<table><thead><tr><th width="120">Setting</th><th width="265">Value</th><th>Description</th></tr></thead><tbody><tr><td>Smtp Server</td><td>Your provider's SMTP server address</td><td>The fully qualified domain name of your SMTP server (e.g. smtp.office365.com)</td></tr><tr><td>User Name</td><td>Your SMTP account username</td><td>Often the same as your email address (e.g. noreply@mydomain.com)</td></tr><tr><td>Password</td><td>Your SMTP account password</td><td>Secure authentication credentials</td></tr><tr><td>Port</td><td>587</td><td>Required for TLS (STARTTLS) encryption</td></tr><tr><td>Enable SSL</td><td>true</td><td>Must be enabled for secure transmission</td></tr></tbody></table>
+<h3 id="twilio-account-optional">Twilio Account (Optional)</h3>
+<p>App Designer uses SMS, among other means, to notify users of certain events e.g. a recommendation alert was triggered or resolved, etc. An SMS provider is required to send SMS notifications.</p>
+<p>Please set up an account at Twilio using these <a href="https://www.twilio.com/docs/usage/tutorials/how-to-use-your-free-trial-account">instructions</a> and have the necessary details handy, i.e. Account ID, Authorization Token, and the Phone Number.</p>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: July 14, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

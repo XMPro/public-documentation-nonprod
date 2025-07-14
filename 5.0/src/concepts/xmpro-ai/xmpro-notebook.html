@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>XMPro Notebook | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="XMPro Notebook | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      <meta name="description" content="v4.3.0">
+      <link rel="icon" href="../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/concepts/xmpro-ai/xmpro-notebook.md&amp;version=GBmain&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="xmpro-notebook">XMPro Notebook</h1>
+
+<div class="video-container">
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/7D1IpFmA-CQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+<h2 id="overview">Overview</h2>
+<p>XMPro Notebook provides an intuitive and flexible interface for data analysis, scientific computing, machine learning, and more. Users can write code and execute cells independently, which facilitates step-by-step exploration and experimentation with real-time data.</p>
+<h3 id="getting-started">Getting Started</h3>
+<p>XMPro Notebook is an embedded version of <a href="https://jupyter.org">Jupyter</a> and can be accessed from the waffle menu on the top left navigation, and by navigating to &quot;AI&quot;.</p>
+<p><img src="../../images/resources/xmpro-notebook_waffle_menu.png" alt="Fig 1: XMPro Notebook"></p>
+<h3 id="quickstart-guide">Quickstart Guide</h3>
+<p>Once opened there is a handy quick-start guide that acts as an introduction on how to use XMPro Notebook.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The first time an XMPro notebook user session loads, the infrastructure is provisioned in real-time, meaning that the application will take a few seconds to load.</p>
+</div>
+<h3 id="chatgpt">ChatGPT</h3>
+<p>XMPro AI has built-in <a href="https://openai.com/blog/chatgpt">ChatGPT</a> functionality through the use of Python Magics. Once you've provided your ChatGPT API Key, you can use line magic to provide a single line of input, or cell magic to provide multiple lines of input.</p>
+<h4 id="set-your-chatgpt-api-key">Set your ChatGPT API Key</h4>
+<pre><code class="lang-python"># Set your ChatGPT API Key
+%chatgpt -k &quot;&lt;your ChatGPT api-key&gt;&quot;
+</code></pre>
+<h4 id="line-magic-chatgpt">Line magic: %chatgpt</h4>
+<p><em>Example input</em>:</p>
+<pre><code class="lang-python">%chatgpt &quot;show a correlation plot for the iris dataset&quot;
+</code></pre>
+<p><em>Example output</em>:</p>
+<pre><code class="lang-python">import seaborn as sns import matplotlib.pyplot as plt
+iris = sns.load_dataset('iris') corr = iris.corr()
+sns.heatmap(corr, annot=True, cmap='coolwarm') plt.show()
+</code></pre>
+<h4 id="cell-magic-chatgpt">Cell magic: %%chatgpt</h4>
+<p><em>Example input</em>:</p>
+<pre><code class="lang-python">%%chatgpt &quot;improve this plot example&quot;
+import matplotlib.pyplot as plt
+x = [1, 2, 3, 4, 5] y = [5, 4, 3, 2, 1]
+plt.plot(x, y, 'ro') plt.xlabel('X axis') plt.ylabel('Y axis') plt.title('Example Plot') plt.show()
+</code></pre>
+<p><em>Example output:</em></p>
+<pre><code class="lang-python">import matplotlib.pyplot as plt
+import numpy as np
+
+# Generate some random data
+x = np.random.randint(0, 10, size=50)
+y = np.random.randint(0, 10, size=50)
+colors = np.random.rand(50)
+
+# Create a scatter plot with different marker sizes and colors
+plt.scatter(x, y, s=50*x, c=colors, alpha=0.5)
+
+# Set axis labels, limits, and title
+plt.xlabel('X axis')
+plt.ylabel('Y axis')
+plt.xlim(0, 10)
+plt.ylim(0, 10)
+plt.title('Random Data Scatter Plot')
+
+# Add a colorbar legend
+plt.colorbar()
+
+# Display the plot
+plt.show()
+</code></pre>
+<video autoplay loop muted playsinline style="max-width: 100%; height: auto;">
+  <source src="images/AI_Overview_Copilot_Notebook.mp4" type="video/mp4">
+</video>
+<h3 id="mlops">MLops</h3>
+<p>MLflow is a well-known open-source MLops platform that streamlines the machine learning lifecycle: to create instances of models and run them in a structured and organized manner.</p>
+<p>This example illustrates how to leverage the MLflow Python library to create an instance of a machine learning model and execute it within your MLflow environment.</p>
+<p><em>Example input</em>:</p>
+<pre><code class="lang-python"># Importing necessary libraries
+from mlflow.models.signature import ModelSignature
+from mlflow.types.schema import ColSpec, Schema
+import mlflow
+from sklearn.linear_model import LinearRegression
+import numpy as np
+
+# Generate some sample data for training
+X = np.array([[1], [2], [3], [4], [5]])
+y = np.array([2, 4, 6, 8, 10])
+
+# Create an instance of Linear Regression model
+model_lr = LinearRegression()
+
+# Fit the model to the training data
+model_lr.fit(X, y)
+
+# Define a schema for the input and output of your model
+# In this case, both input and output are single columns of string type
+sig = ModelSignature(
+    inputs=Schema([ColSpec(name=&quot;input&quot;, type=&quot;string&quot;)]),
+    outputs=Schema([ColSpec(name=&quot;output&quot;, type=&quot;string&quot;)]),
+)
+
+# Set the tracking URI for MLflow
+# This is the address where the MLflow server is running
+# Replace the IP address and port number with the ones for your server
+mlflow.set_tracking_uri('http://&lt;URI&gt;:&lt;PORT&gt;')
+
+# Start a new MLflow run
+# This represents a single execution of the model training code
+mlflow.start_run()
+
+# Log the trained model with MLflow
+mlflow.sklearn.log_model(
+    sk_model=model_lr,
+    artifact_path=&quot;model&quot;,
+    registered_model_name=&quot;LinearRegression&quot;,
+    signature=sig
+)
+
+# End the MLflow run
+mlflow.end_run()
+</code></pre>
+<p><em>Example output:</em></p>
+<pre><code class="lang-python">Successfully registered model 'LinearRegression'.
+Created version '1' of model 'LinearRegression'.
+</code></pre>
+<p><img src="../../images/resources/xmpro-notebook_mlflow-output.png" alt="Fig 3: The trained model is logged in MLflow."></p>
+<h3 id="libraries">Libraries</h3>
+<p>Libraries are a collection of pre-written code and functions that can be imported and used in programs to simplify development and add additional functionality. The following Python libraries are pre-installed in XMPro Notebook:</p>
+<table>
+<thead>
+<tr>
+<th><p>altair </p><p>beautifulsoup4 </p><p>bokeh </p><p>bottleneck </p><p>cloudpickle conda-forge::blas=*=openblas</p><p>cython </p><p>dask </p><p>dill </p><p>h5py<br>ipympl </p></th>
+<th><p>ipywidgets </p><p>matplotlib-base </p><p>mlflow </p><p>numba </p><p>numexpr</p><p>numpy </p><p>openai</p><p>opencv python </p><p>pandas </p><p>patsy </p><p>protobuf</p></th>
+<th><p>pytables </p><p>scikit-image </p><p>scikit-learn </p><p>scipy </p><p>seaborn </p><p>sqlalchemy </p><p>statsmodels </p><p>sympy </p><p>widgetsnbextension </p><p>xlrd<br></p></th>
+</tr>
+</thead>
+</table>
+<p>If any additional libraries are needed, the installation can be performed in the Notebook Cell. Below is an example command for a Python library:</p>
+<pre><code class="lang-python">pip install &lt;your library name&gt;
+</code></pre>
+<p>Please <a href="mailto:support@xmpro.com?subject=XMPro-Notebook-Library-Request">contact</a> XMPro if you would like to propose another library added to the set of defaults.</p>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>Any library you load is only valid for the session and will need to be reinstalled when a new session is created.</p>
+</div>
+<h3 id="licensing">Licensing</h3>
+<p>Unlike other XMPro products, two product licenses are required: one for the core AI product, and a second for XMPro Notebook. For more information on how to request a license, please view the instructions on how to <a href="../../administration/subscriptions-admin/request-and-apply-a-license.html">Request a License</a>.</p>
+<p><img src="../../images/resources/xmpro-notebook_license.png" alt="Fig 4: Two AI product subscriptions"></p>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: July 14, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

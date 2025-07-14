@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Metablock | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Metablock | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/blocks-toolbox/advanced/metablock.md&amp;version=GBmain&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="metablock">Metablock</h1>
+
+<p>Metablock allows pro-code designers to leverage libraries to add their dynamic blocks in XMPro using script files.</p>
+<p>We recommend leveraging generative AI to write the scripts. This approach can significantly streamline the development process and enhance the functionality of the blocks.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Only the <a href="metablock.html#presentation-file-html">Presentation File (HTML)</a> is required. Utilize the other properties based on your specific needs for the Metablock behavior.</p>
+</div>
+<h2 id="metablock-properties">Metablock Properties</h2>
+<h3 id="behavior">Behavior</h3>
+<h4 id="presentation-file-html">Presentation File (HTML)</h4>
+<p>Upload the HTML script file that will be rendered in your Metablock, which is used to create dynamic blocks that may display data from a <a href="metablock.html#data-source">Data Source</a> or from <a href="metablock.html#value-mapping">Value Mapping</a>.</p>
+<pre><code class="lang-html">&lt;div class=&quot;foo&quot;&gt;bar&lt;/div&gt;
+</code></pre>
+<p>Alternatively, you can write your scripts in a single HTML file that includes both CSS and JavaScript. This approach is ideal for smaller applications.</p>
+<pre><code class="lang-html">&lt;!-- Style with CSS the div element with class foo the color blue --&gt;
+&lt;style&gt;
+    .foo { color: blue }
+&lt;/style&gt;
+
+&lt;!-- Html to show the text &quot;foo&quot; --&gt;
+&lt;div class=&quot;foo&quot;&gt;foo&lt;/div&gt;
+
+&lt;!-- JavaScript to change the text &quot;foo&quot; to &quot;bar&quot; when the page has loaded --&gt;
+&lt;script&gt;
+    document.addEventListener('DOMContentLoaded', function() {
+        const fooDiv = document.querySelector('.foo');
+        fooDiv.innerHTML = 'bar';
+    });
+&lt;/script&gt;
+</code></pre>
+<h4 id="styling-file-css">Styling File (CSS)</h4>
+<p>If you wish to add styling, upload a CSS file to style your Metablock control.</p>
+<pre><code class="lang-css">.foo {
+    color : green;
+}
+</code></pre>
+<h4 id="script-file-javascript">Script File (JavaScript)</h4>
+<p>If you wish to run JavaScript, upload a JavaScript file for your Metablock. Place any initial/startup values as constants in this file.</p>
+<pre><code class="lang-javascript">const foo = 'foo';
+</code></pre>
+<h3 id="data-source">Data Source</h3>
+<h4 id="common-properties">Common Properties</h4>
+<p>Common properties include: <em>filter, sort, show # of results,</em> and <em>skip # of results</em>;</p>
+<p><a href="../common-properties.html#data-source">See the Common Properties article for more details on common Data Source properties.</a></p>
+<p>To use the Data Source property, include these predefined JavaScript functions in your <a href="metablock.html#script-file-javascript">Script File</a>:</p>
+<pre><code class="lang-javascript">// Access data source when the metablock is loaded (optional) 
+function onDataLoaded(data) {
+    // Access a value from the data source
+    const foo = data.find(obj =&gt; 'foo' in obj).foo;
+}
+
+// Access live updates on the data source after the metablock has been loaded (optional)
+function onDataChanged(data, changes) {
+    
+}
+</code></pre>
+<details>
+<summary><code>onDataLoaded(data)</code> sample data format</summary>
+<pre><code class="lang-json">[
+    {
+        &quot;ReadingNo&quot;: 911,
+        &quot;Timestamp&quot;: &quot;2024-08-16T07:24:00.1791525Z&quot;,
+        &quot;value&quot;: 3.6695501388374483,
+        &quot;entityid&quot;: &quot;static&quot;,
+        &quot;_$parentProperties&quot;: {},
+        &quot;_$parentExpressions&quot;: [],
+        &quot;_$state&quot;: {
+            &quot;_$typeName&quot;: &quot;EntityState&quot;,
+            &quot;name&quot;: &quot;Unchanged&quot;
+        }
+    }
+]
+</code></pre>
+<p>The data above originates from a data stream that we've set up and it runs once upon page load. Keep in mind that the data format might differ based on your data source configuration.</p>
+</details>
+<details>
+<summary><code>onDataChanged(data, changes)</code> sample data format</summary>
+<pre><code class="lang-json">//data from `data` variable
+[
+    {
+        &quot;ReadingNo&quot;: 1156,
+        &quot;Timestamp&quot;: &quot;2024-08-16T08:04:52.3154712Z&quot;,
+        &quot;value&quot;: 1.5450710600917559,
+        &quot;entityid&quot;: &quot;static&quot;,
+        &quot;_$parentProperties&quot;: {},
+        &quot;_$parentExpressions&quot;: [],
+        &quot;_$state&quot;: {
+            &quot;_$typeName&quot;: &quot;EntityState&quot;,
+            &quot;name&quot;: &quot;Unchanged&quot;
+        }
+    }
+]
+</code></pre>
+<pre><code class="lang-json">//data from `changes` variable
+[
+    {
+        &quot;ReadingNo&quot;: 1156,
+        &quot;Timestamp&quot;: &quot;2024-08-16T08:04:52.3154712Z&quot;,
+        &quot;value&quot;: 1.5450710600917559,
+        &quot;entityid&quot;: &quot;static&quot;,
+        &quot;_$parentProperties&quot;: {},
+        &quot;_$parentExpressions&quot;: [],
+        &quot;_$state&quot;: {
+            &quot;_$typeName&quot;: &quot;EntityState&quot;,
+            &quot;name&quot;: &quot;Unchanged&quot;
+        }
+    }
+]
+</code></pre>
+<p>In this example, both the <code>data</code> and <code>changes</code> variables contain identical data, indicating that there are no updates. However, in a real-world scenario, the <code>changes</code> variable would capture any modifications to the initial data.</p>
+</details>
+<p><em>You can refer to a working example script that demonstrates an Autodesk Forge visualization</em> <a href="metablock.html#example-files"><em>here</em></a><em>.</em></p>
+<h3 id="value">Value</h3>
+<h4 id="value-mapping">Value Mapping</h4>
+<p>If you wish to define value mappings for run-time use, you can configure user-defined key-value pairs. These values remain static during application rendering.</p>
+<p>The Value Mapping opens a new blade to setup the Key and Value configuration. The options for the Value Source are Static, <a href="../../how-tos/apps/use-dynamic-properties.html">Dynamic</a>, <a href="../../how-tos/apps/use-expression-properties.html">Expression</a> and <a href="../../concepts/variable.html">Variables</a>.</p>
+<p>When selecting Server Variables as a Source for the Value Mapping, the list of unencrypted Server Variables will be displayed. Tick the <strong>Encrypt</strong> checkbox to use an encrypted Server Variable for values like keys, secrets, or password.</p>
+<p>From v4.4.18, encrypted Server Variables will not have their value available immediately on the Metablock. Instead, you can use them inside a Fetch/XHR request or a Websocket/MQTT message before being forwarded to the actual target.</p>
+<ul>
+<li><strong>Fetch/XHR Request -</strong> You can use encrypted server variables as part of the URL, Header, or Body of the Fetch/XHR request.</li>
+<li><strong>Websocket/MQTT Message -</strong> You can use encrypted server variables as part of the Websocket message. For MQTT Messages, you can use it as part of the following message types: Connect (Username and Password), Publish (Payload), and Subscribe (Subscribe Topics)</li>
+</ul>
+<h4 id="proxy-requests">Proxy Requests</h4>
+<p>Tick to proxy requests on the AD Server before being forwarded to the actual request. This is ticked by default when using an encrypted server variable on the value mapping, but you can opt in to use it even without any encrypted server variable.</p>
+<p>To use Value Mapping, include this predefined JavaScript function in your <a href="metablock.html#script-file-javascript">Script File</a>:</p>
+<pre><code class="lang-javascript">// Access Value mapping data when the metablock is loaded (optional)
+function onValueMappingLoaded(data){
+    //Apply a value from the value mapping
+    const foo = data['foo'];
+}
+</code></pre>
+<details>
+<summary><code>OnValueMappingLoaded(data)</code> sample data format</summary>
+<pre><code class="lang-json">  {
+      &quot;key&quot;: &quot;Value&quot;,
+      &quot;isWorking&quot;: true,
+      &quot;counter&quot;: 10
+      &quot;password&quot;: &quot;{{var-x:Encrypted Variable Name}}&quot; //Encrypted Server Variable template
+  }
+</code></pre>
+</details>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>Note: The password property will not have the actual value yet when it is mapped from an Encrypted Server Variable. Instead, it is just a template for the Server Variable name.</p>
+</div>
+<h2 id="real-world-use-cases">Real World Use Cases</h2>
+<h3 id="enhancing-chart-display">Enhancing Chart Display</h3>
+<p>Use Value Mapping to incorporate user input for displaying Harmonic Frequency, maintaining connector integrity while improving data visualization.</p>
+<p><img src="../../images/metablock-enhance-chart-display.png" alt="Metablock - Enhance Chart Display"></p>
+<p><em>Fig 1: Enhancing chart display</em></p>
+<div class="NOTE">
+<h5>Note</h5>
+<p><strong>GitHub Repository:</strong> Chart Display Enhancement</p>
+<p>View the complete implementation example for enhancing chart display functionality.</p>
+<p><a href="https://github.com/XMPro/meta-block-examples/tree/main/src/packages/chart-display">View on GitHub</a></p>
+</div>
+<h3 id="streamlining-pump-status-display">Streamlining Pump Status Display</h3>
+<p>Leverage Value Mapping to dynamically pass URLs from other data sources or utilize expressions, eliminating the need for manual URL adjustments during version updates.</p>
+<p><img src="../../images/metablock-pump-status-display.png" alt="Metablock - Pump status display"></p>
+<p><em>Fig 2: Pump status display</em></p>
+<div class="NOTE">
+<h5>Note</h5>
+<p><strong>GitHub Repository:</strong> Pump Status Display</p>
+<p>View the complete implementation example for streamlining pump status display.</p>
+<p><a href="https://github.com/XMPro/meta-block-examples/tree/main/src/packages/pump-status-display">View on GitHub</a></p>
+</div>
+<h3 id="autodesk-visualize-2d--3d-models">Autodesk: visualize 2D &amp; 3D models</h3>
+<p>Access and visualize your engineering data and designs from the cloud using <a href="https://aps.autodesk.com/">Autodesk Platform Services</a> (APS, formerly Forge).</p>
+<p>Leverage <a href="metablock.html#value-mapping">Value Mapping</a> when embedding the <a href="https://aps.autodesk.com/en/docs/viewer/v7/developers_guide/overview/index.md">APS Viewer</a> in XMPro App Pages to display interactive 2D and 3D views of your designs.</p>
+<p><strong>Note</strong>: This is a simple example to demonstrate the APS Viewer API using an unauthenticated repository. Refer to the authenticated use case for a more complex example that includes security measures for credentials.</p>
+<p><img src="../../images/autodesk-forge-viewer-img.jpg" alt="Autodesk Platform Services Viewer example without authentication"></p>
+<p><em>Fig 3: Autodesk Platform Services Viewer example without authentication</em></p>
+<div class="NOTE">
+<h5>Note</h5>
+<p><strong>GitHub Repository:</strong> APS View Basic</p>
+<p>View the complete implementation example for basic Autodesk Platform Services viewer integration.</p>
+<p><a href="https://github.com/XMPro/meta-block-examples/tree/main/src/packages/aps-view-basic">View on GitHub</a></p>
+</div>
+<h3 id="autodesk-visualize-2d--3d-models-with-authentication">Autodesk: Visualize 2D &amp; 3D models with authentication</h3>
+<p>When authentication is needed to dynamically load 2D and 3D views of your designs using the <a href="https://aps.autodesk.com/en/docs/viewer/v7/developers_guide/overview/index.md">APS Viewer</a>. We could utilize a Connector or the Value Mapping and use server variables for the credentials. This eliminates the need for hardcoded credentials while maintaining secure access to the visualization platform, <a href="https://aps.autodesk.com/">Autodesk Platform Services</a> (APS, formerly Forge). See the following Metablock examples on how to use these methods.</p>
+<h4 id="autodesk-authentication-using-connector">Autodesk: Authentication using Connector</h4>
+<p>Leverage the <a href="https://xmpro.gitbook.io/rest-api-connector/">REST API Connector</a> to get Token from the authentication service and the <a href="metablock.html#data-source">Data Source</a> to pass the token to the Metablock.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p><strong>GitHub Repository:</strong> APS View with Authentication</p>
+<p>View the complete implementation example for authenticated Autodesk Platform Services viewer integration using Connector.</p>
+<p><a href="https://github.com/XMPro/meta-block-examples/tree/main/src/packages/aps-view-with-auth">View on GitHub</a></p>
+</div>
+<h4 id="autodesk-authenticate-using-value-mapping">Autodesk: Authenticate using Value Mapping</h4>
+<p>Leverage the<a href="metablock.html#value"> Value Mapping</a> to pass an encrypted Server Variable to the Metablock and call the authentication service using a Fetch request to get the Token.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p><strong>GitHub Repository:</strong> APS View with Authentication from Value Mapping</p>
+<p>View the complete implementation example for authenticated Autodesk Platform Services viewer integration using Value Mapping.</p>
+<p><a href="https://github.com/XMPro/meta-block-examples/tree/main/src/packages/aps-view-with-auth-from-valuemapping">View on GitHub</a></p>
+</div>
+<p><img src="../../images/autodesk-forge-viewer-with-auth-img.png" alt="Autodesk Platform Services Viewer example with authentication"></p>
+<p><em>Fig 4: Autodesk Platform Services Viewer example with authentication</em></p>
+<h2 id="creating-a-metablock-script-step-by-step-guide">Creating a Metablock Script: Step-by-Step Guide</h2>
+<h3 id="step-1-search-for-a-code-snippet">Step 1: Search for a code snippet</h3>
+<p>Find relevant sample, we search for sample Autodesk Forge code and found the following links:</p>
+<ul>
+<li>Demo: <a href="https://autodesk-forge.github.io/viewer-javascript-offline.sample/">Very Basic 3D Viewer (autodesk-forge.github.io)</a></li>
+<li>Github: <a href="https://github.com/Autodesk-Forge/viewer-javascript-offline.sample/blob/gh-pages/index.html">viewer-javascript-offline.sample/index.html at gh-pages · Autodesk-Forge/viewer-javascript-offline.sample · GitHub</a></li>
+</ul>
+<h3 id="step-2-writing-your-metablock-script">Step 2: Writing your Metablock script</h3>
+<p>Adapt the sample code to the Metablock format. For simplicity, the HTML, CSS &amp; JavaScript has been combined into a single file.</p>
+<pre><code class="lang-html">&lt;!-- main.html --&gt;
+&lt;h1&gt;Autodesk Forge Viewer&lt;/h1&gt;
+&lt;div id=&quot;main&quot;&gt;&lt;/div&gt;
+</code></pre>
+<pre><code class="lang-css">/* main.css */
+h1 {
+    font-family: Arial, sans-serif; 
+    color : #333;
+}
+</code></pre>
+<pre><code class="lang-javascript">// main.js
+
+var hasInitialized = false;
+
+function onValueMappingLoaded(data) {
+    
+    // Prevent multiple initializations
+    if (hasInitialized) 
+        return;
+    
+    hasInitialized = true;
+    
+    // Load the CSS forge dependencies
+    const cssViewerUrl = 'https://developer.api.autodesk.com/modelderivative/v2/viewers/style.min.css?v=v7.*';
+    loadCSSViewer(cssViewerUrl);
+    
+    // Load the forge viewer
+    var viwerUrl = 'https://developer.api.autodesk.com/modelderivative/v2/viewers/7.*/viewer3D.min.js';
+    var viewer = loadViewer(viwerUrl);
+    
+    // Get the model URL from the data
+    const modelUrl = data['model_url']
+
+    // Load the model into the viewer
+    loadModel(viewer, modelUrl);
+}
+
+function loadViewer(viewer_url) {
+    return new Promise((resolve, reject) =&gt; {
+        const script = document.createElement('script');
+        script.src = viewer_url;
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
+    });
+}
+
+function loadCSSViewer(css_viewer_url){
+    return new Promise((resolve, reject) =&gt; {
+        const link = document.createElement('link');
+        link.rel = &quot;stylesheet&quot;;
+        link.type = &quot;text/css&quot;;
+        link.href = css_viewer_url;
+        link.onload = resolve;
+        link.onerror = reject;
+        document.head.appendChild(link);
+    });
+}
+
+// Loads the model into the viewer
+function loadModel(viewer, modelUrl) {
+    viewer.then(() =&gt; {
+        var myViewerDiv = document.getElementById('main');
+        var viewer = new Autodesk.Viewing.Private.GuiViewer3D(myViewerDiv);
+        var options = {
+            'env': 'Local',
+            'document': modelUrl
+        };
+        Autodesk.Viewing.Initializer(options, function onInitialized() {
+            viewer.start(options.document, options);
+        });
+    }).catch((error) =&gt; {
+        console.error('Failed to load Forge viewer:', error);
+    });
+}
+</code></pre>
+<h3 id="step-3-testing-your-code-locally-optional">Step 3: Testing your code locally (Optional)</h3>
+<p>Test it locally before implementation by running it from another html file (test-harness.html) via a local webserver. A 3D interactive model of a house should load in your browser.</p>
+<ol>
+<li>Create the <code>test-harness.html</code> file in the same directory as your Metablock files.</li>
+</ol>
+<pre><code class="lang-html">!-- test-harness.html --&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;title&gt;Test Harness for XMPro Metablocks&lt;/title&gt;
+    &lt;!-- Favicon --&gt;
+    &lt;link rel=&quot;icon&quot; type=&quot;image/x-icon&quot; href=&quot;/favicon.ico&quot;&gt;
+    &lt;!-- Link to the Metablock CSS file --&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;main.css&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;!-- Container for the Metablock HTML content --&gt;
+    &lt;div id=&quot;main&quot;&gt;
+        &lt;p id=&quot;loading&quot;&gt;Loading content...&lt;/p&gt;
+    &lt;/div&gt;
+        
+    &lt;!-- Include the Metablock JavaScript file --&gt;
+    &lt;script src=&quot;main.js&quot;&gt;&lt;/script&gt;
+
+    &lt;script&gt;
+        // Fetch the content of main.html and inject it into the #main div
+        fetch('main.html')
+            .then(response =&gt; response.text())
+            .then(html =&gt; {
+                // Insert the fetched HTML into the #main div
+                document.getElementById('main').innerHTML = html;
+
+                // Initialize static data for the Metablock
+                // This object allows passing specific initialization data to the JavaScript
+                // through the onValueMappingLoaded function
+                var data = {
+
+                    // model_url: The url of the model to be displayed in the Metablock
+                    // This would be passed in from the XMPro Metablock configuration Value Mapping.
+
+                    model_url: &quot;https://developer-autodesk.github.io/translated-models/dwfx-sample-house/f0224dd3-8767-45c1-ff99-5c9c881b9fee/0.svf&quot;
+
+                    // Add any other required initialization parameters here, for example:
+                    // api_endpoint: &quot;https://api.example.com/v1&quot;,
+                    // debug_mode: true,
+                    // theme: &quot;dark&quot;
+                    
+                }
+
+                // Call the onValueMappingLoaded function with the initialization data
+                // This function should be defined in main.js and will use the provided data
+                // to set up the Metablock's initial state
+                onValueMappingLoaded(data);
+            })
+            .catch(error =&gt; {
+                // Log any errors that occur during the fetch operation
+                console.error('Error loading main.html:', error);
+            });
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<ol start="2">
+<li>Run the <code>test-harness.html</code> in a webserver (node.js)
+<ol>
+<li><p>Make sure you have Node.js installed on your computer. You can download it from <a href="https://nodejs.org/">https://nodejs.org/</a>.</p>
+</li>
+<li><p>Open a terminal or command prompt and navigate to your project folder where the metablock files are.</p>
+</li>
+<li><p>Initialize a new Node.js project by running <code>npm init -y</code></p>
+</li>
+<li><p>Install Express by running <code>npm install express</code></p>
+</li>
+<li><p>Create <code>public</code> folder and moved your <code>HTML</code>, <code>CSS</code> &amp; <code>JavaScript</code> files inside</p>
+</li>
+<li><p>Create a file named <code>server.js</code></p>
+</li>
+<li><p>copy and paste below code in <code>server.js</code> file</p>
+<pre><code class="lang-javascript">// server.js
+
+const express = require('express');
+const path = require('path');
+const app = express();
+const port = process.env.PORT || 3000;
+
+// Serve static files from the 'public' directory
+app.use(express.static(path.join(__dirname , 'public')));
+
+app.get('/', (req, res) =&gt; {
+    res.sendFile(path.join(__dirname, 'public', 'test-harness.html'));
+});
+
+app.use((req,res) =&gt; {
+    res.status(404);
+    res.send(`&lt;h1&gt;Error 404: Resource not found&lt;/h1&gt;`);
+});
+
+// Start the server
+app.listen(port, () =&gt; {
+    console.log(`Server is running on http://localhost:${port}`);
+});
+</code></pre>
+</li>
+<li><p>To start the server, run <code>node server.js</code></p>
+</li>
+<li><p>Open a web browser and go to <a href="http://localhost:3000/index.md">http://localhost:3000</a></p>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="step-4-configure-the-metablock-in-app-designer">Step 4: Configure the Metablock in App Designer</h3>
+<ol>
+<li>Drag the Metablock onto your page.</li>
+<li>Open Block Properties.</li>
+<li>Add the 3 Metablock files by clicking on the plus icon and uploading the <code>main.html</code>, <code>main.css</code>, <code>main.js</code> files and selecting each from their respective dropdown.</li>
+<li>Add a Value Mapping of key <code>model_url</code> and Value <code>https://developer-autodesk.github.io/translated-models/dwfx-sample-house/f0224dd3-8767-45c1-ff99-5c9c881b9fee/0.svf</code></li>
+<li>Save the page</li>
+<li>Launch the page</li>
+</ol>
+<h3 id="example-files">Example Files</h3>
+<p>Refer to the simple <a href="#autodesk-visualize-2d--3d-models">Autodesk</a> use case for a complete set of files for this example.</p>
+<h2 id="security-features">Security Features</h2>
+<p>We have added security features in Metablock to safeguard the users from potential attacks, When developing applications, we have selectively enabled the following features:</p>
+<ul>
+<li>Form Submission</li>
+<li>Pop-up windows</li>
+<li>Modal Dialogs</li>
+<li>JavaScript Features</li>
+<li>External Resources</li>
+<li>Allowed Downloads (v4.4.18)</li>
+</ul>
+<p>Additionally, Metablock allows the use of specific hardware APIs for enhanced application capabilities, including camera, encrypted-media, full-screen, geo-location, speaker, accelerometer, gyroscope, magnetometer, and midi.</p>
+<h2 id="faqs">FAQs</h2>
+<h3 id="why-did-the-javascript-code-in-my-metablock-not-execute-on-page-load">Why did the JavaScript code in my Metablock not execute on page load?</h3>
+<p>Due to the timing of function instantiation, we recommend checking the document's ready state instead of relying on the load event:</p>
+<p>Check document's ready state:</p>
+<pre><code class="lang-javascript">if (document.readyState === 'complete') {
+    // add your logic here
+}
+</code></pre>
+<p>Alternatively use one of the existing functions.</p>
+<pre><code class="lang-javascript">function onValueMappingLoaded(data) {
+    // add your logic here
+}
+</code></pre>
+<h3 id="how-can-i-load-multiple-script-files">How can I load multiple script files?</h3>
+<p>From v4.4.18, you can load external script files by including a script block - the same as you would usually do in a html file. The same applies to style/CSS files.</p>
+<pre><code class="lang-html">&lt;script src=&quot;https://code.jquery.com/jquery-3.6.0.min.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+<p>You can also reference resources (js, css, image) uploaded on your <strong>App Files</strong> folder by following the correct format for the URL when referencing. Prefix the path with <strong>&quot;./AppFiles/&quot;</strong> and append the path of the App Files resource:</p>
+<pre><code>&quot;./AppFiles/{path on the App Files}&quot;
+</code></pre>
+<p>See the following example for the html that links different resources from the App File:</p>
+<p><strong>App Files</strong></p>
+<p>For an App Files folder structure that looks like this:</p>
+<pre><code>offline_files/
+├── offline_image.png
+├── offline-script.js
+└── offline-styles.css
+</code></pre>
+<p><strong>HTML</strong></p>
+<p>Link the resources by following the correct format.</p>
+<p>ex. &quot;./AppFiles/offline_files/offline-script.js&quot;</p>
+<pre><code class="lang-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;title&gt;My Web Page&lt;/title&gt;
+    &lt;!-- Loading style resource from AppFiles --&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;./AppFiles/offline_files/offline-styles.css&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;!-- Loading image resource from AppFiles --&gt;
+    &lt;img id=&quot;image&quot; src=&quot;./AppFiles/offline_files/offline-image.png&quot; alt=&quot;Offline Image&quot;&gt;
+    &lt;div class=&quot;container&quot;&gt;
+        &lt;h1&gt;Welcome to My Web Page&lt;/h1&gt;
+        &lt;p&gt;This is a sample page that uses &lt;span class=&quot;highlight&quot;&gt;AppFiles&lt;/span&gt; resources for js, css and images.&lt;/p&gt;
+        &lt;button id=&quot;clickMe&quot;&gt;Click Me!&lt;/button&gt;
+        &lt;p id=&quot;counter&quot;&gt;Button clicks: 0&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;!-- Loading script resource from AppFiles --&gt;
+    &lt;script src=&quot;./AppFiles/offline_files/offline-script.js&quot;&gt;&lt;/script&gt;
+    &lt;!-- Loading script resource from an external link --&gt;
+    &lt;script src=&quot;https://code.jquery.com/jquery-3.6.0.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script&gt;
+        $(document).ready(function() {
+            let flipped = false;
+            $('#image').click(function() {
+                flipped = !flipped;
+                $(this).css('transform', flipped ? 'scaleX(-1)' : 'scaleX(1)');
+            });
+        });
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p><strong>GitHub Repository:</strong> Link App Files Resources Example</p>
+<p>View the complete implementation example for linking App Files resources.</p>
+<p><a href="https://github.com/XMPro/meta-block-examples/tree/main/src/packages/link-appfiles-resources">View on GitHub</a></p>
+</div>
+<div class="WARNING">
+<h5>Warning</h5>
+<p><strong>Note:</strong> Displaying the Metablock may take some time since it needs to finish loading all referenced App File resources before it is shown on the Application. Avoid referencing heavy files from the App Files and use external resources instead.</p>
+</div>
+<p>You can also dynamically load JavaScript files but only for external resources and not from the App Files.</p>
+<pre><code class="lang-javascript">function loadScript(url) {
+    return new Promise((resolve, reject) =&gt; {
+        const script = document.createElement('script');
+        script.src = url;
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
+    });
+}
+</code></pre>
+<h3 id="why-is-the-metablock-throwing-500-errors-related-to-styling-and-script-files">Why is the Metablock throwing 500 errors related to styling and script files?</h3>
+<p>This can occur if your HTML file includes inline script import code that does not follow the correct format. Only link external resources or make sure the file is uploaded on <strong>App Files</strong> and the URL format is correct.</p>
+<pre><code class="lang-html">&lt;!-- unsupported import script --&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;styles.css&quot;&gt;
+
+&lt;!-- unsupported import script --&gt;
+&lt;script src=&quot;app.js&quot;&gt;&lt;/script&gt;
+
+&lt;!-- valid html --&gt;
+&lt;span&gt;foo&lt;/span&gt;   
+</code></pre>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: July 14, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

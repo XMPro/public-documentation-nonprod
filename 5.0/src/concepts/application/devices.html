@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Devices | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Devices | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/concepts/application/devices.md&amp;version=GBmain&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="devices">Devices</h1>
+
+<p>An App can be deployed on multiple devices such as a laptop, tablet, or phone. The style and position of the Blocks can be configured to make sure it is compatible with the screen width of the device. This is needed in order for you to view the way the Application looks on multiple devices, and to ensure users have a good user experience regardless of the screen size they are viewing your Application on.</p>
+<p><img src="../../images/concepts/application/Device1.png" alt="Device selector showing desktop, tablet, and mobile view options"></p>
+<h2 id="responsive-design">Responsive Design</h2>
+<p>All pre-built page layouts come with predefined styles and media queries to ensure that Blocks are responsive on different devices.</p>
+<p><img src="../../images/concepts/application/Device2.png" alt="Responsive design example showing layout adjustments across different screen sizes"></p>
+<p>When using a pre-built layout, the positions of the Blocks will automatically change when switching between desktop, tablet, and mobile in order to fit everything comfortably on the page regardless of the screen width.</p>
+<p><img src="../../images/concepts/application/Device3.png" alt="Desktop layout preview showing full-width blocks and multiple columns"></p>
+<p><img src="../../images/concepts/application/Device4.png" alt="Mobile layout preview showing stacked blocks for narrow screens"></p>
+<h2 id="configuring-desktop-tablets-and-phones">Configuring Desktop, Tablets, and Phones</h2>
+<p>Changes such as block styling made to desktop devices are automatically applied to devices of all sizes. Changes made to tablet devices affect screens smaller than 1366 pixels, and changes made to mobile mode affect screens smaller than 896 pixels.</p>
+<p>If a different style is configured for both desktop and mobile mode, the mobile mode style will override the styles of larger devices when viewing in mobile mode. The same applies to the tablet.</p>
+<p><img src="../../images/concepts/application/Device5-1.png" alt="Desktop configuration panel showing style settings for larger screens"></p>
+<p><img src="../../images/concepts/application/Device6-1.png" alt="Tablet configuration panel showing style settings for medium screens"></p>
+<p><img src="../../images/concepts/application/Device7-1.png" alt="Mobile configuration panel showing style settings for small screens"></p>
+<p>The styles applied to devices are applied to both the selected style group and the selected state as well.</p>
+<h2 id="further-reading">Further Reading</h2>
+<ul>
+<li><a href="block-styling.html">Block Styling</a></li>
+<li><a href="../../how-tos/apps/use-block-styling-and-devices.html">How to use Block Styling and Devices</a></li>
+<li><a href="../../how-tos/apps/use-flex.html">How to use Flex</a></li>
+</ul>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: July 14, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

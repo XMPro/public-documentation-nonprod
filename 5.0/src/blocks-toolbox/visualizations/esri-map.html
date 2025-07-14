@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Esri Map | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Esri Map | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/blocks-toolbox/visualizations/esri-map.md&amp;version=GBmain&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="esri-map">Esri Map</h1>
+
+<p>This Block allows you to integrate an Esri Map into the page. An Esri Map has additional features to a regular map such as allowing you to visualize additional geographical information, terrain formation, or topographical information for a given area.</p>
+<h2 id="esri-map-properties">Esri Map Properties</h2>
+<h3 id="appearance">Appearance</h3>
+<h4 id="base-map">Base Map</h4>
+<p>Choose the visual context for the map from the options listed below:</p>
+<table><thead><tr><th width="150">Base Map</th><th width="360.28544382299776">Description</th><th>Thumbnail</th></tr></thead><tbody><tr><td>Dark Grey (default)</td><td>Shows the world on a gray canvas to focus your attention on thematic content.</td><td><img src="../../images/darkgrey.png" alt="Dark Grey base map thumbnail"></td></tr><tr><td>Topography</td><td>Shows geographical details including the height and shape of mountains, sea levels, and other geographical features such as rivers.</td><td><img src="../../images/topographic.png" alt="Topography base map thumbnail"></td></tr><tr><td>Streets</td><td>Shows highway-level and street-level data for the world. Major roads are highlighted and all roads are labeled.</td><td><img src="../../images/streets.png" alt="Streets base map thumbnail"></td></tr><tr><td>Streets Night</td><td>Shows highway-level and street-level data for the world, designed for use at night or in a low light environment. Major roads are highlighted and all roads are labeled.</td><td><img src="../../images/streets-night.png" alt="Streets Night base map thumbnail"></td></tr><tr><td>Satellite</td><td>Shows high-resolution satellite imagery for many areas. </td><td><img src="../../images/imagery.png" alt="Satellite base map thumbnail"></td></tr><tr><td>Hybrid</td><td>Shows high-resolution satellite imagery for many areas, with road labels or location references overlaid on top.</td><td><img src="../../images/imagery-hybrid.png" alt="Hybrid base map thumbnail"></td></tr><tr><td>Gray</td><td>Shows the world on a light gray canvas to focus your attention on thematic content.</td><td><img src="../../images/lightgrey.png" alt="Gray base map thumbnail"></td></tr><tr><td>National Geographic</td><td>Provides a detailed view of political boundaries, and emphasises certain characteristics of the land such as mountains.</td><td><img src="../../images/nationalgeo.png" alt="National Geographic base map thumbnail"></td></tr><tr><td>Oceans</td><td>Designed for Marine GIS professionals to provide important reference points within the Oceans and Seas of the world. </td><td><img src="../../images/oceans.png" alt="Oceans base map thumbnail"></td></tr><tr><td>Open Street Map</td><td>Open Street Map (OSM) is a collaborative project to create an open, editable neighborhood map. The Esri replica is updated continuously with the latest edits. </td><td><img src="../../images/openstreetmap.png" alt="Open Street Map base map thumbnail"></td></tr><tr><td>Terrain</td><td>Shows terrain details including the height of the land and sea.</td><td><img src="../../images/terrain.png" alt="Terrain base map thumbnail"></td></tr></tbody></table>
+<h4 id="allow-pan-and-rotate">Allow pan and rotate</h4>
+<p>Adds a button to the map which allows the user to rotate the map.</p>
+<h4 id="longitude-latitude-height-and-tilt-angle">Longitude, Latitude, Height, and Tilt Angle</h4>
+<p>The map will load the location specified with Longitude, Latitude, Height, and Tilt Angle.</p>
+<video autoplay loop muted playsinline style="max-width: 100%; height: auto;">
+  <source src="../../images/6a0xucyk8u.mp4" type="video/mp4">
+</video>
+<h3 id="behavior">Behavior</h3>
+<h4 id="use-variables">Use Variables</h4>
+<p>This allows you to choose between manually entering a value for the <em>API Key</em> or selecting from a static variable.</p>
+<p><img src="../../images/esri-map-api-key.gif" alt="Esri Map API Key configuration interface"></p>
+<h4 id="api-key">API Key</h4>
+<p>The API key is used to get the private <a href="esri-map.html#feature-layers">feature layers</a>. For more details, <a href="https://developers.arcgis.com/documentation/mapping-apis-and-services/security/api-keys/">visit the official Esri map documentation</a>.</p>
+<p>The API Key property is required for the Esri Map when there are feature layers added.</p>
+<h4 id="show-basemap-gallery">Show Basemap Gallery</h4>
+<p>This will add a button on the map and give the option to change the <a href="esri-map.html#base-map">Base Map</a> layout.</p>
+<h4 id="allow-show-current-location">Allow Show Current Location</h4>
+<p>This will show the user's current location on the map. Requires the location of the device.</p>
+<h3 id="feature-layers">Feature Layers</h3>
+<p>A Feature Layer is a single layer overlaid on the base map that can be created in a variety of ways and display different visualizations. Spatial feature layers include features that use Geometry and allow you to render the scene in either 2D or 3D. These features also provide more information about the real world which can be displayed through pop-up windows within the scene. Non-spatial feature layers do not provide this information about geographical features.</p>
+<p>For more details, <a href="https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-FeatureLayer.html">visit the official Esri Map documentation</a>.</p>
+<h3 id="markers-data-source">Markers Data Source</h3>
+<h4 id="mode">Mode</h4>
+<p>This can be changed to either use <em>Static Items</em> or a <em>Dynamic Data Source</em>. In both cases, markers need to be configured in the <a href="esri-map.html#data">Data section</a>. If the static items option is chosen, markers for locations can be entered manually under the <em>Data</em> section. If the Dynamic Data Source option is chosen, marker locations coming from the Data Source can be used.</p>
+<p><a href="../common-properties.html#data-source">See the Common Properties article for more details on common Data Source properties.</a></p>
+<h3 id="data">Data</h3>
+<p>Markers for locations can be manually added and they will show on the map. Actions are triggered when you click on a marker on the map. Markers are entered by Longitude and Latitude. Markers can also have a text label that will be shown on top of the marker.</p>
+<p><img src="../../images/esri-markers.png" alt="Esri Map markers configuration panel"></p>
+<p><img src="../../images/image-9.png" alt="Esri Map with location markers displayed"></p>
+<h3 id="action">Action</h3>
+<h4 id="common-properties">Common Properties</h4>
+<p>Actions are triggered when you click on a label marker on the map.</p>
+<p>Properties that are common to most Blocks include: <em>navigate to</em> and <em>show confirmation dialog;</em></p>
+<p><a href="../common-properties.html#action">See the Common Properties article for more details on common action properties.</a></p>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: July 14, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

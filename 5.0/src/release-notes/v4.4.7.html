@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>v4.4.7 | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="v4.4.7 | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      <meta name="description" content="25 June 2024">
+      <link rel="icon" href="../../images/favicon.png">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/release-notes/v4.4.7.md&amp;version=GBmain&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="v447">v4.4.7</h1>
+
+<h2 id="integrations">Integrations</h2>
+<table><thead><tr><th width="155">Change Type</th><th width="250">Name</th><th>Description</th></tr></thead><tbody><tr><td>Enhancement</td><td><a href="https://xmpro.gitbook.io/neo4j/">Neo4J Agents v1.01</a></td><td>Repackaged to update the Neo4J icon.</td></tr><tr><td>Fix</td><td><a href="https://xmpro.gitbook.io/azure-digital-twin/">Azure Digital Twin Context Provider v1.05<br>and Action Agent v1.20</a></td><td>Added the Azure Client DLL to resolve an error when opening the Agent's configuration.</td></tr><tr><td>Fix</td><td><a href="https://xmpro.gitbook.io/azure-sql/">Azure SQL Action Agent v5.30</a></td><td>Fixed the update to update not create</td></tr><tr><td>Fix</td><td><a href="https://xmpro.gitbook.io/sql-server/">SQL Server Action Agent v5.30</a></td><td>Fixed the update to update not create</td></tr></tbody></table>
+<h2 id="app-designer">App Designer</h2>
+<table><thead><tr><th width="157">Change Type</th><th>Description</th></tr></thead><tbody><tr><td>Feature</td><td><p>New Blocks added to make your interactions with <a href="../concepts/recommendation/recommendation-alert.html">Recommendation Alerts</a> composable:</p><ul><li><a href="../blocks-toolbox/recommendations/alert-timeline.html">Alert Timeline</a> - reuse <a href="../concepts/recommendation/recommendation-alert.html#timeline">this</a> timeline section to list activities on the alert. </li><li><a href="../blocks-toolbox/recommendations/alert-triage.html">Alert Triage</a> - reuse <a href="../concepts/recommendation/recommendation-alert.html#triage-instructions">this</a> triage section to include useful information on suggested actions to resolve the alert.</li><li><a href="../blocks-toolbox/recommendations/alert-event-data.html">Alert Event Data</a> - reuse <a href="../concepts/recommendation/recommendation-alert.html#event-data">this</a> event data section to view conditions that gave rise to the alert. </li></ul><p>The Recommendation Alert Form Block, introduced in v4.4.6, has been renamed <a href="../blocks-toolbox/recommendations/alert-form.html">Alert Form</a>.</p></td></tr><tr><td>Enhancement</td><td>The <a href="../blocks-toolbox/advanced/metablock.html">Metablock</a> Block, introduced in v4.4.6, has added presentation and styling file options, which empowers designers to increase reuse while reducing complexity.</td></tr><tr><td>Enhancement</td><td>The Lookup Block no longer makes multiple read calls on page load.</td></tr><tr><td>Fix</td><td><em>I changed the data type of one of the data stream tags from a double to a string, refreshed the recommendation rule, and now the</em> <a href="../concepts/recommendation/rule.html#rule-logic"><em>rule logic</em></a> <em>box is no longer editable.</em><br>The error is appended to the data stream tags in the rule logic box to communicate the problem to the designer, e.g. "(INVALID DATA TYPE STRING)". </td></tr><tr><td>Fix</td><td>I'm using a Unity v2022  model, but it doesn't load cached data when launched and there is also a zooming in/out issue. <br>The Unity Block's cached data and zoom works as expected.</td></tr></tbody></table>
+<h2 id="data-stream-designer">Data Stream Designer</h2>
+<table><thead><tr><th width="157">Change Type</th><th>Description</th></tr></thead><tbody><tr><td>Enhancement</td><td><a href="../how-tos/data-streams/use-business-case-and-notes.html#adding-notes">Notes</a> are now distinct per version rather than per Data Stream, thus allowing the notes to track the differences between versions.</td></tr><tr><td>Enhancement</td><td>We've further improved the <a href="../how-tos/data-streams/upgrade-a-stream-object-version.html">Agent upgrade</a> experience: the button name changes to 'Downgrade' if the Agent is on the latest version and the list of versions includes the same information as the Agent's version blade, i.e. the date it was added and the number of data streams in which it is used.</td></tr><tr><td>Enhancement</td><td>We've reduced the size of the Data Stream Designer application package by decoupling the <a href="../installation/complete-installation/install-stream-host/index.html#download-the-installer">Stream Host installer download</a>. From v4.4.7 onwards, ensure your network policy allows access to the <code>download.app.xmpro.com</code> domain when downloading the Windows or Ubuntu Stream Host installer. Better yet, use our <a href="../installation/complete-installation/install-stream-host/docker.html">Docker Stream Host</a> option.</td></tr><tr><td>Fix</td><td><em>I cannot upload the 'Tier 5 - Agents.zip' file even though it meets the requirements - the compressed size is 31.7 MB and the pre-compression contents are 88.2 MB.</em><br><a href="../how-tos/agents/manage-agents.html#bulk-adding-agents">Bulk adding agents</a> validates the 100 MB limit using the XMP file size, not the converted JSON object size.  </td></tr></tbody></table>
+<h2 id="subscription-manager">Subscription Manager</h2>
+<table><thead><tr><th width="157">Change Type</th><th>Description</th></tr></thead><tbody><tr><td>Enhancement</td><td>Microsoft .NET Framework downgrade from 4.8.1 to 4.8 in preparation for Docker image.</td></tr></tbody></table>
+<h2 id="stream-host">Stream Host</h2>
+<table><thead><tr><th width="157">Change Type</th><th>Description</th></tr></thead><tbody><tr><td>Fix</td><td><em>I've upgraded my Stream Host to v4.4 and my Data Stream that contains the Azure IoT Hub Listener Agent has errors in the log.</em><br>Upgrade the Azure IoT Hub Listener Agent to v3.06, released earlier this year, with the newer version of Microsoft.Azure.Amqp.dll.  </td></tr></tbody></table>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: July 14, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

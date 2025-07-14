@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Visual Media Capture | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Visual Media Capture | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/blocks-toolbox/device-input/visual-media-capture.md&amp;version=GBmain&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="visual-media-capture">Visual Media Capture</h1>
+
+<p>The Visual Media Capture Block enables users to capture a photo or a video or upload an existing media file. This is useful when composing Applications such as a mobile inspection app and the user may be required to include an image when logging an issue.</p>
+<p><img src="../../images/blocks-toolbox/device-input/visual-media-capture-main.png" alt="Visual Media Capture Block"></p>
+<h2 id="visual-media-capture-properties">Visual Media Capture Properties</h2>
+<h3 id="appearance">Appearance</h3>
+<h4 id="common-properties">Common Properties</h4>
+<p>The <em>visibility</em> property is common to most Blocks;</p>
+<p><a href="../common-properties.html#appearance">See the Common Properties article for more details on common appearance properties.</a></p>
+<h4 id="capture-button-text">Capture Button Text</h4>
+<p>The text displayed on the capture button.</p>
+<h3 id="behavior">Behavior</h3>
+<h4 id="common-properties-1">Common Properties</h4>
+<p>The <em>disabled</em> property is common to most Blocks;</p>
+<p><a href="../common-properties.html#behavior">See the Common Properties article for more details on common behavior properties.</a></p>
+<h4 id="allowed-file-extensions">Allowed File Extensions</h4>
+<p>This allows you to specify the types of files that can be uploaded. If left blank, any file type can be uploaded.</p>
+<p>If a file extension is listed, (for example, a .png file), the Visual Media Capture will not allow you to upload any other file except those with a .png extension.</p>
+<h4 id="max-file-size">Max File Size</h4>
+<p>This setting dictates the maximum allowable file size for uploads. If you attempt to upload a file that exceeds the maximum size, it will not be uploaded.</p>
+<h4 id="provider">Provider</h4>
+<p>The supported external cloud storage providers are Azure Blob or Amazon S3.</p>
+<h4 id="use-variables">Use Variables</h4>
+<p>Tick to use variables for the provider-related properties.</p>
+<h4 id="blob-connection-string">Blob Connection String</h4>
+<p>The blob connection string (applies to the Azure Blob <a href="visual-media-capture.html#provider">Provider</a> only).</p>
+<h4 id="blob-container-name">Blob Container Name</h4>
+<p>The blob container name (applies to the Azure Blob <a href="visual-media-capture.html#provider">Provider</a> only).</p>
+<h4 id="access-key">Access Key</h4>
+<p>The Amazon S3 access key (applies to the Amazon S3 <a href="visual-media-capture.html#provider">Provider</a> only).</p>
+<h4 id="secret-key">Secret Key</h4>
+<p>The Amazon S3 secret key (applies to the Amazon S3 <a href="visual-media-capture.html#provider">Provider</a> only).</p>
+<h4 id="bucket-name">Bucket Name</h4>
+<p>The Amazon S3 bucket name (applies to the Amazon S3 <a href="visual-media-capture.html#provider">Provider</a> only).</p>
+<h4 id="region">Region</h4>
+<p>The Amazon S3 region (applies to the Amazon S3 <a href="visual-media-capture.html#provider">Provider</a> only).</p>
+<h3 id="value">Value</h3>
+<h4 id="common-properties-2">Common Properties</h4>
+<p>The <em>value</em> property is common to most Blocks;</p>
+<p><a href="../common-properties.html#value">See the Common Properties article for more details on common value properties.</a></p>
+<p>We recommend using a dynamic value property so that when you upload media files, the URLs are bound to the value property, with enclosed brackets and comma-separated.</p>
+<p>You can utilize a stored proc to save the file URLs into a data source and view them by adding the URL as a hyperlink to a Data Grid.</p>
+<pre><code class="lang-sql">-- Sample code to populate the file URLs to a SQL table
+CREATE PROCEDURE [dbo].[sp_MobileSpec_Update]  
+(  
+    @MobileId BIGINT,  
+    @MediaArray NVARCHAR(MAX),  
+    @UploadDate DATETIME2(7),  
+    @UploadUser NVARCHAR(150)  
+)  
+AS  
+BEGIN  
+    SET NOCOUNT ON  
+  
+    IF (@MediaArray IS NOT NULL AND @MediaArray != '')  
+    BEGIN  
+        DECLARE @IDs TABLE (ID NVARCHAR(MAX)) -- Use NVARCHAR(MAX) to store URLs  
+  
+        -- Populate @IDs table with the result of dbo.SplitString function  
+        INSERT INTO @IDs (ID)  
+        SELECT Value FROM dbo.SplitString(@MediaArray, ',')  
+  
+        -- Iterate over each URL and insert into the table  
+        DECLARE @ID NVARCHAR(MAX)  
+  
+        DECLARE cur CURSOR FOR  
+        SELECT ID FROM @IDs  
+  
+        OPEN cur  
+        FETCH NEXT FROM cur INTO @ID  
+  
+        WHILE @@FETCH_STATUS = 0  
+        BEGIN  
+   DECLARE @LastSlashPosition INT = LEN(@ID) - CHARINDEX('/', REVERSE(@ID)) + 1  
+   DECLARE @FileName NVARCHAR(MAX) = SUBSTRING(@ID, @LastSlashPosition + 1, LEN(@ID) - @LastSlashPosition)  
+   SET @FileName = SUBSTRING(@FileName, CHARINDEX('/', @FileName) + 1, LEN(@FileName))  
+            -- Process each URL here  
+            INSERT INTO [MobileInspectionApp_AppFile] ([MobileInspectionAppId], [AppFileId], [UploadDate], [UploadUser], [URL])  
+            VALUES (@MobileId, @FileName, @UploadDate, @UploadUser, @ID)  
+  
+            FETCH NEXT FROM cur INTO @ID  
+        END  
+  
+        CLOSE cur  
+        DEALLOCATE cur  
+  
+  UPDATE [MobileInspectionAppTest] SET [AppFileId] = 'Files attached' WHERE [Id] = @MobileId  
+    END  
+END
+</code></pre>
+<h3 id="validation">Validation</h3>
+<h4 id="common-properties-3">Common Properties</h4>
+<p>The <em>Validation Group and Required</em> properties are common to most Blocks;</p>
+<p><a href="../common-properties.html#validation">See the Common Properties article for more details on common validation properties</a>.</p>
+<h4 id="required-message">Required Message</h4>
+<p>The text of the error message that is displayed to the user when no media file has been captured or uploaded.</p>
+<p><img src="../../images/blocks-toolbox/device-input/visual-media-capture-required.png" alt="Required Message"></p>
+<h4 id="capture-failed-message">Capture Failed Message</h4>
+<p>The text of the error message that is displayed to the user if the media capture fails for any reason.</p>
+<p><img src="../../images/blocks-toolbox/device-input/visual-media-capture-failed.png" alt="Capture Failed Message"></p>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: July 14, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

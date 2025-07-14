@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Form | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Form | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/concepts/recommendation/form.md&amp;version=GBmain&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="form">Form</h1>
+
+<p>A Form is a collection of fields that appear on <a href="recommendation-alert.html">Recommendation Alerts</a>. Forms are how relevant information can be entered and changed over the course of resolving an Alert. Forms can also contain buttons that allow specific actions to be performed in other business systems, like creating a work order in your EAM system. The Action Request Agent in the <a href="../data-stream/index.html">Data Stream Designer</a> will pass the data from your form to other systems.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p><a href="action-requests.html">See the Action Requests article for more details on Action Requests</a>.</p>
+</div>
+<p>When a <a href="recommendation-alert.html">Recommendation Alert</a> is created from the <a href="rule.html">Rule</a>, the Rule's selected Form is used to determine the <a href="form.html#blocks">fields (Blocks)</a> that will appear in the alert. Forms are managed through the Recommendations page.</p>
+<p><img src="../../images/image-1614.png" alt="Form Configuration Interface"></p>
+<p>The same form can be seen as created in a Recommendation Alert:</p>
+<p><img src="../../images/image-898.png" alt="Form in Recommendation Alert"></p>
+<h2 id="category">Category</h2>
+<p>Forms can be organized into different categories. This refers to the category under which the Form is found in the Form list. This category is separate from the <a href="../category.html">App and Data Stream Categories</a>.</p>
+<h2 id="actions-on-the-form">Actions on the Form</h2>
+<p>The following Actions can be taken on a Recommendation Form:</p>
+<table><thead><tr><th width="199">Action</th><th>Description</th></tr></thead><tbody><tr><td><a href="form.html#blocks">Blocks</a></td><td>Opens the list of Blocks that are available to the Form.</td></tr><tr><td>Properties</td><td>Opens the properties for the selected Block.</td></tr><tr><td>Save</td><td>Saves any changes made to the Form up to this point.</td></tr><tr><td>Discard</td><td>Discards any changes made to the Form up to this point.</td></tr><tr><td>Settings</td><td>Opens the Form Settings, where you can modify the Form's Name and Category or delete the Form.</td></tr><tr><td><a href="../version.html">Manage Versions</a></td><td>Versioning for the Form.</td></tr><tr><td><a href="../manage-access.html">Manage Access</a></td><td>Allows you to manage which users are allowed to view or modify this Recommendation and the Recommendation Alerts created by this Recommendation.</td></tr><tr><td><a href="../../how-tos/import-export-and-clone.html">Clone</a></td><td>Clones the Form as a new Form.</td></tr><tr><td><a href="../../how-tos/import-export-and-clone.html#exporting">Export</a></td><td>Export the Form as an encrypted file.</td></tr><tr><td>Delete</td><td>Deletes the Form.</td></tr></tbody></table>
+<h2 id="blocks">Blocks</h2>
+<p>The following Blocks can be added to a Recommendation Form:</p>
+<table><thead><tr><th width="199">Name</th><th>Description</th></tr></thead><tbody><tr><td>Text</td><td>A control that displays text.</td></tr><tr><td>Textbox</td><td>A control for the user to input text.</td></tr><tr><td>Text Area</td><td>A control for the user to input a large amount of text (multiline).</td></tr><tr><td>Numberbox</td><td>A control for the user to input a numeric value.</td></tr><tr><td>Datebox</td><td>A control for the user to input a date.</td></tr><tr><td>Checkbox</td><td>A control that allows the user to tick an option.</td></tr><tr><td>Dropdown</td><td>A control that allows the user to select from a predefined list.</td></tr><tr><td>Grid</td><td>A control that displays tabular data, updated as a JSON Array by an <a href="https://xmpro.gitbook.io/update-recommendation">Update Recommendation Agent</a> in a Data Stream. It is read-only when viewed in App Designer. <br>It is used to add information for users reviewing or resolving Recommendation Alerts, such as a Data Stream configured to listen for changes in an external work order system and update the Alert.</td></tr><tr><td>Button</td><td>A control that can be clicked to trigger an event or action.</td></tr></tbody></table>
+<p>Blocks are added to the Form by dragging from the Blocks tab.</p>
+<p><img src="../../images/image-1748.png" alt="Adding Blocks to Form"></p>
+<p>Blocks can be re-ordered by dragging them up and down</p>
+<p><img src="../../images/image-583.png" alt="Reordering Form Blocks"></p>
+<p>The properties of a Block are available in the Properties tab after clicking on a Block to select it. A Block can also be deleted by clicking on the delete button in the selection toolbar:</p>
+<p><img src="../../images/image-607.png" alt="Block Properties and Delete"></p>
+<h3 id="block-properties">Block Properties</h3>
+<table data-header-hidden><thead><tr><th width="201">Property</th><th>Description</th></tr></thead><tbody><tr><td><strong>Property</strong></td><td><strong>Description</strong></td></tr><tr><td>Name</td><td>Name of the recommendation. This is usually one or two words that describe the form.<br>Name is how the Block is differentiated for Data Stream Agents.</td></tr><tr><td>Caption</td><td>The caption is displayed above the Block.</td></tr><tr><td><em>(Text)</em><br>Caption Style</td><td>The style of the text Block. Options include <strong>Heading 1</strong> - <strong>4</strong>, <strong>Body</strong>, <strong>Metric</strong>, and <strong>Small Text.</strong></td></tr><tr><td>Read Only</td><td>A flag that determines whether the field will allow a new value to be added on the Alert.</td></tr><tr><td>Required</td><td>A flag that determines whether the Block must have a value before the Alert can be saved.</td></tr><tr><td><em>(Dropdown)</em> <br>Items</td><td>The items that are available for selection in the dropdown. <br><strong>Text</strong> is shown in the dropdown, and <strong>Value</strong> is what will be selected and saved. </td></tr><tr><td><p><em>(Button)</em></p><p>Button Style</p></td><td><p>The style of the button in the Recommendation Alert:</p><p><strong>Text:</strong> The button has no borders. The text color depends on the Button Type.</p><p><strong>Outlined:</strong> The button has a colored outline. The border color depends on the Button Type.</p><p><strong>Contained:</strong> The button has a colored background. The color depends on the Button Type. If the Button Type is Normal, it has a black outline. </p></td></tr><tr><td><em>(Button)</em><br>Button Type</td><td><p>The color of the button in the Recommendation Alert:</p><p><strong>Danger:</strong> Red.</p><p><strong>Default:</strong> Blue.</p><p><strong>Normal:</strong> White or Black.</p><p><strong>Success:</strong> Green.</p></td></tr></tbody></table>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Number Selector automatically converts the entered value into a scientific notation if it is greater than 21 digits for an integer value and greater than 6 digits for a decimal value.</p>
+</div>
+<h2 id="further-reading">Further Reading</h2>
+<ul>
+<li><a href="../../how-tos/recommendations/manage-forms.html">How to Create and Manage Forms</a></li>
+<li><a href="action-requests.html">Action Requests: creating work orders in Data Streams with a Form button</a></li>
+</ul>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: July 14, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

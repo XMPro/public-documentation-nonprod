@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Manage Collections | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Manage Collections | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/how-tos/data-streams/manage-collections.md&amp;version=GBmain&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="manage-collections">Manage Collections</h1>
+
+<p>Stream Hosts are grouped into different Collections, which are created and maintained in Data Stream Designer. A Collection can be defined as a category that contains a set of Stream Hosts that run the same Data Streams. Collections are used to prevent you from having to redeploy a Data Stream to multiple Stream Hosts, devices, and assets. When a Data Stream is published for a Collection, the devices themselves can just subscribe to that Collection.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>It is recommended that you read the article listed below to improve your understanding of Collections.</p>
+<ul>
+<li><a href="../../concepts/collection.html">Collection and Stream Host</a></li>
+</ul>
+</div>
+<div class="embeddedvideo"><iframe src="https://www.youtube-nocookie.com/embed/-f2TRr-OQSY?rel=0" frameborder="0" allowfullscreen="true"></iframe></div>
+<blockquote>
+<div style="text-align: center; color: #666;">Video 1: How To Use Collections</div>
+</blockquote>
+<h2 id="create-a-collection">Create a Collection</h2>
+<p>Collections are an important concept in the Data Stream Designer. You might have to create a Collection soon after starting to use the Application as they are crucial to the workings of use cases and Streams. A Collection also has to be created before installing a Stream Host as the Stream host is dependent on the information contained in a Collection. To create a Collection, follow the steps below:</p>
+<ol>
+<li>Open the <em>Collections</em> page from the left-hand menu.</li>
+<li>Click on <em>New</em>.</li>
+<li>Choose a name for the new Collection.</li>
+<li>You may also include tags if needed by choosing tags from the drop-down that will open as soon as you click on the field or by typing a new value and pressing <em>Enter</em>.</li>
+<li>Click <em>Ok</em>.</li>
+</ol>
+<p><img src="../../images/c1.png" alt="Creating a new collection"></p>
+<p><img src="../../images/collection-new.png" alt="Collection creation dialog"></p>
+<h2 id="change-a-collection-key">Change a Collection key</h2>
+<p>It might be needed to replace or change the key that is associated with a Collection from time to time. To replace a key with a new one, follow the steps below:</p>
+<ol>
+<li>Open the <em>Collections</em> page from the left-hand menu.</li>
+<li>Select the Collection from the list.</li>
+<li>Click on <em>Revoke Key</em>.</li>
+<li>Confirm that you would like to revoke the key. After clicking <em>Revoke</em>, the key will be replaced with a new key.</li>
+</ol>
+<p><img src="../../images/collection-key.png" alt="Collection key management"></p>
+<p><img src="../../images/c4.png" alt="Confirming key revocation"></p>
+<h2 id="delete-a-collection">Delete a Collection</h2>
+<p>To remove a Collection, follow the steps below:</p>
+<ol>
+<li>Open the <em>Collections</em> page from the left-hand menu.</li>
+<li>Select the Collection you would like to remove.</li>
+<li>Click on the <em>Delete</em> button.</li>
+</ol>
+<p><img src="../../images/collection-delete.png" alt="Deleting a collection"></p>
+<ol start="4">
+<li>Confirm that you would like to delete the selected Collection.</li>
+</ol>
+<p><img src="../../images/c6.png" alt="Confirming collection deletion"></p>
+<h2 id="further-reading">Further Reading</h2>
+<ul>
+<li><a href="remote-receivers-and-publishers.html">How to Use Remote Receivers and Publishers</a></li>
+</ul>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: July 14, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

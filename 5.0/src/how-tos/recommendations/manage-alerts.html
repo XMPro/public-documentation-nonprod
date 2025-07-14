@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Manage Alerts | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Manage Alerts | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/how-tos/recommendations/manage-alerts.md&amp;version=GBmain&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="manage-alerts">Manage Alerts</h1>
+
+<p>Recommendation Alerts are advanced Alerts that get triggered when real-time data meets the criteria defined in a <a href="../../concepts/recommendation/rule.html">Recommendation Rule</a>. They notify you when certain conditions occur in your data and provide decision support for how to take action.</p>
+<p><a href="../../concepts/recommendation/index.html">Recommendations</a> create new Recommendation Alerts based on <a href="../../concepts/recommendation/rule.html#rule-logic">Business Rules</a>, and the Alerts recommend the best next actions based on expert suggestions. Recommendation Alerts monitor the actions taken and outcomes to close the loop on event response.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>It is recommended that you read the article listed below to improve your understanding of Recommendations Alerts.</p>
+<ul>
+<li><a href="../../concepts/recommendation/recommendation-alert.html">Recommendation Alert</a></li>
+<li><a href="manage-recommendations.html">Manage Recommendations</a></li>
+</ul>
+</div>
+<h2 id="finding-recommendation-alerts">Finding Recommendation Alerts</h2>
+<p>The search bar can be used to find any specific Recommendation Alerts that you may be looking for. There is a dropdown option where you can specify to search through everything in App Designer, or only for Recommendation Alerts.</p>
+<p><img src="../../images/attempt3.png" alt="attempt3.png"></p>
+<h2 id="how-to-use-the-recommendation-alerts-grid">How to Use the Recommendation Alerts Grid</h2>
+<h3 id="how-to-filter-the-grid">How to Filter the Grid</h3>
+<ol>
+<li>Open the Recommendation Alerts page.</li>
+<li>Click the filter icon next to the column that you want to filter on.</li>
+<li>Tick the desired checkbox.</li>
+<li>Click OK.</li>
+</ol>
+<p>The Grid with Alerts will be updated.</p>
+<p><img src="../../images/image-592.png" alt=""></p>
+<h3 id="how-to-search-the-grid">How to Search the Grid</h3>
+<ol>
+<li>Open the Recommendation Alerts page.</li>
+<li>Start typing in the search bar.</li>
+<li>The Grid with Alerts will be automatically updated.</li>
+</ol>
+<p><img src="../../images/image-1546.png" alt=""></p>
+<h3 id="how-to-resolve-alerts-from-the-grid">How to Resolve Alerts From the Grid</h3>
+<ol>
+<li>Open the Recommendation Alerts page.</li>
+<li>Tick the checkbox of the Alerts that you want to Resolve.</li>
+<li>Click the Mark As Resolved button.</li>
+</ol>
+<p><img src="../../images/image-1666.png" alt=""></p>
+<h3 id="how-to-show-archived-alerts">How to Show Archived Alerts</h3>
+<ol>
+<li>Open the Recommendation Alerts page.</li>
+<li>Tick the Show Archived checkbox.</li>
+</ol>
+<p>The Grid with Alerts will be updated with archived Alerts.</p>
+<p><img src="../../images/image-1240.png" alt=""></p>
+<h2 id="how-to-use-the-alert-details-page">How to Use the Alert Details Page</h2>
+<p>The Recommendation Alert page provides details of the alert and allows you to monitor, discuss, and take action.</p>
+<h3 id="how-to-add-a-notes">How to Add a Notes</h3>
+<ol>
+<li>Type in the designated area for Notes.</li>
+<li>Click Save.</li>
+</ol>
+<p><img src="../../images/image-1815.png" alt=""></p>
+<h3 id="how-to-fill-out-a-form">How to Fill Out a Form</h3>
+<ol>
+<li>Click the Form tab.</li>
+<li>Fill on the form fields.</li>
+<li>Click the Create Work Request button in the form to save the changes.</li>
+</ol>
+<p><img src="../../images/image-518.png" alt=""></p>
+<h3 id="how-to-contribute-to-a-discussion">How to Contribute to a Discussion</h3>
+<ol>
+<li>Click the Discussion tab.</li>
+<li>Write your message.</li>
+<li>Click the Send button.</li>
+</ol>
+<p><img src="../../images/image-504.png" alt=""></p>
+<h3 id="how-to-share-an-alert">How to Share an Alert</h3>
+<ol>
+<li>Click the Share button.</li>
+</ol>
+<p><img src="../../images/image-1714.png" alt=""></p>
+<p>2. Select Users from the dropdown.<br>
+3. Add a Note.<br>
+4. Click the Share button.</p>
+<p><img src="../../images/image-732.png" alt=""></p>
+<h3 id="how-to-save-resolve-and-mark-as-false-positive">How to Save, Resolve, and Mark as False Positive</h3>
+<ol>
+<li>Clicking the Save button - Changes will be saved and Alert Details Page will stay open.</li>
+<li>Mark as False Positive - Will mark the Alert as False Positive and will close the Alert Details Page.</li>
+<li>Mark as Resolve - Will resolve the Alert and close the Alert Details Page.</li>
+</ol>
+<p><img src="../../images/image-91.png" alt=""></p>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: July 14, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

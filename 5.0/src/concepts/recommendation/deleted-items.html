@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Deleted Items | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Deleted Items | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/concepts/recommendation/deleted-items.md&amp;version=GBmain&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="deleted-items">Deleted Items</h1>
+
+<p>When you delete a Recommendation, there may be archived <a href="recommendation-alert.html">Recommendation Alerts</a> created by that Recommendation that you don't want to delete. In order to facilitate this, deleting a Recommendation, Recommendation Version, or Rule will move the item to the Deleted Items.</p>
+<p>Items that are deleted will not generate new Recommendation Alerts, and will not be visible in other areas of the App Designer and Data Stream Designer. For example, deleted items will not show when selecting a Recommendation to filter on in the Recommendations Block or Stream Objects.</p>
+<p>Deleting the Recommendation itself will also delete all versions and rules within that Recommendation. Deleting a version will also delete all rules within the version. The Recommendation itself will not be deleted, and only the deleted version and rules will show in the deleted items list.</p>
+<p><img src="../../images/image-1850.png" alt="Deleted Items Menu"></p>
+<p>Deleted items can be accessed through the Deleted Items button on the Recommendations page.</p>
+<p><img src="../../images/image-78.png" alt="Access Deleted Items"></p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Items that have not been deleted don't have a select box, and cannot be restored or permanently deleted.</p>
+</div>
+<h2 id="alert-count-column">Alert Count Column</h2>
+<p>When you view deleted items, an Alert Count Column will be displayed next to the items. This will show the number of Alerts that were triggered previously for the deleted Rule.</p>
+<p><img src="../../images/image-1337.png" alt="Alert Count Column"></p>
+<p>Clicking on an Alert Count for a deleted Rule will display the list of Alerts in the Recommendation Alerts table.</p>
+<p><img src="../../images/image-60.png" alt="Recommendation Alerts Table"></p>
+<h2 id="selection">Selection</h2>
+<p>Selecting a Recommendation will select and expand all Versions and Rules for that Recommendation.</p>
+<p><img src="../../images/image-812.png" alt="Select Recommendation"></p>
+<p>Selecting a Version will select and expand all the Rules for that Version.</p>
+<p><img src="../../images/image-1230.png" alt="Select Version"></p>
+<p>When an item is deselected, only that item will be deselected. For example, if you deselect a Recommendation, only the recommendation will be deselected. The Version and Rules for that Recommendation will remain selected.</p>
+<p>Similarly, if you deselect a Version, only the Version will be deselected. Any rules for that Version will remain selected.</p>
+<p><img src="../../images/image-1604.png" alt="Deselect Items"></p>
+<p>If all Versions are deselected in a Recommendation, that Recommendation will be deselected, as you cannot have a Recommendation without a Version.</p>
+<h2 id="restore-items">Restore Items</h2>
+<p>To restore items, select them and press the Restore button. Restored items will return to their original state before being deleted. Restored items will start generating Recommendation Alerts if the Recommendation is published.</p>
+<p>It is possible to restore an item while its parent item is still deleted. In this case, the restored item will not be visible anywhere but will become visible when the parent item is restored.</p>
+<p><img src="../../images/image-304.png" alt="Restore Items"></p>
+<p>If you restore an item without selecting the parents of the item, the parents will be restored as well. For example, if you select a Rule (and do not select its version or Recommendation), the Rule will be restored and the version and recommendation will still be automatically restored as well, even if they were not selected.</p>
+<p><img src="../../images/image-969.png" alt="Auto-Restore Parents"></p>
+<h2 id="permanently-delete-items">Permanently Delete Items</h2>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>Warning! Recommendation Alerts will also be permanently deleted when permanently deleting items.</p>
+</div>
+<p>To permanently delete items, select them and press Delete. The items, any child items, and any Recommendation Alerts generated from them will be deleted forever.</p>
+<h2 id="actions-on-the-deleted-items">Actions on the Deleted Items</h2>
+<table>
+<thead>
+<tr>
+<th><strong>Action</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Restore</td>
+<td>Restores the Deleted item.</td>
+</tr>
+<tr>
+<td>Delete</td>
+<td>Permanently deletes the item.</td>
+</tr>
+<tr>
+<td>Select All</td>
+<td>Toggles between selecting and deselecting all the items in the deleted items list.</td>
+</tr>
+<tr>
+<td>Expand All</td>
+<td>Expands all Recommendations and Versions to see all Versions and Rules underneath.</td>
+</tr>
+<tr>
+<td>Collapse All</td>
+<td>Collapses any already expanded Recommendations.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="further-reading">Further Reading</h2>
+<ul>
+<li><a href="../../how-tos/recommendations/manage-deleted-recommendation-items.html">How to Manage Deleted Recommendation Items</a></li>
+</ul>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: July 14, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

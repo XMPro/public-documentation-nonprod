@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Troubleshooting | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Troubleshooting | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../../toc.html">
+      <meta name="docfx:tocrel" content="../../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/deployment/azure-terraform/troubleshooting.md&amp;version=GBmain&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../../index.html">
+            <img id="logo" class="svg" src="../../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="troubleshooting">Troubleshooting</h1>
+
+<h2 id="introduction">Introduction</h2>
+<p>This guide covers common issues encountered during XMPro Azure Terraform deployment and their solutions. Use this guide to diagnose and resolve deployment problems quickly.</p>
+<h2 id="common-deployment-issues">Common Deployment Issues</h2>
+<h3 id="authentication-problems">Authentication Problems</h3>
+<h4 id="service-principal-authentication-failed">Service Principal Authentication Failed</h4>
+<p><strong>Error Message:</strong></p>
+<pre><code>Error: building AzureRM Client: obtain subscription() from Azure CLI: parsing json result from the Azure CLI: waiting for the Azure CLI: exit status 1: ERROR: Please run 'az login' to setup account.
+</code></pre>
+<p><strong>Solution:</strong></p>
+<pre><code class="lang-bash"># Re-authenticate with Azure CLI
+az logout
+az login
+
+# Verify authentication
+az account show
+
+# Set correct subscription
+az account set --subscription &quot;Your Subscription Name&quot;
+
+# Test service principal authentication
+az login --service-principal \
+  --username &quot;$ARM_CLIENT_ID&quot; \
+  --password &quot;$ARM_CLIENT_SECRET&quot; \
+  --tenant &quot;$ARM_TENANT_ID&quot;
+</code></pre>
+<h4 id="insufficient-permissions">Insufficient Permissions</h4>
+<p><strong>Error Message:</strong></p>
+<pre><code>Error: authorization failed: The client 'xxx' with object id 'xxx' does not have authorization to perform action 'Microsoft.Resources/subscriptions/resourceGroups/write'
+</code></pre>
+<p><strong>Solution:</strong></p>
+<pre><code class="lang-bash"># Check current permissions
+az role assignment list --assignee &quot;$ARM_CLIENT_ID&quot;
+
+# Assign Contributor role
+az role assignment create \
+  --assignee &quot;$ARM_CLIENT_ID&quot; \
+  --role &quot;Contributor&quot; \
+  --scope &quot;/subscriptions/$ARM_SUBSCRIPTION_ID&quot;
+
+# Verify assignment
+az role assignment list --assignee &quot;$ARM_CLIENT_ID&quot; --output table
+</code></pre>
+<h3 id="resource-quota-issues">Resource Quota Issues</h3>
+<h4 id="insufficient-compute-quota">Insufficient Compute Quota</h4>
+<p><strong>Error Message:</strong></p>
+<pre><code>Error: creating App Service Plan: compute.AppServicePlansClient#CreateOrUpdate: Failure responding to request: StatusCode=409 -- Original Error: autorest/azure: Service returned an error. Status=409 Code=&quot;SubscriptionIsOverQuotaForSku&quot;
+</code></pre>
+<p><strong>Solution:</strong></p>
+<pre><code class="lang-bash"># Check current quota usage
+az vm list-usage --location eastus --output table
+
+# Request quota increase
+az support tickets create \
+  --ticket-name &quot;Increase App Service Plan Quota&quot; \
+  --issue-type quota \
+  --severity low \
+  --description &quot;Need to increase App Service Plan quota for XMPro deployment&quot;
+
+# Alternative: Use different SKU
+# In terraform.tfvars, change:
+app_service_sku_name = &quot;B1&quot;  # Instead of B2
+</code></pre>
+<h4 id="sql-database-quota-exceeded">SQL Database Quota Exceeded</h4>
+<p><strong>Error Message:</strong></p>
+<pre><code>Error: creating SQL Database: sql.DatabasesClient#CreateOrUpdate: Failure responding to request: StatusCode=409 -- Original Error: autorest/azure: Service returned an error. Status=409 Code=&quot;SubscriptionIsOverQuotaForSku&quot;
+</code></pre>
+<p><strong>Solution:</strong></p>
+<pre><code class="lang-bash"># Check SQL quota
+az sql list-usage --location eastus
+
+# Use different database SKU
+# In terraform.tfvars:
+sql_sku_name = &quot;Basic&quot;  # Instead of S0
+</code></pre>
+<h3 id="container-registry-issues">Container Registry Issues</h3>
+<h4 id="acr-authentication-failed">ACR Authentication Failed</h4>
+<p><strong>Error Message:</strong></p>
+<pre><code>Error: pulling image: Error response from daemon: pull access denied for xmprocontainers.azurecr.io/xmpro-ad
+</code></pre>
+<p><strong>Solution:</strong></p>
+<pre><code class="lang-bash"># Test ACR login
+az acr login --name xmprocontainers
+
+# Verify credentials
+az acr credential show --name xmprocontainers
+
+# Test image pull
+docker pull xmprocontainers.azurecr.io/xmpro-ad:latest
+
+# Check terraform variables
+echo $TF_VAR_acr_username
+echo $TF_VAR_acr_password
+</code></pre>
+<h4 id="container-image-not-found">Container Image Not Found</h4>
+<p><strong>Error Message:</strong></p>
+<pre><code>Error: App Service cannot start: Container image 'xmprocontainers.azurecr.io/xmpro-ad:5.0.0-main-abc123' not found
+</code></pre>
+<p><strong>Solution:</strong></p>
+<pre><code class="lang-bash"># List available images
+az acr repository list --name xmprocontainers
+
+# List available tags
+az acr repository show-tags --name xmprocontainers --repository xmpro-ad
+
+# Update terraform.tfvars with correct image version
+imageversion = &quot;5.0.0-main-correct-hash&quot;
+
+# Or use latest tag
+imageversion = &quot;latest&quot;
+</code></pre>
+<h3 id="database-connection-issues">Database Connection Issues</h3>
+<h4 id="sql-server-firewall-blocked">SQL Server Firewall Blocked</h4>
+<p><strong>Error Message:</strong></p>
+<pre><code>Error: cannot connect to SQL Server: A connection was attempted from a source with an IP address that is not allowed to access the server
+</code></pre>
+<p><strong>Solution:</strong></p>
+<pre><code class="lang-bash"># Add current IP to firewall
+MY_IP=$(curl -s ifconfig.me)
+az sql server firewall-rule create \
+  --resource-group $(terraform output -raw resource_group_name) \
+  --server $(terraform output -raw sql_server_name) \
+  --name &quot;TempAccess-$MY_IP&quot; \
+  --start-ip-address $MY_IP \
+  --end-ip-address $MY_IP
+
+# Or add Azure services access
+az sql server firewall-rule create \
+  --resource-group $(terraform output -raw resource_group_name) \
+  --server $(terraform output -raw sql_server_name) \
+  --name &quot;AllowAzureServices&quot; \
+  --start-ip-address 0.0.0.0 \
+  --end-ip-address 0.0.0.0
+</code></pre>
+<h4 id="database-migration-failed">Database Migration Failed</h4>
+<p><strong>Error Message:</strong></p>
+<pre><code>Error: Container instance 'sm-dbmigrate' exited with code 1
+</code></pre>
+<p><strong>Solution:</strong></p>
+<pre><code class="lang-bash"># Check container logs
+az container logs \
+  --resource-group $(terraform output -raw resource_group_name) \
+  --name sm-dbmigrate
+
+# Restart migration manually
+az container restart \
+  --resource-group $(terraform output -raw resource_group_name) \
+  --name sm-dbmigrate
+
+# Check database status
+az sql db show \
+  --resource-group $(terraform output -raw resource_group_name) \
+  --server $(terraform output -raw sql_server_name) \
+  --name SM \
+  --query &quot;status&quot;
+</code></pre>
+<h3 id="app-service-startup-issues">App Service Startup Issues</h3>
+<h4 id="application-startup-timeout">Application Startup Timeout</h4>
+<p><strong>Error Message:</strong></p>
+<pre><code>Error: App Service 'xmpro-dev-ad' failed to start within timeout period
+</code></pre>
+<p><strong>Solution:</strong></p>
+<pre><code class="lang-bash"># Check app service logs
+az webapp log tail \
+  --name xmpro-dev-ad \
+  --resource-group $(terraform output -raw resource_group_name)
+
+# Check container settings
+az webapp config container show \
+  --name xmpro-dev-ad \
+  --resource-group $(terraform output -raw resource_group_name)
+
+# Restart app service
+az webapp restart \
+  --name xmpro-dev-ad \
+  --resource-group $(terraform output -raw resource_group_name)
+
+# Check app service health
+curl -f &quot;$(terraform output -raw ad_url)/health&quot;
+</code></pre>
+<h4 id="environment-variable-issues">Environment Variable Issues</h4>
+<p><strong>Error Message:</strong></p>
+<pre><code>Error: Required environment variable 'ConnectionStrings__DefaultConnection' not found
+</code></pre>
+<p><strong>Solution:</strong></p>
+<pre><code class="lang-bash"># Check app service configuration
+az webapp config appsettings list \
+  --name xmpro-dev-ad \
+  --resource-group $(terraform output -raw resource_group_name)
+
+# Verify Key Vault secrets
+az keyvault secret list \
+  --vault-name $(terraform output -raw key_vault_name)
+
+# Check Key Vault access policy
+az keyvault show \
+  --name $(terraform output -raw key_vault_name) \
+  --query &quot;properties.accessPolicies&quot;
+</code></pre>
+<h3 id="terraform-state-issues">Terraform State Issues</h3>
+<h4 id="state-file-locked">State File Locked</h4>
+<p><strong>Error Message:</strong></p>
+<pre><code>Error: Error locking state: Error acquiring the state lock: ConditionalCheckFailedException: The conditional request failed
+</code></pre>
+<p><strong>Solution:</strong></p>
+<pre><code class="lang-bash"># Force unlock (use with caution)
+terraform force-unlock -force &lt;lock-id&gt;
+
+# Alternative: Wait for lock to expire (usually 10 minutes)
+# Or identify who has the lock:
+terraform force-unlock &lt;lock-id&gt;
+</code></pre>
+<h4 id="state-file-corruption">State File Corruption</h4>
+<p><strong>Error Message:</strong></p>
+<pre><code>Error: State file corruption detected
+</code></pre>
+<p><strong>Solution:</strong></p>
+<pre><code class="lang-bash"># Restore from backup
+cp terraform.tfstate.backup terraform.tfstate
+
+# Or refresh state from Azure
+terraform refresh
+
+# In worst case, recreate state by importing resources
+terraform import azurerm_resource_group.main /subscriptions/xxx/resourceGroups/xxx
+</code></pre>
+<h4 id="state-drift-detected">State Drift Detected</h4>
+<p><strong>Error Message:</strong></p>
+<pre><code>Error: Provider produced inconsistent result after apply
+</code></pre>
+<p><strong>Solution:</strong></p>
+<pre><code class="lang-bash"># Refresh state
+terraform refresh
+
+# Check for drift
+terraform plan -refresh-only
+
+# Apply changes to fix drift
+terraform apply -refresh-only
+</code></pre>
+<h3 id="network-connectivity-issues">Network Connectivity Issues</h3>
+<h4 id="dns-resolution-failed">DNS Resolution Failed</h4>
+<p><strong>Error Message:</strong></p>
+<pre><code>Error: custom domain verification failed for 'xmpro.yourdomain.com'
+</code></pre>
+<p><strong>Solution:</strong></p>
+<pre><code class="lang-bash"># Check DNS propagation
+nslookup xmpro.yourdomain.com
+
+# Verify DNS zone configuration
+az network dns zone show \
+  --name yourdomain.com \
+  --resource-group $(terraform output -raw resource_group_name) \
+  --query nameServers
+
+# Check domain verification
+az webapp config hostname add \
+  --webapp-name xmpro-dev-ad \
+  --resource-group $(terraform output -raw resource_group_name) \
+  --hostname xmpro.yourdomain.com
+</code></pre>
+<h4 id="ssl-certificate-issues">SSL Certificate Issues</h4>
+<p><strong>Error Message:</strong></p>
+<pre><code>Error: SSL certificate validation failed
+</code></pre>
+<p><strong>Solution:</strong></p>
+<pre><code class="lang-bash"># Check certificate status
+az webapp config ssl list \
+  --resource-group $(terraform output -raw resource_group_name)
+
+# Renew certificate
+az webapp config ssl upload \
+  --resource-group $(terraform output -raw resource_group_name) \
+  --name xmpro-dev-ad \
+  --certificate-file certificate.pfx \
+  --certificate-password &lt;password&gt;
+</code></pre>
+<h2 id="diagnostic-commands">Diagnostic Commands</h2>
+<h3 id="general-health-check">General Health Check</h3>
+<pre><code class="lang-bash"># Check all resources in resource group
+az resource list \
+  --resource-group $(terraform output -raw resource_group_name) \
+  --output table
+
+# Check deployment status
+az deployment group list \
+  --resource-group $(terraform output -raw resource_group_name) \
+  --query &quot;[].{name:name, state:properties.provisioningState}&quot;
+</code></pre>
+<h3 id="app-service-diagnostics">App Service Diagnostics</h3>
+<pre><code class="lang-bash"># Check app service status
+az webapp list \
+  --resource-group $(terraform output -raw resource_group_name) \
+  --query &quot;[].{name:name, state:state, url:defaultHostName}&quot;
+
+# Check app service metrics
+az monitor metrics list \
+  --resource $(terraform output -raw ad_app_service_id) \
+  --metric &quot;Http2xx&quot; \
+  --start-time $(date -u -d '1 hour ago' '+%Y-%m-%dT%H:%M:%SZ') \
+  --end-time $(date -u '+%Y-%m-%dT%H:%M:%SZ')
+
+# Download app service logs
+az webapp log download \
+  --name xmpro-dev-ad \
+  --resource-group $(terraform output -raw resource_group_name) \
+  --log-file webapp_logs.zip
+</code></pre>
+<h3 id="database-diagnostics">Database Diagnostics</h3>
+<pre><code class="lang-bash"># Check database status
+az sql db list \
+  --server $(terraform output -raw sql_server_name) \
+  --resource-group $(terraform output -raw resource_group_name) \
+  --query &quot;[].{name:name, status:status}&quot;
+
+# Check database connections
+az sql db show \
+  --server $(terraform output -raw sql_server_name) \
+  --name AD \
+  --resource-group $(terraform output -raw resource_group_name) \
+  --query &quot;maxSizeBytes&quot;
+
+# Check database firewall
+az sql server firewall-rule list \
+  --server $(terraform output -raw sql_server_name) \
+  --resource-group $(terraform output -raw resource_group_name)
+</code></pre>
+<h3 id="container-diagnostics">Container Diagnostics</h3>
+<pre><code class="lang-bash"># Check container instance status
+az container list \
+  --resource-group $(terraform output -raw resource_group_name) \
+  --query &quot;[].{name:name, state:instanceView.state}&quot;
+
+# Check container logs
+az container logs \
+  --resource-group $(terraform output -raw resource_group_name) \
+  --name stream-host
+
+# Check container events
+az container show \
+  --resource-group $(terraform output -raw resource_group_name) \
+  --name stream-host \
+  --query &quot;instanceView.events&quot;
+</code></pre>
+<h2 id="performance-issues">Performance Issues</h2>
+<h3 id="slow-app-service-response">Slow App Service Response</h3>
+<p><strong>Symptoms:</strong></p>
+<ul>
+<li>High response times</li>
+<li>Timeouts</li>
+<li>Poor user experience</li>
+</ul>
+<p><strong>Diagnosis:</strong></p>
+<pre><code class="lang-bash"># Check app service metrics
+az monitor metrics list \
+  --resource $(terraform output -raw ad_app_service_id) \
+  --metric &quot;AverageResponseTime&quot; \
+  --start-time $(date -u -d '1 hour ago' '+%Y-%m-%dT%H:%M:%SZ')
+
+# Check CPU usage
+az monitor metrics list \
+  --resource $(terraform output -raw ad_app_service_id) \
+  --metric &quot;CpuPercentage&quot; \
+  --start-time $(date -u -d '1 hour ago' '+%Y-%m-%dT%H:%M:%SZ')
+</code></pre>
+<p><strong>Solution:</strong></p>
+<pre><code class="lang-bash"># Scale up app service plan
+terraform apply -var=&quot;app_service_sku_name=S2&quot;
+
+# Configure autoscaling
+az monitor autoscale create \
+  --resource-group $(terraform output -raw resource_group_name) \
+  --resource $(terraform output -raw app_service_plan_id) \
+  --min-count 2 \
+  --max-count 10 \
+  --count 2
+</code></pre>
+<h3 id="database-performance-issues">Database Performance Issues</h3>
+<p><strong>Symptoms:</strong></p>
+<ul>
+<li>Slow queries</li>
+<li>High DTU usage</li>
+<li>Connection timeouts</li>
+</ul>
+<p><strong>Diagnosis:</strong></p>
+<pre><code class="lang-bash"># Check database metrics
+az monitor metrics list \
+  --resource $(terraform output -raw ad_database_id) \
+  --metric &quot;dtu_consumption_percent&quot; \
+  --start-time $(date -u -d '1 hour ago' '+%Y-%m-%dT%H:%M:%SZ')
+
+# Check connection count
+az monitor metrics list \
+  --resource $(terraform output -raw ad_database_id) \
+  --metric &quot;connection_successful&quot; \
+  --start-time $(date -u -d '1 hour ago' '+%Y-%m-%dT%H:%M:%SZ')
+</code></pre>
+<p><strong>Solution:</strong></p>
+<pre><code class="lang-bash"># Scale up database
+terraform apply -var=&quot;sql_sku_name=S2&quot;
+
+# Enable query performance insights
+az sql db advisor update \
+  --resource-group $(terraform output -raw resource_group_name) \
+  --server $(terraform output -raw sql_server_name) \
+  --database AD \
+  --advisor-name CreateIndex \
+  --auto-execute-action Enabled
+</code></pre>
+<h2 id="security-issues">Security Issues</h2>
+<h3 id="key-vault-access-denied">Key Vault Access Denied</h3>
+<p><strong>Error Message:</strong></p>
+<pre><code>Error: The user, group or application 'xxx' does not have secrets get permission on key vault 'xxx'
+</code></pre>
+<p><strong>Solution:</strong></p>
+<pre><code class="lang-bash"># Check current access policies
+az keyvault show \
+  --name $(terraform output -raw key_vault_name) \
+  --query &quot;properties.accessPolicies&quot;
+
+# Add access policy for app service
+OBJECT_ID=$(az webapp identity show \
+  --name xmpro-dev-ad \
+  --resource-group $(terraform output -raw resource_group_name) \
+  --query principalId -o tsv)
+
+az keyvault set-policy \
+  --name $(terraform output -raw key_vault_name) \
+  --object-id $OBJECT_ID \
+  --secret-permissions get list
+</code></pre>
+<h3 id="network-security-group-issues">Network Security Group Issues</h3>
+<p><strong>Error Message:</strong></p>
+<pre><code>Error: Connection refused on port 443
+</code></pre>
+<p><strong>Solution:</strong></p>
+<pre><code class="lang-bash"># Check NSG rules
+az network nsg list \
+  --resource-group $(terraform output -raw resource_group_name)
+
+# Add HTTPS rule
+az network nsg rule create \
+  --resource-group $(terraform output -raw resource_group_name) \
+  --nsg-name xmpro-nsg \
+  --name AllowHTTPS \
+  --protocol tcp \
+  --priority 1000 \
+  --destination-port-range 443 \
+  --access allow
+</code></pre>
+<h2 id="logging-and-monitoring">Logging and Monitoring</h2>
+<h3 id="enable-detailed-logging">Enable Detailed Logging</h3>
+<pre><code class="lang-bash"># Enable app service logging
+az webapp log config \
+  --name xmpro-dev-ad \
+  --resource-group $(terraform output -raw resource_group_name) \
+  --application-logging true \
+  --detailed-error-messages true \
+  --failed-request-tracing true
+
+# Enable SQL auditing
+az sql server audit-policy update \
+  --resource-group $(terraform output -raw resource_group_name) \
+  --server $(terraform output -raw sql_server_name) \
+  --state Enabled \
+  --storage-account $(terraform output -raw storage_account_name)
+</code></pre>
+<h3 id="monitor-with-application-insights">Monitor with Application Insights</h3>
+<pre><code class="lang-bash"># Get Application Insights key
+INSIGHTS_KEY=$(terraform output -raw app_insights_instrumentation_key)
+
+# View recent exceptions
+az monitor app-insights query \
+  --app $(terraform output -raw app_insights_id) \
+  --analytics-query &quot;exceptions | take 10&quot;
+
+# View performance counters
+az monitor app-insights query \
+  --app $(terraform output -raw app_insights_id) \
+  --analytics-query &quot;performanceCounters | take 10&quot;
+</code></pre>
+<h2 id="recovery-procedures">Recovery Procedures</h2>
+<h3 id="rollback-deployment">Rollback Deployment</h3>
+<pre><code class="lang-bash"># Rollback to previous state
+terraform apply -refresh=false terraform.tfstate.backup
+
+# Or destroy and recreate
+terraform destroy -auto-approve
+terraform apply -auto-approve
+</code></pre>
+<h3 id="disaster-recovery">Disaster Recovery</h3>
+<pre><code class="lang-bash"># Export databases
+az sql db export \
+  --resource-group $(terraform output -raw resource_group_name) \
+  --server $(terraform output -raw sql_server_name) \
+  --name AD \
+  --storage-key &lt;storage-key&gt; \
+  --storage-uri https://backup.blob.core.windows.net/backups/ad.bacpac \
+  --admin-user $(terraform output -raw db_admin_username) \
+  --admin-password $TF_VAR_db_admin_password
+
+# Restore from backup
+az sql db import \
+  --resource-group $(terraform output -raw resource_group_name) \
+  --server $(terraform output -raw sql_server_name) \
+  --name AD-restored \
+  --storage-key &lt;storage-key&gt; \
+  --storage-uri https://backup.blob.core.windows.net/backups/ad.bacpac \
+  --admin-user $(terraform output -raw db_admin_username) \
+  --admin-password $TF_VAR_db_admin_password
+</code></pre>
+<h2 id="getting-help">Getting Help</h2>
+<h3 id="terraform-debug-mode">Terraform Debug Mode</h3>
+<pre><code class="lang-bash"># Enable debug logging
+export TF_LOG=DEBUG
+export TF_LOG_PATH=./terraform.log
+
+# Run terraform command
+terraform apply
+
+# Review detailed logs
+grep -i error terraform.log
+</code></pre>
+<h3 id="azure-support">Azure Support</h3>
+<pre><code class="lang-bash"># Create support ticket
+az support tickets create \
+  --ticket-name &quot;XMPro Deployment Issue&quot; \
+  --description &quot;Detailed description of the issue&quot; \
+  --severity low \
+  --issue-type technical \
+  --contact-method email \
+  --contact-email your-email@company.com
+</code></pre>
+<h3 id="collect-diagnostic-information">Collect Diagnostic Information</h3>
+<pre><code class="lang-bash"># Create diagnostic package
+mkdir -p troubleshooting/$(date +%Y%m%d_%H%M%S)
+cd troubleshooting/$(date +%Y%m%d_%H%M%S)
+
+# Collect Terraform outputs
+terraform output -json &gt; terraform-outputs.json
+
+# Collect resource information
+az resource list --resource-group $(terraform output -raw resource_group_name) --output json &gt; resources.json
+
+# Collect app service logs
+az webapp log download --name xmpro-dev-ad --resource-group $(terraform output -raw resource_group_name) --log-file webapp-logs.zip
+
+# Collect container logs
+az container logs --resource-group $(terraform output -raw resource_group_name) --name stream-host &gt; container-logs.txt
+
+# Create summary
+echo &quot;Diagnostic information collected on $(date)&quot; &gt; summary.txt
+echo &quot;Terraform version: $(terraform version)&quot; &gt;&gt; summary.txt
+echo &quot;Azure CLI version: $(az version --query '\&quot;azure-cli\&quot;' -o tsv)&quot; &gt;&gt; summary.txt
+</code></pre>
+<h2 id="next-steps">Next Steps</h2>
+<p>After resolving issues:</p>
+<ol>
+<li><strong>Update Documentation</strong> - Document any new issues and solutions</li>
+<li><strong>Implement Monitoring</strong> - Set up alerts for similar issues</li>
+<li><strong>Test Thoroughly</strong> - Validate the fix works as expected</li>
+<li><strong>Share Knowledge</strong> - Update team on lessons learned</li>
+</ol>
+<h2 id="support-contacts">Support Contacts</h2>
+<ul>
+<li><strong>XMPro Support</strong>: support@xmpro.com</li>
+<li><strong>Azure Support</strong>: Create ticket through Azure Portal</li>
+<li><strong>Terraform Support</strong>: terraform-help@hashicorp.com</li>
+</ul>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: July 14, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

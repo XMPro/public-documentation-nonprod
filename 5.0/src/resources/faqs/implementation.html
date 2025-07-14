@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Implementation FAQs | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Implementation FAQs | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      <meta name="description" content="Find answers to some of the most frequently asked implementation questions.">
+      <link rel="icon" href="../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/resources/faqs/implementation.md&amp;version=GBmain&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="implementation">Implementation</h1>
+
+<p>Find answers to some of the most frequently asked implementation questions.</p>
+<h2 id="starting-out">Starting Out</h2>
+<h3 id="where-do-i-start-with-xmpro">Where do I start with XMPro?</h3>
+<p>XMPro strongly recommends that all projects should have a defined ROI. Therefore the initial Use Cases, collection of data pertaining to the Business Problems that you are seeking to resolve, and evaluation of project outcome at the midpoint and project close are vital to substantiate the ROI.</p>
+<p>A synopsis of our framework for a project is as follows:</p>
+<ul>
+<li>Define the Business Problem that needs to be addressed</li>
+<li>Identify Bad Actors</li>
+<li>Care must be taken to identify the initial Use Case
+<ul>
+<li>Refer McKinsey <a href="https://www.mckinsey.com/capabilities/operations/our-insights/toward-smart-production-machine-intelligence-in-business-operations">study</a> 4 steps on page 12</li>
+<li>Refer McKinsey <a href="https://www.mckinsey.com/capabilities/operations/our-insights/capturing-the-true-value-of-industry-four-point-zero">study</a> Avoid Pilot Purgatory</li>
+</ul>
+</li>
+<li>Gather data for the initial Proof of Value or Pilot</li>
+<li>Commence Proof of Value or Pilot</li>
+<li>Hold a mid-point review &amp; measure success against these questions
+<ul>
+<li>Does the tool work?</li>
+<li>Does it deliver value?</li>
+<li>Would the customer use it?</li>
+</ul>
+</li>
+<li>Collect the ROI achieved in the Pilot Period</li>
+<li>Project Gate = Go / No Go decision</li>
+</ul>
+<p><img src="../../images/resources/faqs/faq-bad-actors.png" alt="Bad Actors"></p>
+<h3 id="to-build-a-digital-twin-of-a-factory-do-i-start-with-the-whole-factory-or-start-small">To build a Digital Twin of a factory, do I start with the whole factory or start small?</h3>
+<p>Always start small. Digital transformation is achieved by many small projects that lock in success at each step. The overall goal is to achieve project success early and expand.</p>
+<p>There will be many challenges for you to achieve success, by starting with small projects you lower the overall risk of failure. The positive flip side of small projects is that you fail fast, and the costs are limited.</p>
+<p><img src="../../images/resources/faqs/faq-easy-wins.png" alt="Easy Wins"></p>
+<h3 id="i-want-predictive-maintenance-and-i-want-it-now">I want Predictive Maintenance, and I want it now.</h3>
+<p>We think it makes sense to think of two components of PdM (Predictive Maintenance):</p>
+<ul>
+<li>First Principle / Engineering Models – The starting point for most predictive solutions supported by real-time sensor data</li>
+<li>AI / Statistical Models – Use the AI / Statistical models to augment decision support but requires quality data and contextual models</li>
+</ul>
+<p>Subject to quality data, the First Principle / Engineering Models are the fast start as the formula is agreed upon and the model is ready to go. AI / Statistical Models require more effort and analysis – one will need the assets failure history and time and resources to refine your models.</p>
+<p><img src="../../images/resources/faqs/faq-predictive-maintenance-1.png" alt="Predictive Maintenance Progression"></p>
+<p>Another view of your predictive maintenance goal is to consider the maturity of the use cases. Smart Asset Management includes the smart use of condition monitoring, predictive maintenance, and process optimization.</p>
+<p><img src="../../images/resources/faqs/faq-predictive-maintenance-2.png" alt="Predictive Maintenance 2"></p>
+<h3 id="what-is-xmpros-approach-to-ai">What is XMPro's approach to AI?</h3>
+<p>XMPro is not an AI company. We can call the AI / Statistical models and use the output to trigger recommendation alerts, but the models are sourced from you or one of our AI partners.</p>
+<p>How does XMPro do it? We provide integration building blocks in our Data Streams to call the model and use the model output for computation of the real-time data stream, which is used in the creation of a recommendation for the asset.</p>
+<p>XMPro has the capability to pass data to Azure Machine Learning and train models. These models can be called by other XMPro Data Streams to use the model output for evaluation of real-time streaming data. For example, the RUL of a Secondary Crusher.</p>
+<h4 id="further-reading">Further Reading</h4>
+<ul>
+<li><a href="../../how-tos/data-streams/manage-data-streams.html">How to work with Data Streams</a></li>
+<li><a href="https://xmpro.gitbook.io/python/">Python Integration</a></li>
+<li><a href="https://xmpro.gitbook.io/azure-ml/">Azure ML Integration</a></li>
+</ul>
+<h3 id="ive-seen-mining-examples-can-xmpro-compose-a-digital-twin-for-utilities">I've seen Mining examples. Can XMPro compose a Digital Twin for utilities?</h3>
+<p>Yes, we can. In 2021/22 XMPro predominantly worked in the Mining and Oil &amp; Gas sectors, and we are now expanding to other asset-intensive industries such as Utilities and Chemicals.</p>
+<p>These asset-intensive industries all have similar equipment, challenges, and use cases. We find that we can transport solutions from one to the other in these industries. The lessons learned from Mining can accelerate solutions for Utilities, bringing a slightly different perspective on how to approach challenges from a &quot;bad actor&quot; and failure analysis point of view rather than a traditional &quot;similar industry&quot; approach.</p>
+<p>Below is our strategy for expansion in asset-intensive industries with transferable use cases around asset availability problems.</p>
+<p><img src="../../images/resources/faqs/faq-predictive-maintenance-2.png" alt="Predictive Maintenance 2"></p>
+<h2 id="architecture">Architecture</h2>
+<h3 id="can-xmpro-be-installed-and-used-on-premise">Can XMPro be installed and used on-premise?</h3>
+<p>Yes. Currently, the majority of XMPro deployments are Cloud-based. XMPro can be deployed on-premises, on Azure/AWS, or as a hybrid with parts on-premises and in the cloud.</p>
+<p>Typically for the hybrid deployment, the stream host is deployed on-premises with the core application being hosted on the cloud.</p>
+<p>On-premise deployments have been driven by the need for remote locations, as well as constraints on internet access from within a corporate network.</p>
+<h4 id="further-reading-1">Further Reading</h4>
+<ul>
+<li><a href="../../installation/deployment/windows-server-2022/index.html">On-Premise deployment</a></li>
+<li><a href="../../installation/deployment/index.html">All deployment options</a></li>
+</ul>
+<h3 id="if-xmpro-is-in-the-cloud-can-i-connect-to-my-on-premise-applications">If XMPro is in the Cloud, can I connect to my On-Premise application(s)?</h3>
+<p>Yes. If your applications are internet-facing, then a cloud stream host can be used. If your applications are behind a firewall and internal to your network, then in this instance XMPro will be a hybrid deployment model, with the stream host located on-premises.</p>
+<h4 id="further-reading-2">Further Reading</h4>
+<ul>
+<li><a href="../../installation/deployment/azure.html#architecture">Azure Deployment Diagram</a></li>
+<li><a href="../../installation/deployment/aws.html#architecture">AWS Deployment Diagram</a></li>
+</ul>
+<h3 id="do-i-need-a-separate-server-for-the-stream-host-or-will-it-run-on-the-same-application-server">Do I need a separate server for the stream host, or will it run on the same application server?</h3>
+<p>The preferred approach is to have a separate infrastructure for the stream host.</p>
+<p>It is possible that your XMPro deployment has only one Stream Host. However, this is rarely the case and we suggest the following considerations:</p>
+<ul>
+<li>Consider each location having a dedicated Stream Host</li>
+<li>A critical Data Stream, like pressure readings on a pressure vessel, may have its own dedicated Stream Host</li>
+<li>If a payload for a Data Stream is large and frequent, then consider a dedicated Stream Host for that Data Stream.</li>
+<li>Having several Stream Hosts can improve the resilience of your system</li>
+<li>Network latency and geographical spread could be factors in considering the case for multiple Stream Hosts</li>
+</ul>
+<h2 id="performance">Performance</h2>
+<h3 id="a-look-beneath-the-hood-of-xmpro-charts-and-time-series-analysis-charts">A look beneath the hood of XMPro Charts and Time Series Analysis Charts</h3>
+<p>Often the first time that users are aware of the components that make up XMPro charts is when they experience slow rendering times. This article seeks to explain the structure behind the XMPro charts and the components that impact chart performance.</p>
+<p>Performance is not limited to the <a href="../../blocks-toolbox/visualizations/time-series-analysis.html">Time Series Analysis</a> as the same pattern pertains to other XMPro charts too, such as the <a href="../../blocks-toolbox/visualizations/chart.html">Chart Block</a>. With an understanding of the influences on chart performance, the reader will be in an informed position to address their requirement.</p>
+<p>The current Time Series Analysis use SQL and Azure ADX as data sources.</p>
+<h4 id="xmpro-as-an-event-intelligence-platform">XMPro as an Event Intelligence platform</h4>
+<p>XMPro is purpose-built to manage events in real-time. This means its technologies can be used for Business Intelligence purposes.</p>
+<p>The processing of large swathes of past time series data is possible, but there are circumstances where this will not be an optimal user experience as the connectors work on the basis of 'Get All Data' and not incremental steps like for example, Grafana.</p>
+<p><img src="../../images/resources/faqs/tsc-faq-fig-1.png" alt="Time Series Chart FAQ 1"></p>
+<h4 id="xmpro-app-designer-server-memory-scenarios">XMPro App Designer Server memory scenarios</h4>
+<p>The XMPro App Designer Server will reserve the required memory for each unique query while there is at least 1 active user interacting with it. A unique query is defined as a Time Series Chart instance, with the same date selection and same data source. The number of concurrent queries with at least 1 active user will have an influence on the XMPro App Designer Server performance.</p>
+<p>If one user runs a query that consumes 2 GB of server memory and a different user performs that same query, then the server consumes no additional memory and instead used the cached query.</p>
+<p>If a different query is run that consumes 4 GB of server memory, then a total of 6 GB of memory would be consumed, and so on. Depending on the server configuration this could impact overall server performance and response time (user experience).&quot;</p>
+<h4 id="settings-that-could-impact-performance">Settings that could impact performance</h4>
+<p>There are several influences on XMPro App Designer Server and XMPro App Designer Client performance. The main influences would include:</p>
+<ul>
+<li>Web Server memory</li>
+<li>Web Server CPU</li>
+<li>Load balancing / Auto Scaling (scale out)</li>
+<li>Data Size (size and number of rows)</li>
+<li>Data Complexity (type and relationship of data)</li>
+<li>Where aggregation is performed (Data Layer vs Web Server vs Chart Control)</li>
+<li>Network speed and reliability (Data Layer, Web Server, and Client Browser)</li>
+<li>Client Available CPU speed</li>
+<li>Client Available Memory</li>
+<li>Web Browser and Version</li>
+<li>XMPro Platform Version</li>
+</ul>
+<h4 id="sql-vs-adx">SQL vs ADX</h4>
+<p>The first consideration that impacts response time is the amount of data queried at the data source and the volume of data transmitted in response. The second consideration is the volume and complexity of data that the App Designer Server needs to parse.</p>
+<p>Figures 1 &amp; 2 illustrate the reason for the improved performance of ADX over SQL.</p>
+<p>Amending the aggregation period will be almost instantaneous on ADX. On SQL this is likely to be slower.</p>
+<p><img src="../../images/resources/faqs/tsc-faq-fig-2.png" alt="Time Series Chart FAQ 2"></p>
+<h4 id="issues-for-consideration-to-address-overall-performance">Issues for consideration to address overall performance</h4>
+<ul>
+<li>The Time Series Analysis data loads initially and then again whenever the date selection is changed.
+<ul>
+<li>Thus the initial selection should be limited, e.g. 3 hours.</li>
+<li>The appropriate initial selection depends upon the frequency of data points, i.e., if the time interval is every second, every minute, or every hour.</li>
+<li>The number of assets affects performance - not whether they are selected. All data points for all assets for the data range selection are loaded so that the query does not need to be reloaded when a user changes their asset selection.</li>
+</ul>
+</li>
+<li>Limit the number of records fetched from the source system, either by using aggregation at the source if possible (or) by limiting to a shorter date range selection.</li>
+<li>Consider whether this is tracking events in real-time or requires discovery in a BI environment.</li>
+<li>Consider the number of simultaneous users and unique query combinations and whether sufficient resources have been allocated.</li>
+</ul>
+<h4 id="appendix-1-elapsed-time-for-time-series-analysis-regular-charts-and-d3-charts">Appendix 1: Elapsed Time for Time Series Analysis, Regular Charts, and D3 Charts</h4>
+<p><a href="/docs/assets/pdfs/pdf-viewer.html?pdf=Chart_Comparison_Appendix.pdf">Chart Comparison Appendix</a></p>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: July 14, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

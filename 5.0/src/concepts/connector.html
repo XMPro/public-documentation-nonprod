@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Connector | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Connector | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../images/favicon.png">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/concepts/connector.md&amp;version=GBmain&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="connector">Connector</h1>
+
+<h2 id="overview">Overview</h2>
+<p>A <em>Connector</em> is a pre-built integration plug-in for the XMPro App Designer that allows you to connect to third-party data sources without writing code.</p>
+<p>They can be used when integrating data from data sources such as a database into an Application. This can include real-time data from machines, websites, other streaming data, or contextual data such as the make or model of a certain item.</p>
+<p>Connectors are useful if you want to use the data within an Application or display the data to the user on a page of an Application.</p>
+<p>Data Sources can include databases, Data Streams, or Recommendations. <a href="application/data-integration.html">See the Data Integration article for more details</a>. You can assume that Connectors have already been set up by your Administrator.</p>
+<div class="embeddedvideo"><iframe src="https://www.youtube-nocookie.com/embed/1KbTHWZwgPI?rel=0" frameborder="0" allowfullscreen="true"></iframe></div>
+<p>Each Connector consists of code, <a href="#settings">settings</a>, and other properties that are packaged into a file that can be uploaded to App Designer.</p>
+<p>XMPro has a <a href="../resources/integrations.html#connectors">library of Connectors</a> available to use. To acquire any of these Connectors, please contact your XMPro sales representative or write to us at <a href="mailto:support@xmpro.com">support@xmpro.com</a>. Alternatively, since Connectors can be written by anyone that has some knowledge of programming and has access to the required technologies, you can write your own Connector by following <a href="../how-tos/connectors/building-connectors.html">these</a> instructions.</p>
+<h2 id="category">Category</h2>
+<p>Connectors can be grouped into categories. This category is separate from the <a href="category.html">App and Data Stream Categories</a>.</p>
+<h2 id="settings">Settings</h2>
+<p>A Connector consists of code and user settings. The code defines the actions a Connector performs in App Designer. The settings are the input for the code that executes, provided by the user when adding the Connector to App Designer, such as authentication credentials.</p>
+<p>For example, consider the SQL Server Connector, which retrieves data from a SQL database. The settings a user must define for the Connector so it can do that are as follows:</p>
+<ul>
+<li>Name of the SQL Server instance</li>
+<li>SQL Server username</li>
+<li>Whether SQL Server authentication should be used or not</li>
+<li>SQL Server password</li>
+<li>Database to which the data should be written</li>
+</ul>
+<h2 id="finding-connectors">Finding Connectors</h2>
+<p>The search bar can be used to find any specific Connectors that you may be looking for. There is a dropdown option where you can specify to search through everything in App Designer, or only for Connectors.</p>
+<p><img src="../images/search-connectors.png" alt="Search Connectors"></p>
+<h2 id="adding-a-connector">Adding a Connector</h2>
+<p>Connectors can be added by uploading their XMP file on the connectors page. Each version of a Connector has its own XMP file. When uploading an app, any missing Connectors that the app needs must be updated or uploaded for the app to be imported successfully.</p>
+<p><img src="../images/connectors-adding-1.png" alt="Adding a Connector"></p>
+<p><img src="../images/connectors-adding-2.png" alt="Adding a Connector 2"></p>
+<h2 id="versions">Versions</h2>
+<p>Connectors can have multiple versions. For example, a new version of a Connector can be created if there are any changes or updates made to it. Changes or updates made to new versions of a Connector will not affect the previous versions.</p>
+<p>Each version of a Connector has its own XMP file. When uploading a Connector, a specific version of that Connector will be uploaded. To upload a different version, you will need to upload the XMP file for that specific version you want to use.</p>
+<p>When you view a Connector, you can see the list of specific versions for that Connector. The number of apps using each version is shown next to the version number. Apps that you do not have access to will not show on the list. When you upload a new version, the new version will be displayed in this list.</p>
+<p>When selecting a Connector to use in an app, the application will automatically choose the latest version available.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>When a new version of a Connector is uploaded, any apps using older versions may need to be upgraded. <a href="application/data-integration.html#connection">See the Data Integration article for more information on how to upgrade an app's connection.</a></p>
+</div>
+<p><img src="../images/connectors-versions.png" alt="Connector Versions"></p>
+<h3 id="view-and-edit-applications">View and Edit Applications</h3>
+<p>There is an alternate way to view or edit Applications directly from the Connectors page. When viewing a Connector, you will see the number of Applications using each version of the Connector. Expand to see the full list of Applications, which can be viewed by clicking on the Application or edited by clicking the <em>Edit</em> button.</p>
+<p><img src="../images/connectors-edit-applications.png" alt="View and Edit Applications"></p>
+<h3 id="publish-and-unpublish-apps">Publish and Unpublish Apps</h3>
+<p>You can also publish or unpublish an Application that uses that version of the Connector.</p>
+<p>As an Admin, this is useful if you need to unpublish an Application and you don't have access to it. See the <a href="../how-tos/publish/admin-unpublish-override.html">How to Admin Unpublish Override</a> article for more details.</p>
+<p><img src="../images/connectors-publish-unpublish.png" alt="Publish and Unpublish Apps"></p>
+<h2 id="actions-on-the-connector">Actions on the Connector</h2>
+<table>
+<thead>
+<tr>
+<th><strong>Action</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Add</td>
+<td>Adds a new Connector.</td>
+</tr>
+<tr>
+<td>Select</td>
+<td>Selects multiple Connectors.</td>
+</tr>
+<tr>
+<td>Delete</td>
+<td>Deletes the Connector.</td>
+</tr>
+<tr>
+<td>Manage Categories</td>
+<td>Creates and edits categories to organize the Connectors. These categories are separate from the <a href="category.html">App and Data Stream Categories</a>.</td>
+</tr>
+<tr>
+<td>Save</td>
+<td>Saves any changes made to the Connector up to this point.</td>
+</tr>
+<tr>
+<td>Discard</td>
+<td>Discards any changes made to the Connector up to this point.</td>
+</tr>
+<tr>
+<td>Delete Versions</td>
+<td>Deletes a selected version of a Connector. You can only delete versions that don't have any apps using that version of the Connector. If you don't have access to an app that a version is using, you still cannot delete the version.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="further-reading">Further Reading</h2>
+<ul>
+<li><a href="../how-tos/connectors/manage-connectors.html">How to Create and Manage Connectors</a></li>
+</ul>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: July 14, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

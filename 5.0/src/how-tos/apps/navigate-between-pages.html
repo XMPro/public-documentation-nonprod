@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Navigate Between Pages | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Navigate Between Pages | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/how-tos/apps/navigate-between-pages.md&amp;version=GBmain&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="navigate-between-pages">Navigate Between Pages</h1>
+
+<p>It is possible to allow navigation between Pages of an App by configuring the Action of a Block. This allows you to separate your content within the application into sections that can be easily navigated by the user.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>It is recommended that you read the article listed below to improve your understanding of Navigating between Pages.</p>
+<ul>
+<li><a href="../../concepts/application/navigation-and-parameters.html">Navigation and Parameters</a></li>
+<li><a href="manage-pages.html">How to Manage Pages</a></li>
+</ul>
+</div>
+<h2 id="configuring-navigation-between-pages">Configuring Navigation between Pages</h2>
+<p>To add Navigation between Pages, make sure the Application has more than one Page. <a href="manage-pages.html">See the Manage Pages article to read more about adding Pages.</a></p>
+<p><img src="../../images/apps/navigation/nav-1.png" alt="Screenshot showing the application editor with multiple pages listed in the left sidebar under the Pages section. Each page is represented as a card with its name."></p>
+<p>When a new Page is created, they are automatically configured to have links going back to the landing page, which can be seen at the top of the screen.</p>
+<p><img src="../../images/apps/navigation/nav-2.png" alt="Screenshot showing the automatic navigation link back to the landing page, appearing as a breadcrumb navigation at the top of the screen."></p>
+<p>Some Pages do not automatically have links to other Pages. For example, the Landing page does not have links going to other pages. To add Navigation between Pages, follow these steps:</p>
+<ol>
+<li>Click on <em>Applications</em> from the left-hand menu.</li>
+<li>Click on the <em>edit</em> button of the Application from the list.</li>
+</ol>
+<p><img src="../../images/apps/parameters/params-1.png" alt="Screenshot of the Applications list view showing multiple application cards with an Edit button highlighted on one of them."></p>
+<p>3. Select a Page from the Application's Edit menu.<br>
+4. Click on <em>Blocks</em>.<br>
+5. Under '<em>Actions</em>', select an action such as a button.<br>
+6. Drag and drop it onto the Page of the application.</p>
+<p><img src="../../images/apps/navigation/nav-4.png" alt="Screenshot showing the Blocks toolbox with the Actions section expanded. A button component is being dragged from the toolbox onto the page canvas."></p>
+<p>7. Select the button.<br>
+8. Click on <em>Block Properties.</em><br>
+9. Under '<em>Action</em>,' click on the <em>Navigate To</em> Dropdown and select <em>Page</em>.</p>
+<p><img src="../../images/apps/navigation/nav-5.png" alt="Screenshot of the Block Properties panel with the Action section open. The Navigate To dropdown is set to &quot;Page&quot; in the properties."></p>
+<p>10. Select the page you want to navigate to.</p>
+<p><img src="../../images/apps/navigation/nav-6.png" alt="Screenshot showing the dropdown list of available pages that can be selected as the navigation target for the button."></p>
+<p>11. Under '<em>Appearance,</em>' give the button a name.<br>
+12. Click on <em>Save</em>.</p>
+<p><img src="../../images/apps/navigation/nav-7.png" alt="Screenshot of the Block Properties panel with the Appearance section open. The Name field is filled with &quot;Go to Page 2&quot; and the Save button is highlighted at the bottom."></p>
+<h2 id="navigating-between-pages-at-runtime">Navigating between Pages at Runtime</h2>
+<p>After the Navigation between Pages has been added, you can Launch the App to see what it will look like at runtime. Follow the steps below to Launch and view the App:</p>
+<ol>
+<li>Click on <em>Launch</em>.</li>
+<li>The button is visible on the Page. Click on the button to navigate to the other selected Page.</li>
+</ol>
+<p><img src="../../images/apps/navigation/nav-8.png" alt="Screenshot showing the app in preview mode with the navigation button visible on the page."></p>
+<p><img src="../../images/apps/navigation/nav-9.png" alt="Screenshot showing the cursor hovering over the navigation button, indicating it's about to be clicked."></p>
+<p>3. The page will open.</p>
+<p><img src="../../images/apps/navigation/nav-10.png" alt="Screenshot showing the destination page after the navigation button has been clicked. This shows the result of successful navigation between pages."></p>
+<h2 id="deleting-navigation-between-pages">Deleting Navigation between Pages</h2>
+<p>You can delete the navigation functionality by either deleting the Block itself or by deleting the settings under <em>Action</em> in the <em>Block Properties</em> tab.</p>
+<p><img src="../../images/apps/navigation/nav-11.png" alt="Screenshot of the Block Properties panel showing how to remove navigation by clearing the Action settings. The Navigate To dropdown is being set to &quot;None&quot;."></p>
+<h2 id="navigating-using-back-url">Navigating Using Back URL</h2>
+<p>You can include a back URL to the current page when configuring a Navigate To URL, so that the user can return to the original page. For example, you want to open an Alert from a custom templated list and the alert drill-down needs a back URL.</p>
+<p>To append a back URL, follow these steps:</p>
+<ol>
+<li>Click on <em>Block Properties</em>.</li>
+<li>Under '<em>Action</em>', click on the <em>Navigate To</em> Dropdown and select <em>URL</em>.</li>
+<li>Toggle the URL mode to Expression Mode.</li>
+<li>Click the dropdown to edit the expression value.</li>
+</ol>
+<p><img src="../../images/apps/navigation/backurl-1-4.png" alt="Screenshot showing the Block Properties panel with URL configuration. The URL field is in Expression Mode and the expression editor dropdown is open."></p>
+<p>5. Note the current page parameters under Constants.</p>
+<p><img src="../../images/apps/navigation/backurl-5.png" alt="Screenshot of the expression editor showing the Constants section with current page parameters like appId, pageId, and categoryName that can be used in the back URL."></p>
+<p>6. Configure the URL with back parameters, similar to the below:</p>
+<pre><code>&quot;https://xmad-sample.azurewebsites.net/viewalert;id=&quot;+&quot;12345&quot;+&quot;;backUrl=render;backParams=\{\\&quot;appId\\&quot;:\\&quot;&quot;+appId+&quot;\\&quot;,\\&quot;pageId\\&quot;:\\&quot;&quot;+pageId+&quot;\\&quot;,\\&quot;categoryName\\&quot;:\\&quot;&quot;+categoryName+&quot;\\&quot;,\\&quot;appVersion\\&quot;:\\&quot;&quot;+appVersion+&quot;\\&quot;\\}&quot;
+</code></pre>
+<p><img src="../../images/apps/navigation/backurl-6.png" alt="Screenshot showing the completed expression for the back URL with all parameters properly formatted in the expression editor."></p>
+<h2 id="copying-app-link">Copying App Link</h2>
+<p>You can copy the App link if you want to share it. This creates a link to the published app version - or to the latest version if there is no published version.</p>
+<ol>
+<li>Click More.</li>
+<li>Click Copy App Link.</li>
+</ol>
+<p><img src="../../images/apps/navigation/app-link.png" alt="Screenshot showing the More dropdown menu in the application editor with the &quot;Copy App Link&quot; option highlighted."></p>
+<h2 id="copying-page-link">Copying Page Link</h2>
+<p>You can copy a specific App Page link if you want to share it. This will create a link to the specific app version and page.</p>
+<ol>
+<li>Open the Page.</li>
+<li>Click Copy Page Link.</li>
+</ol>
+<p><img src="../../images/apps/navigation/page-link.png" alt="Screenshot showing the Page editor with the &quot;Copy Page Link&quot; button highlighted in the toolbar."></p>
+<h2 id="further-reading">Further Reading</h2>
+<ul>
+<li><a href="pass-parameters-between-pages.html">How to Pass Parameters between Pages</a></li>
+</ul>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: July 14, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

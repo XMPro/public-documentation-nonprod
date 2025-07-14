@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Manage Site Settings | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Manage Site Settings | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../images/favicon.png">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/how-tos/manage-site-settings.md&amp;version=GBmain&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="manage-site-settings">Manage Site Settings</h1>
+
+<p>These settings are used to configure each XMPro Product. To open the settings page, click on the <em>gears</em> icon in the grey bar at the top of the screen.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Please note that the settings that you will see on this page depend on the role and access rights that have been assigned to you.</p>
+</div>
+<p><img src="../images/manage-site-settings-1.png" alt="Fig 1: Access the Site Settings"></p>
+<h2 id="app-designer-settings">App Designer Settings</h2>
+<h3 id="security">Security</h3>
+<h4 id="enable-audit-trail">Enable Audit Trail</h4>
+<p>Enabling this setting would cause logs to be created whenever changes are made to <a href="../concepts/recommendation/index.html">Recommendations</a>, <a href="../concepts/connector.html">Connectors</a>, and components of <a href="../concepts/application/index.html">Applications</a>. The logs will contain details about who made the change and when it was applied.</p>
+<h4 id="encryption-key">Encryption Key</h4>
+<p>The encryption key is used to encrypt and decrypt sensitive data configured in the user settings when they are stored or retrieved from the database, for example, passwords.</p>
+<h3 id="integration">Integration</h3>
+<h4 id="integration-key">Integration Key</h4>
+<p>This key is used to verify Agents that integrate with the App Designer. The Integration Key will need to be copied into the Agent's configuration settings.</p>
+<h3 id="user-interface">User Interface</h3>
+<h4 id="desktop-landing-page">Desktop Landing Page</h4>
+<p>Optionally override the default <a href="../concepts/landing-pages.html">landing page</a> to use a published Application for the whole company when using a desktop computer.</p>
+<h4 id="mobile-landing-page">Mobile Landing Page</h4>
+<p>Optionally override the default <a href="../concepts/landing-pages.html">landing page</a> to use a published Application for the whole company when using a mobile device.</p>
+<h4 id="enable-mobile-app">Enable Mobile App</h4>
+<p>Optionally override the default <a href="../concepts/landing-pages.html">landing page</a> to use a published Application for the whole company when using a desktop computer.</p>
+<h4 id="mobile--landing-page">Mobile  Landing Page</h4>
+<p>Optionally override the default <a href="../concepts/landing-pages.html">landing page</a> to use a published Application for the whole company when using a mobile device.</p>
+<h4 id="enable-mobile-app-1">Enable Mobile App</h4>
+<p><em>Added v4.4.4</em></p>
+<p>This defaults to true on new installations. Toggle it off to hide the mobile app icon on the toolbar.</p>
+<p>This defaults to true on new installations. Toggle it off to hide the mobile app icon on the toolbar.</p>
+<h3 id="metablocks">Metablocks</h3>
+<p><em>Added v4.4.0</em></p>
+<h4 id="enable-metablocks">Enable Metablocks</h4>
+<p>Enabling this setting results in <a href="../concepts/application/metablocks.html">Metablocks</a> appearing in the Blocks blade.</p>
+<h3 id="reports">Reports</h3>
+<p><em>Added v4.3.7</em></p>
+<p>Standard reports give the administrator a view into where (which Applications) and how (which version) Connectors have been used. The information is presented in a grid that can be sorted, filtered, reorganized, and grouped. It can also be exported as an XLSX file.</p>
+<p><img src="../images/manage-site-settings-2.png" alt="Fig 2: Example App Designer Report"></p>
+<h4 id="connector-usage-report">Connector Usage Report</h4>
+<p>This report shows all loaded Connectors, their versions, and how many times each version is used in an Application, if any.</p>
+<p>This master list shows the administrator which Connectors are installed and their utilization. This assists in identifying new Connectors or versions not yet added.</p>
+<h4 id="connector-usage-details-report">Connector Usage Details Report</h4>
+<p>This report shows the Applications in which a Connector version has been used. Additional information includes the Application's owner and category.</p>
+<p>This detailed report assists in gauging the impact of upgrading one or more Connector versions.</p>
+<h3 id="scripts">Scripts</h3>
+<h4 id="embed-script">Embed Script</h4>
+<p>Added in v4.4.17, the supplied html script tag is inserted into every App Designer html page. Use this to load an external JavaScript script, such as to provide localized support or track user usage. For example, the below script embeds a chatbot into App Designer.</p>
+<pre><code class="lang-javascript">// example script to embed a fastbot trained on appropriate documentation
+&lt;script defer src=&quot;https://app.fastbots.ai/embed.js&quot; data-bot-id=&quot;abc&quot;&gt;&lt;/script&gt;
+</code></pre>
+<p>To improve performance and ensure users always have the latest version of your script:</p>
+<ol>
+<li><p><strong>Use version parameters</strong> in your script URL to control caching:</p>
+<pre><code>&lt;script defer src=&quot;https://example.com/your-script.js?v=1.0.2&quot;&gt;&lt;/script&gt;
+</code></pre>
+</li>
+</ol>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Update the version number whenever you modify the script. This ensures:</p>
+<ul>
+<li>Returning users get the new version immediately</li>
+<li>Users benefit from browser caching between sessions</li>
+<li>You control exactly when cache invalidation occurs</li>
+</ul>
+</div>
+<ol start="2">
+<li><strong>Consider using content delivery networks (CDNs)</strong> for faster loading and improved caching.</li>
+<li><strong>Use appropriate loading attributes</strong> like <code>defer</code> or <code>async</code> to optimize page rendering:
+<ul>
+<li><code>defer</code>: Script executes after HTML parsing is complete (recommended for most cases)</li>
+<li><code>async</code>: Script executes as soon as it's available, potentially during HTML parsing</li>
+</ul>
+</li>
+</ol>
+<p>For guidance on how to use this setting effectively, please contact your XMPro representative.</p>
+<h2 id="data-stream-designer-settings">Data Stream Designer Settings</h2>
+<h3 id="security-1">Security</h3>
+<h4 id="encryption-key-1">Encryption Key</h4>
+<p>The encryption key is used to encrypt and decrypt sensitive data configured in the user settings of an <a href="../concepts/agent/index.html">Agent</a> when they are stored or retrieved from the database, for example, passwords.</p>
+<h4 id="enable-audit-trail-1">Enable Audit Trail</h4>
+<p>Enabling this setting would cause logs to be created whenever changes are made to <a href="../concepts/agent/index.html">Agents</a>, <a href="../concepts/collection.html">Collections</a>, and components of <a href="../concepts/data-stream/index.html">Data Streams</a>. The records will contain details about who made the change and when it was applied.</p>
+<h3 id="user-interface-1">User Interface</h3>
+<h4 id="enable-inputmap-highlights">Enable InputMap Highlights</h4>
+<p>Enables the Canvas arrow highlight which is shown if the arrow's configuration doesn't have mappings. This is useful for demos where the complete configuration has intentionally not been provided.</p>
+<h4 id="enable-stream-metrics">Enable Stream Metrics</h4>
+<p>Enables the logging and display of stream metrics (<a href="data-streams/use-stream-metrics.html#stream-load">Stream Load</a> and <a href="data-streams/use-stream-metrics.html#stream-errors">Stream Errors</a>) in Data Streams. Refresh the page for the setting to be applied to the Data Stream Canvas.</p>
+<h3 id="behavior">Behavior</h3>
+<h4 id="default-polling-interval-seconds">Default Polling Interval (seconds)</h4>
+<p><em>Added v4.3.7</em></p>
+<p>The default value that is used for the polling interval when a Polling Agent is added to a <a href="../concepts/data-stream/index.html">Streaming</a> type Data Stream.</p>
+<p>If there is no value provided for this setting, the polling interval defaults to 3600 seconds (1 hour).</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The default is applied when the Agent is added to the canvas. A change to this site setting will only take effect for Agents added afterward.</p>
+</div>
+<h4 id="live-view-usage">Live View Usage</h4>
+<p><em>Added v4.3.6</em></p>
+<p>Over time, if users did not close the <a href="../concepts/data-stream/running-data-streams.html#viewing-live-data">Live View</a>, these open connections placed an additional load on the Data Stream Designer (DS) as the Stream Hosts continued to send live data back to DS. This reduced overall performance and reliability, and increased infrastructure costs.</p>
+<p>We recommend that users always close the Live View of a published Data Stream before navigating away. When in doubt, an administrator can force a reset to close all open Live View connections.</p>
+<p>The Live View Usage includes the following:</p>
+<ul>
+<li>The number of Stream Objects (Agents) with Live View enabled and the number of Data Streams affected.</li>
+<li>A button to reset the Live View usage.</li>
+</ul>
+<p><img src="../images/manage-site-settings-3.png" alt="Fig 3: Live View Usage and Reset Button"></p>
+<p>Resetting the Live View will close any connections that may have been left open if a user closes the Data Stream canvas without first closing the Live View.</p>
+<p>It will also stop any open Live View blades from receiving data. To start receiving data again, re-open the Live View and reselect the Stream Objects.</p>
+<p>Refer to the <a href="manage-site-settings.html#live-view-usage-report">Live View Usage Report</a> for a list of Stream Objects and Data Streams that are preselected for Live View.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>A Stream Object with Live View enabled is an indicator that a user has viewed the data - it is not confirmation whether the user closed the connection.</p>
+</div>
+<div class="TIP">
+<h5>Tip</h5>
+<p>The Live View issue is addressed in the v4.3.7 release:</p>
+<ol>
+<li>Open connections are closed regardless of how the Live View is closed (e.g. navigating away or closing the tab).</li>
+<li>All connections are closed when the Data Stream Designer app service is restarted.</li>
+</ol>
+<p>If you've upgraded to v4.3.7, use the Reset Live View button once to ensure all connections are closed.</p>
+</div>
+<h3 id="reports-1">Reports</h3>
+<p><em>Added v4.3.7</em></p>
+<p>Standard reports give the administrator a view into where (which Data Stream) and how (which version) Agents have been used. The information is presented in a grid that can be sorted, filtered, reorganized, and grouped. It can also be exported as an XLSX file.</p>
+<p><img src="../images/manage-site-settings-4.png" alt="Fig 4: Example Data Stream Designer Report"></p>
+<h4 id="live-view-usage-report">Live View Usage Report</h4>
+<p>This report shows all Agents that have Live View enabled. Additional information includes the Data Stream name, Data Stream version, Data Stream owner, the Collection name, the Stream Object name, and whether the Data Stream is published.</p>
+<p>This report along with the <a href="manage-site-settings.html#live-view-usage">Reset option</a> was useful prior to v4.3.7, to determine where connections may have been left open.</p>
+<h4 id="agent-usage-report">Agent Usage Report</h4>
+<p>This report shows all loaded Agents, their versions, their categories, and how many times a version is used in a Data Stream, if any.</p>
+<p>This master list shows the administrator which Agents are installed and their utilization. This assists in identifying new Agents or versions not yet added.</p>
+<h4 id="agent-usage-details-report">Agent Usage Details Report</h4>
+<p>This report shows Data Streams in which an Agent version has been used. Additional information includes the Data Stream version, its owner, the Collection, and the Stream Object name.</p>
+<p>This detailed report assists in gauging the impact of upgrading one or more Agent versions.</p>
+<h4 id="agent-polling-interval-report">Agent Polling Interval Report</h4>
+<p>This report shows the polling intervals configured on all Agents that have the Polling Interval option. Additional information includes the Agent Name, Agent Category, Data Stream name, Data Stream version, Data Stream owner, the Collection name, the Stream Object name, and whether the Data Stream is published.</p>
+<p>This master list empowers the administrator to locate those set too short (1s) that may be causing performance issues. 10 seconds may be appropriate during initial testing, but ill-advised in a QA or Production environment.</p>
+<h2 id="subscription-manager-settings">Subscription Manager Settings</h2>
+<h3 id="security-2">Security</h3>
+<h4 id="hide-users-outside-business-role-branch">Hide Users Outside Business Role Branch</h4>
+<p>When enabled, users can see the information of users in their business role and any of its parent business roles up to the root. They cannot see any child or sibling business roles and their users.</p>
+<p>For example, a user cannot tag/search users outside their business role tree path in a comment on a recommendation alert.</p>
+<p>This defaults to true on new installations. Toggle it off to make all user information visible to all users in the company.</p>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>The exception for this setting is a user with an Administrator role for the Subscription Manager product. They can assign access to XMPro objects to any user or business role in the company.</p>
+</div>
+<h3 id="global-notification">Global Notification</h3>
+<p><em>Added v4.4.0</em></p>
+<p>Global Administrators can display a global notification across the top of all products in the XMPro suite for a specific period. This aids in communicating important information to users, such as a notice advising of planned maintenance downtime and a hyperlink to release notes.</p>
+<p>Choose a type of hint, warning, or error to set the notification icon and banner color. The banner can be dismissed for a session.</p>
+<h4 id="discard-global-notification-settings">Discard &quot;Global Notification&quot; Settings</h4>
+<p>Clears all Global Notification settings and hides the current message, if any.</p>
+<h4 id="type">Type</h4>
+<p>This determines the icon and color of the notification banner. The options are a hint, warning, or error.</p>
+<h4 id="message">Message</h4>
+<p>A message of up to 500 characters is displayed in the notification banner. Basic text formatting, lists, and links are supported.</p>
+<h4 id="show-now">Show Now</h4>
+<p>Enabling this setting results in the notification banner being immediately shown across all products, and disables the <a href="manage-site-settings.html#show-on-your-local-time">Show On</a> property.</p>
+<h4 id="show-on-your-local-time">Show On (your local time)</h4>
+<p>The date and time when the notification will be shown to users. It is stored as UTC, but displayed in the administrator's local time zone.</p>
+<p>This setting is not available when <a href="manage-site-settings.html#show-now">Show Now</a> is enabled.</p>
+<h4 id="hide-on-your-local-time">Hide On (your local time)</h4>
+<p>An optional date and time when the notification should no longer be shown to users. It is stored as UTC, but displayed in the administrator's local time zone.</p>
+<p>Leave blank if you want the message to be shown until it is manually cleared - either by clicking <a href="manage-site-settings.html#discard-global-notification-settings">Discard &quot;Global Notifications&quot; Settings</a>, clearing the <a href="manage-site-settings.html#message">Message</a> or Show option.</p>
+<h3 id="support">Support</h3>
+<h4 id="email">Email</h4>
+<p>The email to which notifications will be sent if a user signs up to XMPro or makes a request, for instance, a request for a Subscription to a Product, or a request for a License.</p>
+<h4 id="disable-email-notifications">Disable Email Notifications</h4>
+<p>Disables emails sent to the email address above for any reason. If email notifications are disabled then the Global Administrator will need to log in to Subscription Manager to check whether there are any pending requests.</p>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: July 14, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

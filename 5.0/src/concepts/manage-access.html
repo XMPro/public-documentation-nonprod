@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Manage Access | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Manage Access | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../images/favicon.png">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/concepts/manage-access.md&amp;version=GBmain&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="manage-access">Manage Access</h1>
+
+<p>Managing the access of users is important as it can improve the security of XMPro Objects. Permissions are given to users only based on what they need to do, for example, someone who only needs to view something can be given <em>read</em> access. This can hide additional functionality that users do not need and also protect against unintentional tampering.</p>
+<p>Whether or not you can design a particular data stream, application, or other XMPro Objects is determined by the permissions that you have on it. The person that originally created the XMPro Object will be listed as the owner and can never lose his/her right to access it unless it is deleted. Other users can then be assigned read or read-and-write access.</p>
+<div class="embeddedvideo"><iframe src="https://www.youtube-nocookie.com/embed/T-dr8cGbNoo?rel=0" frameborder="0" allowfullscreen="true"></iframe></div>
+<h2 id="grant-permissions">Grant Permissions</h2>
+<p>Granting permissions makes it easier for multiple users to collaborate on one particular XMPro Object. It also makes it easier to grant permissions to multiple users who are only allowed to view or read it without making changes, possibly to just give feedback or to discuss part of the XMPro Object.</p>
+<h3 id="permissions-owner">Permissions: Owner</h3>
+<p>The <em>Owner</em> has full permission to make any changes required to the XMPro Object. The owner is also allowed to give other users access or change the permissions of existing users.</p>
+<h3 id="permissions-co-owner">Permissions: Co-Owner</h3>
+<p>The <em>Co-Owner</em> has full permission to make any changes required to the XMPro Object. The Co-Owner is also allowed to give other users or change the permissions of existing users, except removing or changing the Owner's permissions.</p>
+<h3 id="permissions-write">Permissions: Write</h3>
+<p>A person who has <em>Write</em> access will be allowed to view, edit, publish and unpublish the XMPro Object.</p>
+<h3 id="permissions-read">Permissions: Read</h3>
+<p>The <em>Read</em> permission will allow a person to view the XMPro Object, but making any changes to the XMPro Object will be prohibited.</p>
+<h3 id="permission-matrix">Permission Matrix</h3>
+<table>
+<thead>
+<tr>
+<th>Permission/Operation</th>
+<th>Owner</th>
+<th>Co-Owner</th>
+<th>Write</th>
+<th>Read</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>View</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+</tr>
+<tr>
+<td>Publish/Unpublish</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>Edit</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>Delete</td>
+<td>✓</td>
+<td>✓</td>
+<td>✗</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>Manage Versions</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>• View</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+</tr>
+<tr>
+<td>• Create/Copy</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>• Delete</td>
+<td>✓</td>
+<td>✓</td>
+<td>✗</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>Manage Access</td>
+<td>✓</td>
+<td>✓</td>
+<td>✗</td>
+<td>✗</td>
+</tr>
+</tbody>
+</table>
+<p><img src="../images/manage-access-1.png" alt="Manage Access 1"></p>
+<p><img src="../images/manage-access-2.png" alt="Manage Access 2"></p>
+<p><img src="../images/manage-access-5.png" alt="Manage Access 3"></p>
+<h2 id="actions-on-the-manage-access-page">Actions on the Manage Access page</h2>
+<table>
+<thead>
+<tr>
+<th><strong>Action</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Add</td>
+<td>Adds a user.</td>
+</tr>
+<tr>
+<td>Select</td>
+<td>Selects multiple users.</td>
+</tr>
+<tr>
+<td>Edit</td>
+<td>Edits the permissions of a particular user.</td>
+</tr>
+<tr>
+<td>Cancel</td>
+<td>Discards any changes made to the user's permissions up to that point.</td>
+</tr>
+<tr>
+<td>Delete</td>
+<td>Deletes a user.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="manage-run-access">Manage Run Access</h2>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>For Apps, if a User has Design Access they will also automatically have access to run the App in view mode. However, for Recommendations, a User can only view Recommendation Alerts if they or their Business Role has Run Access, regardless of whether they have Design Access to the Recommendation.</p>
+</div>
+<p><img src="../images/run-access-example.png" alt="Run Access Example"></p>
+<h2 id="business-roles-company-administrator">Business Roles (Company Administrator)</h2>
+<p>Business Roles are a hierarchical representation of the different areas of an organization. When managing access for XMPro Products, the Business Roles defined in Subscription Manager are used.</p>
+<p>Business Roles are managed by the Administrator of a Company through the Users page.</p>
+<p><img src="../images/business-roles-management.png" alt="Business Roles Management"></p>
+<p>All new users will automatically be added under the default 'All Employees' Business Role. Users can be moved, but not deleted from this list. A User can only be listed once underneath one Business Role.</p>
+<p><img src="../images/all-employees-business-role.png" alt="All Employees Business Role"></p>
+<h3 id="business-role-of-a-user">Business Role of a User</h3>
+<p>Alternatively, a user's business role can also be managed from the user blade. See <a href="../administration/users/business-role-for-a-user.html">Change Business Role</a>.</p>
+<p><img src="../images/change-business-role.png" alt="Change Business Role"></p>
+<h3 id="sync-business-roles-from-azure-ad">Sync Business Roles from Azure AD</h3>
+<p>If <a href="../installation/complete-installation/configure-sso-optional/sso-azure-ad.html">Azure AD</a> has been linked as your External Identity Provider, you can specify a claim name that Azure AD or the graph API will pass to Subscription Manager.</p>
+<p>When a user logs in, Subscription Manager will look at the value specified in this Claim and assign them to the Business Role with the same name.</p>
+<p><a href="../installation/complete-installation/configure-sso-optional/sso-azure-ad.html#sync-azure-ad-role-to-sms-business-role">See the Sync Azure AD Role to SM's Business Role article for information on how to configure the claim name.</a></p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>If a Business Role with the same name doesn't exist, it will be created as a child under the default Business Role, 'All Employees'.</p>
+</div>
+<h2 id="actions-on-the-manage-run-access-page">Actions on the Manage Run Access page</h2>
+<table>
+<thead>
+<tr>
+<th><strong>Action</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Save</td>
+<td>Saves any changes made to the Manage Run Access up to this point.</td>
+</tr>
+<tr>
+<td>Discard</td>
+<td>Discards any changes made to the Manage Run Access up to this point.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="further-reading">Further Reading</h2>
+<ul>
+<li><a href="../how-tos/manage-access.html">How to Manage Access</a></li>
+</ul>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: July 14, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
