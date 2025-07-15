@@ -202,14 +202,14 @@ function onDataChanged(data, changes) {
 <h4 id="value-mapping">Value Mapping</h4>
 <p>If you wish to define value mappings for run-time use, you can configure user-defined key-value pairs. These values remain static during application rendering.</p>
 <p>The Value Mapping opens a new blade to setup the Key and Value configuration. The options for the Value Source are Static, <a href="../../how-tos/apps/use-dynamic-properties.html">Dynamic</a>, <a href="../../how-tos/apps/use-expression-properties.html">Expression</a> and <a href="../../concepts/variable.html">Variables</a>.</p>
-<p>When selecting Server Variables as a Source for the Value Mapping, the list of unencrypted Server Variables will be displayed. Tick the <strong>Encrypt</strong> checkbox to use an encrypted Server Variable for values like keys, secrets, or password.</p>
-<p>From v4.4.18, encrypted Server Variables will not have their value available immediately on the Metablock. Instead, you can use them inside a Fetch/XHR request or a Websocket/MQTT message before being forwarded to the actual target.</p>
+<p>When selecting Server Variables as a Source for the Value Mapping, the list of unencrypted Server Variables will be displayed. Tick the <strong>Encrypt</strong> checkbox to use an encrypted Server Variable for values like keys, secrets, or password. Note that only <strong>plain text</strong> values are supported for <strong>encrypted</strong> Server Variables due to the request proxying process.</p>
+<p>From v4.4.18, encrypted Server Variables will not have their value available immediately on the Metablock. Instead, you can use them inside a Fetch/XHR request or a WebSocket/MQTT message before being forwarded to the actual target.</p>
 <ul>
 <li><strong>Fetch/XHR Request -</strong> You can use encrypted server variables as part of the URL, Header, or Body of the Fetch/XHR request.</li>
-<li><strong>Websocket/MQTT Message -</strong> You can use encrypted server variables as part of the Websocket message. For MQTT Messages, you can use it as part of the following message types: Connect (Username and Password), Publish (Payload), and Subscribe (Subscribe Topics)</li>
+<li><strong>WebSocket/MQTT Message -</strong> You can use encrypted server variables as part of the WebSocket message. For MQTT Messages, you can use it as part of the following message types: Connect (Username and Password), Publish (Payload), and Subscribe (Subscribe Topics)</li>
 </ul>
 <h4 id="proxy-requests">Proxy Requests</h4>
-<p>Tick to proxy requests on the AD Server before being forwarded to the actual request. This is ticked by default when using an encrypted server variable on the value mapping, but you can opt in to use it even without any encrypted server variable.</p>
+<p>Tick to proxy requests on the AD Server, so that encrypted server variables are replaced with the actual value before being forwarded to the target request. This is ticked by default when using an encrypted server variable on the value mapping, but you can opt in to use it even without any encrypted server variable.</p>
 <p>To use Value Mapping, include this predefined JavaScript function in your <a href="metablock.html#script-file-javascript">Script File</a>:</p>
 <pre><code class="lang-javascript">// Access Value mapping data when the metablock is loaded (optional)
 function onValueMappingLoaded(data){

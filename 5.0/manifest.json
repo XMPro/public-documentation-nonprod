@@ -22787,6 +22787,16 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "src/images/resources/lemonade.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/resources/lemonade.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "src/images/resources/linear-interpolation.png",
       "output": {
         "resource": {
@@ -24751,6 +24761,16 @@
       "output": {
         "resource": {
           "relative_path": "src/images/resources/timeline.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/images/resources/timeseries-logger-icon.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/resources/timeseries-logger-icon.png"
         }
       },
       "version": ""
@@ -27281,6 +27301,26 @@
       "output": {
         ".html": {
           "relative_path": "src/release-notes/v4.4.2.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "src/release-notes/v4.4.20.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/release-notes/v4.4.20.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "src/release-notes/v4.4.21.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/release-notes/v4.4.21.html"
         }
       },
       "version": ""

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>v4.4.20 | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="v4.4.20 | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      <meta name="description" content="Pending">
+      <link rel="icon" href="../../images/favicon.png">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/release-notes/v4.4.20.md&amp;version=GBmain&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="v4420">v4.4.20</h1>
+
+<h2 id="common">Common</h2>
+<table>
+<thead>
+<tr>
+<th>Change Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Security</td>
+<td>As part of our ongoing commitment to product security and stability, we've implemented several improvements in this release:<br>• Remove occasional email notification errors for recommendation alerts in App Designer by upgrading Hangfire from 1.8.12 to 1.8.18.<br>• Support encryption in the SQL Agents. See <a href="#integrations">Integrations</a>.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="integrations">Integrations</h2>
+<h3 id="agents">Agents</h3>
+<table>
+<thead>
+<tr>
+<th>Change Type</th>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Enhancement</td>
+<td><a href="https://xmpro.gitbook.io/azure-sql">Azure SQL Listener v5.52<br>Azure SQL Context Provider v5.52<br>Azure SQL Action Agent v5.52</a></td>
+<td>Support encryption (<a href="https://learn.microsoft.com/en-us/dotnet/api/system.data.sqlclient.sqlconnectionstringbuilder.trustservercertificate">TrustServerCertificate</a>) in the connection string., resolved a connection string vulnerability, and improved error messages.</td>
+</tr>
+<tr>
+<td>Enhancement</td>
+<td><a href="https://xmpro.gitbook.io/sql-server">SQL Server Listener v5.52<br>SQL Server Context Provider v5.52<br>SQL Server Action Agent v5.52</a></td>
+<td>Support encryption (<a href="https://learn.microsoft.com/en-us/dotnet/api/system.data.sqlclient.sqlconnectionstringbuilder.trustservercertificate">TrustServerCertificate</a>) in the connection string., resolved a connection string vulnerability, and improved error messages.</td>
+</tr>
+<tr>
+<td>Enhancement</td>
+<td><a href="https://xmpro.gitbook.io/transpose/">Transpose Transformation v1.12</a></td>
+<td>Simplified the common pattern where all transposed columns have the same target name and value.</td>
+</tr>
+<tr>
+<td>Enhancement</td>
+<td><a href="https://xmpro.gitbook.io/union/">Union Transformation v1.08</a></td>
+<td>Support null padding for columns that are not common across all incoming data sets.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="data-stream-designer">Data Stream Designer</h2>
+<table>
+<thead>
+<tr>
+<th>Change Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fix</td>
+<td><em>A colleague shared a link to their Data Stream. When I opened it, the title was missing and some buttons were disabled.</em><br>When a user navigates to a URL for a Data Stream to which they don't have access, they are redirected to the landing page with an error &quot;Data Stream was not found.&quot;</td>
+</tr>
+</tbody>
+</table>
+<h2 id="subscription-manager">Subscription Manager</h2>
+<table>
+<thead>
+<tr>
+<th>Change Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fix</td>
+<td><em>I haven't signed in yet and I can see there is a message, but it is covered by the language selection.</em><br>The <a href="../how-tos/manage-site-settings.html#global-notification">global notification</a> is no longer covered by the language selection tool (added in <a href="v4.4.14.html#common">v4.4.14</a>).</td>
+</tr>
+</tbody>
+</table>
+<h2 id="stream-host">Stream Host</h2>
+<table>
+<thead>
+<tr>
+<th>Change Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fix</td>
+<td><em>I tried a docker Stream Host, but the value in my environment variable &quot;my database url&quot; was not used.</em><br>Spaces in environment variable names are now supported for Stream Host Containers.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="nuget-packages">NuGet Packages</h2>
+<h3 id="agent-development">Agent Development</h3>
+<p>No changes to XMPro.XMIoT.Framework.</p>
+<h3 id="connector-development">Connector Development</h3>
+<p>No changes to XMPro.Integration.Framework, XMPro.Integration.Helpers, or XMPro.Integration.Settings.</p>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: July 15, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
