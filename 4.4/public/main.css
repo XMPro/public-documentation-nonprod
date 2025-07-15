@@ -541,4 +541,142 @@ code {
   color: var(--bs-navbar-active-color) !important;
 }
 
+/* Non-Production Banner Styles */
+.nonprod-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: #ff8c00;
+  color: #ffffff;
+  z-index: 9999;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-family: var(--xmpro-font-family);
+  pointer-events: none;
+}
+
+[data-bs-theme="dark"] .nonprod-banner {
+  background-color: #ff8c00;
+  color: #ffffff;
+}
+
+.nonprod-banner-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  min-height: 48px;
+  overflow: visible;
+}
+
+.nonprod-banner-icon {
+  display: flex;
+  align-items: center;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.nonprod-banner-icon svg {
+  fill: currentColor;
+}
+
+.nonprod-banner-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  text-align: center;
+  max-width: 100%;
+  overflow: visible;
+}
+
+.nonprod-banner-main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.nonprod-banner-text strong {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.nonprod-banner-pr {
+  background-color: rgba(128, 128, 128, 0.8);
+  color: #ffffff;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+[data-bs-theme="dark"] .nonprod-banner-pr {
+  background-color: rgba(128, 128, 128, 0.8);
+  color: #ffffff;
+}
+
+.nonprod-banner-message {
+  font-size: 0.875rem;
+  opacity: 0.9;
+  flex: 1;
+  min-width: 0;
+}
+
+.nonprod-banner-link {
+  color: #ffffff;
+  text-decoration: underline;
+  font-size: 0.875rem;
+  font-weight: 500;
+  white-space: nowrap;
+  pointer-events: auto;
+}
+
+.nonprod-banner-link:hover {
+  color: #f0f0f0;
+  text-decoration: none;
+}
+
+[data-bs-theme="dark"] .nonprod-banner-link {
+  color: #ffffff;
+}
+
+[data-bs-theme="dark"] .nonprod-banner-link:hover {
+  color: #f0f0f0;
+}
+
+/* Adjust layout when non-production banner is present */
+body.has-nonprod-banner {
+  padding-top: 64px;
+}
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+  .nonprod-banner-content {
+    padding: 8px 15px;
+    min-height: 36px;
+  }
+  
+  .nonprod-banner-text {
+    font-size: 0.813rem;
+    gap: 8px;
+  }
+  
+  .nonprod-banner-message {
+    display: block;
+    width: 100%;
+    white-space: normal;
+    text-overflow: unset;
+  }
+  
+  body.has-nonprod-banner {
+    padding-top: 44px;
+  }
+}
+
 

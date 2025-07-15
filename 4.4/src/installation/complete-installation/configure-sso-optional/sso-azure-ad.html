@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>SSO - Azure AD | XMPro </title>
+      <title>SSO - Azure Entra ID | XMPro </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="SSO - Azure AD | XMPro ">
+      <meta name="title" content="SSO - Azure Entra ID | XMPro ">
       <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
       
       <link rel="icon" href="../../../../images/favicon.png">
@@ -85,7 +85,7 @@
         </div>
 
         <article data-uid="">
-<h1 id="sso---azure-ad">SSO - Azure AD</h1>
+<h1 id="sso---azure-entra-id">SSO - Azure Entra ID</h1>
 
 <p>In this article, we will look at how to set up Azure AD so that it can be used as an external identity provider for Subscription Manager, allowing single sign-on capability between Azure AD and Subscription Manager.</p>
 <h2 id="register-application">Register application</h2>
@@ -105,14 +105,22 @@
 <li>Add a description for your new client secret.</li>
 <li>Choose a duration.</li>
 <li>Click <em>Add.</em></li>
+<li>Copy the value of the newly generated secret and store it safely for later use.</li>
 </ol>
 <p><img src="../../../images/add-secret-1-1.png" alt="Add secret step 1"></p>
 <p><img src="../../../images/add-secret-2-2.png" alt="Add secret step 2"></p>
-<div class="NOTE">
-<h5>Note</h5>
-<p>Both the application client ID and the secret need to be added to Subscription Manager's <em>web.config</em> file.</p>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>Both the application client ID and the secret need to be added to Subscription Manager's <em>web.config</em> file. You will not be able to retrieve the secret once the page has been closed. Make sure to copy and safely store the secret before the page is closed, or you will need to repeat the previous steps.</p>
 </div>
-<ol start="6">
+<ol start="7">
+<li>On the left, click <em>Token Configuration</em>.</li>
+<li>Click <em>Add Optional Claim</em>.</li>
+<li>Select the <em>ID</em> token type.</li>
+<li>Select <em>upn</em> from the list of claims.</li>
+<li>Click Add, and then Save.</li>
+<li>Open the app <em>Manifest</em>.</li>
+<li>Set <em>&quot;acceptMappedClaims&quot;: true (applies from v4.4.19+)</em></li>
 <li>Navigate to the IIS location where Subscription Manager has been installed.</li>
 <li>Open the file <em>web.config</em> file.</li>
 <li>Scroll down to the &quot;<em>xmpro</em>&quot; section.</li>
@@ -121,7 +129,7 @@
 <h5>Note</h5>
 <p>This section might have to be decrypted, for which you can find instructions <a href="https://docs.xmpro.com/knowledge-base-2/how-to-encrypt-and-decrypt-a-web-config-file/">here</a>.</p>
 </div>
-<ol start="9">
+<ol start="17">
 <li>Add the application (client) ID that you copied earlier to the <code>clientId</code> attribute of the <code>azureAD</code> element</li>
 <li>Copy the secret and add it to the <em>web.config</em>.</li>
 </ol>
@@ -131,7 +139,7 @@
 <p>If you're using the Azure key store to manage app settings and secrets, use the <code>${}</code> syntax for the azureAD attributes in the <em>web.config</em>, similar to:
 <code>&lt;azureAD clientId=&quot;${ADClientID}&quot; key=&quot;${ADSecret}&quot; /&gt;</code></p>
 </div>
-<ol start="11">
+<ol start="19">
 <li>And define the following secrets in the key store:</li>
 </ol>
 <table>
@@ -153,11 +161,11 @@
 </tbody>
 </table>
 <h2 id="authentication">Authentication</h2>
-<ol start="12">
+<ol start="20">
 <li>Copy the baseUrl value in the <em>web.config</em> - you will need it later in this guide.</li>
 </ol>
 <p><img src="../../../images/sso-azuread-web-config-baseurl.png" alt="Azure AD web config baseUrl"></p>
-<ol start="13">
+<ol start="21">
 <li>In Azure Portal, click on <em>Authentication</em> and add the following URL in the space provided:</li>
 </ol>
 <ul>
@@ -166,13 +174,13 @@
 </li>
 </ul>
 <p><img src="../../../images/authentication-4.png" alt="Authentication configuration"></p>
-<ol start="14">
+<ol start="22">
 <li>On the Authentication page, scroll down until you see &quot;<em>Advanced Settings</em>&quot;.</li>
 <li>Select &quot;<em>ID tokens</em>&quot; and click <em>Save</em>.</li>
 </ol>
 <p><img src="../../../images/authentication-advanced-settings.png" alt="Authentication advanced settings"></p>
 <h2 id="api-permissions">API permissions</h2>
-<ol start="16">
+<ol start="24">
 <li>Select <em>API permissions</em> on the left-hand menu.</li>
 <li>Make sure the permissions set on the application correspond to the image below.</li>
 </ol>
@@ -195,7 +203,7 @@
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: July 07, 2025</em></small></p>
+    <p><small><em>Last modified: July 15, 2025</em></small></p>
   </div>
 </article>
 

@@ -110,7 +110,7 @@
 </tr>
 <tr>
 <td>Fix</td>
-<td>A change in v4.4.18 caused SSO integration with Azure AD to behave differently for guest accounts, and users are requested to link them again.<br>This has been resolved without requiring any changes to the guest username.</td>
+<td>A change in v4.4.18 caused SSO integration with Azure AD to behave differently for guest accounts, and users are requested to link them again.<br>This has been resolved without requiring any changes to the guest username.<br><br>However, you need to make two configuration changes in Azure AD SSO to avoid AADSTS50146 authentication errors:<br>1. Open the app <em>Manifest</em>.<br>2. Set <em>&quot;acceptMappedClaims&quot;: true</em></td>
 </tr>
 <tr>
 <td>Documentation</td>
@@ -236,7 +236,7 @@
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: July 07, 2025</em></small></p>
+    <p><small><em>Last modified: July 15, 2025</em></small></p>
   </div>
 </article>
 
