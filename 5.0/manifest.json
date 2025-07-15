@@ -37,6 +37,16 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "images/enable-filter-panel.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/enable-filter-panel.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "images/favicon.png",
       "output": {
         "resource": {
@@ -281,6 +291,16 @@
       "output": {
         ".html": {
           "relative_path": "src/administration/users/reset-password.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/assets/files/xmpro-icon-library.zip",
+      "output": {
+        "resource": {
+          "relative_path": "src/assets/files/xmpro-icon-library.zip"
         }
       },
       "version": ""
@@ -5917,6 +5937,26 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "src/images/64.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/64.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/images/65.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/65.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "src/images/66.png",
       "output": {
         "resource": {
@@ -6337,6 +6377,16 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "src/images/Fieldset2-3.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/Fieldset2-3.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "src/images/access-control-policy.png",
       "output": {
         "resource": {
@@ -6391,6 +6441,26 @@
       "output": {
         "resource": {
           "relative_path": "src/images/add-data-manually.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/images/add-form-1.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/add-form-1.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/images/add-form-2.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/add-form-2.png"
         }
       },
       "version": ""
@@ -6781,6 +6851,16 @@
       "output": {
         "resource": {
           "relative_path": "src/images/apply-license.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/images/apps/add-parameter.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/apps/add-parameter.png"
         }
       },
       "version": ""
@@ -8941,6 +9021,26 @@
       "output": {
         "resource": {
           "relative_path": "src/images/azure-armtemplate-upload.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/images/azure-digital-twin-hierarchy-block.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/azure-digital-twin-hierarchy-block.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/images/azure-digital-twin-hierarchy-interval-size.mp4",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/azure-digital-twin-hierarchy-interval-size.mp4"
         }
       },
       "version": ""
@@ -12367,6 +12467,16 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "src/images/connector-logs-4-1-13.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/connector-logs-4-1-13.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "src/images/connectors-10.png",
       "output": {
         "resource": {
@@ -13037,6 +13147,16 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "src/images/debugging-destination-folder.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/debugging-destination-folder.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "src/images/debugging-error-configuring.png",
       "output": {
         "resource": {
@@ -13097,6 +13217,16 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "src/images/default-filter.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/default-filter.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "src/images/delete-1.png",
       "output": {
         "resource": {
@@ -13111,6 +13241,26 @@
       "output": {
         "resource": {
           "relative_path": "src/images/delete-a-user-v3.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/images/delete-block.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/delete-block.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/images/delete-form.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/delete-form.png"
         }
       },
       "version": ""
@@ -13341,6 +13491,26 @@
       "output": {
         "resource": {
           "relative_path": "src/images/embedded-page.jpg"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/images/enable-filter-panel.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/enable-filter-panel.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/images/enable-row-filtering.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/enable-row-filtering.png"
         }
       },
       "version": ""
@@ -15447,6 +15617,16 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "src/images/image-165.gif",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/image-165.gif"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "src/images/image-165.png",
       "output": {
         "resource": {
@@ -16061,6 +16241,16 @@
       "output": {
         "resource": {
           "relative_path": "src/images/image-190.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/images/image-192.gif",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/image-192.gif"
         }
       },
       "version": ""
@@ -18281,6 +18471,16 @@
       "output": {
         "resource": {
           "relative_path": "src/images/image-999.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/images/image-map-block-4-1-13.mp4",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/image-map-block-4-1-13.mp4"
         }
       },
       "version": ""
@@ -20731,6 +20931,16 @@
       "output": {
         "resource": {
           "relative_path": "src/images/removing-static-content.mp4"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/images/reorder-block.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/reorder-block.png"
         }
       },
       "version": ""
@@ -25237,10 +25447,10 @@
     },
     {
       "type": "Resource",
-      "source_relative_path": "src/images/settings-template.png",
+      "source_relative_path": "src/images/settings-template2.png",
       "output": {
         "resource": {
-          "relative_path": "src/images/settings-template.png"
+          "relative_path": "src/images/settings-template2.png"
         }
       },
       "version": ""
@@ -25361,6 +25571,16 @@
       "output": {
         "resource": {
           "relative_path": "src/images/sso-azuread-web-config-guest-tenant.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/images/started-on-stream-metric.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/started-on-stream-metric.png"
         }
       },
       "version": ""
@@ -25787,6 +26007,16 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "src/images/unity-block-4-1-13.mp4",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/unity-block-4-1-13.mp4"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "src/images/unity-example-2.mp4",
       "output": {
         "resource": {
@@ -26041,6 +26271,16 @@
       "output": {
         "resource": {
           "relative_path": "src/images/xbwzl8xaze.mp4"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/images/xmpro-package-manager-win-store.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/xmpro-package-manager-win-store.png"
         }
       },
       "version": ""
