@@ -4,6 +4,54 @@ export default {
   start: () => {
     // Startup script goes here
     
+    // Check if this is a non-production environment and add warning banner
+    const hostname = window.location.hostname;
+    const isNonProduction = hostname.endsWith('.z13.web.core.windows.net') || 
+                            hostname.endsWith('.z19.web.core.windows.net') ||
+                            hostname.endsWith('.z22.web.core.windows.net') ||
+                            hostname.endsWith('.web.core.windows.net') ||
+                            hostname === 'nonprod.documentation.xmpro.com' ||
+                            hostname === 'localhost' ||
+                            hostname === '127.0.0.1';
+    
+    if (isNonProduction) {
+      // Extract PR number from hostname if possible (format: xmprodocpr123.z13.web.core.windows.net)
+      const prMatch = hostname.match(/xmprodocpr(\d+)/);
+      const prNumber = prMatch ? prMatch[1] : null;
+      
+      // Create warning banner
+      const banner = document.createElement('div');
+      banner.id = 'nonprod-banner';
+      banner.className = 'nonprod-banner';
+      
+      // Banner content
+      const bannerContent = `
+        <div class="nonprod-banner-content">
+          <div class="nonprod-banner-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+            </svg>
+          </div>
+          <div class="nonprod-banner-text">
+            <div class="nonprod-banner-main">
+              <strong>NON-PRODUCTION PREVIEW</strong>
+              ${prNumber ? `<span class="nonprod-banner-pr">PR #${prNumber}</span>` : ''}
+              <span class="nonprod-banner-message">THIS IS A PREVIEW ENVIRONMENT FOR DOCUMENTATION REVIEW. CONTENT MAY NOT BE FINAL.</span>
+            </div>
+            <a href="https://documentation.xmpro.com/" class="nonprod-banner-link" target="_blank" rel="noopener">View Official Docs</a>
+          </div>
+        </div>
+      `;
+      
+      banner.innerHTML = bannerContent;
+      
+      // Add banner to the page
+      document.body.insertBefore(banner, document.body.firstChild);
+      
+      // Add class to body to enable CSS targeting
+      document.body.classList.add('has-nonprod-banner');
+    }
+    
     // Add the switchVersion function to the global scope
     window.switchVersion = function(version) {
       // Check if we're running locally
