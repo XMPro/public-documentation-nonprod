@@ -14627,6 +14627,16 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "src/images/image-1391.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/image-1391.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "src/images/image-1394.png",
       "output": {
         "resource": {
@@ -15587,6 +15597,16 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "src/images/image-1761.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/image-1761.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "src/images/image-1765.png",
       "output": {
         "resource": {
@@ -15611,6 +15631,16 @@
       "output": {
         "resource": {
           "relative_path": "src/images/image-1772.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/images/image-178.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/image-178.png"
         }
       },
       "version": ""
@@ -15961,6 +15991,16 @@
       "output": {
         "resource": {
           "relative_path": "src/images/image-237.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/images/image-241.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/image-241.png"
         }
       },
       "version": ""
@@ -16747,6 +16787,16 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "src/images/image-552.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/image-552.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "src/images/image-558.png",
       "output": {
         "resource": {
@@ -17037,6 +17087,16 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "src/images/image-665.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/image-665.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "src/images/image-670.png",
       "output": {
         "resource": {
@@ -17197,6 +17257,16 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "src/images/image-713.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/image-713.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "src/images/image-715.png",
       "output": {
         "resource": {
@@ -17211,6 +17281,16 @@
       "output": {
         "resource": {
           "relative_path": "src/images/image-722.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/images/image-726.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/image-726.png"
         }
       },
       "version": ""
@@ -24937,6 +25017,16 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "src/images/signup-page.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/signup-page.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "src/images/signup.png",
       "output": {
         "resource": {
@@ -25121,6 +25211,16 @@
       "output": {
         "resource": {
           "relative_path": "src/images/stream-host-find-online.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/images/stream-host-install-download.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/stream-host-install-download.png"
         }
       },
       "version": ""
@@ -25791,6 +25891,26 @@
       "output": {
         ".html": {
           "relative_path": "src/installation/install-stream-host/docker.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "src/installation/install-stream-host/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/installation/install-stream-host/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "src/installation/install-stream-host/windows-x64.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/installation/install-stream-host/windows-x64.html"
         }
       },
       "version": ""
