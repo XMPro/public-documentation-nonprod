@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../../">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/blocks-toolbox/advanced/metablock.md&amp;version=GBmain&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/blocks-toolbox/advanced/metablock.md&amp;version=GBrelease-4.5.1&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -202,14 +202,14 @@ function onDataChanged(data, changes) {
 <h4 id="value-mapping">Value Mapping</h4>
 <p>If you wish to define value mappings for run-time use, you can configure user-defined key-value pairs. These values remain static during application rendering.</p>
 <p>The Value Mapping opens a new blade to setup the Key and Value configuration. The options for the Value Source are Static, <a href="../../how-tos/apps/use-dynamic-properties.html">Dynamic</a>, <a href="../../how-tos/apps/use-expression-properties.html">Expression</a> and <a href="../../concepts/variable.html">Variables</a>.</p>
-<p>When selecting Server Variables as a Source for the Value Mapping, the list of unencrypted Server Variables will be displayed. Tick the <strong>Encrypt</strong> checkbox to use an encrypted Server Variable for values like keys, secrets, or password.</p>
-<p>From v4.4.18, encrypted Server Variables will not have their value available immediately on the Metablock. Instead, you can use them inside a Fetch/XHR request or a Websocket/MQTT message before being forwarded to the actual target.</p>
+<p>When selecting Server Variables as a Source for the Value Mapping, the list of unencrypted Server Variables will be displayed. Tick the <strong>Encrypt</strong> checkbox to use an encrypted Server Variable for values like keys, secrets, or password. Note that only <strong>plain text</strong> values are supported for <strong>encrypted</strong> Server Variables due to the request proxying process.</p>
+<p>From v4.4.18, encrypted Server Variables will not have their value available immediately on the Metablock. Instead, you can use them inside a Fetch/XHR request or a WebSocket/MQTT message before being forwarded to the actual target.</p>
 <ul>
 <li><strong>Fetch/XHR Request -</strong> You can use encrypted server variables as part of the URL, Header, or Body of the Fetch/XHR request.</li>
-<li><strong>Websocket/MQTT Message -</strong> You can use encrypted server variables as part of the Websocket message. For MQTT Messages, you can use it as part of the following message types: Connect (Username and Password), Publish (Payload), and Subscribe (Subscribe Topics)</li>
+<li><strong>WebSocket/MQTT Message -</strong> You can use encrypted server variables as part of the WebSocket message. For MQTT Messages, you can use it as part of the following message types: Connect (Username and Password), Publish (Payload), and Subscribe (Subscribe Topics)</li>
 </ul>
 <h4 id="proxy-requests">Proxy Requests</h4>
-<p>Tick to proxy requests on the AD Server before being forwarded to the actual request. This is ticked by default when using an encrypted server variable on the value mapping, but you can opt in to use it even without any encrypted server variable.</p>
+<p>Tick to proxy requests on the AD Server, so that encrypted server variables are replaced with the actual value before being forwarded to the target request. This is ticked by default when using an encrypted server variable on the value mapping, but you can opt in to use it even without any encrypted server variable.</p>
 <p>To use Value Mapping, include this predefined JavaScript function in your <a href="metablock.html#script-file-javascript">Script File</a>:</p>
 <pre><code class="lang-javascript">// Access Value mapping data when the metablock is loaded (optional)
 function onValueMappingLoaded(data){
@@ -254,7 +254,7 @@ function onValueMappingLoaded(data){
 </div>
 <h3 id="autodesk-visualize-2d--3d-models">Autodesk: visualize 2D &amp; 3D models</h3>
 <p>Access and visualize your engineering data and designs from the cloud using <a href="https://aps.autodesk.com/">Autodesk Platform Services</a> (APS, formerly Forge).</p>
-<p>Leverage <a href="metablock.html#value-mapping">Value Mapping</a> when embedding the <a href="https://aps.autodesk.com/en/docs/viewer/v7/developers_guide/overview/index.md">APS Viewer</a> in XMPro App Pages to display interactive 2D and 3D views of your designs.</p>
+<p>Leverage <a href="metablock.html#value-mapping">Value Mapping</a> when embedding the <a href="https://aps.autodesk.com/en/docs/viewer/v7/developers_guide/overview/">APS Viewer</a> in XMPro App Pages to display interactive 2D and 3D views of your designs.</p>
 <p><strong>Note</strong>: This is a simple example to demonstrate the APS Viewer API using an unauthenticated repository. Refer to the authenticated use case for a more complex example that includes security measures for credentials.</p>
 <p><img src="../../images/autodesk-forge-viewer-img.jpg" alt="Autodesk Platform Services Viewer example without authentication"></p>
 <p><em>Fig 3: Autodesk Platform Services Viewer example without authentication</em></p>
@@ -265,7 +265,7 @@ function onValueMappingLoaded(data){
 <p><a href="https://github.com/XMPro/meta-block-examples/tree/main/src/packages/aps-view-basic">View on GitHub</a></p>
 </div>
 <h3 id="autodesk-visualize-2d--3d-models-with-authentication">Autodesk: Visualize 2D &amp; 3D models with authentication</h3>
-<p>When authentication is needed to dynamically load 2D and 3D views of your designs using the <a href="https://aps.autodesk.com/en/docs/viewer/v7/developers_guide/overview/index.md">APS Viewer</a>. We could utilize a Connector or the Value Mapping and use server variables for the credentials. This eliminates the need for hardcoded credentials while maintaining secure access to the visualization platform, <a href="https://aps.autodesk.com/">Autodesk Platform Services</a> (APS, formerly Forge). See the following Metablock examples on how to use these methods.</p>
+<p>When authentication is needed to dynamically load 2D and 3D views of your designs using the <a href="https://aps.autodesk.com/en/docs/viewer/v7/developers_guide/overview/">APS Viewer</a>. We could utilize a Connector or the Value Mapping and use server variables for the credentials. This eliminates the need for hardcoded credentials while maintaining secure access to the visualization platform, <a href="https://aps.autodesk.com/">Autodesk Platform Services</a> (APS, formerly Forge). See the following Metablock examples on how to use these methods.</p>
 <h4 id="autodesk-authentication-using-connector">Autodesk: Authentication using Connector</h4>
 <p>Leverage the <a href="https://xmpro.gitbook.io/rest-api-connector/">REST API Connector</a> to get Token from the authentication service and the <a href="metablock.html#data-source">Data Source</a> to pass the token to the Metablock.</p>
 <div class="NOTE">
@@ -476,7 +476,7 @@ app.listen(port, () =&gt; {
 </li>
 <li><p>To start the server, run <code>node server.js</code></p>
 </li>
-<li><p>Open a web browser and go to <a href="http://localhost:3000/index.md">http://localhost:3000</a></p>
+<li><p>Open a web browser and go to <a href="http://localhost:3000/">http://localhost:3000</a></p>
 </li>
 </ol>
 </li>
@@ -604,7 +604,7 @@ app.listen(port, () =&gt; {
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: July 07, 2025</em></small></p>
+    <p><small><em>Last modified: July 15, 2025</em></small></p>
   </div>
 </article>
 

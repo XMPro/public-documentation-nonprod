@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Stream Host Docker | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Stream Host Docker | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/install-stream-host/docker.md&amp;version=GBrelease-4.5.1&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="stream-host-docker">Stream Host Docker</h1>
+
+<h2 id="introduction">Introduction</h2>
+<p>This guide covers the XMPro Stream Host Docker image available from version 4.4.19 onwards. The latest Stream Host images have been redesigned for improved security and usability.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<h3 id="software-requirements">Software Requirements</h3>
+<p>A container runtime such as <a href="https://www.docker.com/products/docker-desktop/">Docker Desktop</a>.</p>
+<h3 id="hardware-requirements">Hardware Requirements</h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Small</th>
+<th>Medium</th>
+<th>Large</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stream Host</td>
+<td>1 CPU, 4 GB RAM</td>
+<td>2 CPU, 8GB RAM</td>
+<td>4 CPU, 16GB RAM</td>
+</tr>
+</tbody>
+</table>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Actual resource requirements depend on your specific data streams. Monitor performance and adjust resources accordingly.</p>
+</div>
+<h3 id="configuration">Configuration</h3>
+<p>Essential Environment Variables</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>xm__xmpro__Gateway__Id</td>
+<td>Optional</td>
+<td>Unique GUID identifier for this Stream Host instance.<br><em>Default: A new GUID</em></td>
+</tr>
+<tr>
+<td>xm__xmpro__Gateway__Name</td>
+<td>Optional</td>
+<td>Display name in Data Stream Designer.<br><em>Default: &quot;[Image-Version]-[Gateway Id]&quot;, e.g.</em> &quot;alpine3.21-python3.12-3bd462d4-4f1f-4cda-b6c5-d02f986beb6f&quot;</td>
+</tr>
+<tr>
+<td>xm__xmpro__Gateway__CollectionId</td>
+<td>Required</td>
+<td>ID of your Collection<br>(available in Data Stream Designer)</td>
+</tr>
+<tr>
+<td>xm__xmpro__Gateway__Secret</td>
+<td>Required</td>
+<td>Secret key of your Collection<br>(available in Data Stream Designer)</td>
+</tr>
+<tr>
+<td>xm__xmpro__Gateway__ServerUrl</td>
+<td>Required</td>
+<td>The server URL for where Data Stream Designer is hosted. E.g. <em>&quot;https://dsserver/datastreamdesigner/&quot;.</em><br><br>Please note that this URL needs to end in a forward slash.</td>
+</tr>
+<tr>
+<td>xm__xmpro__Gateway__Rank</td>
+<td>Optional</td>
+<td>An integer, by default is &quot;0&quot;.<br>See <a href="../../concepts/collection.html#stream-host-rank">Stream Host Rank</a> for further details.</td>
+</tr>
+</tbody>
+</table>
+<p>These settings can be found in Data Stream Designer:</p>
+<p><img src="../../images/image-1489.png" alt="Fig 1: Collection details in Data Stream Designer"></p>
+<h2 id="docker-repository">Docker Repository</h2>
+<p>Below is the XMPro Docker Stream Host repository.</p>
+<pre><code>xmpro.azurecr.io/stream-host
+</code></pre>
+<h2 id="image-variants">Image Variants</h2>
+<h3 id="version-tagging">Version Tagging</h3>
+<p>All images are tagged with their version number. For example:</p>
+<pre><code>xmpro.azurecr.io/stream-host:4.4.19
+</code></pre>
+<p>The <code>latest</code> tag points to the most recent release:</p>
+<pre><code>xmpro.azurecr.io/stream-host:latest
+</code></pre>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>Using the <code>latest</code> tag caches the image locally. For guaranteed latest version, specify the exact version number or re-pull the image.</p>
+</div>
+<h3 id="available-variants">Available Variants</h3>
+<p>A Stream Host running a Data Stream must provide the capabilities to run each Agents in the Data Stream. Choose your image depending on the capabilities that are required.</p>
+<table>
+<thead>
+<tr>
+<th>Image Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>xmpro.azurecr.io/stream-host:4.4.19-bookworm-slim</code></td>
+<td>Debian (Default)</td>
+</tr>
+<tr>
+<td><code>xmpro.azurecr.io/stream-host:4.4.19-bookworm-slim-python3.12</code></td>
+<td>Debian with Python</td>
+</tr>
+<tr>
+<td><code>xmpro.azurecr.io/stream-host:4.4.19-alpine3.21</code></td>
+<td>Alpine</td>
+</tr>
+</tbody>
+</table>
+<h3 id="choosing-the-right-image">Choosing the Right Image</h3>
+<ul>
+<li>Alpine-based images offer a smaller footprint, ideal for environments where size matters</li>
+<li>Debian-based images (Bookworm Slim) provide more comprehensive tools and libraries for general use</li>
+<li>Python-enabled images come with Python pre-installed for running Python-based Agents and Connectors</li>
+</ul>
+<h2 id="python-package-installation">Python Package Installation</h2>
+<p>For Python-enabled images, you can install packages using:</p>
+<p>Either a <strong><code>requirements.txt</code></strong> file,</p>
+<pre><code class="lang-docker">pandas==2.1.4
+numpy==1.26.3
+</code></pre>
+<p>Or the <strong><code>SH_PIP_MODULES</code></strong> environment variable:</p>
+<pre><code>SH_PIP_MODULES = pandas==2.1.4 numpy==1.26.3
+</code></pre>
+<h4 id="requirementstxt-location">Requirements.txt Location</h4>
+<p>Specify the location of your <code>requirements.txt</code> file using the <code>PIP_REQUIREMENTS_PATH</code> environment variable:</p>
+<pre><code> # Powershell and Bash Terminal
+ -v &quot;&lt;path_to_your_solution&gt;:/opt/&quot;
+ -e PIP_REQUIREMENTS_PATH=&quot;/opt&quot;
+
+ # Docker compose
+ - PIP_REQUIREMENTS_PATH=/opt
+volumes:
+ - &quot;&lt;path_to_your_solution&gt;:/opt/&quot;
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>If not specified, the system will look for <code>requirements.txt</code> in the default path <code>/app</code>.</p>
+</div>
+<h3 id="installing-system-dependencies">Installing System Dependencies</h3>
+<p>To install additional system packages (APK/APT), you can install it using environment variables:</p>
+<pre><code>ADDITIONAL_INSTALLS=git
+</code></pre>
+<h2 id="deployment">Deployment</h2>
+<h3 id="docker">Docker</h3>
+<p>Replace <code>&lt;values&gt;</code> with your actual configuration settings.</p>
+<h4 id="powershell">PowerShell</h4>
+<pre><code class="lang-powershell">docker run `
+  --name stream-host `
+  --restart on-failure `
+  -e &quot;XM__XMPRO__GATEWAY__COLLECTIONID=&lt;Collection ID&gt;&quot; `
+  -e &quot;XM__XMPRO__GATEWAY__SECRET=&lt;Collection Secret&gt;&quot; `
+  -e &quot;XM__XMPRO__GATEWAY__SERVERURL=&lt;Server URL&gt;&quot; `
+  xmpro.azurecr.io/stream-host:latest
+</code></pre>
+<h4 id="with-optional-environment-variables">With optional environment variables:</h4>
+<pre><code class="lang-powershell">docker run `
+--name stream-host `
+--restart on-failure `
+--pull always `
+-e &quot;XM__XMPRO__GATEWAY__COLLECTIONID=&lt;Collection ID&gt;&quot; `
+-e &quot;XM__XMPRO__GATEWAY__SECRET=&lt;Collection Secret&gt;&quot; `
+-e &quot;XM__XMPRO__GATEWAY__SERVERURL=&lt;Server URL&gt;&quot; `
+-e &quot;XM__XMPRO__GATEWAY__ID=&lt;Stream Host Id&gt;&quot; `
+-e &quot;XM__XMPRO__GATEWAY__NAME=&lt;Stream Host Name&gt;&quot; `
+-e &quot;XM__XMPRO__GATEWAY__RANK=&lt;Stream Host Rank&gt;&quot; `
+-e &quot;SH_PIP_MODULES=pandas scikit-learn numpy&quot; `
+-v &quot;&lt;path_to_your_solution&gt;:/opt/&quot; `
+-e &quot;PIP_REQUIREMENTS_PATH=/opt&quot; `
+-e &quot;ADDITIONAL_INSTALLS=git&quot; `
+xmpro.azurecr.io/stream-host:latest
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Remove optional variables that are NOT needed.</p>
+</div>
+<h4 id="bashterminal">Bash/Terminal</h4>
+<pre><code class="lang-bash">docker run \
+--name stream-host \
+--restart on-failure \
+-e &quot;XM__XMPRO__GATEWAY__COLLECTIONID=&lt;Collection ID&gt;&quot; \
+-e &quot;XM__XMPRO__GATEWAY__SECRET=&lt;Collection Secret&gt;&quot; \
+-e &quot;XM__XMPRO__GATEWAY__SERVERURL=&lt;Server URL&gt;&quot; \
+xmpro.azurecr.io/stream-host:latest
+</code></pre>
+<p>With optional environment variables</p>
+<pre><code class="lang-bash">MSYS_NO_PATHCONV=1 docker run \
+--name stream-host \
+--restart on-failure \
+--pull always \
+-e &quot;XM__XMPRO__GATEWAY__COLLECTIONID=&lt;Collection ID&gt;&quot; \
+-e &quot;XM__XMPRO__GATEWAY__SECRET=&lt;Collection Secret&gt;&quot; \
+-e &quot;XM__XMPRO__GATEWAY__SERVERURL=&lt;Server URL&gt;&quot; \
+-e &quot;XM__XMPRO__GATEWAY__ID=&lt;Stream Host Id&gt;&quot; \
+-e &quot;XM__XMPRO__GATEWAY__NAME=&lt;Stream Host Name&gt;&quot; \
+-e &quot;XM__XMPRO__GATEWAY__RANK=&lt;Stream Host Rank&gt;&quot; \
+-e &quot;SH_PIP_MODULES=pandas scikit-learn numpy&quot; \
+-v &quot;&lt;path_to_your_solution&gt;:/opt/&quot; \
+-e &quot;PIP_REQUIREMENTS_PATH=/opt&quot; \
+-e &quot;ADDITIONAL_INSTALLS=git&quot; \
+xmpro.azurecr.io/stream-host:latest
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Remove optional variables that are NOT needed.</p>
+</div>
+<h3 id="docker-compose">Docker Compose</h3>
+<p>Create a <code>compose.yaml</code> file in your working directory:</p>
+<pre><code class="lang-yaml">services:
+  stream-host:
+    image: xmpro.azurecr.io/stream-host:latest
+    pull_policy: always
+    container_name: 'stream-host'
+    environment:
+      - XM__XMPRO__GATEWAY__COLLECTIONID=&lt;Collection ID&gt;
+      - XM__XMPRO__GATEWAY__SECRET=&lt;Collection Secret&gt;
+      - XM__XMPRO__GATEWAY__SERVERURL=&lt;Server URL&gt;
+    restart: on-failure
+</code></pre>
+<p>With optional environment variables</p>
+<pre><code class="lang-yaml">services:
+  stream-host:
+    image: xmpro.azurecr.io/stream-host:latest
+    pull_policy: always
+    container_name: 'stream-host'
+    environment:
+      - XM__XMPRO__GATEWAY__COLLECTIONID=&lt;Collection ID&gt;
+      - XM__XMPRO__GATEWAY__SECRET=&lt;Collection Secret&gt;
+      - XM__XMPRO__GATEWAY__SERVERURL=&lt;Server URL&gt;
+      # Optional: Uncomment if needed
+      # - XM__XMPRO__GATEWAY__ID=&lt;Stream Host Id&gt;
+      # - XM__XMPRO__GATEWAY__NAME=&lt;Stream Host Name&gt;
+      # - XM__XMPRO__GATEWAY__RANK=&lt;Stream Host Rank&gt;
+      # - SH_PIP_MODULES=pandas scikit-learn numpy
+      # - PIP_REQUIREMENTS_PATH=/opt
+      # - ADDITIONAL_INSTALLS=git
+    # volumes:  
+    # - &quot;&lt;path_to_your_solution&gt;:/opt/&quot;  
+    restart: on-failure
+</code></pre>
+<p>Replace <code>&lt;values&gt;</code> with your actual configuration settings.</p>
+<h4 id="managing-your-docker-compose-container">Managing Your Docker Compose Container</h4>
+<p>Start the Stream Host:</p>
+<pre><code>docker-compose up -d stream-host
+</code></pre>
+<p>Stop the Stream Host:</p>
+<pre><code>docker-compose down
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>For more information on Docker Compose, see the <a href="https://docs.docker.com/compose/">Docker Compose Overview</a>.</p>
+</div>
+<p>Your Stream Host installation is now complete.</p>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: July 15, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

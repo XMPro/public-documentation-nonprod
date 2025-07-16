@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/concepts/manage-access.md&amp;version=GBmain&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/concepts/manage-access.md&amp;version=GBrelease-4.5.1&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -226,10 +226,9 @@
 <h3 id="business-role-of-a-user">Business Role of a User</h3>
 <p>Alternatively, a user's business role can also be managed from the user blade. See <a href="../administration/users/business-role-for-a-user.html">Change Business Role</a>.</p>
 <p><img src="../images/change-business-role.png" alt="Change Business Role"></p>
-<h3 id="sync-business-roles-from-azure-ad">Sync Business Roles from Azure AD</h3>
-<p>If <a href="../installation/complete-installation/configure-sso-optional/sso-azure-ad.html">Azure AD</a> has been linked as your External Identity Provider, you can specify a claim name that Azure AD or the graph API will pass to Subscription Manager.</p>
+<h3 id="sync-business-roles-from-azure-entra-id">Sync Business Roles from Azure Entra ID</h3>
+<p>If Azure Entra ID has been linked as your External Identity Provider, you can specify a claim name that Azure Entra ID or the graph API will pass to Subscription Manager.</p>
 <p>When a user logs in, Subscription Manager will look at the value specified in this Claim and assign them to the Business Role with the same name.</p>
-<p><a href="../installation/complete-installation/configure-sso-optional/sso-azure-ad.html#sync-azure-ad-role-to-sms-business-role">See the Sync Azure AD Role to SM's Business Role article for information on how to configure the claim name.</a></p>
 <div class="NOTE">
 <h5>Note</h5>
 <p>If a Business Role with the same name doesn't exist, it will be created as a child under the default Business Role, 'All Employees'.</p>
@@ -261,7 +260,7 @@
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: July 07, 2025</em></small></p>
+    <p><small><em>Last modified: July 15, 2025</em></small></p>
   </div>
 </article>
 
