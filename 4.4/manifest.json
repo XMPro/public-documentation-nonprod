@@ -25487,6 +25487,16 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "src/images/signup-page.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/signup-page.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "src/images/signup.png",
       "output": {
         "resource": {

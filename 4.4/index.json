@@ -42,7 +42,7 @@
   "src/administration/companies/register-a-company.html": {
     "href": "src/administration/companies/register-a-company.html",
     "title": "Register a Company | XMPro",
-    "summary": "Register a Company Register a Company Click on the Sign-Up button on the login page. Follow the steps below: Fill in your first name, last name, and email address. If this is the first time you or someone in your company is signing up to use Subscription Manager, fill in the company name and check the “Create a new company?” checkbox. By checking this box, your company will be registered in the system when your account is created. This check box will automatically become visible after you have filled in your company name and click anywhere else on the form. Choose a unique username, for example, “keith.miller“. Do not include your company name in your username. Choose a password and confirm your password. Click “Agree“. Wait for an email, confirming that your company has been registered and that you have been granted access to Subscription Manager. You will only be allowed to use the system after being granted access."
+    "summary": "Register a Company Register a Company Click on the Sign-Up button on the login page. Follow the steps below: Fill in your first name, last name, and email address. If this is the first time you or someone in your company is signing up to use Subscription Manager, fill in the company name and check the \"Create a new company?\" checkbox. By checking this box, your company will be registered in the system when your account is created. This check box will automatically become visible after you have filled in your company name and click anywhere else on the form. Choose Preferred Language. Choose a unique username, for example, \"keith.miller\". Do not include your company name in your username. Choose a password and confirm your password. Click \"Submit\". Wait for an email, confirming that your company has been registered and that you have been granted access to Subscription Manager. You will only be allowed to use the system after being granted access."
   },
   "src/administration/language.html": {
     "href": "src/administration/language.html",
@@ -167,7 +167,7 @@
   "src/blocks-toolbox/ai/index.html": {
     "href": "src/blocks-toolbox/ai/index.html",
     "title": "AI | XMPro",
-    "summary": "AI"
+    "summary": "AI Azure Copilot ChatGPT Copilot"
   },
   "src/blocks-toolbox/basic/README.html": {
     "href": "src/blocks-toolbox/basic/README.html",
@@ -232,7 +232,7 @@
   "src/blocks-toolbox/basic/index.html": {
     "href": "src/blocks-toolbox/basic/index.html",
     "title": "Basic | XMPro",
-    "summary": "Basic Calendar Checkbox Color Selector Data Grid Date Selector Dropdown Grid File Library File Uploader HTML Editor Image Indicator List Lookup Number Selector Radio Buttons Range Selector Select Box Switch Tags Text Area Text Textbox Tree Grid Tree List"
+    "summary": "Basic Calendar Checkbox Color Selector Data Grid Date Selector Dropdown Grid Embedded Page File Library File Uploader HTML Editor Image Indicator List Lookup Number Selector Radio Buttons Range Selector Select Box Switch Tags Text Area Text Textbox Tree Grid Tree List"
   },
   "src/blocks-toolbox/basic/indicator.html": {
     "href": "src/blocks-toolbox/basic/indicator.html",
@@ -502,7 +502,7 @@
   "src/blocks-toolbox/visualizations/index.html": {
     "href": "src/blocks-toolbox/visualizations/index.html",
     "title": "Visualizations | XMPro",
-    "summary": "Visualizations Autodesk Forge Azure Digital Twin Hierarchy Bar Gauge Chart Circular Gauge D3 Visualization Esri Map Image Map Linear Gauge Map Pivot Grid Polar Chart Time Series Analysis"
+    "summary": "Visualizations Autodesk Forge Azure Digital Twin Hierarchy Bar Gauge Chart Circular Gauge D3 Visualization Esri Map Image Map Linear Gauge Live Feed Map Pie Chart Pivot Grid Polar Chart Power BI Sparkline Time Series Analysis Tree Map Unity Unity (Legacy)"
   },
   "src/blocks-toolbox/visualizations/linear-gauge.html": {
     "href": "src/blocks-toolbox/visualizations/linear-gauge.html",
