@@ -57,6 +57,16 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "images/logo-dark.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/logo-dark.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "images/logo-light.png",
       "output": {
         "resource": {
