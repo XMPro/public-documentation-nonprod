@@ -27,6 +27,16 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "404.html",
+      "output": {
+        "resource": {
+          "relative_path": "404.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "images/beta-icon.png",
       "output": {
         "resource": {
