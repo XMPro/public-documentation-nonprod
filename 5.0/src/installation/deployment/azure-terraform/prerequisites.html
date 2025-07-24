@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../../../">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/deployment/azure-terraform/prerequisites.md&amp;version=GB20830-fix-yaml-template-syntax&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/deployment/azure-terraform/prerequisites.md&amp;version=GBmain&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -182,6 +182,20 @@ Start-Process msiexec.exe -Wait -ArgumentList '/I AzureCLI.msi /quiet'
 <p><strong>Alternative - Using pip:</strong></p>
 <pre><code class="lang-bash">pip install azure-cli
 </code></pre>
+<h3 id="3-install-docker-optional">3. Install Docker (Optional)</h3>
+<p>Docker is optional but recommended for testing container image access.</p>
+<p><strong>Windows:</strong></p>
+<ul>
+<li>Download and install <a href="https://www.docker.com/products/docker-desktop">Docker Desktop for Windows</a></li>
+</ul>
+<p><strong>macOS:</strong></p>
+<pre><code class="lang-bash">brew install --cask docker
+</code></pre>
+<p><strong>Linux:</strong></p>
+<pre><code class="lang-bash"># Ubuntu/Debian
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
+</code></pre>
 <h2 id="azure-setup">Azure Setup</h2>
 <h3 id="1-create-azure-service-principal">1. Create Azure Service Principal</h3>
 <p>A service principal is required for Terraform to authenticate with Azure.</p>
@@ -228,14 +242,17 @@ az account set --subscription &quot;Your Subscription Name&quot;
 az account show
 </code></pre>
 <h2 id="container-registry-access">Container Registry Access</h2>
-<h3 id="1-azure-container-registry-acr">1. Azure Container Registry (ACR)</h3>
-<p>If using a private ACR, obtain credentials from your administrator:</p>
-<pre><code class="lang-bash"># Login to ACR
-az acr login --name xmprocontainers
-
-# Test image access
-az acr repository list --name xmprocontainers
+<h3 id="1-xmpro-public-container-registry">1. XMPro Public Container Registry</h3>
+<p>XMPro container images are publicly available at <code>xmpro.azurecr.io</code>. No authentication is required to pull these images.</p>
+<pre><code class="lang-bash"># Test image access (no login required)
+docker pull xmpro.azurecr.io/ad:4.5.1
+docker pull xmpro.azurecr.io/ds:4.5.1
+docker pull xmpro.azurecr.io/stream-host:4.5.1
 </code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>SM (Subscription Manager) runs as a Windows App Service using a deployment package, not a container image.</p>
+</div>
 <h2 id="environment-configuration">Environment Configuration</h2>
 <h3 id="1-environment-variables">1. Environment Variables</h3>
 <p>Create a <code>.env</code> file or set system environment variables:</p>
@@ -245,21 +262,20 @@ export ARM_CLIENT_SECRET=&quot;your-client-secret&quot;
 export ARM_SUBSCRIPTION_ID=&quot;your-subscription-id&quot;
 export ARM_TENANT_ID=&quot;your-tenant-id&quot;
 
-# Container Registry
-export TF_VAR_acr_username=&quot;your-acr-username&quot;
-export TF_VAR_acr_password=&quot;your-acr-password&quot;
-
 # Application Secrets
 export TF_VAR_db_admin_password=&quot;SecurePassword123!&quot;
 export TF_VAR_company_admin_password=&quot;AdminPassword123!&quot;
 export TF_VAR_site_admin_password=&quot;SitePassword123!&quot;
-export TF_VAR_masterkey=&quot;YourMasterKey123!&quot;
 </code></pre>
 <p><strong>Windows PowerShell:</strong></p>
 <pre><code class="lang-powershell">$env:ARM_CLIENT_ID=&quot;your-client-id&quot;
 $env:ARM_CLIENT_SECRET=&quot;your-client-secret&quot;
 $env:ARM_SUBSCRIPTION_ID=&quot;your-subscription-id&quot;
 $env:ARM_TENANT_ID=&quot;your-tenant-id&quot;
+
+$env:TF_VAR_db_admin_password=&quot;SecurePassword123!&quot;
+$env:TF_VAR_company_admin_password=&quot;AdminPassword123!&quot;
+$env:TF_VAR_site_admin_password=&quot;SitePassword123!&quot;
 </code></pre>
 <h3 id="2-terraform-backend-configuration">2. Terraform Backend Configuration</h3>
 <p>For production deployments, configure remote state storage:</p>
@@ -341,6 +357,9 @@ terraform version
 
 # Check Azure CLI version
 az version
+
+# Check Docker version (if installed)
+docker --version
 </code></pre>
 <h3 id="2-test-azure-authentication">2. Test Azure Authentication</h3>
 <pre><code class="lang-bash"># Test Azure login
@@ -356,8 +375,32 @@ az login --service-principal \
   --tenant &quot;$ARM_TENANT_ID&quot;
 </code></pre>
 <h3 id="3-validate-terraform-configuration">3. Validate Terraform Configuration</h3>
-<pre><code class="lang-bash"># Navigate to deployment directory
-cd deploy/terraform-v5/environments/sandbox
+<p>Create a test configuration file to validate your setup:</p>
+<pre><code class="lang-bash"># Create a test directory
+mkdir xmpro-terraform-test
+cd xmpro-terraform-test
+
+# Create a minimal test configuration
+cat &gt; main.tf &lt;&lt; 'EOF'
+terraform {
+  required_providers {
+    azurerm = {
+      source  = &quot;hashicorp/azurerm&quot;
+      version = &quot;~&gt; 3.0&quot;
+    }
+  }
+}
+
+provider &quot;azurerm&quot; {
+  features {}
+}
+
+# Test resource group
+resource &quot;azurerm_resource_group&quot; &quot;test&quot; {
+  name     = &quot;terraform-test-rg&quot;
+  location = &quot;East US&quot;
+}
+EOF
 
 # Initialize Terraform
 terraform init
@@ -365,18 +408,22 @@ terraform init
 # Validate configuration
 terraform validate
 
-# Check formatting
-terraform fmt -check
+# Plan to verify authentication
+terraform plan
+
+# Clean up test directory when done
+cd ..
+rm -rf xmpro-terraform-test
 </code></pre>
 <h3 id="4-test-container-registry-access">4. Test Container Registry Access</h3>
-<pre><code class="lang-bash"># Test ACR login
-az acr login --name xmprocontainers
+<pre><code class="lang-bash"># No login required for public registry
+# Test image pull directly
+docker pull xmpro.azurecr.io/ad:4.5.1
+docker pull xmpro.azurecr.io/ds:4.5.1
+docker pull xmpro.azurecr.io/stream-host:4.5.1
 
-# List repositories
-az acr repository list --name xmprocontainers
-
-# Test image pull
-docker pull xmprocontainers.azurecr.io/xmpro-ad:latest
+# Verify images
+docker images | grep xmpro
 </code></pre>
 <h2 id="troubleshooting-setup-issues">Troubleshooting Setup Issues</h2>
 <h3 id="common-installation-problems">Common Installation Problems</h3>
@@ -446,22 +493,28 @@ $env:ARM_CLIENT_ID=&quot;your-value&quot;
 <h2 id="next-steps">Next Steps</h2>
 <p>After completing the prerequisites:</p>
 <ol>
-<li><strong><a href="infrastructure.html">Infrastructure Deployment</a></strong> - Deploy the core infrastructure</li>
+<li><strong><a href="implementation-guide.html">Implementation Guide</a></strong> - Deploy the core infrastructure using the XMPro Terraform module from GitHub</li>
 <li><strong><a href="troubleshooting.html">Troubleshooting</a></strong> - Common issues and solutions</li>
 </ol>
+<p>The infrastructure deployment guide will show you how to use the XMPro Terraform module directly from GitHub:</p>
+<pre><code class="lang-hcl">module &quot;xmpro&quot; {
+  source  = &quot;github.com/xmpro/xmpro-terraform//deploy/terraform-v5/terraform-xmpro-azure?ref=v4.5.1&quot;
+  # ... your configuration
+}
+</code></pre>
 <h2 id="support">Support</h2>
 <p>For setup issues:</p>
 <ul>
 <li>Review Azure documentation for service principal setup</li>
 <li>Check Terraform documentation for installation guides</li>
 <li>Contact your Azure administrator for subscription permissions</li>
-<li>Reach out to XMPro support for container registry access</li>
+<li>Visit <a href="https://documentation.xmpro.com">XMPro Documentation</a> for additional resources</li>
 </ul>
 
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: July 21, 2025</em></small></p>
+    <p><small><em>Last modified: July 24, 2025</em></small></p>
   </div>
 </article>
 

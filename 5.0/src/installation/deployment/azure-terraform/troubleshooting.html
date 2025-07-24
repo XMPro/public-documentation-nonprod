@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../../../">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/deployment/azure-terraform/troubleshooting.md&amp;version=GB20830-fix-yaml-template-syntax&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/deployment/azure-terraform/troubleshooting.md&amp;version=GBmain&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -90,6 +90,40 @@
 <h2 id="introduction">Introduction</h2>
 <p>This guide covers common issues encountered during XMPro Azure Terraform deployment and their solutions. Use this guide to diagnose and resolve deployment problems quickly.</p>
 <h2 id="common-deployment-issues">Common Deployment Issues</h2>
+<h3 id="module-source-issues">Module Source Issues</h3>
+<h4 id="incorrect-module-source-path">Incorrect Module Source Path</h4>
+<p><strong>Error Message:</strong></p>
+<pre><code>Error: Module not found
+│ 
+│ The module address &quot;./terraform-xmpro-azure&quot; could not be resolved.
+</code></pre>
+<p><strong>Solution:</strong>
+Use the correct GitHub source for the module:</p>
+<pre><code class="lang-hcl">module &quot;xmpro&quot; {
+  source  = &quot;github.com/xmpro/xmpro-devops//deploy/terraform-v5/terraform-xmpro-azure?ref=main&quot;
+  # Your variables here
+}
+</code></pre>
+<p><strong>Note:</strong> Do not use local file paths unless you have cloned the repository locally.</p>
+<h3 id="variable-naming-issues">Variable Naming Issues</h3>
+<h4 id="incorrect-variable-names">Incorrect Variable Names</h4>
+<p><strong>Error Message:</strong></p>
+<pre><code>Error: Unsupported argument
+│ 
+│ An argument named &quot;companyname&quot; is not expected here. Did you mean &quot;company_name&quot;?
+</code></pre>
+<p><strong>Solution:</strong>
+Use the correct variable names with underscores:</p>
+<pre><code class="lang-hcl"># Correct variable names
+company_name = &quot;acme&quot;         # NOT companyname
+environment = &quot;dev&quot;           # Valid environments: dev, qa, sandbox-sm-only
+is_evaluation_mode = false    # Default is false
+</code></pre>
+<p><strong>Common Variable Name Corrections:</strong></p>
+<ul>
+<li><code>companyname</code> → <code>company_name</code></li>
+<li>Use underscores for all multi-word variables</li>
+</ul>
 <h3 id="authentication-problems">Authentication Problems</h3>
 <h4 id="service-principal-authentication-failed">Service Principal Authentication Failed</h4>
 <p><strong>Error Message:</strong></p>
@@ -162,37 +196,39 @@ az sql list-usage --location eastus
 sql_sku_name = &quot;Basic&quot;  # Instead of S0
 </code></pre>
 <h3 id="container-registry-issues">Container Registry Issues</h3>
-<h4 id="acr-authentication-failed">ACR Authentication Failed</h4>
+<blockquote>
+<p><strong>Important:</strong> The XMPro container registry at <code>xmpro.azurecr.io</code> is a <strong>public registry</strong> and does not require authentication credentials. The Terraform module does not need <code>acr_username</code> or <code>acr_password</code> variables - they are not used by the module.</p>
+</blockquote>
+<h4 id="acr-public-registry-access">ACR Public Registry Access</h4>
 <p><strong>Error Message:</strong></p>
-<pre><code>Error: pulling image: Error response from daemon: pull access denied for xmprocontainers.azurecr.io/xmpro-ad
+<pre><code>Error: pulling image: Error response from daemon: pull access denied for xmpro.azurecr.io/ad
 </code></pre>
 <p><strong>Solution:</strong></p>
-<pre><code class="lang-bash"># Test ACR login
-az acr login --name xmprocontainers
+<pre><code class="lang-bash"># Test direct image pull (no authentication needed)
+docker pull xmpro.azurecr.io/ad:latest
 
-# Verify credentials
-az acr credential show --name xmprocontainers
+# List available images (public registry)
+az acr repository list --name xmpro --output table
 
-# Test image pull
-docker pull xmprocontainers.azurecr.io/xmpro-ad:latest
+# Check if firewall is blocking Docker Hub or ACR
+curl -I https://xmpro.azurecr.io
 
-# Check terraform variables
-echo $TF_VAR_acr_username
-echo $TF_VAR_acr_password
+# Verify image exists with specific tag
+az acr repository show-tags --name xmpro --repository xmpro-ad --output table
 </code></pre>
 <h4 id="container-image-not-found">Container Image Not Found</h4>
 <p><strong>Error Message:</strong></p>
-<pre><code>Error: App Service cannot start: Container image 'xmprocontainers.azurecr.io/xmpro-ad:5.0.0-main-abc123' not found
+<pre><code>Error: App Service cannot start: Container image 'xmpro.azurecr.io/ad:4.5.1-main-abc123' not found
 </code></pre>
 <p><strong>Solution:</strong></p>
-<pre><code class="lang-bash"># List available images
-az acr repository list --name xmprocontainers
+<pre><code class="lang-bash"># List available images in public registry
+az acr repository list --name xmpro --output table
 
-# List available tags
-az acr repository show-tags --name xmprocontainers --repository xmpro-ad
+# List available tags for specific repository
+az acr repository show-tags --name xmpro --repository ad --output table
 
 # Update terraform.tfvars with correct image version
-imageversion = &quot;5.0.0-main-correct-hash&quot;
+imageversion = &quot;4.5.1-main-correct-hash&quot;
 
 # Or use latest tag
 imageversion = &quot;latest&quot;
@@ -245,26 +281,26 @@ az sql db show \
 <h3 id="app-service-startup-issues">App Service Startup Issues</h3>
 <h4 id="application-startup-timeout">Application Startup Timeout</h4>
 <p><strong>Error Message:</strong></p>
-<pre><code>Error: App Service 'xmpro-dev-ad' failed to start within timeout period
+<pre><code>Error: App Service 'xmpro-prefix-ad' failed to start within timeout period
 </code></pre>
 <p><strong>Solution:</strong></p>
 <pre><code class="lang-bash"># Check app service logs
 az webapp log tail \
-  --name xmpro-dev-ad \
+  --name xmpro-prefix-ad \
   --resource-group $(terraform output -raw resource_group_name)
 
 # Check container settings
 az webapp config container show \
-  --name xmpro-dev-ad \
+  --name xmpro-prefix-ad \
   --resource-group $(terraform output -raw resource_group_name)
 
 # Restart app service
 az webapp restart \
-  --name xmpro-dev-ad \
+  --name xmpro-prefix-ad \
   --resource-group $(terraform output -raw resource_group_name)
 
-# Check app service health
-curl -f &quot;$(terraform output -raw ad_url)/health&quot;
+# Check app service version
+curl -f &quot;$(terraform output -raw ad_url)/version&quot;
 </code></pre>
 <h4 id="environment-variable-issues">Environment Variable Issues</h4>
 <p><strong>Error Message:</strong></p>
@@ -273,7 +309,7 @@ curl -f &quot;$(terraform output -raw ad_url)/health&quot;
 <p><strong>Solution:</strong></p>
 <pre><code class="lang-bash"># Check app service configuration
 az webapp config appsettings list \
-  --name xmpro-dev-ad \
+  --name xmpro-prefix-ad \
   --resource-group $(terraform output -raw resource_group_name)
 
 # Verify Key Vault secrets
@@ -343,26 +379,18 @@ az network dns zone show \
 
 # Check domain verification
 az webapp config hostname add \
-  --webapp-name xmpro-dev-ad \
+  --webapp-name xmpro-prefix-ad \
   --resource-group $(terraform output -raw resource_group_name) \
   --hostname xmpro.yourdomain.com
 </code></pre>
-<h4 id="ssl-certificate-issues">SSL Certificate Issues</h4>
-<p><strong>Error Message:</strong></p>
-<pre><code>Error: SSL certificate validation failed
-</code></pre>
-<p><strong>Solution:</strong></p>
-<pre><code class="lang-bash"># Check certificate status
-az webapp config ssl list \
-  --resource-group $(terraform output -raw resource_group_name)
-
-# Renew certificate
-az webapp config ssl upload \
-  --resource-group $(terraform output -raw resource_group_name) \
-  --name xmpro-dev-ad \
-  --certificate-file certificate.pfx \
-  --certificate-password &lt;password&gt;
-</code></pre>
+<h4 id="ssltls-configuration">SSL/TLS Configuration</h4>
+<p>For SSL/TLS configuration, the Azure App Service platform provides built-in SSL certificates for the default domain (*.azurewebsites.net). For custom domains, you can:</p>
+<ol>
+<li>Use App Service Managed Certificates (free)</li>
+<li>Import your own certificates</li>
+<li>Purchase App Service Certificates</li>
+</ol>
+<p><strong>Note:</strong> The Terraform module does not manage SSL certificates directly. Configure SSL/TLS through the Azure Portal or Azure CLI after deployment.</p>
 <h2 id="diagnostic-commands">Diagnostic Commands</h2>
 <h3 id="general-health-check">General Health Check</h3>
 <pre><code class="lang-bash"># Check all resources in resource group
@@ -390,7 +418,7 @@ az monitor metrics list \
 
 # Download app service logs
 az webapp log download \
-  --name xmpro-dev-ad \
+  --name xmpro-prefix-ad \
   --resource-group $(terraform output -raw resource_group_name) \
   --log-file webapp_logs.zip
 </code></pre>
@@ -508,7 +536,7 @@ az keyvault show \
 
 # Add access policy for app service
 OBJECT_ID=$(az webapp identity show \
-  --name xmpro-dev-ad \
+  --name xmpro-prefix-ad \
   --resource-group $(terraform output -raw resource_group_name) \
   --query principalId -o tsv)
 
@@ -540,7 +568,7 @@ az network nsg rule create \
 <h3 id="enable-detailed-logging">Enable Detailed Logging</h3>
 <pre><code class="lang-bash"># Enable app service logging
 az webapp log config \
-  --name xmpro-dev-ad \
+  --name xmpro-prefix-ad \
   --resource-group $(terraform output -raw resource_group_name) \
   --application-logging true \
   --detailed-error-messages true \
@@ -631,7 +659,7 @@ terraform output -json &gt; terraform-outputs.json
 az resource list --resource-group $(terraform output -raw resource_group_name) --output json &gt; resources.json
 
 # Collect app service logs
-az webapp log download --name xmpro-dev-ad --resource-group $(terraform output -raw resource_group_name) --log-file webapp-logs.zip
+az webapp log download --name xmpro-prefix-ad --resource-group $(terraform output -raw resource_group_name) --log-file webapp-logs.zip
 
 # Collect container logs
 az container logs --resource-group $(terraform output -raw resource_group_name) --name stream-host &gt; container-logs.txt
@@ -649,6 +677,23 @@ echo &quot;Azure CLI version: $(az version --query '\&quot;azure-cli\&quot;' -o 
 <li><strong>Test Thoroughly</strong> - Validate the fix works as expected</li>
 <li><strong>Share Knowledge</strong> - Update team on lessons learned</li>
 </ol>
+<h2 id="key-points-summary">Key Points Summary</h2>
+<h3 id="important-configuration-notes">Important Configuration Notes</h3>
+<ol>
+<li><strong>Container Registry</strong>: <code>xmpro.azurecr.io</code> is a public registry - no authentication required</li>
+<li><strong>Image Version</strong>: Use version <code>4.5.1</code> or <code>latest</code></li>
+<li><strong>Module Source</strong>: Use GitHub source: <code>github.com/xmpro/xmpro-devops//deploy/terraform-v5/terraform-xmpro-azure?ref=main</code></li>
+<li><strong>Variable Names</strong>: Use underscores (e.g., <code>company_name</code> not <code>companyname</code>)</li>
+<li><strong>Environments</strong>: Valid values are <code>dev</code>, <code>qa</code>, and <code>sandbox-sm-only</code></li>
+<li><strong>Evaluation Mode</strong>: Default is <code>false</code></li>
+<li><strong>SSL Certificates</strong>: Managed separately, not through Terraform variables</li>
+</ol>
+<h3 id="resource-naming-convention">Resource Naming Convention</h3>
+<p>Resources are named with the pattern: <code>xmpro-{prefix}-{resource}</code> where:</p>
+<ul>
+<li><code>{prefix}</code> is your chosen prefix (e.g., company name)</li>
+<li><code>{resource}</code> is the resource type (e.g., <code>ad</code>, <code>ds</code>, <code>sm</code>)</li>
+</ul>
 <h2 id="support-contacts">Support Contacts</h2>
 <ul>
 <li><strong>XMPro Support</strong>: support@xmpro.com</li>
@@ -659,7 +704,7 @@ echo &quot;Azure CLI version: $(az version --query '\&quot;azure-cli\&quot;' -o 
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: July 21, 2025</em></small></p>
+    <p><small><em>Last modified: July 24, 2025</em></small></p>
   </div>
 </article>
 

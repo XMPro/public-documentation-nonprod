@@ -25867,20 +25867,20 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "src/installation/deployment/azure-terraform/index.md",
+      "source_relative_path": "src/installation/deployment/azure-terraform/implementation-guide.md",
       "output": {
         ".html": {
-          "relative_path": "src/installation/deployment/azure-terraform/index.html"
+          "relative_path": "src/installation/deployment/azure-terraform/implementation-guide.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "src/installation/deployment/azure-terraform/infrastructure.md",
+      "source_relative_path": "src/installation/deployment/azure-terraform/index.md",
       "output": {
         ".html": {
-          "relative_path": "src/installation/deployment/azure-terraform/infrastructure.html"
+          "relative_path": "src/installation/deployment/azure-terraform/index.html"
         }
       },
       "version": ""
@@ -25901,6 +25901,16 @@
       "output": {
         ".html": {
           "relative_path": "src/installation/deployment/azure-terraform/troubleshooting.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "src/installation/deployment/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/installation/deployment/index.html"
         }
       },
       "version": ""
