@@ -31099,6 +31099,16 @@
       "version": ""
     },
     {
+      "type": "Resource",
+      "source_relative_path": "src/variables.json",
+      "output": {
+        "resource": {
+          "relative_path": "src/variables.json"
+        }
+      },
+      "version": ""
+    },
+    {
       "type": "Conceptual",
       "source_relative_path": "terraform-pr/README.md",
       "output": {

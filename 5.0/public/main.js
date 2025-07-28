@@ -148,5 +148,106 @@ export default {
         window.open(viewerUrl, '_blank');
       }
     });
+
+    // Variable replacement functionality
+    loadAndReplaceVariables();
   },
+}
+
+// Variable replacement utility
+function loadAndReplaceVariables() {
+  // Cache the variables to avoid multiple fetches
+  let cachedVariables = null;
+  let fetchPromise = null;
+
+  function loadVariables() {
+    if (cachedVariables) {
+      return Promise.resolve(cachedVariables);
+    }
+    
+    if (fetchPromise) {
+      return fetchPromise;
+    }
+    
+    // Determine the path to variables.json based on current URL structure
+    // This handles different deployment scenarios (local, versioned, GitHub Pages)
+    const currentPath = window.location.pathname;
+    let variablesPath = '';
+    
+    // Check for versioned paths (e.g., /4.5/src/, /public-documentation/4.5/src/)
+    const versionMatch = currentPath.match(/\/(\d+\.\d+)\//);
+    if (versionMatch) {
+      // Extract base path up to and including the version
+      const versionPath = currentPath.substring(0, currentPath.indexOf(versionMatch[0]) + versionMatch[0].length);
+      variablesPath = versionPath + 'src/variables.json';
+    } else {
+      // Fallback for development or non-versioned deployments
+      variablesPath = '/src/variables.json';
+    }
+    
+    fetchPromise = fetch(variablesPath)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        // Create a copy of all variables from JSON
+        cachedVariables = {...data};
+        
+        // Add derived INSTALL_URL variable
+        cachedVariables.INSTALL_URL = (data.INSTALL_URL_PREFIX || 'https://github.com/XMPro/xmpro-windows-installer/releases/download/') + 
+                                     (data.VERSION || 'latest') + '/' + 
+                                     (data.INSTALLER_SCRIPT || 'install-xmpro.ps1');
+        
+        return cachedVariables;
+      })
+      .catch(error => {
+        console.warn('Failed to load variables:', error);
+        // Fallback values
+        cachedVariables = {
+          INSTALL_URL_PREFIX: 'https://github.com/XMPro/xmpro-windows-installer/releases/download/',
+          INSTALLER_SCRIPT: 'install-xmpro.ps1',
+          VERSION: 'latest',
+          ACR_URL: 'xmpro.azurecr.io',
+          INSTALL_URL: 'https://github.com/XMPro/xmpro-windows-installer/releases/latest/download/install-xmpro.ps1'
+        };
+        return cachedVariables;
+      });
+    
+    return fetchPromise;
+  }
+
+  // Auto-initialize when DOM is ready or immediately if already loaded
+  function init() {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+      return;
+    }
+    
+    // Global replace of all {{VARIABLE_NAME}} placeholders in the entire document
+    loadVariables().then(variables => {
+      let content = document.body.innerHTML;
+      // Replace all variables from the JSON file (including derived INSTALL_URL)
+      Object.keys(variables).forEach(key => {
+        // Handle plain text placeholders
+        const simplePlaceholder = new RegExp(`\\{\\{${key}\\}\\}`, 'g');
+        content = content.replace(simplePlaceholder, variables[key]);
+        
+        // Handle DocFX syntax highlighted placeholders: {{<span>KEY</span>}}
+        // Allow whitespace/line breaks around the key
+        const spanWrappedPlaceholder = new RegExp(
+          `\\{\\{\\s*<span[^>]*>\\s*${key}\\s*</span>\\s*\\}\\}`,
+          'gis'
+        );
+        content = content.replace(spanWrappedPlaceholder, variables[key]);
+      });
+      
+      document.body.innerHTML = content;
+    });
+  }
+
+  // Initialize
+  init();
 }
