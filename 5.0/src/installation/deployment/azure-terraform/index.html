@@ -93,22 +93,25 @@
 <h5>Note</h5>
 <p>For <strong>v4.4 and earlier</strong>, use the <a href="https://documentation.xmpro.com/4.4/src/installation/deployment/azure.html">ARM template deployment</a>. This Terraform module is for XMPro v4.5 and later.</p>
 </div>
-<h2 id="what-gets-deployed">What Gets Deployed</h2>
-<p>The Terraform module creates a complete XMPro platform with:</p>
+<h2 id="architecture">Architecture</h2>
+<p>The Terraform module deploys a complete XMPro platform on Azure:</p>
+<p><img src="../../../images/azure-terraform-architecture-07-29-2025.png" alt="XMPro Azure Terraform Architecture"></p>
+<p>The module creates:</p>
 <ul>
 <li><strong>Core Applications</strong>: SM, AD, DS, and optionally AI services</li>
 <li><strong>Azure Infrastructure</strong>: SQL databases, App Services, Key Vault, Storage</li>
 <li><strong>Security</strong>: Managed identities, SSL certificates, network security</li>
 <li><strong>Monitoring</strong>: Application Insights and Log Analytics</li>
 </ul>
-<p>For detailed architecture and component descriptions, see the <a href="https://github.com/XMPro/terraform-xmpro-azure#%EF%B8%8F-architecture-overview">Architecture Overview</a> in the GitHub README.</p>
-<h2 id="quick-start">Quick Start</h2>
+<p>For detailed component descriptions, resource dependencies, and technical specifications, see the <a href="https://github.com/XMPro/terraform-xmpro-azure#%EF%B8%8F-architecture-overview">Architecture Overview</a> and <a href="https://github.com/XMPro/terraform-xmpro-azure#-submodules">Submodules</a> sections in the GitHub README.</p>
+<h2 id="install">Install</h2>
+<p>To deploy XMPro on Azure using Terraform:</p>
 <ol>
 <li><strong><a href="prerequisites.html">Prerequisites</a></strong> - Set up your environment</li>
-<li><strong><a href="implementation-guide.html">Implementation Guide</a></strong> - Deploy XMPro</li>
+<li><strong><a href="implementation-guide.html">Implementation Guide</a></strong> - Step-by-step deployment instructions</li>
 <li><strong><a href="https://github.com/XMPro/terraform-xmpro-azure">Module Documentation</a></strong> - Technical reference</li>
 </ol>
-<h2 id="key-features">Key Features</h2>
+<h3 id="key-features">Key Features</h3>
 <ul>
 <li><strong>Production-Ready Defaults</strong>: Optimized configurations for immediate use</li>
 <li><strong>Flexible Deployment Options</strong>: Support for evaluation and production modes</li>
@@ -116,608 +119,17 @@
 <li><strong>Custom Domain Management</strong>: Automatic SSL certificates via Azure</li>
 <li><strong>Comprehensive Monitoring</strong>: Built-in Application Insights and logging</li>
 </ul>
-<h2 id="architecture">Architecture</h2>
-<p>The Terraform module deploys a complete XMPro platform on Azure:</p>
-<p><img src="../../../images/azure-architecture-as-of-nov-11-2024x1.png" alt="XMPro Azure Terraform Architecture"></p>
-<p>For detailed component descriptions, resource dependencies, and technical specifications, see the <a href="https://github.com/XMPro/terraform-xmpro-azure#%EF%B8%8F-architecture-overview">Architecture Overview</a> and <a href="https://github.com/XMPro/terraform-xmpro-azure#-submodules">Submodules</a> sections in the GitHub README.</p>
-<h2 id="post-deployment-steps">Post-Deployment Steps</h2>
-<h3 id="stream-host-installation">Stream Host Installation</h3>
-<p>The module includes one Stream Host container for testing. For production data collection, install additional Stream Hosts near your data sources:</p>
-<ul>
-<li><a href="../../install-stream-host/index.html">Stream Host Installation Guide</a></li>
-<li><a href="../../install-stream-host/windows-x64.html">Windows Installation</a></li>
-<li><a href="../../install-stream-host/docker.html">Docker Installation</a></li>
-</ul>
-<h3 id="optional-components">Optional Components</h3>
-<p>The module supports additional components that can be configured based on your requirements. For details on currently available optional components like custom domains and email notifications, see the module's <a href="https://github.com/XMPro/terraform-xmpro-azure#-inputs">Configuration Reference</a>.</p>
-<p>Future optional components (requiring manual configuration):</p>
-<ul>
-<li><strong>Redis Cache</strong>: For performance optimization and caching</li>
-<li><strong>Master Data</strong>: For centralized reference data management</li>
-<li><strong>Twilio Integration</strong>: For SMS and voice notifications</li>
-</ul>
-<h3 id="advanced-configuration">Advanced Configuration</h3>
-<p>The module supports extensive configuration options for production deployments. For details on:</p>
-<ul>
-<li><strong>Master Data</strong>: See the <a href="https://github.com/XMPro/terraform-xmpro-azure#advanced-configuration-with-existing-database">GitHub README</a></li>
-<li><strong>Stream Host Configuration</strong>: See <a href="https://github.com/XMPro/terraform-xmpro-azure#stream-host-configuration">Stream Host Configuration</a></li>
-<li><strong>DNS and Custom Domains</strong>: See <a href="https://github.com/XMPro/terraform-xmpro-azure#dns-and-domain-configuration">DNS and Domain Configuration</a></li>
-<li><strong>Email Notifications</strong>: See <a href="https://github.com/XMPro/terraform-xmpro-azure#email-configuration">Email Configuration</a></li>
-<li><strong>Additional Components</strong>: Configured based on your specific requirements</li>
-</ul>
-<h2 id="sizing-recommendations">Sizing Recommendations</h2>
-<p>For production deployment sizing recommendations based on real-world usage patterns, see the <a href="https://github.com/XMPro/terraform-xmpro-azure#sizing-recommendations">Sizing Recommendations</a> section in the GitHub README.</p>
-<div class="IMPORTANT">
-<h5>Important</h5>
-<p>The Terraform module defaults to conservative B1 App Service Plans. Production deployments should use P1v3 minimum as documented in the sizing guide.</p>
-</div>
-<h2 id="available-environments">Available Environments</h2>
-<h3 id="non-production-environment">Non-Production Environment</h3>
-<p>Pre-configured for testing and staging:</p>
-<pre><code class="lang-hcl"># Key configuration
-environment = &quot;nonprod&quot;
-# Separate App Service Plans for each product
-# Development/Small Production Example:
-sm_service_plan_sku = &quot;B1&quot;   # Basic tier for development
-ad_service_plan_sku = &quot;B1&quot;   # Basic tier for development
-ds_service_plan_sku = &quot;B1&quot;   # Basic tier for development
-sh_service_plan_sku = &quot;B1&quot;   # Basic tier for development
-sql_sku_name = &quot;S0&quot;
-enable_backup = false
-</code></pre>
-<p><strong>Location:</strong> <code>deploy/terraform-v5/environments/dev/</code></p>
-<h3 id="production-environment">Production Environment</h3>
-<p>Production environment for live workloads:</p>
-<pre><code class="lang-hcl"># Key configuration
-environment = &quot;prod&quot;
-# Separate App Service Plans with production workload sizing based on real usage
-sm_service_plan_sku = &quot;P2v3&quot;   # Small production minimum
-ad_service_plan_sku = &quot;P3v3&quot;   # Handles complex dashboards and real-time updates
-ds_service_plan_sku = &quot;P2v3&quot;   # Small production minimum  
-sh_service_plan_sku = &quot;P3v3&quot;   # Memory-intensive stream processing
-# Use vCore-based database pricing for better performance predictability
-databases = {
-  SM = { sku_name = &quot;GP_Gen5_4&quot; }  # 4 vCPU, 20.8GB RAM
-  AD = { sku_name = &quot;GP_Gen5_4&quot; }
-  DS = { sku_name = &quot;GP_Gen5_4&quot; }
-}
-enable_backup = true
-enable_custom_domain = false  # Set to true if using custom domain (requires dns_zone_name)
-</code></pre>
-<p><strong>Location:</strong> <code>deploy/terraform-v5/environments/qa/</code></p>
-<h3 id="sandbox-environment">Sandbox Environment</h3>
-<p>Full-featured environment for demonstrations:</p>
-<pre><code class="lang-hcl"># Key configuration
-environment = &quot;sandbox&quot;
-enable_stream_host = true  # Enabled for full demo capabilities
-</code></pre>
-<p><strong>Location:</strong> <code>deploy/terraform-v5/environments/sandbox-sm-only/</code> (note: full sandbox not available)</p>
-<h3 id="sm-only-environment">SM-Only Environment</h3>
-<p>Minimal deployment with only Subscription Manager:</p>
-<pre><code class="lang-hcl"># Key configuration
-enable_ad = false
-enable_ds = false
-enable_stream_host = false
-</code></pre>
-<p><strong>Location:</strong> <code>deploy/terraform-v5/environments/sandbox-sm-only/</code></p>
-<h2 id="single-product-deployments">Single Product Deployments</h2>
-<p>For customers who already have XMPro Subscription Manager (SM) deployed and want to add individual products like App Designer (AD) or Data Stream Designer (DS), the module supports partial deployment configurations. This is useful for:</p>
-<ul>
-<li>Adding AD to an existing SM installation</li>
-<li>Adding DS to an existing SM installation</li>
-<li>Scaling deployments by adding products incrementally</li>
-<li>Integrating with existing XMPro installations</li>
-</ul>
-<h3 id="prerequisites-for-single-product-deployments">Prerequisites for Single Product Deployments</h3>
-<p>Before deploying individual products, ensure you have:</p>
-<ol>
-<li><p><strong>Existing SM Installation Details:</strong></p>
-<ul>
-<li>SM application URL (e.g., <code>https://sm.yourcompany.com</code>)</li>
-<li>SM database connection details</li>
-<li>Valid admin credentials for the existing SM</li>
-</ul>
-</li>
-<li><p><strong>Network Connectivity:</strong></p>
-<ul>
-<li>Products must be able to communicate with existing SM</li>
-<li>Ensure firewall rules allow communication between services</li>
-<li>Consider Azure Virtual Network peering if using different VNets</li>
-</ul>
-</li>
-<li><p><strong>Compatible Versions:</strong></p>
-<ul>
-<li>Ensure the product version matches or is compatible with existing SM</li>
-<li>Check version compatibility in the <a href="../../../release-notes/index.html">release notes</a></li>
-</ul>
-</li>
-</ol>
-<h3 id="ad-only-deployment">AD-Only Deployment</h3>
-<p>To deploy only App Designer with an existing SM installation:</p>
-<pre><code class="lang-hcl"># Key configuration for AD-only deployment
-enable_ad = true          # Deploy App Designer
-enable_ds = false         # Skip Data Stream Designer
-enable_stream_host = false # Skip Stream Host
-enable_sm = false         # Skip Subscription Manager
-
-# Existing SM connection details
-existing_sm_url = &quot;https://your-existing-sm.azurewebsites.net&quot;
-existing_sm_database_server = &quot;your-existing-sql-server.database.windows.net&quot;
-existing_sm_database_name = &quot;SM&quot;
-
-# AD-specific configuration
-ad_service_plan_sku = &quot;P1v3&quot;
-ad_cpu = 1
-ad_memory = &quot;2Gi&quot;
-
-# Database configuration (reuse existing or create new)
-use_existing_database = true  # Set to false to create new AD database
-existing_sql_server_name = &quot;your-existing-sql-server&quot;
-existing_sql_server_resource_group = &quot;your-existing-rg&quot;
-existing_database_names = {
-  AD = &quot;ExistingADDatabase&quot;  # Use existing AD database
-  SM = &quot;ExistingSMDatabase&quot;  # Reference to existing SM database
-}
-</code></pre>
-<p><strong>Configuration Notes:</strong></p>
-<ul>
-<li>Set <code>enable_sm = false</code> to skip SM deployment entirely</li>
-<li>Configure <code>existing_sm_url</code> to point to your existing SM installation</li>
-<li>Use <code>existing_sm_database_server</code> and <code>existing_sm_database_name</code> for database connectivity</li>
-<li>AD will register itself with the existing SM during startup</li>
-</ul>
-<h3 id="ds-only-deployment">DS-Only Deployment</h3>
-<p>To deploy only Data Stream Designer with an existing SM installation:</p>
-<pre><code class="lang-hcl"># Key configuration for DS-only deployment
-enable_ad = false         # Skip App Designer
-enable_ds = true          # Deploy Data Stream Designer
-enable_stream_host = false # Skip Stream Host (unless needed)
-enable_sm = false         # Skip Subscription Manager
-
-# Existing SM connection details
-existing_sm_url = &quot;https://your-existing-sm.azurewebsites.net&quot;
-existing_sm_database_server = &quot;your-existing-sql-server.database.windows.net&quot;
-existing_sm_database_name = &quot;SM&quot;
-
-# DS-specific configuration
-ds_service_plan_sku = &quot;P1v3&quot;
-ds_cpu = 1
-ds_memory = &quot;2Gi&quot;
-
-# Optional: Enable Stream Host if needed for DS
-# enable_stream_host = true
-# sh_service_plan_sku = &quot;P1v3&quot;
-
-# Database configuration
-use_existing_database = true
-existing_sql_server_name = &quot;your-existing-sql-server&quot;
-existing_sql_server_resource_group = &quot;your-existing-rg&quot;
-existing_database_names = {
-  DS = &quot;ExistingDSDatabase&quot;  # Use existing DS database
-  SM = &quot;ExistingSMDatabase&quot;  # Reference to existing SM database
-}
-</code></pre>
-<p><strong>Configuration Notes:</strong></p>
-<ul>
-<li>DS requires connection to SM for user authentication and licensing</li>
-<li>Consider enabling Stream Host if your DS deployment needs real-time data streaming</li>
-<li>DS will register as a product with the existing SM during startup</li>
-</ul>
-<h3 id="combined-ad--ds-deployment-no-sm">Combined AD + DS Deployment (No SM)</h3>
-<p>To deploy both AD and DS products with an existing SM:</p>
-<pre><code class="lang-hcl"># Deploy both products, skip SM
-enable_ad = true
-enable_ds = true
-enable_stream_host = false   # Set to true if you need stream processing
-enable_sm = false           # Skip SM deployment
-
-# Existing SM connection
-existing_sm_url = &quot;https://your-existing-sm.azurewebsites.net&quot;
-existing_sm_database_server = &quot;your-existing-sql-server.database.windows.net&quot;
-existing_sm_database_name = &quot;SM&quot;
-
-# Product-specific sizing
-ad_service_plan_sku = &quot;P2v3&quot;  # Higher SKU for combined deployment
-ds_service_plan_sku = &quot;P2v3&quot;
-sh_service_plan_sku = &quot;P1v3&quot;
-
-# Database configuration
-use_existing_database = true
-existing_sql_server_name = &quot;your-existing-sql-server&quot;
-existing_sql_server_resource_group = &quot;your-existing-rg&quot;
-existing_database_names = {
-  AD = &quot;ExistingADDatabase&quot;
-  DS = &quot;ExistingDSDatabase&quot;
-  SM = &quot;ExistingSMDatabase&quot;  # Reference to existing SM database
-}
-</code></pre>
-<h3 id="connecting-to-existing-sm-instance">Connecting to Existing SM Instance</h3>
-<p>When deploying products to work with an existing SM, configure the following connection details:</p>
-<h4 id="application-configuration">Application Configuration</h4>
-<pre><code class="lang-hcl"># SM connection variables
-existing_sm_url = &quot;https://sm.yourcompany.com&quot;
-existing_sm_database_server = &quot;yourserver.database.windows.net&quot;
-existing_sm_database_name = &quot;SM&quot;
-
-# Authentication settings (must match existing SM)
-site_admin_password = &quot;same-as-existing-sm&quot;
-company_admin_password = &quot;same-as-existing-sm&quot;
-masterkey = &quot;same-masterkey-as-existing-sm&quot;
-</code></pre>
-<h4 id="database-connection-variables">Database Connection Variables</h4>
-<pre><code class="lang-hcl"># For connecting to existing SQL Server
-existing_sql_server_name = &quot;your-sql-server-name&quot;
-existing_sql_server_resource_group = &quot;your-sql-server-rg&quot;
-
-# Database credentials (must have access to existing databases)
-db_admin_username = &quot;sqladmin&quot;
-db_admin_password = &quot;your-db-password&quot;
-</code></pre>
-<h4 id="network-configuration">Network Configuration</h4>
-<pre><code class="lang-hcl"># If deploying in different region/vnet than existing SM
-location = &quot;eastus&quot;  # Can be different from existing SM
-vnet_address_space = &quot;10.1.0.0/16&quot;  # Ensure no IP conflicts
-
-# DNS and domain settings (optional)
-dns_zone_name = &quot;yourcompany.com&quot;
-enable_custom_domain = false  # Set to true if you need custom domain names (requires dns_zone_name)
-</code></pre>
-<h3 id="deployment-example">Deployment Example</h3>
-<p>Complete example for AD-only deployment with existing SM:</p>
-<pre><code class="lang-hcl"># terraform-v5.0-ad-only.tfvars for AD-only deployment
-prefix = &quot;xmpro&quot;
-environment = &quot;prod&quot;
-location = &quot;eastus&quot;
-company_name = &quot;yourcompany&quot;
-
-# Product selection - AD only
-enable_ad = true
-enable_ds = false
-enable_sm = false
-enable_stream_host = false
-
-# Existing SM connection
-existing_sm_url = &quot;https://sm-yourcompany-prod.azurewebsites.net&quot;
-existing_sm_database_server = &quot;sql-yourcompany-prod.database.windows.net&quot;
-existing_sm_database_name = &quot;SM&quot;
-
-# Container registry
-acr_url_product = &quot;xmpro.azurecr.io&quot;
-# ACR credentials not needed for public registry
-imageversion = &quot;4.5.1&quot;
-
-# Database reuse
-use_existing_database = true
-existing_sql_server_name = &quot;sql-yourcompany-prod&quot;
-existing_sql_server_resource_group = &quot;rg-yourcompany-prod-shared&quot;
-existing_database_names = {
-  AD = &quot;AD&quot;
-  SM = &quot;SM&quot;
-}
-
-# Authentication (must match existing SM)
-db_admin_username = &quot;sqladmin&quot;
-db_admin_password = &quot;YourExistingDbPassword!&quot;
-company_admin_password = &quot;YourExistingAdminPassword!&quot;
-site_admin_password = &quot;YourExistingSitePassword!&quot;
-masterkey = &quot;YourExistingMasterKey!&quot;
-
-# AD sizing
-ad_service_plan_sku = &quot;P2v3&quot;
-ad_cpu = 1
-ad_memory = &quot;2Gi&quot;
-
-# Optional SMTP (if different from existing SM)
-smtp_username = &quot;notifications@yourcompany.com&quot;
-smtp_password = &quot;your-smtp-password&quot;
-smtp_fromemail = &quot;noreply@yourcompany.com&quot;
-smtp_host = &quot;smtp.sendgrid.net&quot;
-smtp_port = 587
-smtp_enable_ssl = true  # Set to false if your SMTP server doesn't require SSL
-</code></pre>
-<h3 id="post-deployment-configuration">Post-Deployment Configuration</h3>
-<p>After deploying individual products:</p>
-<ol>
-<li><p><strong>Verify Product Registration:</strong></p>
-<pre><code class="lang-bash"># Check that new product appears in existing SM
-curl -f &quot;${existing_sm_url}/api/products&quot;
-</code></pre>
-</li>
-<li><p><strong>Update Licenses:</strong></p>
-<ul>
-<li>Login to existing SM as Super Admin</li>
-<li>Navigate to Company → Subscriptions</li>
-<li>Verify new product appears and has valid license</li>
-<li>Request additional licenses if needed</li>
-</ul>
-</li>
-<li><p><strong>Configure Product Access:</strong></p>
-<ul>
-<li>Assign users to new product in SM</li>
-<li>Configure role-based permissions</li>
-<li>Test product functionality with existing user accounts</li>
-</ul>
-</li>
-<li><p><strong>Network Verification:</strong></p>
-<pre><code class="lang-bash"># Test connectivity between products
-curl -f &quot;$(terraform output -raw ad_url)/health&quot;
-curl -f &quot;${existing_sm_url}/health&quot;
-
-# Verify product can reach SM database
-az sql db show \
-  --resource-group ${existing_sql_server_resource_group} \
-  --server ${existing_sql_server_name} \
-  --name &quot;SM&quot;
-</code></pre>
-</li>
-</ol>
-<h3 id="considerations-and-limitations">Considerations and Limitations</h3>
-<p><strong>Security:</strong></p>
-<ul>
-<li>Products deployed separately may need additional security group rules</li>
-<li>Ensure consistent authentication settings across all products</li>
-<li>Consider Azure Key Vault for shared secrets management</li>
-</ul>
-<p><strong>Performance:</strong></p>
-<ul>
-<li>Monitor cross-region latency if products are in different Azure regions</li>
-<li>Consider co-locating products with existing SM for optimal performance</li>
-<li>Database connection pooling may need adjustment for multiple products</li>
-</ul>
-<p><strong>Maintenance:</strong></p>
-<ul>
-<li>Coordinate upgrades across all products to maintain compatibility</li>
-<li>Test product interactions thoroughly after individual updates</li>
-<li>Maintain consistent backup strategies across all components</li>
-</ul>
-<p><strong>Licensing:</strong></p>
-<ul>
-<li>Each product requires valid licenses in the existing SM</li>
-<li>Monitor license usage as you add products</li>
-<li>Consider license implications for multi-region deployments</li>
-</ul>
-<h2 id="deployment-methods">Deployment Methods</h2>
-<h3 id="local-deployment">Local Deployment</h3>
-<p>For non-production and testing environments:</p>
-<ol>
-<li><p><strong>Navigate to environment directory:</strong></p>
-<pre><code class="lang-bash">cd deploy/terraform-v5/environments/dev
-</code></pre>
-</li>
-<li><p><strong>Initialize Terraform:</strong></p>
-<pre><code class="lang-bash">terraform init
-</code></pre>
-</li>
-<li><p><strong>Configure variables:</strong></p>
-<pre><code class="lang-bash"># Create version-specific terraform configuration
-cat &gt; terraform-v5.0.tfvars &lt;&lt;EOF
-prefix = &quot;xmpro&quot;
-environment = &quot;nonprod&quot;
-location = &quot;eastus&quot;
-company_name = &quot;mycompany&quot;
-acr_url_product = &quot;xmpro.azurecr.io&quot;
-# ACR credentials not needed for public registry
-db_admin_password = &quot;SecurePassword123!&quot;
-company_admin_password = &quot;AdminPassword123!&quot;
-site_admin_password = &quot;SitePassword123!&quot;
-masterkey = &quot;YourMasterKey123!&quot;
-EOF
-</code></pre>
-</li>
-<li><p><strong>Deploy infrastructure:</strong></p>
-<pre><code class="lang-bash">terraform plan -var-file=&quot;terraform-v5.0.tfvars&quot; -out=tfplan-v5.0
-terraform apply tfplan-v5.0
-</code></pre>
-</li>
-</ol>
-<h3 id="cicd-pipeline-deployment">CI/CD Pipeline Deployment</h3>
-<p>For automated production deployments:</p>
-<p><strong>Pipeline File:</strong> <code>/deploy/terraform-v5.0-deploy.yml</code></p>
-<p><strong>Variable Groups:</strong></p>
-<ul>
-<li><code>terraform-nonprod-v5.0</code>: Non-production environment secrets</li>
-<li><code>terraform-prod-v5.0</code>: Production environment secrets</li>
-</ul>
-<p><strong>Deployment Flow:</strong></p>
-<ol>
-<li>Version generation</li>
-<li>Terraform validation</li>
-<li>Environment deployment (nonprod → prod)</li>
-</ol>
-<h2 id="configuration-options">Configuration Options</h2>
-<h3 id="basic-configuration">Basic Configuration</h3>
-<pre><code class="lang-hcl"># Core settings
-prefix = &quot;xmpro&quot;
-environment = &quot;nonprod&quot;
-location = &quot;eastus&quot;
-company_name = &quot;mycompany&quot;
-
-# Container registry
-acr_url_product = &quot;xmpro.azurecr.io&quot;
-acr_username = &quot;registry-username&quot;
-acr_password = &quot;registry-password&quot;
-
-# Image version (optional)
-imageversion = &quot;4.5.1&quot;
-</code></pre>
-<h3 id="feature-toggles-and-optional-components">Feature Toggles and Optional Components</h3>
-<pre><code class="lang-hcl"># Stream Host Configuration (Always deployed, but customizable)
-stream_host_cpu = 2.0     # Recommended for production (default: 1.0)
-stream_host_memory = 8.0  # Recommended for production (default: 4.0)
-
-# Advanced Stream Host environment variables
-stream_host_environment_variables = {
-  &quot;ADDITIONAL_INSTALLS&quot; = &quot;build-base gcc g++ python3-dev&quot;
-  &quot;SH_PIP_MODULES&quot;     = &quot;pandas numpy scikit-learn matplotlib&quot;
-  &quot;PIP_REQUIREMENTS_PATH&quot; = &quot;/app/requirements&quot;
-}
-
-# DNS Zone (Optional)
-enable_custom_domain = true  # Enables custom domain support
-dns_zone_name = &quot;xmpro.company.com&quot;  # Required when enable_custom_domain is true
-use_existing_dns_zone = false  # Set to true to use existing DNS zone
-
-# Backup Configuration (if available in your Terraform version)
-enable_backup = true
-backup_retention_days = 30
-
-# Future optional components (not included in standard deployment)
-# These require manual configuration or custom Terraform modules:
-# - Redis Cache for performance optimization
-# - Master Data for centralized reference data
-# - Twilio for SMS/voice notifications
-# - Elasticsearch for advanced analytics
-# - Apache Kafka for event streaming
-</code></pre>
-<h3 id="smtp-configuration">SMTP Configuration</h3>
-<pre><code class="lang-hcl"># Email settings
-smtp_username = &quot;notifications@yourdomain.com&quot;
-smtp_password = &quot;smtp-password&quot;
-smtp_fromemail = &quot;noreply@yourdomain.com&quot;
-smtp_host = &quot;smtp.sendgrid.net&quot;
-smtp_port = 587
-smtp_enable_ssl = true  # Set to false if your SMTP server doesn't require SSL
-</code></pre>
-<h2 id="quick-start-1">Quick Start</h2>
-<p>The fastest way to deploy XMPro on Azure:</p>
-<ol>
-<li><p><strong>Set up authentication:</strong></p>
-<pre><code class="lang-bash">az login
-az account set --subscription &quot;Your Subscription&quot;
-</code></pre>
-</li>
-<li><p><strong>Set environment variables:</strong></p>
-<pre><code class="lang-bash">export ARM_CLIENT_ID=&quot;your-client-id&quot;
-export ARM_CLIENT_SECRET=&quot;your-client-secret&quot;
-export ARM_SUBSCRIPTION_ID=&quot;your-subscription-id&quot;
-export ARM_TENANT_ID=&quot;your-tenant-id&quot;
-# ACR credentials not needed - xmpro.azurecr.io is public
-</code></pre>
-</li>
-<li><p><strong>Create your deployment directory:</strong></p>
-<pre><code class="lang-bash">mkdir xmpro-deployment
-cd xmpro-deployment
-</code></pre>
-</li>
-<li><p><strong>Create main.tf file:</strong></p>
-<pre><code class="lang-bash">cat &gt; main.tf &lt;&lt;'EOF'
-module &quot;xmpro_platform&quot; {
-  source = &quot;github.com/XMPro/terraform-xmpro-azure?ref=v4.5.1&quot;
-
-  # Core configuration
-  environment = &quot;dev&quot;
-  location    = &quot;East US&quot;
-  company_name = &quot;mycompany&quot;
-
-  # Database credentials
-  db_admin_password      = &quot;MySecureDbPassword123!&quot;
-  company_admin_password = &quot;MyCompanyAdminPassword123!&quot;
-  site_admin_password    = &quot;MySiteAdminPassword123!&quot;
-
-  # Container registry (public)
-  acr_url_product = &quot;xmpro.azurecr.io&quot;
-  imageversion    = &quot;4.5.1&quot;
-
-  # App Service Plans (adjust for your environment)
-  sm_service_plan_sku = &quot;P1v3&quot;  # Production recommended
-  ad_service_plan_sku = &quot;P1v3&quot;
-  ds_service_plan_sku = &quot;P1v3&quot;
-}
-EOF
-</code></pre>
-</li>
-<li><p><strong>Deploy:</strong></p>
-<pre><code class="lang-bash">terraform init
-terraform plan -out=tfplan
-terraform apply tfplan
-</code></pre>
-</li>
-<li><p><strong>Get deployment outputs:</strong></p>
-<pre><code class="lang-bash">terraform output -json &gt; deployment-info.json
-</code></pre>
-</li>
-</ol>
-<h2 id="post-deployment">Post-Deployment</h2>
-<h3 id="initial-access">Initial Access</h3>
-<p>After deployment, retrieve your application URLs and credentials:</p>
-<pre><code class="lang-bash"># Application URLs
-echo &quot;App Designer: $(terraform output -raw ad_url)&quot;
-echo &quot;Data Stream Designer: $(terraform output -raw ds_url)&quot;
-echo &quot;Subscription Manager: $(terraform output -raw sm_url)&quot;
-
-# Admin credentials
-echo &quot;Admin Email: $(terraform output -raw company_admin_email)&quot;
-echo &quot;Admin Password: $(terraform output -raw company_admin_password)&quot;
-</code></pre>
-<h3 id="service-verification">Service Verification</h3>
-<pre><code class="lang-bash"># Check service health
-curl -f &quot;$(terraform output -raw ad_url)/health&quot;
-curl -f &quot;$(terraform output -raw ds_url)/health&quot;
-curl -f &quot;$(terraform output -raw sm_url)/health&quot;
-
-# Verify database connectivity
-az sql db show \
-  --resource-group $(terraform output -raw resource_group_name) \
-  --server $(terraform output -raw sql_server_name) \
-  --name &quot;AD&quot;
-</code></pre>
-<h3 id="initial-configuration">Initial Configuration</h3>
-<ol>
-<li>Navigate to Subscription Manager URL</li>
-<li>Login with admin credentials</li>
-<li>Configure company settings</li>
-<li>Set up additional users and roles</li>
-<li>Configure license keys</li>
-</ol>
-<h2 id="restarting-app-services">Restarting App Services</h2>
-<p>After deployment, you may need to restart your app services in the Azure Portal:</p>
-<ol>
-<li>Navigate to &quot;Resource groups&quot; in the Azure Portal</li>
-<li>Select your resource group (e.g., <code>rg-{company_name}-{environment}-xmpro</code>)</li>
-<li>Select the App Services (SM, AD, DS)</li>
-<li>Click &quot;Restart&quot; for each service</li>
-</ol>
-<div class="NOTE">
-<h5>Note</h5>
-<p>App Services may need to be restarted after initial deployment to ensure all configurations are properly loaded.</p>
-</div>
-<h2 id="admin-logins">Admin Logins</h2>
-<p>After deployment, you can access the platform with these accounts:</p>
-<table>
-<thead>
-<tr>
-<th>User</th>
-<th>Type</th>
-<th>Password</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>admin@xmpro.onxmpro.com</td>
-<td>Super Admin</td>
-<td>Value from <code>site_admin_password</code> variable</td>
-</tr>
-<tr>
-<td>{firstname}.{lastname}@{company_name}.onxmpro.com</td>
-<td>Company Admin</td>
-<td>Value from <code>company_admin_password</code> variable</td>
-</tr>
-</tbody>
-</table>
-<div class="WARNING">
-<h5>Warning</h5>
-<p>The username format is critical: <code>firstname.lastname@company_name.onxmpro.com</code></p>
-</div>
-<h2 id="license-management">License Management</h2>
-<h3 id="evaluation-mode">Evaluation Mode</h3>
-<p>When <code>is_evaluation_mode = true</code>, the deployment includes:</p>
+<h3 id="request-a-license">Request a License</h3>
+<p>The Terraform module supports two licensing modes:</p>
+<h4 id="evaluation-mode-default">Evaluation Mode (Default)</h4>
+<p>When <code>is_evaluation_mode = true</code> (default), the deployment includes:</p>
 <ul>
 <li>Automatic license provisioning via licenses container</li>
 <li>Pre-configured evaluation product IDs and keys</li>
 <li>No manual license requests required</li>
 </ul>
-<h3 id="production-mode-default">Production Mode (Default)</h3>
-<p>When <code>is_evaluation_mode = false</code> (default), you need to manually request licenses:</p>
+<h4 id="production-mode">Production Mode</h4>
+<p>When <code>is_evaluation_mode = false</code>, you need to manually request licenses:</p>
 <ol>
 <li>Login using the Super Admin account <code>admin@xmpro.onxmpro.com</code></li>
 <li>Navigate to Company → Subscriptions</li>
@@ -727,41 +139,77 @@ az sql db show \
 </ol>
 <div class="NOTE">
 <h5>Note</h5>
-<p>License requests require SMTP configuration to be enabled during deployment.</p>
+<p>License requests require SMTP configuration to be enabled during deployment. See the <a href="https://github.com/XMPro/terraform-xmpro-azure#email-configuration">Module Documentation</a> for SMTP setup.</p>
 </div>
 <h2 id="upgrade">Upgrade</h2>
-<p>To upgrade an existing XMPro Terraform deployment:</p>
+<p>To upgrade an existing XMPro Terraform deployment to a newer version:</p>
 <div class="WARNING">
 <h5>Warning</h5>
 <p>Before upgrading, back up your databases using Azure SQL Database export functionality.</p>
 </div>
+<h3 id="step-1-prepare-for-upgrade">Step 1: Prepare for Upgrade</h3>
+<pre><code class="lang-bash"># Navigate to your deployment directory
+cd xmpro-deployment  # Your deployment directory
+
+# Back up current state
+cp terraform.tfstate terraform.tfstate.backup
+</code></pre>
+<h3 id="step-2-update-configuration">Step 2: Update Configuration</h3>
+<p>Update your Terraform configuration to use the new version:</p>
+<pre><code class="lang-bash"># Option A: Update imageversion variable
+# Edit your terraform.tfvars file and update:
+# imageversion = &quot;4.5.2&quot;  # Upgrade from 4.5.0 to 4.5.2
+
+# Option B: Use command line override
+terraform plan -var=&quot;imageversion=4.5.2&quot;
+</code></pre>
+<h3 id="step-3-plan-your-upgrade">Step 3: Plan Your Upgrade</h3>
+<pre><code class="lang-bash">terraform plan
+</code></pre>
+<p>Review the planned changes before proceeding.</p>
+<h3 id="step-4-apply-configuration">Step 4: Apply Configuration</h3>
+<pre><code class="lang-bash">terraform apply
+</code></pre>
+<h3 id="step-5-verify-deployment">Step 5: Verify Deployment</h3>
+<p>After upgrade, verify your applications are running:</p>
+<pre><code class="lang-bash"># List deployed resources
+az resource list --resource-group $(terraform output -raw resource_group_name) --output table
+
+# Check application versions
+curl -f &quot;$(terraform output -raw ad_app_url)/version&quot;
+curl -f &quot;$(terraform output -raw ds_app_url)/version&quot;
+curl -f &quot;$(terraform output -raw sm_app_url)/version&quot;
+</code></pre>
+<h3 id="step-6-access-applications">Step 6: Access Applications</h3>
+<p>Navigate to the URLs provided by <code>terraform output</code>:</p>
+<ul>
+<li><strong>SM (Subscription Manager)</strong>: Verify user access and licenses</li>
+<li><strong>AD (App Designer)</strong>: Test application functionality</li>
+<li><strong>DS (Data Stream Designer)</strong>: Verify data pipeline operations</li>
+</ul>
+<h3 id="post-upgrade-validation">Post-Upgrade Validation</h3>
 <ol>
-<li><p><strong>Update your Terraform configuration:</strong></p>
-<pre><code class="lang-bash">cd deploy/terraform-v5/environments/{your-environment}
-
-# Update the imageversion variable to the new version
-terraform plan -var imageversion=&quot;new-version-tag&quot;
-terraform apply
-</code></pre>
+<li><p><strong>Test Core Functionality</strong></p>
+<ul>
+<li>Login with existing user accounts</li>
+<li>Verify applications and data streams function correctly</li>
+<li>Check that data is preserved and accessible</li>
+</ul>
 </li>
-<li><p><strong>Restart App Services</strong> after upgrade completion</p>
-</li>
-<li><p><strong>Verify the upgrade:</strong></p>
-<pre><code class="lang-bash"># Check application URLs
-terraform output -json
-
-# Verify service health
-curl -f &quot;$(terraform output -raw ad_url)/health&quot;
-curl -f &quot;$(terraform output -raw ds_url)/health&quot;
-curl -f &quot;$(terraform output -raw sm_url)/health&quot;
-</code></pre>
+<li><p><strong>Monitor Performance</strong></p>
+<ul>
+<li>Check Application Insights for any errors</li>
+<li>Monitor resource utilization</li>
+<li>Verify all services are responding normally</li>
+</ul>
 </li>
 </ol>
+<p>For upgrade troubleshooting, see the <a href="troubleshooting.html">Troubleshooting Guide</a>.</p>
 <h2 id="uninstall">Uninstall</h2>
 <p>To completely remove the XMPro platform:</p>
 <ol>
 <li><p><strong>Destroy Terraform resources:</strong></p>
-<pre><code class="lang-bash">cd deploy/terraform-v5/environments/{your-environment}
+<pre><code class="lang-bash">cd xmpro-deployment  # Your deployment directory
 terraform destroy
 </code></pre>
 </li>
@@ -776,21 +224,6 @@ terraform destroy
 <h5>Warning</h5>
 <p>This will permanently delete all data. Ensure you have backups before proceeding.</p>
 </div>
-<h2 id="next-steps">Next Steps</h2>
-<ul>
-<li><a href="prerequisites.html">Prerequisites and Setup</a> - Detailed setup instructions</li>
-<li><a href="implementation-guide.html">Implementation Guide</a> - Step-by-step deployment process</li>
-<li><a href="https://github.com/XMPro/terraform-xmpro-azure#cost-estimation">Cost Estimation</a> - Azure Pricing Calculator links for different deployment sizes</li>
-<li><a href="troubleshooting.html">Troubleshooting</a> - Common issues and solutions</li>
-</ul>
-<h2 id="support">Support</h2>
-<p>For deployment issues:</p>
-<ul>
-<li>Check the <a href="troubleshooting.html">Troubleshooting Guide</a></li>
-<li>Review Azure DevOps pipeline logs</li>
-<li>Use Application Insights for debugging</li>
-<li>Contact XMPro support with deployment details</li>
-</ul>
 
 
   <div class="last-modified">

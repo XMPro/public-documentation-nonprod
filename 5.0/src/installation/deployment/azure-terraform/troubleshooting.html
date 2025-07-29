@@ -100,7 +100,7 @@
 <p><strong>Solution:</strong>
 Use the correct GitHub source for the module:</p>
 <pre><code class="lang-hcl">module &quot;xmpro&quot; {
-  source  = &quot;github.com/xmpro/xmpro-devops//deploy/terraform-v5/terraform-xmpro-azure?ref=main&quot;
+  source  = &quot;github.com/XMPro/terraform-xmpro-azure?ref=v4.5.2&quot;
   # Your variables here
 }
 </code></pre>
@@ -117,7 +117,7 @@ Use the correct variable names with underscores:</p>
 <pre><code class="lang-hcl"># Correct variable names
 company_name = &quot;acme&quot;         # NOT companyname
 environment = &quot;dev&quot;           # Valid environments: dev, qa, sandbox-sm-only
-is_evaluation_mode = false    # Default is false
+is_evaluation_mode = false    # Default is true, set to false for production
 </code></pre>
 <p><strong>Common Variable Name Corrections:</strong></p>
 <ul>
@@ -125,44 +125,14 @@ is_evaluation_mode = false    # Default is false
 <li>Use underscores for all multi-word variables</li>
 </ul>
 <h3 id="authentication-problems">Authentication Problems</h3>
-<h4 id="service-principal-authentication-failed">Service Principal Authentication Failed</h4>
-<p><strong>Error Message:</strong></p>
-<pre><code>Error: building AzureRM Client: obtain subscription() from Azure CLI: parsing json result from the Azure CLI: waiting for the Azure CLI: exit status 1: ERROR: Please run 'az login' to setup account.
-</code></pre>
-<p><strong>Solution:</strong></p>
-<pre><code class="lang-bash"># Re-authenticate with Azure CLI
-az logout
-az login
-
-# Verify authentication
-az account show
-
-# Set correct subscription
-az account set --subscription &quot;Your Subscription Name&quot;
-
-# Test service principal authentication
-az login --service-principal \
-  --username &quot;$ARM_CLIENT_ID&quot; \
-  --password &quot;$ARM_CLIENT_SECRET&quot; \
-  --tenant &quot;$ARM_TENANT_ID&quot;
-</code></pre>
-<h4 id="insufficient-permissions">Insufficient Permissions</h4>
-<p><strong>Error Message:</strong></p>
-<pre><code>Error: authorization failed: The client 'xxx' with object id 'xxx' does not have authorization to perform action 'Microsoft.Resources/subscriptions/resourceGroups/write'
-</code></pre>
-<p><strong>Solution:</strong></p>
-<pre><code class="lang-bash"># Check current permissions
-az role assignment list --assignee &quot;$ARM_CLIENT_ID&quot;
-
-# Assign Contributor role
-az role assignment create \
-  --assignee &quot;$ARM_CLIENT_ID&quot; \
-  --role &quot;Contributor&quot; \
-  --scope &quot;/subscriptions/$ARM_SUBSCRIPTION_ID&quot;
-
-# Verify assignment
-az role assignment list --assignee &quot;$ARM_CLIENT_ID&quot; --output table
-</code></pre>
+<p>For detailed Azure authentication setup and troubleshooting, refer to the official Microsoft guide:</p>
+<p><a href="https://learn.microsoft.com/en-us/azure/developer/terraform/quickstart-configure">Configure Terraform in Azure - Microsoft Learn</a></p>
+<p><strong>Common authentication issues:</strong></p>
+<ul>
+<li><strong>Expired Azure CLI session</strong>: Run <code>az login</code> to re-authenticate</li>
+<li><strong>Wrong subscription selected</strong>: Use <code>az account set --subscription &quot;Your Subscription Name&quot;</code></li>
+<li><strong>Insufficient permissions</strong>: Ensure your account has Contributor role on the subscription</li>
+</ul>
 <h3 id="resource-quota-issues">Resource Quota Issues</h3>
 <h4 id="insufficient-compute-quota">Insufficient Compute Quota</h4>
 <p><strong>Error Message:</strong></p>
@@ -199,12 +169,31 @@ sql_sku_name = &quot;Basic&quot;  # Instead of S0
 <blockquote>
 <p><strong>Important:</strong> The XMPro container registry at <code>xmpro.azurecr.io</code> is a <strong>public registry</strong> and does not require authentication credentials. The Terraform module does not need <code>acr_username</code> or <code>acr_password</code> variables - they are not used by the module.</p>
 </blockquote>
+<h4 id="docker-login-issues-with-public-registry">Docker Login Issues with Public Registry</h4>
+<p><strong>Error Message:</strong></p>
+<pre><code>Username: 
+Password:
+Error response from daemon: Get https://xmpro.azurecr.io/v2/: unauthorized: authentication required
+</code></pre>
+<p><strong>Cause:</strong> You may have previously authenticated to the registry and Docker is requesting credentials.</p>
+<p><strong>Solution:</strong></p>
+<pre><code class="lang-bash"># Logout from the registry to clear cached credentials
+docker logout xmpro.azurecr.io
+
+# Now pull without authentication (public registry)
+docker pull xmpro.azurecr.io/ad:4.5.2
+docker pull xmpro.azurecr.io/ds:4.5.2
+docker pull xmpro.azurecr.io/stream-host:4.5.2
+</code></pre>
 <h4 id="acr-public-registry-access">ACR Public Registry Access</h4>
 <p><strong>Error Message:</strong></p>
 <pre><code>Error: pulling image: Error response from daemon: pull access denied for xmpro.azurecr.io/ad
 </code></pre>
 <p><strong>Solution:</strong></p>
-<pre><code class="lang-bash"># Test direct image pull (no authentication needed)
+<pre><code class="lang-bash"># First ensure you're not logged in
+docker logout xmpro.azurecr.io
+
+# Test direct image pull (no authentication needed)
 docker pull xmpro.azurecr.io/ad:latest
 
 # List available images (public registry)
@@ -218,7 +207,7 @@ az acr repository show-tags --name xmpro --repository xmpro-ad --output table
 </code></pre>
 <h4 id="container-image-not-found">Container Image Not Found</h4>
 <p><strong>Error Message:</strong></p>
-<pre><code>Error: App Service cannot start: Container image 'xmpro.azurecr.io/ad:4.5.1-main-abc123' not found
+<pre><code>Error: App Service cannot start: Container image 'xmpro.azurecr.io/ad:4.5.X' not found
 </code></pre>
 <p><strong>Solution:</strong></p>
 <pre><code class="lang-bash"># List available images in public registry
@@ -228,7 +217,7 @@ az acr repository list --name xmpro --output table
 az acr repository show-tags --name xmpro --repository ad --output table
 
 # Update terraform.tfvars with correct image version
-imageversion = &quot;4.5.1-main-correct-hash&quot;
+imageversion = &quot;4.5.X&quot;
 
 # Or use latest tag
 imageversion = &quot;latest&quot;
@@ -300,7 +289,7 @@ az webapp restart \
   --resource-group $(terraform output -raw resource_group_name)
 
 # Check app service version
-curl -f &quot;$(terraform output -raw ad_url)/version&quot;
+curl -f &quot;$(terraform output -raw ad_app_url)/version&quot;
 </code></pre>
 <h4 id="environment-variable-issues">Environment Variable Issues</h4>
 <p><strong>Error Message:</strong></p>
@@ -421,6 +410,38 @@ az webapp log download \
   --name xmpro-prefix-ad \
   --resource-group $(terraform output -raw resource_group_name) \
   --log-file webapp_logs.zip
+</code></pre>
+<h3 id="how-to-restart-app-services">How to Restart App Services</h3>
+<p>If you need to restart the XMPro app services:</p>
+<p><strong>Via Azure Portal:</strong></p>
+<ol>
+<li>Navigate to &quot;Resource groups&quot; in the Azure Portal</li>
+<li>Select your resource group (e.g., <code>rg-{company_name}-{environment}-xmpro</code>)</li>
+<li>Select the App Services (SM, AD, DS)</li>
+<li>Click &quot;Restart&quot; for each service</li>
+</ol>
+<p><strong>Via Azure CLI:</strong></p>
+<pre><code class="lang-bash"># Restart SM (Subscription Manager)
+az webapp restart \
+  --name xmpro-${PREFIX}-sm \
+  --resource-group $(terraform output -raw resource_group_name)
+
+# Restart AD (App Designer)
+az webapp restart \
+  --name xmpro-${PREFIX}-ad \
+  --resource-group $(terraform output -raw resource_group_name)
+
+# Restart DS (Data Stream Designer)
+az webapp restart \
+  --name xmpro-${PREFIX}-ds \
+  --resource-group $(terraform output -raw resource_group_name)
+
+# Restart all at once
+for app in sm ad ds; do
+  az webapp restart \
+    --name xmpro-${PREFIX}-${app} \
+    --resource-group $(terraform output -raw resource_group_name)
+done
 </code></pre>
 <h3 id="database-diagnostics">Database Diagnostics</h3>
 <pre><code class="lang-bash"># Check database status
@@ -681,11 +702,11 @@ echo &quot;Azure CLI version: $(az version --query '\&quot;azure-cli\&quot;' -o 
 <h3 id="important-configuration-notes">Important Configuration Notes</h3>
 <ol>
 <li><strong>Container Registry</strong>: <code>xmpro.azurecr.io</code> is a public registry - no authentication required</li>
-<li><strong>Image Version</strong>: Use version <code>4.5.1</code> or <code>latest</code></li>
-<li><strong>Module Source</strong>: Use GitHub source: <code>github.com/xmpro/xmpro-devops//deploy/terraform-v5/terraform-xmpro-azure?ref=main</code></li>
+<li><strong>Image Version</strong>: Use version <code>4.5.2</code> or <code>latest</code></li>
+<li><strong>Module Source</strong>: Use GitHub source: <code>github.com/XMPro/terraform-xmpro-azure?ref=v4.5.2</code></li>
 <li><strong>Variable Names</strong>: Use underscores (e.g., <code>company_name</code> not <code>companyname</code>)</li>
 <li><strong>Environments</strong>: Valid values are <code>dev</code>, <code>qa</code>, and <code>sandbox-sm-only</code></li>
-<li><strong>Evaluation Mode</strong>: Default is <code>false</code></li>
+<li><strong>Evaluation Mode</strong>: Default is <code>true</code></li>
 <li><strong>SSL Certificates</strong>: Managed separately, not through Terraform variables</li>
 </ol>
 <h3 id="resource-naming-convention">Resource Naming Convention</h3>

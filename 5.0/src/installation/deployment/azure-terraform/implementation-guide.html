@@ -139,7 +139,7 @@ cd terraform-xmpro-azure/examples/basic
 </code></pre>
 <div class="TIP">
 <h5>Tip</h5>
-<p>For detailed deployment instructions and troubleshooting, see the <a href="https://github.com/XMPro/terraform-xmpro-azure#-quick-start">GitHub README</a>.</p>
+<p>For detailed deployment instructions and troubleshooting, see the <a href="https://github.com/XMPro/terraform-xmpro-azure">GitHub README</a>.</p>
 </div>
 <h2 id="configuration-reference">Configuration Reference</h2>
 <p>The module supports extensive configuration options. Key areas include:</p>
@@ -164,9 +164,9 @@ cd terraform-xmpro-azure/examples/basic
 az resource list --resource-group $(terraform output -raw resource_group_name) --output table
 
 # Check application versions
-curl -f &quot;$(terraform output -raw ad_url)/version&quot;
-curl -f &quot;$(terraform output -raw ds_url)/version&quot;
-curl -f &quot;$(terraform output -raw sm_url)/version&quot;
+curl -f &quot;$(terraform output -raw ad_app_url)/version&quot;
+curl -f &quot;$(terraform output -raw ds_app_url)/version&quot;
+curl -f &quot;$(terraform output -raw sm_app_url)/version&quot;
 </code></pre>
 <h3 id="access-applications">Access Applications</h3>
 <p>Navigate to the URLs provided by <code>terraform output</code>:</p>
@@ -175,6 +175,62 @@ curl -f &quot;$(terraform output -raw sm_url)/version&quot;
 <li><strong>AD (App Designer)</strong>: Build applications</li>
 <li><strong>DS (Data Stream Designer)</strong>: Create data pipelines</li>
 </ul>
+<h3 id="initial-configuration">Initial Configuration</h3>
+<ol>
+<li>Navigate to Subscription Manager URL</li>
+<li>Login with admin credentials</li>
+<li>Configure company settings</li>
+<li>Set up additional users and roles</li>
+<li>Configure license keys</li>
+</ol>
+<h3 id="admin-logins">Admin Logins</h3>
+<p>After deployment, you can access the platform with these accounts:</p>
+<table>
+<thead>
+<tr>
+<th>User</th>
+<th>Type</th>
+<th>Password</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>admin@xmpro.onxmpro.com</td>
+<td>Super Admin</td>
+<td>Value from <code>site_admin_password</code> variable</td>
+</tr>
+<tr>
+<td>{firstname}.{lastname}@{company_name}.onxmpro.com</td>
+<td>Company Admin</td>
+<td>Value from <code>company_admin_password</code> variable</td>
+</tr>
+</tbody>
+</table>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>The username format is critical: <code>firstname.lastname@company_name.onxmpro.com</code></p>
+</div>
+<h3 id="license-management">License Management</h3>
+<h4 id="evaluation-mode-default">Evaluation Mode (Default)</h4>
+<p>When <code>is_evaluation_mode = true</code> (default), the deployment includes:</p>
+<ul>
+<li>Automatic license provisioning via licenses container</li>
+<li>Pre-configured evaluation product IDs and keys</li>
+<li>No manual license requests required</li>
+</ul>
+<h4 id="production-mode">Production Mode</h4>
+<p>When <code>is_evaluation_mode = false</code>, you need to manually request licenses:</p>
+<ol>
+<li>Login using the Super Admin account <code>admin@xmpro.onxmpro.com</code></li>
+<li>Navigate to Company → Subscriptions</li>
+<li>Click &quot;Update License&quot; for each product (AD, DS)</li>
+<li>Generate license requests and submit to XMPro support</li>
+<li>Upload received licenses</li>
+</ol>
+<div class="NOTE">
+<h5>Note</h5>
+<p>License requests require SMTP configuration to be enabled during deployment.</p>
+</div>
 <h2 id="troubleshooting">Troubleshooting</h2>
 <p>For common deployment issues and solutions, see:</p>
 <ul>
