@@ -226,9 +226,15 @@ function loadAndReplaceVariables() {
       return;
     }
     
-    // Global replace of all {{VARIABLE_NAME}} placeholders in the entire document
+    // Replace {{VARIABLE_NAME}} placeholders in the main content area only
     loadVariables().then(variables => {
-      let content = document.body.innerHTML;
+      const contentArea = document.querySelector('.content');
+      if (!contentArea) {
+        console.warn('Content area not found, skipping variable replacement');
+        return;
+      }
+      
+      let content = contentArea.innerHTML;
       // Replace all variables from the JSON file (including derived INSTALL_URL)
       Object.keys(variables).forEach(key => {
         // Handle plain text placeholders
@@ -244,7 +250,7 @@ function loadAndReplaceVariables() {
         content = content.replace(spanWrappedPlaceholder, variables[key]);
       });
       
-      document.body.innerHTML = content;
+      contentArea.innerHTML = content;
     });
   }
 
