@@ -196,16 +196,16 @@ sudo sh get-docker.sh
 </ul>
 <h2 id="xmpro-artifacts-access">XMPro Artifacts Access</h2>
 <h3 id="1-xmpro-public-container-registry">1. XMPro Public Container Registry</h3>
-<p>XMPro container images are publicly available at <code>xmpro.azurecr.io</code>. No authentication is required to pull these images.</p>
+<p>XMPro container images are publicly available at <code>{{ACR_URL}}</code>. No authentication is required to pull these images.</p>
 <pre><code class="lang-bash"># Test image access (no login required)
-docker pull xmpro.azurecr.io/ad:4.5.2
-docker pull xmpro.azurecr.io/ds:4.5.2
-docker pull xmpro.azurecr.io/stream-host:4.5.2
+docker pull {{ACR_URL}}/ad:{{VERSION}}
+docker pull {{ACR_URL}}/ds:{{VERSION}}
+docker pull {{ACR_URL}}/stream-host:{{VERSION}}
 </code></pre>
 <h3 id="2-xmpro-download-site">2. XMPro Download Site</h3>
-<p>The SM (Subscription Manager) deployment package is downloaded from <code>https://download.xmpro.com</code>. This site hosts the SM.zip file and other XMPro installation artifacts.</p>
+<p>The SM (Subscription Manager) deployment package is downloaded from <code>{{DOWNLOAD_URL}}</code>. This site hosts the SM.zip file and other XMPro installation artifacts.</p>
 <pre><code class="lang-bash"># The Terraform module automatically downloads SM.zip from:
-# https://download.xmpro.com/SM.zip
+# {{DOWNLOAD_URL}}/SM.zip
 </code></pre>
 <div class="NOTE">
 <h5>Note</h5>
@@ -215,8 +215,8 @@ docker pull xmpro.azurecr.io/stream-host:4.5.2
 <h5>Tip</h5>
 <p>If you're behind a corporate firewall, ensure that access to the following resources is allowed:</p>
 <ul>
-<li>Container registries: <code>xmpro.azurecr.io</code> and <code>registry-1.docker.io</code> (Docker Hub)</li>
-<li>Download site: <code>https://download.xmpro.com</code></li>
+<li>Container registries: <code>{{ACR_URL}}</code> and <code>registry-1.docker.io</code> (Docker Hub)</li>
+<li>Download site: <code>{{DOWNLOAD_URL}}</code></li>
 </ul>
 <p>You may need to configure proxy settings or request firewall exceptions from your IT administrator.</p>
 </div>
@@ -272,9 +272,9 @@ docker --version
 <h3 id="3-test-xmpro-artifacts-access">3. Test XMPro Artifacts Access</h3>
 <pre><code class="lang-bash"># No login required for public registry
 # Test image pull directly
-docker pull xmpro.azurecr.io/ad:4.5.2
-docker pull xmpro.azurecr.io/ds:4.5.2
-docker pull xmpro.azurecr.io/stream-host:4.5.2
+docker pull {{ACR_URL}}/ad:{{VERSION}}
+docker pull {{ACR_URL}}/ds:{{VERSION}}
+docker pull {{ACR_URL}}/stream-host:{{VERSION}}
 
 # Verify images
 docker images | grep xmpro

@@ -167,47 +167,47 @@ sql_sku_name = &quot;Basic&quot;  # Instead of S0
 </code></pre>
 <h3 id="container-registry-issues">Container Registry Issues</h3>
 <blockquote>
-<p><strong>Important:</strong> The XMPro container registry at <code>xmpro.azurecr.io</code> is a <strong>public registry</strong> and does not require authentication credentials. The Terraform module does not need <code>acr_username</code> or <code>acr_password</code> variables - they are not used by the module.</p>
+<p><strong>Important:</strong> The XMPro container registry at <code>{{ACR_URL}}</code> is a <strong>public registry</strong> and does not require authentication credentials. The Terraform module does not need <code>acr_username</code> or <code>acr_password</code> variables - they are not used by the module.</p>
 </blockquote>
 <h4 id="docker-login-issues-with-public-registry">Docker Login Issues with Public Registry</h4>
 <p><strong>Error Message:</strong></p>
 <pre><code>Username: 
 Password:
-Error response from daemon: Get https://xmpro.azurecr.io/v2/: unauthorized: authentication required
+Error response from daemon: Get https://{{ACR_URL}}/v2/: unauthorized: authentication required
 </code></pre>
 <p><strong>Cause:</strong> You may have previously authenticated to the registry and Docker is requesting credentials.</p>
 <p><strong>Solution:</strong></p>
 <pre><code class="lang-bash"># Logout from the registry to clear cached credentials
-docker logout xmpro.azurecr.io
+docker logout {{ACR_URL}}
 
 # Now pull without authentication (public registry)
-docker pull xmpro.azurecr.io/ad:4.5.2
-docker pull xmpro.azurecr.io/ds:4.5.2
-docker pull xmpro.azurecr.io/stream-host:4.5.2
+docker pull {{ACR_URL}}/ad:{{VERSION}}
+docker pull {{ACR_URL}}/ds:{{VERSION}}
+docker pull {{ACR_URL}}/stream-host:{{VERSION}}
 </code></pre>
 <h4 id="acr-public-registry-access">ACR Public Registry Access</h4>
 <p><strong>Error Message:</strong></p>
-<pre><code>Error: pulling image: Error response from daemon: pull access denied for xmpro.azurecr.io/ad
+<pre><code>Error: pulling image: Error response from daemon: pull access denied for {{ACR_URL}}/ad
 </code></pre>
 <p><strong>Solution:</strong></p>
 <pre><code class="lang-bash"># First ensure you're not logged in
-docker logout xmpro.azurecr.io
+docker logout {{ACR_URL}}
 
 # Test direct image pull (no authentication needed)
-docker pull xmpro.azurecr.io/ad:latest
+docker pull {{ACR_URL}}/ad:latest
 
 # List available images (public registry)
 az acr repository list --name xmpro --output table
 
 # Check if firewall is blocking Docker Hub or ACR
-curl -I https://xmpro.azurecr.io
+curl -I https://{{ACR_URL}}
 
 # Verify image exists with specific tag
 az acr repository show-tags --name xmpro --repository xmpro-ad --output table
 </code></pre>
 <h4 id="container-image-not-found">Container Image Not Found</h4>
 <p><strong>Error Message:</strong></p>
-<pre><code>Error: App Service cannot start: Container image 'xmpro.azurecr.io/ad:4.5.X' not found
+<pre><code>Error: App Service cannot start: Container image '{{ACR_URL}}/ad:{{VERSION}}' not found
 </code></pre>
 <p><strong>Solution:</strong></p>
 <pre><code class="lang-bash"># List available images in public registry
@@ -217,7 +217,7 @@ az acr repository list --name xmpro --output table
 az acr repository show-tags --name xmpro --repository ad --output table
 
 # Update terraform.tfvars with correct image version
-imageversion = &quot;4.5.X&quot;
+imageversion = &quot;{{VERSION}}&quot;
 
 # Or use latest tag
 imageversion = &quot;latest&quot;
@@ -701,8 +701,8 @@ echo &quot;Azure CLI version: $(az version --query '\&quot;azure-cli\&quot;' -o 
 <h2 id="key-points-summary">Key Points Summary</h2>
 <h3 id="important-configuration-notes">Important Configuration Notes</h3>
 <ol>
-<li><strong>Container Registry</strong>: <code>xmpro.azurecr.io</code> is a public registry - no authentication required</li>
-<li><strong>Image Version</strong>: Use version <code>4.5.2</code> or <code>latest</code></li>
+<li><strong>Container Registry</strong>: <code>{{ACR_URL}}</code> is a public registry - no authentication required</li>
+<li><strong>Image Version</strong>: Use version <code>{{VERSION}}</code> or <code>latest</code></li>
 <li><strong>Module Source</strong>: Use GitHub source: <code>github.com/XMPro/terraform-xmpro-azure?ref=v4.5.2</code></li>
 <li><strong>Variable Names</strong>: Use underscores (e.g., <code>company_name</code> not <code>companyname</code>)</li>
 <li><strong>Environments</strong>: Valid values are <code>dev</code>, <code>qa</code>, and <code>sandbox-sm-only</code></li>
