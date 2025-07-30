@@ -211,15 +211,20 @@ curl -f &quot;$(terraform output -raw sm_app_url)/version&quot;
 <p>The username format is critical: <code>firstname.lastname@company_name.onxmpro.com</code></p>
 </div>
 <h3 id="license-management">License Management</h3>
-<h4 id="evaluation-mode-default">Evaluation Mode (Default)</h4>
-<p>When <code>is_evaluation_mode = true</code> (default), the deployment includes:</p>
+<h4 id="evaluation-mode">Evaluation Mode</h4>
+<p>When <code>is_evaluation_mode = true</code>, the deployment includes:</p>
 <ul>
 <li>Automatic license provisioning via licenses container</li>
 <li>Pre-configured evaluation product IDs and keys</li>
 <li>No manual license requests required</li>
+<li><strong>Forces company name to &quot;Evaluation&quot; (overrides any <code>company_name</code> variable value)</strong></li>
 </ul>
-<h4 id="production-mode">Production Mode</h4>
-<p>When <code>is_evaluation_mode = false</code>, you need to manually request licenses:</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>To use a custom company name, you must set <code>is_evaluation_mode = false</code> and request licenses from XMPro for your specific company name.</p>
+</div>
+<h4 id="production-mode-default">Production Mode (Default)</h4>
+<p>When <code>is_evaluation_mode = false</code> (default), you need to manually request licenses:</p>
 <ol>
 <li>Login using the Super Admin account <code>admin@xmpro.onxmpro.com</code></li>
 <li>Navigate to Company → Subscriptions</li>
@@ -229,7 +234,7 @@ curl -f &quot;$(terraform output -raw sm_app_url)/version&quot;
 </ol>
 <div class="NOTE">
 <h5>Note</h5>
-<p>License requests require SMTP configuration to be enabled during deployment.</p>
+<p>License requests require SMTP configuration to be enabled during deployment. See the <a href="https://github.com/XMPro/terraform-xmpro-azure#email-configuration">Module Documentation</a> for SMTP setup.</p>
 </div>
 <h2 id="troubleshooting">Troubleshooting</h2>
 <p>For common deployment issues and solutions, see:</p>
@@ -276,7 +281,7 @@ curl -f &quot;$(terraform output -raw sm_app_url)/version&quot;
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: July 29, 2025</em></small></p>
+    <p><small><em>Last modified: July 30, 2025</em></small></p>
   </div>
 </article>
 

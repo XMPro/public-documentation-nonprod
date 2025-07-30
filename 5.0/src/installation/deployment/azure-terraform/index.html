@@ -119,17 +119,22 @@
 <li><strong>Custom Domain Management</strong>: Automatic SSL certificates via Azure</li>
 <li><strong>Comprehensive Monitoring</strong>: Built-in Application Insights and logging</li>
 </ul>
-<h3 id="request-a-license">Request a License</h3>
+<h3 id="license-management">License Management</h3>
 <p>The Terraform module supports two licensing modes:</p>
-<h4 id="evaluation-mode-default">Evaluation Mode (Default)</h4>
-<p>When <code>is_evaluation_mode = true</code> (default), the deployment includes:</p>
+<h4 id="evaluation-mode">Evaluation Mode</h4>
+<p>When <code>is_evaluation_mode = true</code>, the deployment includes:</p>
 <ul>
 <li>Automatic license provisioning via licenses container</li>
 <li>Pre-configured evaluation product IDs and keys</li>
 <li>No manual license requests required</li>
+<li><strong>Forces company name to &quot;Evaluation&quot; (overrides any <code>company_name</code> variable value)</strong></li>
 </ul>
-<h4 id="production-mode">Production Mode</h4>
-<p>When <code>is_evaluation_mode = false</code>, you need to manually request licenses:</p>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>To use a custom company name, you must set <code>is_evaluation_mode = false</code> and request licenses from XMPro for your specific company name.</p>
+</div>
+<h4 id="production-mode-default">Production Mode (Default)</h4>
+<p>When <code>is_evaluation_mode = false</code> (default), you need to manually request licenses:</p>
 <ol>
 <li>Login using the Super Admin account <code>admin@xmpro.onxmpro.com</code></li>
 <li>Navigate to Company → Subscriptions</li>
@@ -228,7 +233,7 @@ terraform destroy
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: July 29, 2025</em></small></p>
+    <p><small><em>Last modified: July 30, 2025</em></small></p>
   </div>
 </article>
 
