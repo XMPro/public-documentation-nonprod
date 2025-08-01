@@ -8697,10 +8697,10 @@
     },
     {
       "type": "Resource",
-      "source_relative_path": "src/images/azure-terraform-architecture-07-29-2025.png",
+      "source_relative_path": "src/images/azure-terraform-architecture-07-30-2025.png",
       "output": {
         "resource": {
-          "relative_path": "src/images/azure-terraform-architecture-07-29-2025.png"
+          "relative_path": "src/images/azure-terraform-architecture-07-30-2025.png"
         }
       },
       "version": ""
