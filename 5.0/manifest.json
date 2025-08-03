@@ -13247,6 +13247,96 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "src/images/existing-database/ad-product-details.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/existing-database/ad-product-details.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/images/existing-database/ai-product-details.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/existing-database/ai-product-details.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/images/existing-database/ds-product-details.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/existing-database/ds-product-details.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/images/existing-database/product-logout-url-update.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/existing-database/product-logout-url-update.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/images/existing-database/product-url-update.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/existing-database/product-url-update.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/images/existing-database/sm-login.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/existing-database/sm-login.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/images/existing-database/sm-product-details.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/existing-database/sm-product-details.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/images/existing-database/sm-product-list.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/existing-database/sm-product-list.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/images/existing-database/sm-product-menu.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/existing-database/sm-product-menu.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "src/images/faq-run-recommendation.png",
       "output": {
         "resource": {
@@ -25871,6 +25961,16 @@
       "output": {
         "resource": {
           "relative_path": "src/images/zoom.mp4"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "src/installation/deployment/azure-terraform/existing-database.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/installation/deployment/azure-terraform/existing-database.html"
         }
       },
       "version": ""
