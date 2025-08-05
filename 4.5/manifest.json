@@ -31097,6 +31097,46 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "src/technical/log-events/ad-log-events.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/technical/log-events/ad-log-events.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "src/technical/log-events/ds-log-events.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/technical/log-events/ds-log-events.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "src/technical/log-events/sh-log-events.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/technical/log-events/sh-log-events.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "src/technical/log-events/sm-log-events.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/technical/log-events/sm-log-events.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "src/technical/redis-implementation.md",
       "output": {
         ".html": {
