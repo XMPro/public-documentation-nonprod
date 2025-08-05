@@ -8687,6 +8687,16 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "src/images/azure-terraform-architecture-07-30-2025.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/azure-terraform-architecture-07-30-2025.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "src/images/basis.png",
       "output": {
         "resource": {
@@ -25857,20 +25867,20 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "src/installation/deployment/azure-terraform/index.md",
+      "source_relative_path": "src/installation/deployment/azure-terraform/implementation-guide.md",
       "output": {
         ".html": {
-          "relative_path": "src/installation/deployment/azure-terraform/index.html"
+          "relative_path": "src/installation/deployment/azure-terraform/implementation-guide.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "src/installation/deployment/azure-terraform/infrastructure.md",
+      "source_relative_path": "src/installation/deployment/azure-terraform/index.md",
       "output": {
         ".html": {
-          "relative_path": "src/installation/deployment/azure-terraform/infrastructure.html"
+          "relative_path": "src/installation/deployment/azure-terraform/index.html"
         }
       },
       "version": ""
@@ -25897,6 +25907,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "src/installation/deployment/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/installation/deployment/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "src/installation/install-stream-host/docker.md",
       "output": {
         ".html": {
@@ -25911,6 +25931,16 @@
       "output": {
         ".html": {
           "relative_path": "src/installation/install-stream-host/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "src/installation/install-stream-host/terraform.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/installation/install-stream-host/terraform.html"
         }
       },
       "version": ""

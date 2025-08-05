@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Box &amp; Data Repeater Box | XMPro </title>
+      <title>2. Install XMPro | XMPro </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Box &amp; Data Repeater Box | XMPro ">
+      <meta name="title" content="2. Install XMPro | XMPro ">
       <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
       
       <link rel="icon" href="../../../images/favicon.png">
@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../../">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/blocks-toolbox/layout/box-and-data-repeater-box.md&amp;version=GBrelease-4.5.2&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/deployment/index.md&amp;version=GBrelease-4.5.2&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -85,35 +85,42 @@
         </div>
 
         <article data-uid="">
-<h1 id="box--data-repeater-box">Box &amp; Data Repeater Box</h1>
+<h1 id="2-install-xmpro">2. Install XMPro</h1>
 
-<p>A Box is a simple Block that allows you to add data or other elements inside it. This can be used as a container to store a group of other Blocks.</p>
-<p>A Data Repeater Box is a Box that allows you to repeat data multiple times, including data that is coming from a Data Source. If a text field is added to the Data Repeater Box, that text Block can be bound to a field coming from the Data Source. The Data Repeater Box will then repeat the data for that field for each record.</p>
-<div class="WARNING">
-<h5>Warning</h5>
-<p>Take care with repeated elements that also have a Data Source, such as a <a href="../basic/lookup.html">Lookup</a>, as their Data Source is fetched for every record returned by the Data Repeater's Data Source. A large result set may result in a timeout.</p>
-<p>You can use the <strong>Show # of Results</strong> under the <a href="#data-source-1"><strong>Data Source</strong></a> property to limit the repetition of the blocks.</p>
-</div>
-<h2 id="box-properties">Box Properties</h2>
-<h3 id="appearance">Appearance</h3>
-<h4 id="common-properties">Common Properties</h4>
-<p>The <em>visibility</em> property is common to most Blocks;</p>
-<p><a href="../common-properties.html#appearance">See the Common Properties article for more details on common appearance properties.</a></p>
-<p><img src="../../images/box-appearance-properties.png" alt="Box appearance properties"></p>
-<h3 id="data-source">Data Source</h3>
-<h4 id="common-properties-1">Common Properties</h4>
-<p>The Box has properties that are common to most Blocks: <em>filter, sort, show # of results</em>, and <em>skip # of results;</em></p>
-<p><a href="../common-properties.html#data-source">See the Common Properties article for more details on common data source properties.</a></p>
-<h2 id="data-repeater-box-properties">Data Repeater Box Properties</h2>
-<h3 id="appearance-1">Appearance</h3>
-<h4 id="common-properties-2">Common Properties</h4>
-<p>The <em>visibility</em> property is common to most Blocks;</p>
-<p><a href="../common-properties.html#appearance">See the Common Properties article for more details on common appearance properties.</a></p>
-<p><img src="../../images/data-repeater-box-appearance-properties.png" alt="Data Repeater Box appearance properties"></p>
-<h3 id="data-source-1">Data Source</h3>
-<h4 id="common-properties-3">Common Properties</h4>
-<p>The data repeater box has properties that are common to most Blocks: <em>filter, sort, show # of results</em>, <em>skip # of results,</em> and <em>show default row;</em></p>
-<p><a href="../common-properties.html#data-source">See the Common Properties article for more details on common Data Source properties.</a></p>
+<p>XMPro Platform can be installed using a range of Infrastructure, please choose the option below that best suits your requirements:</p>
+<h2 id="cloud-deployment">Cloud Deployment</h2>
+<h3 id="azure-terraform-deployment"><a href="azure-terraform/index.html">Azure Terraform Deployment</a></h3>
+<p><strong>Recommended for XMPro v4.5+</strong></p>
+<p>Modern Infrastructure as Code deployment using Terraform. This approach provides:</p>
+<ul>
+<li>Reproducible infrastructure deployments</li>
+<li>Version-controlled infrastructure changes</li>
+<li>Production-ready defaults and best practices</li>
+<li>Support for existing database scenarios</li>
+<li>Comprehensive monitoring and logging</li>
+</ul>
+<h3 id="azure-arm-template-deployment-legacy"><a href="https://documentation.xmpro.com/4.4/src/installation/deployment/azure.html">Azure ARM Template Deployment (Legacy)</a></h3>
+<p><strong>For XMPro v4.4 and earlier versions</strong></p>
+<p>Traditional ARM template deployment approach. This method is maintained for:</p>
+<ul>
+<li>Existing v4.4 installations requiring maintenance</li>
+<li>Legacy upgrade scenarios</li>
+<li>Organizations with ARM template requirements</li>
+</ul>
+<blockquote>
+<p><strong>Note</strong>: New deployments should use the Terraform approach above for the latest features and improved deployment experience.</p>
+</blockquote>
+<h2 id="other-deployment-options">Other Deployment Options</h2>
+<h3 id="aws-deployment"><a href="https://documentation.xmpro.com/4.4/src/installation/deployment/aws.html">AWS Deployment</a></h3>
+<p>Deploy XMPro on Amazon Web Services using Kubernetes and Helm charts.</p>
+<h3 id="windows-server-2022-deployment"><a href="https://documentation.xmpro.com/4.4/src/installation/deployment/windows-server-2022/index.html">Windows Server 2022 Deployment</a></h3>
+<p>On-premises deployment for Windows Server environments.</p>
+<hr>
+<h2 id="next-steps">Next Steps</h2>
+<p>After completing your infrastructure deployment, proceed to:</p>
+<ul>
+<li><a href="https://documentation.xmpro.com/4.4/src/installation/complete-installation/index.html">Complete Installation</a> for environment setup and configuration</li>
+</ul>
 
 
   <div class="last-modified">

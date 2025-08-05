@@ -2,1525 +2,1537 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://xmpro.github.io/public-documentation/index.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/pipeline-scripts/README.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/pipeline-templates/README.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/administration/administrative-accounts.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/administration/companies/index.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/administration/companies/manage-a-company.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/administration/companies/manage-company-subscriptions.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/administration/companies/manage-license.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/administration/companies/register-a-company.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/administration/language.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/administration/subscriptions-admin/index.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/administration/subscriptions-admin/manage-user-access.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/administration/subscriptions-admin/request-and-apply-a-license.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/administration/subscriptions-admin/setup-auto-approvals-default-subscriptions.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/administration/users/business-role-for-a-user.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/administration/users/change-password.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/administration/users/delete-a-user.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/administration/users/index.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/administration/users/invite-a-user.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/administration/users/profile.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/administration/users/register-an-account.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/administration/users/reset-password.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/actions/README.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/actions/box-hyperlink.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/actions/button.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/actions/data-operations.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/actions/hyperlink.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/actions/index.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/advanced/index.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/advanced/metablock.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/ai/README.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/ai/azure-copilot.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/ai/chatgpt-copilot.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/ai/index.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/basic/README.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/basic/calendar.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/basic/checkbox.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/basic/color-selector.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/basic/data-grid.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/basic/date-selector.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/basic/dropdown-grid.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/basic/embedded-page.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/basic/file-library.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/basic/file-uploader.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/basic/html-editor.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/basic/image.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/basic/index.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/basic/indicator.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/basic/list.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/basic/lookup.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/basic/number-selector.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/basic/radio-buttons.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/basic/range-selector.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/basic/select-box.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/basic/switch.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/basic/tags.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/basic/text-area.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/basic/text.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/basic/textbox.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/basic/tree-grid.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/basic/tree-list.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/common-properties.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/device-input/README.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/device-input/index.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/device-input/location-capture.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/device-input/visual-media-capture.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/index.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/layout/accordion.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/layout/box-and-data-repeater-box.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/layout/card-and-content-card.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/layout/field-and-fieldset.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/layout/horizontal-and-vertical-stacked-layouts.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/layout/index.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/layout/layout-grid.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/layout/menu.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/layout/scroll-box.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/layout/tabs.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/layout/templated-list.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/layout/toolbar.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/recommendations/alert-action.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/recommendations/alert-event-data.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/recommendations/alert-form.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/recommendations/alert-list.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/recommendations/alert-survey.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/recommendations/alert-timeline.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/recommendations/alert-triage.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/recommendations/index.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/recommendations/recommendation-alert-discussion.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/recommendations/recommendation-analytics.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/recommendations/recommendation-chart.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/visualizations/README.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/visualizations/autodesk-forge-1.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/visualizations/autodesk-forge.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/visualizations/azure-digital-twin-hierarchy.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/visualizations/bar-gauge.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/visualizations/chart.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/visualizations/circular-gauge.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/visualizations/d3-visualization.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/visualizations/esri-map.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/visualizations/image-map.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/visualizations/index.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/visualizations/linear-gauge.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/visualizations/map.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/visualizations/pie-chart.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/visualizations/pivot-grid.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/visualizations/polar-chart.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/visualizations/power-bi.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/visualizations/sparkline.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/visualizations/time-series-analysis.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/visualizations/tree-map.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/visualizations/unity-1.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/visualizations/unity.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/blocks-toolbox/widgets.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/concepts/agent/index.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/concepts/agent/virtual-vs-non-virtual-agents.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/concepts/application/app-files.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/concepts/application/block-properties.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/concepts/application/block-styling.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/concepts/application/block.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/concepts/application/canvas.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/concepts/application/data-integration.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/concepts/application/devices.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/concepts/application/flex.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/concepts/application/index.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/concepts/application/metablocks.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/concepts/application/navigation-and-parameters.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/concepts/application/page-layers.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/concepts/application/page.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/concepts/application/template.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/concepts/application/variables-and-expressions.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/concepts/category.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/concepts/collection.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/concepts/connector.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/concepts/data-stream/index.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/concepts/data-stream/running-data-streams.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/concepts/data-stream/stream-object-configuration.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/concepts/data-stream/timeline.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/concepts/data-stream/verifying-stream-integrity.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/concepts/insights/data-delivery-insights.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/concepts/landing-pages.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/concepts/manage-access.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/concepts/recommendation/action-requests.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/concepts/recommendation/auto-escalate.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/concepts/recommendation/deleted-items.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/concepts/recommendation/execution-order.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/concepts/recommendation/form.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/concepts/recommendation/index.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/concepts/recommendation/notification.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/concepts/recommendation/recommendation-alert.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/concepts/recommendation/recommendation-scoring.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/concepts/recommendation/rule.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/concepts/variable.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/concepts/version.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/concepts/xmpro-ai/index.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/concepts/xmpro-ai/xmpro-notebook.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/getting-started/browser-requirements.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/getting-started/end-to-end-use-case.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/agents/README.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/agents/building-agents.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/agents/debugging-an-agent.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/agents/index.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/agents/manage-agents.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/agents/packaging-agents.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/apps/README.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/apps/check-connector-logs.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/apps/create-and-maintain-notes.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/apps/design-pages-for-mobile.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/apps/import-an-app-page.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/apps/manage-app-files.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/apps/manage-apps.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/apps/manage-connections.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/apps/manage-data-sources.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/apps/manage-pages.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/apps/manage-templates.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/apps/manage-themes.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/apps/manage-widgets.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/apps/navigate-between-apps.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/apps/navigate-between-pages.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/apps/page-data.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/apps/pass-parameters-between-pages.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/apps/use-block-styling-and-devices.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/apps/use-data-sources-in-the-page.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/apps/use-dynamic-properties.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/apps/use-expression-properties.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/apps/use-flex.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/apps/use-page-layers.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/apps/use-validation.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/apps/use-variables-and-expressions.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/connectors/README.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/connectors/building-connectors.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/connectors/manage-connectors.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/connectors/packaging-connectors.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/data-streams/README.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/data-streams/check-data-stream-logs.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/data-streams/context-menu.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/data-streams/manage-collections.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/data-streams/manage-data-streams.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/data-streams/manage-recurrent-data-streams.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/data-streams/remote-receivers-and-publishers.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/data-streams/run-an-integrity-check.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/data-streams/setup-input-mappings.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/data-streams/troubleshoot-a-data-stream.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/data-streams/upgrade-a-stream-object-version.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/data-streams/use-business-case-and-notes.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/data-streams/use-error-endpoints.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/data-streams/use-live-view.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/data-streams/use-stream-metrics.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/data-streams/use-the-timeline.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/import-export-and-clone.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/index.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/manage-access.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/manage-categories.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/manage-landing-pages.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/manage-site-settings.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/manage-variables.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/manage-versions.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/publish/admin-unpublish-override.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/publish/index.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/recommendations/README.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/recommendations/create-rules.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/recommendations/manage-alerts-on-mobile.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/recommendations/manage-alerts.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/recommendations/manage-categories.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/recommendations/manage-deleted-recommendation-items.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/recommendations/manage-forms.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/recommendations/manage-notification-templates.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/recommendations/manage-notifications.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/recommendations/manage-recommendations.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/recommendations/manage-variables.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/recommendations/subscribe-to-notifications.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/how-tos/stream-host.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://xmpro.github.io/public-documentation/src/installation/deployment/azure-terraform/implementation-guide.html</loc>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/installation/deployment/azure-terraform/index.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://xmpro.github.io/public-documentation/src/installation/deployment/azure-terraform/infrastructure.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/installation/deployment/azure-terraform/prerequisites.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/installation/deployment/azure-terraform/troubleshooting.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://xmpro.github.io/public-documentation/src/installation/deployment/index.html</loc>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/installation/install-stream-host/docker.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/installation/install-stream-host/index.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://xmpro.github.io/public-documentation/src/installation/install-stream-host/terraform.html</loc>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/installation/install-stream-host/windows-x64.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/installation/overview.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/release-notes/index.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/resources/faqs/agent-faqs.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/resources/faqs/configuration.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/resources/faqs/general.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/resources/faqs/implementation.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/resources/faqs/index.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/resources/icon-library.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/resources/integrations.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/resources/platform-security.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/resources/practice-notes/index.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/resources/practice-notes/performant-landing-pages-in-real-time-monitoring.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/resources/practice-notes/unified-recommendation-alert-management.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/resources/sizing-guideline.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/src/technical/redis-implementation.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://xmpro.github.io/public-documentation/terraform-pr/README.html</loc>
-    <lastmod>2025-08-04T08:23:21+00:00</lastmod>
+    <lastmod>2025-08-05T12:56:31+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
