@@ -98,12 +98,16 @@
 <p><img src="../../../images/azure-terraform-architecture-07-30-2025.png" alt="XMPro Azure Terraform Architecture"></p>
 <p>The module creates:</p>
 <ul>
-<li><strong>Core Applications</strong>: SM, AD, DS, and optionally AI services</li>
+<li><strong>Core Applications</strong>: SM, AD, DS, and Stream Host</li>
 <li><strong>Azure Infrastructure</strong>: SQL databases, App Services, Key Vault, Storage</li>
 <li><strong>Security</strong>: Managed identities, SSL certificates, network security</li>
 <li><strong>Monitoring</strong>: Application Insights and Log Analytics</li>
 </ul>
 <p>For detailed component descriptions, resource dependencies, and technical specifications, see the <a href="https://github.com/XMPro/terraform-xmpro-azure#%EF%B8%8F-architecture-overview">Architecture Overview</a> and <a href="https://github.com/XMPro/terraform-xmpro-azure#-submodules">Submodules</a> sections in the GitHub README.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The GitHub module may reference this documentation using <code>/latest/</code> URLs. These URLs automatically redirect to the current stable version.</p>
+</div>
 <h2 id="install">Install</h2>
 <p>To deploy XMPro on Azure using Terraform:</p>
 <ol>
@@ -129,11 +133,15 @@
 <li>No manual license requests required</li>
 <li><strong>Forces company name to &quot;Evaluation&quot; (overrides any <code>company_name</code> variable value)</strong></li>
 </ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The <code>examples/basic</code> configuration uses <code>is_evaluation_mode = true</code> as default for quick evaluation deployments.</p>
+</div>
 <div class="IMPORTANT">
 <h5>Important</h5>
 <p>To use a custom company name, you must set <code>is_evaluation_mode = false</code> and request licenses from XMPro for your specific company name.</p>
 </div>
-<h4 id="production-mode-default">Production Mode (Default)</h4>
+<h4 id="for-production-workloads-default">For Production Workloads (Default)</h4>
 <p>When <code>is_evaluation_mode = false</code> (default), you need to manually request licenses:</p>
 <ol>
 <li>Login using the Super Admin account <code>admin@xmpro.onxmpro.com</code></li>
@@ -163,10 +171,10 @@ cp terraform.tfstate terraform.tfstate.backup
 <p>Update your Terraform configuration to use the new version:</p>
 <pre><code class="lang-bash"># Option A: Update imageversion variable
 # Edit your terraform.tfvars file and update:
-# imageversion = &quot;4.5.2&quot;  # Upgrade from 4.5.0 to 4.5.2
+# imageversion = &quot;5.0.0&quot;  # Upgrade from 4.5.0 to 5.0.0
 
 # Option B: Use command line override
-terraform plan -var=&quot;imageversion=4.5.2&quot;
+terraform plan -var=&quot;imageversion=5.0.0&quot;
 </code></pre>
 <h3 id="step-3-plan-your-upgrade">Step 3: Plan Your Upgrade</h3>
 <pre><code class="lang-bash">terraform plan
@@ -233,7 +241,7 @@ terraform destroy
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: August 03, 2025</em></small></p>
+    <p><small><em>Last modified: August 05, 2025</em></small></p>
   </div>
 </article>
 

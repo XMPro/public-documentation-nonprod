@@ -91,37 +91,7 @@
 <p>This guide covers the prerequisites and initial setup required for deploying XMPro on Azure using Terraform. Follow these steps carefully to ensure a successful deployment.</p>
 <h2 id="system-requirements">System Requirements</h2>
 <h3 id="development-machine">Development Machine</h3>
-<table>
-<thead>
-<tr>
-<th>Component</th>
-<th>Minimum</th>
-<th>Recommended</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Operating System</td>
-<td>Windows 10, macOS 10.15, Ubuntu 18.04</td>
-<td>Windows 11, macOS 12+, Ubuntu 20.04+</td>
-</tr>
-<tr>
-<td>Memory</td>
-<td>8 GB RAM</td>
-<td>16 GB RAM</td>
-</tr>
-<tr>
-<td>Storage</td>
-<td>10 GB free space</td>
-<td>50 GB free space</td>
-</tr>
-<tr>
-<td>Network</td>
-<td>Stable internet connection</td>
-<td>High-speed internet</td>
-</tr>
-</tbody>
-</table>
+<p>For system requirements and supported operating systems, see the <a href="https://developer.hashicorp.com/terraform/install">Terraform installation documentation</a>.</p>
 <h3 id="azure-subscription">Azure Subscription</h3>
 <table>
 <thead>
@@ -151,38 +121,22 @@
 </table>
 <h2 id="software-installation">Software Installation</h2>
 <h3 id="1-install-terraform">1. Install Terraform</h3>
-<p>Follow the official HashiCorp installation guide for your operating system:</p>
+<p>Install the latest version of Terraform on the machine you'll be running the deployment from (your local workstation or CI/CD agent).</p>
 <p><a href="https://developer.hashicorp.com/terraform/install">Install Terraform - HashiCorp Developer</a></p>
 <p>After installation, verify it works:</p>
 <pre><code class="lang-bash">terraform version
 </code></pre>
 <h3 id="2-install-azure-cli">2. Install Azure CLI</h3>
-<p><strong>Windows:</strong></p>
-<pre><code class="lang-powershell">Invoke-WebRequest -Uri https://aka.ms/installazurecliwindows -OutFile .\AzureCLI.msi
-Start-Process msiexec.exe -Wait -ArgumentList '/I AzureCLI.msi /quiet'
+<p>Install the Azure CLI on your local machine for managing Azure resources and authentication.</p>
+<p><a href="https://learn.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest">Install Azure CLI - Microsoft Learn</a></p>
+<p>After installation, verify it works:</p>
+<pre><code class="lang-bash">az version
 </code></pre>
-<p><strong>macOS:</strong></p>
-<pre><code class="lang-bash">brew install azure-cli
-</code></pre>
-<p><strong>Linux:</strong></p>
-<pre><code class="lang-bash">curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
-</code></pre>
-<p><strong>Alternative - Using pip:</strong></p>
-<pre><code class="lang-bash">pip install azure-cli
-</code></pre>
-<h3 id="3-install-docker-optional">3. Install Docker (Optional)</h3>
-<p>Docker is optional but recommended for testing container image access.</p>
-<p><strong>Windows:</strong></p>
-<ul>
-<li>Download and install <a href="https://www.docker.com/products/docker-desktop">Docker Desktop for Windows</a></li>
-</ul>
-<p><strong>macOS:</strong></p>
-<pre><code class="lang-bash">brew install --cask docker
-</code></pre>
-<p><strong>Linux:</strong></p>
-<pre><code class="lang-bash"># Ubuntu/Debian
-curl -fsSL https://get.docker.com -o get-docker.sh
-sudo sh get-docker.sh
+<h3 id="3-install-docker-desktop-optional">3. Install Docker Desktop (Optional)</h3>
+<p>Docker Desktop is optional but recommended for testing container image access.</p>
+<p><a href="https://docs.docker.com/desktop/">Install Docker Desktop</a></p>
+<p>After installation, verify it works:</p>
+<pre><code class="lang-bash">docker --version
 </code></pre>
 <h2 id="azure-setup">Azure Setup</h2>
 <p>For Azure authentication and service principal setup, follow the official Microsoft guide:</p>
@@ -333,7 +287,7 @@ Refer to the <a href="https://learn.microsoft.com/en-us/azure/developer/terrafor
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: August 03, 2025</em></small></p>
+    <p><small><em>Last modified: August 05, 2025</em></small></p>
   </div>
 </article>
 

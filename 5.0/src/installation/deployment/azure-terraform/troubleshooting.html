@@ -501,17 +501,13 @@ az monitor metrics list \
   --start-time $(date -u -d '1 hour ago' '+%Y-%m-%dT%H:%M:%SZ')
 </code></pre>
 <p><strong>Solution:</strong></p>
-<pre><code class="lang-bash"># Scale up app service plan
+<pre><code class="lang-bash"># Scale up app service plan (manual scaling)
 terraform apply -var=&quot;app_service_sku_name=S2&quot;
-
-# Configure autoscaling
-az monitor autoscale create \
-  --resource-group $(terraform output -raw resource_group_name) \
-  --resource $(terraform output -raw app_service_plan_id) \
-  --min-count 2 \
-  --max-count 10 \
-  --count 2
 </code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Auto-scaling and Redis integration for session state management will be available in a future release. Check the release notes for updates on these features.</p>
+</div>
 <h3 id="database-performance-issues">Database Performance Issues</h3>
 <p><strong>Symptoms:</strong></p>
 <ul>
@@ -586,36 +582,154 @@ az network nsg rule create \
   --access allow
 </code></pre>
 <h2 id="logging-and-monitoring">Logging and Monitoring</h2>
-<h3 id="enable-detailed-logging">Enable Detailed Logging</h3>
-<pre><code class="lang-bash"># Enable app service logging
-az webapp log config \
-  --name xmpro-prefix-ad \
-  --resource-group $(terraform output -raw resource_group_name) \
-  --application-logging true \
-  --detailed-error-messages true \
-  --failed-request-tracing true
+<div class="TIP">
+<h5>Tip</h5>
+<p>When using the <code>examples/basic</code> configuration, the following Terraform outputs are available:</p>
+<ul>
+<li><code>resource_group_name</code> - Resource group containing all resources</li>
+<li><code>sql_server_name</code> - SQL Server name</li>
+<li><code>ad_app_url</code>, <code>ds_app_url</code>, <code>sm_app_url</code> - Application URLs</li>
+</ul>
+<p>Use <code>terraform output</code> to see all available outputs.</p>
+</div>
+<h3 id="view-application-logs-recommended-application-insights">View Application Logs (Recommended: Application Insights)</h3>
+<p>The Terraform module automatically configures Application Insights for centralized logging and monitoring. This is the <strong>recommended way</strong> to view logs and diagnose issues.</p>
+<h4 id="primary-method-application-insights-recommended">Primary Method: Application Insights (Recommended)</h4>
+<ol>
+<li><p><strong>Access Application Insights in Azure Portal</strong></p>
+<ul>
+<li>Navigate to your resource group in Azure Portal</li>
+<li>Look for the Application Insights resource (usually named <code>appi-{prefix}-{suffix}</code>)</li>
+<li>Click on it to open the Application Insights dashboard</li>
+</ul>
+</li>
+<li><p><strong>View Logs and Traces</strong></p>
+<ul>
+<li>Go to <strong>&quot;Logs&quot;</strong> in the left menu</li>
+<li>Use these common queries:</li>
+</ul>
+<pre><code class="lang-kusto">// View all recent traces
+traces 
+| where timestamp &gt; ago(1h)
+| order by timestamp desc
+| take 100
 
-# Enable SQL auditing
-az sql server audit-policy update \
-  --resource-group $(terraform output -raw resource_group_name) \
-  --server $(terraform output -raw sql_server_name) \
-  --state Enabled \
-  --storage-account $(terraform output -raw storage_account_name)
+// View errors and exceptions
+exceptions
+| where timestamp &gt; ago(24h)
+| order by timestamp desc
+
+// View specific service logs
+traces
+| where customDimensions.Category contains &quot;XMPro&quot;
+| where timestamp &gt; ago(1h)
 </code></pre>
-<h3 id="monitor-with-application-insights">Monitor with Application Insights</h3>
-<pre><code class="lang-bash"># Get Application Insights key
-INSIGHTS_KEY=$(terraform output -raw app_insights_instrumentation_key)
+</li>
+<li><p><strong>Real-time Monitoring</strong></p>
+<ul>
+<li>Click on <strong>&quot;Live Metrics&quot;</strong> for real-time performance data</li>
+<li>View <strong>&quot;Failures&quot;</strong> for error tracking</li>
+<li>Check <strong>&quot;Performance&quot;</strong> for response time analysis</li>
+</ul>
+</li>
+</ol>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>Application Insights provides the most comprehensive view of your application's health, including:</p>
+<ul>
+<li>Centralized logging from all services</li>
+<li>Performance metrics and telemetry</li>
+<li>Error tracking and diagnostics</li>
+<li>Custom queries and alerts</li>
+</ul>
+</div>
+<h4 id="alternative-method-direct-app-service-logs">Alternative Method: Direct App Service Logs</h4>
+<p>If you need to view raw application logs directly:</p>
+<ol>
+<li><p><strong>Azure Portal</strong></p>
+<ul>
+<li>Navigate to your resource group</li>
+<li>Select the specific App Service (e.g., <code>app-ad-{suffix}</code>, <code>app-ds-{suffix}</code>, <code>app-sm-{suffix}</code>)</li>
+<li>Go to &quot;Log stream&quot; for real-time logs</li>
+</ul>
+</li>
+<li><p><strong>Azure CLI</strong> (for advanced users)</p>
+<pre><code class="lang-bash"># Get resource group name
+RESOURCE_GROUP=$(terraform output -raw resource_group_name)
 
-# View recent exceptions
-az monitor app-insights query \
-  --app $(terraform output -raw app_insights_id) \
-  --analytics-query &quot;exceptions | take 10&quot;
+# List App Services
+az webapp list --resource-group $RESOURCE_GROUP --query &quot;[].name&quot; -o tsv
 
-# View performance counters
-az monitor app-insights query \
-  --app $(terraform output -raw app_insights_id) \
-  --analytics-query &quot;performanceCounters | take 10&quot;
+# View logs for specific service
+az webapp log tail --name {app-service-name} --resource-group $RESOURCE_GROUP
 </code></pre>
+</li>
+</ol>
+<h3 id="container-logs">Container Logs</h3>
+<p>View logs from migration containers:</p>
+<pre><code class="lang-bash"># View SM database migration logs
+az container logs \
+  --resource-group $(terraform output -raw resource_group_name) \
+  --name sm-dbmigrate
+
+# View AD database migration logs
+az container logs \
+  --resource-group $(terraform output -raw resource_group_name) \
+  --name ad-dbmigrate
+
+# View Stream Host logs
+az container logs \
+  --resource-group $(terraform output -raw resource_group_name) \
+  --name stream-host
+</code></pre>
+<h3 id="application-logging-configuration">Application Logging Configuration</h3>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Enhanced Serilog configuration for custom log levels and overrides will be available in a future release. The current deployment enables standard application logging with default settings. Check the release notes for updates on advanced logging configuration features.</p>
+</div>
+<h3 id="monitoring-with-application-insights">Monitoring with Application Insights</h3>
+<div class="TIP">
+<h5>Tip</h5>
+<p>Application Insights is your one-stop dashboard for monitoring all XMPro services. It's automatically configured during deployment.</p>
+</div>
+<p><strong>Access Application Insights:</strong></p>
+<ol>
+<li>Open Azure Portal</li>
+<li>Navigate to your resource group</li>
+<li>Find and click the Application Insights resource (named <code>appi-{prefix}-{suffix}</code>)</li>
+</ol>
+<p><strong>Key Monitoring Features:</strong></p>
+<ul>
+<li><strong>Application Map</strong>: Visual representation of service dependencies</li>
+<li><strong>Live Metrics</strong>: Real-time performance monitoring</li>
+<li><strong>Failures</strong>: Track and diagnose errors across all services</li>
+<li><strong>Performance</strong>: Analyze response times and throughput</li>
+<li><strong>Alerts</strong>: Set up proactive notifications for issues</li>
+<li><strong>Workbooks</strong>: Create custom dashboards for your metrics</li>
+</ul>
+<p><strong>Common Monitoring Tasks:</strong></p>
+<ol>
+<li><p><strong>Check Service Health</strong></p>
+<ul>
+<li>Go to &quot;Application Map&quot; to see all services and their status</li>
+<li>Green = Healthy, Red = Issues detected</li>
+</ul>
+</li>
+<li><p><strong>Investigate Errors</strong></p>
+<ul>
+<li>Click &quot;Failures&quot; in the left menu</li>
+<li>Select time range and filter by service</li>
+<li>Click on specific errors to see stack traces</li>
+</ul>
+</li>
+<li><p><strong>Monitor Performance</strong></p>
+<ul>
+<li>Use &quot;Performance&quot; to see response times</li>
+<li>Identify slow operations or bottlenecks</li>
+<li>Track performance trends over time</li>
+</ul>
+</li>
+</ol>
 <h2 id="recovery-procedures">Recovery Procedures</h2>
 <h3 id="rollback-deployment">Rollback Deployment</h3>
 <pre><code class="lang-bash"># Rollback to previous state
@@ -658,37 +772,56 @@ terraform apply
 # Review detailed logs
 grep -i error terraform.log
 </code></pre>
-<h3 id="azure-support">Azure Support</h3>
-<pre><code class="lang-bash"># Create support ticket
-az support tickets create \
-  --ticket-name &quot;XMPro Deployment Issue&quot; \
-  --description &quot;Detailed description of the issue&quot; \
-  --severity low \
-  --issue-type technical \
-  --contact-method email \
-  --contact-email your-email@company.com
-</code></pre>
 <h3 id="collect-diagnostic-information">Collect Diagnostic Information</h3>
-<pre><code class="lang-bash"># Create diagnostic package
-mkdir -p troubleshooting/$(date +%Y%m%d_%H%M%S)
-cd troubleshooting/$(date +%Y%m%d_%H%M%S)
+<p>When troubleshooting deployment issues, collect the following information:</p>
+<pre><code class="lang-bash"># Create diagnostic directory
+mkdir -p xmpro-diagnostics
+cd xmpro-diagnostics
 
-# Collect Terraform outputs
+# 1. Save Terraform outputs
 terraform output -json &gt; terraform-outputs.json
 
-# Collect resource information
-az resource list --resource-group $(terraform output -raw resource_group_name) --output json &gt; resources.json
+# 2. Get resource group name
+RESOURCE_GROUP=$(terraform output -raw resource_group_name)
 
-# Collect app service logs
-az webapp log download --name xmpro-prefix-ad --resource-group $(terraform output -raw resource_group_name) --log-file webapp-logs.zip
+# 3. List all resources in the resource group
+az resource list --resource-group $RESOURCE_GROUP --output json &gt; resources.json
 
-# Collect container logs
-az container logs --resource-group $(terraform output -raw resource_group_name) --name stream-host &gt; container-logs.txt
+# 4. Get App Service names and collect logs
+az webapp list --resource-group $RESOURCE_GROUP --query &quot;[].name&quot; -o tsv &gt; app-services.txt
 
-# Create summary
-echo &quot;Diagnostic information collected on $(date)&quot; &gt; summary.txt
-echo &quot;Terraform version: $(terraform version)&quot; &gt;&gt; summary.txt
-echo &quot;Azure CLI version: $(az version --query '\&quot;azure-cli\&quot;' -o tsv)&quot; &gt;&gt; summary.txt
+# For each app service, download logs (replace {app-service-name} with actual names from above)
+# az webapp log download --name {app-service-name} --resource-group $RESOURCE_GROUP --log-file {app-service-name}-logs.zip
+
+# 5. Collect container instance logs
+for container in sm-dbmigrate ad-dbmigrate ds-dbmigrate stream-host; do
+  echo &quot;=== Logs for $container ===&quot; &gt;&gt; container-logs.txt
+  az container logs --resource-group $RESOURCE_GROUP --name $container &gt;&gt; container-logs.txt 2&gt;&amp;1
+  echo &quot;&quot; &gt;&gt; container-logs.txt
+done
+
+# 6. Create summary report
+cat &gt; summary.txt &lt;&lt; EOF
+Diagnostic Information Summary
+Generated: $(date)
+Resource Group: $RESOURCE_GROUP
+
+Terraform Version:
+$(terraform version)
+
+Azure CLI Version:
+$(az version)
+
+Available Terraform Outputs:
+$(terraform output)
+EOF
+
+# 7. Check container instance status
+echo -e &quot;\n=== Container Instance Status ===&quot; &gt;&gt; summary.txt
+az container list --resource-group $RESOURCE_GROUP --query &quot;[].{name:name, state:instanceView.state}&quot; -o table &gt;&gt; summary.txt
+
+# 8. Package all diagnostics
+tar -czf xmpro-diagnostics-$(date +%Y%m%d-%H%M%S).tar.gz *.txt *.json *.zip 2&gt;/dev/null || true
 </code></pre>
 <h2 id="next-steps">Next Steps</h2>
 <p>After resolving issues:</p>
@@ -725,7 +858,7 @@ echo &quot;Azure CLI version: $(az version --query '\&quot;azure-cli\&quot;' -o 
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: August 03, 2025</em></small></p>
+    <p><small><em>Last modified: August 05, 2025</em></small></p>
   </div>
 </article>
 

@@ -151,8 +151,8 @@ cd terraform-xmpro-azure/examples/basic
 <li><strong>Service Sizing</strong>: See <a href="https://github.com/XMPro/terraform-xmpro-azure#service-configuration">Service Configuration</a></li>
 </ul>
 <h2 id="deployment-scenarios">Deployment Scenarios</h2>
-<h3 id="evaluation-mode-vs-production-mode">Evaluation Mode vs Production Mode</h3>
-<p>The module supports two deployment modes. See <a href="https://github.com/XMPro/terraform-xmpro-azure#-evaluation-vs-production-mode">Evaluation vs Production Mode</a> in the README for detailed explanation.</p>
+<h3 id="evaluation-mode-vs-for-production-workloads">Evaluation Mode vs For Production Workloads</h3>
+<p>The module supports two deployment modes. See <a href="https://github.com/XMPro/terraform-xmpro-azure#-evaluation-vs-for-production-workloads">Evaluation vs For Production Workloads</a> in the README for detailed explanation.</p>
 <h3 id="using-existing-database">Using Existing Database</h3>
 <p>For scenarios where you have an existing SQL Server, see <a href="https://github.com/XMPro/terraform-xmpro-azure#%EF%B8%8F-existing-database-support">Existing Database Support</a>.</p>
 <h3 id="custom-domain-configuration">Custom Domain Configuration</h3>
@@ -221,9 +221,13 @@ curl -f &quot;$(terraform output -raw sm_app_url)/version&quot;
 </ul>
 <div class="NOTE">
 <h5>Note</h5>
+<p>The <code>examples/basic</code> configuration uses <code>is_evaluation_mode = true</code> as default for quick evaluation deployments.</p>
+</div>
+<div class="NOTE">
+<h5>Note</h5>
 <p>To use a custom company name, you must set <code>is_evaluation_mode = false</code> and request licenses from XMPro for your specific company name.</p>
 </div>
-<h4 id="production-mode-default">Production Mode (Default)</h4>
+<h4 id="for-production-workloads-default">For Production Workloads (Default)</h4>
 <p>When <code>is_evaluation_mode = false</code> (default), you need to manually request licenses:</p>
 <ol>
 <li>Login using the Super Admin account <code>admin@xmpro.onxmpro.com</code></li>
@@ -281,7 +285,7 @@ curl -f &quot;$(terraform output -raw sm_app_url)/version&quot;
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: August 03, 2025</em></small></p>
+    <p><small><em>Last modified: August 05, 2025</em></small></p>
   </div>
 </article>
 
