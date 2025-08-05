@@ -26047,6 +26047,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "src/installation/install-stream-host/terraform.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/installation/install-stream-host/terraform.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "src/installation/install-stream-host/windows-x64.md",
       "output": {
         ".html": {
