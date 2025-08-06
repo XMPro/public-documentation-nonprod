@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../../">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/install-stream-host/docker.md&amp;version=GBrelease-4.5.2&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/install-stream-host/docker.md&amp;version=GBdocs-release-4.5&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -162,15 +162,15 @@
 <p><img src="../../images/image-1489.png" alt="Fig 1: Collection details in Data Stream Designer"></p>
 <h2 id="docker-repository">Docker Repository</h2>
 <p>Below is the XMPro Docker Stream Host repository.</p>
-<pre><code>{{ACR_URL}}/stream-host
+<pre><code>xmpro.azurecr.io/stream-host
 </code></pre>
 <h2 id="image-variants">Image Variants</h2>
 <h3 id="version-tagging">Version Tagging</h3>
 <p>All images are tagged with their version number. For example:</p>
-<pre><code>{{ACR_URL}}/stream-host:{{VERSION}}
+<pre><code>xmpro.azurecr.io/stream-host:4.4.19
 </code></pre>
 <p>The <code>latest</code> tag points to the most recent release:</p>
-<pre><code>{{ACR_URL}}/stream-host:latest
+<pre><code>xmpro.azurecr.io/stream-host:latest
 </code></pre>
 <div class="WARNING">
 <h5>Warning</h5>
@@ -187,15 +187,15 @@
 </thead>
 <tbody>
 <tr>
-<td><code>{{ACR_URL}}/stream-host:{{VERSION}}-bookworm-slim</code></td>
+<td><code>xmpro.azurecr.io/stream-host:4.4.19-bookworm-slim</code></td>
 <td>Debian (Default)</td>
 </tr>
 <tr>
-<td><code>{{ACR_URL}}/stream-host:{{VERSION}}-bookworm-slim-python3.12</code></td>
+<td><code>xmpro.azurecr.io/stream-host:4.4.19-bookworm-slim-python3.12</code></td>
 <td>Debian with Python</td>
 </tr>
 <tr>
-<td><code>{{ACR_URL}}/stream-host:{{VERSION}}-alpine3.21</code></td>
+<td><code>xmpro.azurecr.io/stream-host:4.4.19-alpine3.21</code></td>
 <td>Alpine</td>
 </tr>
 </tbody>
@@ -244,7 +244,7 @@ volumes:
   -e &quot;XM__XMPRO__GATEWAY__COLLECTIONID=&lt;Collection ID&gt;&quot; `
   -e &quot;XM__XMPRO__GATEWAY__SECRET=&lt;Collection Secret&gt;&quot; `
   -e &quot;XM__XMPRO__GATEWAY__SERVERURL=&lt;Server URL&gt;&quot; `
-  {{ACR_URL}}/stream-host:latest
+  xmpro.azurecr.io/stream-host:latest
 </code></pre>
 <h4 id="with-optional-environment-variables">With optional environment variables:</h4>
 <pre><code class="lang-powershell">docker run `
@@ -261,7 +261,7 @@ volumes:
 -v &quot;&lt;path_to_your_solution&gt;:/opt/&quot; `
 -e &quot;PIP_REQUIREMENTS_PATH=/opt&quot; `
 -e &quot;ADDITIONAL_INSTALLS=git&quot; `
-{{ACR_URL}}/stream-host:latest
+xmpro.azurecr.io/stream-host:latest
 </code></pre>
 <div class="NOTE">
 <h5>Note</h5>
@@ -274,7 +274,7 @@ volumes:
 -e &quot;XM__XMPRO__GATEWAY__COLLECTIONID=&lt;Collection ID&gt;&quot; \
 -e &quot;XM__XMPRO__GATEWAY__SECRET=&lt;Collection Secret&gt;&quot; \
 -e &quot;XM__XMPRO__GATEWAY__SERVERURL=&lt;Server URL&gt;&quot; \
-{{ACR_URL}}/stream-host:latest
+xmpro.azurecr.io/stream-host:latest
 </code></pre>
 <p>With optional environment variables</p>
 <pre><code class="lang-bash">MSYS_NO_PATHCONV=1 docker run \
@@ -291,7 +291,7 @@ volumes:
 -v &quot;&lt;path_to_your_solution&gt;:/opt/&quot; \
 -e &quot;PIP_REQUIREMENTS_PATH=/opt&quot; \
 -e &quot;ADDITIONAL_INSTALLS=git&quot; \
-{{ACR_URL}}/stream-host:latest
+xmpro.azurecr.io/stream-host:latest
 </code></pre>
 <div class="NOTE">
 <h5>Note</h5>
@@ -301,7 +301,7 @@ volumes:
 <p>Create a <code>compose.yaml</code> file in your working directory:</p>
 <pre><code class="lang-yaml">services:
   stream-host:
-    image: {{ACR_URL}}/stream-host:latest
+    image: xmpro.azurecr.io/stream-host:latest
     pull_policy: always
     container_name: 'stream-host'
     environment:
@@ -313,7 +313,7 @@ volumes:
 <p>With optional environment variables</p>
 <pre><code class="lang-yaml">services:
   stream-host:
-    image: {{ACR_URL}}/stream-host:latest
+    image: xmpro.azurecr.io/stream-host:latest
     pull_policy: always
     container_name: 'stream-host'
     environment:
