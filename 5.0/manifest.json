@@ -26027,6 +26027,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "src/installation/install-stream-host/azure-terraform.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/installation/install-stream-host/azure-terraform.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "src/installation/install-stream-host/docker.md",
       "output": {
         ".html": {
@@ -26041,16 +26051,6 @@
       "output": {
         ".html": {
           "relative_path": "src/installation/install-stream-host/index.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "src/installation/install-stream-host/terraform.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/installation/install-stream-host/terraform.html"
         }
       },
       "version": ""

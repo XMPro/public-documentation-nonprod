@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Stream Host Terraform | XMPro </title>
+      <title>Stream Host Azure Terraform | XMPro </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Stream Host Terraform | XMPro ">
+      <meta name="title" content="Stream Host Azure Terraform | XMPro ">
       <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
       
       <link rel="icon" href="../../../images/favicon.png">
@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../../">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/install-stream-host/terraform.md&amp;version=GBmain&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/install-stream-host/azure-terraform.md&amp;version=GBmain&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -85,7 +85,7 @@
         </div>
 
         <article data-uid="">
-<h1 id="stream-host-terraform">Stream Host Terraform</h1>
+<h1 id="stream-host-azure-terraform">Stream Host Azure Terraform</h1>
 
 <h2 id="introduction">Introduction</h2>
 <p>This guide covers deploying XMPro Stream Host using the Azure Terraform module. You can deploy Stream Host either as part of the full XMPro platform or as a standalone container that connects to an existing Data Stream Designer instance.</p>
@@ -101,29 +101,46 @@
 <li>An existing XMPro Data Stream Designer instance</li>
 <li>Collection ID and Secret from your DS instance</li>
 </ul>
-<h3 id="hardware-requirements">Hardware Requirements</h3>
-<p>The Terraform module allows you to configure Stream Host resources:</p>
+<h3 id="sizing-recommendations">Sizing Recommendations</h3>
+<p>The Terraform module allows you to configure Stream Host resources based on your workload:</p>
 <table>
 <thead>
 <tr>
-<th>Component</th>
-<th>Small (Default)</th>
-<th>Medium</th>
-<th>Large</th>
+<th>Workload Type</th>
+<th>CPU Cores</th>
+<th>Memory (GB)</th>
+<th>Use Case</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Stream Host</td>
-<td>1 CPU, 4 GB RAM</td>
-<td>2 CPU, 8GB RAM</td>
-<td>4 CPU, 16GB RAM</td>
+<td>Small (Default)</td>
+<td>1</td>
+<td>4</td>
+<td>Light data processing, few agents</td>
+</tr>
+<tr>
+<td>Medium</td>
+<td>2</td>
+<td>8</td>
+<td>Moderate workloads, multiple agents</td>
+</tr>
+<tr>
+<td>Large</td>
+<td>4</td>
+<td>16</td>
+<td>Heavy processing, complex transformations</td>
 </tr>
 </tbody>
 </table>
-<div class="NOTE">
-<h5>Note</h5>
-<p>CPU can be between 0.25 and 4 cores. Memory can be between 0.5 and 16 GB.</p>
+<p><strong>Configuration Limits:</strong></p>
+<ul>
+<li>CPU: 0.25 to 4 cores</li>
+<li>Memory: 0.5 to 16 GB</li>
+</ul>
+<div class="TIP">
+<h5>Tip</h5>
+<p>Start with the default configuration (1 CPU, 4 GB RAM) and scale up based on monitoring metrics.</p>
 </div>
 <h2 id="deployment-options">Deployment Options</h2>
 <h3 id="option-1-with-full-xmpro-platform">Option 1: With Full XMPro Platform</h3>
@@ -177,17 +194,25 @@ terraform apply
 <li><strong>stream_host_cpu</strong>: CPU cores (0.25 to 4)</li>
 <li><strong>stream_host_memory</strong>: Memory in GB (0.5 to 16)</li>
 </ul>
+<h3 id="docker-image-variants">Docker Image Variants</h3>
+<ul>
+<li><strong>stream_host_variant</strong>: Choose the Docker image variant (default: <code>&quot;&quot;</code> which is the same as <code>&quot;bookworm-slim&quot;</code>, other options: <code>&quot;bookworm-slim-python3.12&quot;</code>, <code>&quot;alpine3.21&quot;</code>)</li>
+</ul>
 <h3 id="environment-variables">Environment Variables</h3>
 <ul>
-<li><strong>SH_PIP_MODULES</strong>: Python packages to install</li>
-<li><strong>ADDITIONAL_INSTALLS</strong>: System packages to install</li>
-<li><strong>Custom variables</strong>: Any additional environment variables</li>
+<li><strong>SH_PIP_MODULES</strong>: Python packages to install (only available with <code>bookworm-slim-python3.12</code> variant)</li>
+<li><strong>ADDITIONAL_INSTALLS</strong>: System packages to install (works with all variants - APT for Debian, APK for Alpine)</li>
+<li><strong>Custom variables</strong>: Any additional environment variables (works with all variants)</li>
 </ul>
 <p>For a complete list of variables and configuration options, see the <a href="https://github.com/XMPro/terraform-xmpro-azure/tree/main/modules/stream-host-container">module documentation</a>.</p>
 <h2 id="common-configuration-examples">Common Configuration Examples</h2>
 <h3 id="python-package-installation">Python Package Installation</h3>
 <p>Install Python packages for data processing:</p>
 <pre><code class="lang-bash"># In your terraform.tfvars
+# First, specify the Python variant
+stream_host_variant = &quot;bookworm-slim-python3.12&quot;
+
+# Then configure pip packages (only works with Python variant)
 environment_variables = {
   &quot;SH_PIP_MODULES&quot; = &quot;pandas numpy scikit-learn&quot;
 }
@@ -195,14 +220,26 @@ environment_variables = {
 <h3 id="system-dependencies">System Dependencies</h3>
 <p>Install additional system packages:</p>
 <pre><code class="lang-bash"># In your terraform.tfvars
+# Use Python variant if you need both Python and system packages
+stream_host_variant = &quot;bookworm-slim-python3.12&quot;
+
 environment_variables = {
-  &quot;ADDITIONAL_INSTALLS&quot; = &quot;git build-essential python3-dev&quot;
-  &quot;SH_PIP_MODULES&quot;     = &quot;pandas numpy scikit-learn tensorflow&quot;
+  &quot;ADDITIONAL_INSTALLS&quot; = &quot;git build-essential python3-dev&quot;  # Works with all variants
+  &quot;SH_PIP_MODULES&quot;     = &quot;pandas numpy scikit-learn tensorflow&quot;  # Only works with Python variant
 }
 </code></pre>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>The <code>SH_PIP_MODULES</code> and <code>PIP_REQUIREMENTS_PATH</code> environment variables only work with the <code>bookworm-slim-python3.12</code> variant. The <code>ADDITIONAL_INSTALLS</code> variable works with all variants (APT for Debian variants, APK for Alpine). See <a href="docker.html#available-variants">Docker Variants documentation</a> for details.</p>
+</div>
 <h3 id="resource-scaling">Resource Scaling</h3>
-<p>Adjust resources for your workload:</p>
+<p>Adjust resources based on your workload requirements:</p>
 <pre><code class="lang-bash"># In your terraform.tfvars
+# Medium workload
+stream_host_cpu    = 2
+stream_host_memory = 8
+
+# Large workload
 stream_host_cpu    = 4
 stream_host_memory = 16
 </code></pre>
@@ -236,7 +273,7 @@ stream_host_memory = 16
 <h3 id="other-common-issues">Other Common Issues</h3>
 <p>For comprehensive troubleshooting including:</p>
 <ul>
-<li>Python package installation failures</li>
+<li>Python package installation failures (ensure you're using <code>bookworm-slim-python3.12</code> variant)</li>
 <li>Resource allocation problems</li>
 <li>Network connectivity issues</li>
 <li>Container restart loops</li>
@@ -298,7 +335,7 @@ stream_host_memory = 16
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: August 05, 2025</em></small></p>
+    <p><small><em>Last modified: August 06, 2025</em></small></p>
   </div>
 </article>
 
