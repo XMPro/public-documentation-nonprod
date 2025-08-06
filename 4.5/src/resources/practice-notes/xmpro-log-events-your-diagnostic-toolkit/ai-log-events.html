@@ -2,21 +2,21 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Check Data Stream Logs | XMPro </title>
+      <title>AI Log Events | XMPro </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Check Data Stream Logs | XMPro ">
+      <meta name="title" content="AI Log Events | XMPro ">
       <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
       
-      <link rel="icon" href="../../../images/favicon.png">
-      <link rel="stylesheet" href="../../../public/docfx.min.css">
-      <link rel="stylesheet" href="../../../public/main.css">
-      <meta name="docfx:navrel" content="../../../toc.html">
-      <meta name="docfx:tocrel" content="../../toc.html">
+      <link rel="icon" href="../../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../../toc.html">
+      <meta name="docfx:tocrel" content="../../../toc.html">
       
-      <meta name="docfx:rel" content="../../../">
+      <meta name="docfx:rel" content="../../../../">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/how-tos/data-streams/check-data-stream-logs.md&amp;version=GBrelease-4.5.2&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/resources/practice-notes/xmpro-log-events-your-diagnostic-toolkit/ai-log-events.md&amp;version=GBrelease-4.5.2&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -30,7 +30,7 @@
       <meta name="loc:copy" content="Copy">
       <meta name="loc:downloadPdf" content="Download PDF">
 
-      <script type="module" src="./../../../public/docfx.min.js"></script>
+      <script type="module" src="./../../../../public/docfx.min.js"></script>
 
       <script>
         const theme = localStorage.getItem('theme') || 'auto'
@@ -43,8 +43,8 @@
     <header class="bg-body border-bottom">
       <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
         <div class="container-xxl flex-nowrap">
-          <a class="navbar-brand" href="../../../index.html">
-            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+          <a class="navbar-brand" href="../../../../index.html">
+            <img id="logo" class="svg" src="../../../../images/logo-light.png" alt="">
             
           </a>
           <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
@@ -85,65 +85,67 @@
         </div>
 
         <article data-uid="">
-<h1 id="check-data-stream-logs">Check Data Stream Logs</h1>
+<h1 id="ai-log-events">AI Log Events</h1>
 
-<p>A Stream Host is an application that can either be installed as a Windows Service or as a Console Application. Stream Hosts enable Data Streams to run, and you can check any status updates, messages, or errors from the Stream Host directly from the Data Stream you are running.</p>
-<div class="NOTE">
-<h5>Note</h5>
-<p>It is recommended that you read the article listed below to improve your understanding of Stream Hosts and Data Streams.</p>
+<p>AI generates log events that monitor the core application operations including web application lifecycle, file upload activities, and HTTP request processing. These events provide essential monitoring and troubleshooting information for the AI platform.</p>
+<p>The tables below organize log events by severity level, with each entry showing the message template you'll see in your logs and the context explaining what triggers that event. The levels are:</p>
 <ul>
-<li><a href="../../concepts/data-stream/index.html">Data Stream</a></li>
-<li><a href="../../concepts/collection.html">Collection and Stream Host</a></li>
-<li><a href="manage-data-streams.html">How to Manage Data Streams</a></li>
+<li>Fatal</li>
+<li>Error</li>
+<li>Information</li>
 </ul>
-</div>
-<p>Stream Host logs can be checked by going to the 'Collection' page of Data Stream Designer and viewing the logs there. However, you can also view Logs that are specific to a Data Stream directly from the Data Stream canvas.</p>
-<div class="NOTE">
-<h5>Note</h5>
-<p>To find out more about viewing Stream Host logs, visit the <a href="../stream-host.html">How to Manage Stream Hosts article</a>.</p>
-</div>
-<h2 id="view-data-stream-logs">View Data Stream Logs</h2>
-<p>To view Data Stream logs from the canvas, follow the steps below:</p>
-<ol>
-<li>Publish a Data Stream.</li>
-<li>Click on Logs.</li>
-<li>Select the Stream Host Device to view logs for.</li>
-<li>Logs will display in the grid.</li>
-</ol>
-<p><img src="../../images/logs-view-logs.png" alt="View Data Stream Logs"></p>
-<p>You can also maximize the grid to view the data more clearly.</p>
-<p><img src="../../images/logs-max1.png" alt="Maximizing the Grid - Step 1"></p>
-<p><img src="../../images/logs-max2.png" alt="Maximizing the Grid - Step 2"></p>
-<p>To view logs within a specific time range, adjust the timeline slider above the grid.</p>
-<p><img src="../../images/logs-timeline-2.png" alt="Timeline Slider for Logs"></p>
-<h2 id="refresh-data-stream-logs">Refresh Data Stream Logs</h2>
-<p>To refresh Stream Host logs, follow the steps below:</p>
-<ol>
-<li>Publish a Data Stream.</li>
-<li>Click on Logs.</li>
-<li>Click on refresh.</li>
-</ol>
-<p>Logs in the grid will clear and refresh.</p>
-<p><img src="../../images/logs-refresh.png" alt="Refreshing Logs"></p>
-<h2 id="filter-data-stream-logs">Filter Data Stream Logs</h2>
-<p>To filter Data Stream logs, follow the steps below:</p>
-<ol>
-<li>Publish a Data Stream</li>
-<li>Click on Logs.</li>
-<li>Click on the 'Level' filter button.</li>
-<li>Select the log level.</li>
-<li>Click on OK.</li>
-</ol>
-<p><img src="../../images/logs-filter.png" alt="Filtering Logs by Level"></p>
-<h2 id="export-data-stream-logs">Export Data Stream Logs</h2>
-<p>To export Data Stream logs, follow the steps below:</p>
-<ol>
-<li>Publish a Data Stream</li>
-<li>Click on Logs.</li>
-<li>Click on the three dots.</li>
-<li>Export all data or export selected rows.</li>
-</ol>
-<p><img src="../../images/logs-export2.png" alt="Exporting Logs"></p>
+<h2 id="fatal-level">Fatal Level</h2>
+<p>Fatal events indicate critical system failures that cause the application to terminate unexpectedly. These require immediate attention as they represent complete system breakdown.</p>
+<table>
+<thead>
+<tr>
+<th>Message Template</th>
+<th>Context Summary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&quot;Application terminated unexpectedly&quot;</td>
+<td>Application startup failure causing termination</td>
+</tr>
+</tbody>
+</table>
+<h2 id="error-level">Error Level</h2>
+<p>Error events indicate serious problems that prevent normal operation but don't necessarily cause application termination. These require prompt investigation and resolution.</p>
+<table>
+<thead>
+<tr>
+<th>Message Template</th>
+<th>Context Summary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&quot;An error occurred on {RequestPath} with {Message}&quot;</td>
+<td>HTTP request processing errors</td>
+</tr>
+</tbody>
+</table>
+<h2 id="information-level">Information Level</h2>
+<p>Information events track normal system operations and user activities. These provide audit trails and operational insights for system monitoring.</p>
+<table>
+<thead>
+<tr>
+<th>Message Template</th>
+<th>Context Summary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&quot;Starting web application&quot;</td>
+<td>Application startup logging</td>
+</tr>
+<tr>
+<td>&quot;Uploading file with max width {MaxWidth} and height {MaxHeight}&quot;</td>
+<td>File upload operations</td>
+</tr>
+</tbody>
+</table>
 
 
   <div class="last-modified">
