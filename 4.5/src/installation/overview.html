@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/overview.md&amp;version=GBdocs-release-4.5&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/overview.md&amp;version=GBrelease-4.5.2&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -94,9 +94,35 @@
 <li>Subscription Manager</li>
 </ul>
 <h2 id="xmpro-45-deployment">XMPro 4.5 Deployment</h2>
-<p>Please contact our team for installation assistance with XMPro 4.5.</p>
-<p>We're currently developing comprehensive documentation for our new container-based deployment architecture. Installation packages and detailed guides for Azure, Windows, and AWS environments will be released in upcoming patches.</p>
+<p>XMPro 4.5 introduces container-based deployment architecture for improved scalability and maintenance. Multiple deployment options are available:</p>
+<h3 id="cloud-deployment-options">Cloud Deployment Options</h3>
+<h4 id="azure-terraform-deployment">Azure Terraform Deployment</h4>
+<p>Deploy XMPro on Azure using our Terraform Infrastructure as Code (IaC) module:</p>
+<ul>
+<li><strong>Full Platform</strong>: Complete XMPro deployment with all components</li>
+<li><strong>Single Product</strong>: Deploy individual components (AD-only, DS-only, SM-only)</li>
+<li><strong>Production Ready</strong>: Includes monitoring, backup, and security configurations</li>
+<li><strong>Cost Optimized</strong>: Multiple environment templates for different scales</li>
+</ul>
+<p>See the comprehensive <a href="deployment/azure-terraform/index.html">Azure Terraform Deployment</a> guide for complete setup instructions.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>For v4.4 ARM template deployment, see the ARM template documentation. The Terraform deployment covers XMPro v5.0 and later, featuring the new separate App Service Plans per product architecture introduced in v4.4.</p>
+</div>
+<h4 id="aws-deployment">AWS Deployment</h4>
+<p>AWS deployment options are in development and will be available in upcoming releases.</p>
+<h3 id="on-premises-deployment">On-Premises Deployment</h3>
+<h4 id="stream-host-available-now">Stream Host (Available Now)</h4>
 <p>For immediate deployment needs, Stream Host deployment is available for multiple platforms including Windows and Docker. See the <a href="install-stream-host/index.html">Install Stream Host</a> guide for detailed instructions.</p>
+<h4 id="windows-installation">Windows Installation</h4>
+<p>Windows-based installation packages for on-premises deployment will be available in upcoming patches.</p>
+<h3 id="getting-help">Getting Help</h3>
+<p>For deployment assistance:</p>
+<ul>
+<li>Review the <a href="deployment/azure-terraform/troubleshooting.html">Azure Terraform troubleshooting guide</a></li>
+<li>Contact XMPro support for deployment planning</li>
+<li>Check our documentation for the latest deployment options</li>
+</ul>
 
 
   <div class="last-modified">
