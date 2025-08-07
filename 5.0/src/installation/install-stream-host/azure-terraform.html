@@ -163,10 +163,15 @@ cd terraform-xmpro-azure/examples/stream-host
 </li>
 <li><p><strong>Configure your deployment</strong></p>
 <pre><code class="lang-bash"># Copy the example variables file
+# Linux/Mac:
 cp terraform.tfvars.example terraform.tfvars
 
+# Windows:
+copy terraform.tfvars.example terraform.tfvars
+
 # Edit with your specific values
-nano terraform.tfvars
+nano terraform.tfvars   # Linux/Mac
+notepad terraform.tfvars # Windows
 </code></pre>
 </li>
 <li><p><strong>Deploy</strong></p>
@@ -335,7 +340,7 @@ stream_host_memory = 16
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: August 06, 2025</em></small></p>
+    <p><small><em>Last modified: August 07, 2025</em></small></p>
   </div>
 </article>
 

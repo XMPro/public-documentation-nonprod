@@ -329,7 +329,11 @@ terraform force-unlock &lt;lock-id&gt;
 </code></pre>
 <p><strong>Solution:</strong></p>
 <pre><code class="lang-bash"># Restore from backup
+# Linux/Mac:
 cp terraform.tfstate.backup terraform.tfstate
+
+# Windows:
+copy terraform.tfstate.backup terraform.tfstate
 
 # Or refresh state from Azure
 terraform refresh
@@ -763,32 +767,74 @@ az sql db import \
 <h2 id="getting-help">Getting Help</h2>
 <h3 id="terraform-debug-mode">Terraform Debug Mode</h3>
 <pre><code class="lang-bash"># Enable debug logging
+# Linux/Mac:
 export TF_LOG=DEBUG
 export TF_LOG_PATH=./terraform.log
+
+# Windows (PowerShell):
+$env:TF_LOG = &quot;DEBUG&quot;
+$env:TF_LOG_PATH = &quot;./terraform.log&quot;
+
+# Windows (Command Prompt):
+set TF_LOG=DEBUG
+set TF_LOG_PATH=./terraform.log
 
 # Run terraform command
 terraform apply
 
 # Review detailed logs
+# Linux/Mac:
 grep -i error terraform.log
+
+# Windows (PowerShell):
+Select-String -Pattern &quot;error&quot; -Path terraform.log -CaseSensitive:$false
+
+# Windows (Command Prompt):
+findstr /i &quot;error&quot; terraform.log
 </code></pre>
 <h3 id="collect-diagnostic-information">Collect Diagnostic Information</h3>
 <p>When troubleshooting deployment issues, collect the following information:</p>
 <pre><code class="lang-bash"># Create diagnostic directory
+# Linux/Mac:
 mkdir -p xmpro-diagnostics
+
+# Windows:
+mkdir xmpro-diagnostics
+
 cd xmpro-diagnostics
 
 # 1. Save Terraform outputs
 terraform output -json &gt; terraform-outputs.json
 
 # 2. Get resource group name
+# Linux/Mac/Git Bash:
 RESOURCE_GROUP=$(terraform output -raw resource_group_name)
 
+# Windows (PowerShell):
+$RESOURCE_GROUP = terraform output -raw resource_group_name
+
+# Windows (Command Prompt):
+for /f %i in ('terraform output -raw resource_group_name') do set RESOURCE_GROUP=%i
+
 # 3. List all resources in the resource group
+# Linux/Mac/Git Bash:
 az resource list --resource-group $RESOURCE_GROUP --output json &gt; resources.json
 
+# Windows (PowerShell):
+az resource list --resource-group $RESOURCE_GROUP --output json &gt; resources.json
+
+# Windows (Command Prompt):
+az resource list --resource-group %RESOURCE_GROUP% --output json &gt; resources.json
+
 # 4. Get App Service names and collect logs
+# Linux/Mac/Git Bash:
 az webapp list --resource-group $RESOURCE_GROUP --query &quot;[].name&quot; -o tsv &gt; app-services.txt
+
+# Windows (PowerShell):
+az webapp list --resource-group $RESOURCE_GROUP --query &quot;[].name&quot; -o tsv &gt; app-services.txt
+
+# Windows (Command Prompt):
+az webapp list --resource-group %RESOURCE_GROUP% --query &quot;[].name&quot; -o tsv &gt; app-services.txt
 
 # For each app service, download logs (replace {app-service-name} with actual names from above)
 # az webapp log download --name {app-service-name} --resource-group $RESOURCE_GROUP --log-file {app-service-name}-logs.zip
@@ -858,7 +904,7 @@ tar -czf xmpro-diagnostics-$(date +%Y%m%d-%H%M%S).tar.gz *.txt *.json *.zip 2&gt
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: August 06, 2025</em></small></p>
+    <p><small><em>Last modified: August 07, 2025</em></small></p>
   </div>
 </article>
 

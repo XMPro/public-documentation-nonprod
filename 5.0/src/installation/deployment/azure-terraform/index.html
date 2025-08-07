@@ -165,7 +165,11 @@
 cd xmpro-deployment  # Your deployment directory
 
 # Back up current state
+# Linux/Mac:
 cp terraform.tfstate terraform.tfstate.backup
+
+# Windows:
+copy terraform.tfstate terraform.tfstate.backup
 </code></pre>
 <h3 id="step-2-update-configuration">Step 2: Update Configuration</h3>
 <p>Update your Terraform configuration to use the new version:</p>
@@ -241,7 +245,7 @@ terraform destroy
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: August 06, 2025</em></small></p>
+    <p><small><em>Last modified: August 07, 2025</em></small></p>
   </div>
 </article>
 
