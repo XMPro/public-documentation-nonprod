@@ -18347,6 +18347,26 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "src/images/installation-agents-and-connectors.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/installation-agents-and-connectors.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/images/installation-complete-installation.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/installation-complete-installation.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "src/images/installation/windows-server-2022-1.png",
       "output": {
         "resource": {
@@ -25967,6 +25987,76 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "src/installation/complete-installation/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/installation/complete-installation/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "src/installation/complete-installation/install-connectors.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/installation/complete-installation/install-connectors.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "src/installation/complete-installation/install-stream-host/azure-terraform.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/installation/complete-installation/install-stream-host/azure-terraform.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "src/installation/complete-installation/install-stream-host/docker.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/installation/complete-installation/install-stream-host/docker.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "src/installation/complete-installation/install-stream-host/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/installation/complete-installation/install-stream-host/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "src/installation/complete-installation/install-stream-host/windows-x64.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/installation/complete-installation/install-stream-host/windows-x64.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "src/installation/complete-installation/set-up-a-tenant-company.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/installation/complete-installation/set-up-a-tenant-company.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "src/installation/deployment/azure-terraform/existing-database.md",
       "output": {
         ".html": {
@@ -26021,46 +26111,6 @@
       "output": {
         ".html": {
           "relative_path": "src/installation/deployment/index.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "src/installation/install-stream-host/azure-terraform.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/installation/install-stream-host/azure-terraform.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "src/installation/install-stream-host/docker.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/installation/install-stream-host/docker.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "src/installation/install-stream-host/index.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/installation/install-stream-host/index.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "src/installation/install-stream-host/windows-x64.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/installation/install-stream-host/windows-x64.html"
         }
       },
       "version": ""

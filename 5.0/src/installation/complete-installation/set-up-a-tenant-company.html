@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Windows x64 | XMPro </title>
+      <title>Create Base Company | XMPro </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Windows x64 | XMPro ">
+      <meta name="title" content="Create Base Company | XMPro ">
       <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
       
       <link rel="icon" href="../../../images/favicon.png">
@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../../">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/install-stream-host/windows-x64.md&amp;version=GBmain&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/complete-installation/set-up-a-tenant-company.md&amp;version=GBmain&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -85,90 +85,105 @@
         </div>
 
         <article data-uid="">
-<h1 id="windows-x64">Windows x64</h1>
+<h1 id="create-base-company">Create Base Company</h1>
 
-<h2 id="prerequisites">Prerequisites</h2>
-<h3 id="downloads">Downloads</h3>
-<p>Follow the instructions in the <a href="index.html">Install Stream Host</a> guide to download the connection profile and installer.</p>
-<h3 id="hardware-and-software">Hardware and Software</h3>
-<p>XMPro Stream Host requires certain hardware and software specifications in order to install and run. Complete these steps in the <strong>1. Preparation</strong> guide:</p>
+<h2 id="create-a-company-subscription">Create a company subscription</h2>
 <ol>
-<li>Meet the <strong>hardware</strong> requirements</li>
-<li>Install the <strong>software</strong> requirements</li>
+<li>Browse to the XMPro Subscription Manager website and click on <em>Sign up for an account</em>.</li>
 </ol>
-<h2 id="initial-steps">Initial Steps</h2>
-<ol>
-<li><p>Run the executable installer file that you've downloaded as administrator</p>
-</li>
-<li><p>When the installation wizard opens, click Next</p>
-</li>
+<p><img src="../../images/signup.png" alt=""></p>
+<ol start="2">
+<li>Complete the form, checking the <em>Create new company</em> checkbox, and press Agree</li>
 </ol>
-<p><img src="../../images/image-726.png" alt="Installation wizard"></p>
+<p><img src="../../images/image-784.png" alt=""></p>
 <ol start="3">
-<li>Read and accept the license agreement by ticking the check box at the bottom and click Next</li>
+<li><p>Browse to the XMPro Subscription Manager website</p>
+</li>
+<li><p>Log in using the XMPro credentials (admin@xmpro.onxmpro.com)</p>
+</li>
 </ol>
-<p><img src="../../images/image-241.png" alt="License agreement"></p>
+<p><img src="../../images/image-340.png" alt=""></p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The username and password displayed on the final step of the Subscription Manager deployment.</p>
+</div>
+<ol start="5">
+<li>Open the Companies page from the left-hand menu</li>
+</ol>
+<p><img src="../../images/companies1.png" alt=""></p>
+<ol start="6">
+<li><p>Click the Company you have just requested to be added (in this example, &quot;Company&quot;)</p>
+</li>
+<li><p>Click the Subscription Requests button in the command bar, click the request and click Save</p>
+</li>
+</ol>
+<p><img src="../../images/companies2.png" alt=""></p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The requested Company has been approved and subscribed to XMPro Subscription Manager. The user you applied with above can now log in.</p>
+</div>
+<ol start="8">
+<li>Press Ok</li>
+</ol>
+<p><img src="../../images/image-1160.png" alt=""></p>
+<h2 id="request-a-license">Request a license</h2>
+<p>Next we add subscriptions for Data Stream Designer and App Designer to the new Company:</p>
+<ol>
+<li><p>Click the Subscriptions gauge in the Company to open the Company's Subscriptions</p>
+</li>
+<li><p>Click the Add button in the command bar to add a new Subscription</p>
+</li>
+</ol>
+<p><img src="../../images/image-670.png" alt=""></p>
+<ol start="3">
+<li>Select the Data Stream Designer product</li>
+</ol>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The exact name will depend on your installation, in this example, it is &quot;DataStreams&quot;.</p>
+</div>
 <ol start="4">
-<li><p>Click the Change button to choose the location for the Stream Host to be installed</p>
-</li>
-<li><p>Browse to the directory you would like to use, or use the default, and click Next</p>
-</li>
-</ol>
-<p><img src="../../images/image-178.png" alt="Directory selection"></p>
-<h2 id="host-type-selection">Host Type Selection</h2>
-<ol>
-<li>Select the host type and click Next</li>
-</ol>
-<p><img src="../../images/image-665.png" alt="Host type selection"></p>
-<div class="NOTE">
-<h5>Note</h5>
-<p><em>Console Application</em> is recommended for testing purposes.</p>
-<p>It will be listed in the Start menu under the name &quot;<em>XMPro Stream Host</em>&quot; and <strong>must be</strong> <strong>manually run as administrator</strong> from the Start menu.</p>
-</div>
-<div class="NOTE">
-<h5>Note</h5>
-<p><em>Windows Service</em> is recommended for production environments.</p>
-<p>It will automatically start after installation completes and the name of the service will be the same as the &quot;<em>Device Name</em>&quot; you specified when you downloaded the Connection Profile file or manually added the name to the installer.</p>
-</div>
-<h2 id="connection-profile">Connection Profile</h2>
-<ol>
-<li>Select your preferred setup mode and click Next</li>
-</ol>
-<p><img src="../../images/image-552.png" alt="Setup mode selection"></p>
-<h3 id="upload-a-collection-profile">Upload a Collection Profile</h3>
-<p>Follow these steps if you selected <em>Connection Profile:</em></p>
-<ol>
-<li><p>Click Browse and select the Connection Profile file you downloaded earlier in the <a href="index.html">guide</a></p>
-</li>
-<li><p>In the File Key textbox enter the key used to create the Connection Profile</p>
-</li>
-<li><p>Click Next and let the wizard install the Stream Host</p>
-</li>
+<li>Click <em>Request a new License</em></li>
 </ol>
 <div class="NOTE">
 <h5>Note</h5>
-<p>If you selected <em>Manual</em>, see the section below for instructions on how to set it up.</p>
+<p>This sends a request to XMPro for a Data Stream Designer license for this Company.</p>
 </div>
-<p><img src="../../images/image-713.png" alt="Connection profile configuration"></p>
-<h3 id="manual-settings">Manual Settings</h3>
-<p>If you decide to manually set up the connection settings for the Stream Host, you can find the values you need by following the steps below.</p>
-<ol>
-<li>Choose a name for the device</li>
-<li>Log into Data Stream Designer and open the <em>Collections</em> page from the left-hand menu</li>
-<li>Select the Collection you wish to use</li>
-<li>Copy the <em>ID</em> of the Collection from Data Stream Designer to your clipboard by clicking on the <em>copy</em> button and paste it into the <em>Collection ID</em> field in the installer</li>
-<li>Copy the <em>Key</em> of the Collection from Data Stream Designer to your clipboard by clicking on the <em>copy</em> button and paste it into the <em>Collection Secret</em> field in the installer</li>
-<li>Add the <em>Server URL</em> for Data Stream Designer in the installer, for example, &quot;<em>http://localhost/DataStreams</em>&quot;</li>
-<li>Add an encryption key that can be used in the <em>Encryption Key</em> field in the installer</li>
-<li>Click <em>Next</em> and let the wizard install the Stream Host</li>
+<p><img src="../../images/image-626.png" alt=""></p>
+<ol start="5">
+<li>Change the Product to App Designer and request another license</li>
 </ol>
-<p><img src="../../images/image-1391.png" alt="Manual settings configuration"></p>
-<p>Your Stream Host installation is now complete.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Licenses are given on an individual basis by the <a href="http://xmpro.com/support/">XMPro support team</a>.</p>
+</div>
+<p>When you have received a license for each product through an email sent to the email address used to create this account, return to this page.</p>
+<h2 id="upload-the-license">Upload the license</h2>
+<ol>
+<li>Select the Data Stream Designer product, upload its corresponding license and click Save</li>
+</ol>
+<p><img src="../../images/image-921.png" alt=""></p>
+<ol start="2">
+<li>Click Add on the Subscriptions page and repeat the steps above for the App Designer product</li>
+</ol>
+<p><img src="../../images/image-470.png" alt=""></p>
+<h2 id="add-the-user">Add the user</h2>
+<p>Now we will add the user to each subscription:</p>
+<ol>
+<li><p>Click the Data Stream Designer product and click the Add button</p>
+</li>
+<li><p>Select the user, role, any permissions the user should have in the product and click Save</p>
+</li>
+</ol>
+<p><img src="../../images/image-280.png" alt=""></p>
+<ol start="3">
+<li>Repeat the above steps for the App Designer.</li>
+</ol>
 
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: August 07, 2025</em></small></p>
+    <p><small><em>Last modified: August 12, 2025</em></small></p>
   </div>
 </article>
 
