@@ -2,11 +2,11 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Version | XMPro </title>
+      <title>v4.4.22 | XMPro </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Version | XMPro ">
+      <meta name="title" content="v4.4.22 | XMPro ">
       <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
-      
+      <meta name="description" content="Pending">
       <link rel="icon" href="../../images/favicon.png">
       <link rel="stylesheet" href="../../public/docfx.min.css">
       <link rel="stylesheet" href="../../public/main.css">
@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/concepts/version.md&amp;version=GBrelease-4.4.22&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/release-notes/v4.4.22.md&amp;version=GBrelease-4.4.22&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -85,64 +85,46 @@
         </div>
 
         <article data-uid="">
-<h1 id="version">Version</h1>
+<h1 id="v4422">v4.4.22</h1>
 
-<h2 id="version-management">Version Management</h2>
-<p>Versioning provides traceability, which is the ability to view all revisions and changes made throughout an XMPro Object's history, including changes made during each development stage. Adding new versions also allows different team members to work on and make changes to an XMPro Object that is currently in use by other people. This allows others to continue using it without any downtime.</p>
-<p>Making changes on a new version of an XMPro Object also allows you to maintain a version of it before you made changes, which can also act as a backup mechanism. If major issues are found in the new version, you are easily able to switch back to an older one if needed.</p>
-<p>Each XMPro Object keeps track of different versions, including:</p>
-<ul>
-<li>Data Streams</li>
-<li>Agents and Connectors</li>
-<li>Applications</li>
-<li>Recommendations</li>
-<li>Forms</li>
-</ul>
-<div class="embeddedvideo"><iframe src="https://www.youtube-nocookie.com/embed/3oqlQJxFaOg?rel=0" frameborder="0" allowfullscreen="true"></iframe></div>
-<p>Minor version increases are automatically handled by the system every time you make changes to the particular XMPro Object and save those changes. However, control over how major version increases are handled is given, to some extent, to the user as versions can easily be copied or removed.</p>
-<p>Copying a version allows you to continue working and making changes to the XMPro Object while maintaining a version of it before you made changes, which can also act as a backup mechanism.</p>
-<p>To view the available versions for a particular XMPro Object, click on the &quot;<em>Versions</em>&quot; button.</p>
-<p><img src="../images/version-button.png" alt="Versions Button"></p>
-<p>When you open an XMPro Object, the latest version is automatically opened. Even if there is an older version published, the latest version will still be opened.</p>
-<p><img src="../images/version-latest.png" alt="Latest Version"></p>
-<h2 id="published-versions">Published Versions</h2>
-<p>A published version is a version of the XMPro Object that is published and viewable and usable to others. <a href="../how-tos/publish/index.html">See the Publish article for more details on published XMPro Objects.</a></p>
-<p>Versions that are published will display a green play symbol next to the version number.</p>
-<p><img src="../images/version-published.png" alt="Published Versions"></p>
-<h2 id="copying-versions">Copying Versions</h2>
-<p>When copying a version, all properties and inner components of the XMPro Object's version will be duplicated as a new version.</p>
-<p><img src="../images/version-copying-1.png" alt="Copying Versions"></p>
-<p><img src="../images/version-copying-2.png" alt="Copying Versions 2"></p>
-<h2 id="deleting-versions">Deleting Versions</h2>
-<p>Published versions cannot be deleted. When an XMPro Object only has a single version or one last remaining version, that version also cannot be deleted.</p>
-<p><img src="../images/version-deleting.png" alt="Deleting Versions"></p>
-<h2 id="actions-on-the-version">Actions on the Version</h2>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Security update: Mitigate high-severity vulnerabilities by upgrading all products.</p>
+</div>
+<h2 id="common">Common</h2>
 <table>
 <thead>
 <tr>
-<th><strong>Action</strong></th>
-<th><strong>Description</strong></th>
+<th>Change Type</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>View/Open</td>
-<td>Opens that particular version of the XMPro Object.</td>
+<td>Security</td>
+<td><strong>Product security and stability</strong>: We've mitigated several high-severity vulnerabilities by upgrading the corresponding NuGet packages.</td>
 </tr>
 <tr>
-<td>Copy</td>
-<td>Copies the selected version as a new version, with a higher version number.</td>
-</tr>
-<tr>
-<td>Delete</td>
-<td>Deletes the Version.</td>
+<td>Security</td>
+<td><strong>Ubuntu Support Removed</strong>: As advised in v4.4.19's release notes, Ubuntu is now deprecated and has been removed from from the Collections Download.</td>
 </tr>
 </tbody>
 </table>
-<h2 id="further-reading">Further Reading</h2>
-<ul>
-<li><a href="../how-tos/manage-versions.html">How to manage Versions</a></li>
-</ul>
+<h2 id="documentation">Documentation</h2>
+<table>
+<thead>
+<tr>
+<th>Change Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fix</td>
+<td><strong>Azure Installation</strong>: Fixed missing hyperlinks in the Azure install section.</td>
+</tr>
+</tbody>
+</table>
 
 
   <div class="last-modified">

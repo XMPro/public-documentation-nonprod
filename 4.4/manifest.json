@@ -27547,6 +27547,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "src/release-notes/v4.4.22.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/release-notes/v4.4.22.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "src/release-notes/v4.4.3.md",
       "output": {
         ".html": {
