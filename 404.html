@@ -123,6 +123,10 @@
             const currentPath = window.location.pathname;
             const queryString = window.location.search;
             const hash = window.location.hash;
+            const hostname = window.location.hostname;
+            
+            // Check if this is a PR site (not .xmpro.com)
+            const isPRSite = !hostname.includes('.xmpro.com');
             
             // Split path and remove empty strings
             const pathParts = currentPath.split('/').filter(p => p);
@@ -132,12 +136,65 @@
                 pathParts.shift();
             }
             
+            // Define URL mappings
+            const urlMappings = [
+                {
+                    pattern: /^\/installation\/3\.-complete-installation\//,
+                    replacement: isPRSite ? '/src/installation/complete-installation/' : '/4.5/src/installation/complete-installation/',
+                    description: 'Redirect old complete-installation path'
+                },
+                {
+                    pattern: /^\/installation\/2\.-deployment\//,
+                    replacement: isPRSite ? '/src/installation/deployment/' : '/4.5/src/installation/deployment/',
+                    description: 'Redirect old deployment path'
+                },
+                {
+                    pattern: /^\/installation\/2\.-install-xmpro\//,
+                    replacement: isPRSite ? '/src/installation/deployment/' : '/4.5/src/installation/deployment/',
+                    description: 'Redirect old install-xmpro path'
+                },
+                {
+                    pattern: /^\/4\.5\/src\/installation\/deployment\//,
+                    replacement: isPRSite ? '/src/installation/deployment/' : '/4.4/src/installation/deployment/',
+                    description: 'Fallback to 4.4 for deployment'
+                },
+                {
+                    pattern: isPRSite ? /^\/src\/installation\/complete-installation\/install-stream-host\// : /^\/4\.5\/src\/installation\/complete-installation\/install-stream-host\//,
+                    replacement: isPRSite ? '/src/installation/install-stream-host/' : '/4.5/src/installation/install-stream-host/',
+                    description: 'Fallback URL for old structure'
+                }
+            ];
+            
+            // Reconstruct the full path for matching
+            let fullPath = '/' + pathParts.join('/');
+            
+            // Stage 1: Check for specific URL mappings first (with trailing slash for pattern matching)
+            let pathForMatching = fullPath;
+            if (pathForMatching !== '/' && !pathForMatching.endsWith('/')) {
+                pathForMatching += '/';
+            }
+            
+            for (const mapping of urlMappings) {
+                if (mapping.pattern.test(pathForMatching)) {
+                    // Replace pattern, maintaining the rest of the path after the pattern
+                    const targetPath = pathForMatching.replace(mapping.pattern, mapping.replacement);
+                    // Remove trailing slash if original didn't have one
+                    const finalPath = currentPath.endsWith('/') ? targetPath : targetPath.replace(/\/$/, '');
+                    const targetUrl = finalPath + queryString + hash;
+                    console.log(`Applying mapping: ${mapping.description}`);
+                    console.log(`From: ${currentPath}`);
+                    console.log(`To: ${finalPath}`);
+                    redirectToVersionedPage(targetUrl, currentPath);
+                    return;
+                }
+            }
+            
             // Check if path already starts with a version (e.g., "4.4", "4.5", "5.0")
             const versionPattern = /^[0-9]+\.[0-9]+$/;
             const isVersioned = pathParts.length > 0 && versionPattern.test(pathParts[0]);
             
             if (isVersioned) {
-                // Already in a versioned folder - try adding trailing slash if missing
+                // Stage 3: Already versioned - only add trailing slash if missing and not a file
                 if (!currentPath.endsWith('/') && !currentPath.endsWith('.html')) {
                     const targetUrl = currentPath + '/' + queryString + hash;
                     redirectToVersionedPage(targetUrl, currentPath);
@@ -146,10 +203,24 @@
                     showNotFoundPage(currentPath);
                 }
             } else {
-                // Not versioned - redirect to latest version with /src/ prefix
-                const targetPath = '/' + LATEST_VERSION + '/src/' + pathParts.join('/');
-                const targetUrl = targetPath + queryString + hash;
-                redirectToVersionedPage(targetUrl, currentPath);
+                // Not versioned - handle based on site type
+                if (isPRSite) {
+                    // PR sites don't have versioning
+                    if (pathParts.length > 0 && pathParts[0] === 'src') {
+                        // Already has /src/ prefix - show 404 instead of redirecting to same path
+                        showNotFoundPage(currentPath);
+                    } else {
+                        // Add /src/ prefix
+                        const targetPath = '/src/' + pathParts.join('/');
+                        const targetUrl = targetPath + queryString + hash;
+                        redirectToVersionedPage(targetUrl, currentPath);
+                    }
+                } else {
+                    // Production site - redirect to latest version with /src/ prefix
+                    const targetPath = '/' + LATEST_VERSION + '/src/' + pathParts.join('/');
+                    const targetUrl = targetPath + queryString + hash;
+                    redirectToVersionedPage(targetUrl, currentPath);
+                }
             }
         }
         
