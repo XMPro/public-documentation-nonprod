@@ -162,18 +162,23 @@
             
             // Reconstruct the full path for matching
             let fullPath = '/' + pathParts.join('/');
-            if (fullPath !== '/' && !fullPath.endsWith('/')) {
-                fullPath += '/';
+            
+            // Stage 1: Check for specific URL mappings first (with trailing slash for pattern matching)
+            let pathForMatching = fullPath;
+            if (pathForMatching !== '/' && !pathForMatching.endsWith('/')) {
+                pathForMatching += '/';
             }
             
-            // Check for specific URL mappings first
             for (const mapping of urlMappings) {
-                if (mapping.pattern.test(fullPath)) {
-                    const targetPath = fullPath.replace(mapping.pattern, mapping.replacement);
-                    const targetUrl = targetPath + queryString + hash;
+                if (mapping.pattern.test(pathForMatching)) {
+                    // Replace pattern, maintaining the rest of the path after the pattern
+                    const targetPath = pathForMatching.replace(mapping.pattern, mapping.replacement);
+                    // Remove trailing slash if original didn't have one
+                    const finalPath = currentPath.endsWith('/') ? targetPath : targetPath.replace(/\/$/, '');
+                    const targetUrl = finalPath + queryString + hash;
                     console.log(`Applying mapping: ${mapping.description}`);
-                    console.log(`From: ${fullPath}`);
-                    console.log(`To: ${targetPath}`);
+                    console.log(`From: ${currentPath}`);
+                    console.log(`To: ${finalPath}`);
                     redirectToVersionedPage(targetUrl, currentPath);
                     return;
                 }
@@ -184,7 +189,7 @@
             const isVersioned = pathParts.length > 0 && versionPattern.test(pathParts[0]);
             
             if (isVersioned) {
-                // Already in a versioned folder - try adding trailing slash if missing
+                // Stage 3: Already versioned - only add trailing slash if missing and not a file
                 if (!currentPath.endsWith('/') && !currentPath.endsWith('.html')) {
                     const targetUrl = currentPath + '/' + queryString + hash;
                     redirectToVersionedPage(targetUrl, currentPath);
