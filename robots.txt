@@ -1,0 +1,8 @@
+# robots.txt for XMPro Documentation (NonProd Environment)
+# This file tells search engines not to crawl nonprod documentation
+
+# Block all search engines from crawling nonprod
+User-agent: *
+Disallow: /
+
+# No sitemap for nonprod - we don't want it indexed
