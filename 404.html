@@ -149,6 +149,11 @@
                     description: 'Redirect old deployment path'
                 },
                 {
+                    pattern: /^\/installation\/2\.-install-xmpro\//,
+                    replacement: isPRSite ? '/src/installation/deployment/' : '/4.5/src/installation/deployment/',
+                    description: 'Redirect old install-xmpro path'
+                },
+                {
                     pattern: /^\/4\.5\/src\/installation\/deployment\//,
                     replacement: isPRSite ? '/src/installation/deployment/' : '/4.4/src/installation/deployment/',
                     description: 'Fallback to 4.4 for deployment'
