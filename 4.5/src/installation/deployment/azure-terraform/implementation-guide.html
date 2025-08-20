@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Implementation Guide | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Implementation Guide | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../../toc.html">
+      <meta name="docfx:tocrel" content="../../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/deployment/azure-terraform/implementation-guide.md&amp;version=GBrelease-4.5.2&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../../index.html">
+            <img id="logo" class="svg" src="../../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="implementation-guide">Implementation Guide</h1>
+
+<h2 id="introduction">Introduction</h2>
+<p>This guide provides step-by-step instructions for deploying XMPro on Azure using the Terraform module. For detailed technical specifications, configuration options, and module documentation, please refer to the <a href="https://github.com/XMPro/terraform-xmpro-azure">GitHub README</a>.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>Before starting, ensure you have:</p>
+<ul>
+<li>Completed all <a href="prerequisites.html">prerequisites</a></li>
+<li>Reviewed the <a href="https://github.com/XMPro/terraform-xmpro-azure#-prerequisites">module documentation</a> on GitHub</li>
+<li>Azure subscription with appropriate permissions</li>
+</ul>
+<h2 id="deployment-options">Deployment Options</h2>
+<p>The XMPro Terraform module provides several deployment examples:</p>
+<h3 id="option-1-basic-deployment-recommended-for-getting-started">Option 1: Basic Deployment (Recommended for Getting Started)</h3>
+<ol>
+<li><p><strong>Clone the repository and use the basic example:</strong></p>
+<pre><code class="lang-bash">git clone https://github.com/XMPro/terraform-xmpro-azure.git
+cd terraform-xmpro-azure/examples/basic
+</code></pre>
+</li>
+<li><p><strong>Copy and customize the configuration:</strong></p>
+<pre><code class="lang-bash"># Linux/Mac:
+cp terraform.tfvars.example terraform.tfvars
+
+# Windows:
+copy terraform.tfvars.example terraform.tfvars
+
+# Edit terraform.tfvars with your values
+</code></pre>
+</li>
+<li><p><strong>Review the example configuration</strong> in the <a href="https://github.com/XMPro/terraform-xmpro-azure#basic-usage">Basic Usage section</a> of the README.</p>
+</li>
+</ol>
+<h3 id="option-2-production-deployment">Option 2: Production Deployment</h3>
+<p>For production deployments, refer to the <a href="https://github.com/XMPro/terraform-xmpro-azure#advanced-configuration-with-existing-database">Advanced Configuration</a> section in the README which covers:</p>
+<ul>
+<li>Production-grade App Service SKUs</li>
+<li>Custom domain configuration</li>
+<li>Email notification setup</li>
+<li>Existing database integration</li>
+</ul>
+<h3 id="option-3-custom-implementation">Option 3: Custom Implementation</h3>
+<p>Create your own Terraform configuration using the module directly. See the <a href="https://github.com/XMPro/terraform-xmpro-azure#module-source-options">Module Source Options</a> in the README for different ways to reference the module.</p>
+<h2 id="deployment-process">Deployment Process</h2>
+<h3 id="step-1-initialize-terraform">Step 1: Initialize Terraform</h3>
+<pre><code class="lang-bash">terraform init
+</code></pre>
+<h3 id="step-2-plan-your-deployment">Step 2: Plan Your Deployment</h3>
+<pre><code class="lang-bash">terraform plan
+</code></pre>
+<h3 id="step-3-apply-configuration">Step 3: Apply Configuration</h3>
+<pre><code class="lang-bash">terraform apply
+</code></pre>
+<h3 id="step-4-access-your-applications">Step 4: Access Your Applications</h3>
+<p>After deployment, retrieve the application URLs:</p>
+<pre><code class="lang-bash">terraform output
+</code></pre>
+<div class="TIP">
+<h5>Tip</h5>
+<p>For detailed deployment instructions and troubleshooting, see the <a href="https://github.com/XMPro/terraform-xmpro-azure">GitHub README</a>.</p>
+</div>
+<h2 id="configuration-reference">Configuration Reference</h2>
+<p>The module supports extensive configuration options. Key areas include:</p>
+<ul>
+<li><strong>Required Variables</strong>: See <a href="https://github.com/XMPro/terraform-xmpro-azure#required-variables">Required Variables</a></li>
+<li><strong>Basic Configuration</strong>: See <a href="https://github.com/XMPro/terraform-xmpro-azure#basic-configuration">Basic Configuration</a></li>
+<li><strong>Database Options</strong>: See <a href="https://github.com/XMPro/terraform-xmpro-azure#database-configuration">Database Configuration</a></li>
+<li><strong>Container Registry</strong>: See <a href="https://github.com/XMPro/terraform-xmpro-azure#container-registry">Container Registry</a></li>
+<li><strong>Service Sizing</strong>: See <a href="https://github.com/XMPro/terraform-xmpro-azure#service-configuration">Service Configuration</a></li>
+</ul>
+<h2 id="deployment-scenarios">Deployment Scenarios</h2>
+<h3 id="evaluation-mode-vs-for-production-workloads">Evaluation Mode vs For Production Workloads</h3>
+<p>The module supports two deployment modes. See <a href="https://github.com/XMPro/terraform-xmpro-azure#-evaluation-vs-for-production-workloads">Evaluation vs For Production Workloads</a> in the README for detailed explanation.</p>
+<h3 id="using-existing-database">Using Existing Database</h3>
+<p>For scenarios where you have an existing SQL Server, see <a href="https://github.com/XMPro/terraform-xmpro-azure#%EF%B8%8F-existing-database-support">Existing Database Support</a>.</p>
+<h3 id="custom-domain-configuration">Custom Domain Configuration</h3>
+<p>To configure custom domains with automatic SSL certificates, refer to the <a href="https://github.com/XMPro/terraform-xmpro-azure#dns-and-domain-configuration">DNS and Domain Configuration</a> section.</p>
+<h2 id="post-deployment-validation">Post-Deployment Validation</h2>
+<h3 id="verify-deployment">Verify Deployment</h3>
+<p>After deployment, verify your applications are running:</p>
+<pre><code class="lang-bash"># List deployed resources
+az resource list --resource-group $(terraform output -raw resource_group_name) --output table
+
+# Check application versions
+curl -f &quot;$(terraform output -raw ad_app_url)/version&quot;
+curl -f &quot;$(terraform output -raw ds_app_url)/version&quot;
+curl -f &quot;$(terraform output -raw sm_app_url)/version&quot;
+</code></pre>
+<h3 id="access-applications">Access Applications</h3>
+<p>Navigate to the URLs provided by <code>terraform output</code>:</p>
+<ul>
+<li><strong>SM (Subscription Manager)</strong>: Configure users and licenses</li>
+<li><strong>AD (App Designer)</strong>: Build applications</li>
+<li><strong>DS (Data Stream Designer)</strong>: Create data pipelines</li>
+</ul>
+<h3 id="initial-configuration">Initial Configuration</h3>
+<ol>
+<li>Navigate to Subscription Manager URL</li>
+<li>Login with admin credentials</li>
+<li>Configure company settings</li>
+<li>Set up additional users and roles</li>
+<li>Configure license keys</li>
+</ol>
+<h3 id="admin-logins">Admin Logins</h3>
+<p>After deployment, you can access the platform with these accounts:</p>
+<table>
+<thead>
+<tr>
+<th>User</th>
+<th>Type</th>
+<th>Password</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>admin@xmpro.onxmpro.com</td>
+<td>Super Admin</td>
+<td>Value from <code>site_admin_password</code> variable</td>
+</tr>
+<tr>
+<td>{firstname}.{lastname}@{company_name}.onxmpro.com</td>
+<td>Company Admin</td>
+<td>Value from <code>company_admin_password</code> variable</td>
+</tr>
+</tbody>
+</table>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>The username format is critical: <code>firstname.lastname@company_name.onxmpro.com</code></p>
+</div>
+<h3 id="license-management">License Management</h3>
+<h4 id="evaluation-mode">Evaluation Mode</h4>
+<p>When <code>is_evaluation_mode = true</code>, the deployment includes:</p>
+<ul>
+<li>Automatic license provisioning via licenses container</li>
+<li>Pre-configured evaluation product IDs and keys</li>
+<li>No manual license requests required</li>
+<li><strong>Forces company name to &quot;Evaluation&quot; (overrides any <code>company_name</code> variable value)</strong></li>
+</ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The <code>examples/basic</code> configuration uses <code>is_evaluation_mode = true</code> as default for quick evaluation deployments.</p>
+</div>
+<div class="NOTE">
+<h5>Note</h5>
+<p>To use a custom company name, you must set <code>is_evaluation_mode = false</code> and request licenses from XMPro for your specific company name.</p>
+</div>
+<h4 id="for-production-workloads-default">For Production Workloads (Default)</h4>
+<p>When <code>is_evaluation_mode = false</code> (default), you need to manually request licenses:</p>
+<ol>
+<li>Login using the Super Admin account <code>admin@xmpro.onxmpro.com</code></li>
+<li>Navigate to Company → Subscriptions</li>
+<li>Click &quot;Update License&quot; for each product (AD, DS)</li>
+<li>Generate license requests and submit to XMPro support</li>
+<li>Upload received licenses</li>
+</ol>
+<div class="NOTE">
+<h5>Note</h5>
+<p>License requests require SMTP configuration to be enabled during deployment. See the <a href="https://github.com/XMPro/terraform-xmpro-azure#email-configuration">Module Documentation</a> for SMTP setup.</p>
+</div>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<p>For common deployment issues and solutions, see:</p>
+<ul>
+<li><a href="troubleshooting.html">Troubleshooting Guide</a> in this documentation</li>
+<li><a href="https://github.com/XMPro/terraform-xmpro-azure#-troubleshooting">Troubleshooting section</a> in the GitHub README</li>
+</ul>
+<h2 id="cleanup">Cleanup</h2>
+<p>To remove all deployed resources:</p>
+<pre><code class="lang-bash">terraform destroy
+</code></pre>
+<h2 id="next-steps">Next Steps</h2>
+<p>After successful deployment:</p>
+<ol>
+<li><p><strong>Access Applications</strong></p>
+<ul>
+<li>Navigate to the URLs from terraform output</li>
+<li>Log in with admin credentials</li>
+</ul>
+</li>
+<li><p><strong>Configure Applications</strong></p>
+<ul>
+<li>Set up users and permissions</li>
+<li>Configure data streams</li>
+<li>Create applications</li>
+</ul>
+</li>
+<li><p><strong>Review Security</strong></p>
+<ul>
+<li>Enable Azure AD authentication</li>
+<li>Configure network restrictions</li>
+<li>Review audit logs</li>
+</ul>
+</li>
+</ol>
+<h2 id="support">Support</h2>
+<p>For deployment issues:</p>
+<ul>
+<li>Review the <a href="troubleshooting.html">Troubleshooting Guide</a></li>
+<li>Check Terraform logs: <code>terraform show</code></li>
+<li>Contact XMPro support with deployment details</li>
+</ul>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: August 19, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
