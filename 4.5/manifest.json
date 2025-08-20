@@ -1,6 +1,6 @@
 {
   "sitemap": {
-    "baseUrl": "https://xmpro.github.io/public-documentation/",
+    "baseUrl": "https://documentation.xmpro.com/4.5/",
     "changefreq": "daily",
     "priority": 0.5
   },
@@ -81,26 +81,6 @@
       "output": {
         ".html": {
           "relative_path": "index.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "pipeline-scripts/README.md",
-      "output": {
-        ".html": {
-          "relative_path": "pipeline-scripts/README.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "pipeline-templates/README.md",
-      "output": {
-        ".html": {
-          "relative_path": "pipeline-templates/README.html"
         }
       },
       "version": ""
