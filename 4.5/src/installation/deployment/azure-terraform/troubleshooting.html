@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../../../">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/deployment/azure-terraform/troubleshooting.md&amp;version=GBrelease-4.5.2&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/deployment/azure-terraform/troubleshooting.md&amp;version=GB21317-cherry-pick-batch-to-release-4.5.2&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -87,824 +87,227 @@
         <article data-uid="">
 <h1 id="troubleshooting">Troubleshooting</h1>
 
-<h2 id="introduction">Introduction</h2>
-<p>This guide covers common issues encountered during XMPro Azure Terraform deployment and their solutions. Use this guide to diagnose and resolve deployment problems quickly.</p>
-<h2 id="common-deployment-issues">Common Deployment Issues</h2>
-<h3 id="module-source-issues">Module Source Issues</h3>
-<h4 id="incorrect-module-source-path">Incorrect Module Source Path</h4>
-<p><strong>Error Message:</strong></p>
-<pre><code>Error: Module not found
-│ 
-│ The module address &quot;./terraform-xmpro-azure&quot; could not be resolved.
-</code></pre>
-<p><strong>Solution:</strong>
-Use the correct GitHub source for the module:</p>
-<pre><code class="lang-hcl">module &quot;xmpro&quot; {
-  source  = &quot;github.com/XMPro/terraform-xmpro-azure?ref=v4.5.2&quot;
-  # Your variables here
-}
-</code></pre>
-<p><strong>Note:</strong> Do not use local file paths unless you have cloned the repository locally.</p>
-<h3 id="variable-naming-issues">Variable Naming Issues</h3>
-<h4 id="incorrect-variable-names">Incorrect Variable Names</h4>
-<p><strong>Error Message:</strong></p>
-<pre><code>Error: Unsupported argument
-│ 
-│ An argument named &quot;companyname&quot; is not expected here. Did you mean &quot;company_name&quot;?
-</code></pre>
-<p><strong>Solution:</strong>
-Use the correct variable names with underscores:</p>
-<pre><code class="lang-hcl"># Correct variable names
-company_name = &quot;acme&quot;         # NOT companyname
-environment = &quot;dev&quot;           # Valid environments: dev, qa, sandbox-sm-only
-is_evaluation_mode = false    # Default is true, set to false for production
-</code></pre>
-<p><strong>Common Variable Name Corrections:</strong></p>
-<ul>
-<li><code>companyname</code> → <code>company_name</code></li>
-<li>Use underscores for all multi-word variables</li>
-</ul>
-<h3 id="authentication-problems">Authentication Problems</h3>
-<p>For detailed Azure authentication setup and troubleshooting, refer to the official Microsoft guide:</p>
-<p><a href="https://learn.microsoft.com/en-us/azure/developer/terraform/quickstart-configure">Configure Terraform in Azure - Microsoft Learn</a></p>
-<p><strong>Common authentication issues:</strong></p>
-<ul>
-<li><strong>Expired Azure CLI session</strong>: Run <code>az login</code> to re-authenticate</li>
-<li><strong>Wrong subscription selected</strong>: Use <code>az account set --subscription &quot;Your Subscription Name&quot;</code></li>
-<li><strong>Insufficient permissions</strong>: Ensure your account has Contributor role on the subscription</li>
-</ul>
-<h3 id="resource-quota-issues">Resource Quota Issues</h3>
-<h4 id="insufficient-compute-quota">Insufficient Compute Quota</h4>
-<p><strong>Error Message:</strong></p>
-<pre><code>Error: creating App Service Plan: compute.AppServicePlansClient#CreateOrUpdate: Failure responding to request: StatusCode=409 -- Original Error: autorest/azure: Service returned an error. Status=409 Code=&quot;SubscriptionIsOverQuotaForSku&quot;
-</code></pre>
-<p><strong>Solution:</strong></p>
-<pre><code class="lang-bash"># Check current quota usage
-az vm list-usage --location eastus --output table
-
-# Request quota increase
-az support tickets create \
-  --ticket-name &quot;Increase App Service Plan Quota&quot; \
-  --issue-type quota \
-  --severity low \
-  --description &quot;Need to increase App Service Plan quota for XMPro deployment&quot;
-
-# Alternative: Use different SKU
-# In terraform.tfvars, change:
-app_service_sku_name = &quot;B1&quot;  # Instead of B2
-</code></pre>
-<h4 id="sql-database-quota-exceeded">SQL Database Quota Exceeded</h4>
-<p><strong>Error Message:</strong></p>
-<pre><code>Error: creating SQL Database: sql.DatabasesClient#CreateOrUpdate: Failure responding to request: StatusCode=409 -- Original Error: autorest/azure: Service returned an error. Status=409 Code=&quot;SubscriptionIsOverQuotaForSku&quot;
-</code></pre>
-<p><strong>Solution:</strong></p>
-<pre><code class="lang-bash"># Check SQL quota
-az sql list-usage --location eastus
-
-# Use different database SKU
-# In terraform.tfvars:
-sql_sku_name = &quot;Basic&quot;  # Instead of S0
-</code></pre>
-<h3 id="container-registry-issues">Container Registry Issues</h3>
-<blockquote>
-<p><strong>Important:</strong> The XMPro container registry at <code>{{ACR_URL}}</code> is a <strong>public registry</strong> and does not require authentication credentials. The Terraform module does not need <code>acr_username</code> or <code>acr_password</code> variables - they are not used by the module.</p>
-</blockquote>
-<h4 id="docker-login-issues-with-public-registry">Docker Login Issues with Public Registry</h4>
-<p><strong>Error Message:</strong></p>
-<pre><code>Username: 
-Password:
-Error response from daemon: Get https://{{ACR_URL}}/v2/: unauthorized: authentication required
-</code></pre>
-<p><strong>Cause:</strong> You may have previously authenticated to the registry and Docker is requesting credentials.</p>
-<p><strong>Solution:</strong></p>
-<pre><code class="lang-bash"># Logout from the registry to clear cached credentials
-docker logout {{ACR_URL}}
-
-# Now pull without authentication (public registry)
-docker pull {{ACR_URL}}/ad:{{VERSION}}
-docker pull {{ACR_URL}}/ds:{{VERSION}}
-docker pull {{ACR_URL}}/stream-host:{{VERSION}}
-</code></pre>
-<h4 id="acr-public-registry-access">ACR Public Registry Access</h4>
-<p><strong>Error Message:</strong></p>
-<pre><code>Error: pulling image: Error response from daemon: pull access denied for {{ACR_URL}}/ad
-</code></pre>
-<p><strong>Solution:</strong></p>
-<pre><code class="lang-bash"># First ensure you're not logged in
-docker logout {{ACR_URL}}
-
-# Test direct image pull (no authentication needed)
-docker pull {{ACR_URL}}/ad:latest
-
-# List available images (public registry)
-az acr repository list --name xmpro --output table
-
-# Check if firewall is blocking Docker Hub or ACR
-curl -I https://{{ACR_URL}}
-
-# Verify image exists with specific tag
-az acr repository show-tags --name xmpro --repository xmpro-ad --output table
-</code></pre>
-<h4 id="container-image-not-found">Container Image Not Found</h4>
-<p><strong>Error Message:</strong></p>
-<pre><code>Error: App Service cannot start: Container image '{{ACR_URL}}/ad:{{VERSION}}' not found
-</code></pre>
-<p><strong>Solution:</strong></p>
-<pre><code class="lang-bash"># List available images in public registry
-az acr repository list --name xmpro --output table
-
-# List available tags for specific repository
-az acr repository show-tags --name xmpro --repository ad --output table
-
-# Update terraform.tfvars with correct image version
-imageversion = &quot;{{VERSION}}&quot;
-
-# Or use latest tag
-imageversion = &quot;latest&quot;
-</code></pre>
-<h3 id="database-connection-issues">Database Connection Issues</h3>
-<h4 id="sql-server-firewall-blocked">SQL Server Firewall Blocked</h4>
-<p><strong>Error Message:</strong></p>
-<pre><code>Error: cannot connect to SQL Server: A connection was attempted from a source with an IP address that is not allowed to access the server
-</code></pre>
-<p><strong>Solution:</strong></p>
-<pre><code class="lang-bash"># Add current IP to firewall
-MY_IP=$(curl -s ifconfig.me)
-az sql server firewall-rule create \
-  --resource-group $(terraform output -raw resource_group_name) \
-  --server $(terraform output -raw sql_server_name) \
-  --name &quot;TempAccess-$MY_IP&quot; \
-  --start-ip-address $MY_IP \
-  --end-ip-address $MY_IP
-
-# Or add Azure services access
-az sql server firewall-rule create \
-  --resource-group $(terraform output -raw resource_group_name) \
-  --server $(terraform output -raw sql_server_name) \
-  --name &quot;AllowAzureServices&quot; \
-  --start-ip-address 0.0.0.0 \
-  --end-ip-address 0.0.0.0
-</code></pre>
-<h4 id="database-migration-failed">Database Migration Failed</h4>
-<p><strong>Error Message:</strong></p>
-<pre><code>Error: Container instance 'sm-dbmigrate' exited with code 1
-</code></pre>
-<p><strong>Solution:</strong></p>
-<pre><code class="lang-bash"># Check container logs
-az container logs \
-  --resource-group $(terraform output -raw resource_group_name) \
-  --name sm-dbmigrate
-
-# Restart migration manually
-az container restart \
-  --resource-group $(terraform output -raw resource_group_name) \
-  --name sm-dbmigrate
-
-# Check database status
-az sql db show \
-  --resource-group $(terraform output -raw resource_group_name) \
-  --server $(terraform output -raw sql_server_name) \
-  --name SM \
-  --query &quot;status&quot;
-</code></pre>
-<h3 id="app-service-startup-issues">App Service Startup Issues</h3>
-<h4 id="application-startup-timeout">Application Startup Timeout</h4>
-<p><strong>Error Message:</strong></p>
-<pre><code>Error: App Service 'xmpro-prefix-ad' failed to start within timeout period
-</code></pre>
-<p><strong>Solution:</strong></p>
-<pre><code class="lang-bash"># Check app service logs
-az webapp log tail \
-  --name xmpro-prefix-ad \
-  --resource-group $(terraform output -raw resource_group_name)
-
-# Check container settings
-az webapp config container show \
-  --name xmpro-prefix-ad \
-  --resource-group $(terraform output -raw resource_group_name)
-
-# Restart app service
-az webapp restart \
-  --name xmpro-prefix-ad \
-  --resource-group $(terraform output -raw resource_group_name)
-
-# Check app service version
-curl -f &quot;$(terraform output -raw ad_app_url)/version&quot;
-</code></pre>
-<h4 id="environment-variable-issues">Environment Variable Issues</h4>
-<p><strong>Error Message:</strong></p>
-<pre><code>Error: Required environment variable 'ConnectionStrings__DefaultConnection' not found
-</code></pre>
-<p><strong>Solution:</strong></p>
-<pre><code class="lang-bash"># Check app service configuration
-az webapp config appsettings list \
-  --name xmpro-prefix-ad \
-  --resource-group $(terraform output -raw resource_group_name)
-
-# Verify Key Vault secrets
-az keyvault secret list \
-  --vault-name $(terraform output -raw key_vault_name)
-
-# Check Key Vault access policy
-az keyvault show \
-  --name $(terraform output -raw key_vault_name) \
-  --query &quot;properties.accessPolicies&quot;
-</code></pre>
-<h3 id="terraform-state-issues">Terraform State Issues</h3>
-<h4 id="state-file-locked">State File Locked</h4>
-<p><strong>Error Message:</strong></p>
-<pre><code>Error: Error locking state: Error acquiring the state lock: ConditionalCheckFailedException: The conditional request failed
-</code></pre>
-<p><strong>Solution:</strong></p>
-<pre><code class="lang-bash"># Force unlock (use with caution)
-terraform force-unlock -force &lt;lock-id&gt;
-
-# Alternative: Wait for lock to expire (usually 10 minutes)
-# Or identify who has the lock:
-terraform force-unlock &lt;lock-id&gt;
-</code></pre>
-<h4 id="state-file-corruption">State File Corruption</h4>
-<p><strong>Error Message:</strong></p>
-<pre><code>Error: State file corruption detected
-</code></pre>
-<p><strong>Solution:</strong></p>
-<pre><code class="lang-bash"># Restore from backup
-# Linux/Mac:
-cp terraform.tfstate.backup terraform.tfstate
-
-# Windows:
-copy terraform.tfstate.backup terraform.tfstate
-
-# Or refresh state from Azure
-terraform refresh
-
-# In worst case, recreate state by importing resources
-terraform import azurerm_resource_group.main /subscriptions/xxx/resourceGroups/xxx
-</code></pre>
-<h4 id="state-drift-detected">State Drift Detected</h4>
-<p><strong>Error Message:</strong></p>
-<pre><code>Error: Provider produced inconsistent result after apply
-</code></pre>
-<p><strong>Solution:</strong></p>
-<pre><code class="lang-bash"># Refresh state
-terraform refresh
-
-# Check for drift
-terraform plan -refresh-only
-
-# Apply changes to fix drift
-terraform apply -refresh-only
-</code></pre>
-<h3 id="network-connectivity-issues">Network Connectivity Issues</h3>
-<h4 id="dns-resolution-failed">DNS Resolution Failed</h4>
-<p><strong>Error Message:</strong></p>
-<pre><code>Error: custom domain verification failed for 'xmpro.yourdomain.com'
-</code></pre>
-<p><strong>Solution:</strong></p>
-<pre><code class="lang-bash"># Check DNS propagation
-nslookup xmpro.yourdomain.com
-
-# Verify DNS zone configuration
-az network dns zone show \
-  --name yourdomain.com \
-  --resource-group $(terraform output -raw resource_group_name) \
-  --query nameServers
-
-# Check domain verification
-az webapp config hostname add \
-  --webapp-name xmpro-prefix-ad \
-  --resource-group $(terraform output -raw resource_group_name) \
-  --hostname xmpro.yourdomain.com
-</code></pre>
-<h4 id="ssltls-configuration">SSL/TLS Configuration</h4>
-<p>For SSL/TLS configuration, the Azure App Service platform provides built-in SSL certificates for the default domain (*.azurewebsites.net). For custom domains, you can:</p>
-<ol>
-<li>Use App Service Managed Certificates (free)</li>
-<li>Import your own certificates</li>
-<li>Purchase App Service Certificates</li>
-</ol>
-<p><strong>Note:</strong> The Terraform module does not manage SSL certificates directly. Configure SSL/TLS through the Azure Portal or Azure CLI after deployment.</p>
-<h2 id="diagnostic-commands">Diagnostic Commands</h2>
-<h3 id="general-health-check">General Health Check</h3>
-<pre><code class="lang-bash"># Check all resources in resource group
-az resource list \
-  --resource-group $(terraform output -raw resource_group_name) \
-  --output table
-
-# Check deployment status
-az deployment group list \
-  --resource-group $(terraform output -raw resource_group_name) \
-  --query &quot;[].{name:name, state:properties.provisioningState}&quot;
-</code></pre>
-<h3 id="app-service-diagnostics">App Service Diagnostics</h3>
-<pre><code class="lang-bash"># Check app service status
-az webapp list \
-  --resource-group $(terraform output -raw resource_group_name) \
-  --query &quot;[].{name:name, state:state, url:defaultHostName}&quot;
-
-# Check app service metrics
-az monitor metrics list \
-  --resource $(terraform output -raw ad_app_service_id) \
-  --metric &quot;Http2xx&quot; \
-  --start-time $(date -u -d '1 hour ago' '+%Y-%m-%dT%H:%M:%SZ') \
-  --end-time $(date -u '+%Y-%m-%dT%H:%M:%SZ')
-
-# Download app service logs
-az webapp log download \
-  --name xmpro-prefix-ad \
-  --resource-group $(terraform output -raw resource_group_name) \
-  --log-file webapp_logs.zip
-</code></pre>
-<h3 id="how-to-restart-app-services">How to Restart App Services</h3>
-<p>If you need to restart the XMPro app services:</p>
-<p><strong>Via Azure Portal:</strong></p>
-<ol>
-<li>Navigate to &quot;Resource groups&quot; in the Azure Portal</li>
-<li>Select your resource group (e.g., <code>rg-{company_name}-{environment}-xmpro</code>)</li>
-<li>Select the App Services (SM, AD, DS)</li>
-<li>Click &quot;Restart&quot; for each service</li>
-</ol>
-<p><strong>Via Azure CLI:</strong></p>
-<pre><code class="lang-bash"># Restart SM (Subscription Manager)
-az webapp restart \
-  --name xmpro-${PREFIX}-sm \
-  --resource-group $(terraform output -raw resource_group_name)
-
-# Restart AD (App Designer)
-az webapp restart \
-  --name xmpro-${PREFIX}-ad \
-  --resource-group $(terraform output -raw resource_group_name)
-
-# Restart DS (Data Stream Designer)
-az webapp restart \
-  --name xmpro-${PREFIX}-ds \
-  --resource-group $(terraform output -raw resource_group_name)
-
-# Restart all at once
-for app in sm ad ds; do
-  az webapp restart \
-    --name xmpro-${PREFIX}-${app} \
-    --resource-group $(terraform output -raw resource_group_name)
-done
-</code></pre>
-<h3 id="database-diagnostics">Database Diagnostics</h3>
-<pre><code class="lang-bash"># Check database status
-az sql db list \
-  --server $(terraform output -raw sql_server_name) \
-  --resource-group $(terraform output -raw resource_group_name) \
-  --query &quot;[].{name:name, status:status}&quot;
-
-# Check database connections
-az sql db show \
-  --server $(terraform output -raw sql_server_name) \
-  --name AD \
-  --resource-group $(terraform output -raw resource_group_name) \
-  --query &quot;maxSizeBytes&quot;
-
-# Check database firewall
-az sql server firewall-rule list \
-  --server $(terraform output -raw sql_server_name) \
-  --resource-group $(terraform output -raw resource_group_name)
-</code></pre>
-<h3 id="container-diagnostics">Container Diagnostics</h3>
-<pre><code class="lang-bash"># Check container instance status
-az container list \
-  --resource-group $(terraform output -raw resource_group_name) \
-  --query &quot;[].{name:name, state:instanceView.state}&quot;
-
-# Check container logs
-az container logs \
-  --resource-group $(terraform output -raw resource_group_name) \
-  --name stream-host
-
-# Check container events
-az container show \
-  --resource-group $(terraform output -raw resource_group_name) \
-  --name stream-host \
-  --query &quot;instanceView.events&quot;
-</code></pre>
-<h2 id="performance-issues">Performance Issues</h2>
-<h3 id="slow-app-service-response">Slow App Service Response</h3>
-<p><strong>Symptoms:</strong></p>
-<ul>
-<li>High response times</li>
-<li>Timeouts</li>
-<li>Poor user experience</li>
-</ul>
-<p><strong>Diagnosis:</strong></p>
-<pre><code class="lang-bash"># Check app service metrics
-az monitor metrics list \
-  --resource $(terraform output -raw ad_app_service_id) \
-  --metric &quot;AverageResponseTime&quot; \
-  --start-time $(date -u -d '1 hour ago' '+%Y-%m-%dT%H:%M:%SZ')
-
-# Check CPU usage
-az monitor metrics list \
-  --resource $(terraform output -raw ad_app_service_id) \
-  --metric &quot;CpuPercentage&quot; \
-  --start-time $(date -u -d '1 hour ago' '+%Y-%m-%dT%H:%M:%SZ')
-</code></pre>
-<p><strong>Solution:</strong></p>
-<pre><code class="lang-bash"># Scale up app service plan (manual scaling)
-terraform apply -var=&quot;app_service_sku_name=S2&quot;
-</code></pre>
-<div class="NOTE">
-<h5>Note</h5>
-<p>Auto-scaling and Redis integration for session state management will be available in a future release. Check the release notes for updates on these features.</p>
-</div>
-<h3 id="database-performance-issues">Database Performance Issues</h3>
-<p><strong>Symptoms:</strong></p>
-<ul>
-<li>Slow queries</li>
-<li>High DTU usage</li>
-<li>Connection timeouts</li>
-</ul>
-<p><strong>Diagnosis:</strong></p>
-<pre><code class="lang-bash"># Check database metrics
-az monitor metrics list \
-  --resource $(terraform output -raw ad_database_id) \
-  --metric &quot;dtu_consumption_percent&quot; \
-  --start-time $(date -u -d '1 hour ago' '+%Y-%m-%dT%H:%M:%SZ')
-
-# Check connection count
-az monitor metrics list \
-  --resource $(terraform output -raw ad_database_id) \
-  --metric &quot;connection_successful&quot; \
-  --start-time $(date -u -d '1 hour ago' '+%Y-%m-%dT%H:%M:%SZ')
-</code></pre>
-<p><strong>Solution:</strong></p>
-<pre><code class="lang-bash"># Scale up database
-terraform apply -var=&quot;sql_sku_name=S2&quot;
-
-# Enable query performance insights
-az sql db advisor update \
-  --resource-group $(terraform output -raw resource_group_name) \
-  --server $(terraform output -raw sql_server_name) \
-  --database AD \
-  --advisor-name CreateIndex \
-  --auto-execute-action Enabled
-</code></pre>
-<h2 id="security-issues">Security Issues</h2>
-<h3 id="key-vault-access-denied">Key Vault Access Denied</h3>
-<p><strong>Error Message:</strong></p>
-<pre><code>Error: The user, group or application 'xxx' does not have secrets get permission on key vault 'xxx'
-</code></pre>
-<p><strong>Solution:</strong></p>
-<pre><code class="lang-bash"># Check current access policies
-az keyvault show \
-  --name $(terraform output -raw key_vault_name) \
-  --query &quot;properties.accessPolicies&quot;
-
-# Add access policy for app service
-OBJECT_ID=$(az webapp identity show \
-  --name xmpro-prefix-ad \
-  --resource-group $(terraform output -raw resource_group_name) \
-  --query principalId -o tsv)
-
-az keyvault set-policy \
-  --name $(terraform output -raw key_vault_name) \
-  --object-id $OBJECT_ID \
-  --secret-permissions get list
-</code></pre>
-<h3 id="network-security-group-issues">Network Security Group Issues</h3>
-<p><strong>Error Message:</strong></p>
-<pre><code>Error: Connection refused on port 443
-</code></pre>
-<p><strong>Solution:</strong></p>
-<pre><code class="lang-bash"># Check NSG rules
-az network nsg list \
-  --resource-group $(terraform output -raw resource_group_name)
-
-# Add HTTPS rule
-az network nsg rule create \
-  --resource-group $(terraform output -raw resource_group_name) \
-  --nsg-name xmpro-nsg \
-  --name AllowHTTPS \
-  --protocol tcp \
-  --priority 1000 \
-  --destination-port-range 443 \
-  --access allow
-</code></pre>
-<h2 id="logging-and-monitoring">Logging and Monitoring</h2>
+<p>This guide helps you fix common issues when deploying XMPro on Azure.</p>
 <div class="TIP">
 <h5>Tip</h5>
-<p>When using the <code>examples/basic</code> configuration, the following Terraform outputs are available:</p>
+<p><strong>Most issues are solved by:</strong></p>
 <ul>
-<li><code>resource_group_name</code> - Resource group containing all resources</li>
-<li><code>sql_server_name</code> - SQL Server name</li>
-<li><code>ad_app_url</code>, <code>ds_app_url</code>, <code>sm_app_url</code> - Application URLs</li>
+<li>Running <code>az login</code> to refresh your Azure authentication</li>
+<li>Making sure you're in the right directory (<code>terraform-xmpro-azure/examples/basic</code>)</li>
+<li>Using a different Azure region if you get &quot;quota exceeded&quot; errors</li>
 </ul>
-<p>Use <code>terraform output</code> to see all available outputs.</p>
 </div>
-<h3 id="view-application-logs-recommended-application-insights">View Application Logs (Recommended: Application Insights)</h3>
-<p>The Terraform module automatically configures Application Insights for centralized logging and monitoring. This is the <strong>recommended way</strong> to view logs and diagnose issues.</p>
-<h4 id="primary-method-application-insights-recommended">Primary Method: Application Insights (Recommended)</h4>
-<ol>
-<li><p><strong>Access Application Insights in Azure Portal</strong></p>
-<ul>
-<li>Navigate to your resource group in Azure Portal</li>
-<li>Look for the Application Insights resource (usually named <code>appi-{prefix}-{suffix}</code>)</li>
-<li>Click on it to open the Application Insights dashboard</li>
-</ul>
-</li>
-<li><p><strong>View Logs and Traces</strong></p>
-<ul>
-<li>Go to <strong>&quot;Logs&quot;</strong> in the left menu</li>
-<li>Use these common queries:</li>
-</ul>
-<pre><code class="lang-kusto">// View all recent traces
-traces 
-| where timestamp &gt; ago(1h)
-| order by timestamp desc
-| take 100
+<h2 id="most-common-issues">Most Common Issues</h2>
+<h3 id="1-terraform-command-not-found">1. &quot;Terraform command not found&quot;</h3>
+<p><strong>Solution:</strong></p>
+<pre><code class="lang-bash"># You haven't installed Terraform yet. Download it from:
+# https://developer.hashicorp.com/terraform/install
 
-// View errors and exceptions
-exceptions
-| where timestamp &gt; ago(24h)
-| order by timestamp desc
-
-// View specific service logs
-traces
-| where customDimensions.Category contains &quot;XMPro&quot;
-| where timestamp &gt; ago(1h)
+# After installing, restart your terminal and try:
+terraform version
 </code></pre>
-</li>
-<li><p><strong>Real-time Monitoring</strong></p>
+<h3 id="2-error-building-account-please-ensure-you-have-logged-in">2. &quot;Error: building account... Please ensure you have logged in&quot;</h3>
+<p><strong>Solution:</strong></p>
+<pre><code class="lang-bash"># Login to Azure:
+az login
+
+# If that doesn't work, try:
+az logout
+az login --use-device-code
+</code></pre>
+<h3 id="3-subscription-not-found-or-wrong-subscription">3. &quot;Subscription not found&quot; or wrong subscription</h3>
+<p><strong>Solution:</strong></p>
+<pre><code class="lang-bash"># List your subscriptions:
+az account list --output table
+
+# Switch to the right one:
+az account set --subscription &quot;Your Subscription Name&quot;
+
+# Verify you're on the right subscription:
+az account show
+</code></pre>
+<h3 id="4-resource-already-exists-errors">4. &quot;Resource already exists&quot; errors</h3>
+<p><strong>Problem:</strong> Azure resource names must be globally unique.</p>
+<p><strong>Solution:</strong>
+Edit your <code>terraform.tfvars</code> and add a unique prefix:</p>
+<pre><code class="lang-hcl">prefix = &quot;mycompany123&quot;  # Add this line with a unique value
+</code></pre>
+<h3 id="5-deployment-takes-forever-more-than-30-minutes">5. Deployment takes forever (more than 30 minutes)</h3>
+<p><strong>Common causes:</strong></p>
 <ul>
-<li>Click on <strong>&quot;Live Metrics&quot;</strong> for real-time performance data</li>
-<li>View <strong>&quot;Failures&quot;</strong> for error tracking</li>
-<li>Check <strong>&quot;Performance&quot;</strong> for response time analysis</li>
+<li>Azure is slow in your region - this is normal for first deployment</li>
+<li>Database creation can take 10-15 minutes alone</li>
 </ul>
-</li>
-</ol>
-<div class="IMPORTANT">
-<h5>Important</h5>
-<p>Application Insights provides the most comprehensive view of your application's health, including:</p>
-<ul>
-<li>Centralized logging from all services</li>
-<li>Performance metrics and telemetry</li>
-<li>Error tracking and diagnostics</li>
-<li>Custom queries and alerts</li>
-</ul>
-</div>
-<h4 id="alternative-method-direct-app-service-logs">Alternative Method: Direct App Service Logs</h4>
-<p>If you need to view raw application logs directly:</p>
+<p><strong>What to check:</strong></p>
 <ol>
-<li><p><strong>Azure Portal</strong></p>
-<ul>
-<li>Navigate to your resource group</li>
-<li>Select the specific App Service (e.g., <code>app-ad-{suffix}</code>, <code>app-ds-{suffix}</code>, <code>app-sm-{suffix}</code>)</li>
-<li>Go to &quot;Log stream&quot; for real-time logs</li>
-</ul>
-</li>
-<li><p><strong>Azure CLI</strong> (for advanced users)</p>
-<pre><code class="lang-bash"># Get resource group name
-RESOURCE_GROUP=$(terraform output -raw resource_group_name)
-
-# List App Services
-az webapp list --resource-group $RESOURCE_GROUP --query &quot;[].name&quot; -o tsv
-
-# View logs for specific service
-az webapp log tail --name {app-service-name} --resource-group $RESOURCE_GROUP
+<li>Look at the Azure Portal - are resources being created?</li>
+<li>Check terraform output - is it progressing?</li>
+<li>If stuck for over 45 minutes, try:
+<pre><code class="lang-bash"># Cancel with Ctrl+C, then:
+terraform destroy  # Clean up partial deployment
+terraform apply    # Try again
 </code></pre>
 </li>
 </ol>
-<h3 id="container-logs">Container Logs</h3>
-<p>View logs from migration containers:</p>
-<pre><code class="lang-bash"># View SM database migration logs
-az container logs \
-  --resource-group $(terraform output -raw resource_group_name) \
-  --name sm-dbmigrate
-
-# View AD database migration logs
-az container logs \
-  --resource-group $(terraform output -raw resource_group_name) \
-  --name ad-dbmigrate
-
-# View Stream Host logs
-az container logs \
-  --resource-group $(terraform output -raw resource_group_name) \
-  --name stream-host
+<h3 id="6-insufficient-quota-or-subscriptionisoverquotaforsku">6. &quot;Insufficient quota&quot; or &quot;SubscriptionIsOverQuotaForSku&quot;</h3>
+<p><strong>Problem:</strong> Your Azure subscription has limits on resources.</p>
+<p><strong>Quick Solution:</strong>
+Use smaller resource sizes in <code>terraform.tfvars</code>:</p>
+<pre><code class="lang-hcl">app_service_sku_name = &quot;B1&quot;  # Instead of B2
+sql_sku_name = &quot;Basic&quot;        # Instead of S0
 </code></pre>
-<h3 id="application-logging-configuration">Application Logging Configuration</h3>
+<p><strong>Long-term Solution:</strong>
+Request a quota increase in Azure Portal under &quot;Quotas&quot;.</p>
+<h3 id="7-login-problems-after-deployment">7. Login problems after deployment</h3>
+<p><strong>Can't login with admin credentials?</strong></p>
+<p>Check your passwords in <code>terraform.tfvars</code>:</p>
+<ul>
+<li>Must be at least 8 characters</li>
+<li>Must have uppercase, lowercase, number, and special character</li>
+<li>No spaces or quotes in the password</li>
+</ul>
+<p><strong>Forgot what you set?</strong>
+Look in your <code>terraform.tfvars</code> file for:</p>
+<ul>
+<li><code>site_admin_password</code></li>
+<li><code>company_admin_password</code></li>
+</ul>
+<h3 id="8-applications-wont-start-app-service-issues">8. Applications won't start (App Service issues)</h3>
+<p><strong>Quick fixes to try:</strong></p>
+<ol>
+<li><p><strong>Restart the services</strong> in Azure Portal:</p>
+<ul>
+<li>Go to your resource group</li>
+<li>Click on each App Service (SM, AD, DS)</li>
+<li>Click &quot;Restart&quot;</li>
+</ul>
+</li>
+<li><p><strong>Check the logs</strong> in Azure Portal:</p>
+<ul>
+<li>Go to your App Service</li>
+<li>Click &quot;Log stream&quot; in the left menu</li>
+<li>Look for error messages</li>
+</ul>
+</li>
+<li><p><strong>Wait a bit longer</strong>:</p>
+<ul>
+<li>First startup can take 5-10 minutes</li>
+<li>Check the <code>/version</code> endpoint:
+<pre><code class="lang-bash">curl &quot;$(terraform output -raw sm_app_url)/version&quot;
+</code></pre>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="getting-more-help">Getting More Help</h2>
+<h3 id="check-your-setup">Check Your Setup</h3>
+<p>Run this to verify everything is working:</p>
+<pre><code class="lang-bash"># Check Terraform:
+terraform version
+
+# Check Azure login:
+az account show
+
+# Check your configuration:
+terraform validate
+</code></pre>
+<h3 id="collect-information-for-support">Collect Information for Support</h3>
+<p>If you need to contact support, run:</p>
+<pre><code class="lang-bash"># Save all outputs:
+terraform output &gt; terraform-outputs.txt
+
+# Get resource group name:
+terraform output resource_group_name
+
+# List what was created:
+az resource list --resource-group $(terraform output -raw resource_group_name) --output table
+</code></pre>
+<h3 id="view-logs-in-azure-portal">View Logs in Azure Portal</h3>
+<ol>
+<li><strong>Go to Azure Portal</strong> (portal.azure.com)</li>
+<li><strong>Find your resource group</strong> (named like <code>rg-yourcompany-dev-xmpro</code>)</li>
+<li><strong>Click on Application Insights</strong> resource</li>
+<li><strong>Click &quot;Logs&quot;</strong> to see application logs</li>
+<li><strong>Click &quot;Failures&quot;</strong> to see errors</li>
+</ol>
+<h3 id="common-error-messages-explained">Common Error Messages Explained</h3>
+<table>
+<thead>
+<tr>
+<th>Error</th>
+<th>What it means</th>
+<th>Solution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&quot;terraform: command not found&quot;</td>
+<td>Terraform isn't installed</td>
+<td><a href="https://developer.hashicorp.com/terraform/install">Install Terraform</a></td>
+</tr>
+<tr>
+<td>&quot;Error: building account&quot;</td>
+<td>Not logged into Azure</td>
+<td>Run <code>az login</code></td>
+</tr>
+<tr>
+<td>&quot;SubscriptionIsOverQuotaForSku&quot;</td>
+<td>Azure limits exceeded</td>
+<td>Use smaller SKUs or request quota increase</td>
+</tr>
+<tr>
+<td>&quot;Resource already exists&quot;</td>
+<td>Name conflict</td>
+<td>Add unique <code>prefix</code> in terraform.tfvars</td>
+</tr>
+<tr>
+<td>&quot;Container image not found&quot;</td>
+<td>Wrong version specified</td>
+<td>Use <code>imageversion = &quot;latest&quot;</code> in terraform.tfvars</td>
+</tr>
+<tr>
+<td>&quot;SSL/TLS connection error&quot;</td>
+<td>Network/firewall issue</td>
+<td>Check corporate firewall or try different network</td>
+</tr>
+</tbody>
+</table>
+<h2 id="still-stuck">Still Stuck?</h2>
+<ol>
+<li><p><strong>Double-check the basics:</strong></p>
+<ul>
+<li>Are you in the right directory? (<code>terraform-xmpro-azure/examples/basic</code>)</li>
+<li>Did you run <code>terraform init</code> first?</li>
+<li>Is your <code>terraform.tfvars</code> file saved?</li>
+</ul>
+</li>
+<li><p><strong>Try a clean deployment:</strong></p>
+<pre><code class="lang-bash">terraform destroy  # Remove everything
+terraform apply    # Start fresh
+</code></pre>
+</li>
+<li><p><strong>Use a different Azure region:</strong></p>
+<pre><code class="lang-hcl"># In terraform.tfvars, try:
+location = &quot;eastus2&quot;  # or &quot;westeurope&quot;, &quot;southeastasia&quot;
+</code></pre>
+</li>
+<li><p><strong>Contact Support:</strong></p>
+<ul>
+<li>Use the <a href="javascript:window.open(%27https://xmpro.na1.teamsupport.com/login/user%27,%27_blank%27)">XMPro Support Portal</a></li>
+<li>Include your error messages</li>
+<li>Describe what step failed</li>
+</ul>
+</li>
+</ol>
 <div class="NOTE">
 <h5>Note</h5>
-<p>Enhanced Serilog configuration for custom log levels and overrides will be available in a future release. The current deployment enables standard application logging with default settings. Check the release notes for updates on advanced logging configuration features.</p>
+<p>For advanced troubleshooting and detailed technical issues, see the <a href="https://github.com/XMPro/terraform-xmpro-azure">complete module documentation</a>.</p>
 </div>
-<h3 id="monitoring-with-application-insights">Monitoring with Application Insights</h3>
-<div class="TIP">
-<h5>Tip</h5>
-<p>Application Insights is your one-stop dashboard for monitoring all XMPro services. It's automatically configured during deployment.</p>
-</div>
-<p><strong>Access Application Insights:</strong></p>
-<ol>
-<li>Open Azure Portal</li>
-<li>Navigate to your resource group</li>
-<li>Find and click the Application Insights resource (named <code>appi-{prefix}-{suffix}</code>)</li>
-</ol>
-<p><strong>Key Monitoring Features:</strong></p>
-<ul>
-<li><strong>Application Map</strong>: Visual representation of service dependencies</li>
-<li><strong>Live Metrics</strong>: Real-time performance monitoring</li>
-<li><strong>Failures</strong>: Track and diagnose errors across all services</li>
-<li><strong>Performance</strong>: Analyze response times and throughput</li>
-<li><strong>Alerts</strong>: Set up proactive notifications for issues</li>
-<li><strong>Workbooks</strong>: Create custom dashboards for your metrics</li>
-</ul>
-<p><strong>Common Monitoring Tasks:</strong></p>
-<ol>
-<li><p><strong>Check Service Health</strong></p>
-<ul>
-<li>Go to &quot;Application Map&quot; to see all services and their status</li>
-<li>Green = Healthy, Red = Issues detected</li>
-</ul>
-</li>
-<li><p><strong>Investigate Errors</strong></p>
-<ul>
-<li>Click &quot;Failures&quot; in the left menu</li>
-<li>Select time range and filter by service</li>
-<li>Click on specific errors to see stack traces</li>
-</ul>
-</li>
-<li><p><strong>Monitor Performance</strong></p>
-<ul>
-<li>Use &quot;Performance&quot; to see response times</li>
-<li>Identify slow operations or bottlenecks</li>
-<li>Track performance trends over time</li>
-</ul>
-</li>
-</ol>
-<h2 id="recovery-procedures">Recovery Procedures</h2>
-<h3 id="rollback-deployment">Rollback Deployment</h3>
-<pre><code class="lang-bash"># Rollback to previous state
-terraform apply -refresh=false terraform.tfstate.backup
-
-# Or destroy and recreate
-terraform destroy -auto-approve
-terraform apply -auto-approve
-</code></pre>
-<h3 id="disaster-recovery">Disaster Recovery</h3>
-<pre><code class="lang-bash"># Export databases
-az sql db export \
-  --resource-group $(terraform output -raw resource_group_name) \
-  --server $(terraform output -raw sql_server_name) \
-  --name AD \
-  --storage-key &lt;storage-key&gt; \
-  --storage-uri https://backup.blob.core.windows.net/backups/ad.bacpac \
-  --admin-user $(terraform output -raw db_admin_username) \
-  --admin-password $TF_VAR_db_admin_password
-
-# Restore from backup
-az sql db import \
-  --resource-group $(terraform output -raw resource_group_name) \
-  --server $(terraform output -raw sql_server_name) \
-  --name AD-restored \
-  --storage-key &lt;storage-key&gt; \
-  --storage-uri https://backup.blob.core.windows.net/backups/ad.bacpac \
-  --admin-user $(terraform output -raw db_admin_username) \
-  --admin-password $TF_VAR_db_admin_password
-</code></pre>
-<h2 id="getting-help">Getting Help</h2>
-<h3 id="terraform-debug-mode">Terraform Debug Mode</h3>
-<pre><code class="lang-bash"># Enable debug logging
-# Linux/Mac:
-export TF_LOG=DEBUG
-export TF_LOG_PATH=./terraform.log
-
-# Windows (PowerShell):
-$env:TF_LOG = &quot;DEBUG&quot;
-$env:TF_LOG_PATH = &quot;./terraform.log&quot;
-
-# Windows (Command Prompt):
-set TF_LOG=DEBUG
-set TF_LOG_PATH=./terraform.log
-
-# Run terraform command
-terraform apply
-
-# Review detailed logs
-# Linux/Mac:
-grep -i error terraform.log
-
-# Windows (PowerShell):
-Select-String -Pattern &quot;error&quot; -Path terraform.log -CaseSensitive:$false
-
-# Windows (Command Prompt):
-findstr /i &quot;error&quot; terraform.log
-</code></pre>
-<h3 id="collect-diagnostic-information">Collect Diagnostic Information</h3>
-<p>When troubleshooting deployment issues, collect the following information:</p>
-<pre><code class="lang-bash"># Create diagnostic directory
-# Linux/Mac:
-mkdir -p xmpro-diagnostics
-
-# Windows:
-mkdir xmpro-diagnostics
-
-cd xmpro-diagnostics
-
-# 1. Save Terraform outputs
-terraform output -json &gt; terraform-outputs.json
-
-# 2. Get resource group name
-# Linux/Mac/Git Bash:
-RESOURCE_GROUP=$(terraform output -raw resource_group_name)
-
-# Windows (PowerShell):
-$RESOURCE_GROUP = terraform output -raw resource_group_name
-
-# Windows (Command Prompt):
-for /f %i in ('terraform output -raw resource_group_name') do set RESOURCE_GROUP=%i
-
-# 3. List all resources in the resource group
-# Linux/Mac/Git Bash:
-az resource list --resource-group $RESOURCE_GROUP --output json &gt; resources.json
-
-# Windows (PowerShell):
-az resource list --resource-group $RESOURCE_GROUP --output json &gt; resources.json
-
-# Windows (Command Prompt):
-az resource list --resource-group %RESOURCE_GROUP% --output json &gt; resources.json
-
-# 4. Get App Service names and collect logs
-# Linux/Mac/Git Bash:
-az webapp list --resource-group $RESOURCE_GROUP --query &quot;[].name&quot; -o tsv &gt; app-services.txt
-
-# Windows (PowerShell):
-az webapp list --resource-group $RESOURCE_GROUP --query &quot;[].name&quot; -o tsv &gt; app-services.txt
-
-# Windows (Command Prompt):
-az webapp list --resource-group %RESOURCE_GROUP% --query &quot;[].name&quot; -o tsv &gt; app-services.txt
-
-# For each app service, download logs (replace {app-service-name} with actual names from above)
-# az webapp log download --name {app-service-name} --resource-group $RESOURCE_GROUP --log-file {app-service-name}-logs.zip
-
-# 5. Collect container instance logs
-for container in sm-dbmigrate ad-dbmigrate ds-dbmigrate stream-host; do
-  echo &quot;=== Logs for $container ===&quot; &gt;&gt; container-logs.txt
-  az container logs --resource-group $RESOURCE_GROUP --name $container &gt;&gt; container-logs.txt 2&gt;&amp;1
-  echo &quot;&quot; &gt;&gt; container-logs.txt
-done
-
-# 6. Create summary report
-cat &gt; summary.txt &lt;&lt; EOF
-Diagnostic Information Summary
-Generated: $(date)
-Resource Group: $RESOURCE_GROUP
-
-Terraform Version:
-$(terraform version)
-
-Azure CLI Version:
-$(az version)
-
-Available Terraform Outputs:
-$(terraform output)
-EOF
-
-# 7. Check container instance status
-echo -e &quot;\n=== Container Instance Status ===&quot; &gt;&gt; summary.txt
-az container list --resource-group $RESOURCE_GROUP --query &quot;[].{name:name, state:instanceView.state}&quot; -o table &gt;&gt; summary.txt
-
-# 8. Package all diagnostics
-tar -czf xmpro-diagnostics-$(date +%Y%m%d-%H%M%S).tar.gz *.txt *.json *.zip 2&gt;/dev/null || true
-</code></pre>
-<h2 id="next-steps">Next Steps</h2>
-<p>After resolving issues:</p>
-<ol>
-<li><strong>Update Documentation</strong> - Document any new issues and solutions</li>
-<li><strong>Implement Monitoring</strong> - Set up alerts for similar issues</li>
-<li><strong>Test Thoroughly</strong> - Validate the fix works as expected</li>
-<li><strong>Share Knowledge</strong> - Update team on lessons learned</li>
-</ol>
-<h2 id="key-points-summary">Key Points Summary</h2>
-<h3 id="important-configuration-notes">Important Configuration Notes</h3>
-<ol>
-<li><strong>Container Registry</strong>: <code>{{ACR_URL}}</code> is a public registry - no authentication required</li>
-<li><strong>Image Version</strong>: Use version <code>{{VERSION}}</code> or <code>latest</code></li>
-<li><strong>Module Source</strong>: Use GitHub source: <code>github.com/XMPro/terraform-xmpro-azure?ref=v4.5.2</code></li>
-<li><strong>Variable Names</strong>: Use underscores (e.g., <code>company_name</code> not <code>companyname</code>)</li>
-<li><strong>Environments</strong>: Valid values are <code>dev</code>, <code>qa</code>, and <code>sandbox-sm-only</code></li>
-<li><strong>Evaluation Mode</strong>: Default is <code>true</code></li>
-<li><strong>SSL Certificates</strong>: Managed separately, not through Terraform variables</li>
-</ol>
-<h3 id="resource-naming-convention">Resource Naming Convention</h3>
-<p>Resources are named with the pattern: <code>xmpro-{prefix}-{resource}</code> where:</p>
-<ul>
-<li><code>{prefix}</code> is your chosen prefix (e.g., company name)</li>
-<li><code>{resource}</code> is the resource type (e.g., <code>ad</code>, <code>ds</code>, <code>sm</code>)</li>
-</ul>
-<h2 id="support-contacts">Support Contacts</h2>
-<ul>
-<li><strong>XMPro Support</strong>: support@xmpro.com</li>
-<li><strong>Azure Support</strong>: Create ticket through Azure Portal</li>
-<li><strong>Terraform Support</strong>: terraform-help@hashicorp.com</li>
-</ul>
 
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: August 19, 2025</em></small></p>
+    <p><small><em>Last modified: August 22, 2025</em></small></p>
   </div>
 </article>
 

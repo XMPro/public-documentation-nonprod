@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Redis Cache Implementation | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Redis Cache Implementation | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../images/favicon.png">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/technical-reference/redis-cache-implementation.md&amp;version=GB21317-cherry-pick-batch-to-release-4.5.2&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="redis-cache-implementation">Redis Cache Implementation</h1>
+
+<div class="NOTE">
+<h5>Note</h5>
+<p>For Azure Terraform deployments, see the <a href="../installation/deployment/azure-terraform/implementation-guide.html#configure-autoscale">Azure Terraform Implementation Guide</a> to enable autoscaling with Redis.</p>
+</div>
+<h2 id="introduction">Introduction</h2>
+<p>XMPro uses Redis as a distributed caching solution to improve performance and enable scalability across multiple application instances. Redis is automatically activated when you enable AutoScale in your XMPro configuration and will gracefully fall back to single-server operation when disabled.</p>
+<p>This guide explores Redis implementation in XMPro, focusing on how Redis server configuration impacts XMPro performance and behavior. We'll cover usage patterns across products, data caching strategies, capacity management scenarios, configuration best practices, and troubleshooting guidance - with particular attention to what happens when Redis capacity limits are reached.</p>
+<h2 id="redis-usage-per-xmpro-product">Redis Usage per XMPro Product</h2>
+<p>XMPro uses Redis to store data for caching and passing through data for SignalR. The XMPro Products use it as follows:</p>
+<table>
+<thead>
+<tr>
+<th>Product</th>
+<th>Redis Usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>App Designer</strong></td>
+<td>Full (Cache + SignalR)</td>
+</tr>
+<tr>
+<td><strong>Data Stream Designer</strong></td>
+<td>SignalR Only</td>
+</tr>
+<tr>
+<td><strong>Subscription Manager</strong></td>
+<td>SignalR Only</td>
+</tr>
+<tr>
+<td><strong>AI</strong></td>
+<td>None</td>
+</tr>
+<tr>
+<td><strong>Stream Host</strong></td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+<h3 id="data-caching">Data Caching</h3>
+<ul>
+<li><strong>Purpose</strong>: Caches real-time Data Stream data sent by the <a href="https://xmpro.gitbook.io/xmpro-app/">XMPro App Agent</a> to App Designer via the <a href="https://xmpro.gitbook.io/data-streams-connector/">Data Streams Connector</a> Data Source. This allows preservation of temporary data even if the App Designer server restarts and avoids consuming the server's memory.</li>
+<li><strong>Structure</strong>: Key Values are stored in the Redis Cache as a mix of Hash and List types. Groups of Keys are created for each Connection created with the <strong>Data Streams Connector</strong>. The keys are prefixed to indicate their grouping with the following format: <code>DS:&lt;AD Connection Id&gt;-&lt;DS Stream Object Id&gt;:*</code></li>
+</ul>
+<h3 id="signalr-backplane">SignalR Backplane</h3>
+<ul>
+<li><strong>Purpose</strong>: Enables SignalR message distribution across multiple server instances. SignalR is used to send real time data between XMPro Products like Database changes or Notifications. This ensures that when one server instance receives a message, all other instances are automatically notified, keeping users connected to different servers synchronized with the same real-time information.</li>
+<li><strong>Single Server Performance</strong>: Even on a single server deployment, Redis backplane can improve SignalR performance by offloading message routing from server memory to Redis, reducing memory pressure and improving scalability for high-frequency real-time updates.</li>
+</ul>
+<h2 id="redis-cache-capacity-and-expiry-configuration-in-xmpro">Redis Cache Capacity and Expiry Configuration in XMPro</h2>
+<p>The <a href="https://xmpro.gitbook.io/xmpro-app/how-to-use/configuration-guide#server">XMPro App Agent</a> and <a href="https://xmpro.gitbook.io/data-streams-connector/how-to-use/configuration#cache">Data Streams Connector</a> provide options to configure how data is stored: Cache Size limits, Sliding Expiry, and Cache Clearing.</p>
+<ol>
+<li><p><strong>Cache Size Limits</strong>:</p>
+<ul>
+<li>XMPro implements its own cache size management via the Agent and Connector</li>
+<li>When inserting new items that exceed the configured cache size, oldest items are removed to give way to new data</li>
+</ul>
+</li>
+<li><p><strong>Sliding Expiry</strong>:</p>
+<ul>
+<li>Cache items have configurable sliding expiration times</li>
+<li>Items are automatically removed by Redis after expiration</li>
+<li>Expiration is refreshed on access to keep frequently used data in cache</li>
+</ul>
+</li>
+<li><p><strong>Cache Clearing</strong>:</p>
+<ul>
+<li>Cache items can be cleared via the XMPro App Agent if the Data Stream definition is changed, making the cached data no longer relevant</li>
+<li>Only data related to that XMPro App Agent is cleared</li>
+</ul>
+</li>
+</ol>
+<h2 id="impact-when-capacity-is-reached-on-the-redis-server">Impact When Capacity is Reached on the Redis Server</h2>
+<p>When a Redis server reaches its memory capacity limits, the impact on the XMPro Products varies significantly between SignalR Backplane and Data Caching usage patterns. Understanding these differences is critical for capacity planning and performance expectations.</p>
+<p><strong>Overview</strong></p>
+<ul>
+<li><strong>SignalR</strong>: Automatic fallback to default behavior, no functionality loss within servers</li>
+<li><strong>Data Caching</strong>: Data sent by the data stream while at capacity will not be cached, creating gaps in the cached data timeline; caching resumes when capacity is restored. See <a href="#data-caching-impact-stored-data">Data Caching Impact (Stored Data)</a> for details as actual behavior depends on Redis server configuration.</li>
+</ul>
+<h3 id="signalr-backplane-impact-message-pass-through">SignalR Backplane Impact (Message Pass-Through)</h3>
+<p><strong>SignalR Usage:</strong></p>
+<ul>
+<li>Redis serves as a temporary message broker between XMPro servers</li>
+<li>Messages are passed through Redis but not permanently stored</li>
+<li>Used by App Designer, Data Stream Designer, and Subscription Manager</li>
+</ul>
+<p><strong>Behavior When Capacity Reached:</strong></p>
+<ol>
+<li><p><strong>Automatic Fallback</strong>: XMPro falls back to single-server SignalR using its configured product SQL database - no functionality loss</p>
+</li>
+<li><p><strong>Performance Impact</strong>:</p>
+<ul>
+<li>Increased database load as cache misses increase</li>
+<li>Potential for increased latency in real-time data updates</li>
+</ul>
+</li>
+<li><p><strong>User Impact</strong>:</p>
+<ul>
+<li>Real-time updates work normally for users on the same server</li>
+<li>Cross-server real-time synchronization temporarily unavailable</li>
+</ul>
+<p><strong>Example:</strong> When Design User A updates a block or agent, Design Users B &amp; C on the same server see the real-time update immediately, but Design Users X, Y &amp; Z on a different server won't see it until they refresh or Redis capacity is restored.</p>
+</li>
+<li><p><strong>Recovery</strong>: Automatic restoration when Redis capacity returns - no manual intervention needed</p>
+</li>
+<li><p><strong>Data Safety</strong>: No data loss - SignalR uses Redis for pass-through messaging only, all business data remains in SQL databases</p>
+</li>
+</ol>
+<h3 id="data-caching-impact-stored-data">Data Caching Impact (Stored Data)</h3>
+<p><strong>Data Caching Usage:</strong></p>
+<ul>
+<li>Redis stores actual cached data from Data Streams Connector</li>
+<li>Cached data persists in Redis for performance optimization</li>
+<li>Used primarily in App Designer for metric data in a dashboard application page</li>
+</ul>
+<p><strong>Behavior When Capacity Reached:</strong></p>
+<ol>
+<li><p><strong>App Designer Cached Data</strong>:</p>
+<ul>
+<li><strong>Data Loss</strong>: Cached real-time values displayed in applications will be lost</li>
+<li><strong>New Data Behavior</strong>: Behavior for which data is lost depends on the configured Redis Memory Policy:
+<ul>
+<li>With <code>allkeys-lru</code> policy: New data replaces old data</li>
+<li>With <code>noeviction</code> policy: New data is rejected, existing cached data remains</li>
+</ul>
+</li>
+<li><strong>Application Display</strong>: Users will see gaps in historical dashboard data</li>
+</ul>
+</li>
+<li><p><strong>Recovery</strong>: When Redis capacity returns to normal, the cache will gradually repopulate as new data flows through the application. If it is important to fill in the gap, missed data would have to be resent via the Data Stream.</p>
+</li>
+</ol>
+<h2 id="redis-server-configuration">Redis Server Configuration</h2>
+<div class="NOTE">
+<h5>Note</h5>
+<p>For Azure Terraform deployments, see the <a href="../installation/deployment/azure-terraform/implementation-guide.html#configure-autoscale">Azure Terraform Implementation Guide</a> for details on how to enable autoscaling with Redis.</p>
+</div>
+<h3 id="connection-configuration">Connection Configuration</h3>
+<ul>
+<li>Redis connection is configured via connection strings</li>
+<li>Supports both standard Redis and Azure Redis Cache</li>
+<li>Connection multiplexer is registered as a singleton for connection pooling</li>
+</ul>
+<h3 id="redis-memory-policies">Redis Memory Policies</h3>
+<p>These policies are configured during Redis service setup. They determine how Redis handles memory limits and what happens when the server reaches its maximum memory capacity. Redis server typically uses:</p>
+<ul>
+<li><strong>Default Policy</strong>: <code>noeviction</code> - Returns errors when memory limit reached</li>
+<li><strong>Recommended</strong>: <code>allkeys-lru</code> - Evicts least recently used keys</li>
+<li><strong>Alternative</strong>: <code>volatile-lru</code> - Evicts LRU keys with expiration set</li>
+</ul>
+<h2 id="recommendations">Recommendations</h2>
+<h3 id="data-caching-recommendations">Data Caching Recommendations</h3>
+<p>These Redis configuration practices specifically address XMPro data caching performance and help prevent the capacity-related data gaps described above.</p>
+<p><strong>Configure Appropriate Eviction Policies</strong></p>
+<ul>
+<li>Set Redis <code>maxmemory-policy</code> to <code>allkeys-lru</code> to automatically remove least-recently-used data when capacity is reached</li>
+<li>Configure <code>maxmemory</code> limit based on available resources</li>
+<li>Consider Redis clustering for high-volume deployments</li>
+</ul>
+<p><strong>Cache Size Configuration</strong></p>
+<ul>
+<li>Adjust XMPro cache size limits based on your expected data throughput</li>
+<li>Balance between memory usage and cache expiry duration</li>
+<li>Monitor cache effectiveness and adjust limits accordingly</li>
+</ul>
+<h3 id="general-recommendations">General Recommendations</h3>
+<p>These broader Redis server configurations support overall system performance and reliability.</p>
+<p><strong>Monitor Redis Memory Usage</strong></p>
+<ul>
+<li>Set up monitoring for Redis memory consumption</li>
+<li>Configure alerts before reaching capacity</li>
+<li>Plan for Redis scaling based on data volume</li>
+</ul>
+<p><strong>High Availability</strong></p>
+<ul>
+<li>Use Redis persistence for critical cache data</li>
+<li>Implement Redis replication for failover</li>
+<li>Consider Redis Sentinel or Cluster for production</li>
+</ul>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<p>When Autoscaling is enabled, Redis connection can be checked using the XMPro Health check URL. Common issues are:</p>
+<div class="TIP">
+<h5>Tip</h5>
+<p>For comprehensive information about XMPro health check endpoints and troubleshooting, see the <a href="health-checks.html">Health Checks</a> technical reference.</p>
+</div>
+<ol>
+<li><p><strong>Connection Failures</strong>: Redis server is unhealthy from the Health Check URL</p>
+<p><strong>Fix</strong>: Restart Redis service, verify network connectivity, and confirm correct connection string in XMPro configuration</p>
+</li>
+<li><p><strong>Memory Errors</strong>: Monitor Redis memory usage and eviction statistics</p>
+<p><strong>Fix</strong>: Increase Redis memory allocation, set <code>maxmemory-policy</code> to <code>allkeys-lru</code>, or optimize XMPro cache size limits</p>
+</li>
+<li><p><strong>Performance Degradation</strong>: Review cache hit/miss ratios and adjust cache sizes</p>
+<p><strong>Fix</strong>: Increase Redis memory, adjust cache expiration times, or review data patterns to optimize cache effectiveness</p>
+</li>
+</ol>
+<p>See the <a href="https://redis.io/">Redis Documentation</a> on how to solve more issues regarding the Server.</p>
+<h3 id="diagnostic-commands">Diagnostic Commands</h3>
+<p>Use these common <a href="https://redis.io/docs/latest/commands/">Redis CLI commands</a> from your Redis server or any machine with Redis CLI to help in your investigation</p>
+<pre><code class="lang-bash"># Check Redis memory usage
+redis-cli INFO memory
+
+# Monitor evicted keys
+redis-cli INFO stats | grep evicted
+
+# View current memory policy
+redis-cli CONFIG GET maxmemory-policy
+</code></pre>
+<h2 id="summary">Summary</h2>
+<p>Redis serves different functions across XMPro products, with SignalR backplane providing graceful fallback when capacity is reached, while data caching can experience gaps in cached data. Understanding these behavioral differences and properly configuring Redis memory policies, monitoring, and capacity planning ensures optimal XMPro performance and prevents data loss scenarios. The key insight is that Redis server configuration directly affects how XMPro handles capacity constraints, making proper setup and monitoring essential for reliable operation.</p>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: August 22, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

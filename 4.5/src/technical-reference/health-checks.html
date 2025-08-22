@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Health Checks | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Health Checks | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../images/favicon.png">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/technical-reference/health-checks.md&amp;version=GB21317-cherry-pick-batch-to-release-4.5.2&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="health-checks">Health Checks</h1>
+
+<div class="NOTE">
+<h5>Note</h5>
+<p>For Azure Terraform deployments, see the <a href="../installation/deployment/azure-terraform/implementation-guide.html#health-checks-configuration">Azure Terraform Implementation Guide</a> for automated health checks configuration.</p>
+</div>
+<div class="video-container">
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/W1LWcSUrgTs" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+<h2 id="overview">Overview</h2>
+<p>Health checks are diagnostic tools that monitor the readiness of your XMPro services. They evaluate various aspects of system health including:</p>
+<ul>
+<li>XMPro service availability</li>
+<li>Database connectivity</li>
+<li>Redis Cache status (when configured)</li>
+</ul>
+<p>Health checks are disabled by default but are highly recommended for production environments to ensure service reliability and enable automatic recovery mechanisms.</p>
+<h2 id="health-endpoints">Health Endpoints</h2>
+<p>Each XMPro application exposes health check endpoints:</p>
+<table>
+<thead>
+<tr>
+<th>Application</th>
+<th>Health Endpoint</th>
+<th>Health UI</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Application Designer (AD)</td>
+<td><code>/health</code></td>
+<td><code>/health-ui</code></td>
+</tr>
+<tr>
+<td>Data Stream Designer (DS)</td>
+<td><code>/health</code></td>
+<td><code>/health-ui</code></td>
+</tr>
+<tr>
+<td>Subscription Manager (SM)</td>
+<td><code>/health</code></td>
+<td><code>/health-ui</code></td>
+</tr>
+<tr>
+<td>XMPro AI</td>
+<td><code>/health</code></td>
+<td><code>/health-ui</code></td>
+</tr>
+</tbody>
+</table>
+<p>The health endpoint returns JSON with detailed status information:</p>
+<pre><code class="lang-json">{
+  &quot;status&quot;: &quot;Healthy&quot;,
+  &quot;data&quot;: {},
+  &quot;description&quot;: &quot;Service is running&quot;,
+  &quot;duration&quot;: &quot;00:00:00.0123456&quot;,
+  &quot;tags&quot;: [&quot;database&quot;, &quot;cache&quot;]
+}
+</code></pre>
+<h2 id="health-ui">Health UI</h2>
+<p>The Health UI provides a user-friendly display of health check results:</p>
+<ul>
+<li>Accessible via <code>/health-ui</code> path</li>
+<li>Shows real-time status of all configured health checks</li>
+<li>Displays response times and error details</li>
+<li>Provides historical health data</li>
+</ul>
+<h2 id="configure-health-checks">Configure Health Checks</h2>
+<div class="NOTE">
+<h5>Note</h5>
+<p>For Azure Terraform deployments, health checks are automatically configured and enabled. See the <a href="../installation/deployment/azure-terraform/implementation-guide.html#health-checks-configuration">Azure Terraform Implementation Guide</a> for details.</p>
+</div>
+<h2 id="adding-third-party-endpoints">Adding Third-Party Endpoints</h2>
+<div class="NOTE">
+<h5>Note</h5>
+<p>For Azure Terraform deployments, third-party endpoints can be configured through environment variables. See the <a href="../installation/deployment/azure-terraform/implementation-guide.html#health-checks-configuration">Azure Terraform Implementation Guide</a> for details.</p>
+</div>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: August 22, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

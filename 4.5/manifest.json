@@ -18227,6 +18227,56 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "src/images/installation-agents-and-connectors.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/installation-agents-and-connectors.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/images/installation-complete-installation.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/installation-complete-installation.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/images/installation-install-xmpro.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/installation-install-xmpro.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/images/installation-overview.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/installation-overview.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/images/installation-preparation.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/installation-preparation.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "src/images/installation/windows-server-2022-1.png",
       "output": {
         "resource": {
@@ -25847,6 +25897,96 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "src/installation/azure-terraform-preparation.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/installation/azure-terraform-preparation.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "src/installation/complete-installation/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/installation/complete-installation/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "src/installation/complete-installation/install-connectors.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/installation/complete-installation/install-connectors.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "src/installation/complete-installation/install-stream-host/azure-terraform.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/installation/complete-installation/install-stream-host/azure-terraform.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "src/installation/complete-installation/install-stream-host/docker.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/installation/complete-installation/install-stream-host/docker.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "src/installation/complete-installation/install-stream-host/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/installation/complete-installation/install-stream-host/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "src/installation/complete-installation/install-stream-host/windows-x64.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/installation/complete-installation/install-stream-host/windows-x64.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "src/installation/complete-installation/set-up-a-tenant-company.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/installation/complete-installation/set-up-a-tenant-company.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "src/installation/deployment/azure-terraform/advanced-configuration.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/installation/deployment/azure-terraform/advanced-configuration.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "src/installation/deployment/azure-terraform/implementation-guide.md",
       "output": {
         ".html": {
@@ -25861,16 +26001,6 @@
       "output": {
         ".html": {
           "relative_path": "src/installation/deployment/azure-terraform/index.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "src/installation/deployment/azure-terraform/prerequisites.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/installation/deployment/azure-terraform/prerequisites.html"
         }
       },
       "version": ""
@@ -25897,40 +26027,10 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "src/installation/install-stream-host/azure-terraform.md",
+      "source_relative_path": "src/installation/install.md",
       "output": {
         ".html": {
-          "relative_path": "src/installation/install-stream-host/azure-terraform.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "src/installation/install-stream-host/docker.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/installation/install-stream-host/docker.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "src/installation/install-stream-host/index.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/installation/install-stream-host/index.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "src/installation/install-stream-host/windows-x64.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/installation/install-stream-host/windows-x64.html"
+          "relative_path": "src/installation/install.html"
         }
       },
       "version": ""
@@ -31141,6 +31241,106 @@
       "output": {
         ".html": {
           "relative_path": "src/resources/sizing-guideline.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "src/technical-reference/health-checks.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/technical-reference/health-checks.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "src/technical-reference/redis-cache-implementation.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/technical-reference/redis-cache-implementation.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "src/technical-reference/sso-adfs.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/technical-reference/sso-adfs.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "src/technical-reference/sso-azure-ad.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/technical-reference/sso-azure-ad.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "src/technical-reference/xmpro-log-events/ai-log-events.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/technical-reference/xmpro-log-events/ai-log-events.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "src/technical-reference/xmpro-log-events/app-designer-log-events.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/technical-reference/xmpro-log-events/app-designer-log-events.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "src/technical-reference/xmpro-log-events/data-stream-designer-log-events.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/technical-reference/xmpro-log-events/data-stream-designer-log-events.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "src/technical-reference/xmpro-log-events/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/technical-reference/xmpro-log-events/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "src/technical-reference/xmpro-log-events/stream-host-log-events.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/technical-reference/xmpro-log-events/stream-host-log-events.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "src/technical-reference/xmpro-log-events/subscription-manager-log-events.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/technical-reference/xmpro-log-events/subscription-manager-log-events.html"
         }
       },
       "version": ""
