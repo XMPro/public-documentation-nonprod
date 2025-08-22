@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Azure Terraform Deployment | XMPro </title>
+      <title>Deploy XMPro on Azure | XMPro </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Azure Terraform Deployment | XMPro ">
+      <meta name="title" content="Deploy XMPro on Azure | XMPro ">
       <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
       
       <link rel="icon" href="../../../../images/favicon.png">
@@ -85,167 +85,207 @@
         </div>
 
         <article data-uid="">
-<h1 id="azure-terraform-deployment">Azure Terraform Deployment</h1>
+<h1 id="deploy-xmpro-on-azure">Deploy XMPro on Azure</h1>
 
-<h2 id="overview">Overview</h2>
-<p>Deploy XMPro on Azure using our production-ready Terraform module. This documentation provides implementation guidance, while technical specifications are maintained in the <a href="https://github.com/XMPro/terraform-xmpro-azure">module's GitHub repository</a>.</p>
+<p>Get XMPro running on Azure in 20 minutes with these simple steps.</p>
 <div class="NOTE">
 <h5>Note</h5>
-<p>For <strong>v4.4 and earlier</strong>, use the <a href="https://documentation.xmpro.com/4.4/src/installation/deployment/azure.html">ARM template deployment</a>. This Terraform module is for XMPro v4.5 and later.</p>
+<p>This guide works on <strong>Windows</strong>, <strong>Mac</strong>, and <strong>Linux</strong>. Windows users should use Command Prompt or PowerShell.</p>
 </div>
-<h2 id="architecture">Architecture</h2>
-<p>The Terraform module deploys a complete XMPro platform on Azure:</p>
-<p><img src="../../../images/azure-terraform-architecture-07-30-2025.png" alt="XMPro Azure Terraform Architecture"></p>
-<p>The module creates:</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>You need:</p>
 <ul>
-<li><strong>Core Applications</strong>: SM, AD, DS, and Stream Host</li>
-<li><strong>Azure Infrastructure</strong>: SQL databases, App Services, Key Vault, Storage</li>
-<li><strong>Security</strong>: Managed identities, SSL certificates, network security</li>
-<li><strong>Monitoring</strong>: Application Insights and Log Analytics</li>
+<li>An Azure account with a subscription</li>
+<li>A computer with internet access</li>
 </ul>
-<p>For detailed component descriptions, resource dependencies, and technical specifications, see the <a href="https://github.com/XMPro/terraform-xmpro-azure#%EF%B8%8F-architecture-overview">Architecture Overview</a> and <a href="https://github.com/XMPro/terraform-xmpro-azure#-submodules">Submodules</a> sections in the GitHub README.</p>
+<h2 id="quick-deployment">Quick Deployment</h2>
+<h3 id="1-install-required-tools">1. Install Required Tools</h3>
+<p>Install these on your computer:</p>
+<ul>
+<li><strong>Git</strong>: <a href="https://git-scm.com/downloads">Download here</a></li>
+<li><strong>Terraform</strong>: <a href="https://developer.hashicorp.com/terraform/install">Download here</a></li>
+<li><strong>Azure CLI</strong>: <a href="https://learn.microsoft.com/en-us/cli/azure/install-azure-cli">Download here</a></li>
+</ul>
+<p>Verify they work:</p>
+<p><strong>Windows (Command Prompt or PowerShell):</strong></p>
+<pre><code class="lang-powershell">git --version
+terraform version
+az version
+</code></pre>
+<p><strong>Mac/Linux:</strong></p>
+<pre><code class="lang-bash">git --version
+terraform version
+az version
+</code></pre>
+<h3 id="2-login-to-azure">2. Login to Azure</h3>
+<p><strong>All platforms:</strong></p>
+<pre><code class="lang-powershell"># Login to your Azure account
+az login
+
+# Set your subscription (if you have multiple)
+az account set --subscription &quot;YOUR-SUBSCRIPTION-NAME-OR-ID&quot;
+</code></pre>
+<div class="TIP">
+<h5>Tip</h5>
+<p>Terraform will automatically use your Azure CLI credentials. If you prefer using environment variables or service principals, see the advanced setup below.</p>
+</div>
+<details>
+<summary><b>Optional: Use ARM environment variables instead</b></summary>
+<p>If you can't use <code>az login</code> (e.g., in CI/CD pipelines), set these environment variables:</p>
+<p><strong>Windows (PowerShell):</strong></p>
+<pre><code class="lang-powershell">$env:ARM_SUBSCRIPTION_ID = &quot;your-subscription-id&quot;
+$env:ARM_TENANT_ID = &quot;your-tenant-id&quot;
+$env:ARM_CLIENT_ID = &quot;your-service-principal-id&quot;
+$env:ARM_CLIENT_SECRET = &quot;your-service-principal-password&quot;
+</code></pre>
+<p><strong>Mac/Linux:</strong></p>
+<pre><code class="lang-bash">export ARM_SUBSCRIPTION_ID=&quot;your-subscription-id&quot;
+export ARM_TENANT_ID=&quot;your-tenant-id&quot;
+export ARM_CLIENT_ID=&quot;your-service-principal-id&quot;
+export ARM_CLIENT_SECRET=&quot;your-service-principal-password&quot;
+</code></pre>
+<p>For more details, see <a href="https://learn.microsoft.com/en-us/azure/developer/terraform/overview">Microsoft's Terraform on Azure documentation</a>.</p>
+</details>
+<h3 id="3-get-the-deployment-files">3. Get the Deployment Files</h3>
+<p><strong>Windows (PowerShell):</strong></p>
+<pre><code class="lang-powershell"># Download the deployment configuration
+git clone https://github.com/XMPro/terraform-xmpro-azure.git
+cd terraform-xmpro-azure\examples\basic
+
+# Create your configuration
+Copy-Item terraform.tfvars.example terraform.tfvars
+</code></pre>
+<p><strong>Windows (Command Prompt):</strong></p>
+<pre><code class="lang-cmd"># Download the deployment configuration
+git clone https://github.com/XMPro/terraform-xmpro-azure.git
+cd terraform-xmpro-azure\examples\basic
+
+# Create your configuration
+copy terraform.tfvars.example terraform.tfvars
+</code></pre>
+<p><strong>Mac/Linux:</strong></p>
+<pre><code class="lang-bash"># Download the deployment configuration
+git clone https://github.com/XMPro/terraform-xmpro-azure.git
+cd terraform-xmpro-azure/examples/basic
+
+# Create your configuration
+cp terraform.tfvars.example terraform.tfvars
+</code></pre>
+<p>Edit <code>terraform.tfvars</code> with any text editor (Notepad, VS Code, vim, etc.).
+Only modify the QUICK START section at the top:</p>
+<pre><code class="lang-hcl"># Core platform settings
+location = &quot;eastus&quot;                           # Azure region (see list below)
+company_name = &quot;YourCompany&quot;                  # Your company name (must be unique)
+
+# Database credentials - IMPORTANT: Don't change these after deployment!
+db_admin_username = &quot;xmadmin&quot;                 # Database admin username
+db_admin_password = &quot;StrongPassword123!&quot;      # Database admin password
+
+# Application passwords
+site_admin_password = &quot;StrongPassword123!&quot;      # Super admin password
+company_admin_password = &quot;StrongPassword123!&quot;   # Company admin password
+
+# Company administrator details
+company_admin_email_address = &quot;admin@yourcompany.com&quot;  # Your email address
+company_admin_first_name = &quot;John&quot;             # Your first name
+company_admin_last_name = &quot;Doe&quot;               # Your last name
+
+# Evaluation mode - Set to true for testing/demo (includes licenses)
+is_evaluation_mode = true
+</code></pre>
+<div class="TIP">
+<h5>Tip</h5>
+<p><strong>Common Azure regions</strong>: <code>eastus</code>, <code>westus2</code>, <code>centralus</code>, <code>westeurope</code>, <code>northeurope</code>, <code>southeastasia</code>, <code>australiaeast</code></p>
+<p>For the complete list, run <code>az account list-locations -o table</code> or see <a href="https://azure.microsoft.com/en-us/explore/global-infrastructure/geographies/">Azure Regions</a></p>
+</div>
+<h3 id="4-deploy-xmpro">4. Deploy XMPro</h3>
+<p><strong>All platforms:</strong></p>
+<pre><code class="lang-powershell">terraform init    # Prepare Terraform
+terraform apply   # Deploy to Azure (type 'yes' when asked)
+</code></pre>
+<h3 id="5-access-xmpro">5. Access XMPro</h3>
+<p>After deployment completes:</p>
+<p><strong>All platforms:</strong></p>
+<pre><code class="lang-powershell">terraform output  # Shows your URLs
+</code></pre>
+<p>Login to Subscription Manager with either account:</p>
+<table>
+<thead>
+<tr>
+<th>Account Type</th>
+<th>Username</th>
+<th>Password</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Super Admin</strong></td>
+<td><code>admin@xmpro.onxmpro.com</code></td>
+<td>Your <code>site_admin_password</code></td>
+<td>Full system access, license management</td>
+</tr>
+<tr>
+<td><strong>Company Admin</strong></td>
+<td><code>firstname.lastname@yourcompany.onxmpro.com</code></td>
+<td>Your <code>company_admin_password</code></td>
+<td>Company management, normal operations</td>
+</tr>
+</tbody>
+</table>
 <div class="NOTE">
 <h5>Note</h5>
-<p>The GitHub module may reference this documentation using <code>/latest/</code> URLs. These URLs automatically redirect to the current stable version.</p>
+<p>Replace <code>firstname.lastname</code> and <code>yourcompany</code> with the values you set in terraform.tfvars.</p>
 </div>
-<h2 id="install">Install</h2>
-<p>To deploy XMPro on Azure using Terraform:</p>
+<h2 id="thats-it">That's It!</h2>
+<p>XMPro is now running on Azure with this architecture:</p>
+<p><img src="../../../images/azure-terraform-architecture-07-30-2025.png" alt="Azure Terraform Architecture"></p>
+<p>Your deployment includes:</p>
+<ul>
+<li>✅ All XMPro applications (SM, AD, DS, Stream Host)</li>
+<li>✅ SQL databases for each component</li>
+<li>✅ Key Vault for secret management</li>
+<li>✅ Application Insights monitoring</li>
+<li>✅ Storage accounts for files</li>
+<li>✅ SSL certificates automatically configured</li>
+</ul>
+<h2 id="whats-next">What's Next?</h2>
 <ol>
-<li><strong><a href="prerequisites.html">Prerequisites</a></strong> - Set up your environment</li>
-<li><strong><a href="implementation-guide.html">Implementation Guide</a></strong> - Step-by-step deployment instructions</li>
-<li><strong><a href="https://github.com/XMPro/terraform-xmpro-azure">Module Documentation</a></strong> - Technical reference</li>
+<li><strong><a href="../../complete-installation/set-up-a-tenant-company.html">Set up your company</a></strong> - Create and configure your first tenant</li>
+<li><strong><a href="../../complete-installation/install-connectors.html">Upload agents and connectors</a></strong> - Enable data integration</li>
+<li><strong><a href="../../complete-installation/install-stream-host/index.html">Add more Stream Hosts</a></strong> (optional) - Scale your data processing</li>
 </ol>
-<h3 id="key-features">Key Features</h3>
+<h2 id="need-help">Need Help?</h2>
+<h3 id="common-issues">Common Issues</h3>
+<p><strong>&quot;terraform: command not found&quot;</strong>
+→ You haven't installed Terraform yet. Go back to step 1.</p>
+<p><strong>&quot;Please ensure you have logged in&quot;</strong>
+→ Run <code>az login</code> again</p>
+<p><strong>&quot;Resource already exists&quot;</strong>
+→ Add <code>prefix = &quot;unique123&quot;</code> to your terraform.tfvars</p>
+<p><strong>Takes longer than 20 minutes?</strong>
+→ First deployment can take up to 30 minutes. Check Azure Portal to see progress.</p>
+<h3 id="more-resources">More Resources</h3>
 <ul>
-<li><strong>Production-Ready Defaults</strong>: Optimized configurations for immediate use</li>
-<li><strong>Flexible Deployment Options</strong>: Support for evaluation and production modes</li>
-<li><strong>Existing Database Support</strong>: Integrate with your current SQL infrastructure</li>
-<li><strong>Custom Domain Management</strong>: Automatic SSL certificates via Azure</li>
-<li><strong>Comprehensive Monitoring</strong>: Built-in Application Insights and logging</li>
+<li><a href="troubleshooting.html">Troubleshooting Guide</a> - Fix common problems</li>
+<li><a href="advanced-configuration.html">Advanced Configuration</a> - Production settings</li>
+<li><a href="https://github.com/XMPro/terraform-xmpro-azure">Complete Documentation</a> - All options</li>
 </ul>
-<h3 id="license-management">License Management</h3>
-<p>The Terraform module supports two licensing modes:</p>
-<h4 id="evaluation-mode">Evaluation Mode</h4>
-<p>When <code>is_evaluation_mode = true</code>, the deployment includes:</p>
-<ul>
-<li>Automatic license provisioning via licenses container</li>
-<li>Pre-configured evaluation product IDs and keys</li>
-<li>No manual license requests required</li>
-<li><strong>Forces company name to &quot;Evaluation&quot; (overrides any <code>company_name</code> variable value)</strong></li>
-</ul>
+<h2 id="cleanup">Cleanup</h2>
+<p>To remove everything and stop Azure charges:</p>
+<p><strong>All platforms:</strong></p>
+<pre><code class="lang-powershell">terraform destroy
+</code></pre>
+<hr>
 <div class="NOTE">
 <h5>Note</h5>
-<p>The <code>examples/basic</code> configuration uses <code>is_evaluation_mode = true</code> as default for quick evaluation deployments.</p>
-</div>
-<div class="IMPORTANT">
-<h5>Important</h5>
-<p>To use a custom company name, you must set <code>is_evaluation_mode = false</code> and request licenses from XMPro for your specific company name.</p>
-</div>
-<h4 id="for-production-workloads-default">For Production Workloads (Default)</h4>
-<p>When <code>is_evaluation_mode = false</code> (default), you need to manually request licenses:</p>
-<ol>
-<li>Login using the Super Admin account <code>admin@xmpro.onxmpro.com</code></li>
-<li>Navigate to Company → Subscriptions</li>
-<li>Click &quot;Update License&quot; for each product (AD, DS)</li>
-<li>Generate license requests and submit to XMPro support</li>
-<li>Upload received licenses</li>
-</ol>
-<div class="NOTE">
-<h5>Note</h5>
-<p>License requests require SMTP configuration to be enabled during deployment. See the <a href="https://github.com/XMPro/terraform-xmpro-azure#email-configuration">Module Documentation</a> for SMTP setup.</p>
-</div>
-<h2 id="upgrade">Upgrade</h2>
-<p>To upgrade an existing XMPro Terraform deployment to a newer version:</p>
-<div class="WARNING">
-<h5>Warning</h5>
-<p>Before upgrading, back up your databases using Azure SQL Database export functionality.</p>
-</div>
-<h3 id="step-1-prepare-for-upgrade">Step 1: Prepare for Upgrade</h3>
-<pre><code class="lang-bash"># Navigate to your deployment directory
-cd xmpro-deployment  # Your deployment directory
-
-# Back up current state
-# Linux/Mac:
-cp terraform.tfstate terraform.tfstate.backup
-
-# Windows:
-copy terraform.tfstate terraform.tfstate.backup
-</code></pre>
-<h3 id="step-2-update-configuration">Step 2: Update Configuration</h3>
-<p>Update your Terraform configuration to use the new version:</p>
-<pre><code class="lang-bash"># Option A: Update imageversion variable
-# Edit your terraform.tfvars file and update:
-# imageversion = &quot;5.0.0&quot;  # Upgrade from 4.5.0 to 5.0.0
-
-# Option B: Use command line override
-terraform plan -var=&quot;imageversion=5.0.0&quot;
-</code></pre>
-<h3 id="step-3-plan-your-upgrade">Step 3: Plan Your Upgrade</h3>
-<pre><code class="lang-bash">terraform plan
-</code></pre>
-<p>Review the planned changes before proceeding.</p>
-<h3 id="step-4-apply-configuration">Step 4: Apply Configuration</h3>
-<pre><code class="lang-bash">terraform apply
-</code></pre>
-<h3 id="step-5-verify-deployment">Step 5: Verify Deployment</h3>
-<p>After upgrade, verify your applications are running:</p>
-<pre><code class="lang-bash"># List deployed resources
-az resource list --resource-group $(terraform output -raw resource_group_name) --output table
-
-# Check application versions
-curl -f &quot;$(terraform output -raw ad_app_url)/version&quot;
-curl -f &quot;$(terraform output -raw ds_app_url)/version&quot;
-curl -f &quot;$(terraform output -raw sm_app_url)/version&quot;
-</code></pre>
-<h3 id="step-6-access-applications">Step 6: Access Applications</h3>
-<p>Navigate to the URLs provided by <code>terraform output</code>:</p>
-<ul>
-<li><strong>SM (Subscription Manager)</strong>: Verify user access and licenses</li>
-<li><strong>AD (App Designer)</strong>: Test application functionality</li>
-<li><strong>DS (Data Stream Designer)</strong>: Verify data pipeline operations</li>
-</ul>
-<h3 id="post-upgrade-validation">Post-Upgrade Validation</h3>
-<ol>
-<li><p><strong>Test Core Functionality</strong></p>
-<ul>
-<li>Login with existing user accounts</li>
-<li>Verify applications and data streams function correctly</li>
-<li>Check that data is preserved and accessible</li>
-</ul>
-</li>
-<li><p><strong>Monitor Performance</strong></p>
-<ul>
-<li>Check Application Insights for any errors</li>
-<li>Monitor resource utilization</li>
-<li>Verify all services are responding normally</li>
-</ul>
-</li>
-</ol>
-<p>For upgrade troubleshooting, see the <a href="troubleshooting.html">Troubleshooting Guide</a>.</p>
-<h2 id="uninstall">Uninstall</h2>
-<p>To completely remove the XMPro platform:</p>
-<ol>
-<li><p><strong>Destroy Terraform resources:</strong></p>
-<pre><code class="lang-bash">cd xmpro-deployment  # Your deployment directory
-terraform destroy
-</code></pre>
-</li>
-<li><p><strong>Manual cleanup (if needed):</strong></p>
-<ul>
-<li>Remove the resource group from Azure Portal</li>
-<li>Remove Terraform state files (if using local state)</li>
-</ul>
-</li>
-</ol>
-<div class="WARNING">
-<h5>Warning</h5>
-<p>This will permanently delete all data. Ensure you have backups before proceeding.</p>
+<p>This guide uses the <code>examples/basic</code> configuration which is perfect for getting started. For production deployments with custom domains, SMTP, and other advanced features, see the <a href="https://github.com/XMPro/terraform-xmpro-azure">GitHub documentation</a>.</p>
 </div>
 
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: August 20, 2025</em></small></p>
+    <p><small><em>Last modified: August 22, 2025</em></small></p>
   </div>
 </article>
 

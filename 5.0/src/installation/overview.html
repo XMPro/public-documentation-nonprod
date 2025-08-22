@@ -87,47 +87,37 @@
         <article data-uid="">
 <h1 id="overview">Overview</h1>
 
-<p>XMPro Platform consists of three main components:</p>
+<p>XMPro Platform consists of three main components - App Designer, Data Stream Designer, and Subscription Manager - deployed using a modern container-based architecture (v4.5+) that supports Azure, AWS, and on-premises environments.</p>
+<p>This container-based approach provides:</p>
 <ul>
-<li>App Designer</li>
-<li>Data Stream Designer</li>
-<li>Subscription Manager</li>
+<li><strong>Improved Scalability</strong>: Easy horizontal scaling of components</li>
+<li><strong>Better Resource Utilization</strong>: Optimized container sizing for each component</li>
+<li><strong>Simplified Updates</strong>: Streamlined deployment and update process</li>
+<li><strong>Enhanced Security</strong>: Container isolation and security boundaries</li>
+<li><strong>Cost Optimization</strong>: Pay only for resources you use</li>
 </ul>
-<h2 id="xmpro-45-deployment">XMPro 4.5 Deployment</h2>
-<p>XMPro 4.5 introduces container-based deployment architecture for improved scalability and maintenance. Multiple deployment options are available:</p>
-<h3 id="cloud-deployment-options">Cloud Deployment Options</h3>
-<h4 id="azure-terraform-deployment">Azure Terraform Deployment</h4>
-<p>Deploy XMPro on Azure using our Terraform Infrastructure as Code (IaC) module:</p>
-<ul>
-<li><strong>Full Platform</strong>: Complete XMPro deployment with all components</li>
-<li><strong>Single Product</strong>: Deploy individual components (AD-only, DS-only, SM-only)</li>
-<li><strong>Production Ready</strong>: Includes monitoring, backup, and security configurations</li>
-<li><strong>Cost Optimized</strong>: Multiple environment templates for different scales</li>
-</ul>
-<p>See the comprehensive <a href="deployment/azure-terraform/index.html">Azure Terraform Deployment</a> guide for complete setup instructions.</p>
 <div class="NOTE">
 <h5>Note</h5>
-<p>For v4.4 ARM template deployment, see the ARM template documentation. The Terraform deployment covers XMPro v5.0 and later, featuring the new separate App Service Plans per product architecture introduced in v4.4.</p>
+<p>For v4.4 deployments, see the ARM template documentation. The Terraform deployment covers XMPro v4.5 and later, featuring the new separate App Service Plans per product architecture.</p>
 </div>
-<h4 id="aws-deployment">AWS Deployment</h4>
-<p>AWS deployment options are in development and will be available in upcoming releases.</p>
-<h3 id="on-premises-deployment">On-Premises Deployment</h3>
-<h4 id="stream-host-available-now">Stream Host (Available Now)</h4>
-<p>For immediate deployment needs, Stream Host deployment is available for multiple platforms including Windows and Docker. See the <a href="complete-installation/install-stream-host/index.html">Install Stream Host</a> guide for detailed instructions.</p>
-<h4 id="windows-installation">Windows Installation</h4>
-<p>Windows-based installation packages for on-premises deployment will be available in upcoming patches.</p>
-<h3 id="getting-help">Getting Help</h3>
-<p>For deployment assistance:</p>
+<p>The complete process - encompassing preparation, installation, setup, and loading templates - is depicted in the flowchart below.</p>
+<p><img src="../images/installation-overview.png" alt="Fig 1: The installation process overview"></p>
+<h2 id="artifacts">Artifacts</h2>
 <ul>
-<li>Review the <a href="deployment/azure-terraform/troubleshooting.html">Azure Terraform troubleshooting guide</a></li>
-<li>Contact XMPro support for deployment planning</li>
-<li>Check our documentation for the latest deployment options</li>
+<li><a href="mailto:support@xmpro.com?subject=Request-Installers">Request Installers</a></li>
+<li><a href="mailto:support@xmpro.com?subject=Request-Tiers-1-to-4">Request Tiers 1 - 4</a></li>
+<li><a href="complete-installation/install-connectors.html">Download and install Tier 5 &amp; 6 Files</a>
+<ul>
+<li>Links for the larger AI &amp; ML Agents are on their individual documentation pages, as indicated <a href="../resources/integrations.html#tier-5">here</a>.</li>
+</ul>
+</li>
+<li><a href="https://github.com/XMPro/Blueprints-Accelerators-Patterns">Download Blueprints, Accelerators &amp; Patterns</a></li>
 </ul>
 
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: August 20, 2025</em></small></p>
+    <p><small><em>Last modified: August 22, 2025</em></small></p>
   </div>
 </article>
 

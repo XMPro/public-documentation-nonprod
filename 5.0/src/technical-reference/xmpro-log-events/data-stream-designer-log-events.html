@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Data Stream Designer Log Events | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Data Stream Designer Log Events | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/technical-reference/xmpro-log-events/data-stream-designer-log-events.md&amp;version=GBmain&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="data-stream-designer-log-events">Data Stream Designer Log Events</h1>
+
+<p>Data Stream Designer generates log events that track real-time data processing operations and system management activities. These events cover use case management and deployment operations, data stream import/export processes, agent configuration and deployment lifecycle, file processing activities, stream host service management, and user authentication and authorization validation throughout the system.</p>
+<p>The tables below organize log events by severity level, with each entry showing the message template you'll see in your logs and the context explaining what triggers that event. The levels are:</p>
+<ul>
+<li>Fatal</li>
+<li>Error</li>
+<li>Warning</li>
+<li>Information</li>
+<li>Debug</li>
+<li>Trace</li>
+<li>Verbose</li>
+</ul>
+<h2 id="fatal-level">Fatal Level</h2>
+<p>Fatal events indicate critical system failures that cause the application to terminate unexpectedly. These require immediate attention as they represent complete system breakdown.</p>
+<table>
+<thead>
+<tr>
+<th>Message Template</th>
+<th>Context Summary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&quot;Application terminated unexpectedly&quot;</td>
+<td>Application startup failure in main program</td>
+</tr>
+</tbody>
+</table>
+<h2 id="error-level">Error Level</h2>
+<p>Error events indicate serious problems that prevent normal operation but don't necessarily cause application termination. These require prompt investigation and resolution.</p>
+<table>
+<thead>
+<tr>
+<th>Message Template</th>
+<th>Context Summary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&quot;Error retrieving use case summaries for entities by user {UserId}&quot;</td>
+<td>Deployment manager entity summary retrieval errors</td>
+</tr>
+<tr>
+<td>&quot;Error retrieving use case summaries with version by user {UserId}&quot;</td>
+<td>Deployment manager version summary retrieval errors</td>
+</tr>
+<tr>
+<td>&quot;Error retrieving use case summaries by user {UserId}&quot;</td>
+<td>Deployment manager general summary retrieval errors</td>
+</tr>
+<tr>
+<td>&quot;Error exporting use case {UniversalId} by user {UserId}&quot;</td>
+<td>Use case export operation errors</td>
+</tr>
+<tr>
+<td>&quot;Error importing data streams by user {UserId}&quot;</td>
+<td>Data stream import operation errors</td>
+</tr>
+<tr>
+<td>&quot;Error retrieving agents for user {UserId}&quot;</td>
+<td>Agent retrieval operation errors</td>
+</tr>
+<tr>
+<td>&quot;Error deserializing collection mapping&quot;</td>
+<td>Collection mapping deserialization errors</td>
+</tr>
+<tr>
+<td>&quot;Error deserializing agent version mapping&quot;</td>
+<td>Agent version mapping deserialization errors</td>
+</tr>
+<tr>
+<td>&quot;Error extracting import parameters&quot;</td>
+<td>Import parameter extraction errors</td>
+</tr>
+<tr>
+<td>&quot;Error executing post processing logic&quot;</td>
+<td>Post-processing logic execution errors in collections</td>
+</tr>
+<tr>
+<td>&quot;An error occurred while setting favorite for agent {AgentId}&quot;</td>
+<td>Agent favorite setting errors</td>
+</tr>
+<tr>
+<td>&quot;User {UserId} does not exist or is not in the specified company&quot;</td>
+<td>User validation errors during agent operations</td>
+</tr>
+<tr>
+<td>&quot;An error occurred while toggling favorite for agent {AgentId} for user {UserId} in company {CompanyId}&quot;</td>
+<td>Agent favorite toggle errors</td>
+</tr>
+<tr>
+<td>&quot;Failed to get StreamObject Outputs for StreamObject {StreamObjectId}&quot;</td>
+<td>Stream object output retrieval errors</td>
+</tr>
+<tr>
+<td>&quot;Timeout occured when attempting to interact with the device&quot;</td>
+<td>Device interaction timeout errors</td>
+</tr>
+<tr>
+<td>&quot;Error while configuring stream object&quot;</td>
+<td>Stream object configuration errors</td>
+</tr>
+<tr>
+<td>&quot;Error parsing XML for data stream {FileName}&quot;</td>
+<td>XML parsing errors during import</td>
+</tr>
+<tr>
+<td>&quot;Error saving data stream {FileName}&quot;</td>
+<td>Data stream saving errors during import</td>
+</tr>
+<tr>
+<td>&quot;Error processing file {FileName}&quot;</td>
+<td>General file processing errors during import</td>
+</tr>
+<tr>
+<td>&quot;UseCaseFile failed to Deserialize from memory stream&quot;</td>
+<td>Use case file deserialization errors</td>
+</tr>
+<tr>
+<td>&quot;Failed to create UseCaseFile from memory stream&quot;</td>
+<td>Use case file creation errors</td>
+</tr>
+<tr>
+<td>&quot;Error occurred while importing use case&quot;</td>
+<td>Use case import operation errors</td>
+</tr>
+<tr>
+<td>&quot;Error occurred while importing use case version&quot;</td>
+<td>Use case version import operation errors</td>
+</tr>
+<tr>
+<td>&quot;Error in Stream Host&quot;</td>
+<td>Stream host console application errors</td>
+</tr>
+<tr>
+<td>&quot;Error in Stream Host service&quot;</td>
+<td>Stream host service errors</td>
+</tr>
+<tr>
+<td>&quot;Error in Stream Host ServiceRunner&quot;</td>
+<td>Stream host service runner errors</td>
+</tr>
+<tr>
+<td>&quot;Error starting Stream Host service&quot;</td>
+<td>Stream host service startup errors</td>
+</tr>
+<tr>
+<td>&quot;Error stopping Stream Host service&quot;</td>
+<td>Stream host service shutdown errors</td>
+</tr>
+</tbody>
+</table>
+<h2 id="warning-level">Warning Level</h2>
+<p>Warning events indicate potential issues or unusual conditions that don't prevent operation but may lead to problems if not addressed. Monitor these for trends.</p>
+<table>
+<thead>
+<tr>
+<th>Message Template</th>
+<th>Context Summary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&quot;User {UserId} attempted to retrieve summaries without providing request&quot;</td>
+<td>User input validation warnings for summaries</td>
+</tr>
+<tr>
+<td>&quot;User {UserId} attempted to retrieve summaries without providing entity IDs&quot;</td>
+<td>User input validation warnings for entity IDs</td>
+</tr>
+<tr>
+<td>&quot;User {UserId} attempted to access entity IDs {EntityIds} without any permission&quot;</td>
+<td>User permission validation warnings</td>
+</tr>
+<tr>
+<td>&quot;Invalid request for use case summaries by user {UserId}&quot;</td>
+<td>Invalid use case summary request warnings</td>
+</tr>
+<tr>
+<td>&quot;Unauthorized access attempt by user {UserId}&quot;</td>
+<td>Unauthorized access attempt warnings</td>
+</tr>
+<tr>
+<td>&quot;User {UserId} attempted to retrieve version summaries without providing request&quot;</td>
+<td>Version summary request validation warnings</td>
+</tr>
+<tr>
+<td>&quot;User {UserId} attempted to retrieve version summaries without providing versions&quot;</td>
+<td>Version summary input validation warnings</td>
+</tr>
+<tr>
+<td>&quot;User {UserId} attempted to access versions without permission&quot;</td>
+<td>Version access permission warnings</td>
+</tr>
+<tr>
+<td>&quot;Invalid request for version summaries by user {UserId}&quot;</td>
+<td>Invalid version summary request warnings</td>
+</tr>
+<tr>
+<td>&quot;Unauthorized version access attempt by user {UserId}&quot;</td>
+<td>Unauthorized version access warnings</td>
+</tr>
+<tr>
+<td>&quot;User {UserId} attempted to retrieve summaries without providing Universal IDs&quot;</td>
+<td>Universal ID input validation warnings</td>
+</tr>
+<tr>
+<td>&quot;User {UserId} attempted to access Universal IDs {UniversalIds} without permission&quot;</td>
+<td>Universal ID access permission warnings</td>
+</tr>
+<tr>
+<td>&quot;User {UserId} attempted to export without providing request&quot;</td>
+<td>Export request validation warnings</td>
+</tr>
+<tr>
+<td>&quot;User {UserId} attempted to export without providing Universal ID&quot;</td>
+<td>Export Universal ID validation warnings</td>
+</tr>
+<tr>
+<td>&quot;User {UserId} attempted to export use case {UniversalId} without permission&quot;</td>
+<td>Export permission validation warnings</td>
+</tr>
+<tr>
+<td>&quot;Unauthorized export attempt by user {UserId} for use case {UniversalId}&quot;</td>
+<td>Unauthorized export attempt warnings</td>
+</tr>
+<tr>
+<td>&quot;User {UserId} attempted import without providing files&quot;</td>
+<td>Import file validation warnings</td>
+</tr>
+<tr>
+<td>&quot;User {UserId} provided invalid import parameters: {Error}&quot;</td>
+<td>Import parameter validation warnings</td>
+</tr>
+<tr>
+<td>&quot;Invalid import request by user {UserId}&quot;</td>
+<td>Invalid import request warnings</td>
+</tr>
+<tr>
+<td>&quot;Unauthorized import attempt by user {UserId}&quot;</td>
+<td>Unauthorized import attempt warnings</td>
+</tr>
+<tr>
+<td>&quot;User {UserId} attempted to retrieve agents without providing request&quot;</td>
+<td>Agent retrieval request validation warnings</td>
+</tr>
+<tr>
+<td>&quot;User {UserId} attempted to retrieve agents without providing IDs&quot;</td>
+<td>Agent ID validation warnings</td>
+</tr>
+<tr>
+<td>&quot;User {UserId} attempted to access agents not in their company {CompanyId}&quot;</td>
+<td>Agent company access validation warnings</td>
+</tr>
+<tr>
+<td>&quot;Invalid agent request by user {UserId}&quot;</td>
+<td>Invalid agent request warnings</td>
+</tr>
+<tr>
+<td>&quot;SM Server BaseUrl is not valid, Origin for AllowSMGet CORS policy will not be applied&quot;</td>
+<td>CORS policy configuration warnings</td>
+</tr>
+<tr>
+<td>&quot;SM Server BaseUrl is not valid, Origin for AllowPost CORS policy will not be applied&quot;</td>
+<td>CORS policy configuration warnings</td>
+</tr>
+</tbody>
+</table>
+<h2 id="information-level">Information Level</h2>
+<p>Information events track normal system operations and user activities. These provide audit trails and operational insights for system monitoring.</p>
+<table>
+<thead>
+<tr>
+<th>Message Template</th>
+<th>Context Summary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&quot;Starting web application&quot;</td>
+<td>Application startup information</td>
+</tr>
+<tr>
+<td>&quot;Stream Metrics Service - Started&quot;</td>
+<td>Metrics cleanup service initialization</td>
+</tr>
+<tr>
+<td>&quot;Stream Metrics Service - No task is running, check for new job&quot;</td>
+<td>Metrics cleanup service task status</td>
+</tr>
+<tr>
+<td>&quot;Stream Metrics Service - There is a task still running, wait for next cycle&quot;</td>
+<td>Metrics cleanup service concurrency control</td>
+</tr>
+<tr>
+<td>&quot;Stream Metrics Service - Skipping cleanup as another instance may already have completed the operation&quot;</td>
+<td>Metrics cleanup service coordination</td>
+</tr>
+<tr>
+<td>&quot;Stream Metrics Service - Initiate graceful shutdown&quot;</td>
+<td>Metrics cleanup service shutdown</td>
+</tr>
+<tr>
+<td>&quot;Retrieving use case summaries for {Count} universal IDs&quot;</td>
+<td>Use case summary retrieval operations</td>
+</tr>
+<tr>
+<td>&quot;Exporting use case to Git with universal Id {UniversalId} with version {Version}&quot;</td>
+<td>Use case export operations</td>
+</tr>
+<tr>
+<td>&quot;Saving changes to dashboard&quot;</td>
+<td>Dashboard modification operations</td>
+</tr>
+<tr>
+<td>&quot;Creating dashboard&quot;</td>
+<td>Dashboard creation operations</td>
+</tr>
+<tr>
+<td>&quot;Cloning dashboard with Id {DashboardId} with clone name {CloneName}&quot;</td>
+<td>Dashboard cloning operations</td>
+</tr>
+<tr>
+<td>&quot;Revoking collection key with Id {CollectionId}&quot;</td>
+<td>Collection key management operations</td>
+</tr>
+<tr>
+<td>&quot;Serializing variable {Variable} files&quot;</td>
+<td>Variable serialization operations</td>
+</tr>
+<tr>
+<td>&quot;Deleting collection with Id {CollectionId}&quot;</td>
+<td>Collection deletion operations</td>
+</tr>
+<tr>
+<td>&quot;Saving changes to collection&quot;</td>
+<td>Collection modification operations</td>
+</tr>
+<tr>
+<td>&quot;Creating collection&quot;</td>
+<td>Collection creation operations</td>
+</tr>
+<tr>
+<td>&quot;Saving changes to variable&quot;</td>
+<td>Variable modification operations</td>
+</tr>
+<tr>
+<td>&quot;Deleting variables with names {VariableNames}&quot;</td>
+<td>Variable deletion operations</td>
+</tr>
+<tr>
+<td>&quot;Uploading file with max width {MaxWidth} and height {MaxHeight}&quot;</td>
+<td>File upload operations</td>
+</tr>
+<tr>
+<td>&quot;Publishing use case with Id {UseCaseId} with major version {MajorVersion}&quot;</td>
+<td>Use case publishing operations</td>
+</tr>
+<tr>
+<td>&quot;Unpublishing use case with Id {UseCaseId}&quot;</td>
+<td>Use case unpublishing operations</td>
+</tr>
+<tr>
+<td>&quot;Publishing use cases with Ids {UseCaseIds}&quot;</td>
+<td>Bulk use case publishing operations</td>
+</tr>
+<tr>
+<td>&quot;Unpublishing use cases with Ids {UseCaseIds}&quot;</td>
+<td>Bulk use case unpublishing operations</td>
+</tr>
+<tr>
+<td>&quot;Copying stream with Id {StreamId} with version {Version}&quot;</td>
+<td>Stream copying operations</td>
+</tr>
+<tr>
+<td>&quot;Exporting use case by Id {UseCaseId} with version {Version}&quot;</td>
+<td>Use case export by ID operations</td>
+</tr>
+<tr>
+<td>&quot;Exporting use case with universal Id {UniversalId} with version {Version}&quot;</td>
+<td>Use case export by Universal ID operations</td>
+</tr>
+<tr>
+<td>&quot;Cloning use case with Id {UseCaseId} and name {CloneName}&quot;</td>
+<td>Use case cloning operations</td>
+</tr>
+<tr>
+<td>&quot;Deleting use case with Id {UseCaseId}&quot;</td>
+<td>Use case deletion operations</td>
+</tr>
+<tr>
+<td>&quot;Deleting stream with Id {StreamId} with major version {MajorVersion}&quot;</td>
+<td>Stream deletion operations</td>
+</tr>
+<tr>
+<td>&quot;Deleting all devices failures by use case Id {UseCaseId}&quot;</td>
+<td>Device failure cleanup operations</td>
+</tr>
+<tr>
+<td>&quot;Deleting specific device with Id {DeviceId}&quot;</td>
+<td>Specific device deletion operations</td>
+</tr>
+<tr>
+<td>&quot;Saving changes to use case&quot;</td>
+<td>Use case modification operations</td>
+</tr>
+<tr>
+<td>&quot;Creating use case&quot;</td>
+<td>Use case creation operations</td>
+</tr>
+<tr>
+<td>&quot;Reassigning categories with Ids {CategoryIds} to new category Id {NewCategoryId}&quot;</td>
+<td>Category reassignment operations</td>
+</tr>
+<tr>
+<td>&quot;Reassigning collection with collection Id {CollectionId} with use case Id {UseCaseId}&quot;</td>
+<td>Collection reassignment operations</td>
+</tr>
+<tr>
+<td>&quot;Importing use case with Id {UserCaseId}&quot;</td>
+<td>Use case import operations</td>
+</tr>
+<tr>
+<td>&quot;Importing stream with version {StreamVersion} with use case Id {UseCaseId}&quot;</td>
+<td>Stream import operations</td>
+</tr>
+<tr>
+<td>&quot;Configuring agent with Id {AgentId}&quot;</td>
+<td>Agent configuration operations</td>
+</tr>
+<tr>
+<td>&quot;Remote configuration for agent with Id {AgentId} and version {version}&quot;</td>
+<td>Remote agent configuration operations</td>
+</tr>
+<tr>
+<td>&quot;Updating settings with name {SettingName}&quot;</td>
+<td>Settings update operations</td>
+</tr>
+</tbody>
+</table>
+<h2 id="debug-level">Debug Level</h2>
+<p>Debug events provide detailed technical information for troubleshooting specific operations. These are typically enabled only when investigating particular issues.</p>
+<table>
+<thead>
+<tr>
+<th>Message Template</th>
+<th>Context Summary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&quot;API {message:l}&quot;</td>
+<td>API operation debug messages</td>
+</tr>
+</tbody>
+</table>
+<h2 id="trace-level">Trace Level</h2>
+<p>Trace events provide the most detailed diagnostic information for deep troubleshooting. These are typically used for low-level debugging.</p>
+<table>
+<thead>
+<tr>
+<th>Message Template</th>
+<th>Context Summary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&quot;Authorization header validation succeeded: {reason}&quot;</td>
+<td>Bearer token validation success</td>
+</tr>
+<tr>
+<td>&quot;Authorization header validation failed: {reason}&quot;</td>
+<td>Bearer token validation failures</td>
+</tr>
+<tr>
+<td>&quot;Bearer token validation failed: {reason}&quot;</td>
+<td>Bearer token processing failures</td>
+</tr>
+</tbody>
+</table>
+<h2 id="verbose-level-serilog">Verbose Level (Serilog)</h2>
+<p>Verbose events provide extremely detailed logging for comprehensive system tracing. These generate high volume logs and should be used sparingly.</p>
+<table>
+<thead>
+<tr>
+<th>Message Template</th>
+<th>Context Summary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&quot;API ({invocationId:l}) {instance:l}.{method:l}({parameters})&quot;</td>
+<td>REST client method invocation tracing</td>
+</tr>
+<tr>
+<td>&quot;API ({invocationId:l}) Returning {returnValue}&quot;</td>
+<td>REST client method return value tracing</td>
+</tr>
+<tr>
+<td>&quot;API ({invocationId:l}) {statusCode} {requestUri}&quot;</td>
+<td>REST client HTTP response tracing</td>
+</tr>
+<tr>
+<td>&quot;API ({invocationId:l}) {method:l} {requestUri}&quot;</td>
+<td>REST client HTTP request tracing</td>
+</tr>
+</tbody>
+</table>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: August 22, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

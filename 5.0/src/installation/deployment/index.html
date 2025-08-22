@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>2. Install XMPro | XMPro </title>
+      <title>2. Deploy XMPro | XMPro </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="2. Install XMPro | XMPro ">
+      <meta name="title" content="2. Deploy XMPro | XMPro ">
       <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
       
       <link rel="icon" href="../../../images/favicon.png">
@@ -85,32 +85,42 @@
         </div>
 
         <article data-uid="">
-<h1 id="2-install-xmpro">2. Install XMPro</h1>
+<h1 id="2-deploy-xmpro">2. Deploy XMPro</h1>
 
+<p><img src="../../images/installation-install-xmpro.png" alt="Deploy XMPro"></p>
 <p>XMPro Platform can be installed using a range of Infrastructure, please choose the option below that best suits your requirements:</p>
-<h2 id="cloud-deployment">Cloud Deployment</h2>
+<h2 id="container-based-deployments">Container-Based Deployments</h2>
 <h3 id="azure-terraform-deployment"><a href="azure-terraform/index.html">Azure Terraform Deployment</a></h3>
-<p><strong>Recommended for XMPro v4.5+</strong></p>
-<p>Modern Infrastructure as Code deployment using Terraform. This approach provides:</p>
+<div class="TIP">
+<h5>Tip</h5>
+<p><strong>Full Platform</strong>: Complete XMPro deployment with all components (includes Stream Host by default)</p>
+</div>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The following features are not yet available in Azure Terraform Deployment:</p>
 <ul>
-<li>Reproducible infrastructure deployments</li>
-<li>Version-controlled infrastructure changes</li>
-<li>Production-ready defaults and best practices</li>
-<li>Support for existing database scenarios</li>
-<li>Comprehensive monitoring and logging</li>
+<li>SMTP OAuth configuration</li>
+<li>Redis/Autoscale setup</li>
+<li>SSO Azure Entra ID integration</li>
+<li>SSO ADFS integration</li>
+<li>Custom environment variables</li>
+<li>Custom health checks configuration</li>
 </ul>
-<h3 id="azure-arm-template-deployment-legacy"><a href="https://documentation.xmpro.com/4.4/src/installation/deployment/azure.html">Azure ARM Template Deployment (Legacy)</a></h3>
-<p><strong>For XMPro v4.4 and earlier versions</strong></p>
-<p>Traditional ARM template deployment approach. This method is maintained for:</p>
-<ul>
-<li>Existing v4.4 installations requiring maintenance</li>
-<li>Legacy upgrade scenarios</li>
-<li>Organizations with ARM template requirements</li>
-</ul>
-<blockquote>
-<p><strong>Note</strong>: New deployments should use the Terraform approach above for the latest features and improved deployment experience.</p>
-</blockquote>
-<h2 id="other-deployment-options">Other Deployment Options</h2>
+</div>
+<h3 id="aws-terraform-deployment">AWS Terraform Deployment</h3>
+<div class="NOTE">
+<h5>Note</h5>
+<p>AWS container deployment is coming soon for XMPro v4.5+.</p>
+</div>
+<h3 id="windows-server-2022-container-deployment">Windows Server 2022 Container Deployment</h3>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Windows Server 2022 container deployment is coming soon for XMPro v4.5+.</p>
+</div>
+<h2 id="legacy-installers">Legacy Installers</h2>
+<p>Traditional installation methods for XMPro v4.4 and earlier versions.</p>
+<h3 id="azure-arm-template-deployment"><a href="https://documentation.xmpro.com/4.4/src/installation/deployment/azure.html">Azure ARM Template Deployment</a></h3>
+<p>Traditional ARM template deployment approach for existing v4.4 installations.</p>
 <h3 id="aws-deployment"><a href="https://documentation.xmpro.com/4.4/src/installation/deployment/aws.html">AWS Deployment</a></h3>
 <p>Deploy XMPro on Amazon Web Services using Kubernetes and Helm charts.</p>
 <h3 id="windows-server-2022-deployment"><a href="https://documentation.xmpro.com/4.4/src/installation/deployment/windows-server-2022/index.html">Windows Server 2022 Deployment</a></h3>
@@ -118,14 +128,12 @@
 <hr>
 <h2 id="next-steps">Next Steps</h2>
 <p>After completing your infrastructure deployment, proceed to:</p>
-<ul>
-<li><a href="https://documentation.xmpro.com/4.4/src/installation/complete-installation/index.html">Complete Installation</a> for environment setup and configuration</li>
-</ul>
+<p><strong><a href="../complete-installation/index.html">3. Post-deployment</a></strong> - Complete the setup and configuration of your XMPro environment.</p>
 
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: August 20, 2025</em></small></p>
+    <p><small><em>Last modified: August 22, 2025</em></small></p>
   </div>
 </article>
 
