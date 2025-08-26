@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>v4.5.0 | XMPro </title>
+      <title>v4.5 Release Notes | XMPro </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="v4.5.0 | XMPro ">
+      <meta name="title" content="v4.5 Release Notes | XMPro ">
       <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
       
       <link rel="icon" href="../../images/favicon.png">
@@ -85,186 +85,341 @@
         </div>
 
         <article data-uid="">
-<h1 id="v450">v4.5.0</h1>
+<h1 id="v45-release-notes">v4.5 Release Notes</h1>
 
-<p>Pending</p>
+<p>Date Released: Pending</p>
+<p>This section contains the release notes for XMPro v4.5, followed by the release notes for each patch version, providing information about new features, improvements, and bug fixes.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Security update: Mitigate high-severity vulnerabilities by upgrading all products to v4.5.1+.</p>
+</div>
 <h2 id="common">Common</h2>
 <table>
-<thead>
-<tr>
-<th>Change Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Feature</td>
-<td><strong>Containerized Deployment</strong>: Both App Designer and Data Stream Designer can now be deployed as containers using Docker and orchestration platforms like Kubernetes. This containerized approach provides consistent deployment environments, improved scalability, and simplified infrastructure management. As an administrator, you can now deploy XMPro applications using modern container orchestration tools, enabling easier scaling, rolling updates, and integration with cloud-native infrastructure while maintaining environment consistency across development, staging, and production.</td>
-</tr>
-<tr>
-<td>Feature</td>
-<td><strong>Deployment At Scale</strong>: A comprehensive set of REST APIs for managing application deployments across enterprise environments. These APIs provide programmatic access to export and import applications, manage Git repositories, handle deployment dependencies, and control access through new ManageDeployment permissions with secure CORS configuration. This means you can now automate your deployment processes, integrate XMPro with CI/CD pipelines, and manage large-scale deployments programmatically rather than through manual processes.</td>
-</tr>
-</tbody>
+  <thead>
+    <tr>
+      <th width="120">Change Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Feature</td>
+      <td><b>Containerized Deployment</b>: Both App Designer and Data Stream Designer can now be deployed as containers using Docker and orchestration platforms like Kubernetes. This containerized approach provides consistent deployment environments, improved scalability, and simplified infrastructure management. As an administrator, you can now deploy XMPro applications using modern container orchestration tools, enabling easier scaling, rolling updates, and integration with cloud-native infrastructure while maintaining environment consistency across development, staging, and production.</td>
+    </tr>
+    <tr>
+        <td>Feature</td>
+        <td><b>Deployment At Scale</b>: A comprehensive set of REST APIs for managing application deployments across enterprise environments. These APIs provide programmatic access to export and import applications, manage Git repositories, handle deployment dependencies, and control access through new ManageDeployment permissions with secure CORS configuration. This means you can now automate your deployment processes, integrate XMPro with CI/CD pipelines, and manage large-scale deployments programmatically rather than through manual processes.</td>
+    </tr>
+  </tbody>
 </table>
 <h2 id="integrations">Integrations</h2>
+<table>
+  <thead>
+    <tr>
+      <th width="100">Date</th>
+      <th width="120">Change Type</th>
+      <th width="250">Name</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>02 Jul 2025</td>
+      <td>Fix</td>
+      <td><a href="https://xmpro.gitbook.io/erbessd-connector/">Erbessd Connector v3.20</a></td>
+      <td>Repackaged to improve performance.</td>
+    </tr>
+    <tr>
+      <td>18 Jul 2025</td>
+      <td>Enhancement</td>
+      <td><a href="https://xmpro.gitbook.io/meta-action-agent/">Meta Action Agent v1.15</a></td>
+      <td>Added more detail to Python package installation logging for network related errors, permission errors, package not found errors, and dependency conflicts.</td>
+    </tr>
+    <tr>
+      <td>22 Jul 2025</td>
+      <td>Enhancement</td>
+      <td><a href="https://xmpro.gitbook.io/csv/">CSV Action Agent v1.12</a></td>
+      <td>Support dynamic filenames and output as a Base64-encoded string.</td>
+    </tr>
+    <tr>
+      <td>23 Jul 2025</td>
+      <td>Fix</td>
+      <td><a href="https://xmpro.gitbook.io/azure-sql-connector/">Azure SQL Connector v2.21</a></td>
+      <td>Fixed value type mismatch error when updating a GUID column.</td>
+    </tr>
+    <tr>
+      <td>23 Jul 2025</td>
+      <td>Fix</td>
+      <td><a href="https://xmpro.gitbook.io/sql-server-connector/">SQL Server Connector v2.21</a></td>
+      <td>Fixed value type mismatch error when updating a GUID column.</td>
+    </tr>
+    <tr>
+      <td>28 Jul 2025</td>
+      <td>Fix</td>
+      <td><a href="https://xmpro.gitbook.io/xmpro-app/">XMPro App Action Agent v2.25</a></td>
+      <td>Added error handling to prevent the Stream Host from crashing when the Agent is not configured or unable to authenticate with the credentials provided.</td>
+    </tr>
+    <tr>
+      <td>28 Jul 2025</td>
+      <td>Fix</td>
+      <td><a href="https://xmpro.gitbook.io/action-request/">Read Action Request Agent v2.08</a></td>
+      <td>Added error handling to prevent the Stream Host from crashing when the Agent is not configured or unable to authenticate with the credentials provided.</td>
+    </tr>
+    <tr>
+      <td>28 Jul 2025</td>
+      <td>Fix</td>
+      <td><a href="https://xmpro.gitbook.io/action-request/">Close Action Request Agent v1.03</a></td>
+      <td>Added error handling to prevent the Stream Host from crashing when the Agent is not configured or unable to authenticate with the credentials provided.</td>
+    </tr>
+    <tr>
+      <td>28 Jul 2025</td>
+      <td>Fix</td>
+      <td><a href="https://xmpro.gitbook.io/read-recommendation/">Read Recommendation Agent v3.02</a></td>
+      <td>Added error handling to prevent the Stream Host from crashing when the Agent is not configured or unable to authenticate with the credentials provided.</td>
+    </tr>
+    <tr>
+      <td>28 Jul 2025</td>
+      <td>Fix</td>
+      <td><a href="https://xmpro.gitbook.io/resolve-recommendation/">Resolve Recommendation Agent v2.49</a></td>
+      <td>Added error handling to prevent the Stream Host from crashing when the Agent is not configured or unable to authenticate with the credentials provided.</td>
+    </tr>
+    <tr>
+      <td>28 Jul 2025</td>
+      <td>Fix</td>
+      <td><a href="https://xmpro.gitbook.io/read-recommendation/">Read Recommendation Agent v3.02</a></td>
+      <td>Added error handling to prevent the Stream Host from crashing when the Agent is not configured or unable to authenticate with the credentials provided.</td>
+    </tr>
+    <tr>
+      <td>28 Jul 2025</td>
+      <td>Fix</td>
+      <td><a href="https://xmpro.gitbook.io/run-recommendation/">Run Recommendation Agent v3.05</a></td>
+      <td>Added error handling to prevent the Stream Host from crashing when the Agent is not configured or unable to authenticate with the credentials provided.</td>
+    </tr>
+    <tr>
+      <td>28 Jul 2025</td>
+      <td>Fix</td>
+      <td><a href="https://xmpro.gitbook.io/update-recommendation/">Update Recommendation Agent v3.02</a></td>
+      <td>Added error handling to prevent the Stream Host from crashing when the Agent is not configured or unable to authenticate with the credentials provided.</td>
+    </tr>
+  </tbody>
+</table>
 <h3 id="package-manager">Package Manager</h3>
 <table>
-<thead>
-<tr>
-<th>Change Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Enhancement</td>
-<td><strong>Settings Reordering</strong>: You can now reorder Groups and Settings within the Package Manager Settings Blade using drag-and-drop functionality. This allows you to organize your agent configuration options in a logical order that makes sense for your specific use case, improving the user experience when configuring agents.</td>
-</tr>
-<tr>
-<td>Fix</td>
-<td><strong>File Type Support</strong>: You can now attach any file type when adding Resource references in the Package Manager. Previously, only specific file types were supported, which limited your ability to include custom documentation, configuration files, or other resources with your agent packages. This enhancement removes file type restrictions, giving you greater flexibility in packaging your integrations.</td>
-</tr>
-<tr>
-<td>Fix</td>
-<td><strong>Crash Prevention</strong>: When working with connector packages, you previously encountered app crashes when deleting grid controls or creating new connector packages. The application would force close unexpectedly, losing your work. This issue has been resolved, and the Package Manager now handles grid deletions and connector package creation safely without crashing.</td>
-</tr>
-</tbody>
+  <thead>
+    <tr>
+      <th width="120">Change Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Enhancement</td>
+      <td><b>Settings Reordering</b>: You can now reorder Groups and Settings within the Package Manager Settings Blade using drag-and-drop functionality. This allows you to organize your agent configuration options in a logical order that makes sense for your specific use case, improving the user experience when configuring agents.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td><b>File Type Support</b>: You can now attach any file type when adding Resource references in the Package Manager. Previously, only specific file types were supported, which limited your ability to include custom documentation, configuration files, or other resources with your agent packages. This enhancement removes file type restrictions, giving you greater flexibility in packaging your integrations.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td><b>Crash Prevention</b>: When working with connector packages, you previously encountered app crashes when deleting grid controls or creating new connector packages. The application would force close unexpectedly, losing your work. This issue has been resolved, and the Package Manager now handles grid deletions and connector package creation safely without crashing.</td>
+    </tr>
+  </tbody>
 </table>
 <h2 id="app-designer">App Designer</h2>
 <table>
-<thead>
-<tr>
-<th>Change Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Enhancement</td>
-<td><strong>Enhanced Expression Component</strong>: The Expression component can now read data from multiple parent components simultaneously. Previously, expressions were limited to reading from a single parent, which restricted your ability to create complex calculations and data relationships. This enhancement allows you to build more sophisticated expressions that combine data from multiple sources in your application.</td>
-</tr>
-<tr>
-<td>Fix</td>
-<td><strong>Survey Archiving Display</strong>: When you archive a survey in a recommendation, the survey would continue to appear active until you manually refreshed the page. This was confusing as it suggested the archiving action hadn't worked. The survey block now updates its display state immediately when archived, providing instant visual feedback that the action was successful.</td>
-</tr>
-<tr>
-<td>Fix</td>
-<td><strong>Timeline URL Navigation</strong>: When you click on timeline entries to navigate to specific time periods or events, the URL navigation wasn't working properly, leaving you on the same view regardless of your selection. Timeline navigation now works correctly, allowing you to bookmark specific time periods and navigate directly to timeline events via URL parameters.</td>
-</tr>
-<tr>
-<td>Fix</td>
-<td><strong>Email Notification Links</strong>: When you receive email notifications about alerts, clicking the links in the email would take you to the standard alert view instead of the specific alert context. Email notification links now direct you to the appropriate alert view with proper context, making it easier to act on notifications directly from your inbox.</td>
-</tr>
-<tr>
-<td>Fix</td>
-<td><strong>Tree Grid Selection Persistence</strong>: When you configure a Tree Grid with multiple selection enabled and set default selections, the defaults wouldn't persist after page load. You would have to manually reselect items each time you visited the page. Tree Grid controls now properly retain their multiple selection defaults on page load, maintaining your configured selections.</td>
-</tr>
-<tr>
-<td>Fix</td>
-<td><strong>Data Grid DateTime Filters</strong>: When you set up a Data Grid with DateTime columns, the row filter options didn't match those available for Date columns, limiting your filtering capabilities. DateTime columns now have the same comparison operators as Date columns, giving you consistent filtering options across different date-related data types.</td>
-</tr>
-<tr>
-<td>Fix</td>
-<td><strong>Data Source Field Sorting</strong>: When you configure data sources in App Designer, the field list wasn't sorted alphabetically, making it difficult to find specific fields in large datasets. Data source fields are now sorted alphabetically, improving the designer experience when working with complex data structures.</td>
-</tr>
-<tr>
-<td>Fix</td>
-<td><strong>Template Category Persistence</strong>: When you assign a template category to an application, the category would sometimes disappear or not save properly. Template categories now persist correctly, ensuring your application organization and categorization remains intact.</td>
-</tr>
-<tr>
-<td>Fix</td>
-<td><strong>Validation Groups</strong>: When you use validation groups in App Designer, various issues could occur that prevented proper validation behavior. Validation group functionality has been improved to work reliably across different component configurations.</td>
-</tr>
-<tr>
-<td>Fix</td>
-<td><strong>Notes Auto-Update Prevention</strong>: When you work with notes in recommendations, notes would automatically update without prompting you, even when notes were null or previously saved. This could lead to unintended overwrites of your content. Notes now only update when you explicitly save them, preventing accidental data loss and ensuring your notes remain under your control.</td>
-</tr>
-<tr>
-<td>Fix</td>
-<td><strong>Application Name Translations</strong>: Application names were inconsistently translated across different products, with some showing incorrect or misleading translations (particularly affecting Portuguese-Brazil). Application names now display consistently and accurately across all products and locales.</td>
-</tr>
-</tbody>
+  <thead>
+    <tr>
+      <th width="120">Change Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Enhancement</td>
+      <td><b>Enhanced Expression Component</b>: The Expression component can now read data from multiple parent components simultaneously. Previously, expressions were limited to reading from a single parent, which restricted your ability to create complex calculations and data relationships. This enhancement allows you to build more sophisticated expressions that combine data from multiple sources in your application.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td><b>Survey Archiving Display</b>: When you archive a survey in a recommendation, the survey would continue to appear active until you manually refreshed the page. This was confusing as it suggested the archiving action hadn't worked. The survey block now updates its display state immediately when archived, providing instant visual feedback that the action was successful.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td><b>Timeline URL Navigation</b>: When you click on timeline entries to navigate to specific time periods or events, the URL navigation wasn't working properly, leaving you on the same view regardless of your selection. Timeline navigation now works correctly, allowing you to bookmark specific time periods and navigate directly to timeline events via URL parameters.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td><b>Email Notification Links</b>: When you receive email notifications about alerts, clicking the links in the email would take you to the standard alert view instead of the specific alert context. Email notification links now direct you to the appropriate alert view with proper context, making it easier to act on notifications directly from your inbox.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td><b>Tree Grid Selection Persistence</b>: When you configure a Tree Grid with multiple selection enabled and set default selections, the defaults wouldn't persist after page load. You would have to manually reselect items each time you visited the page. Tree Grid controls now properly retain their multiple selection defaults on page load, maintaining your configured selections.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td><b>Data Grid DateTime Filters</b>: When you set up a Data Grid with DateTime columns, the row filter options didn't match those available for Date columns, limiting your filtering capabilities. DateTime columns now have the same comparison operators as Date columns, giving you consistent filtering options across different date-related data types.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td><b>Data Source Field Sorting</b>: When you configure data sources in App Designer, the field list wasn't sorted alphabetically, making it difficult to find specific fields in large datasets. Data source fields are now sorted alphabetically, improving the designer experience when working with complex data structures.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td><b>Template Category Persistence</b>: When you assign a template category to an application, the category would sometimes disappear or not save properly. Template categories now persist correctly, ensuring your application organization and categorization remains intact.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td><b>Validation Groups</b>: When you use validation groups in App Designer, various issues could occur that prevented proper validation behavior. Validation group functionality has been improved to work reliably across different component configurations.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td><b>Notes Auto-Update Prevention</b>: When you work with notes in recommendations, notes would automatically update without prompting you, even when notes were null or previously saved. This could lead to unintended overwrites of your content. Notes now only update when you explicitly save them, preventing accidental data loss and ensuring your notes remain under your control.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td><b>Application Name Translations</b>: Application names were inconsistently translated across different products, with some showing incorrect or misleading translations (particularly affecting Portuguese-Brazil). Application names now display consistently and accurately across all products and locales.</td>
+    </tr>
+  </tbody>
 </table>
 <h2 id="data-stream-designer">Data Stream Designer</h2>
 <table>
-<thead>
-<tr>
-<th>Change Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Fix</td>
-<td><strong>Timeline Form Updates</strong>: When you use agents in your data streams, timeline views wouldn't show form updates properly, making it difficult to track changes and modifications. Timeline components now correctly display form updates when agents are involved, providing complete visibility into your data stream modifications and agent interactions.</td>
-</tr>
-</tbody>
+  <thead>
+    <tr>
+      <th width="120">Change Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Fix</td>
+      <td><b>Timeline Form Updates</b>: When you use agents in your data streams, timeline views wouldn't show form updates properly, making it difficult to track changes and modifications. Timeline components now correctly display form updates when agents are involved, providing complete visibility into your data stream modifications and agent interactions.</td>
+    </tr>
+  </tbody>
 </table>
 <h2 id="subscription-manager">Subscription Manager</h2>
 <table>
-<thead>
-<tr>
-<th>Change Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Fix</td>
-<td><strong>Language Dropdown Population</strong>: When you access the profile settings, the language dropdown would intermittently appear empty, preventing you from changing your language preference. The language dropdown now populates consistently, ensuring you can always modify your language settings when needed.</td>
-</tr>
-<tr>
-<td>Fix</td>
-<td><strong>Company Request Rejections (Non-English)</strong>: When your system is configured for non-English languages, you were unable to reject company subscription requests, limiting your ability to manage subscriptions in localized environments. Company request rejections now work properly across all supported languages.</td>
-</tr>
-<tr>
-<td>Fix</td>
-<td><strong>Product Description Translations</strong>: Product descriptions in Subscription Manager weren't being translated, showing only English text regardless of your selected language. Product descriptions now display in the appropriate language based on your locale settings.</td>
-</tr>
-<tr>
-<td>Fix</td>
-<td><strong>Search Criteria Spacing</strong>: When you perform searches in Subscription Manager, extra spaces were being added to search criteria results, affecting the display formatting and potentially impacting search accuracy. Search results now display without unwanted spacing.</td>
-</tr>
-<tr>
-<td>Fix</td>
-<td><strong>Settings Blade Translation Coverage</strong>: Various text elements in the settings blade weren't translated, creating an inconsistent user experience in non-English environments. Missing translations have been added to provide complete localization coverage in the settings interface.</td>
-</tr>
-<tr>
-<td>Fix</td>
-<td><strong>Home Page Subscription Messages</strong>: Subscription access messages on the SM home page weren't translated, displaying only in English regardless of your language preference. These messages now appear in the appropriate language based on your locale settings.</td>
-</tr>
-<tr>
-<td>Fix</td>
-<td><strong>Password Change Confirmation</strong>: When you change your password, the confirmation message wasn't translated, appearing only in English. Password change confirmation messages now display in the appropriate language for your locale.</td>
-</tr>
-<tr>
-<td>Fix</td>
-<td><strong>Spanish Layout Heading Issues</strong>: When using Spanish (es-ES) locale, headings weren't being translated correctly, causing display issues and confusion. Spanish headings now translate properly across all interface elements.</td>
-</tr>
-<tr>
-<td>Fix</td>
-<td><strong>Email Template Address Updates</strong>: All email notification templates across the platform now use the correct company address. This ensures that automated emails sent from XMPro (including alerts, invitations, and notifications) display the proper contact information, improving professional communication with users and external stakeholders.</td>
-</tr>
-</tbody>
+  <thead>
+    <tr>
+      <th width="120">Change Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Fix</td>
+      <td><b>Language Dropdown Population</b>: When you access the profile settings, the language dropdown would intermittently appear empty, preventing you from changing your language preference. The language dropdown now populates consistently, ensuring you can always modify your language settings when needed.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td><b>Company Request Rejections (Non-English)</b>: When your system is configured for non-English languages, you were unable to reject company subscription requests, limiting your ability to manage subscriptions in localized environments. Company request rejections now work properly across all supported languages.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td><b>Product Description Translations</b>: Product descriptions in Subscription Manager weren't being translated, showing only English text regardless of your selected language. Product descriptions now display in the appropriate language based on your locale settings.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td><b>Search Criteria Spacing</b>: When you perform searches in Subscription Manager, extra spaces were being added to search criteria results, affecting the display formatting and potentially impacting search accuracy. Search results now display without unwanted spacing.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td><b>Settings Blade Translation Coverage</b>: Various text elements in the settings blade weren't translated, creating an inconsistent user experience in non-English environments. Missing translations have been added to provide complete localization coverage in the settings interface.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td><b>Home Page Subscription Messages</b>: Subscription access messages on the SM home page weren't translated, displaying only in English regardless of your language preference. These messages now appear in the appropriate language based on your locale settings.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td><b>Password Change Confirmation</b>: When you change your password, the confirmation message wasn't translated, appearing only in English. Password change confirmation messages now display in the appropriate language for your locale.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td><b>Spanish Layout Heading Issues</b>: When using Spanish (es-ES) locale, headings weren't being translated correctly, causing display issues and confusion. Spanish headings now translate properly across all interface elements.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td><b>Email Template Address Updates</b>: All email notification templates across the platform now use the correct company address. This ensures that automated emails sent from XMPro (including alerts, invitations, and notifications) display the proper contact information, improving professional communication with users and external stakeholders.</td>
+    </tr>
+  </tbody>
 </table>
 <h2 id="nuget-packages">NuGet Packages</h2>
 <h3 id="agent-development">Agent Development</h3>
 <p>No changes to XMPro.XMIoT.Framework.</p>
 <h3 id="connector-development">Connector Development</h3>
 <p>No changes to XMPro.Integration.Framework, XMPro.Integration.Helpers, or XMPro.Integration.Settings.</p>
+<h2 id="v451">v4.5.1</h2>
+<p>Date Released: Pending</p>
+<table>
+  <thead>
+    <tr>
+      <th width="120">Change Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Security</td>
+      <td>
+            <p><b>Product security and stability</b>: We've mitigated several high-severity vulnerabilities by upgrading the corresponding NuGet packages:</p>
+            <ul>
+                <li>Upgraded system.formats.asn1 from 6.0.0 to 6.0.1 in App Designer for <a href="https://www.cve.org/CVERecord?id=CVE-2024-38095">CVE-2024-38095</a></li>
+                <li>Upgraded system.security.cryptography.xml from 4.4.0 to 4.4.2 in App Designer for <a href="https://www.cve.org/CVERecord?id=CVE-2018-0764">CVE-2018-0764</a>/<a href="https://www.cve.org/CVERecord?id=CVE-2018-0765">CVE-2018-0765</a></li>
+                <li>Upgraded Microsoft.Extensions.Caching.Memory from 8.0.0 to 8.0.1 in Data Stream Designer for <a href="https://www.cve.org/CVERecord?id=CVE-2024-43483">CVE-2024-43483</a></li>
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <td>Deployment</td>
+        <td>
+            <p><b>Container-Based Enhancements</b>:</p>
+            <ul>
+                <li>Introduced runtime certificate generation using dedicated builder containers, eliminating baked-in certificates and supporting both self-signed and customer-provided certificates</li>
+                <li>Implemented hybrid configuration support to enable Subscription Manager (SM) running on a Windows host while other applications run in Linux containers, resolving SM's Linux container reliability issues.</li>
+                <li>Resolved SM connectivity issues in container deployments by implementing proper BaseUrl/InternalBaseUrl handling, ensuring applications connect correctly from both server-side and client-side perspectives.</li>
+            </ul>
+        </td>
+    </tr>
+  </tbody>
+</table>
+<h2 id="v452">v4.5.2</h2>
+<p>Date Released: Pending</p>
+<table>
+  <thead>
+    <tr>
+      <th width="120">Change Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Feature</td>
+      <td><b>Azure Terraform deployment capabilities</b>, replacing previous manual deployment processes with an automated, streamlined infrastructure provisioning experience and delivering major improvements to Azure deployment along with complete documentation.</td>
+    </tr>
+  </tbody>
+</table>
 <h2 id="known-issues">Known Issues</h2>
 <table>
 <thead>
 <tr>
 <th>Product</th>
 <th>Description</th>
+<th>Reported</th>
+<th>Fixed</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td></td>
-<td>None reported for this release.</td>
+<td>App Designer</td>
+<td>Bug 20828: Assigning or Sharing a recommendation alert results in an error message when using the Alert Action Block</td>
+<td>v4.5.0</td>
+<td>Fix Pending Release</td>
+</tr>
+<tr>
+<td>App Designer</td>
+<td>Bug 21266: Data Grid is no longer converting datetimes from UTC time to local</td>
+<td>v4.5.0</td>
+<td>Fix Pending Release</td>
 </tr>
 </tbody>
 </table>
@@ -272,7 +427,7 @@
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: August 22, 2025</em></small></p>
+    <p><small><em>Last modified: August 26, 2025</em></small></p>
   </div>
 </article>
 
