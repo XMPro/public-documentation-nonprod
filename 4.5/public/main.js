@@ -154,19 +154,14 @@ export default {
   },
 }
 
-// Variable replacement utility
+// Variable replacement utility - synchronous version
 function loadAndReplaceVariables() {
   // Cache the variables to avoid multiple fetches
   let cachedVariables = null;
-  let fetchPromise = null;
 
-  function loadVariables() {
+  function loadVariablesSync() {
     if (cachedVariables) {
-      return Promise.resolve(cachedVariables);
-    }
-    
-    if (fetchPromise) {
-      return fetchPromise;
+      return cachedVariables;
     }
     
     // Determine the path to variables.json based on current URL structure
@@ -185,14 +180,16 @@ function loadAndReplaceVariables() {
       variablesPath = '/src/variables.json';
     }
     
-    fetchPromise = fetch(variablesPath)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`HTTP ${response.status}`);
-        }
-        return response.json();
-      })
-      .then(data => {
+    // Use synchronous XMLHttpRequest
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', variablesPath, false); // false makes it synchronous
+    
+    try {
+      xhr.send();
+      
+      if (xhr.status === 200) {
+        const data = JSON.parse(xhr.responseText);
+        
         // Create a copy of all variables from JSON
         cachedVariables = {...data};
         
@@ -200,60 +197,57 @@ function loadAndReplaceVariables() {
         cachedVariables.INSTALL_URL = (data.INSTALL_URL_PREFIX || 'https://github.com/XMPro/xmpro-windows-installer/releases/download/') + 
                                      (data.VERSION || 'latest') + '/' + 
                                      (data.INSTALLER_SCRIPT || 'install-xmpro.ps1');
-        
-        return cachedVariables;
-      })
-      .catch(error => {
-        console.warn('Failed to load variables:', error);
-        // Fallback values
-        cachedVariables = {
-          INSTALL_URL_PREFIX: 'https://github.com/XMPro/xmpro-windows-installer/releases/download/',
-          INSTALLER_SCRIPT: 'install-xmpro.ps1',
-          VERSION: 'latest',
-          ACR_URL: 'xmpro.azurecr.io',
-          INSTALL_URL: 'https://github.com/XMPro/xmpro-windows-installer/releases/latest/download/install-xmpro.ps1'
-        };
-        return cachedVariables;
-      });
+      } else {
+        throw new Error(`HTTP ${xhr.status}`);
+      }
+    } catch (error) {
+      console.warn('Failed to load variables:', error);
+      // Fallback values
+      cachedVariables = {
+        INSTALL_URL_PREFIX: 'https://github.com/XMPro/xmpro-windows-installer/releases/download/',
+        INSTALLER_SCRIPT: 'install-xmpro.ps1',
+        VERSION: 'latest',
+        ACR_URL: 'xmpro.azurecr.io',
+        INSTALL_URL: 'https://github.com/XMPro/xmpro-windows-installer/releases/latest/download/install-xmpro.ps1'
+      };
+    }
     
-    return fetchPromise;
+    return cachedVariables;
   }
 
-  // Auto-initialize when DOM is ready or immediately if already loaded
-  function init() {
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', init);
+  // Replace variables synchronously
+  function replaceVariables() {
+    const contentArea = document.querySelector('.content');
+    if (!contentArea) {
+      console.warn('Content area not found, skipping variable replacement');
       return;
     }
     
-    // Replace {{VARIABLE_NAME}} placeholders in the main content area only
-    loadVariables().then(variables => {
-      const contentArea = document.querySelector('.content');
-      if (!contentArea) {
-        console.warn('Content area not found, skipping variable replacement');
-        return;
-      }
+    const variables = loadVariablesSync();
+    let content = contentArea.innerHTML;
+    
+    // Replace all variables from the JSON file (including derived INSTALL_URL)
+    Object.keys(variables).forEach(key => {
+      // Handle plain text placeholders
+      const simplePlaceholder = new RegExp(`\\{\\{${key}\\}\\}`, 'g');
+      content = content.replace(simplePlaceholder, variables[key]);
       
-      let content = contentArea.innerHTML;
-      // Replace all variables from the JSON file (including derived INSTALL_URL)
-      Object.keys(variables).forEach(key => {
-        // Handle plain text placeholders
-        const simplePlaceholder = new RegExp(`\\{\\{${key}\\}\\}`, 'g');
-        content = content.replace(simplePlaceholder, variables[key]);
-        
-        // Handle DocFX syntax highlighted placeholders: {{<span>KEY</span>}}
-        // Allow whitespace/line breaks around the key
-        const spanWrappedPlaceholder = new RegExp(
-          `\\{\\{\\s*<span[^>]*>\\s*${key}\\s*</span>\\s*\\}\\}`,
-          'gis'
-        );
-        content = content.replace(spanWrappedPlaceholder, variables[key]);
-      });
-      
-      contentArea.innerHTML = content;
+      // Handle DocFX syntax highlighted placeholders: {{<span>KEY</span>}}
+      // Allow whitespace/line breaks around the key
+      const spanWrappedPlaceholder = new RegExp(
+        `\\{\\{\\s*<span[^>]*>\\s*${key}\\s*</span>\\s*\\}\\}`,
+        'gis'
+      );
+      content = content.replace(spanWrappedPlaceholder, variables[key]);
     });
+    
+    contentArea.innerHTML = content;
   }
 
-  // Initialize
-  init();
+  // Initialize - either wait for DOM or run immediately
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', replaceVariables);
+  } else {
+    replaceVariables();
+  }
 }
