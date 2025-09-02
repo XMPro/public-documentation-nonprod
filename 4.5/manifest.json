@@ -31157,80 +31157,10 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "src/resources/practice-notes/redis-configuration-impact-in-xmpro.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/resources/practice-notes/redis-configuration-impact-in-xmpro.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
       "source_relative_path": "src/resources/practice-notes/unified-recommendation-alert-management.md",
       "output": {
         ".html": {
           "relative_path": "src/resources/practice-notes/unified-recommendation-alert-management.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "src/resources/practice-notes/xmpro-log-events-your-diagnostic-toolkit/ai-log-events.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/resources/practice-notes/xmpro-log-events-your-diagnostic-toolkit/ai-log-events.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "src/resources/practice-notes/xmpro-log-events-your-diagnostic-toolkit/app-designer-log-events.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/resources/practice-notes/xmpro-log-events-your-diagnostic-toolkit/app-designer-log-events.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "src/resources/practice-notes/xmpro-log-events-your-diagnostic-toolkit/data-stream-designer-log-events.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/resources/practice-notes/xmpro-log-events-your-diagnostic-toolkit/data-stream-designer-log-events.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "src/resources/practice-notes/xmpro-log-events-your-diagnostic-toolkit/index.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/resources/practice-notes/xmpro-log-events-your-diagnostic-toolkit/index.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "src/resources/practice-notes/xmpro-log-events-your-diagnostic-toolkit/stream-host-log-events.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/resources/practice-notes/xmpro-log-events-your-diagnostic-toolkit/stream-host-log-events.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "src/resources/practice-notes/xmpro-log-events-your-diagnostic-toolkit/subscription-manager-log-events.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/resources/practice-notes/xmpro-log-events-your-diagnostic-toolkit/subscription-manager-log-events.html"
         }
       },
       "version": ""
