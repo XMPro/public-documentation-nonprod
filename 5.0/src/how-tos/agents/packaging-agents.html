@@ -377,9 +377,72 @@
 <div class="NOTE">
 <h5>Note</h5>
 <ul>
-<li>Only the Agent Description, Properties and Static Helptext are translated. Internal messages and dynamic Helptext added when <a href="building-agents.html">building the Agent</a> are not included.</li>
-<li>Multilingual support requires XMPro Data Stream Designer and Stream Host v4.4.16+.</li>
-<li>Override the automated translations by editing the JSON file and repackaging it with an incremented version number.</li>
+<li><p><strong>What is Translated:</strong>  The Agent description and static properties added when packaging the Agent are translated, whereas internal messages and dynamic properties added when <a href="building-agents.html">building the Agent</a> are not.</p>
+</li>
+<li><p><strong>Minimum XMPro Product Version:</strong> The tables below outline the minimum versions of XMPro Data Stream Designer (DS), XMPro Stream Host (SH), and XMPro Package Manager (PM) required for multilingual support.</p>
+</li>
+<li><p><strong>If Automated Translations Are Incorrect:</strong> Edit the translations in the JSON file and repackage it with an incremented version number.</p>
+<table style="width:100%; table-layout:fixed;">
+<thead>
+   <tr>
+     <th style="width:49%;">DS &amp; SH Multilingual Support</th>
+     <th style="width:17%;">Pre v4.4.16</th>
+     <th style="width:17%;">v4.4.16+</th>
+     <th style="width:17%;">v5.0.0+</th>
+   </tr>
+</thead>
+<tbody>
+   <tr>
+     <td>Internal messages and dynamic properties</td>
+     <td>✗</td>
+     <td>✗</td>
+     <td>✗</td>
+   </tr>
+   <tr>
+     <td>Agent description and static properties</td>
+     <td>✗</td>
+     <td>✓</td>
+     <td>✓</td>
+   </tr>
+   <tr>
+     <td>Static property drop-down options</td>
+     <td>✗</td>
+     <td>✗</td>
+     <td>✓</td>
+   </tr>
+</tbody>
+</table>
+<table style="width:100%; table-layout:fixed;">
+  <thead>
+    <tr>
+      <th style="width:49%;">PM Multilingual Support</th>
+      <th style="width:17%;">Pre v1.3.18</th>
+      <th style="width:17%;">v1.3.18+</th>
+      <th style="width:17%;">v5.0.0+</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Internal messages and dynamic properties</td>
+      <td>✗</td>
+      <td>✗</td>
+      <td>✗</td>
+    </tr>
+    <tr>
+      <td>Agent description and static properties</td>
+      <td>✗</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr>
+      <td>Static property drop-down options</td>
+      <td>✗</td>
+      <td>✗</td>
+      <td>✓</td>
+    </tr>
+  </tbody>
+</table>
+</li>
 </ul>
 </div>
 <p><img src="../../images/pm-output-1.png" alt="Output configuration"></p>
@@ -413,7 +476,7 @@
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: September 01, 2025</em></small></p>
+    <p><small><em>Last modified: September 05, 2025</em></small></p>
   </div>
 </article>
 
