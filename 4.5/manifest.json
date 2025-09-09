@@ -31187,6 +31187,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "src/technical-reference/mosquitto-mqtt-broker.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/technical-reference/mosquitto-mqtt-broker.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "src/technical-reference/redis-cache-implementation.md",
       "output": {
         ".html": {
