@@ -26007,16 +26007,6 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "src/installation/azure-terraform-preparation.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/installation/azure-terraform-preparation.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
       "source_relative_path": "src/installation/complete-installation/index.md",
       "output": {
         ".html": {
@@ -26091,26 +26081,6 @@
       "output": {
         ".html": {
           "relative_path": "src/installation/deployment/azure-terraform/advanced-configuration.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "src/installation/deployment/azure-terraform/existing-database.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/installation/deployment/azure-terraform/existing-database.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "src/installation/deployment/azure-terraform/implementation-guide.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/installation/deployment/azure-terraform/implementation-guide.html"
         }
       },
       "version": ""

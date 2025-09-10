@@ -89,7 +89,7 @@
 
 <div class="NOTE">
 <h5>Note</h5>
-<p>For Azure Terraform deployments, see the <a href="../installation/deployment/azure-terraform/implementation-guide.html#configure-autoscale">Azure Terraform Implementation Guide</a> to enable autoscaling with Redis.</p>
+<p>For Azure Terraform deployments, Redis autoscaling is automatically configured when enabled.</p>
 </div>
 <h2 id="introduction">Introduction</h2>
 <p>XMPro uses Redis as a distributed caching solution to improve performance and enable scalability across multiple application instances. Redis is automatically activated when you enable AutoScale in your XMPro configuration and will gracefully fall back to single-server operation when disabled.</p>
@@ -222,7 +222,7 @@
 <h2 id="redis-server-configuration">Redis Server Configuration</h2>
 <div class="NOTE">
 <h5>Note</h5>
-<p>For Azure Terraform deployments, see the <a href="../installation/deployment/azure-terraform/implementation-guide.html#configure-autoscale">Azure Terraform Implementation Guide</a> for details on how to enable autoscaling with Redis.</p>
+<p>For Azure Terraform deployments, Redis autoscaling is automatically configured when enabled.</p>
 </div>
 <h3 id="connection-configuration">Connection Configuration</h3>
 <ul>
@@ -301,7 +301,7 @@ redis-cli CONFIG GET maxmemory-policy
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: September 05, 2025</em></small></p>
+    <p><small><em>Last modified: September 10, 2025</em></small></p>
   </div>
 </article>
 
