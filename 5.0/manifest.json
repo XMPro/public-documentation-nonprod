@@ -57,6 +57,26 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "images/contributing/pr_build.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/pr_build.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/contributing/pr_number.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/pr_number.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "images/enable-filter-panel.png",
       "output": {
         "resource": {
