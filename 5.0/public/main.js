@@ -3,7 +3,27 @@
 export default {
   start: () => {
     // Startup script goes here
-    
+    // Display description from front matter if present
+    setTimeout(() => {
+      // Get all description meta tags and use the last one (page-specific)
+      const descMetas = document.querySelectorAll('meta[name="description"]');
+      const descMeta = descMetas.length > 1 ? descMetas[descMetas.length - 1] : null;
+      if (descMeta && descMeta.content && descMeta.content.trim()) {
+        const articleH1 = document.querySelector('article h1');
+        if (articleH1 && !document.querySelector('.article-description')) {
+          const descElem = document.createElement('p');
+          descElem.className = 'article-description';
+          descElem.textContent = descMeta.content;
+          descElem.style.color = '#666';
+          descElem.style.marginTop = '-0.5em';
+          descElem.style.marginBottom = '1.5em';
+          descElem.style.fontSize = '1em';
+          
+          articleH1.parentNode.insertBefore(descElem, articleH1.nextSibling);
+        }
+      }
+    }, 100);
+
     // Check if this is a non-production environment and add warning banner
     const hostname = window.location.hostname;
     const isNonProduction = hostname.endsWith('.z13.web.core.windows.net') || 
