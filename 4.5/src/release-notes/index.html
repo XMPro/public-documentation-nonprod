@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>v4.5 Release Notes | XMPro </title>
+      <title>Platform | XMPro </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="v4.5 Release Notes | XMPro ">
+      <meta name="title" content="Platform | XMPro ">
       <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
       
       <link rel="icon" href="../../images/favicon.png">
@@ -85,15 +85,92 @@
         </div>
 
         <article data-uid="">
-<h1 id="v45-release-notes">v4.5 Release Notes</h1>
+<h1 id="platform">Platform</h1>
 
-<p>Date Released: Pending</p>
-<p>This section contains the release notes for XMPro v4.5, followed by the release notes for each patch version, providing information about new features, improvements, and bug fixes.</p>
-<div class="NOTE">
-<h5>Note</h5>
+<h2 id="v45-release-notes">v4.5 Release Notes</h2>
+<p>This section contains the release notes for XMPro v4.5 platform, providing information about new features, improvements, and bug fixes across all core products.</p>
+<div class="WARNING">
+<h5>Warning</h5>
 <p>Security update: Mitigate high-severity vulnerabilities by upgrading all products to v4.5.1+.</p>
 </div>
-<h2 id="common">Common</h2>
+<h2 id="known-issues">Known Issues</h2>
+<table>
+<thead>
+<tr>
+<th>Product</th>
+<th>Description</th>
+<th>Reported</th>
+<th>Fixed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>App Designer</td>
+<td>Bug 20828: Assigning or Sharing a recommendation alert results in an error message when using the Alert Action Block</td>
+<td>v4.5.0</td>
+<td>Fix Pending Release</td>
+</tr>
+<tr>
+<td>App Designer</td>
+<td>Bug 21266: Data Grid is no longer converting datetimes from UTC time to local</td>
+<td>v4.5.0</td>
+<td>Fix Pending Release</td>
+</tr>
+</tbody>
+</table>
+<h2 id="v452">v4.5.2</h2>
+<p>Date Released: 15 Aug 2025</p>
+<table>
+  <thead>
+    <tr>
+      <th width="120">Change Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Feature</td>
+      <td><b><a href="../installation/deployment/azure-terraform/index.html">Azure Terraform deployment capabilities</a></b>, replacing previous manual deployment processes with an automated, streamlined infrastructure provisioning experience and delivering major improvements to Azure deployment along with complete documentation.</td>
+    </tr>
+  </tbody>
+</table>
+<h2 id="v451">v4.5.1</h2>
+<p>Date Released: 28 Jul 2025</p>
+<table>
+  <thead>
+    <tr>
+      <th width="120">Change Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Security</td>
+      <td>
+            <p><b>Product security and stability</b>: We've mitigated several high-severity vulnerabilities by upgrading the corresponding NuGet packages:</p>
+            <ul>
+                <li>Upgraded system.formats.asn1 from 6.0.0 to 6.0.1 in App Designer for <a href="https://www.cve.org/CVERecord?id=CVE-2024-38095">CVE-2024-38095</a></li>
+                <li>Upgraded system.security.cryptography.xml from 4.4.0 to 4.4.2 in App Designer for <a href="https://www.cve.org/CVERecord?id=CVE-2018-0764">CVE-2018-0764</a>/<a href="https://www.cve.org/CVERecord?id=CVE-2018-0765">CVE-2018-0765</a></li>
+                <li>Upgraded Microsoft.Extensions.Caching.Memory from 8.0.0 to 8.0.1 in Data Stream Designer for <a href="https://www.cve.org/CVERecord?id=CVE-2024-43483">CVE-2024-43483</a></li>
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <td>Deployment</td>
+        <td>
+            <p><b>Container-Based Enhancements</b>:</p>
+            <ul>
+                <li>Introduced runtime certificate generation using dedicated builder containers, eliminating baked-in certificates and supporting both self-signed and customer-provided certificates</li>
+                <li>Implemented hybrid configuration support to enable Subscription Manager (SM) running on a Windows host while other applications run in Linux containers, resolving SM's Linux container reliability issues.</li>
+                <li>Resolved SM connectivity issues in container deployments by implementing proper BaseUrl/InternalBaseUrl handling, ensuring applications connect correctly from both server-side and client-side perspectives.</li>
+            </ul>
+        </td>
+    </tr>
+  </tbody>
+</table>
+<h2 id="v450">v4.5.0</h2>
+<p>Date Released: 20 Jul 2025</p>
+<h3 id="common">Common</h3>
 <table>
   <thead>
     <tr>
@@ -112,121 +189,7 @@
     </tr>
   </tbody>
 </table>
-<h2 id="integrations">Integrations</h2>
-<table>
-  <thead>
-    <tr>
-      <th width="100">Date</th>
-      <th width="120">Change Type</th>
-      <th width="250">Name</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>02 Jul 2025</td>
-      <td>Fix</td>
-      <td><a href="https://xmpro.gitbook.io/erbessd-connector/">Erbessd Connector v3.20</a></td>
-      <td>Repackaged to improve performance.</td>
-    </tr>
-    <tr>
-      <td>18 Jul 2025</td>
-      <td>Enhancement</td>
-      <td><a href="https://xmpro.gitbook.io/meta-action-agent/">Meta Action Agent v1.15</a></td>
-      <td>Added more detail to Python package installation logging for network related errors, permission errors, package not found errors, and dependency conflicts.</td>
-    </tr>
-    <tr>
-      <td>22 Jul 2025</td>
-      <td>Enhancement</td>
-      <td><a href="https://xmpro.gitbook.io/csv/">CSV Action Agent v1.12</a></td>
-      <td>Support dynamic filenames and output as a Base64-encoded string.</td>
-    </tr>
-    <tr>
-      <td>23 Jul 2025</td>
-      <td>Fix</td>
-      <td><a href="https://xmpro.gitbook.io/azure-sql-connector/">Azure SQL Connector v2.21</a></td>
-      <td>Fixed value type mismatch error when updating a GUID column.</td>
-    </tr>
-    <tr>
-      <td>23 Jul 2025</td>
-      <td>Fix</td>
-      <td><a href="https://xmpro.gitbook.io/sql-server-connector/">SQL Server Connector v2.21</a></td>
-      <td>Fixed value type mismatch error when updating a GUID column.</td>
-    </tr>
-    <tr>
-      <td>28 Jul 2025</td>
-      <td>Fix</td>
-      <td><a href="https://xmpro.gitbook.io/xmpro-app/">XMPro App Action Agent v2.25</a></td>
-      <td>Added error handling to prevent the Stream Host from crashing when the Agent is not configured or unable to authenticate with the credentials provided.</td>
-    </tr>
-    <tr>
-      <td>28 Jul 2025</td>
-      <td>Fix</td>
-      <td><a href="https://xmpro.gitbook.io/action-request/">Read Action Request Agent v2.08</a></td>
-      <td>Added error handling to prevent the Stream Host from crashing when the Agent is not configured or unable to authenticate with the credentials provided.</td>
-    </tr>
-    <tr>
-      <td>28 Jul 2025</td>
-      <td>Fix</td>
-      <td><a href="https://xmpro.gitbook.io/action-request/">Close Action Request Agent v1.03</a></td>
-      <td>Added error handling to prevent the Stream Host from crashing when the Agent is not configured or unable to authenticate with the credentials provided.</td>
-    </tr>
-    <tr>
-      <td>28 Jul 2025</td>
-      <td>Fix</td>
-      <td><a href="https://xmpro.gitbook.io/read-recommendation/">Read Recommendation Agent v3.02</a></td>
-      <td>Added error handling to prevent the Stream Host from crashing when the Agent is not configured or unable to authenticate with the credentials provided.</td>
-    </tr>
-    <tr>
-      <td>28 Jul 2025</td>
-      <td>Fix</td>
-      <td><a href="https://xmpro.gitbook.io/resolve-recommendation/">Resolve Recommendation Agent v2.49</a></td>
-      <td>Added error handling to prevent the Stream Host from crashing when the Agent is not configured or unable to authenticate with the credentials provided.</td>
-    </tr>
-    <tr>
-      <td>28 Jul 2025</td>
-      <td>Fix</td>
-      <td><a href="https://xmpro.gitbook.io/read-recommendation/">Read Recommendation Agent v3.02</a></td>
-      <td>Added error handling to prevent the Stream Host from crashing when the Agent is not configured or unable to authenticate with the credentials provided.</td>
-    </tr>
-    <tr>
-      <td>28 Jul 2025</td>
-      <td>Fix</td>
-      <td><a href="https://xmpro.gitbook.io/run-recommendation/">Run Recommendation Agent v3.05</a></td>
-      <td>Added error handling to prevent the Stream Host from crashing when the Agent is not configured or unable to authenticate with the credentials provided.</td>
-    </tr>
-    <tr>
-      <td>28 Jul 2025</td>
-      <td>Fix</td>
-      <td><a href="https://xmpro.gitbook.io/update-recommendation/">Update Recommendation Agent v3.02</a></td>
-      <td>Added error handling to prevent the Stream Host from crashing when the Agent is not configured or unable to authenticate with the credentials provided.</td>
-    </tr>
-  </tbody>
-</table>
-<h3 id="package-manager">Package Manager</h3>
-<table>
-  <thead>
-    <tr>
-      <th width="120">Change Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Enhancement</td>
-      <td><b>Settings Reordering</b>: You can now reorder Groups and Settings within the Package Manager Settings Blade using drag-and-drop functionality. This allows you to organize your agent configuration options in a logical order that makes sense for your specific use case, improving the user experience when configuring agents.</td>
-    </tr>
-    <tr>
-      <td>Fix</td>
-      <td><b>File Type Support</b>: You can now attach any file type when adding Resource references in the Package Manager. Previously, only specific file types were supported, which limited your ability to include custom documentation, configuration files, or other resources with your agent packages. This enhancement removes file type restrictions, giving you greater flexibility in packaging your integrations.</td>
-    </tr>
-    <tr>
-      <td>Fix</td>
-      <td><b>Crash Prevention</b>: When working with connector packages, you previously encountered app crashes when deleting grid controls or creating new connector packages. The application would force close unexpectedly, losing your work. This issue has been resolved, and the Package Manager now handles grid deletions and connector package creation safely without crashing.</td>
-    </tr>
-  </tbody>
-</table>
-<h2 id="app-designer">App Designer</h2>
+<h3 id="app-designer">App Designer</h3>
 <table>
   <thead>
     <tr>
@@ -281,7 +244,7 @@
     </tr>
   </tbody>
 </table>
-<h2 id="data-stream-designer">Data Stream Designer</h2>
+<h3 id="data-stream-designer">Data Stream Designer</h3>
 <table>
   <thead>
     <tr>
@@ -296,7 +259,7 @@
     </tr>
   </tbody>
 </table>
-<h2 id="subscription-manager">Subscription Manager</h2>
+<h3 id="subscription-manager">Subscription Manager</h3>
 <table>
   <thead>
     <tr>
@@ -343,91 +306,39 @@
     </tr>
   </tbody>
 </table>
-<h2 id="nuget-packages">NuGet Packages</h2>
-<h3 id="agent-development">Agent Development</h3>
+<h3 id="package-manager">Package Manager</h3>
+<table>
+  <thead>
+    <tr>
+      <th width="120">Change Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Enhancement</td>
+      <td><b>Settings Reordering</b>: You can now reorder Groups and Settings within the Package Manager Settings Blade using drag-and-drop functionality. This allows you to organize your agent configuration options in a logical order that makes sense for your specific use case, improving the user experience when configuring agents.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td><b>File Type Support</b>: You can now attach any file type when adding Resource references in the Package Manager. Previously, only specific file types were supported, which limited your ability to include custom documentation, configuration files, or other resources with your agent packages. This enhancement removes file type restrictions, giving you greater flexibility in packaging your integrations.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td><b>Crash Prevention</b>: When working with connector packages, you previously encountered app crashes when deleting grid controls or creating new connector packages. The application would force close unexpectedly, losing your work. This issue has been resolved, and the Package Manager now handles grid deletions and connector package creation safely without crashing.</td>
+    </tr>
+  </tbody>
+</table>
+<h3 id="nuget-packages">NuGet Packages</h3>
+<h4 id="agent-development">Agent Development</h4>
 <p>No changes to XMPro.XMIoT.Framework.</p>
-<h3 id="connector-development">Connector Development</h3>
+<h4 id="connector-development">Connector Development</h4>
 <p>No changes to XMPro.Integration.Framework, XMPro.Integration.Helpers, or XMPro.Integration.Settings.</p>
-<h2 id="v451">v4.5.1</h2>
-<p>Date Released: Pending</p>
-<table>
-  <thead>
-    <tr>
-      <th width="120">Change Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Security</td>
-      <td>
-            <p><b>Product security and stability</b>: We've mitigated several high-severity vulnerabilities by upgrading the corresponding NuGet packages:</p>
-            <ul>
-                <li>Upgraded system.formats.asn1 from 6.0.0 to 6.0.1 in App Designer for <a href="https://www.cve.org/CVERecord?id=CVE-2024-38095">CVE-2024-38095</a></li>
-                <li>Upgraded system.security.cryptography.xml from 4.4.0 to 4.4.2 in App Designer for <a href="https://www.cve.org/CVERecord?id=CVE-2018-0764">CVE-2018-0764</a>/<a href="https://www.cve.org/CVERecord?id=CVE-2018-0765">CVE-2018-0765</a></li>
-                <li>Upgraded Microsoft.Extensions.Caching.Memory from 8.0.0 to 8.0.1 in Data Stream Designer for <a href="https://www.cve.org/CVERecord?id=CVE-2024-43483">CVE-2024-43483</a></li>
-            </ul>
-        </td>
-    </tr>
-    <tr>
-        <td>Deployment</td>
-        <td>
-            <p><b>Container-Based Enhancements</b>:</p>
-            <ul>
-                <li>Introduced runtime certificate generation using dedicated builder containers, eliminating baked-in certificates and supporting both self-signed and customer-provided certificates</li>
-                <li>Implemented hybrid configuration support to enable Subscription Manager (SM) running on a Windows host while other applications run in Linux containers, resolving SM's Linux container reliability issues.</li>
-                <li>Resolved SM connectivity issues in container deployments by implementing proper BaseUrl/InternalBaseUrl handling, ensuring applications connect correctly from both server-side and client-side perspectives.</li>
-            </ul>
-        </td>
-    </tr>
-  </tbody>
-</table>
-<h2 id="v452">v4.5.2</h2>
-<p>Date Released: Pending</p>
-<table>
-  <thead>
-    <tr>
-      <th width="120">Change Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Feature</td>
-      <td><b>Azure Terraform deployment capabilities</b>, replacing previous manual deployment processes with an automated, streamlined infrastructure provisioning experience and delivering major improvements to Azure deployment along with complete documentation.</td>
-    </tr>
-  </tbody>
-</table>
-<h2 id="known-issues">Known Issues</h2>
-<table>
-<thead>
-<tr>
-<th>Product</th>
-<th>Description</th>
-<th>Reported</th>
-<th>Fixed</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>App Designer</td>
-<td>Bug 20828: Assigning or Sharing a recommendation alert results in an error message when using the Alert Action Block</td>
-<td>v4.5.0</td>
-<td>Fix Pending Release</td>
-</tr>
-<tr>
-<td>App Designer</td>
-<td>Bug 21266: Data Grid is no longer converting datetimes from UTC time to local</td>
-<td>v4.5.0</td>
-<td>Fix Pending Release</td>
-</tr>
-</tbody>
-</table>
 
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: September 12, 2025</em></small></p>
+    <p><small><em>Last modified: September 16, 2025</em></small></p>
   </div>
 </article>
 
