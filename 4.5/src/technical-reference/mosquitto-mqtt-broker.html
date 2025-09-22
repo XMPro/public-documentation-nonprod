@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Self-Hosted Mosquitto MQTT Broker Implementation | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Self-Hosted Mosquitto MQTT Broker Implementation | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../images/favicon.png">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/technical-reference/mosquitto-mqtt-broker.md&amp;version=GBrelease-4.5.3&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="self-hosted-mosquitto-mqtt-broker-implementation">Self-Hosted Mosquitto MQTT Broker Implementation</h1>
+
+<h2 id="introduction">Introduction</h2>
+<p>This reference guides organizations to build and maintain their own Mosquitto MQTT broker implementation, removing dependency on XMPro's previous pre-built Mosquitto MQTT broker solution while maintaining compatibility with XMPro platform requirements.</p>
+<h2 id="what-youll-find-here">What You'll Find Here</h2>
+<ul>
+<li>Sample Dockerfile and configuration for building your own Mosquitto container</li>
+<li>Basic authentication setup using environment variables</li>
+<li>Migration guidance from XMPro's previous implementation</li>
+<li>Deployment configuration example</li>
+</ul>
+<blockquote>
+<p><strong>Note</strong>: This is a reference implementation. Organizations should review and adapt the configuration based on their specific security, networking, and operational requirements before production deployment. This implementation requires a mosquitto.conf configuration file, proper volume mounts for data persistence, and consideration of TLS/SSL setup for production environments. Organizations are responsible for understanding and configuring Mosquitto MQTT broker according to their needs.</p>
+</blockquote>
+<h2 id="sample-implementation-with-basic-authentication">Sample Implementation with Basic Authentication</h2>
+<p>For reference, here's a sample implementation with basic authentication:</p>
+<h3 id="dockerfile">Dockerfile</h3>
+<pre><code class="lang-dockerfile">FROM eclipse-mosquitto:2
+
+COPY entrypoint.sh /entrypoint.sh  
+RUN mkdir -p /etc/mosquitto &amp;&amp; touch /etc/mosquitto/passwd &amp;&amp; chmod 0700 /etc/mosquitto/passwd &amp;&amp; \
+    chown mosquitto:mosquitto /etc/mosquitto/passwd &amp;&amp; \
+    chmod +x /entrypoint.sh
+
+ENTRYPOINT [&quot;/entrypoint.sh&quot;]
+</code></pre>
+<h3 id="entrypoint-script-entrypointsh">Entrypoint Script (entrypoint.sh)</h3>
+<pre><code class="lang-bash">#!/bin/sh
+
+# Set up MQTT credentials from environment variables
+if [ -n &quot;$MQTT_USER&quot; ] &amp;&amp; [ -n &quot;$MQTT_PASSWORD&quot; ]; then
+    echo &quot;Setting up MQTT authentication...&quot;
+    mosquitto_passwd -b /etc/mosquitto/passwd &quot;$MQTT_USER&quot; &quot;$MQTT_PASSWORD&quot;
+    echo &quot;Authentication configured for user: $MQTT_USER&quot;
+else
+    echo &quot;No MQTT credentials provided. Running without authentication.&quot;
+fi
+
+# Start Mosquitto with custom configuration
+exec mosquitto -c /mosquitto/config/mosquitto.conf
+</code></pre>
+<h3 id="sample-configuration-file-mosquittoconf">Sample Configuration File (mosquitto.conf)</h3>
+<pre><code class="lang-conf">allow_anonymous true
+password_file /etc/mosquitto/passwd
+listener 1883
+log_dest file /mosquitto/logs/mosquitto.log
+</code></pre>
+<h3 id="key-features">Key Features</h3>
+<ul>
+<li><strong>Authentication</strong>: Uses environment variables <code>MQTT_USER</code> and <code>MQTT_PASSWORD</code></li>
+<li><strong>Configuration</strong>: Expects mosquitto.conf at <code>/mosquitto/config/mosquitto.conf</code></li>
+<li><strong>Password Management</strong>: Automatically creates password file from environment variables</li>
+</ul>
+<h2 id="implementation-details">Implementation Details</h2>
+<h3 id="build-process">Build Process</h3>
+<pre><code class="lang-bash"># Build the custom image
+docker build -t your-mosquitto .
+
+# Run with authentication and proper volume mounts
+docker run -d \
+  --name mosquitto-broker \
+  -e MQTT_USER=youruser \
+  -e MQTT_PASSWORD=yourpass \
+  -p 1883:1883 \
+  -v /path/to/your/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro \
+  -v mosquitto-data:/mosquitto/data \
+  -v mosquitto-logs:/mosquitto/log \
+  your-mosquitto
+
+# Alternative with bind mounts
+docker run -d \
+  --name mosquitto-broker \
+  -e MQTT_USER=youruser \
+  -e MQTT_PASSWORD=yourpass \
+  -p 1883:1883 \
+  -v $(pwd)/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro \
+  -v $(pwd)/data:/mosquitto/data \
+  -v $(pwd)/logs:/mosquitto/log \
+  your-mosquitto
+</code></pre>
+<h3 id="container-configuration">Container Configuration</h3>
+<p>The implementation expects:</p>
+<ul>
+<li>Base image: <code>eclipse-mosquitto:2</code></li>
+<li>Configuration file: <code>/mosquitto/config/mosquitto.conf</code></li>
+<li>Password file: <code>/etc/mosquitto/passwd</code> (auto-generated)</li>
+<li>Required environment variables: <code>MQTT_USER</code>, <code>MQTT_PASSWORD</code></li>
+</ul>
+<h2 id="migration-from-xmpro">Migration from XMPro</h2>
+<p>Organizations migrating from XMPro's mosquitto implementation should:</p>
+<ol>
+<li>Build their own container using this reference</li>
+<li>Deploy to their own container registry</li>
+<li>Update deployment manifests to reference the new image</li>
+<li>Test authentication and configuration compatibility</li>
+</ol>
+<h3 id="deployment-configuration">Deployment Configuration</h3>
+<p>Replace XMPro image reference in your deployment manifest:</p>
+<pre><code class="lang-yaml"># Replace XMPro image reference in your deployment manifest:
+spec:
+  containers:
+  - name: mosquitto
+    image: your-registry/your-mosquitto:latest
+    # Configure ports, environment variables, volume mounts, 
+    # resource limits, and other deployment requirements
+    # according to your infrastructure and security policies
+</code></pre>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: September 22, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
