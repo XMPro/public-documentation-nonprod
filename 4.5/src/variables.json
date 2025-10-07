@@ -1,7 +1,7 @@
 {
   "INSTALL_URL_PREFIX": "https://github.com/XMPro/xmpro-windows-installer/releases/download/",
   "INSTALLER_SCRIPT": "install-xmpro.ps1",
-  "VERSION": "4.5.3",
+  "VERSION": "4.5.4",
   "ACR_URL": "xmprononprod.azurecr.io",
   "TERRAFORM_MODULE_URL": "github.com/XMPro/terraform-xmpro-azure",
   "DOWNLOAD_URL": "https://download.nonprod.xmprodev.com"

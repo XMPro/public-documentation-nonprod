@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/release-notes/index.md&amp;version=GBrelease-4.5.3&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/release-notes/index.md&amp;version=GBrelease-4.5.4&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -108,15 +108,61 @@
 <td>App Designer</td>
 <td>Bug 20828: Assigning or Sharing a recommendation alert results in an error message when using the Alert Action Block</td>
 <td>v4.5.0</td>
-<td>Fix Pending Release</td>
+<td>v4.5.3</td>
 </tr>
 <tr>
 <td>App Designer</td>
 <td>Bug 21266: Data Grid is no longer converting datetimes from UTC time to local</td>
 <td>v4.5.0</td>
-<td>Fix Pending Release</td>
+<td>v4.5.3</td>
+</tr>
+<tr>
+<td>Data Stream Designer</td>
+<td>Team Support 16609: Removing 'View Collection' right causes errors, but including it exposes Collection secret</td>
+<td>v4.5.1</td>
+<td>v4.5.3</td>
 </tr>
 </tbody>
+</table>
+<h2 id="v453">v4.5.3</h2>
+<p>Date Released: 29 Sep 2025</p>
+<table>
+  <thead>
+    <tr>
+      <th width="120">Change Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Security</td>
+      <td><b>Enhanced Security Framework: </b>Significant security hardening across the XMPro platform, including protection against clickjacking and reverse tabnabbing attacks, improved error handling and input validation, and resolution of multiple medium-severity vulnerabilities in core dependencies. We've implemented comprehensive security header enforcement across all API controllers in both Application Designer (AD) and Data Stream (DS) components, upgraded JavaScript libraries to address known vulnerabilities, and enhanced cookie security attributes. Additional improvements include container-level security updates and strengthened endpoint protection to prevent unauthorized resource enumeration.</td>
+    </tr>
+    <tr>
+      <td>Enhancement</td>
+      <td><p><b>Deployment At Scale - Enhanced validation and error reporting</b>:</p>
+          <ul>
+             <li>More details are provided for individual component failures during import, enabling faster resolution.</li>
+             <li>Report all version differences found per Agent/Connector - rather than the first - so that all can be resolved in a single pass.</li>
+          </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td>Bug 20828: Assigning or Sharing a recommendation alert results in an error message when using the Alert Action Block.<br>
+      Symptom: User encounters an error "Unable to assign Recommendation" when sharing an alert.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td>Bug 21266: Data Grid is no longer converting datetimes from UTC time to local.<br>
+      Symptom: User observed date values displayed in a grid where the same as they were stored - not converted to their local time zone.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td>Team Support 16609: Removing 'View Collection' right causes errors, but including it exposes Collection secret.<br>
+      Symptom: When removing "View Collection" from a user who should have read-only access to some data streams (to hide the Collection secret), they encounter an error "Unable to fetch Devices" when viewing a category that contains published data streams.</td>
+    </tr>
+  </tbody>
 </table>
 <h2 id="v452">v4.5.2</h2>
 <p>Date Released: 15 Aug 2025</p>
@@ -338,7 +384,7 @@
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: September 22, 2025</em></small></p>
+    <p><small><em>Last modified: October 06, 2025</em></small></p>
   </div>
 </article>
 
