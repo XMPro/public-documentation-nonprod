@@ -171,6 +171,13 @@ export default {
 
     // Variable replacement functionality
     loadAndReplaceVariables();
+
+    // Load Fastbots AI Assistant
+    const fastbotsScript = document.createElement('script');
+    fastbotsScript.defer = true;
+    fastbotsScript.src = 'https://app.fastbots.ai/embed.js';
+    fastbotsScript.setAttribute('data-bot-id', 'cm18i3pw304l6svbkddavqyai');
+    document.body.appendChild(fastbotsScript);
   },
 }
 
