@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Deploy XMPro on Windows Server 2022 | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Deploy XMPro on Windows Server 2022 | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../../toc.html">
+      <meta name="docfx:tocrel" content="../../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/deployment/windows-server-2022/index.md&amp;version=GBmain&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../../index.html">
+            <img id="logo" class="svg" src="../../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="deploy-xmpro-on-windows-server-2022">Deploy XMPro on Windows Server 2022</h1>
+
+<h2 id="introduction">Introduction</h2>
+<p>Deploy the XMPro platform on Windows Server 2022 using native IIS hosting in under 30 minutes with our interactive installer. This guide walks you through a single-server installation where all XMPro products run on one server using IIS web applications and Windows services.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>This guide uses <strong>native IIS deployment</strong> - not containers. XMPro applications run as IIS web applications and Windows services.</p>
+</div>
+<h2 id="single-server-architecture">Single-Server Architecture</h2>
+<p><img src="../../../images/xmpro-single-server-deployment-architecture.jpg" alt="XMPro Single-Server Deployment Architecture"></p>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>Before installing XMPro applications, ensure your Windows Server has the following components installed.</p>
+<h3 id="software-requirements">Software Requirements</h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Version</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Operating System</strong></td>
+<td>Windows Server 2022</td>
+<td>Standard or Datacenter edition, updated with the latest Windows Updates.</td>
+</tr>
+<tr>
+<td><strong>SQL Server</strong></td>
+<td>2022 (Standard)</td>
+<td>Mixed Mode authentication enabled.<br><br><strong>Database Account:</strong> Create a dedicated user account (e.g., <code>xmadmin</code>) with only required permissions (<code>dbcreator</code> and <code>securityadmin</code> roles) instead of using the built-in <code>sa</code> account.<br>• <code>dbcreator</code> allows creating databases<br>• <code>securityadmin</code> allows managing database logins<br><br><strong>Certificate Trust:</strong> In production, configure the Windows Server to trust the SQL Server certificate. For non-production environments, answer <code>Y</code> (Yes) when prompted &quot;Trust SQL Server Certificate?&quot; during installation (less secure). See <a href="troubleshooting.html#sql-server-certificate-trust-error">Troubleshooting</a> for detailed setup instructions.</td>
+</tr>
+<tr>
+<td><strong>IIS</strong></td>
+<td>10.0+</td>
+<td>Web Server role with required features:<br>• Common HTTP Features (Default Document, Static Content)<br>• Application Development (ASP.NET 4.8, .NET Extensibility 4.8)<br>• Health and Diagnostics (HTTP Logging)<br>• Security (Request Filtering)<br>• Management Tools (IIS Management Console)</td>
+</tr>
+<tr>
+<td><strong>IIS URL Rewrite Module</strong></td>
+<td>2.1+</td>
+<td>Required for application routing.</td>
+</tr>
+<tr>
+<td><strong>.NET Framework</strong></td>
+<td>4.8</td>
+<td>Required for legacy compatibility.</td>
+</tr>
+<tr>
+<td><strong>.NET 8 Hosting Bundle</strong></td>
+<td>8.0+</td>
+<td><strong>Critical</strong>: Must install the Hosting Bundle.</td>
+</tr>
+<tr>
+<td><strong>HTTP.sys Configuration</strong></td>
+<td>Registry settings</td>
+<td>Increase max header size to prevent HTTP 400 errors.<br><code>MaxFieldLength</code> = 65536<br><code>MaxRequestBytes</code> = 65536<br>See <a href="troubleshooting.html#http-error-400---bad-request-request-too-long">Troubleshooting Guide</a> for configuration steps.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="certificate-requirements">Certificate Requirements</h3>
+<table>
+<thead>
+<tr>
+<th>Certificate Type</th>
+<th>Purpose</th>
+<th>File Format</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Signing Certificate</strong></td>
+<td>JWT token signing for inter-product authentication.</td>
+<td><code>.pfx</code> with password</td>
+<td>Self-signed or CA-issued.<br>4096-bit RSA key recommended.<br>See <a href="troubleshooting.html#jwt-token-signing-certificate-error">Troubleshooting Guide</a> for creation example.</td>
+</tr>
+<tr>
+<td><strong>SSL Certificate</strong></td>
+<td>HTTPS encryption for web traffic.</td>
+<td><code>.pfx</code> with password</td>
+<td><strong>Production:</strong> Use certificate from trusted CA.<br><strong>Testing:</strong> Self-signed acceptable.<br>Must include hostname in Subject Alternative Names (SAN).</td>
+</tr>
+</tbody>
+</table>
+<h2 id="quick-deployment">Quick Deployment</h2>
+<h3 id="run-the-installer">Run the Installer</h3>
+<p>Open <strong>CMD (Command Prompt as Administrator)</strong> on your Windows Server and run:</p>
+<pre><code class="lang-cmd">powershell.exe -ExecutionPolicy Bypass -Command &quot;$env:SCRIPT_URL='{{INSTALL_URL_PREFIX}}{{VERSION}}/install-xmpro-application.ps1'; iex (irm $env:SCRIPT_URL)&quot;
+</code></pre>
+<p>This command downloads and runs the interactive installer in one step. The installer will launch a <strong>configuration wizard</strong> that guides you through setup.</p>
+<h3 id="configuration-prompts">Configuration Prompts</h3>
+<p>The installer will ask you several questions. Here's what each prompt means:</p>
+<h4 id="1-product-selection">1. Product Selection</h4>
+<p>The following prompts will ask you sequantially on which of the XMPro components you want to install. The default value for each prompt is &quot;Y&quot; for yes but you are open to choose no (by typing &quot;N&quot;) if you only want to install select XMPro Components. However, some components might require existing installation of other components which is also detailed on the table below:</p>
+<table>
+<colgroup>
+<col style="width: 25%">
+<col style="width: 50%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr>
+<th>Prompt</th>
+<th>What It Means</th>
+<th>Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Install SM? (y/n)</strong></td>
+<td>Whether to install Subscription Manager. A non-Y/y input means installation of Subscription Manager will be skipped. <strong>Required first when installing AD/DS.</strong></td>
+<td><code>y</code></td>
+</tr>
+<tr>
+<td><strong>Install AD? (y/n)</strong></td>
+<td>Whether to install App Designer. A non-Y/y input means installation of App Designer will be skipped. <strong>Requires an existing SM Installation.</strong></td>
+<td><code>y</code></td>
+</tr>
+<tr>
+<td><strong>Install DS? (y/n)</strong></td>
+<td>Whether to install Data Stream Designer. A non-Y/y input means installation of Data Stream Designer will be skipped. <strong>Requires an existing SM Installation.</strong></td>
+<td><code>y</code></td>
+</tr>
+<tr>
+<td><strong>Install SH? (y/n)</strong></td>
+<td>Whether to install Stream Host. A non-Y/y input means installation of Stream Host will be skipped.</td>
+<td><code>y</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="2-database-configuration">2. Database Configuration</h4>
+<table>
+<colgroup>
+<col style="width: 25%">
+<col style="width: 50%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr>
+<th>Prompt</th>
+<th>What It Means</th>
+<th>Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Database Server</strong></td>
+<td>SQL Server instance to connect to.<br><br><strong>Examples:</strong><br>• Local: <code>localhost</code> or <code>hostname</code><br>• External: <code>sql-server.yourcompany.com</code><br>• Custom port: <code>hostname,1433</code><br><br><strong>External SQL Server requirements:</strong><br>• TCP/IP enabled on port 1433<br>• Mixed authentication mode enabled<br>• Firewall allows connections from Windows Server</td>
+<td><code>hostname</code></td>
+</tr>
+<tr>
+<td><strong>Database Username</strong></td>
+<td>The dedicated SQL Server user account created in prerequisites.</td>
+<td><code>xmadmin</code></td>
+</tr>
+<tr>
+<td><strong>Database Password</strong></td>
+<td>The SQL Server password you want to set for the created SQL Account.</td>
+<td><em>(required - no default)</em></td>
+</tr>
+<tr>
+<td><strong>Database Protocol</strong></td>
+<td>SQL Server connection protocol.<br><code>tcp</code> = standard for network connections<br><code>np</code> = named pipes (local only)</td>
+<td><code>tcp</code></td>
+</tr>
+<tr>
+<td><strong>Trust SQL Server Certificate</strong></td>
+<td>Whether to trust SQL Server certificate without validation.<br><br><strong>Production:</strong> Select <code>N</code> (No) and configure Windows Server to trust the SQL Server certificate.<br><strong>Non-Production:</strong> Select <code>Y</code> (Yes) for quick setup (less secure).<br><br>See <a href="troubleshooting.html#sql-server-certificate-trust-error">Troubleshooting</a> for certificate setup instructions.</td>
+<td><code>N</code></td>
+</tr>
+<tr>
+<td><strong>SM Database Name</strong></td>
+<td>Subscription Manager database name (always required as central registry).</td>
+<td><code>SM</code></td>
+</tr>
+<tr>
+<td><strong>AD Database Name</strong></td>
+<td>App Designer database name.<br><em>Only asked if AD is selected.</em></td>
+<td><code>AD</code></td>
+</tr>
+<tr>
+<td><strong>DS Database Name</strong></td>
+<td>Data Stream Designer database name.<br><em>Only asked if DS is selected.</em></td>
+<td><code>DS</code></td>
+</tr>
+<tr>
+<td><strong>Company Name</strong></td>
+<td>Your company name for company admin account (no spaces).<br><em>Only asked if SM is selected.</em></td>
+<td><code>Company</code></td>
+</tr>
+<tr>
+<td><strong>Company Admin First Name</strong></td>
+<td>First name for company admin account.<br><em>Only asked if SM is selected.</em></td>
+<td><code>System</code></td>
+</tr>
+<tr>
+<td><strong>Company Admin Last Name</strong></td>
+<td>Last name for company admin account.<br><em>Only asked if SM is selected.</em></td>
+<td><code>Administrator</code></td>
+</tr>
+<tr>
+<td><strong>Company Admin Email</strong></td>
+<td>Email address for company admin account.<br><em>Only asked if SM is selected.</em></td>
+<td><code>site.admin@yourcompany.com</code></td>
+</tr>
+<tr>
+<td><strong>Company Admin Password</strong></td>
+<td>Password for company admin account.<br><em>Only asked if SM is selected.</em></td>
+<td><em>(required - no default)</em></td>
+</tr>
+<tr>
+<td><strong>Site Admin Password</strong></td>
+<td>Password for site admin account: <code>admin@xmpro.onxmpro.com</code>.<br><em>Only asked if SM is selected.</em></td>
+<td><em>(required - no default)</em></td>
+</tr>
+<tr>
+<td><strong>Use separate SM database credentials? (y/n)</strong></td>
+<td>Use different database credentials for SM.<br><em>Only asked if SM is selected.</em></td>
+<td><code>n</code></td>
+</tr>
+<tr>
+<td><strong>Use separate AD database credentials? (y/n)</strong></td>
+<td>Use different database credentials for AD.<br><em>Only asked if AD is selected.</em></td>
+<td><code>n</code></td>
+</tr>
+<tr>
+<td><strong>Use separate DS database credentials? (y/n)</strong></td>
+<td>Use different database credentials for DS.<br><em>Only asked if DS is selected.</em></td>
+<td><code>n</code></td>
+</tr>
+<tr>
+<td><strong>Enable SMTP configuration? (y/n)</strong></td>
+<td>Enable email for password resets, notifications, invitations.<br><em>Only asked if SM or AD is selected.</em></td>
+<td><code>n</code></td>
+</tr>
+</tbody>
+</table>
+<div class="TIP">
+<h5>Tip</h5>
+<p><strong>Username Format:</strong> Your company admin username will be automatically created as <code>FirstName.LastName@CompanyName.onxmpro.com</code></p>
+<p><strong>Example:</strong> If Company Name = &quot;Acme&quot;, First Name = &quot;John&quot;, Last Name = &quot;Smith&quot;, your username will be: <code>John.Smith@Acme.onxmpro.com</code></p>
+</div>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p><strong>SMTP is required for password resets and user invitations.</strong> Without SMTP configured, users cannot reset forgotten passwords or receive invitation emails. Configure SMTP now or add it later by editing configuration files.</p>
+</div>
+<h5 id="smtp-configuration-if-enabled">SMTP Configuration (if enabled)</h5>
+<p>If you choose to enable SMTP, you'll be prompted for these additional settings:</p>
+<table>
+<thead>
+<tr>
+<th>Prompt</th>
+<th>What It Means</th>
+<th>Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>SMTP Server</strong></td>
+<td>SMTP server address (e.g., <code>smtp.gmail.com</code>).</td>
+<td><em>(required - no default)</em></td>
+</tr>
+<tr>
+<td><strong>SMTP Port</strong></td>
+<td>SMTP port number (usually <code>587</code> for TLS or <code>465</code> for SSL).</td>
+<td><code>587</code></td>
+</tr>
+<tr>
+<td><strong>Enable SSL? (y/n)</strong></td>
+<td>Enable SSL/TLS encryption for SMTP connection.</td>
+<td><code>y</code></td>
+</tr>
+<tr>
+<td><strong>SMTP Username</strong></td>
+<td>SMTP authentication username (e.g., <code>notifications@yourcompany.com</code>).</td>
+<td><em>(required - no default)</em></td>
+</tr>
+<tr>
+<td><strong>SMTP Password</strong></td>
+<td>SMTP authentication password (or app password).</td>
+<td><em>(required - no default)</em></td>
+</tr>
+<tr>
+<td><strong>From Email Address</strong></td>
+<td>Email address to use as sender for system notifications.</td>
+<td><em>(required - no default)</em></td>
+</tr>
+</tbody>
+</table>
+<h4 id="3-product-configuration">3. Product Configuration</h4>
+<h5 id="basic-configuration">Basic Configuration</h5>
+<div class="NOTE">
+<h5>Note</h5>
+<p><strong>Hostname:</strong> Enter the DNS name users will use to access XMPro (e.g., <code>xmpro.yourcompany.com</code>). Use <code>localhost</code> for local-only access.</p>
+<p><strong>Internal Base URL:</strong> Only needed if using a reverse proxy or load balancer where internal server URLs differ from external URLs. Leave default for most installations.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Prompt</th>
+<th>What It Means</th>
+<th>Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>SM Hostname</strong></td>
+<td>DNS name where SM will be accessed.</td>
+<td><code>localhost</code></td>
+</tr>
+<tr>
+<td><strong>SM Listen Port</strong></td>
+<td>Port for SM web application.</td>
+<td><code>5201</code></td>
+</tr>
+<tr>
+<td><strong>SM Internal Base URL (if different)</strong> <em>(optional)</em></td>
+<td>Internal URL for SM (if different from external).</td>
+<td><code>https://hostname</code></td>
+</tr>
+<tr>
+<td><strong>AD Hostname</strong></td>
+<td>DNS name where AD will be accessed.</td>
+<td><code>localhost</code></td>
+</tr>
+<tr>
+<td><strong>AD Listen Port</strong></td>
+<td>Port for AD web application.</td>
+<td><code>5202</code></td>
+</tr>
+<tr>
+<td><strong>AD Internal Base URL (if different)</strong> <em>(optional)</em></td>
+<td>Internal URL for AD (if different from external).</td>
+<td><code>https://hostname:5202</code></td>
+</tr>
+<tr>
+<td><strong>DS Hostname</strong></td>
+<td>DNS name where DS will be accessed.</td>
+<td><code>localhost</code></td>
+</tr>
+<tr>
+<td><strong>DS Listen Port</strong></td>
+<td>Port for DS web application.</td>
+<td><code>5203</code></td>
+</tr>
+<tr>
+<td><strong>DS Internal Base URL (if different)</strong> <em>(optional)</em></td>
+<td>Internal URL for DS (if different from external).</td>
+<td><code>https://hostname:5203</code></td>
+</tr>
+</tbody>
+</table>
+<h5 id="ssl-certificates">SSL Certificates</h5>
+<table>
+<thead>
+<tr>
+<th>Prompt</th>
+<th>What It Means</th>
+<th>Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>SM SSL Certificate Path</strong></td>
+<td>Path to SSL certificate file for SM (e.g., <code>C:\XMPro\Certificates\ssl.pfx</code>).<br><em>Only asked if SM is selected.</em></td>
+<td><em>(required - no default)</em></td>
+</tr>
+<tr>
+<td><strong>SM SSL Certificate Password</strong></td>
+<td>Password for SM SSL certificate.<br><em>Only asked if SM is selected.</em></td>
+<td><em>(required - no default)</em></td>
+</tr>
+<tr>
+<td><strong>Token Certificate Path</strong></td>
+<td>Path to JWT signing certificate file (e.g., <code>C:\XMPro\Certificates\sign.pfx</code>).<br><em>Only asked if SM is selected.</em></td>
+<td><em>(required - no default)</em></td>
+</tr>
+<tr>
+<td><strong>Token Certificate Password</strong></td>
+<td>Password for JWT signing certificate.<br><em>Only asked if SM is selected.</em></td>
+<td><em>(required - no default)</em></td>
+</tr>
+<tr>
+<td><strong>AD SSL Certificate Path</strong></td>
+<td>Path to SSL certificate file for AD.<br><em>Only asked if AD is selected.</em></td>
+<td><em>(required - no default)</em></td>
+</tr>
+<tr>
+<td><strong>AD SSL Certificate Password</strong></td>
+<td>Password for AD SSL certificate.<br><em>Only asked if AD is selected.</em></td>
+<td><em>(required - no default)</em></td>
+</tr>
+<tr>
+<td><strong>DS SSL Certificate Path</strong></td>
+<td>Path to SSL certificate file for DS.<br><em>Only asked if DS is selected.</em></td>
+<td><em>(required - no default)</em></td>
+</tr>
+<tr>
+<td><strong>DS SSL Certificate Password</strong></td>
+<td>Password for DS SSL certificate.<br><em>Only asked if DS is selected.</em></td>
+<td><em>(required - no default)</em></td>
+</tr>
+</tbody>
+</table>
+<h5 id="stream-host-configuration-if-sh-selected">Stream Host Configuration (if SH selected)</h5>
+<table>
+<thead>
+<tr>
+<th>Prompt</th>
+<th>What It Means</th>
+<th>Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Stream Host Install Path</strong></td>
+<td>Directory where Stream Host will be installed.</td>
+<td><code>C:\XMPro\StreamHost</code></td>
+</tr>
+<tr>
+<td><strong>Device Name</strong></td>
+<td>Unique name for this Stream Host instance (will appear in Data Stream Designer).</td>
+<td><code>StreamHost-hostname</code></td>
+</tr>
+<tr>
+<td><strong>Data Stream Designer URL</strong></td>
+<td>DS URL for Stream Host to connect to.</td>
+<td><code>https://hostname:5203</code></td>
+</tr>
+</tbody>
+</table>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Configuration is saved to <code>C:\XMPro\</code> - you'll see these as defaults if you reinstall.</p>
+</div>
+<h3 id="installation-process">Installation Process</h3>
+<p>After answering the prompts, the installer will:</p>
+<ol>
+<li><p>✅ <strong>Validate configuration</strong> - Tests SQL Server connection to the database and validates certificates</p>
+<p><strong>If validation fails</strong>, you'll see the specific error and be prompted to:</p>
+<ul>
+<li><strong>(r) Retry</strong> - Re-enter your credentials</li>
+<li><strong>(s) Skip</strong> - Continue anyway (may cause installation to fail later)</li>
+</ul>
+</li>
+<li><p>✅ <strong>Migrate databases</strong> - Create and populate SM, AD, DS databases (takes 5-10 minutes)</p>
+</li>
+<li><p>✅ <strong>Download products</strong> - Get latest XMPro application packages</p>
+</li>
+<li><p>✅ <strong>Deploy to IIS</strong> - Create application pools and websites</p>
+</li>
+<li><p>✅ <strong>Install Stream Host</strong> - Set up Windows service (if selected)</p>
+</li>
+<li><p>✅ <strong>Configure applications</strong> - Apply settings and start services</p>
+</li>
+</ol>
+<p><strong>Installation time:</strong> 15-30 minutes depending on download speed and server performance.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The installer shows progress for each step.</p>
+</div>
+<h3 id="access-xmpro">Access XMPro</h3>
+<p>After installation completes, the installer displays your access URLs:</p>
+<p><strong>Subscription Manager (SM):</strong></p>
+<pre><code>https://localhost:5201
+</code></pre>
+<p><strong>App Designer (AD):</strong></p>
+<pre><code>https://localhost:5202
+</code></pre>
+<p><strong>Data Stream Designer (DS):</strong></p>
+<pre><code>https://localhost:5203
+</code></pre>
+<h4 id="login-credentials">Login Credentials</h4>
+<table>
+<thead>
+<tr>
+<th>Account Type</th>
+<th>Username</th>
+<th>Password</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Site Admin</strong></td>
+<td><code>admin@xmpro.onxmpro.com</code></td>
+<td>Your site admin password</td>
+<td>Full system access, license management.</td>
+</tr>
+<tr>
+<td><strong>Company Admin</strong></td>
+<td><code>FirstName.LastName@CompanyName.onxmpro.com</code><br><em>Example: <code>John.Smith@Acme.onxmpro.com</code></em></td>
+<td>Your company admin password</td>
+<td>Company operations, user management.</td>
+</tr>
+</tbody>
+</table>
+<div class="TIP">
+<h5>Tip</h5>
+<p><strong>Cannot access?</strong></p>
+<ul>
+<li>Check Windows Firewall allows ports 5201, 5202, 5203</li>
+<li>Verify IIS applications are running: Open IIS Manager → Application Pools</li>
+<li>Check certificate trust: See <a href="troubleshooting.html">Troubleshooting</a> for certificate issues</li>
+</ul>
+</div>
+<h2 id="what-gets-installed">What Gets Installed</h2>
+<h3 id="iis-websites">IIS Websites</h3>
+<ul>
+<li><strong>XMPro-SM</strong>: Subscription Manager (<code>C:\inetpub\wwwroot\XMPro-SM</code>)</li>
+<li><strong>XMPro-AD</strong>: App Designer (<code>C:\inetpub\wwwroot\XMPro-AD</code>)</li>
+<li><strong>XMPro-DS</strong>: Data Stream Designer (<code>C:\inetpub\wwwroot\XMPro-DS</code>)</li>
+</ul>
+<h3 id="database-migration-results">Database Migration Results</h3>
+<ul>
+<li><strong>SM Database</strong>: Identity, licensing, company data</li>
+<li><strong>AD Database</strong>: Applications, pages, dashboards</li>
+<li><strong>DS Database</strong>: Data streams, agents, collections</li>
+</ul>
+<h3 id="windows-services">Windows Services</h3>
+<ul>
+<li><strong>StreamHost-{hostname}</strong>: Data stream execution service</li>
+</ul>
+<h3 id="configuration-files">Configuration Files</h3>
+<ul>
+<li><strong>C:\XMPro\Global-variables.json</strong>: Main configuration</li>
+<li><strong>C:\XMPro\Global-settings.json</strong>: Auto-generated settings (Product IDs, Collection secrets)</li>
+<li><strong>C:\XMPro\SM-variables.json</strong>: SM-specific settings</li>
+<li><strong>C:\XMPro\AD-variables.json</strong>: AD-specific settings</li>
+<li><strong>C:\XMPro\DS-variables.json</strong>: DS-specific settings</li>
+</ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Configuration files are preserved across reinstalls - you'll see your previous settings as defaults.</p>
+</div>
+<div class="WARNING">
+<h5>Warning</h5>
+<p><strong>Security Best Practice:</strong> For production environments, move sensitive secrets (database passwords, certificate passwords, SMTP credentials) from these configuration files to encrypted secure storage solutions such as Azure Key Vault, HashiCorp Vault, or Windows Credential Manager. This reduces the risk of credential exposure.</p>
+</div>
+<h2 id="next-steps">Next Steps</h2>
+<p>After completing your Windows Server deployment, proceed to:</p>
+<p><strong><a href="../../complete-installation/index.html">Post-deployment</a></strong> - Complete the setup and configuration of your XMPro environment.</p>
+<h2 id="common-installation-scenarios">Common Installation Scenarios</h2>
+<h3 id="reinstalling-or-updating">Reinstalling or Updating</h3>
+<p>To reinstall without losing configuration:</p>
+<pre><code class="lang-powershell"># Uses existing configuration from C:\XMPro\
+.\install-xmpro-application.ps1 -SkipPrompts
+</code></pre>
+<h2 id="need-help">Need Help?</h2>
+<ul>
+<li><a href="troubleshooting.html">Troubleshooting Guide</a> - Fix common issues</li>
+<li><a href="multi-server-deployment.html">Multi-Server Deployment</a> - Deploy across multiple servers</li>
+<li><a href="airgapped-deployment.html">Airgapped Deployment</a> - Offline installation</li>
+</ul>
+<hr>
+<div class="NOTE">
+<h5>Note</h5>
+<p>This installer uses <strong>native IIS deployment</strong> - not Docker containers. All XMPro applications run as standard IIS web applications with dedicated application pools.</p>
+</div>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: November 11, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

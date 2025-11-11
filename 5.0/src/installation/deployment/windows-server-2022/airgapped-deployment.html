@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Airgapped Deployment | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Airgapped Deployment | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../../toc.html">
+      <meta name="docfx:tocrel" content="../../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/deployment/windows-server-2022/airgapped-deployment.md&amp;version=GBmain&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../../index.html">
+            <img id="logo" class="svg" src="../../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="airgapped-deployment">Airgapped Deployment</h1>
+
+<h2 id="introduction">Introduction</h2>
+<p>Deploy XMPro in restricted environments without internet access using offline installation packages. This approach is essential for high-security facilities, air-gapped networks, or environments with strict compliance requirements that prohibit external connectivity. All installation files are pre-downloaded and transferred to the isolated environment before deployment.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>For general installation concepts and detailed configuration options, see the <a href="index.html">main installation guide</a>.</p>
+</div>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>Each server in your airgapped deployment must meet the standard prerequisites. See <a href="index.html#prerequisites">Prerequisites</a> for complete requirements including:</p>
+<ul>
+<li>Windows Server 2022</li>
+<li>IIS with required features</li>
+<li>SQL Server 2022 with Mixed Mode authentication</li>
+<li>Certificates (signing and SSL)</li>
+<li>.NET Framework and .NET 8 Hosting Bundle</li>
+</ul>
+<h2 id="download-required-files">Download Required Files</h2>
+<p>From a machine with internet access, download these files:</p>
+<ol>
+<li><p><strong>Installer scripts:</strong></p>
+<ul>
+<li><code>{{INSTALL_URL_PREFIX}}{{VERSION}}/install-xmpro-application.ps1</code></li>
+<li><code>{{INSTALL_URL_PREFIX}}{{VERSION}}/manifest.json</code></li>
+<li>(Optional) <code>{{INSTALL_URL_PREFIX}}{{VERSION}}/install-xmpro-prerequisites.ps1</code></li>
+</ul>
+</li>
+<li><p><strong>Product packages:</strong></p>
+<ul>
+<li>Open <code>manifest.json</code> in a text editor</li>
+<li>Download all URLs listed in the manifest (includes SM.zip, AD.zip, DS.zip, StreamHost.zip, and other dependencies)</li>
+</ul>
+</li>
+</ol>
+<h3 id="optional-automated-download-script">Optional: Automated Download Script</h3>
+<p>Use this PowerShell script to automatically download all files from manifest.json:</p>
+<pre><code class="lang-powershell"># Download manifest.json first
+$manifestUrl = &quot;{{INSTALL_URL_PREFIX}}{{VERSION}}/manifest.json&quot;
+$outputDir = &quot;C:\XMPro-Install&quot;
+New-Item -Path $outputDir -ItemType Directory -Force | Out-Null
+
+curl.exe -L -o &quot;$outputDir\manifest.json&quot; $manifestUrl --silent --show-error
+
+# Read manifest and download all files
+$manifest = Get-Content &quot;$outputDir\manifest.json&quot; | ConvertFrom-Json
+foreach ($file in $manifest.PSObject.Properties) {
+    $url = $file.Value
+    $filename = Split-Path $url -Leaf
+    Write-Host &quot;Downloading $filename...&quot;
+    curl.exe -L -o &quot;$outputDir\$filename&quot; $url --silent --show-error
+}
+
+Write-Host &quot;All files downloaded to $outputDir&quot;
+</code></pre>
+<h2 id="installation-steps">Installation Steps</h2>
+<h3 id="step-1-prepare-installation-directory">Step 1: Prepare Installation Directory</h3>
+<p>On the Windows Server (offline), create a directory and place all files together:</p>
+<pre><code>C:\XMPro-Install\
+├── install-xmpro-application.ps1
+├── manifest.json
+├── SM-v{{VERSION}}.zip
+├── AD-v{{VERSION}}.zip
+├── DS-v{{VERSION}}.zip
+├── SM.Database.Console-v{{VERSION}}.exe
+├── AD.Database.Console-v{{VERSION}}.exe
+├── DS.Database.Console-v{{VERSION}}.exe
+└── StreamHost-win-x64-v{{VERSION}}.exe
+</code></pre>
+<h3 id="step-2-run-installer">Step 2: Run Installer</h3>
+<pre><code class="lang-cmd">cd C:\XMPro-Install
+powershell.exe -ExecutionPolicy Bypass -File install-xmpro-application.ps1
+</code></pre>
+<p><strong>What happens:</strong></p>
+<ul>
+<li>Installer detects local product zip files in same directory</li>
+<li>Skips download step (uses local files instead)</li>
+<li>Proceeds with normal installation process</li>
+<li>No internet connection required</li>
+</ul>
+<div class="TIP">
+<h5>Tip</h5>
+<p><strong>How it works:</strong> The installer looks for <code>manifest.json</code> and product files in the same directory as <code>install-xmpro-application.ps1</code>. If found, it uses them directly instead of downloading.</p>
+</div>
+<h2 id="next-steps">Next Steps</h2>
+<p>After completing your Airgapped deployment, proceed to:</p>
+<p><strong><a href="../../complete-installation/index.html">Post-deployment</a></strong> - Complete the setup and configuration of your XMPro environment.</p>
+<hr>
+<h2 id="need-help">Need Help?</h2>
+<ul>
+<li><a href="index.html">Main Installation Guide</a> - Standard deployment process</li>
+<li><a href="multi-server-deployment.html">Multi-Server Deployment</a> - Distributed deployments</li>
+<li><a href="troubleshooting.html">Troubleshooting Guide</a> - Fix common issues</li>
+</ul>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: November 11, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

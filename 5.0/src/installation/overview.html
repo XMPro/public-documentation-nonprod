@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Overview | XMPro </title>
+      <title>XMPro Deployment Overview | XMPro </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Overview | XMPro ">
+      <meta name="title" content="XMPro Deployment Overview | XMPro ">
       <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
       
       <link rel="icon" href="../../images/favicon.png">
@@ -85,39 +85,206 @@
         </div>
 
         <article data-uid="">
-<h1 id="overview">Overview</h1>
+<h1 id="xmpro-deployment-overview">XMPro Deployment Overview</h1>
 
-<p>XMPro Platform consists of three main components - App Designer, Data Stream Designer, and Subscription Manager - deployed using a modern container-based architecture (v4.5+) that supports Azure, AWS, and on-premises environments.</p>
-<p>This container-based approach provides:</p>
+<p>XMPro platform deployment follows a <strong>two-phase responsibility model</strong> designed to leverage customer infrastructure expertise while ensuring successful application deployment. This approach separates infrastructure provisioning (customer responsibility) from application deployment (XMPro/Implementation Partner responsibility), enabling efficient deployment across Azure cloud and Windows Server environments.</p>
+<p><strong>Key Benefits:</strong></p>
 <ul>
-<li><strong>Improved Scalability</strong>: Easy horizontal scaling of components</li>
-<li><strong>Better Resource Utilization</strong>: Optimized container sizing for each component</li>
-<li><strong>Simplified Updates</strong>: Streamlined deployment and update process</li>
-<li><strong>Enhanced Security</strong>: Container isolation and security boundaries</li>
-<li><strong>Cost Optimization</strong>: Pay only for resources you use</li>
+<li><strong>Clear Ownership:</strong> Defined responsibility boundaries prevent deployment delays</li>
+<li><strong>Customer Control:</strong> Infrastructure remains under customer governance and compliance</li>
+<li><strong>Expertise Alignment:</strong> Customers manage infrastructure, XMPro manages application deployment</li>
+<li><strong>Flexibility:</strong> Supports both Azure cloud and on-premises Windows Server deployments</li>
 </ul>
-<div class="NOTE">
-<h5>Note</h5>
-<p>For v4.4 deployments, see the ARM template documentation. The Terraform deployment covers XMPro v4.5 and later, featuring the new separate App Service Plans per product architecture.</p>
-</div>
-<p>The complete process - encompassing preparation, installation, setup, and loading templates - is depicted in the flowchart below.</p>
-<p><img src="../images/installation-overview.png" alt="Fig 1: The installation process overview"></p>
-<h2 id="artifacts">Artifacts</h2>
+<h2 id="deployment-responsibility-matrix">Deployment Responsibility Matrix</h2>
+<table>
+<thead>
+<tr>
+<th><strong>Customer Responsibilities</strong></th>
+<th><strong>XMPro / Implementation Partner Responsibilities</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Infrastructure Provisioning</strong> <br>Provision all required infrastructure resources including compute, database, storage, and networking components as specified in the respective deployment documentation (Azure Terraform, Windows Server 2022)</td>
+<td><strong>Application Deployment</strong> <br>Deploy XMPro applications using automated deployment scripts and configuration management</td>
+</tr>
+<tr>
+<td><strong>Platform Configuration</strong> <br>Configure compute resources, networking, security groups, and ensure all prerequisites are met</td>
+<td><strong>Service Integration</strong> <br>Configure inter-service communication, authentication flows, and application-specific settings</td>
+</tr>
+<tr>
+<td><strong>Database Setup</strong> <br>Install and configure SQL Server, create required databases with proper security and network access</td>
+<td><strong>Data Migration</strong> <br>Execute database schema migrations and populate configuration data during deployment</td>
+</tr>
+<tr>
+<td><strong>Security &amp; Compliance</strong> <br>Implement firewall rules, certificate management, and ensure compliance with organizational policies</td>
+<td><strong>Application Security</strong> <br>Configure application-level security, encryption, and authentication between XMPro services</td>
+</tr>
+<tr>
+<td><strong>Network &amp; Access Control</strong> <br>Configure network access, load balancing, and provide secure access for deployment team</td>
+<td><strong>Operational Validation</strong> <br>Perform end-to-end testing, health checks, and validate all XMPro functionality</td>
+</tr>
+<tr>
+<td><strong>Documentation &amp; Handoff</strong> <br>Provide access credentials, network topology, and infrastructure documentation to deployment team</td>
+<td><strong>Knowledge Transfer</strong> <br>Deliver operational documentation, training, and ongoing support for XMPro platform</td>
+</tr>
+</tbody>
+</table>
+<h2 id="two-phase-deployment-model">Two-Phase Deployment Model</h2>
+<p>XMPro deployments follow a <strong>two-phase approach</strong> that separates infrastructure provisioning from application deployment:</p>
+<h3 id="phase-1-infrastructure-provisioning">Phase 1: Infrastructure Provisioning</h3>
+<p><strong>Objective:</strong> Establish the foundational infrastructure required for XMPro applications</p>
+<p><strong>Customer Focus:</strong></p>
 <ul>
-<li><a href="mailto:support@xmpro.com?subject=Request-Installers">Request Installers</a></li>
-<li><a href="mailto:support@xmpro.com?subject=Request-Tiers-1-to-4">Request Tiers 1 - 4</a></li>
-<li><a href="complete-installation/install-connectors.html">Download and install Tier 5 &amp; 6 Files</a>
+<li>Provision resources or infrastructure</li>
+<li>Configure networking, security, and database systems</li>
+<li>Ensure all prerequisites are met per specifications</li>
+</ul>
+<p><strong>XMPro / Implementation Partner Focus:</strong></p>
 <ul>
-<li>Links for the larger AI &amp; ML Agents are on their individual documentation pages, as indicated <a href="https://xmpro.gitbook.io/integrations#tier-5">here</a>.</li>
+<li>Provide technical guidance and infrastructure requirements</li>
+<li>Validate that infrastructure meets application needs</li>
+<li>Approve readiness for application deployment</li>
 </ul>
-</li>
-<li><a href="https://github.com/XMPro/Blueprints-Accelerators-Patterns">Download Blueprints, Accelerators &amp; Patterns</a></li>
+<h3 id="phase-2-application-deployment">Phase 2: Application Deployment</h3>
+<p><strong>Objective:</strong> Deploy and configure XMPro applications on the prepared infrastructure</p>
+<p><strong>Customer Focus:</strong></p>
+<ul>
+<li>Provide access and coordinate with deployment team</li>
+<li>Review and approve go-live authorization</li>
 </ul>
+<p><strong>XMPro / Implementation Partner Focus:</strong></p>
+<ul>
+<li>Execute application deployment using automated scripts</li>
+<li>Configure inter-service communication and security</li>
+<li>Perform end-to-end testing and validation</li>
+<li>Deliver knowledge transfer and documentation</li>
+</ul>
+<h3 id="key-benefits-of-this-approach">Key Benefits of This Approach</h3>
+<ul>
+<li><strong>Clear Separation:</strong> Infrastructure and application concerns are handled independently</li>
+<li><strong>Expertise Alignment:</strong> Each party focuses on their area of expertise</li>
+<li><strong>Risk Mitigation:</strong> Issues are identified and resolved at the appropriate phase</li>
+<li><strong>Flexibility:</strong> Works with or without implementation partners</li>
+</ul>
+<h2 id="raci-matrix">RACI Matrix</h2>
+<table>
+<thead>
+<tr>
+<th>Activity</th>
+<th>Customer</th>
+<th>XMPro / Implementation Partner</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Infrastructure Provisioning</td>
+<td>A/R</td>
+<td>C</td>
+</tr>
+<tr>
+<td>Platform Configuration</td>
+<td>A/R</td>
+<td>C</td>
+</tr>
+<tr>
+<td>Database Setup</td>
+<td>A/R</td>
+<td>C</td>
+</tr>
+<tr>
+<td>Security &amp; Compliance</td>
+<td>A/R</td>
+<td>C</td>
+</tr>
+<tr>
+<td>Network &amp; Access Control</td>
+<td>A/R</td>
+<td>C</td>
+</tr>
+<tr>
+<td>Documentation &amp; Handoff</td>
+<td>A/R</td>
+<td>I</td>
+</tr>
+<tr>
+<td>Application Deployment</td>
+<td>C</td>
+<td>A/R</td>
+</tr>
+<tr>
+<td>Service Integration</td>
+<td>C</td>
+<td>A/R</td>
+</tr>
+<tr>
+<td>Data Migration</td>
+<td>C</td>
+<td>A/R</td>
+</tr>
+<tr>
+<td>Application Security</td>
+<td>C</td>
+<td>A/R</td>
+</tr>
+<tr>
+<td>Operational Validation</td>
+<td>C</td>
+<td>A/R</td>
+</tr>
+<tr>
+<td>Knowledge Transfer</td>
+<td>I</td>
+<td>A/R</td>
+</tr>
+</tbody>
+</table>
+<p><strong>RACI Legend:</strong></p>
+<ul>
+<li><strong>R</strong> - Responsible (performs the work)</li>
+<li><strong>A</strong> - Accountable (ensures completion and quality)</li>
+<li><strong>C</strong> - Consulted (provides input and expertise)</li>
+<li><strong>I</strong> - Informed (kept updated on progress)</li>
+</ul>
+<h2 id="documentation-requirements">Documentation Requirements</h2>
+<h3 id="customer-must-provide">Customer Must Provide</h3>
+<p><strong>Infrastructure Documentation:</strong></p>
+<ul>
+<li>Network architecture and security configurations</li>
+<li>Access credentials and administrative permissions</li>
+<li>Environment specifications and resource details</li>
+<li>Compliance and security policy requirements</li>
+</ul>
+<h3 id="xmpro--implementation-partner-will-provide">XMPro / Implementation Partner Will Provide</h3>
+<p><strong>Deployment Documentation:</strong></p>
+<ul>
+<li>Installation procedures and validation steps</li>
+<li>Configuration guides and operational manuals</li>
+<li>Architecture diagrams and technical specifications</li>
+<li>Troubleshooting guides and ongoing support documentation</li>
+</ul>
+<h2 id="deployment-process-overview">Deployment Process Overview</h2>
+<h3 id="infrastructure-deployment">Infrastructure Deployment</h3>
+<p><a href="deployment/index.html">Deploy XMPro</a> - Infrastructure provisioning and platform deployment using:</p>
+<ul>
+<li><strong>Azure Terraform Deployment</strong> - Modern container-based deployment for Azure environments</li>
+<li><strong>Windows Installer</strong> - Native IIS deployment for on-premises Windows Server environments</li>
+<li><strong>Legacy Options</strong> - ARM templates for v4.4 and earlier versions</li>
+</ul>
+<h3 id="post-deployment-configuration">Post-Deployment Configuration</h3>
+<p><a href="complete-installation/index.html">Post-deployment</a> - Complete the setup with:</p>
+<ul>
+<li><strong>Tenant Configuration</strong> - Set up your first tenant company</li>
+<li><strong>Stream Host Deployment</strong> - Add additional processing capacity as needed</li>
+<li><strong>Agents &amp; Connectors</strong> - Upload and configure integration components</li>
+</ul>
+<hr>
+<p>This responsibility model ensures successful XMPro deployments while maintaining clear boundaries, leveraging respective expertise, and enabling scalable deployment processes across diverse customer environments.</p>
 
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: November 07, 2025</em></small></p>
+    <p><small><em>Last modified: November 11, 2025</em></small></p>
   </div>
 </article>
 
