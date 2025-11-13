@@ -13607,6 +13607,36 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "src/images/how-tos/data-streams/recurrence-config.PNG",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/how-tos/data-streams/recurrence-config.PNG"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/images/how-tos/data-streams/recurrence-new-stream.PNG",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/how-tos/data-streams/recurrence-new-stream.PNG"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/images/how-tos/data-streams/recurrence-setup-existing.PNG",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/how-tos/data-streams/recurrence-setup-existing.PNG"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "src/images/iis-manager.png",
       "output": {
         "resource": {
@@ -20291,86 +20321,6 @@
       "output": {
         "resource": {
           "relative_path": "src/images/recommendations-manage-rules-view-timeline-3.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "src/images/recurrent-1.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/images/recurrent-1.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "src/images/recurrent-2.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/images/recurrent-2.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "src/images/recurrent-3.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/images/recurrent-3.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "src/images/recurrent-4.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/images/recurrent-4.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "src/images/recurrent-5.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/images/recurrent-5.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "src/images/recurrent-6.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/images/recurrent-6.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "src/images/recurrent-7.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/images/recurrent-7.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "src/images/recurrent-8.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/images/recurrent-8.png"
         }
       },
       "version": ""

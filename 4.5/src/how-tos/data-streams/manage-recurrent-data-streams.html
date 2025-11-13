@@ -87,10 +87,10 @@
         <article data-uid="">
 <h1 id="manage-recurrent-data-streams">Manage Recurrent Data Streams</h1>
 
-<p>Data Streams of the Streaming type will run polling Agents at a set interval, for instance, every 10 seconds, whereas Recurrent Data Streams run on a customizable schedule, for instance, once a day at 12am. This may be useful if you only want to read data or perform an action with the data at certain points during the day, or if you want to perform actions on the data once a week, month or year.</p>
+<p>Data Streams of the Streaming type will run polling Agents at a set interval, for instance, every 10 seconds, whereas Recurrent Data Streams run on a customizable schedule, for instance, once a day at 12 AM. This may be useful if you only want to read data or perform an action with the data at certain points during the day, or if you want to perform actions on the data once a week, month or year.</p>
 <div class="NOTE">
 <h5>Note</h5>
-<p>It is recommended that you read the article listed below to improve your understanding of Data Streams.</p>
+<p>It is recommended that you read the articles listed below to improve your understanding of Data Streams.</p>
 <ul>
 <li><a href="../../concepts/data-stream/index.html">Data Stream</a></li>
 <li><a href="manage-data-streams.html">How to Manage Data Streams</a></li>
@@ -100,17 +100,17 @@
 <p>The streaming type of the Data Stream can be configured at the time of the Data Stream's creation.</p>
 <ol>
 <li>Click on <em>add Data Stream</em> from the left-hand menu.</li>
-<li>Change the type to be recurring.</li>
+<li>Change the Type to be Recurring.</li>
 <li>Click on <em>Save</em>.</li>
 </ol>
-<p><img src="../../images/recurrent-1.png" alt="Create Recurrent Data Stream"></p>
+<p><img src="../../images/how-tos/data-streams/recurrence-new-stream.PNG" alt="Create Recurrent Data Stream"></p>
 <p>To change an existing Data Stream to recurring, go into the <em>properties</em> menu and change the type to be recurring.</p>
 <ol>
 <li>Click on <em>Properties</em>.</li>
-<li>Change the type to be recurring.</li>
+<li>Change the Type to be Recurring.</li>
 <li>Click on <em>Save</em>.</li>
 </ol>
-<p><img src="../../images/recurrent-2.png" alt="Change to Recurrent Data Stream"></p>
+<p><img src="../../images/how-tos/data-streams/recurrence-setup-existing.PNG" alt="Change to Recurrent Data Stream"></p>
 <h2 id="configuring-recurrence-for-agents">Configuring Recurrence for Agents</h2>
 <p>When a Data Stream is set to be recurring, opening the configuration menu for listeners or context providers will allow you to make changes to the schedule for when they occur.</p>
 <p>To configure recurrence for Agents, follow the steps below:</p>
@@ -119,21 +119,60 @@
 <li>Click on Configure for an Agent. Instead of polling intervals, the configuration menu will ask you to configure recurrence.</li>
 <li>Configure the schedule for the Agent.</li>
 </ol>
-<p><img src="../../images/recurrent-3.png" alt="Configure Agent Recurrence"></p>
-<p><em>Start Repeat</em> - set the time the Agent can start listening for data.</p>
-<p><img src="../../images/recurrent-4.png" alt="Start Repeat Configuration"></p>
-<p><em>Repeat</em> - How often the action will be repeated. For example, daily.</p>
-<p><img src="../../images/recurrent-5.png" alt="Repeat Configuration"></p>
-<p><em>Repeat Every, Repeat On</em>, and <em>Repeat At</em> - How many times it will be repeated. For example, every day, every second day, or on certain weekdays, and at what time.</p>
-<p><img src="../../images/recurrent-6.png" alt="Repeat Every Configuration"></p>
-<p><img src="../../images/recurrent-7.png" alt="Repeat On Configuration"></p>
-<p><em>End repeat</em> - Specifies when to end the recurrence.</p>
-<p><img src="../../images/recurrent-8.png" alt="End Repeat Configuration"></p>
+<p><img src="../../images/how-tos/data-streams/recurrence-config.PNG" alt="Configure Agent Recurrence"></p>
+<h3 id="recurrence">Recurrence</h3>
+<p>The following table describes the Recurrence configuration properties:</p>
+<table>
+<colgroup>
+<col style="width: 15%">
+<col style="width: 85%">
+</colgroup>
+<thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Start Repeat</strong></td>
+<td>Specify whether the Agent's schedule should start <strong>Immediately</strong> when the Data Stream is published or <strong>On</strong> a configured date and time. <br><br> Note: If the <strong>Start Repeat (On)</strong> is already in the past at the time the Data Stream is published, the Agent waits to execute on the next scheduled <strong>Repeat</strong>.</td>
+</tr>
+<tr>
+<td><strong>Repeat</strong></td>
+<td>The schedule's unit of time. The available options are: <strong>Seconds</strong>, <strong>Minutes</strong>, <strong>Hourly</strong>, <strong>Daily</strong>, <strong>Weekly</strong>, <strong>Monthly</strong>, or <strong>Yearly</strong>.</td>
+</tr>
+<tr>
+<td><strong>Repeat Every</strong></td>
+<td>How frequently the repeat interval occurs. For example, every 30 seconds, every 2 weeks, etc.</td>
+</tr>
+<tr>
+<td><strong>Repeat On</strong></td>
+<td>Specify when the Repeat occurs (applies to <strong>Weekly</strong>, <strong>Monthly</strong>, and <strong>Yearly</strong>):<br>• For <strong>Weekly</strong>, select one or more days of the week (e.g., Monday, Wednesday, Friday).<br>• For <strong>Monthly</strong>, choose the day of the month (1-31).<br>• For <strong>Yearly</strong>, select the month and day.</td>
+</tr>
+<tr>
+<td><strong>Repeat At</strong></td>
+<td>The time of day that the Agent executes (applies to <strong>Daily</strong>, <strong>Weekly</strong>, <strong>Monthly</strong>, and <strong>Yearly</strong>).</td>
+</tr>
+<tr>
+<td><strong>End Repeat</strong></td>
+<td>Choose for the recurrence to <strong>Never</strong> end, end <strong>On</strong> the specified date, or end <strong>After</strong> the specified number of occurrences. <br><br> Note: If the Data Stream is published and the <strong>End Repeat</strong> conditions are already met (the <strong>On</strong> date is in the past, or the <strong>Start Repeat On</strong> date is in the past and calculated occurrences up to the current date have reached the set <strong>After</strong> value), the Agent will not execute.</td>
+</tr>
+</tbody>
+</table>
+<div class="WARNING">
+<h5>Warning</h5>
+<p><strong>Execution Behavior Examples:</strong></p>
+<p>We always execute first on the configured <strong>Start Repeat</strong>. When <strong>Start Repeat</strong> and the scheduled <strong>Repeat</strong> fall on the same day, the Agent executes at the <strong>Start Repeat</strong> time but skips the <strong>Repeat At</strong> time to avoid duplicate execution on the same day. The regular schedule resumes on the next occurrence on a different day.</p>
+<p><strong>Example 1</strong>: If you configure <strong>Start Repeat On</strong> 15 January at 9:00 AM, <strong>Repeat Daily</strong> at 2:00 PM, and publish the Data Stream on 15 January at 8:00 AM, the Agent executes on 15 January at 9:00 AM, skips the 2:00 PM execution that same day, and then resumes the regular daily schedule at 2:00 PM on 16 January.</p>
+<p><strong>Example 2</strong>: If the <strong>Start Repeat</strong> is on Monday, and the <strong>Repeat</strong> is Weekly on Wednesday and Friday, publishing the Data Stream on a Sunday first executes on Monday, and proceed with the scheduled repeats on Wednesday and Friday.</p>
+<p><strong>Recommendation</strong>: To ensure predictable behavior, set the Start <strong>Repeat On</strong> date and time to match the next scheduled <strong>Repeat</strong> when using Daily or less frequent intervals.</p>
+</div>
 
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: November 12, 2025</em></small></p>
+    <p><small><em>Last modified: November 13, 2025</em></small></p>
   </div>
 </article>
 
