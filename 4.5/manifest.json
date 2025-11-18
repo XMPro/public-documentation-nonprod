@@ -18257,56 +18257,6 @@
     },
     {
       "type": "Resource",
-      "source_relative_path": "src/images/installation-agents-and-connectors.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/images/installation-agents-and-connectors.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "src/images/installation-complete-installation.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/images/installation-complete-installation.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "src/images/installation-install-xmpro.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/images/installation-install-xmpro.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "src/images/installation-overview.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/images/installation-overview.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "src/images/installation-preparation.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/images/installation-preparation.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
       "source_relative_path": "src/images/installation/windows-server-2022-1.png",
       "output": {
         "resource": {
@@ -25807,10 +25757,30 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "src/images/xmpro-multi-server-deployment-architecture.jpg",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/xmpro-multi-server-deployment-architecture.jpg"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "src/images/xmpro-package-manager-win-store.png",
       "output": {
         "resource": {
           "relative_path": "src/images/xmpro-package-manager-win-store.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/images/xmpro-single-server-deployment-architecture.jpg",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/xmpro-single-server-deployment-architecture.jpg"
         }
       },
       "version": ""
@@ -25977,10 +25947,40 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "src/installation/install.md",
+      "source_relative_path": "src/installation/deployment/windows-server-2022/airgapped-deployment.md",
       "output": {
         ".html": {
-          "relative_path": "src/installation/install.html"
+          "relative_path": "src/installation/deployment/windows-server-2022/airgapped-deployment.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "src/installation/deployment/windows-server-2022/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/installation/deployment/windows-server-2022/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "src/installation/deployment/windows-server-2022/multi-server-deployment.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/installation/deployment/windows-server-2022/multi-server-deployment.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "src/installation/deployment/windows-server-2022/troubleshooting.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/installation/deployment/windows-server-2022/troubleshooting.html"
         }
       },
       "version": ""

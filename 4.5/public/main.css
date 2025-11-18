@@ -661,22 +661,86 @@ body.has-nonprod-banner {
     padding: 8px 15px;
     min-height: 36px;
   }
-  
+
   .nonprod-banner-text {
     font-size: 0.813rem;
     gap: 8px;
   }
-  
+
   .nonprod-banner-message {
     display: block;
     width: 100%;
     white-space: normal;
     text-overflow: unset;
   }
-  
+
   body.has-nonprod-banner {
     padding-top: 44px;
   }
+}
+
+/* Table column width consistency */
+article table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+/* Software Requirements table - wider Details column */
+article h3:has(+ table) + table th:nth-child(1),
+article h3:has(+ table) + table td:nth-child(1) {
+  width: 20%;
+}
+
+article h3:has(+ table) + table th:nth-child(2),
+article h3:has(+ table) + table td:nth-child(2) {
+  width: 15%;
+}
+
+article h3:has(+ table) + table th:nth-child(3),
+article h3:has(+ table) + table td:nth-child(3) {
+  width: 65%;
+}
+
+/* Configuration tables - equal column widths */
+article h4 + table th:nth-child(1),
+article h4 + table td:nth-child(1),
+article h5 + table th:nth-child(1),
+article h5 + table td:nth-child(1),
+article h4 + blockquote + table th:nth-child(1),
+article h4 + blockquote + table td:nth-child(1),
+article h5 + blockquote + table th:nth-child(1),
+article h5 + blockquote + table td:nth-child(1) {
+  width: 25%;
+}
+
+article h4 + table th:nth-child(2),
+article h4 + table td:nth-child(2),
+article h5 + table th:nth-child(2),
+article h5 + table td:nth-child(2),
+article h4 + blockquote + table th:nth-child(2),
+article h4 + blockquote + table td:nth-child(2),
+article h5 + blockquote + table th:nth-child(2),
+article h5 + blockquote + table td:nth-child(2) {
+  width: 50%;
+}
+
+article h4 + table th:nth-child(3),
+article h4 + table td:nth-child(3),
+article h5 + table th:nth-child(3),
+article h5 + table td:nth-child(3),
+article h4 + blockquote + table th:nth-child(3),
+article h4 + blockquote + table td:nth-child(3),
+article h5 + blockquote + table th:nth-child(3),
+article h5 + blockquote + table td:nth-child(3) {
+  width: 25%;
+}
+
+/* Ensure table cells wrap content properly */
+article table td,
+article table th {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
 }
 
 
