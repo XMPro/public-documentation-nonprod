@@ -92,37 +92,158 @@
 <div class="WARNING">
 <h5>Warning</h5>
 <p>Security update: Mitigate high-severity vulnerabilities by upgrading all products to v4.5.1+.</p>
+<p>Breaking change: v4.5.4 contains a breaking change to the Azure Terraform deployment.</p>
 </div>
 <h2 id="known-issues">Known Issues</h2>
 <table>
-<thead>
-<tr>
-<th>Product</th>
-<th>Description</th>
-<th>Reported</th>
-<th>Fixed</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>App Designer</td>
-<td>Bug 20828: Assigning or Sharing a recommendation alert results in an error message when using the Alert Action Block</td>
-<td>v4.5.0</td>
-<td>v4.5.3</td>
-</tr>
-<tr>
-<td>App Designer</td>
-<td>Bug 21266: Data Grid is no longer converting datetimes from UTC time to local</td>
-<td>v4.5.0</td>
-<td>v4.5.3</td>
-</tr>
-<tr>
-<td>Data Stream Designer</td>
-<td>Team Support 16609: Removing 'View Collection' right causes errors, but including it exposes Collection secret</td>
-<td>v4.5.1</td>
-<td>v4.5.3</td>
-</tr>
-</tbody>
+  <thead>
+    <tr>
+      <th width="120">Product</th>
+      <th>Description</th>
+      <th width="95">Reported</th>
+      <th width="95">Fixed</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>App Designer</td>
+      <td>Team Support 15739: Alert Action button not working as expected when an Action is also defined</td>
+      <td>v4.4.16</td>
+      <td>v4.5.4</td>
+    </tr>
+    <tr>
+      <td>App Designer</td>
+      <td>Bug 20828: Assigning or Sharing a recommendation alert results in an error message when using the Alert Action Block</td>
+      <td>v4.5.0</td>
+      <td>v4.5.3</td>
+    </tr>
+    <tr>
+      <td>App Designer</td>
+      <td>Bug 21266: Data Grid is no longer converting datetimes from UTC time to local</td>
+      <td>v4.5.0</td>
+      <td>v4.5.3</td>
+    </tr>
+    <tr>
+      <td>App Designer</td>
+      <td>Team Support 16872: Data Grid header filter does not apply local timezone formatting like it does to the columns data</td>
+      <td>v4.4.22</td>
+      <td>v4.5.4</td>
+    </tr>
+    <tr>
+      <td>App Designer</td>
+      <td>Team Support 16939: Recommendation Version misleads to a different version on Title Modification</td>
+      <td>v4.5.3</td>
+      <td>v4.5.4</td>
+    </tr>
+    <tr>
+      <td>Data Stream Designer</td>
+      <td>Team Support 16609: Removing 'View Collection' right causes errors, but including it exposes Collection secret</td>
+      <td>v4.5.1</td>
+      <td>v4.5.3</td>
+    </tr>
+    <tr>
+      <td>Package Manager</td>
+      <td>Team Support 15214: Sort Index does not save on Sub Groups</td>
+      <td>v4.4.19</td>
+      <td>v4.5.4</td>
+    </tr>
+    <tr>
+      <td>Stream Host</td>
+      <td>Team Support 16822: Stream Host SignalR connection interruptions require manual intervention to restore connectivity</td>
+      <td>v4.4.22</td>
+      <td>v4.5.4</td>
+    </tr>
+    <tr>
+      <td>Stream Host</td>
+      <td>Team Support 16827: Data Stream Agent continues polling after unpublish with "Error Polling - No Agent instance yet" errors</td>
+      <td>v4.4.22</td>
+      <td>v4.5.4</td>
+    </tr>
+  </tbody>
+</table>
+<h2 id="v454">v4.5.4</h2>
+<p>Date Released: 26 Nov 2025</p>
+<table>
+  <thead>
+    <tr>
+      <th width="120">Change Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Security</td>
+      <td>
+        <p><b>Product security and stability</b>: We've mitigated security vulnerabilities and implemented comprehensive security hardening across the platform:</p>
+        <ul>
+          <li>Removed Microsoft.VisualStudio.Web.CodeGeneration.Design from App Designer for <a href="https://www.cve.org/CVERecord?id=CVE-2025-55247">CVE-2025-55247</a>.</li>
+          <li>Upgraded Node.js from 6.17.1 to 22.11.0 and resolved transitive dependency vulnerabilities (tough-cookie, form-data, unset-value, braces, jsrsasign) in Subscription Manager to remediate 1 Very High and 4 High severity Veracode vulnerabilities caused by an outdated package-lock.json file generated with npm 3.10.10.</li>
+          <li><b>Limit Data Access</b>: Implemented the Principle of Least Privilege across App Designer and Data Stream Designer by adding endpoint-level authorization to affected controllers.</li>
+          <li><b>Input Validation</b>: Implemented comprehensive input validation and sanitization using FluentValidation to affected endpoints in App Designer and Data Stream Designer.</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>Feature</td>
+      <td><b><a href="../installation/deployment/windows-server-2022/index.html">Windows Server 2022 deployment capabilities</a></b>: Introduced a one-click Windows installer that automates the complete deployment of XMPro platform components (Subscription Manager, App Designer, Data Stream Designer, and Stream Host) in under 30 minutes, including all prerequisites, database migrations, IIS configuration, and SSL certificate setup. The installer supports multi-server deployments and air-gapped environments, with comprehensive validation and automated rollback capabilities.</td>
+    </tr>
+    <tr>
+      <td>Deployment</td>
+      <td>
+        <p><b>Azure Terraform Deployment Enhancements</b> Providing enterprise-grade security, flexibility, and compliance:</p>
+        <ul>
+          <li><b>Azure AD Authentication for SQL Server</b>: Enables passwordless authentication using managed identities, improving security posture and eliminating the need to manage SQL passwords.</li>
+          <li><b>Custom Database Naming</b>: Supports custom database names throughout the deployment stack (including AAD SQL users and licenses containers), enabling compliance with enterprise naming conventions.</li>
+          <li><b>Private Endpoint Support</b>: Comprehensive private endpoint configuration for all XMPro App Services (AD, DS, SM, AI) with automatic DNS integration, enabling secure private network access for production deployments.</li>
+          <li><b>Configurable RBAC Authorization</b>: Added support for both Azure RBAC and legacy access policies for Key Vaults, providing deployment flexibility for different enterprise security models.</li>
+          <li><b>Removal of Hardcoded Passwords</b>: Eliminated all hardcoded passwords from Terraform modules to meet security compliance requirements.<br><span style="color:red;">Breaking change - Passwords must now be explicitly provided via tfvars files.</span></li>
+          <li><b>Redis SignalR Configuration</b>: Added Redis connection string configuration to Subscription Manager prep container, enabling proper SignalR Redis backplane for scaled deployments.</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>Enhancement</td>
+      <td><b>Deployment Manager API</b>: New zip-based import and export endpoints allow solution developers to handle their own repository authentication without being limited to Git. Existing Git-based endpoints have been enhanced to support nested repository URLs for Enterprise GitLab compatibility.</td>
+    </tr>
+    <tr>
+      <td>Enhancement</td>
+      <td>Team Support 16908: <b>Data Grid Override Values from Data Source</b>: The Data Grid now supports override values from data sources in "Batch with External Save" mode. You can now configure override values (such as BusinessRoleId) that are automatically included in insert and update payloads, ensuring data integrity when saving grid data externally.</td>
+    </tr>
+    <tr>
+      <td>Enhancement</td>
+      <td>Team Support 17151: <b>Recurrence Schedule Handling After Stream Host Restart</b>: When a Stream Host restarts, Data Streams wait for their next scheduled occurrence rather than executing immediately, ensuring predictable execution patterns and not overloading the Stream Host. Execution behavior examples were added to the <a href="/src/how-tos/data-streams/manage-recurrent-data-streams.html">Recurrent Data Streams</a> article.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td><b>Package Manager</b>:
+        <ul>
+          <li><b><a href="/src/how-tos/agents/packaging-agents.html#include-multilingual-support">Multilingual Support</a></b>: <i>Dropdown options and pre-filled field values are not translated to your selected language, appearing only in English regardless of your preferred language.</i><br>Dropdown options and pre-filled field values are now included in the translation system using TranslationMap properties.</li>
+          <li><b>Application Stability</b>: <i>You experience unexpected crashes when deleting grid controls or creating new connector packages, causing loss of work.</i><br>Package Manager now gracefully handles errors without terminating, protecting your work and providing diagnostic information for troubleshooting.</li>
+          <li>Team Support 15214: <b>Sub-Group Sort Index Persistence</b>: <i>When you reorder sub-groups in settings, the ordering reverts to the original configuration after saving, preventing you from organizing settings in your preferred logical order.</i><br>Sub-group sort index values now persist correctly after saving.</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td>Team Support 15739: <b>Alert Action Button Execution Order</b>: <i>When you configure an Alert Action button under the Recommendations block with both a dialog action (like "Assign This Recommendation Alert") and a custom action (like navigating to a page or updating a data source), the custom action executes before the dialog opens, making the Alert Action control unusable.</i><br>The operation order has been corrected so that the dialog now opens first, allowing you to complete the dialog interaction before any custom actions execute.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td>Team Support 16822: <b>Stream Host SignalR Connection Stability</b>: <i>When network issues occur, you experience SignalR connection interruptions requiring manual intervention to restore connectivity to the Data Stream Designer.</i><br>SignalR connections now automatically reconnect when network interruptions occur using stateful reconnection, eliminating the need for manual intervention and maintaining your connection to the Data Stream Designer during temporary network issues.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td>Team Support 16827: <b>Data Stream Agent Polling Error After Unpublish</b>: <i>When you unpublish a recurring Data Stream that contains polling agents (such as SQL Context Provider), the Stream Host continues attempting to poll and reports "Error Polling - No Agent instance yet" errors. This creates confusion and unnecessary error logs in your Stream Host.</i><br>The Stream Host now terminates all polling operations when a Data Stream is unpublished, ensuring that agent instances are properly cleaned up and no further polling errors occur after unpublishing.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td>Team Support 16872: <b>Data Grid Header Filter Timezone Formatting</b>: <i>Date filters in Data Grid headers display dates in UTC format while the grid columns show dates in your local timezone, with inaccurate results.</i><br>Date filters in Data Grid headers now apply the same local timezone formatting as the grid columns, ensuring consistency between what you see in the cells and what you can filter by.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td>Team Support 16939: <b>Recommendation Version Navigation on Title Modification</b>: <i>When you modify a recommendation title and click Save, the application unexpectedly navigates you to a different recommendation version instead of staying on the current version, causing confusion and making it difficult to verify your changes.</i><br>The Save operation now maintains your current recommendation version context, allowing you to verify your updates without losing your place in the workflow.</td>
+    </tr>
+  </tbody>
 </table>
 <h2 id="v453">v4.5.3</h2>
 <p>Date Released: 29 Sep 2025</p>
@@ -136,7 +257,7 @@
   <tbody>
     <tr>
       <td>Security</td>
-      <td><b>Enhanced Security Framework: </b>Significant security hardening across the XMPro platform, including protection against clickjacking and reverse tabnabbing attacks, improved error handling and input validation, and resolution of multiple medium-severity vulnerabilities in core dependencies. We've implemented comprehensive security header enforcement across all API controllers in both Application Designer (AD) and Data Stream (DS) components, upgraded JavaScript libraries to address known vulnerabilities, and enhanced cookie security attributes. Additional improvements include container-level security updates and strengthened endpoint protection to prevent unauthorized resource enumeration.</td>
+      <td><b>Enhanced Security Framework: </b>Significant security hardening across the XMPro platform, including protection against clickjacking and reverse tabnabbing attacks, improved error handling and input validation, and resolution of multiple medium-severity vulnerabilities in core dependencies. We've implemented comprehensive security header enforcement across all API controllers in the Application Designer (AD), Data Stream Designer (DS), and Subscription Manager (SM) components, upgraded JavaScript libraries to address known vulnerabilities, and enhanced cookie security attributes. Additional improvements include container-level security updates and strengthened endpoint protection to prevent unauthorized resource enumeration.</td>
     </tr>
     <tr>
       <td>Enhancement</td>
@@ -149,18 +270,15 @@
     </tr>
     <tr>
       <td>Fix</td>
-      <td>Bug 20828: Assigning or Sharing a recommendation alert results in an error message when using the Alert Action Block.<br>
-      Symptom: User encounters an error "Unable to assign Recommendation" when sharing an alert.</td>
+      <td>Bug 20828: <b>Assigning or Sharing a recommendation alert results in an error message when using the Alert Action Block</b>: <i>When you assign or share a recommendation alert using the Alert Action Block, you encounter an error "Unable to assign Recommendation" that prevents the operation from completing.</i></td>
     </tr>
     <tr>
       <td>Fix</td>
-      <td>Bug 21266: Data Grid is no longer converting datetimes from UTC time to local.<br>
-      Symptom: User observed date values displayed in a grid where the same as they were stored - not converted to their local time zone.</td>
+      <td>Bug 21266: <b>Data Grid is no longer converting datetimes from UTC time to local</b>: <i>Date values displayed in Data Grid are shown in UTC time instead of being converted to your local timezone, making it difficult to interpret timestamps correctly.</i></td>
     </tr>
     <tr>
       <td>Fix</td>
-      <td>Team Support 16609: Removing 'View Collection' right causes errors, but including it exposes Collection secret.<br>
-      Symptom: When removing "View Collection" from a user who should have read-only access to some data streams (to hide the Collection secret), they encounter an error "Unable to fetch Devices" when viewing a category that contains published data streams.</td>
+      <td>Team Support 16609: <b>Removing 'View Collection' right causes errors, but including it exposes Collection secret</b>: <i>When you remove "View Collection" permission from a user who should have read-only access to some data streams (to hide the Collection secret), they encounter an error "Unable to fetch Devices" when viewing a category that contains published data streams.</i></td>
     </tr>
   </tbody>
 </table>
@@ -384,7 +502,7 @@
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: November 18, 2025</em></small></p>
+    <p><small><em>Last modified: November 27, 2025</em></small></p>
   </div>
 </article>
 
