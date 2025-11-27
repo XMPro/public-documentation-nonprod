@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/release-notes/index.md&amp;version=GBrelease-4.5.x&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/release-notes/index.md&amp;version=GBrelease-4.5.4&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -203,7 +203,13 @@
     </tr>
     <tr>
       <td>Enhancement</td>
-      <td><b>Deployment Manager API</b>: New zip-based import and export endpoints allow solution developers to handle their own repository authentication without being limited to Git. Existing Git-based endpoints have been enhanced to support nested repository URLs for Enterprise GitLab compatibility.</td>
+      <td>
+        <b>Deployment At Scale - Enhanced Authentication:</b>
+        <ul>
+          <li>New zip-based import and export endpoints allow solution developers to handle their own repository authentication without being limited to Git.</li>
+          <li>Existing Git-based endpoints have been enhanced to support nested repository URLs for Enterprise GitLab compatibility.</li>
+        </ul>
+      </td>
     </tr>
     <tr>
       <td>Enhancement</td>
@@ -211,13 +217,13 @@
     </tr>
     <tr>
       <td>Enhancement</td>
-      <td>Team Support 17151: <b>Recurrence Schedule Handling After Stream Host Restart</b>: When a Stream Host restarts, Data Streams wait for their next scheduled occurrence rather than executing immediately, ensuring predictable execution patterns and not overloading the Stream Host. Execution behavior examples were added to the <a href="/src/how-tos/data-streams/manage-recurrent-data-streams.html">Recurrent Data Streams</a> article.</td>
+      <td>Team Support 17151: <b>Recurrence Schedule Handling After Stream Host Restart</b>: When a Stream Host restarts, Data Streams wait for their next scheduled occurrence rather than executing immediately, ensuring predictable execution patterns and not overloading the Stream Host. Execution behavior examples were added to the <a href="../how-tos/data-streams/manage-recurrent-data-streams.html">Recurrent Data Streams</a> article.</td>
     </tr>
     <tr>
       <td>Fix</td>
       <td><b>Package Manager</b>:
         <ul>
-          <li><b><a href="/src/how-tos/agents/packaging-agents.html#include-multilingual-support">Multilingual Support</a></b>: <i>Dropdown options and pre-filled field values are not translated to your selected language, appearing only in English regardless of your preferred language.</i><br>Dropdown options and pre-filled field values are now included in the translation system using TranslationMap properties.</li>
+          <li><b><a href="../how-tos/agents/packaging-agents.html#include-multilingual-support">Multilingual Support</a></b>: <i>Dropdown options and pre-filled field values are not translated to your selected language, appearing only in English regardless of your preferred language.</i><br>Dropdown options and pre-filled field values are now included in the translation system using TranslationMap properties.</li>
           <li><b>Application Stability</b>: <i>You experience unexpected crashes when deleting grid controls or creating new connector packages, causing loss of work.</i><br>Package Manager now gracefully handles errors without terminating, protecting your work and providing diagnostic information for troubleshooting.</li>
           <li>Team Support 15214: <b>Sub-Group Sort Index Persistence</b>: <i>When you reorder sub-groups in settings, the ordering reverts to the original configuration after saving, preventing you from organizing settings in your preferred logical order.</i><br>Sub-group sort index values now persist correctly after saving.</li>
         </ul>
