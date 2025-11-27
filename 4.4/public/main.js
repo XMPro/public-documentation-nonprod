@@ -169,9 +169,6 @@ export default {
       }
     });
 
-    // Variable replacement functionality
-    loadAndReplaceVariables();
-
     // Load Fastbots AI Assistant
     const fastbotsScript = document.createElement('script');
     fastbotsScript.defer = true;
