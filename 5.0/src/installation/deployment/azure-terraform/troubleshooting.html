@@ -93,7 +93,7 @@
 <p><strong>Most issues are solved by:</strong></p>
 <ul>
 <li>Running <code>az login</code> to refresh your Azure authentication</li>
-<li>Making sure you're in the right directory (<code>terraform-xmpro-azure/examples/basic</code>)</li>
+<li>Making sure you're in the right directory (<code>terraform-xmpro-azure/examples/layered/infra</code> or <code>.../app</code>)</li>
 <li>Using a different Azure region if you get &quot;quota exceeded&quot; errors</li>
 </ul>
 </div>
@@ -172,7 +172,48 @@ Look in your <code>terraform.tfvars</code> file for:</p>
 <li><code>site_admin_password</code></li>
 <li><code>company_admin_password</code></li>
 </ul>
-<h3 id="8-applications-wont-start-app-service-issues">8. Applications won't start (App Service issues)</h3>
+<h3 id="8-application-layer-errors-step-5---terraform-planapply-failures">8. Application layer errors (Step 5 - terraform plan/apply failures)</h3>
+<p><strong>Problem:</strong> Errors during application deployment, often related to infrastructure references.</p>
+<p><strong>Common errors and solutions:</strong></p>
+<p><strong>&quot;Resource group not found&quot;</strong></p>
+<pre><code class="lang-bash"># Problem 1: resource_group_name in terraform.tfvars doesn't match infrastructure output
+# Solution: Get the correct name from infrastructure layer:
+cd ../infra
+terraform output resource_group_name
+# Copy the exact output to your app/terraform.tfvars
+
+# Problem 2: You're in a different Azure subscription
+# Solution: Check which subscription you're using:
+az account show
+# If wrong, switch to the same subscription used for infrastructure:
+az account set --subscription &quot;Your Subscription Name&quot;
+</code></pre>
+<p><strong>&quot;SQL Server not found&quot; or &quot;cannot connect to database&quot;</strong></p>
+<pre><code class="lang-bash"># Problem: sql_server_fqdn is incorrect or database not ready
+# Solution 1: Get correct SQL server name:
+cd ../infra
+terraform output sql_server_fqdn
+# Copy to app/terraform.tfvars
+
+# Solution 2: Verify SQL server exists in Azure Portal
+# Check your resource group for the SQL server resource
+</code></pre>
+<p><strong>&quot;Storage account not found&quot;</strong></p>
+<pre><code class="lang-bash"># Problem: storage_account_name doesn't match infrastructure
+# Solution:
+cd ../infra
+terraform output storage_account_name
+# Update in app/terraform.tfvars
+</code></pre>
+<p><strong>&quot;App Service Plan not found&quot;</strong></p>
+<pre><code class="lang-bash"># Problem: Referenced App Service Plan names don't exist
+# Solution: Get all infrastructure outputs and verify names match:
+cd ../infra
+terraform output
+# Check that ad_service_plan_name, ds_service_plan_name, sm_service_plan_name match
+</code></pre>
+<p><strong>Best practice:</strong> Always run <code>terraform plan</code> in the app layer before <code>apply</code>. This validates all your infrastructure references are correct.</p>
+<h3 id="9-applications-wont-start-app-service-issues">9. Applications won't start (App Service issues)</h3>
 <p><strong>Quick fixes to try:</strong></p>
 <ol>
 <li><p><strong>Restart the services</strong> in Azure Portal:</p>
@@ -276,7 +317,7 @@ az resource list --resource-group $(terraform output -raw resource_group_name) -
 <ol>
 <li><p><strong>Double-check the basics:</strong></p>
 <ul>
-<li>Are you in the right directory? (<code>terraform-xmpro-azure/examples/basic</code>)</li>
+<li>Are you in the right directory? (<code>terraform-xmpro-azure/examples/layered/infra</code> or <code>.../app</code>)</li>
 <li>Did you run <code>terraform init</code> first?</li>
 <li>Is your <code>terraform.tfvars</code> file saved?</li>
 </ul>
@@ -301,13 +342,13 @@ location = &quot;eastus2&quot;  # or &quot;westeurope&quot;, &quot;southeastasia
 </ol>
 <div class="NOTE">
 <h5>Note</h5>
-<p>For advanced troubleshooting and detailed technical issues, see the <a href="https://github.com/XMPro/terraform-xmpro-azure">complete module documentation</a>.</p>
+<p>For advanced troubleshooting and detailed technical issues, see the <a href="{{TERRAFORM_MODULE_URL}}" target="_blank">complete module documentation</a>.</p>
 </div>
 
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: November 27, 2025</em></small></p>
+    <p><small><em>Last modified: November 28, 2025</em></small></p>
   </div>
 </article>
 

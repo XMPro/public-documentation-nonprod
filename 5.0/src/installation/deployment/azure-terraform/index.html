@@ -88,11 +88,63 @@
 <h1 id="deploy-xmpro-on-azure">Deploy XMPro on Azure</h1>
 
 <h2 id="introduction">Introduction</h2>
-<p>Get your XMPro intelligent digital twin platform running on Microsoft Azure quickly and reliably with Terraform automation. This streamlined deployment process handles all the complex infrastructure setup automatically, letting you focus on building applications rather than managing servers. In about 20 minutes, you'll have a fully functional XMPro environment ready for evaluation or production use.</p>
+<p>Get your XMPro intelligent digital twin platform running on Microsoft Azure quickly and reliably with Terraform automation. You'll deploy in two simple steps - first the infrastructure (databases, storage, networks), then the applications. This two-step approach lets you update applications without touching your infrastructure.</p>
 <div class="NOTE">
 <h5>Note</h5>
 <p>This guide works on <strong>Windows</strong>, <strong>Mac</strong>, and <strong>Linux</strong>. Windows users should use Command Prompt or PowerShell.</p>
 </div>
+<h3 id="provision-infrastructure-your-own-way">Provision Infrastructure Your Own Way?</h3>
+<div class="NOTE">
+<h5>Note</h5>
+<p><strong>Infrastructure provisioning is your responsibility.</strong> The Terraform module in this guide is provided as an <strong>example only</strong> and is not officially supported by XMPro. You are responsible for infrastructure configuration, maintenance, and support. See the <a href="../../overview.html#deployment-responsibility-matrix">Deployment Responsibility Matrix</a> for details.</p>
+</div>
+<div class="TIP">
+<h5>Tip</h5>
+<p>The example Terraform infrastructure module uses <strong>B2</strong> App Service Plans (2 vCPU, 3.5GB RAM) and <strong>Basic</strong> SQL databases by default. This sizing is suitable for development and evaluation. For production sizing recommendations based on your workload, see the <a href="azure-sizing.html">Azure Sizing Guide</a>.</p>
+</div>
+<p>You can provision the required infrastructure using:</p>
+<ul>
+<li>The example Terraform module (community-supported)</li>
+<li>Azure Portal (ClickOps)</li>
+<li>Your organization's infrastructure-as-code tools</li>
+</ul>
+<p>If you provision infrastructure yourself, you'll need to create these resources before deploying applications:</p>
+<p><strong>Required Infrastructure:</strong></p>
+<ul>
+<li>[ ] <strong>Resource Group</strong> - 1 logical grouping for all XMPro resources</li>
+<li>[ ] <strong>Azure SQL Server</strong> - 1 server with 3-4 databases (SM, AD, DS, and optionally AI)</li>
+<li>[ ] <strong>Storage Account</strong> - 1 account for deployment artifacts and application files</li>
+<li>[ ] <strong>App Service Plans</strong> - 3-4 separate Linux plans (one for SM, AD, DS, and optionally AI)</li>
+<li>[ ] <strong>Key Vaults</strong> - 3-4 separate vaults (one for SM, AD, DS, and optionally AI)</li>
+<li>[ ] <strong>Application Insights</strong> - 1 instance for monitoring (recommended)</li>
+<li>[ ] <strong>Log Analytics Workspace</strong> - 1 workspace for centralized logging (recommended)</li>
+</ul>
+<p><strong>Optional Infrastructure (for production environments):</strong></p>
+<ul>
+<li>[ ] <strong>Master Data SQL Server</strong> - Separate SQL server and database for master data (<code>create_masterdata = true</code>)</li>
+<li>[ ] <strong>Virtual Network (VNet)</strong> - For network isolation and security (<code>prod_networking_enabled = true</code>)
+<ul>
+<li>[ ] <strong>Subnets</strong> - Presentation, application, and data tiers (required if VNet enabled)</li>
+<li>[ ] <strong>Network Security Groups (NSGs)</strong> - Firewall rules for each subnet (created with VNet)</li>
+<li>[ ] <strong>Private DNS Zones</strong> - For private endpoint name resolution: <code>privatelink.database.windows.net</code>, <code>privatelink.blob.core.windows.net</code>, <code>privatelink.file.core.windows.net</code>, <code>privatelink.redis.cache.windows.net</code>, <code>privatelink.vaultcore.azure.net</code> (created with VNet)</li>
+<li>[ ] <strong>Private Endpoints</strong> - Secure private connections to SQL Server, Storage Account, Redis Cache, and Key Vault (created with VNet)</li>
+</ul>
+</li>
+<li>[ ] <strong>Redis Cache</strong> - For distributed caching and auto-scaling (<code>create_redis_cache = true</code>, requires VNet)</li>
+<li>[ ] <strong>Public DNS Zone</strong> - For custom domain management (<code>enable_custom_domain = true</code>)
+<ul>
+<li>[ ] <strong>DNS Records</strong> - A records for each service (SM, AD, DS, AI) pointing to App Services</li>
+</ul>
+</li>
+<li>[ ] <strong>Azure AD Authentication for SQL</strong> (<code>enable_sql_aad_auth = true</code>) - Requires:
+<ul>
+<li>[ ] <strong>User-Assigned Managed Identities</strong> - One for each service (SM, AD, DS, AI)</li>
+<li>[ ] <strong>SQL Server AAD Admin</strong> - Configured with appropriate permissions</li>
+</ul>
+</li>
+<li>[ ] <strong>Azure Monitor Alerting</strong> - For Stream Host container monitoring</li>
+</ul>
+<p>Once you've created these resources, you can skip to <a href="#5-deploy-application-layer">Step 5: Deploy Application Layer</a> and provide the infrastructure details in your configuration.</p>
 <h2 id="prerequisites">Prerequisites</h2>
 <p>You need:</p>
 <ul>
@@ -150,61 +202,88 @@ export ARM_CLIENT_SECRET=&quot;your-service-principal-password&quot;
 <h3 id="3-get-the-deployment-files">3. Get the Deployment Files</h3>
 <p><strong>Windows (PowerShell):</strong></p>
 <pre><code class="lang-powershell"># Download the deployment configuration
-git clone https://github.com/XMPro/terraform-xmpro-azure.git
-cd terraform-xmpro-azure\examples\basic
+git clone {{TERRAFORM_MODULE_URL}}.git
+cd terraform-xmpro-azure\examples\layered\infra
 
 # Create your configuration
 Copy-Item terraform.tfvars.example terraform.tfvars
 </code></pre>
 <p><strong>Windows (Command Prompt):</strong></p>
 <pre><code class="lang-cmd"># Download the deployment configuration
-git clone https://github.com/XMPro/terraform-xmpro-azure.git
-cd terraform-xmpro-azure\examples\basic
+git clone {{TERRAFORM_MODULE_URL}}.git
+cd terraform-xmpro-azure\examples\layered\infra
 
 # Create your configuration
 copy terraform.tfvars.example terraform.tfvars
 </code></pre>
 <p><strong>Mac/Linux:</strong></p>
 <pre><code class="lang-bash"># Download the deployment configuration
-git clone https://github.com/XMPro/terraform-xmpro-azure.git
-cd terraform-xmpro-azure/examples/basic
+git clone {{TERRAFORM_MODULE_URL}}.git
+cd terraform-xmpro-azure/examples/layered/infra
 
 # Create your configuration
 cp terraform.tfvars.example terraform.tfvars
 </code></pre>
-<p>Edit <code>terraform.tfvars</code> with any text editor (Notepad, VS Code, vim, etc.).
-Only modify the QUICK START section at the top:</p>
-<pre><code class="lang-hcl"># Core platform settings
-location = &quot;eastus&quot;                           # Azure region (see list below)
-company_name = &quot;YourCompany&quot;                  # Your company name (must be unique)
+<p>The infrastructure layer uses sensible defaults. You can deploy as-is or customize settings in <code>terraform.tfvars.example</code> - see the <a href="{{TERRAFORM_MODULE_URL}}" target="_blank">GitHub documentation</a> for all available options.</p>
+<h3 id="4-deploy-infrastructure-layer">4. Deploy Infrastructure Layer</h3>
+<p><strong>All platforms:</strong></p>
+<pre><code class="lang-powershell">terraform init    # Prepare Terraform
+terraform apply   # Deploy infrastructure (type 'yes' when asked)
+</code></pre>
+<p>This creates the foundation: databases, storage, networks, and App Service Plans. Deployment takes about 10-15 minutes.</p>
+<h3 id="5-deploy-application-layer">5. Deploy Application Layer</h3>
+<p>Now deploy the XMPro applications on top of the infrastructure:</p>
+<p><strong>Windows (PowerShell):</strong></p>
+<pre><code class="lang-powershell">cd ..\app
+Copy-Item terraform.tfvars.example terraform.tfvars
+</code></pre>
+<p><strong>Windows (Command Prompt):</strong></p>
+<pre><code class="lang-cmd">cd ..\app
+copy terraform.tfvars.example terraform.tfvars
+</code></pre>
+<p><strong>Mac/Linux:</strong></p>
+<pre><code class="lang-bash">cd ../app
+cp terraform.tfvars.example terraform.tfvars
+</code></pre>
+<p><strong>First, get the infrastructure values:</strong></p>
+<p><strong>All platforms:</strong></p>
+<pre><code class="lang-powershell"># Go back to infra folder
+cd ..\infra    # Windows
+cd ../infra    # Mac/Linux
 
-# Database credentials - IMPORTANT: Don't change these after deployment!
-db_admin_username = &quot;xmadmin&quot;                 # Database admin username
-db_admin_password = &quot;StrongPassword123!&quot;      # Database admin password
+# Get the values you need
+terraform output
+</code></pre>
+<p>Copy the <code>resource_group_name</code> and <code>sql_server_fqdn</code> values shown.</p>
+<p><strong>Then edit <code>terraform.tfvars</code> in the app folder</strong> with your values:</p>
+<pre><code class="lang-hcl"># Infrastructure references (use the actual values from &quot;terraform output&quot; above)
+resource_group_name = &quot;rg-mycompany-dev001&quot;        # Replace with your value
+sql_server_fqdn = &quot;sql-mycompany-dev001.database.windows.net&quot;  # Replace with your value
 
-# Application passwords
-site_admin_password = &quot;StrongPassword123!&quot;      # Super admin password
-company_admin_password = &quot;StrongPassword123!&quot;   # Company admin password
+# Application passwords - Change these!
+site_admin_password = &quot;YourStrongPassword123!&quot;
+company_admin_password = &quot;YourCompanyPassword123!&quot;
 
-# Company administrator details
-company_admin_email_address = &quot;admin@yourcompany.com&quot;  # Your email address
-company_admin_first_name = &quot;John&quot;             # Your first name
-company_admin_last_name = &quot;Doe&quot;               # Your last name
+# Company admin details - Change these!
+company_admin_email_address = &quot;admin@yourcompany.com&quot;
+company_admin_first_name = &quot;John&quot;
+company_admin_last_name = &quot;Doe&quot;
 
 # Evaluation mode - Set to true for testing/demo (includes licenses)
 is_evaluation_mode = true
 </code></pre>
-<div class="TIP">
-<h5>Tip</h5>
-<p><strong>Common Azure regions</strong>: <code>eastus</code>, <code>westus2</code>, <code>centralus</code>, <code>westeurope</code>, <code>northeurope</code>, <code>southeastasia</code>, <code>australiaeast</code></p>
-<p>For the complete list, run <code>az account list-locations -o table</code> or see <a href="https://azure.microsoft.com/en-us/explore/global-infrastructure/geographies/">Azure Regions</a></p>
-</div>
-<h3 id="4-deploy-xmpro">4. Deploy XMPro</h3>
+<p>Deploy the applications:</p>
 <p><strong>All platforms:</strong></p>
 <pre><code class="lang-powershell">terraform init    # Prepare Terraform
-terraform apply   # Deploy to Azure (type 'yes' when asked)
+terraform plan    # Review what will be deployed and check for errors
+terraform apply   # Deploy applications (type 'yes' when asked)
 </code></pre>
-<h3 id="5-access-xmpro">5. Access XMPro</h3>
+<div class="TIP">
+<h5>Tip</h5>
+<p>The <code>terraform plan</code> step validates your configuration and shows exactly what will be created. If there are errors in your inputs (like incorrect infrastructure references), you'll see them here before deploying.</p>
+</div>
+<p>This deploys all XMPro applications and takes about 5-10 minutes.</p>
+<h3 id="6-access-xmpro">6. Access XMPro</h3>
 <p>After deployment completes:</p>
 <p><strong>All platforms:</strong></p>
 <pre><code class="lang-powershell">terraform output  # Shows your URLs
@@ -221,7 +300,7 @@ terraform apply   # Deploy to Azure (type 'yes' when asked)
 </thead>
 <tbody>
 <tr>
-<td><strong>Super Admin</strong></td>
+<td><strong>Site Admin</strong></td>
 <td><code>admin@xmpro.onxmpro.com</code></td>
 <td>Your <code>site_admin_password</code></td>
 <td>Full system access, license management</td>
@@ -266,7 +345,7 @@ terraform apply   # Deploy to Azure (type 'yes' when asked)
 <ul>
 <li><a href="troubleshooting.html">Troubleshooting Guide</a> - Fix common problems</li>
 <li><a href="advanced-configuration.html">Advanced Configuration</a> - Production settings</li>
-<li><a href="https://github.com/XMPro/terraform-xmpro-azure">Complete Documentation</a> - All options</li>
+<li><a href="{{TERRAFORM_MODULE_URL}}" target="_blank">Complete Documentation</a></li>
 </ul>
 <h2 id="next-steps">Next Steps</h2>
 <p>After completing your infrastructure deployment, proceed to:</p>
@@ -279,13 +358,13 @@ terraform apply   # Deploy to Azure (type 'yes' when asked)
 <hr>
 <div class="NOTE">
 <h5>Note</h5>
-<p>This guide uses the <code>examples/basic</code> configuration which is perfect for getting started. For production deployments with custom domains, SMTP, and other advanced features, see the <a href="https://github.com/XMPro/terraform-xmpro-azure">GitHub documentation</a>.</p>
+<p>For advanced features like custom domains, SMTP, existing databases, and multiple stream hosts, see the <a href="advanced-configuration.html">Advanced Configuration Guide</a> or the <a href="{{TERRAFORM_MODULE_URL}}" target="_blank">GitHub documentation</a>.</p>
 </div>
 
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: November 27, 2025</em></small></p>
+    <p><small><em>Last modified: November 28, 2025</em></small></p>
   </div>
 </article>
 
