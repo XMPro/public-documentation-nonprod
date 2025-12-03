@@ -242,8 +242,86 @@ SH (Stream Host) ← Requires DS URL and collection details
 <ul>
 <li>Stream Host Windows service</li>
 </ul>
+<h2 id="post-deployment-configuration">Post-Deployment Configuration</h2>
+<h3 id="configure-host-files">Configure Host Files</h3>
+<p>After completing all installations, configure the hosts file on each server to enable proper hostname resolution between servers. This is essential when DNS is not configured for your internal server names.</p>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p><strong>Why Configure Hosts Files?</strong></p>
+<p>During installation, each XMPro product is configured with a hostname (e.g., <code>sm-server-01</code>, <code>ad.yourcompany.com</code>). Products use these hostnames to communicate with each other for:</p>
+<ul>
+<li><strong>Authentication</strong>: Products authenticate with SM using the configured hostname</li>
+<li><strong>API Communication</strong>: AD and DS make requests to SM for license validation</li>
+<li><strong>Stream Host Connection</strong>: SH connects to DS using the DS hostname</li>
+</ul>
+<p><strong>Without hostname resolution:</strong></p>
+<ul>
+<li>Products cannot locate each other on the network</li>
+<li>Authentication requests fail with &quot;remote name could not be resolved&quot; errors</li>
+<li>The multi-server deployment will not function</li>
+</ul>
+<p><strong>Alternatives to hosts file:</strong></p>
+<ul>
+<li>If your network has DNS configured, you can add DNS A records instead</li>
+<li>The hosts file is the simplest solution when DNS is not available or for testing environments</li>
+</ul>
+</div>
+<h4 id="configure-hosts-file-on-each-server">Configure Hosts File on Each Server</h4>
+<p>On <strong>each server</strong> (SM, AD, DS, SH), add entries for all other servers:</p>
+<ol>
+<li><p><strong>Open Notepad as Administrator</strong></p>
+<ul>
+<li>Press Windows key</li>
+<li>Type &quot;Notepad&quot;</li>
+<li>Right-click &quot;Notepad&quot; and select &quot;Run as administrator&quot;</li>
+</ul>
+</li>
+<li><p><strong>Open the hosts file</strong></p>
+<ul>
+<li>In Notepad, click File &gt; Open</li>
+<li>Navigate to: <code>C:\Windows\System32\drivers\etc\</code></li>
+<li>Change file filter to &quot;All Files (<em>.</em>)&quot;</li>
+<li>Select the <code>hosts</code> file and click Open</li>
+</ul>
+</li>
+<li><p><strong>Add entries for all servers</strong></p>
+<p>Add the following entries (replace with your actual server IPs and hostnames):</p>
+<pre><code># XMPro Multi-Server Deployment
+192.168.1.10    sm-server-01
+192.168.1.11    ad-server-01
+192.168.1.12    ds-server-01
+192.168.1.13    sh-server-01
+</code></pre>
+</li>
+<li><p><strong>Save the file</strong></p>
+<ul>
+<li>Click File &gt; Save</li>
+<li>Close Notepad</li>
+</ul>
+</li>
+</ol>
+<div class="NOTE">
+<h5>Note</h5>
+<p><strong>Example Hostname Formats:</strong></p>
+<ul>
+<li>Simple names: <code>sm-server-01</code>, <code>ad-server-01</code>, <code>ds-server-01</code>, <code>sh-server-01</code></li>
+<li>Fully qualified: <code>sm.yourcompany.com</code>, <code>ad.yourcompany.com</code>, <code>ds.yourcompany.com</code>, <code>sh.yourcompany.com</code></li>
+</ul>
+<p>Use the same hostname format that you specified during product installation.</p>
+</div>
+<div class="TIP">
+<h5>Tip</h5>
+<p><strong>Testing Hostname Resolution:</strong></p>
+<p>After updating the hosts file, verify connectivity from any server:</p>
+<pre><code class="lang-cmd">ping sm-server-01
+ping ad-server-01
+ping ds-server-01
+ping sh-server-01
+</code></pre>
+<p>Each ping should resolve to the correct IP address and respond successfully.</p>
+</div>
 <h2 id="post-deployment-validation">Post-Deployment Validation</h2>
-<p>After completing all installation steps, verify that products can communicate across servers:</p>
+<p>After completing post-deployment configuration, verify that products can communicate across servers:</p>
 <ol>
 <li><strong>Access SM</strong> - Navigate to <code>https://&lt;sm-hostname&gt;:5201</code> and log in with super admin credentials</li>
 <li><strong>Access AD</strong> - From SM, navigate to App Designer or directly access <code>https://&lt;ad-hostname&gt;:5202</code></li>
@@ -261,7 +339,7 @@ SH (Stream Host) ← Requires DS URL and collection details
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: December 01, 2025</em></small></p>
+    <p><small><em>Last modified: December 03, 2025</em></small></p>
   </div>
 </article>
 
