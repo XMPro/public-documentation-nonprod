@@ -378,6 +378,64 @@
 </tr>
 </tbody>
 </table>
+<h5 id="sso-configuration-if-enabled">SSO Configuration (if enabled)</h5>
+<p>The installer allows you to configure Single Sign-On (SSO) for Azure AD authentication, enabling users to sign in with their organizational accounts.</p>
+<table>
+<thead>
+<tr>
+<th>Prompt</th>
+<th>What It Means</th>
+<th>Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Enable SSO configuration? (y/n)</strong></td>
+<td>Configure Single Sign-On for Azure AD authentication.<br><em>Only asked if SM is selected.</em></td>
+<td><code>n</code></td>
+</tr>
+</tbody>
+</table>
+<p>If you choose to enable SSO, you'll be prompted for these additional settings:</p>
+<table>
+<thead>
+<tr>
+<th>Prompt</th>
+<th>What It Means</th>
+<th>Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Azure AD Client ID</strong></td>
+<td>The Application (client) ID from your Azure AD app registration.</td>
+<td><em>(required - no default)</em></td>
+</tr>
+<tr>
+<td><strong>Azure AD Secret</strong></td>
+<td>The client secret value from your Azure AD app registration.</td>
+<td><em>(required - no default)</em></td>
+</tr>
+<tr>
+<td><strong>Azure AD Tenant ID</strong></td>
+<td>Your Azure AD tenant ID (optional - can be left blank).</td>
+<td><em>(optional - press Enter to skip)</em></td>
+</tr>
+<tr>
+<td><strong>Business Role Claim</strong></td>
+<td>The claim name for business roles (e.g., <code>groups</code>).<br>Used to map Azure AD groups to XMPro roles.</td>
+<td><em>(optional - press Enter to skip)</em></td>
+</tr>
+</tbody>
+</table>
+<div class="NOTE">
+<h5>Note</h5>
+<p><strong>SSO Setup Requirements:</strong> Before enabling SSO during installation, you should have already registered an application in Azure AD and configured the necessary permissions. See <a href="../../../technical-reference/sso-azure-ad.html">SSO - Azure Entra ID</a> for detailed setup instructions.</p>
+</div>
+<div class="TIP">
+<h5>Tip</h5>
+<p><strong>When to enable SSO:</strong> Enable SSO if your organization uses Azure AD and you want users to authenticate with their organizational accounts instead of XMPro-specific credentials.</p>
+</div>
 <h4 id="3-product-configuration">3. Product Configuration</h4>
 <h5 id="basic-configuration">Basic Configuration</h5>
 <div class="NOTE">
