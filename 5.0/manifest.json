@@ -18977,6 +18977,26 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "src/images/installation/windows-server-2022-upgrade-52.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/installation/windows-server-2022-upgrade-52.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/images/installation/windows-server-2022-upgrade-53.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/installation/windows-server-2022-upgrade-53.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "src/images/integrity-check-1.png",
       "output": {
         "resource": {
@@ -26057,6 +26077,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "src/installation/deployment/azure-terraform/upgrade-from-legacy.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/installation/deployment/azure-terraform/upgrade-from-legacy.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "src/installation/deployment/index.md",
       "output": {
         ".html": {
@@ -26101,6 +26131,16 @@
       "output": {
         ".html": {
           "relative_path": "src/installation/deployment/windows-server-2022/troubleshooting.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "src/installation/deployment/windows-server-2022/upgrade-from-legacy.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/installation/deployment/windows-server-2022/upgrade-from-legacy.html"
         }
       },
       "version": ""

@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Upgrade from Legacy ARM Deployment | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Upgrade from Legacy ARM Deployment | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../../toc.html">
+      <meta name="docfx:tocrel" content="../../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/deployment/azure-terraform/upgrade-from-legacy.md&amp;version=GBmain&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../../index.html">
+            <img id="logo" class="svg" src="../../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="upgrade-from-legacy-arm-deployment">Upgrade from Legacy ARM Deployment</h1>
+
+<p>If you're currently running XMPro v4.4.x using the legacy Azure ARM templates and planning to upgrade to v4.5/Latest using Azure Terraform, this guide provides important considerations and step-by-step instructions for a smooth migration.</p>
+<p>The latest version introduces infrastructure-as-code deployment using Terraform, providing better maintainability, version control, and repeatable deployments.</p>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>Version 4.5/latest is primarily an <strong>installation method upgrade</strong>. Your existing data, users, and configurations are fully preserved:</p>
+<ul>
+<li>All database data remains unchanged (users, roles, applications, data streams)</li>
+<li>User credentials and authentication continue to work</li>
+<li>Existing applications and data streams function without modification</li>
+<li>APIs and integrations remain compatible</li>
+</ul>
+</div>
+<hr>
+<h2 id="required-information-from-your-existing-installation">Required Information from Your Existing Installation</h2>
+<p>Before running the Azure Terraform upgrade, document these values from your current v4.4.x ARM deployment and Azure resources. You will need them to update your Terraform variables and configuration files:</p>
+<h3 id="1-azure-resource-information">1. Azure Resource Information</h3>
+<p>Document your existing Azure resource configuration:</p>
+<table>
+<thead>
+<tr>
+<th>Configuration Item</th>
+<th>Where to Find</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Resource Group Name</strong></td>
+<td>Azure Portal or ARM deployment</td>
+<td><code>xmpro-production-rg</code></td>
+</tr>
+<tr>
+<td><strong>Azure Region</strong></td>
+<td>Azure Portal or ARM deployment</td>
+<td><code>eastus</code>, <code>westeurope</code></td>
+</tr>
+<tr>
+<td><strong>Virtual Network Name</strong></td>
+<td>Azure Portal → Virtual Networks</td>
+<td><code>xmpro-vnet</code></td>
+</tr>
+<tr>
+<td><strong>Subnet Names</strong></td>
+<td>Azure Portal → Virtual Networks → Subnets</td>
+<td><code>xmpro-app-subnet</code>, <code>xmpro-db-subnet</code></td>
+</tr>
+<tr>
+<td><strong>App Service Plan Name</strong></td>
+<td>Azure Portal → App Service Plans</td>
+<td><code>xmpro-asp</code></td>
+</tr>
+<tr>
+<td><strong>App Service Plan SKU</strong></td>
+<td>Azure Portal → App Service Plans → Scale Up</td>
+<td><code>P1v2</code>, <code>P2v3</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="2-database-configuration">2. Database Configuration</h3>
+<p>Gather your Azure SQL Database details:</p>
+<table>
+<thead>
+<tr>
+<th>Configuration Item</th>
+<th>Where to Find</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>SQL Server Name</strong></td>
+<td>Azure Portal → SQL Servers</td>
+<td><code>xmpro-sql-server.database.windows.net</code></td>
+</tr>
+<tr>
+<td><strong>SQL Server Admin Username</strong></td>
+<td>ARM parameters or Azure Portal</td>
+<td><code>sqladmin</code></td>
+</tr>
+<tr>
+<td><strong>SQL Server Admin Password</strong></td>
+<td>Key Vault or secure storage</td>
+<td><em>(your secure password)</em></td>
+</tr>
+<tr>
+<td><strong>SM Database Name</strong></td>
+<td>Azure Portal → SQL Databases</td>
+<td><code>SM</code></td>
+</tr>
+<tr>
+<td><strong>AD Database Name</strong></td>
+<td>Azure Portal → SQL Databases</td>
+<td><code>AD</code></td>
+</tr>
+<tr>
+<td><strong>DS Database Name</strong></td>
+<td>Azure Portal → SQL Databases</td>
+<td><code>DS</code></td>
+</tr>
+<tr>
+<td><strong>Database SKU/Tier</strong></td>
+<td>Azure Portal → SQL Database → Pricing Tier</td>
+<td><code>S3</code>, <code>P2</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="3-application-configuration">3. Application Configuration</h3>
+<p>Note your current application settings:</p>
+<table>
+<thead>
+<tr>
+<th>Configuration Item</th>
+<th>Where to Find</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>SM App Service Name</strong></td>
+<td>Azure Portal → App Services</td>
+<td><code>xmpro-sm-app</code></td>
+</tr>
+<tr>
+<td><strong>AD App Service Name</strong></td>
+<td>Azure Portal → App Services</td>
+<td><code>xmpro-ad-app</code></td>
+</tr>
+<tr>
+<td><strong>DS App Service Name</strong></td>
+<td>Azure Portal → App Services</td>
+<td><code>xmpro-ds-app</code></td>
+</tr>
+<tr>
+<td><strong>Custom Domain Names</strong></td>
+<td>Azure Portal → App Services → Custom Domains</td>
+<td><code>xmpro.yourcompany.com</code></td>
+</tr>
+<tr>
+<td><strong>SSL Certificate Configuration</strong></td>
+<td>Azure Portal → App Services → TLS/SSL Settings</td>
+<td>App Service Managed Certificate or Custom</td>
+</tr>
+</tbody>
+</table>
+<h3 id="4-networking--security">4. Networking &amp; Security</h3>
+<p>Capture your network security configuration:</p>
+<table>
+<thead>
+<tr>
+<th>Configuration Item</th>
+<th>Where to Find</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Network Security Groups</strong></td>
+<td>Azure Portal → Network Security Groups</td>
+<td>Inbound/outbound rules</td>
+</tr>
+<tr>
+<td><strong>Application Gateway</strong> (if used)</td>
+<td>Azure Portal → Application Gateways</td>
+<td>Frontend/backend configurations</td>
+</tr>
+<tr>
+<td><strong>Private Endpoints</strong> (if used)</td>
+<td>Azure Portal → Private Link</td>
+<td>SQL Database, Storage endpoints</td>
+</tr>
+<tr>
+<td><strong>Key Vault Name</strong> (if used)</td>
+<td>Azure Portal → Key Vaults</td>
+<td><code>xmpro-keyvault</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="5-monitoring--logging">5. Monitoring &amp; Logging</h3>
+<p>Document your monitoring configuration:</p>
+<table>
+<thead>
+<tr>
+<th>Configuration Item</th>
+<th>Where to Find</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Application Insights Name</strong></td>
+<td>Azure Portal → Application Insights</td>
+<td><code>xmpro-appinsights</code></td>
+</tr>
+<tr>
+<td><strong>Log Analytics Workspace</strong></td>
+<td>Azure Portal → Log Analytics Workspaces</td>
+<td><code>xmpro-logs</code></td>
+</tr>
+<tr>
+<td><strong>Diagnostic Settings</strong></td>
+<td>Azure Portal → Resource → Diagnostic Settings</td>
+<td>Enabled logs and metrics</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Finding values from Azure CLI:</strong></p>
+<pre><code class="lang-bash"># List resources in your resource group
+az resource list --resource-group &lt;your-resource-group&gt; --output table
+
+# Get App Service details
+az webapp list --resource-group &lt;your-resource-group&gt; --output table
+
+# Get SQL Server details
+az sql server list --resource-group &lt;your-resource-group&gt; --output table
+
+# Get SQL Database details
+az sql db list --resource-group &lt;your-resource-group&gt; --server &lt;sql-server-name&gt; --output table
+</code></pre>
+<hr>
+<h2 id="backup-before-upgrading">Backup Before Upgrading</h2>
+<div class="CAUTION">
+<h5>Caution</h5>
+<p><strong>Always backup before upgrading.</strong> While Terraform performs upgrades safely, backups ensure you can recover if needed.</p>
+</div>
+<p><strong>Minimum required backups:</strong></p>
+<h3 id="1-azure-sql-databases">1. Azure SQL Databases</h3>
+<pre><code class="lang-bash"># Using Azure CLI to create database backups
+az sql db export \
+  --resource-group &lt;your-resource-group&gt; \
+  --server &lt;your-sql-server&gt; \
+  --name SM \
+  --storage-key-type StorageAccessKey \
+  --storage-key &lt;your-storage-key&gt; \
+  --storage-uri https://&lt;storage-account&gt;.blob.core.windows.net/backups/SM_PreUpgrade_v4.4.x.bacpac \
+  --admin-user &lt;admin-username&gt; \
+  --admin-password &lt;admin-password&gt;
+
+# Repeat for AD and DS databases
+az sql db export \
+  --resource-group &lt;your-resource-group&gt; \
+  --server &lt;your-sql-server&gt; \
+  --name AD \
+  --storage-key-type StorageAccessKey \
+  --storage-key &lt;your-storage-key&gt; \
+  --storage-uri https://&lt;storage-account&gt;.blob.core.windows.net/backups/AD_PreUpgrade_v4.4.x.bacpac \
+  --admin-user &lt;admin-username&gt; \
+  --admin-password &lt;admin-password&gt;
+
+az sql db export \
+  --resource-group &lt;your-resource-group&gt; \
+  --server &lt;your-sql-server&gt; \
+  --name DS \
+  --storage-key-type StorageAccessKey \
+  --storage-key &lt;your-storage-key&gt; \
+  --storage-uri https://&lt;storage-account&gt;.blob.core.windows.net/backups/DS_PreUpgrade_v4.4.x.bacpac \
+  --admin-user &lt;admin-username&gt; \
+  --admin-password &lt;admin-password&gt;
+</code></pre>
+<h3 id="2-azure-resource-tags-optional-but-recommended">2. Azure Resource Tags (optional but recommended)</h3>
+<pre><code class="lang-bash"># Tag resources to identify pre-upgrade state
+az resource tag \
+  --resource-group &lt;your-resource-group&gt; \
+  --tags &quot;backup-date=$(date +%Y%m%d)&quot; &quot;version=4.4.x&quot; &quot;upgrade-ready=true&quot;
+</code></pre>
+<h3 id="3-app-service-configuration">3. App Service Configuration</h3>
+<pre><code class="lang-bash"># Export App Service application settings
+az webapp config appsettings list \
+  --resource-group &lt;your-resource-group&gt; \
+  --name &lt;sm-app-service-name&gt; \
+  &gt; sm-appsettings-backup-$(date +%Y%m%d).json
+
+az webapp config appsettings list \
+  --resource-group &lt;your-resource-group&gt; \
+  --name &lt;ad-app-service-name&gt; \
+  &gt; ad-appsettings-backup-$(date +%Y%m%d).json
+
+az webapp config appsettings list \
+  --resource-group &lt;your-resource-group&gt; \
+  --name &lt;ds-app-service-name&gt; \
+  &gt; ds-appsettings-backup-$(date +%Y%m%d).json
+</code></pre>
+<hr>
+<h2 id="running-the-upgrade">Running the Upgrade</h2>
+<p>Once you've documented all the required information and backed up your resources:</p>
+<h3 id="1-prepare-terraform-configuration">1. Prepare Terraform Configuration</h3>
+<p>Clone or set up the v4.5 Terraform configuration:</p>
+<pre><code class="lang-bash"># Navigate to your Terraform directory
+cd /path/to/xmpro-terraform
+
+# Create a backup of your current configuration (if applicable)
+cp -r . ../xmpro-terraform-backup-$(date +%Y%m%d)
+</code></pre>
+<h3 id="2-update-variables-file">2. Update Variables File</h3>
+<p>Create or update your <code>terraform.tfvars</code> file with the values you documented earlier:</p>
+<pre><code class="lang-hcl"># Example terraform.tfvars for upgrade
+resource_group_name     = &quot;xmpro-production-rg&quot;
+location                = &quot;eastus&quot;
+environment             = &quot;production&quot;
+
+# Database configuration (use existing database names)
+sql_server_name         = &quot;xmpro-sql-server&quot;
+sql_admin_username      = &quot;sqladmin&quot;
+sm_database_name        = &quot;SM&quot;
+ad_database_name        = &quot;AD&quot;
+ds_database_name        = &quot;DS&quot;
+
+# Application configuration
+sm_app_service_name     = &quot;xmpro-sm-app&quot;
+ad_app_service_name     = &quot;xmpro-ad-app&quot;
+ds_app_service_name     = &quot;xmpro-ds-app&quot;
+
+# Preserve existing custom domains if configured
+custom_domain_name      = &quot;xmpro.yourcompany.com&quot;
+
+# Other settings...
+</code></pre>
+<h3 id="3-review-terraform-plan">3. Review Terraform Plan</h3>
+<p>Before applying, review what Terraform will change:</p>
+<pre><code class="lang-bash"># Initialize Terraform (if needed)
+terraform init
+
+# Review the execution plan
+terraform plan -out=upgrade-plan.tfplan
+
+# Carefully review the output
+# Look for any unexpected resource deletions or recreations
+</code></pre>
+<div class="CAUTION">
+<h5>Caution</h5>
+<p><strong>Review the plan carefully!</strong> Pay special attention to:</p>
+<ul>
+<li>Database resources (should show &quot;update in-place&quot;, not &quot;destroy/create&quot;)</li>
+<li>Data migration steps</li>
+<li>Any resources marked for deletion</li>
+</ul>
+</div>
+<h3 id="4-apply-the-upgrade">4. Apply the Upgrade</h3>
+<p>Once you're satisfied with the plan:</p>
+<pre><code class="lang-bash"># Apply the upgrade
+terraform apply upgrade-plan.tfplan
+
+# Monitor the output for any errors
+</code></pre>
+<p>The Terraform apply will:</p>
+<ul>
+<li>Update App Services to v4.5 application packages</li>
+<li>Perform database schema migrations automatically</li>
+<li>Update application settings and configurations</li>
+<li>Preserve all existing data and resources</li>
+<li>Update networking and security configurations as needed</li>
+</ul>
+<h3 id="5-verify-deployment">5. Verify Deployment</h3>
+<p>After Terraform completes:</p>
+<pre><code class="lang-bash"># Check deployment status
+terraform output
+
+# Verify App Services are running
+az webapp list --resource-group &lt;your-resource-group&gt; --output table
+
+# Check App Service health
+az webapp show --resource-group &lt;your-resource-group&gt; \
+  --name &lt;app-service-name&gt; \
+  --query &quot;state&quot; --output tsv
+</code></pre>
+<h3 id="6-update-product-urls-in-subscription-manager-if-urls-changed">6. Update Product URLs in Subscription Manager (if URLs changed)</h3>
+<p>If your App Service URLs changed during upgrade, update them in Subscription Manager:</p>
+<p>a. <strong>Log in to Subscription Manager</strong> as site admin or company admin</p>
+<p>b. <strong>Navigate to Products</strong>:</p>
+<ul>
+<li>Click the menu icon (☰) in the top-left</li>
+<li>Select &quot;Products&quot; from the left navigation menu</li>
+</ul>
+<p>c. <strong>Select the product to update</strong> (App Designer or Data Stream Designer):</p>
+<p><img src="../../../images/installation/windows-server-2022-upgrade-52.png" alt="Select Product to Edit"></p>
+<ul>
+<li>Click on the product name (e.g., &quot;App Designer&quot;)</li>
+<li>In the product details panel:
+<ul>
+<li>Update <strong>Product Log Out URL</strong> to match your new URL</li>
+<li>Example: Change <code>https://old-app.azurewebsites.net/server/logout</code> to <code>https://new-app.azurewebsites.net/server/logout</code></li>
+</ul>
+</li>
+</ul>
+<p>d. <strong>Scroll down and update Product URLs</strong>:</p>
+<p><img src="../../../images/installation/windows-server-2022-upgrade-53.png" alt="Update Product URLs"></p>
+<ul>
+<li>In the <strong>PRODUCT URLS</strong> section at the bottom</li>
+<li>Update the URL to match your new App Service URL</li>
+</ul>
+<p>e. <strong>Save the changes</strong>:</p>
+<ul>
+<li>Click the &quot;Save&quot; button at the top of the product details panel</li>
+</ul>
+<p>f. <strong>Repeat for Data Stream Designer</strong> if its URL also changed</p>
+<div class="TIP">
+<h5>Tip</h5>
+<p><strong>Terraform Upgrade Best Practices:</strong></p>
+<ul>
+<li>Run <code>terraform plan</code> multiple times before applying to ensure you understand all changes</li>
+<li>Use workspaces to isolate upgrade testing: <code>terraform workspace new upgrade-test</code></li>
+<li>Consider upgrading a non-production environment first to validate the process</li>
+<li>Keep your database backups accessible throughout the upgrade</li>
+</ul>
+</div>
+<hr>
+<h2 id="post-upgrade-validation">Post-Upgrade Validation</h2>
+<p>After the upgrade completes, validate your installation:</p>
+<h3 id="1-verify-app-services-are-running">1. Verify App Services are running</h3>
+<pre><code class="lang-bash"># Check all App Services status
+az webapp list --resource-group &lt;your-resource-group&gt; \
+  --query &quot;[].{Name:name, State:state, DefaultHostName:defaultHostName}&quot; \
+  --output table
+
+# Check specific App Service health
+az webapp show --resource-group &lt;your-resource-group&gt; \
+  --name &lt;sm-app-service&gt; \
+  --query &quot;{Name:name, State:state, OutboundIpAddresses:outboundIpAddresses}&quot; \
+  --output json
+</code></pre>
+<h3 id="2-test-application-endpoints">2. Test application endpoints</h3>
+<pre><code class="lang-bash"># Test SM health endpoint
+curl -k https://&lt;sm-app-service&gt;.azurewebsites.net/health
+
+# Test AD health endpoint
+curl -k https://&lt;ad-app-service&gt;.azurewebsites.net/health
+
+# Test DS health endpoint
+curl -k https://&lt;ds-app-service&gt;.azurewebsites.net/health
+</code></pre>
+<h3 id="3-verify-database-connectivity">3. Verify database connectivity</h3>
+<pre><code class="lang-bash"># Check database status
+az sql db show --resource-group &lt;your-resource-group&gt; \
+  --server &lt;sql-server-name&gt; \
+  --name SM \
+  --query &quot;{Name:name, Status:status, MaxSizeBytes:maxSizeBytes}&quot; \
+  --output table
+</code></pre>
+<h3 id="4-test-login">4. Test login</h3>
+<p>Test login with your existing credentials at:</p>
+<ul>
+<li>Subscription Manager: Your configured SM URL (e.g., <code>https://sm.yourcompany.com</code>)</li>
+<li>App Designer: Your configured AD URL</li>
+<li>Data Stream Designer: Your configured DS URL</li>
+</ul>
+<h3 id="5-check-health-endpoints">5. Check health endpoints</h3>
+<p>Verify products can connect to each other by accessing the health UI:</p>
+<ul>
+<li>Subscription Manager: <code>https://&lt;sm-app-service&gt;.azurewebsites.net/health-ui</code></li>
+<li>App Designer: <code>https://&lt;ad-app-service&gt;.azurewebsites.net/health-ui</code></li>
+<li>Data Stream Designer: <code>https://&lt;ds-app-service&gt;.azurewebsites.net/health-ui</code></li>
+</ul>
+<h3 id="6-verify-stream-host-connectivity-if-applicable">6. Verify Stream Host connectivity (if applicable)</h3>
+<ul>
+<li>Check Azure Container Instance or VM status (depending on your deployment)</li>
+<li>Verify Stream Host appears online in Data Stream Designer</li>
+<li>Check Stream Host logs in Azure Log Analytics</li>
+</ul>
+<h3 id="7-test-existing-functionality">7. Test existing functionality</h3>
+<ul>
+<li>Open existing applications in App Designer</li>
+<li>Verify existing data streams in Data Stream Designer</li>
+<li>Confirm user access and permissions work correctly</li>
+<li>Verify custom domains and SSL certificates are working</li>
+</ul>
+<h3 id="8-check-monitoring-and-logging">8. Check monitoring and logging</h3>
+<pre><code class="lang-bash"># Verify Application Insights is receiving telemetry
+az monitor app-insights component show \
+  --app &lt;app-insights-name&gt; \
+  --resource-group &lt;your-resource-group&gt; \
+  --query &quot;{Name:name, InstrumentationKey:instrumentationKey, ProvisioningState:provisioningState}&quot;
+
+# Query recent logs
+az monitor app-insights query \
+  --app &lt;app-insights-name&gt; \
+  --analytics-query &quot;requests | where timestamp &gt; ago(1h) | summarize count() by resultCode&quot; \
+  --offset 1h
+</code></pre>
+<hr>
+<h2 id="rollback-if-needed">Rollback (if needed)</h2>
+<p>If you encounter issues and need to rollback:</p>
+<h3 id="1-restore-azure-sql-databases-from-backups">1. Restore Azure SQL Databases from backups</h3>
+<pre><code class="lang-bash"># Import database from BACPAC backup
+az sql db import \
+  --resource-group &lt;your-resource-group&gt; \
+  --server &lt;your-sql-server&gt; \
+  --name SM \
+  --storage-key-type StorageAccessKey \
+  --storage-key &lt;your-storage-key&gt; \
+  --storage-uri https://&lt;storage-account&gt;.blob.core.windows.net/backups/SM_PreUpgrade_v4.4.x.bacpac \
+  --admin-user &lt;admin-username&gt; \
+  --admin-password &lt;admin-password&gt;
+
+# Repeat for AD and DS databases
+</code></pre>
+<h3 id="2-restore-app-service-configuration-if-needed">2. Restore App Service Configuration (if needed)</h3>
+<pre><code class="lang-bash"># Restore application settings from backup
+az webapp config appsettings set \
+  --resource-group &lt;your-resource-group&gt; \
+  --name &lt;app-service-name&gt; \
+  --settings @appsettings-backup-&lt;date&gt;.json
+</code></pre>
+<h3 id="3-verify-rollback">3. Verify rollback</h3>
+<pre><code class="lang-bash"># Check App Services are running
+az webapp list --resource-group &lt;your-resource-group&gt; --output table
+
+# Test application access
+curl -k https://&lt;sm-app-service&gt;.azurewebsites.net/health
+</code></pre>
+<div class="CAUTION">
+<h5>Caution</h5>
+<p><strong>Rollback Considerations:</strong></p>
+<ul>
+<li>Database rollback will lose any data created after the backup</li>
+<li>Ensure all users are logged out before rolling back</li>
+<li>Test rollback procedures in a non-production environment first</li>
+<li>Document the issue before rolling back for troubleshooting purposes</li>
+</ul>
+</div>
+<div class="TIP">
+<h5>Tip</h5>
+<p><strong>Need assistance?</strong> Contact XMPro Support or your Implementation Partner for help with the upgrade or rollback process.</p>
+</div>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: December 03, 2025</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
