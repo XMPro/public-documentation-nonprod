@@ -25907,16 +25907,6 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "src/installation/deployment/azure-terraform/azure-sizing.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/installation/deployment/azure-terraform/azure-sizing.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
       "source_relative_path": "src/installation/deployment/azure-terraform/implementation-guide.md",
       "output": {
         ".html": {
