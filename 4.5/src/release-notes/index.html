@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/release-notes/index.md&amp;version=GBrelease-4.5.5&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/release-notes/index.md&amp;version=GBrelease-4.5&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -89,6 +89,10 @@
 
 <h2 id="v45-release-notes">v4.5 Release Notes</h2>
 <p>This section contains the release notes for XMPro v4.5 platform, providing information about new features, improvements, and bug fixes across all core products.</p>
+<div class="CAUTION">
+<h5>Caution</h5>
+<p>Do not use v4.5.4 if you use spaces in entity names in App Designer. See Known Issues for details.</p>
+</div>
 <div class="WARNING">
 <h5>Warning</h5>
 <p>Security update: Mitigate high-severity vulnerabilities by upgrading all products to v4.5.1+.</p>
@@ -136,6 +140,12 @@
       <td>v4.5.4</td>
     </tr>
     <tr>
+      <td>App Designer</td>
+      <td>Team Support 17330: New input validation restrict previously valid entity names that contain spaces, affecting adding or editing data sources at design-time.</td>
+      <td>v4.5.4</td>
+      <td>v4.5.5</td>
+    </tr>
+    <tr>
       <td>Data Stream Designer</td>
       <td>Team Support 16609: Removing 'View Collection' right causes errors, but including it exposes Collection secret</td>
       <td>v4.5.1</td>
@@ -161,8 +171,37 @@
     </tr>
   </tbody>
 </table>
+<h2 id="v455">v4.5.5</h2>
+<p>Date Released: 5 Dec 2025</p>
+<table>
+  <thead>
+    <tr>
+      <th width="120">Change Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Security</td>
+      <td>
+        <p><b>Product security and stability</b>: We've mitigated a high security vulnerability:</p>
+        <ul>
+          <li>Upgraded glob from 10.4.5 to 10.5.0 in App Designer for <a href="https://www.cve.org/CVERecord?id=CVE-2025-64756">CVE-2025-64756</a>.</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td>Team Support 17330: <b>New input validation restrict previously valid entity names that contain spaces, affecting adding or editing data sources at design-time</b>: <i>When you add or edit data sources in App Designer, entity names containing spaces (such as "SQL Query") are rejected by validation, preventing you from saving previously valid configurations.</i><br>The overly restrictive input validation introduced in v4.5.4 has been removed. Entity names now accept spaces and other characters that match database naming requirements, restoring the ability to use naming patterns that were valid in earlier versions.</td>
+    </tr>
+  </tbody>
+</table>
 <h2 id="v454">v4.5.4</h2>
 <p>Date Released: 26 Nov 2025</p>
+<div class="CAUTION">
+<h5>Caution</h5>
+<p>Do not use v4.5.4 if you use spaces in entity names in App Designer. See Known Issues for details.</p>
+</div>
 <table>
   <thead>
     <tr>
@@ -203,7 +242,13 @@
     </tr>
     <tr>
       <td>Enhancement</td>
-      <td><b>Deployment Manager API</b>: New zip-based import and export endpoints allow solution developers to handle their own repository authentication without being limited to Git. Existing Git-based endpoints have been enhanced to support nested repository URLs for Enterprise GitLab compatibility.</td>
+      <td>
+        <b>Deployment At Scale - Enhanced Authentication:</b>
+        <ul>
+          <li>New zip-based import and export endpoints allow solution developers to handle their own repository authentication without being limited to Git.</li>
+          <li>Existing Git-based endpoints have been enhanced to support nested repository URLs for Enterprise GitLab compatibility.</li>
+        </ul>
+      </td>
     </tr>
     <tr>
       <td>Enhancement</td>
@@ -211,13 +256,13 @@
     </tr>
     <tr>
       <td>Enhancement</td>
-      <td>Team Support 17151: <b>Recurrence Schedule Handling After Stream Host Restart</b>: When a Stream Host restarts, Data Streams wait for their next scheduled occurrence rather than executing immediately, ensuring predictable execution patterns and not overloading the Stream Host. Execution behavior examples were added to the <a href="/src/how-tos/data-streams/manage-recurrent-data-streams.html">Recurrent Data Streams</a> article.</td>
+      <td>Team Support 17151: <b>Recurrence Schedule Handling After Stream Host Restart</b>: When a Stream Host restarts, Data Streams wait for their next scheduled occurrence rather than executing immediately, ensuring predictable execution patterns and not overloading the Stream Host. Execution behavior examples were added to the <a href="../how-tos/data-streams/manage-recurrent-data-streams.html">Recurrent Data Streams</a> article.</td>
     </tr>
     <tr>
       <td>Fix</td>
       <td><b>Package Manager</b>:
         <ul>
-          <li><b><a href="/src/how-tos/agents/packaging-agents.html#include-multilingual-support">Multilingual Support</a></b>: <i>Dropdown options and pre-filled field values are not translated to your selected language, appearing only in English regardless of your preferred language.</i><br>Dropdown options and pre-filled field values are now included in the translation system using TranslationMap properties.</li>
+          <li><b><a href="../how-tos/agents/packaging-agents.html#include-multilingual-support">Multilingual Support</a></b>: <i>Dropdown options and pre-filled field values are not translated to your selected language, appearing only in English regardless of your preferred language.</i><br>Dropdown options and pre-filled field values are now included in the translation system using TranslationMap properties.</li>
           <li><b>Application Stability</b>: <i>You experience unexpected crashes when deleting grid controls or creating new connector packages, causing loss of work.</i><br>Package Manager now gracefully handles errors without terminating, protecting your work and providing diagnostic information for troubleshooting.</li>
           <li>Team Support 15214: <b>Sub-Group Sort Index Persistence</b>: <i>When you reorder sub-groups in settings, the ordering reverts to the original configuration after saving, preventing you from organizing settings in your preferred logical order.</i><br>Sub-group sort index values now persist correctly after saving.</li>
         </ul>
@@ -502,7 +547,7 @@
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: December 05, 2025</em></small></p>
+    <p><small><em>Last modified: December 04, 2025</em></small></p>
   </div>
 </article>
 
