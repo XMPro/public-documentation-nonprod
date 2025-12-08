@@ -31419,6 +31419,16 @@
       "version": ""
     },
     {
+      "type": "Conceptual",
+      "source_relative_path": "test-pipeline-exclusion.md",
+      "output": {
+        ".html": {
+          "relative_path": "test-pipeline-exclusion.html"
+        }
+      },
+      "version": ""
+    },
+    {
       "type": "Toc",
       "source_relative_path": "toc.yml",
       "output": {
