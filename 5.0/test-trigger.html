@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Pipeline Exclusion Test | XMPro </title>
+      <title>Test Pipeline Trigger | XMPro </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Pipeline Exclusion Test | XMPro ">
+      <meta name="title" content="Test Pipeline Trigger | XMPro ">
       <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
       
       <link rel="icon" href="images/favicon.png">
@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/test-pipeline-exclusion.md&amp;version=GBrelease-4.1.1&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/test-trigger.md&amp;version=GBrelease-4.0&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -71,13 +71,13 @@
         </div>
 
         <article data-uid="">
-<h1 id="pipeline-exclusion-test">Pipeline Exclusion Test</h1>
+<h1 id="test-pipeline-trigger">Test Pipeline Trigger</h1>
 
-<p>This file is created to test that the pipeline does NOT trigger on patch release branches.</p>
-<p>Branch: release-4.1.1
-Expected: Pipeline should NOT trigger due to the exclude pattern release-<em>.</em>.*
-Date: 2025-12-08</p>
-<p>This is a temporary test file that can be deleted after verification.</p>
+<p>This is a test file to verify pipeline triggers on release-4.x branch.</p>
+<p>Date: 2025-12-08
+Branch: release-4.x
+Expected: Pipeline should trigger since this branch is not excluded</p>
+<p>This file can be deleted after testing.</p>
 
 
   <div class="last-modified">
