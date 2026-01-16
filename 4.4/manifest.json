@@ -32667,16 +32667,6 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "src/resources/integrations.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/resources/integrations.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
       "source_relative_path": "src/resources/platform-security.md",
       "output": {
         ".html": {
