@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../../">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/concepts/insights/data-delivery-insights.md&amp;version=GBrels-4.0&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/concepts/insights/data-delivery-insights.md&amp;version=GBmain&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -102,7 +102,7 @@
 <p>If there is a single batch, data is split into 80 separate messages by an agent within the Data Stream, however, the next agent processes the data significantly more slowly than the previous agent which causes buffering to occur, with 80 messages coming through almost immediately the SH is unable to buffer some messages and therefore drops them.</p>
 <h3 id="recent-improvement">Recent Improvement</h3>
 <p>The v4.4.0 release includes a Stream Host with superior &quot;buffer&quot; functionality.</p>
-<p>The new <a href="https://xmpro.gitbook.io/window">Window</a> Agent supports a delay in transmitting events to the next Agent in a Data Stream. This enhancement aims to mitigate the risk of excessive event data buffering within the Stream Host. The flow of events can be regulated to prevent potential overload scenarios, ensuring smoother data processing and system stability.</p>
+<p>The new <a href="https://xmpro.gitbook.io/integrations/window">Window</a> Agent supports a delay in transmitting events to the next Agent in a Data Stream. This enhancement aims to mitigate the risk of excessive event data buffering within the Stream Host. The flow of events can be regulated to prevent potential overload scenarios, ensuring smoother data processing and system stability.</p>
 <h2 id="data-stream-design-considerations-and-patterns">Data Stream Design Considerations and Patterns</h2>
 <p>When discussing the Data Stream design there are other considerations that, by way of example, point to how patterns could be applied as the design depends on the data profile and orchestrating the data.</p>
 <h3 id="not-all-ingested-messages-are-processed">Not all ingested messages are processed</h3>
@@ -122,7 +122,7 @@
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: December 11, 2025</em></small></p>
+    <p><small><em>Last modified: February 20, 2026</em></small></p>
   </div>
 </article>
 

@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../../../">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/complete-installation/install-stream-host/azure-terraform.md&amp;version=GBrels-4.0&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/complete-installation/install-stream-host/azure-terraform.md&amp;version=GBmain&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -87,19 +87,29 @@
         <article data-uid="">
 <h1 id="stream-host-azure-terraform">Stream Host Azure Terraform</h1>
 
-<h2 id="introduction">Introduction</h2>
-<p>This guide covers deploying XMPro Stream Host using the Azure Terraform module. You can deploy Stream Host either as part of the full XMPro platform or as a standalone container that connects to an existing Data Stream Designer instance.</p>
-<h2 id="prerequisites">Prerequisites</h2>
-<p>Ensure you have completed the <a href="../../deployment/azure-terraform/index.html#prerequisites">Azure Terraform prerequisites</a>, which cover:</p>
+<h2 id="overview">Overview</h2>
+<p>This guide explains how to deploy an XMPro Stream Host using the Azure Terraform module. A Stream Host is a containerized runtime that executes data streams created in Data Stream Designer (DS). You can deploy a single Stream Host or multiple Stream Hosts for horizontal scaling.</p>
+<p>The Azure Terraform module uses a <strong>layered architecture</strong> that separates infrastructure from applications. This approach allows you to:</p>
 <ul>
-<li>Terraform installation</li>
+<li>Deploy a Stream Host as part of the full XMPro platform deployment</li>
+<li>Deploy multiple Stream Hosts for horizontal scaling, edge processing, or regional distribution</li>
+<li>Update Stream Hosts independently without affecting the underlying infrastructure</li>
+</ul>
+<p>This guide covers both deploying a Stream Host with the full platform and deploying additional Stream Hosts to connect to an existing DS instance.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>This section lists the requirements for deploying a Stream Host using Terraform. The requirements differ depending on whether you are deploying as part of a full platform installation or connecting to an existing DS instance.</p>
+<p>Before deploying a Stream Host, ensure you have completed the <a href="../../deployment/azure-terraform/index.html#prerequisites">Azure Terraform prerequisites</a>, which cover:</p>
+<ul>
+<li>Terraform version 1.0 or later</li>
 <li>Azure CLI setup and authentication</li>
 <li>Azure subscription requirements</li>
 </ul>
-<h3 id="for-standalone-deployment">For Standalone Deployment</h3>
+<h3 id="for-standalone-stream-host-deployment">For Standalone Stream Host Deployment</h3>
+<p>When connecting a Stream Host to an existing DS instance rather than deploying the full platform, you need additional information from your DS administrator.</p>
+<p>If you are connecting a Stream Host to an existing DS instance, you also need:</p>
 <ul>
-<li>An existing XMPro Data Stream Designer instance</li>
-<li>Collection ID and Secret from your DS instance</li>
+<li>The URL of your existing DS instance</li>
+<li>Collection ID and Collection Secret from your DS instance (see <a href="#getting-collection-credentials">Getting Collection Credentials</a>)</li>
 </ul>
 <h3 id="sizing-recommendations">Sizing Recommendations</h3>
 <p>The Terraform module allows you to configure Stream Host resources based on your workload:</p>
@@ -142,187 +152,397 @@
 <h5>Tip</h5>
 <p>Start with the default configuration (1 CPU, 4 GB RAM) and scale up based on monitoring metrics.</p>
 </div>
-<h2 id="deployment-options">Deployment Options</h2>
-<h3 id="option-1-with-full-xmpro-platform">Option 1: With Full XMPro Platform</h3>
-<p>When deploying the complete XMPro platform, Stream Host is automatically included. See the <a href="https://github.com/XMPro/terraform-xmpro-azure/tree/main/examples/basic">basic example</a> in the terraform-xmpro-azure repository.</p>
-<h3 id="option-2-standalone-stream-host">Option 2: Standalone Stream Host</h3>
-<p>To deploy only Stream Host to connect to an existing DS instance, use the dedicated <a href="https://github.com/XMPro/terraform-xmpro-azure/tree/main/examples/stream-host">Stream Host example</a> from the terraform-xmpro-azure repository.</p>
-<p>The example includes:</p>
+<h2 id="layered-architecture-overview">Layered Architecture Overview</h2>
+<p>The XMPro Terraform module uses a <strong>layered architecture</strong> that separates infrastructure from applications:</p>
+<pre><code class="lang-text">terraform-xmpro-azure/
+├── _infra/                    # Infrastructure layer (deploy first)
+│   └── ...                    # Resource groups, databases, storage, etc.
+├── _app/                      # Application layer (deploy second)
+│   └── stream-host-container/ # Stream Host module
+└── examples/
+    └── layered/
+        ├── infra/             # Infrastructure configuration
+        └── app/               # Application configuration (includes Stream Host)
+</code></pre>
+<p><strong>Benefits:</strong></p>
 <ul>
-<li>Complete Terraform configuration files</li>
-<li>Variable definitions with defaults</li>
-<li>Step-by-step deployment instructions</li>
-<li>Troubleshooting guide</li>
+<li><strong>Independent Lifecycles</strong>: Update a Stream Host without affecting infrastructure</li>
+<li><strong>Scalable</strong>: Deploy multiple Stream Hosts easily</li>
+<li><strong>Team Separation</strong>: Platform teams manage infrastructure, dev teams manage applications</li>
 </ul>
-<h2 id="quick-start">Quick Start</h2>
-<ol>
-<li><p><strong>Clone the repository</strong></p>
-<pre><code class="lang-bash">git clone https://github.com/XMPro/terraform-xmpro-azure.git
-cd terraform-xmpro-azure/examples/stream-host
-</code></pre>
-</li>
-<li><p><strong>Configure your deployment</strong></p>
-<pre><code class="lang-bash"># Copy the example variables file
-# Linux/Mac:
+<p>The following deployment options show how to use this layered architecture for different scenarios.</p>
+<h2 id="deployment-options">Deployment Options</h2>
+<h3 id="option-1-stream-host-with-full-xmpro-platform">Option 1: Stream Host with Full XMPro Platform</h3>
+<p>When deploying the complete XMPro platform using the layered architecture, Stream Host is automatically included when <code>create_stream_host = true</code> (the default).</p>
+<h4 id="step-1-deploy-infrastructure-layer">Step 1: Deploy Infrastructure Layer</h4>
+<pre><code class="lang-bash">cd examples/layered/infra
 cp terraform.tfvars.example terraform.tfvars
+# Edit terraform.tfvars with your configuration
 
-# Windows:
-copy terraform.tfvars.example terraform.tfvars
+terraform init
+terraform plan
+terraform apply
 
-# Edit with your specific values
-nano terraform.tfvars   # Linux/Mac
-notepad terraform.tfvars # Windows
+# Save outputs for application layer
+terraform output -json &gt; ../app/infra-outputs.json
 </code></pre>
-</li>
-<li><p><strong>Deploy</strong></p>
-<pre><code class="lang-bash">terraform init
+<h4 id="step-2-deploy-application-layer-includes-stream-host">Step 2: Deploy Application Layer (includes Stream Host)</h4>
+<pre><code class="lang-bash">cd ../app
+cp terraform.tfvars.example terraform.tfvars
+# Edit terraform.tfvars using outputs from Step 1
+
+terraform init
 terraform plan
 terraform apply
 </code></pre>
-</li>
-</ol>
-<p>For detailed configuration options and examples, refer to the <a href="https://github.com/XMPro/terraform-xmpro-azure/blob/main/examples/stream-host/README.md">Stream Host example README</a>.</p>
-<h2 id="getting-collection-credentials">Getting Collection Credentials</h2>
-<p>For standalone deployments, you need collection credentials from Data Stream Designer:</p>
-<ol>
-<li>Open your XMPro Data Stream Designer</li>
-<li>Navigate to <strong>Collections</strong></li>
-<li>Select or create a collection for the Stream Host</li>
-<li>Go to <strong>Settings</strong> tab</li>
-<li>Copy the <strong>Collection ID</strong> and <strong>Collection Secret</strong></li>
-</ol>
-<p><img src="../../../images/image-1489.png" alt="Collection details in Data Stream Designer"></p>
-<h2 id="key-configuration-variables">Key Configuration Variables</h2>
-<p>The Stream Host module supports various configuration options. Here are the most important ones:</p>
-<h3 id="resource-allocation">Resource Allocation</h3>
+<p>The application layer automatically:</p>
 <ul>
-<li><strong>stream_host_cpu</strong>: CPU cores (0.25 to 4)</li>
-<li><strong>stream_host_memory</strong>: Memory in GB (0.5 to 16)</li>
+<li>Creates a Stream Host container instance</li>
+<li>Connects it to the deployed DS</li>
+<li>Configures monitoring and logging</li>
 </ul>
-<h3 id="docker-image-variants">Docker Image Variants</h3>
-<ul>
-<li><strong>stream_host_variant</strong>: Choose the Docker image variant (default: <code>&quot;&quot;</code> which is the same as <code>&quot;bookworm-slim&quot;</code>, other options: <code>&quot;bookworm-slim-python3.12&quot;</code>, <code>&quot;alpine3.21&quot;</code>)</li>
-</ul>
-<h3 id="environment-variables">Environment Variables</h3>
-<ul>
-<li><strong>SH_PIP_MODULES</strong>: Python packages to install (only available with <code>bookworm-slim-python3.12</code> variant)</li>
-<li><strong>ADDITIONAL_INSTALLS</strong>: System packages to install (works with all variants - APT for Debian, APK for Alpine)</li>
-<li><strong>Custom variables</strong>: Any additional environment variables (works with all variants)</li>
-</ul>
-<p>For a complete list of variables and configuration options, see the <a href="https://github.com/XMPro/terraform-xmpro-azure/tree/main/modules/stream-host-container">module documentation</a>.</p>
-<h2 id="common-configuration-examples">Common Configuration Examples</h2>
-<h3 id="python-package-installation">Python Package Installation</h3>
-<p>Install Python packages for data processing:</p>
-<pre><code class="lang-bash"># In your terraform.tfvars
-# First, specify the Python variant
-stream_host_variant = &quot;bookworm-slim-python3.12&quot;
+<h3 id="option-2-multiple-stream-hosts">Option 2: Multiple Stream Hosts</h3>
+<p>Deploy additional Stream Host containers for horizontal scaling, edge processing, or regional deployments.</p>
+<p>In your <code>app/terraform.tfvars</code>, configure the <code>stream_hosts</code> map:</p>
+<pre><code class="lang-hcl"># Primary Stream Host (always created when create_stream_host = true)
+create_stream_host = true
 
-# Then configure pip packages (only works with Python variant)
-environment_variables = {
-  &quot;SH_PIP_MODULES&quot; = &quot;pandas numpy scikit-learn&quot;
+# Additional Stream Hosts
+stream_hosts = {
+  &quot;sh01&quot; = {
+    collection_id     = &quot;your-collection-id-from-ds&quot;
+    collection_secret = &quot;your-collection-secret-from-ds&quot;
+    cpu               = 2
+    memory            = 8
+    variant           = &quot;bookworm-slim-python3.12&quot;
+    environment_variables = {
+      SH_PIP_MODULES = &quot;pandas numpy scikit-learn&quot;
+    }
+  }
+  &quot;sh02&quot; = {
+    collection_id     = &quot;another-collection-id&quot;
+    collection_secret = &quot;another-collection-secret&quot;
+    cpu               = 1
+    memory            = 4
+  }
+}
+</code></pre>
+<p>Each Stream Host requires unique collection credentials from DS.</p>
+<h2 id="getting-collection-credentials">Getting Collection Credentials</h2>
+<p>For deployments connecting a Stream Host to an existing DS instance, you need collection credentials. Follow these steps in DS:</p>
+<ol>
+<li>Click on <strong>Collections</strong> in the left navigation menu</li>
+<li>Select a Collection (or create a new one for this Stream Host)</li>
+<li>Click the copy button next to the <strong>Id</strong> field to copy the Collection ID</li>
+<li>Click the copy button next to the <strong>Key</strong> field to copy the Collection Secret</li>
+</ol>
+<p><img src="../../../images/image-1489.png" alt="Collection details in DS"></p>
+<h2 id="key-configuration-variables">Key Configuration Variables</h2>
+<p>The following tables describe the Terraform variables used to configure Stream Host deployments. These variables are set in your <code>app/terraform.tfvars</code> file.</p>
+<h3 id="stream-host-variables-application-layer">Stream Host Variables (Application Layer)</h3>
+<p>These variables control whether and how Stream Hosts are created:</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>create_stream_host</code></td>
+<td>Create primary Stream Host</td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td><code>stream_hosts</code></td>
+<td>Map of additional Stream Hosts</td>
+<td><code>{}</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="per-stream-host-configuration">Per-Stream Host Configuration</h3>
+<p>Each Stream Host in the <code>stream_hosts</code> map accepts the following configuration options:</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cpu</code></td>
+<td>CPU cores (0.25 to 4)</td>
+<td><code>1</code></td>
+</tr>
+<tr>
+<td><code>memory</code></td>
+<td>Memory in GB (0.5 to 16)</td>
+<td><code>4</code></td>
+</tr>
+<tr>
+<td><code>variant</code></td>
+<td>Docker image variant</td>
+<td><code>&quot;&quot;</code></td>
+</tr>
+<tr>
+<td><code>collection_id</code></td>
+<td>Collection ID from DS</td>
+<td>Required</td>
+</tr>
+<tr>
+<td><code>collection_secret</code></td>
+<td>Collection Secret from DS</td>
+<td>Required</td>
+</tr>
+<tr>
+<td><code>environment_variables</code></td>
+<td>Custom environment variables</td>
+<td><code>{}</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="docker-image-variants">Docker Image Variants</h3>
+<p>Stream Host is available in multiple Docker image variants optimized for different use cases:</p>
+<table>
+<thead>
+<tr>
+<th>Variant</th>
+<th>Description</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&quot;&quot;</code> (default)</td>
+<td>Debian Bookworm slim</td>
+<td>Standard deployments</td>
+</tr>
+<tr>
+<td><code>&quot;bookworm-slim-python3.12&quot;</code></td>
+<td>Debian with Python 3.12</td>
+<td>Python agent support</td>
+</tr>
+<tr>
+<td><code>&quot;alpine3.21&quot;</code></td>
+<td>Alpine Linux</td>
+<td>Lightweight, smaller image</td>
+</tr>
+</tbody>
+</table>
+<h2 id="configuration-examples">Configuration Examples</h2>
+<p>The following examples demonstrate common Stream Host configurations for different deployment scenarios.</p>
+<h3 id="python-package-installation">Python Package Installation</h3>
+<p>Install Python packages for data processing (requires Python variant):</p>
+<pre><code class="lang-hcl"># In your app/terraform.tfvars
+stream_hosts = {
+  &quot;python-sh&quot; = {
+    collection_id     = &quot;your-collection-id&quot;
+    collection_secret = &quot;your-collection-secret&quot;
+    cpu               = 2
+    memory            = 8
+    variant           = &quot;bookworm-slim-python3.12&quot;
+    environment_variables = {
+      SH_PIP_MODULES = &quot;pandas numpy scikit-learn tensorflow&quot;
+    }
+  }
 }
 </code></pre>
 <h3 id="system-dependencies">System Dependencies</h3>
 <p>Install additional system packages:</p>
-<pre><code class="lang-bash"># In your terraform.tfvars
-# Use Python variant if you need both Python and system packages
-stream_host_variant = &quot;bookworm-slim-python3.12&quot;
-
-environment_variables = {
-  &quot;ADDITIONAL_INSTALLS&quot; = &quot;git build-essential python3-dev&quot;  # Works with all variants
-  &quot;SH_PIP_MODULES&quot;     = &quot;pandas numpy scikit-learn tensorflow&quot;  # Only works with Python variant
+<pre><code class="lang-hcl">stream_hosts = {
+  &quot;custom-sh&quot; = {
+    collection_id     = &quot;your-collection-id&quot;
+    collection_secret = &quot;your-collection-secret&quot;
+    variant           = &quot;bookworm-slim-python3.12&quot;
+    environment_variables = {
+      ADDITIONAL_INSTALLS = &quot;git build-essential python3-dev&quot;
+      SH_PIP_MODULES      = &quot;pandas numpy&quot;
+    }
+  }
 }
 </code></pre>
 <div class="IMPORTANT">
 <h5>Important</h5>
-<p>The <code>SH_PIP_MODULES</code> and <code>PIP_REQUIREMENTS_PATH</code> environment variables only work with the <code>bookworm-slim-python3.12</code> variant. The <code>ADDITIONAL_INSTALLS</code> variable works with all variants (APT for Debian variants, APK for Alpine). See <a href="docker.html#available-variants">Docker Variants documentation</a> for details.</p>
+<p>The <code>SH_PIP_MODULES</code> environment variable only works with the <code>bookworm-slim-python3.12</code> variant. The <code>ADDITIONAL_INSTALLS</code> variable works with all variants (APT for Debian variants, APK for Alpine). See <a href="docker.html#available-variants">Docker Variants documentation</a> for details.</p>
 </div>
-<h3 id="resource-scaling">Resource Scaling</h3>
-<p>Adjust resources based on your workload requirements:</p>
-<pre><code class="lang-bash"># In your terraform.tfvars
-# Medium workload
-stream_host_cpu    = 2
-stream_host_memory = 8
-
-# Large workload
-stream_host_cpu    = 4
-stream_host_memory = 16
+<h3 id="horizontal-scaling">Horizontal Scaling</h3>
+<p>Deploy multiple identical Stream Hosts for load distribution:</p>
+<pre><code class="lang-hcl">stream_hosts = {
+  &quot;sh-worker-01&quot; = {
+    collection_id     = &quot;collection-1-id&quot;
+    collection_secret = &quot;collection-1-secret&quot;
+    cpu               = 4
+    memory            = 16
+  }
+  &quot;sh-worker-02&quot; = {
+    collection_id     = &quot;collection-2-id&quot;
+    collection_secret = &quot;collection-2-secret&quot;
+    cpu               = 4
+    memory            = 16
+  }
+  &quot;sh-worker-03&quot; = {
+    collection_id     = &quot;collection-3-id&quot;
+    collection_secret = &quot;collection-3-secret&quot;
+    cpu               = 4
+    memory            = 16
+  }
+}
 </code></pre>
-<p>For more advanced configurations including:</p>
-<ul>
-<li>Volume mounts</li>
-<li>Monitoring integration</li>
-<li>Multiple Stream Host deployments</li>
-<li>Custom networking</li>
-</ul>
-<p>See the comprehensive examples in the <a href="https://github.com/XMPro/terraform-xmpro-azure/tree/main/examples/stream-host">terraform-xmpro-azure repository</a>.</p>
+<h3 id="edge-processing-lightweight">Edge Processing (Lightweight)</h3>
+<p>Deploy lightweight Stream Hosts using Alpine variant:</p>
+<pre><code class="lang-hcl">stream_hosts = {
+  &quot;edge-sh&quot; = {
+    collection_id     = &quot;edge-collection-id&quot;
+    collection_secret = &quot;edge-collection-secret&quot;
+    cpu               = 0.5
+    memory            = 1
+    variant           = &quot;alpine3.21&quot;
+  }
+}
+</code></pre>
+<h3 id="stream-host-alerting">Stream Host Alerting</h3>
+<p>Enable Azure Monitor alerts for Stream Host containers:</p>
+<pre><code class="lang-hcl"># In your app/terraform.tfvars
+stream_host_enable_alerting       = true
+stream_host_alert_email_addresses = [&quot;admin@mycompany.com&quot;, &quot;ops@mycompany.com&quot;]
+stream_host_enable_cpu_alerts     = true
+stream_host_cpu_alert_threshold   = 80
+stream_host_enable_memory_alerts  = true
+stream_host_memory_alert_threshold = 85
+stream_host_enable_restart_alerts = true
+stream_host_enable_stop_alerts    = true
+</code></pre>
+<h2 id="quick-start">Quick Start</h2>
+<p>Follow these steps to deploy a Stream Host as part of the full XMPro platform using the layered architecture.</p>
+<ol>
+<li><p><strong>Clone the repository</strong></p>
+<pre><code class="lang-bash">git clone https://github.com/XMPro/terraform-xmpro-azure.git
+cd terraform-xmpro-azure/examples/layered
+</code></pre>
+</li>
+<li><p><strong>Deploy Infrastructure</strong></p>
+<pre><code class="lang-bash">cd infra
+cp terraform.tfvars.example terraform.tfvars
+# Edit terraform.tfvars with your values
+
+terraform init
+terraform apply
+terraform output -json &gt; ../app/infra-outputs.json
+</code></pre>
+</li>
+<li><p><strong>Deploy Applications (with Stream Host)</strong></p>
+<pre><code class="lang-bash">cd ../app
+cp terraform.tfvars.example terraform.tfvars
+# Edit terraform.tfvars using infrastructure outputs
+
+terraform init
+terraform apply
+</code></pre>
+</li>
+<li><p><strong>Verify Deployment</strong></p>
+<pre><code class="lang-bash"># Get DS URL to verify Stream Host connection
+terraform output ds_app_url
+
+# View Stream Host container status
+az container show --resource-group &lt;rg-name&gt; --name &lt;container-name&gt;
+</code></pre>
+</li>
+</ol>
+<h2 id="updating-stream-host">Updating Stream Host</h2>
+<p>One of the key benefits of the layered architecture is independent application updates:</p>
+<pre><code class="lang-bash">cd examples/layered/app
+
+# Update terraform.tfvars (e.g., change imageversion or add stream hosts)
+# imageversion = &quot;{{VERSION}}&quot;
+
+terraform plan
+terraform apply
+</code></pre>
+<p>Infrastructure remains unchanged while Stream Host is updated.</p>
 <h2 id="troubleshooting">Troubleshooting</h2>
+<p>This section covers common issues you may encounter when deploying or running Stream Hosts and how to resolve them.</p>
 <h3 id="stream-host-not-connecting">Stream Host Not Connecting</h3>
-<p>If the Stream Host doesn't appear in Data Stream Designer:</p>
+<p>If the Stream Host doesn't appear in DS:</p>
 <ol>
 <li><p><strong>Check container logs</strong></p>
 <pre><code class="lang-bash">az container logs --resource-group &lt;rg-name&gt; --name &lt;container-name&gt;
 </code></pre>
 </li>
 <li><p><strong>Verify environment variables</strong></p>
-<pre><code class="lang-bash">az container show --resource-group &lt;rg-name&gt; --name &lt;container-name&gt; --query &quot;containers[0].environmentVariables&quot;
+<pre><code class="lang-bash">az container show --resource-group &lt;rg-name&gt; --name &lt;container-name&gt; \
+  --query &quot;containers[0].environmentVariables&quot;
 </code></pre>
 </li>
 <li><p><strong>Check network connectivity</strong></p>
 <ul>
-<li>Ensure DS server URL is accessible</li>
+<li>Ensure the DS server URL is accessible</li>
 <li>Verify no firewall blocking outbound connections</li>
 </ul>
 </li>
 </ol>
-<h3 id="other-common-issues">Other Common Issues</h3>
-<p>For comprehensive troubleshooting including:</p>
+<h3 id="python-package-installation-failures">Python Package Installation Failures</h3>
+<p>If Python packages fail to install in your Stream Host container, check the following:</p>
 <ul>
-<li>Python package installation failures (ensure you're using <code>bookworm-slim-python3.12</code> variant)</li>
-<li>Resource allocation problems</li>
-<li>Network connectivity issues</li>
-<li>Container restart loops</li>
+<li>Ensure you're using the <code>bookworm-slim-python3.12</code> variant</li>
+<li>Check container logs for pip installation errors</li>
+<li>Verify package names are correct</li>
 </ul>
-<p>Refer to the <a href="https://github.com/XMPro/terraform-xmpro-azure/blob/main/examples/stream-host/README.md#troubleshooting">troubleshooting section</a> in the Stream Host example.</p>
+<h3 id="resource-allocation-issues">Resource Allocation Issues</h3>
+<p>If containers fail to start or restart frequently:</p>
+<ol>
+<li>Check Azure Container Instances limits for your subscription</li>
+<li>Review container logs for out-of-memory errors</li>
+<li>Increase CPU/memory allocation in terraform.tfvars</li>
+</ol>
+<p>For comprehensive troubleshooting, see the <a href="../../deployment/azure-terraform/troubleshooting.html">Azure Terraform Troubleshooting Guide</a>.</p>
 <h2 id="best-practices">Best Practices</h2>
+<p>Follow these recommendations for successful Stream Host deployments in production environments.</p>
 <ol>
 <li><p><strong>Start Simple</strong></p>
 <ul>
-<li>Use the example configuration as a starting point</li>
-<li>Test with minimal configuration first</li>
+<li>Use the default configuration initially</li>
 <li>Add complexity incrementally</li>
+<li>Test with one Stream Host before scaling</li>
 </ul>
 </li>
 <li><p><strong>Version Control</strong></p>
 <ul>
-<li>Store your Terraform configurations in version control</li>
-<li>Use <code>.gitignore</code> for sensitive files</li>
+<li>Store Terraform configurations in version control</li>
+<li>Use <code>.gitignore</code> for sensitive files (terraform.tfvars with secrets)</li>
 <li>Tag deployments for easy rollback</li>
 </ul>
 </li>
 <li><p><strong>Security</strong></p>
 <ul>
 <li>Never commit credentials to version control</li>
-<li>Use Azure Key Vault for secrets</li>
-<li>Enable managed identities where possible</li>
+<li>Use environment variables for sensitive values:
+<pre><code class="lang-bash">export TF_VAR_db_admin_password=&quot;YourSecurePassword&quot;
+</code></pre>
+</li>
+<li>Use Azure Key Vault for secrets in production</li>
 </ul>
 </li>
 <li><p><strong>Monitoring</strong></p>
 <ul>
-<li>Always configure Application Insights</li>
-<li>Set up alerts for critical metrics</li>
-<li>Review logs regularly</li>
+<li>Enable Application Insights (default)</li>
+<li>Configure alerting for production workloads</li>
+<li>Review container logs regularly</li>
 </ul>
 </li>
 </ol>
-<h2 id="complete-example-repository">Complete Example Repository</h2>
-<p>All the code examples, configuration files, and detailed documentation for Stream Host deployment are available in the <a href="https://github.com/XMPro/terraform-xmpro-azure">terraform-xmpro-azure</a> repository:</p>
+<h2 id="module-reference">Module Reference</h2>
+<p>For complete variable reference and advanced configurations:</p>
 <ul>
-<li><strong><a href="https://github.com/XMPro/terraform-xmpro-azure/tree/main/examples/stream-host">Stream Host Example</a></strong> - Complete standalone deployment</li>
-<li><strong><a href="https://github.com/XMPro/terraform-xmpro-azure/tree/main/examples/basic">Basic Platform Example</a></strong> - Full platform with Stream Host</li>
-<li><strong><a href="https://github.com/XMPro/terraform-xmpro-azure/tree/main/modules/stream-host-container">Module Documentation</a></strong> - Detailed variable reference</li>
+<li><strong><a href="https://github.com/XMPro/terraform-xmpro-azure/blob/main/README.md">Layered Architecture README</a></strong> - Complete module documentation</li>
+<li><strong><a href="https://github.com/XMPro/terraform-xmpro-azure/tree/main/examples/layered/app">Application Layer Example</a></strong> - Full terraform.tfvars.example</li>
+<li><strong><a href="https://github.com/XMPro/terraform-xmpro-azure/tree/main/modules/_app/stream-host-container">Stream Host Container Module</a></strong> - Module source code</li>
 </ul>
 <h2 id="related-documentation">Related Documentation</h2>
+<p>These resources provide additional context and alternative deployment methods:</p>
 <ul>
 <li><a href="docker.html">Stream Host Docker Installation</a> - For standalone Docker deployments</li>
 <li><a href="../../../concepts/collection.html">Collection and Stream Host Concepts</a> - Understanding Stream Host architecture</li>
@@ -331,7 +551,7 @@ stream_host_memory = 16
 <h2 id="next-steps">Next Steps</h2>
 <p>After deployment:</p>
 <ol>
-<li>Access Data Stream Designer to verify Stream Host connection</li>
+<li>Access DS to verify Stream Host connection</li>
 <li>Create your first data stream</li>
 <li>Configure agents and connectors</li>
 <li>Monitor performance and adjust resources as needed</li>
@@ -340,7 +560,7 @@ stream_host_memory = 16
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: December 11, 2025</em></small></p>
+    <p><small><em>Last modified: February 20, 2026</em></small></p>
   </div>
 </article>
 

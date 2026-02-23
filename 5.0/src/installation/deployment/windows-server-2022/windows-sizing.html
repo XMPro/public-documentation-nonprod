@@ -2,21 +2,21 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Sizing Guideline | XMPro </title>
+      <title>Sizing Recommendations | XMPro </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Sizing Guideline | XMPro ">
+      <meta name="title" content="Sizing Recommendations | XMPro ">
       <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
       
-      <link rel="icon" href="../../images/favicon.png">
-      <link rel="stylesheet" href="../../public/docfx.min.css">
-      <link rel="stylesheet" href="../../public/main.css">
-      <meta name="docfx:navrel" content="../../toc.html">
-      <meta name="docfx:tocrel" content="../toc.html">
+      <link rel="icon" href="../../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../../toc.html">
+      <meta name="docfx:tocrel" content="../../../toc.html">
       
-      <meta name="docfx:rel" content="../../">
+      <meta name="docfx:rel" content="../../../../">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/resources/sizing-guideline.md&amp;version=GBrels-4.0&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/deployment/windows-server-2022/windows-sizing.md&amp;version=GBmain&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -30,7 +30,7 @@
       <meta name="loc:copy" content="Copy">
       <meta name="loc:downloadPdf" content="Download PDF">
 
-      <script type="module" src="./../../public/docfx.min.js"></script>
+      <script type="module" src="./../../../../public/docfx.min.js"></script>
 
       <script>
         const theme = localStorage.getItem('theme') || 'auto'
@@ -43,8 +43,8 @@
     <header class="bg-body border-bottom">
       <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
         <div class="container-xxl flex-nowrap">
-          <a class="navbar-brand" href="../../index.html">
-            <img id="logo" class="svg" src="../../images/logo-light.png" alt="">
+          <a class="navbar-brand" href="../../../../index.html">
+            <img id="logo" class="svg" src="../../../../images/logo-light.png" alt="">
             
           </a>
           <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
@@ -85,9 +85,10 @@
         </div>
 
         <article data-uid="">
-<h1 id="sizing-guideline">Sizing Guideline</h1>
+<h1 id="sizing-recommendations">Sizing Recommendations</h1>
 
-<p>This is a guideline for the compute resources needed for the different components in a deployment.</p>
+<p>This guide provides recommendations for Windows Server resource sizing when deploying XMPro.</p>
+<h2 id="overview">Overview</h2>
 <p>Small, medium, and large sizing estimates are provided. The small option starts with the minimum recommended resources and, generally, each subsequent size doubles the number of CPU cores and available RAM. Not all components experience the same increase in load, so the estimates may not increase at the same rate for all components.</p>
 <p>Many factors influence the number of Apps and Data Streams a deployment can effectively run. These factors include:</p>
 <ul>
@@ -105,7 +106,7 @@
 <li>~15 Stream Hosts,</li>
 <li>serving data and triggering recommendations for ~10 Apps</li>
 </ul>
-<h2 id="on-premise">On-Premise</h2>
+<h2 id="windows-server-sizing">Windows Server Sizing</h2>
 <table>
 <thead>
 <tr>
@@ -150,124 +151,66 @@
 </table>
 <div class="NOTE">
 <h5>Note</h5>
-<h4 id="footnotes">Footnotes</h4>
-<p><strong>1</strong> High volumes of concurrent users may require additional compute.</p>
-<p><strong>2</strong> Multiple Stream Hosts can be deployed to the Stream Host Server.</p>
-<p><strong>3</strong> If the Stream Host needs more resources, consider increasing the RAM before adding additional CPU cores as Stream Hosts perform in-memory processing of events.</p>
-<p><strong>4</strong> High volumes of recommendations may require additional compute and storage.</p>
-</div>
-<h2 id="azure">Azure</h2>
-<p>Estimates for Azure target the Premium v3 service plan for applications, and Azure SQL Database for the databases.</p>
-<p>Azure SQL database estimates are based on the General-Purpose service tier and use the DTU-based purchasing model (a blended measure of compute, storage, and IO resources).</p>
-<table>
-<thead>
-<tr>
-<th>Component</th>
-<th>Small</th>
-<th>Medium</th>
-<th>Large</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Subscription Manager (SM) App Service Plan<br><strong>1</strong></td>
-<td>P1v3</td>
-<td>P1v3</td>
-<td>P2v3</td>
-</tr>
-<tr>
-<td>Application Designer (AD) App Service Plan<br></td>
-<td>P1v3</td>
-<td>P2v3</td>
-<td>P3v3</td>
-</tr>
-<tr>
-<td>Data Stream Designer (DS) App Service Plan<br></td>
-<td>P1v3</td>
-<td>P1v3</td>
-<td>P2v3</td>
-</tr>
-<tr>
-<td>Stream Host Server (SH) App Service Plan<br><strong>2,3</strong></td>
-<td>P1v3</td>
-<td>P2v3</td>
-<td>P3v3</td>
-</tr>
-<tr>
-<td>Azure SQL Database <br>(For each of SM, AD, DS) <br><strong>4</strong></td>
-<td>Standard – 20 DTUs</td>
-<td>Standard – 50 DTUs</td>
-<td>Standard – 100 DTUs</td>
-</tr>
-</tbody>
-</table>
-<div class="NOTE">
-<h5>Note</h5>
 <p><strong>Footnotes</strong></p>
 <p><strong>1</strong> High volumes of concurrent users may require additional compute.</p>
-<p><strong>2</strong> Multiple Stream Hosts can be deployed to the Stream Host App Service Plan.</p>
-<p><strong>3</strong> If the Stream Host needs more resources, consider increasing the RAM before adding additional CPU cores as Stream Hosts perform in-memory processing of events.</p>
-<p><strong>4</strong> High volumes of recommendations may require additional compute and storage.</p>
-</div>
-<p>For additional details please see <a href="https://azure.microsoft.com/en-au/pricing/details/app-service/windows/">Azure App Service Pricing</a> and <a href="https://azure.microsoft.com/en-au/pricing/details/azure-sql-database/single/#pricing">Azure SQL Database Pricing</a>.</p>
-<h2 id="aws">AWS</h2>
-<p>Estimates for AWS target Amazon EC2 T3 instances for applications, and an Amazon RDS T3 instance for the databases.</p>
-<table>
-<thead>
-<tr>
-<th>Component</th>
-<th>Small</th>
-<th>Medium</th>
-<th>Large</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Subscription Manager (SM) EC2 Instance<br><strong>1</strong></td>
-<td>t3.large</td>
-<td>t3.large</td>
-<td>t3.xlarge</td>
-</tr>
-<tr>
-<td>Application Designer (AD) EC2 Instance<br></td>
-<td>t3.large</td>
-<td>t3.xlarge</td>
-<td>t3.2xlarge</td>
-</tr>
-<tr>
-<td>Data Stream Designer (DS) EC2 Instance<br></td>
-<td>t3.large</td>
-<td>t3.large</td>
-<td>t3.xlarge</td>
-</tr>
-<tr>
-<td>Stream Host Server (SH) EC2 Instance<br><strong>2,3</strong></td>
-<td>t3.large</td>
-<td>t3.xlarge</td>
-<td>t3.2xlarge</td>
-</tr>
-<tr>
-<td>Amazon RDS for SQL <br>(Combined for SM, AD, DS) <br><strong>4</strong></td>
-<td>t3.large</td>
-<td>t3.xlarge</td>
-<td>t3.2xlarge</td>
-</tr>
-</tbody>
-</table>
-<div class="NOTE">
-<h5>Note</h5>
-<h4 id="footnotes-1">Footnotes</h4>
-<p><strong>1</strong> High volumes of concurrent users may require additional compute.</p>
 <p><strong>2</strong> Multiple Stream Hosts can be deployed to the Stream Host Server.</p>
 <p><strong>3</strong> If the Stream Host needs more resources, consider increasing the RAM before adding additional CPU cores as Stream Hosts perform in-memory processing of events.</p>
 <p><strong>4</strong> High volumes of recommendations may require additional compute and storage.</p>
 </div>
-<p>For additional details please see <a href="https://aws.amazon.com/ec2/instance-types/">AWS EC2</a> and <a href="https://aws.amazon.com/rds/instance-types/">RDS instance types</a>.</p>
+<h2 id="single-server-vs-multi-server-deployment">Single-Server vs Multi-Server Deployment</h2>
+<p>For smaller deployments, all XMPro components can run on a single server. For medium to large deployments, consider distributing components across multiple servers:</p>
+<table>
+<thead>
+<tr>
+<th>Deployment Size</th>
+<th>Recommended Configuration</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Small</strong></td>
+<td>Single server with all components (minimum 8 CPU, 32GB RAM)</td>
+</tr>
+<tr>
+<td><strong>Medium</strong></td>
+<td>Separate application server and database server</td>
+</tr>
+<tr>
+<td><strong>Large</strong></td>
+<td>Dedicated servers for each component with database cluster</td>
+</tr>
+</tbody>
+</table>
+<h2 id="default-configuration">Default Configuration</h2>
+<p>The Windows Server installer deploys all XMPro products to a single IIS server by default. This configuration is suitable for:</p>
+<ul>
+<li>Development and evaluation workloads</li>
+<li>Small production deployments</li>
+<li>Proof-of-concept environments</li>
+</ul>
+<p>For production deployments with higher workloads, consider the <a href="multi-server-deployment.html">Multi-Server Deployment</a> guide.</p>
+<h2 id="additional-considerations">Additional Considerations</h2>
+<h3 id="virtual-machine-sizing">Virtual Machine Sizing</h3>
+<p>When running XMPro on virtual machines (VMware, Hyper-V, etc.), ensure:</p>
+<ul>
+<li>CPU resources are not over-committed</li>
+<li>Memory is dedicated (not ballooned or shared)</li>
+<li>Storage uses SSD or high-performance disks</li>
+<li>Network has low latency to the database server</li>
+</ul>
+<h3 id="sql-server-requirements">SQL Server Requirements</h3>
+<p>The SQL Server sizing recommendations assume:</p>
+<ul>
+<li>SQL Server 2022 Standard Edition or higher</li>
+<li>Mixed Mode authentication enabled</li>
+<li>Dedicated SQL Server instance (not shared with other applications)</li>
+</ul>
+<p>For high-availability deployments, consider SQL Server Always On Availability Groups.</p>
 
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: December 11, 2025</em></small></p>
+    <p><small><em>Last modified: February 20, 2026</em></small></p>
   </div>
 </article>
 

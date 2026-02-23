@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../../../">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/deployment/windows-server-2022/index.md&amp;version=GBrels-4.0&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/deployment/windows-server-2022/index.md&amp;version=GBmain&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -96,6 +96,10 @@
 <div class="NOTE">
 <h5>Note</h5>
 <p>This guide uses <strong>native IIS deployment</strong> - not containers. XMPro applications run as IIS web applications and Windows services.</p>
+</div>
+<div class="TIP">
+<h5>Tip</h5>
+<p>This guide deploys all XMPro products to a single server by default. This is suitable for development and evaluation. For production sizing recommendations based on your workload, see the <a href="windows-sizing.html">Sizing Recommendations</a> guide.</p>
 </div>
 <h2 id="single-server-architecture">Single-Server Architecture</h2>
 <p><img src="../../../images/xmpro-single-server-deployment-architecture.jpg" alt="XMPro Single-Server Deployment Architecture"></p>
@@ -686,6 +690,15 @@
 <h5>Warning</h5>
 <p><strong>Security Best Practice:</strong> For production environments, move sensitive secrets (database passwords, certificate passwords, SMTP credentials) from these configuration files to encrypted secure storage solutions such as Azure Key Vault, HashiCorp Vault, or Windows Credential Manager. This reduces the risk of credential exposure.</p>
 </div>
+<h2 id="need-help">Need Help?</h2>
+<h3 id="more-resources">More Resources</h3>
+<ul>
+<li><a href="upgrade-from-legacy.html">Upgrade from Legacy Windows Installer</a> - Upgrade from v4.4.x to v4.5</li>
+<li><a href="windows-sizing.html">Sizing Recommendations</a> - Production sizing guidelines</li>
+<li><a href="troubleshooting.html">Troubleshooting Guide</a> - Fix common issues</li>
+<li><a href="multi-server-deployment.html">Multi-Server Deployment</a> - Deploy across multiple servers</li>
+<li><a href="airgapped-deployment.html">Airgapped Deployment</a> - Offline installation</li>
+</ul>
 <h2 id="next-steps">Next Steps</h2>
 <p>After completing your Windows Server deployment, proceed to:</p>
 <p><strong><a href="../../complete-installation/index.html">Post-deployment</a></strong> - Complete the setup and configuration of your XMPro environment.</p>
@@ -695,13 +708,6 @@
 <pre><code class="lang-powershell"># Uses existing configuration from C:\XMPro\
 .\install-xmpro-application.ps1 -SkipPrompts
 </code></pre>
-<h2 id="need-help">Need Help?</h2>
-<ul>
-<li><a href="upgrade-from-legacy.html">Upgrade from Legacy Windows Installer</a> - Upgrade from v4.4.x to v4.5</li>
-<li><a href="troubleshooting.html">Troubleshooting Guide</a> - Fix common issues</li>
-<li><a href="multi-server-deployment.html">Multi-Server Deployment</a> - Deploy across multiple servers</li>
-<li><a href="airgapped-deployment.html">Airgapped Deployment</a> - Offline installation</li>
-</ul>
 <hr>
 <div class="NOTE">
 <h5>Note</h5>
@@ -711,7 +717,7 @@
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: December 11, 2025</em></small></p>
+    <p><small><em>Last modified: February 20, 2026</em></small></p>
   </div>
 </article>
 

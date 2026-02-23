@@ -26147,6 +26147,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "src/installation/deployment/windows-server-2022/windows-sizing.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/installation/deployment/windows-server-2022/windows-sizing.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "src/installation/overview.md",
       "output": {
         ".html": {
@@ -31261,16 +31271,6 @@
       "output": {
         ".html": {
           "relative_path": "src/resources/practice-notes/unified-recommendation-alert-management.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "src/resources/sizing-guideline.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/resources/sizing-guideline.html"
         }
       },
       "version": ""
