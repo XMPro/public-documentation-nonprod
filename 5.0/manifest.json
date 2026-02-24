@@ -31297,6 +31297,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "src/technical-reference/oauth-smtp-configuration.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/technical-reference/oauth-smtp-configuration.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "src/technical-reference/redis-cache-implementation.md",
       "output": {
         ".html": {
