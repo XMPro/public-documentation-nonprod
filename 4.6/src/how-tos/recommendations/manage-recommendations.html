@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Manage Recommendations | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Manage Recommendations | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/how-tos/recommendations/manage-recommendations.md&amp;version=GBrelease-4.6&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="manage-recommendations">Manage Recommendations</h1>
+
+<p>If a Run Recommendation Agent is added to a <a href="../../concepts/data-stream/index.html">Data Stream</a>, the Recommendation will read the live data in real-time and compare it to the conditions and <a href="../../concepts/recommendation/rule.html">Rules</a> configured. If any data falls into a Rule's condition then a <a href="../../concepts/recommendation/recommendation-alert.html">Recommendation Alert</a> is created. A Recommendation Alert notifies specific users of pending issues or dangers associated with the data and allows them to act upon them.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>It is recommended that you read the article listed below to improve your understanding of Recommendations.</p>
+<ul>
+<li><a href="../../concepts/recommendation/index.html">Recommendation</a></li>
+</ul>
+</div>
+<h2 id="manage-recommendations-1">Manage Recommendations</h2>
+<p>To access the Recommendation management page, follow the steps below:</p>
+<ol>
+<li>In the App Designer, click the <em>Recommendations</em> button in the left-hand menu.</li>
+<li>Click the <em>Manage Recommendations</em> button.</li>
+</ol>
+<div class="NOTE">
+<h5>Note</h5>
+<p>If you do not have the right to view Recommendation Alerts, the Recommendation Alerts grid will not be shown and the second step can be skipped.</p>
+</div>
+<p><img src="../../images/image-1491.png" alt="Recommendation management page"></p>
+<h2 id="create-a-recommendation">Create a Recommendation</h2>
+<p>To create a new Recommendation, follow the steps below after navigating to the Recommendation management page:</p>
+<ol>
+<li>Click <em>New</em>.</li>
+<li>Specify a name for your new Recommendation.</li>
+<li>Select or create a new Category.</li>
+</ol>
+<p><img src="../../images/recommendations-manage-recommendations-create-recommendation.png" alt=""></p>
+<p>a. Click the Plus button.</p>
+<p><img src="../../images/recommendations-manage-recommendations-create-recommendation-2.png" alt=""></p>
+<p>b. Specify the Name.</p>
+<p>c. Specify the Score Factor for Category</p>
+<p>c. Click Save.</p>
+<p><img src="../../images/recommendations-manage-recommendations-create-recommendation-3-1.png" alt=""></p>
+<ol start="4">
+<li><p>Specify the Score Factor for the Recommendation</p>
+</li>
+<li><p>Choose a Data Stream to receive data from</p>
+</li>
+<li><p>Click Save</p>
+</li>
+</ol>
+<p><img src="../../images/recommendations-manage-recommendations-create-recommendation-4.png" alt=""></p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>A Recommendation needs Rules. <a href="create-rules.html#create-rules">See the Manage Rules article to find out how to create a Rule</a>.</p>
+</div>
+<h2 id="view-recommendation-timeline">View Recommendation Timeline</h2>
+<p>The Timeline shows the changes that occur when details in the recommendation is being edited. Follow the steps below to view the timeline:</p>
+<ol>
+<li>Select Recommendation</li>
+<li>Click More</li>
+<li>Click Timeline</li>
+</ol>
+<p><img src="../../images/manage-recommendations.png" alt=""></p>
+<p><img src="../../images/recommendations-manage-recommendations-view-recommendation-2.png" alt=""></p>
+<h2 id="delete-a-recommendation">Delete a Recommendation</h2>
+<p>To delete an existing Recommendation, follow the steps below:</p>
+<ol>
+<li>Select the Recommendation.</li>
+<li>Hover over More.</li>
+<li>Click the Delete button.</li>
+</ol>
+<p><img src="../../images/image-1115.png" alt="Delete recommendation menu"></p>
+<ol start="4">
+<li>Confirm the action.</li>
+</ol>
+<p><img src="../../images/image-1279.png" alt="Delete confirmation dialog"></p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Deleting a Recommendation will not permanently delete it or any Recommendation Alerts generated by it. Deletion can be undone or made permanent from <a href="../../concepts/recommendation/deleted-items.html">Deleted Items</a>.</p>
+</div>
+<h2 id="further-reading">Further Reading</h2>
+<ul>
+<li><a href="create-rules.html">How to Manage Rules</a></li>
+<li><a href="manage-categories.html">How to Manage Categories</a></li>
+<li><a href="subscribe-to-notifications.html">How to Subscribe to Notifications</a></li>
+<li><a href="manage-forms.html">How to Manage Forms</a></li>
+<li><a href="manage-variables.html">How to Manage Variables</a></li>
+<li><a href="manage-alerts.html">How to Manage Alerts</a></li>
+<li><a href="manage-alerts-on-mobile.html">How to Manage Alerts on Mobile</a></li>
+<li><a href="manage-deleted-recommendation-items.html">How to Manage Deleted Recommendation Items</a></li>
+</ul>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: February 24, 2026</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

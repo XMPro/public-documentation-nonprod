@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Troubleshooting | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Troubleshooting | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../../toc.html">
+      <meta name="docfx:tocrel" content="../../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/deployment/azure-terraform/troubleshooting.md&amp;version=GBrelease-4.6&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../../index.html">
+            <img id="logo" class="svg" src="../../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="troubleshooting">Troubleshooting</h1>
+
+<p>This guide helps you fix common issues when deploying XMPro on Azure.</p>
+<div class="TIP">
+<h5>Tip</h5>
+<p><strong>Most issues are solved by:</strong></p>
+<ul>
+<li>Running <code>az login</code> to refresh your Azure authentication</li>
+<li>Making sure you're in the right directory (<code>terraform-xmpro-azure/examples/layered/infra</code> or <code>.../app</code>)</li>
+<li>Using a different Azure region if you get &quot;quota exceeded&quot; errors</li>
+</ul>
+</div>
+<h2 id="most-common-issues">Most Common Issues</h2>
+<h3 id="1-terraform-command-not-found">1. &quot;Terraform command not found&quot;</h3>
+<p><strong>Solution:</strong></p>
+<pre><code class="lang-bash"># You haven't installed Terraform yet. Download it from:
+# https://developer.hashicorp.com/terraform/install
+
+# After installing, restart your terminal and try:
+terraform version
+</code></pre>
+<h3 id="2-error-building-account-please-ensure-you-have-logged-in">2. &quot;Error: building account... Please ensure you have logged in&quot;</h3>
+<p><strong>Solution:</strong></p>
+<pre><code class="lang-bash"># Login to Azure:
+az login
+
+# If that doesn't work, try:
+az logout
+az login --use-device-code
+</code></pre>
+<h3 id="3-subscription-not-found-or-wrong-subscription">3. &quot;Subscription not found&quot; or wrong subscription</h3>
+<p><strong>Solution:</strong></p>
+<pre><code class="lang-bash"># List your subscriptions:
+az account list --output table
+
+# Switch to the right one:
+az account set --subscription &quot;Your Subscription Name&quot;
+
+# Verify you're on the right subscription:
+az account show
+</code></pre>
+<h3 id="4-resource-already-exists-errors">4. &quot;Resource already exists&quot; errors</h3>
+<p><strong>Problem:</strong> Azure resource names must be globally unique.</p>
+<p><strong>Solution:</strong>
+Edit your <code>terraform.tfvars</code> and add a unique prefix:</p>
+<pre><code class="lang-hcl">prefix = &quot;mycompany123&quot;  # Add this line with a unique value
+</code></pre>
+<h3 id="5-deployment-takes-forever-more-than-30-minutes">5. Deployment takes forever (more than 30 minutes)</h3>
+<p><strong>Common causes:</strong></p>
+<ul>
+<li>Azure is slow in your region - this is normal for first deployment</li>
+<li>Database creation can take 10-15 minutes alone</li>
+</ul>
+<p><strong>What to check:</strong></p>
+<ol>
+<li>Look at the Azure Portal - are resources being created?</li>
+<li>Check terraform output - is it progressing?</li>
+<li>If stuck for over 45 minutes, try:
+<pre><code class="lang-bash"># Cancel with Ctrl+C, then:
+terraform destroy  # Clean up partial deployment
+terraform apply    # Try again
+</code></pre>
+</li>
+</ol>
+<h3 id="6-insufficient-quota-or-subscriptionisoverquotaforsku">6. &quot;Insufficient quota&quot; or &quot;SubscriptionIsOverQuotaForSku&quot;</h3>
+<p><strong>Problem:</strong> Your Azure subscription has limits on resources.</p>
+<p><strong>Quick Solution:</strong>
+Use smaller resource sizes in <code>terraform.tfvars</code>:</p>
+<pre><code class="lang-hcl">app_service_sku_name = &quot;B1&quot;  # Instead of B2
+sql_sku_name = &quot;Basic&quot;        # Instead of S0
+</code></pre>
+<p><strong>Long-term Solution:</strong>
+Request a quota increase in Azure Portal under &quot;Quotas&quot;.</p>
+<h3 id="7-login-problems-after-deployment">7. Login problems after deployment</h3>
+<p><strong>Can't login with admin credentials?</strong></p>
+<p>Check your passwords in <code>terraform.tfvars</code>:</p>
+<ul>
+<li>Must be at least 8 characters</li>
+<li>Must have uppercase, lowercase, number, and special character</li>
+<li>No spaces or quotes in the password</li>
+</ul>
+<p><strong>Forgot what you set?</strong>
+Look in your <code>terraform.tfvars</code> file for:</p>
+<ul>
+<li><code>site_admin_password</code></li>
+<li><code>company_admin_password</code></li>
+</ul>
+<h3 id="8-application-layer-errors-step-5---terraform-planapply-failures">8. Application layer errors (Step 5 - terraform plan/apply failures)</h3>
+<p><strong>Problem:</strong> Errors during application deployment, often related to infrastructure references.</p>
+<p><strong>Common errors and solutions:</strong></p>
+<p><strong>&quot;Resource group not found&quot;</strong></p>
+<pre><code class="lang-bash"># Problem 1: resource_group_name in terraform.tfvars doesn't match infrastructure output
+# Solution: Get the correct name from infrastructure layer:
+cd ../infra
+terraform output resource_group_name
+# Copy the exact output to your app/terraform.tfvars
+
+# Problem 2: You're in a different Azure subscription
+# Solution: Check which subscription you're using:
+az account show
+# If wrong, switch to the same subscription used for infrastructure:
+az account set --subscription &quot;Your Subscription Name&quot;
+</code></pre>
+<p><strong>&quot;SQL Server not found&quot; or &quot;cannot connect to database&quot;</strong></p>
+<pre><code class="lang-bash"># Problem: sql_server_fqdn is incorrect or database not ready
+# Solution 1: Get correct SQL server name:
+cd ../infra
+terraform output sql_server_fqdn
+# Copy to app/terraform.tfvars
+
+# Solution 2: Verify SQL server exists in Azure Portal
+# Check your resource group for the SQL server resource
+</code></pre>
+<p><strong>&quot;Storage account not found&quot;</strong></p>
+<pre><code class="lang-bash"># Problem: storage_account_name doesn't match infrastructure
+# Solution:
+cd ../infra
+terraform output storage_account_name
+# Update in app/terraform.tfvars
+</code></pre>
+<p><strong>&quot;App Service Plan not found&quot;</strong></p>
+<pre><code class="lang-bash"># Problem: Referenced App Service Plan names don't exist
+# Solution: Get all infrastructure outputs and verify names match:
+cd ../infra
+terraform output
+# Check that ad_service_plan_name, ds_service_plan_name, sm_service_plan_name match
+</code></pre>
+<p><strong>Best practice:</strong> Always run <code>terraform plan</code> in the app layer before <code>apply</code>. This validates all your infrastructure references are correct.</p>
+<h3 id="9-applications-wont-start-app-service-issues">9. Applications won't start (App Service issues)</h3>
+<p><strong>Quick fixes to try:</strong></p>
+<ol>
+<li><p><strong>Restart the services</strong> in Azure Portal:</p>
+<ul>
+<li>Go to your resource group</li>
+<li>Click on each App Service (SM, AD, DS)</li>
+<li>Click &quot;Restart&quot;</li>
+</ul>
+</li>
+<li><p><strong>Check the logs</strong> in Azure Portal:</p>
+<ul>
+<li>Go to your App Service</li>
+<li>Click &quot;Log stream&quot; in the left menu</li>
+<li>Look for error messages</li>
+</ul>
+</li>
+<li><p><strong>Wait a bit longer</strong>:</p>
+<ul>
+<li>First startup can take 5-10 minutes</li>
+<li>Check the <code>/version</code> endpoint:
+<pre><code class="lang-bash">curl &quot;$(terraform output -raw sm_app_url)/version&quot;
+</code></pre>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="getting-more-help">Getting More Help</h2>
+<h3 id="check-your-setup">Check Your Setup</h3>
+<p>Run this to verify everything is working:</p>
+<pre><code class="lang-bash"># Check Terraform:
+terraform version
+
+# Check Azure login:
+az account show
+
+# Check your configuration:
+terraform validate
+</code></pre>
+<h3 id="collect-information-for-support">Collect Information for Support</h3>
+<p>If you need to contact support, run:</p>
+<pre><code class="lang-bash"># Save all outputs:
+terraform output &gt; terraform-outputs.txt
+
+# Get resource group name:
+terraform output resource_group_name
+
+# List what was created:
+az resource list --resource-group $(terraform output -raw resource_group_name) --output table
+</code></pre>
+<h3 id="view-logs-in-azure-portal">View Logs in Azure Portal</h3>
+<ol>
+<li><strong>Go to Azure Portal</strong> (portal.azure.com)</li>
+<li><strong>Find your resource group</strong> (named like <code>rg-yourcompany-dev-xmpro</code>)</li>
+<li><strong>Click on Application Insights</strong> resource</li>
+<li><strong>Click &quot;Logs&quot;</strong> to see application logs</li>
+<li><strong>Click &quot;Failures&quot;</strong> to see errors</li>
+</ol>
+<h3 id="common-error-messages-explained">Common Error Messages Explained</h3>
+<table>
+<thead>
+<tr>
+<th>Error</th>
+<th>What it means</th>
+<th>Solution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&quot;terraform: command not found&quot;</td>
+<td>Terraform isn't installed</td>
+<td><a href="https://developer.hashicorp.com/terraform/install">Install Terraform</a></td>
+</tr>
+<tr>
+<td>&quot;Error: building account&quot;</td>
+<td>Not logged into Azure</td>
+<td>Run <code>az login</code></td>
+</tr>
+<tr>
+<td>&quot;SubscriptionIsOverQuotaForSku&quot;</td>
+<td>Azure limits exceeded</td>
+<td>Use smaller SKUs or request quota increase</td>
+</tr>
+<tr>
+<td>&quot;Resource already exists&quot;</td>
+<td>Name conflict</td>
+<td>Add unique <code>prefix</code> in terraform.tfvars</td>
+</tr>
+<tr>
+<td>&quot;Container image not found&quot;</td>
+<td>Wrong version specified</td>
+<td>Use <code>imageversion = &quot;latest&quot;</code> in terraform.tfvars</td>
+</tr>
+<tr>
+<td>&quot;SSL/TLS connection error&quot;</td>
+<td>Network/firewall issue</td>
+<td>Check corporate firewall or try different network</td>
+</tr>
+</tbody>
+</table>
+<h2 id="still-stuck">Still Stuck?</h2>
+<ol>
+<li><p><strong>Double-check the basics:</strong></p>
+<ul>
+<li>Are you in the right directory? (<code>terraform-xmpro-azure/examples/layered/infra</code> or <code>.../app</code>)</li>
+<li>Did you run <code>terraform init</code> first?</li>
+<li>Is your <code>terraform.tfvars</code> file saved?</li>
+</ul>
+</li>
+<li><p><strong>Try a clean deployment:</strong></p>
+<pre><code class="lang-bash">terraform destroy  # Remove everything
+terraform apply    # Start fresh
+</code></pre>
+</li>
+<li><p><strong>Use a different Azure region:</strong></p>
+<pre><code class="lang-hcl"># In terraform.tfvars, try:
+location = &quot;eastus2&quot;  # or &quot;westeurope&quot;, &quot;southeastasia&quot;
+</code></pre>
+</li>
+<li><p><strong>Contact Support:</strong></p>
+<ul>
+<li>Use the <a href="javascript:window.open(%27https://xmpro.na1.teamsupport.com/login/user%27,%27_blank%27)">XMPro Support Portal</a></li>
+<li>Include your error messages</li>
+<li>Describe what step failed</li>
+</ul>
+</li>
+</ol>
+<div class="NOTE">
+<h5>Note</h5>
+<p>For advanced troubleshooting and detailed technical issues, see the <a href="{{TERRAFORM_MODULE_URL}}" target="_blank">complete module documentation</a>.</p>
+</div>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: February 24, 2026</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Circular Gauge | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Circular Gauge | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/blocks-toolbox/visualizations/circular-gauge.md&amp;version=GBrelease-4.6&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="circular-gauge">Circular Gauge</h1>
+
+<p>This Block allows you to display data in the format of a Circular Gauge. The Circular Gauge includes a circle to indicate a single value or multiple values. Circular Gauges are useful for displaying and visualizing numeric values within a certain range.</p>
+<h2 id="circular-gauge-properties">Circular Gauge Properties</h2>
+<h3 id="appearance">Appearance</h3>
+<h4 id="common-properties">Common Properties</h4>
+<p>The Circular Gauge has the option to change its <em>visibility</em>.</p>
+<p><a href="../common-properties.html#appearance">See the Common Properties article for more details on common appearance properties.</a></p>
+<p>Options that are specific to Circular Gauges include the ability to change the <em>title, font color, tick interval,</em> and the style of the primary and sub-values.</p>
+<h4 id="title">Title</h4>
+<p>This is the text that shows on top of the Circular Gauge.</p>
+<h4 id="font-color">Font Color</h4>
+<p>This changes the color of the text above the Circular Gauge.</p>
+<p><img src="../../images/image-259.png" alt="Font color configuration showing text color options above the circular gauge"></p>
+<h4 id="tick-interval">Tick Interval</h4>
+<p>This determines the distance between ticks on the outer circle of the Circular Gauge.</p>
+<p><img src="../../images/image-995.png" alt="Tick interval preview showing distance between ticks on the gauge outer circle"></p>
+<h4 id="primary-value-indicator-type">Primary Value Indicator Type</h4>
+<p>This determines the style of the primary indicator showing on the Circular Gauge.</p>
+<p>This determines the shape of the marker that points to the value on the Circular Gauge. Options include a rectangle needle, triangle needle, two-color needle, range bar, triangle marker, and text cloud.</p>
+<p><img src="../../images/image-1753.png" alt="Primary value indicator types including needle, marker, and text cloud options"></p>
+<h4 id="primary-value-format-text-as-percentage">Primary Value Format Text as Percentage</h4>
+<p>This is only available if the indicator type is a text cloud. Enabling this will show the text on the screen as a percentage.</p>
+<p><img src="../../images/image-492.png" alt="Text cloud indicator displaying value as percentage format"></p>
+<h4 id="primary-value-indicator-color">Primary Value Indicator Color</h4>
+<p>This determines the color of the indicator.</p>
+<p><img src="../../images/image-880.png" alt="Primary value indicator color selection interface"></p>
+<h4 id="primary-value-indicator-second-color">Primary Value Indicator second color</h4>
+<p>This option is only available if the indicator type is a two-color needle. It determines the color of the second needle.</p>
+<p><img src="../../images/image-1232.png" alt="Two-color needle showing second color configuration option"></p>
+<h4 id="primary-value-indicator-offset">Primary Value Indicator offset</h4>
+<p>This determines how far away the needle or marker is when pointing to the value.</p>
+<p><img src="../../images/image-1104.png" alt="Primary value indicator offset adjustment showing needle distance from value"></p>
+<h4 id="sub-value-indicator-type">Sub Value Indicator Type</h4>
+<p>This determines the style of the sub-values showing on the Circular Gauge. The indicator refers to the shape of the marker that points to the value on the gauge.</p>
+<p><img src="../../images/image-89.png" alt="Sub-value indicator type options for secondary gauge markers"></p>
+<h4 id="sub-value-format-text-as-percentage">Sub Value Format Text as Percentage</h4>
+<p>This is only available if the indicator type for the sub-value is a text cloud. Enabling this will show the text on the screen as a percentage.</p>
+<p><img src="../../images/image-1394.png" alt="Sub-value text cloud showing percentage format display option"></p>
+<h4 id="sub-value-indicator-color">Sub Value Indicator Color</h4>
+<p>This determines the color of the sub-values.</p>
+<p><img src="../../images/image-1641.png" alt="Sub-value indicator color configuration interface"></p>
+<h4 id="sub-value-indicator-second-color">Sub Value Indicator Second Color</h4>
+<p>This option is only available if the sub-value indicator type is a two-color needle. It determines the color of the second needle.</p>
+<p><img src="../../images/image-1796.png" alt="Sub-value two-color needle second color selection"></p>
+<h4 id="sub-value-indicator-offset">Sub Value Indicator Offset</h4>
+<p>This determines how far away the needle or marker is when pointing to the sub-value.</p>
+<p><img src="../../images/image-167.png" alt="Sub-value indicator offset showing marker distance adjustment"></p>
+<h3 id="behavior">Behavior</h3>
+<h4 id="common-properties-1">Common Properties</h4>
+<p>The <em>disabled</em> property is common to most Blocks;</p>
+<p><a href="../common-properties.html#behavior">See the Common Properties article for more details on common behavior properties.</a></p>
+<h4 id="start-range-and-end-range">Start Range and End Range</h4>
+<p>The start and end range define the boundaries of where the values of the Circular Gauge should start and end.</p>
+<p><img src="../../images/image-839.png" alt="Start and end range configuration defining gauge value boundaries"></p>
+<h3 id="range">Range</h3>
+<p>The range allows you to change the color of different ranges on the gauge.</p>
+<p><img src="../../images/image-1262.png" alt="Range color configuration showing different colored sections on the gauge"></p>
+<h3 id="value">Value</h3>
+<p>You can show but a single value on the Circular Gauge, as well as sub-values.</p>
+<p><img src="../../images/image-1688.png" alt="Circular gauge displaying primary value and sub-values"></p>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: February 24, 2026</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,746 @@
+/* XMPro Custom Styling for DocFX */
+
+
+:root {
+  --xmpro-primary: #00B0F0;
+  --xmpro-secondary: #6c757d;
+  --xmpro-dark: #1A1A1A;
+  --xmpro-darker: #121212;
+  --xmpro-light: #f8f9fa;
+  --xmpro-lighter: #ffffff;
+  --xmpro-accent: #0091D1;
+  --xmpro-success: #28a745;
+  --xmpro-info: #17a2b8;
+  --xmpro-warning: #ffc107;
+  --xmpro-danger: #dc3545;
+  
+  /* Additional styling variables - Dark theme defaults */
+  --xmpro-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  --xmpro-text-color: #ffffff;
+  --xmpro-text-muted: #a0a0a0;
+  --xmpro-link-color: var(--xmpro-primary);
+  --xmpro-link-hover-color: var(--xmpro-accent);
+  --xmpro-border-color: #333333;
+  --xmpro-code-bg: #2d2d2d;
+  --xmpro-current-logo-url: url('../images/logo-dark.png');
+  --xmpro-bg-color: var(--xmpro-dark);
+  --xmpro-navbar-bg: var(--xmpro-darker);
+}
+
+[data-bs-theme="light"] {
+  --xmpro-text-color: #212529;
+  --xmpro-text-muted: #6c757d;
+  --xmpro-border-color: #dee2e6;
+  --xmpro-code-bg: #f8f9fa;
+  --xmpro-current-logo-url: url('../images/logo-light.png');
+  --xmpro-bg-color: var(--xmpro-lighter);
+  --xmpro-navbar-bg: var(--xmpro-light);
+}
+
+/* Dark theme variables are defined in root */
+
+/* GitBook-style Header Spacing */
+article h1 {
+  margin-top: 0;
+  margin-bottom: 32px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--xmpro-border-color);
+  font-size: 2.5rem;
+  font-weight: 600;
+}
+
+article h2 {
+  margin-top: 48px;
+  margin-bottom: 24px;
+  padding-top: 16px;
+  font-size: 1.875rem;
+  font-weight: 600;
+}
+
+article h3 {
+  margin-top: 32px;
+  margin-bottom: 16px;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+article h4 {
+  margin-top: 24px;
+  margin-bottom: 12px;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+article h5 {
+  margin-top: 20px;
+  margin-bottom: 12px;
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+article h6 {
+  margin-top: 16px;
+  margin-bottom: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+/* Ensure first header after article start doesn't have extra top margin */
+article > h1:first-child,
+article > h2:first-child,
+article > h3:first-child,
+article > h4:first-child,
+article > h5:first-child,
+article > h6:first-child {
+  margin-top: 0;
+}
+
+/* Add spacing between consecutive headers */
+article h1 + h2,
+article h2 + h3,
+article h3 + h4,
+article h4 + h5,
+article h5 + h6 {
+  margin-top: 24px;
+}
+
+/* Paragraph spacing after headers */
+article h1 + p,
+article h2 + p,
+article h3 + p,
+article h4 + p,
+article h5 + p,
+article h6 + p {
+  margin-top: 16px;
+}
+
+/* General paragraph spacing */
+article p {
+  margin-bottom: 16px;
+  line-height: 1.7;
+}
+
+
+#logo {
+  content: var(--xmpro-current-logo-url);
+  max-height: 36px;
+}
+
+/* Apply XMPro styling to elements */
+body {
+  font-family: var(--xmpro-font-family);
+  background-color: var(--xmpro-bg-color);
+  color: var(--xmpro-text-color);
+}
+
+a {
+  color: var(--xmpro-link-color);
+}
+
+a:hover {
+  color: var(--xmpro-link-hover-color);
+}
+
+.navbar {
+  background-color: var(--xmpro-navbar-bg);
+  border-bottom: 1px solid var(--xmpro-border-color);
+}
+
+.sidenav {
+  background-color: var(--xmpro-bg-color);
+  border-right: 1px solid var(--xmpro-border-color);
+}
+
+.toc .nav > li > a {
+  color: var(--xmpro-text-muted);
+}
+
+.toc .nav > li > a:hover,
+.toc .nav > li > a:focus {
+  color: var(--xmpro-text-color);
+}
+
+.toc .nav > li.active > a {
+  color: var(--xmpro-primary);
+}
+
+code {
+  background-color: var(--xmpro-code-bg);
+  border: 1px solid var(--xmpro-border-color);
+}
+
+.btn-primary {
+  background-color: var(--xmpro-primary);
+  border-color: var(--xmpro-primary);
+}
+
+.btn-primary:hover {
+  background-color: var(--xmpro-accent);
+  border-color: var(--xmpro-accent);
+}
+
+/* GitBook-style Alert/Callout Blocks - Base styles */
+.TIP, .NOTE, .IMPORTANT, .WARNING, .CAUTION {
+  padding: 20px 20px 20px 56px;
+  margin: 24px 0;
+  border-radius: 6px;
+  border: none;
+  position: relative;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* TIP - Info/Tip styling (Blue theme) */
+.TIP {
+  background-color: #27292a;
+  color: #e2e8f0;
+}
+
+[data-bs-theme="light"] .TIP {
+  background-color: #edeff1;
+  color: #2d3748;
+  border: 1px solid #e2e8f0;
+}
+
+[data-bs-theme="dark"] .TIP {
+  background-color: #27292a;
+  color: #e2e8f0;
+}
+
+/* NOTE - Note styling (Same as TIP) */
+.NOTE {
+  background-color: #27292a;
+  color: #e2e8f0;
+}
+
+[data-bs-theme="light"] .NOTE {
+  background-color: #edeff1;
+  color: #2d3748;
+  border: 1px solid #e2e8f0;
+}
+
+[data-bs-theme="dark"] .NOTE {
+  background-color: #27292a;
+  color: #e2e8f0;
+}
+
+/* IMPORTANT - Important styling (Teal theme) */
+.IMPORTANT {
+  background-color: #1a2e2e;
+  color: #e2e8f0;
+}
+
+[data-bs-theme="light"] .IMPORTANT {
+  background-color: #e6fffa;
+  color: #2d3748;
+  border: 1px solid #b2f5ea;
+}
+
+[data-bs-theme="dark"] .IMPORTANT {
+  background-color: #1a2e2e;
+  color: #e2e8f0;
+}
+
+/* WARNING - Warning styling (Yellow/Orange theme) */
+.WARNING {
+  background-color: #2e2a1a;
+  color: #e2e8f0;
+}
+
+[data-bs-theme="light"] .WARNING {
+  background-color: #fffaf0;
+  color: #2d3748;
+  border: 1px solid #fed7aa;
+}
+
+[data-bs-theme="dark"] .WARNING {
+  background-color: #2e2a1a;
+  color: #e2e8f0;
+}
+
+/* CAUTION - Caution/Danger styling (Red theme) */
+.CAUTION {
+  background-color: #2e1a1a;
+  color: #e2e8f0;
+}
+
+[data-bs-theme="light"] .CAUTION {
+  background-color: #fff5f5;
+  color: #2d3748;
+  border: 1px solid #feb2b2;
+}
+
+[data-bs-theme="dark"] .CAUTION {
+  background-color: #2e1a1a;
+  color: #e2e8f0;
+}
+
+/* Hide the default DocFx alert headers */
+.TIP > h5:first-child,
+.NOTE > h5:first-child,
+.IMPORTANT > h5:first-child,
+.WARNING > h5:first-child,
+.CAUTION > h5:first-child {
+  display: none;
+}
+
+/* Icon positioning and styling */
+.TIP::before,
+.NOTE::before,
+.IMPORTANT::before,
+.WARNING::before,
+.CAUTION::before {
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  width: 20px;
+  height: 20px;
+  content: '';
+}
+
+/* Icon colors for each type */
+.TIP::before {
+  background-color: #60a5fa; /* Blue */
+}
+
+[data-bs-theme="light"] .TIP::before {
+  background-color: #3b82f6;
+}
+
+.NOTE::before {
+  background-color: #60a5fa; /* Blue - same as TIP */
+}
+
+[data-bs-theme="light"] .NOTE::before {
+  background-color: #3b82f6; /* Blue - same as TIP */
+}
+
+.IMPORTANT::before {
+  background-color: #34d399; /* Teal */
+}
+
+[data-bs-theme="light"] .IMPORTANT::before {
+  background-color: #10b981;
+}
+
+.WARNING::before {
+  background-color: #fbbf24; /* Yellow */
+}
+
+[data-bs-theme="light"] .WARNING::before {
+  background-color: #f59e0b;
+}
+
+.CAUTION::before {
+  background-color: #f87171; /* Red */
+}
+
+[data-bs-theme="light"] .CAUTION::before {
+  background-color: #ef4444;
+}
+
+/* SVG Icons for each alert type */
+.TIP::before {
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath d='M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24h80c13.3 0 24-10.7 24-24s-10.7-24-24-24h-8V248c0-13.3-10.7-24-24-24H216c-13.3 0-24 10.7-24 24s10.7 24 24 24h24v64H216zm40-144a32 32 0 1 0 0-64 32 32 0 1 0 0 64z'/%3E%3C/svg%3E");
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath d='M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24h80c13.3 0 24-10.7 24-24s-10.7-24-24-24h-8V248c0-13.3-10.7-24-24-24H216c-13.3 0-24 10.7-24 24s10.7 24 24 24h24v64H216zm40-144a32 32 0 1 0 0-64 32 32 0 1 0 0 64z'/%3E%3C/svg%3E");
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+}
+
+/* NOTE icon - same circle-info icon as TIP */
+.NOTE::before {
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath d='M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24h80c13.3 0 24-10.7 24-24s-10.7-24-24-24h-8V248c0-13.3-10.7-24-24-24H216c-13.3 0-24 10.7-24 24s10.7 24 24 24h24v64H216zm40-144a32 32 0 1 0 0-64 32 32 0 1 0 0 64z'/%3E%3C/svg%3E");
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath d='M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24h80c13.3 0 24-10.7 24-24s-10.7-24-24-24h-8V248c0-13.3-10.7-24-24-24H216c-13.3 0-24 10.7-24 24s10.7 24 24 24h24v64H216zm40-144a32 32 0 1 0 0-64 32 32 0 1 0 0 64z'/%3E%3C/svg%3E");
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+}
+
+/* IMPORTANT icon - exclamation circle */
+.IMPORTANT::before {
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath d='M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm0-384c-13.3 0-24 10.7-24 24V264c0 13.3 10.7 24 24 24s24-10.7 24-24V152c0-13.3-10.7-24-24-24zm32 224a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z'/%3E%3C/svg%3E");
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath d='M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm0-384c-13.3 0-24 10.7-24 24V264c0 13.3 10.7 24 24 24s24-10.7 24-24V152c0-13.3-10.7-24-24-24zm32 224a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z'/%3E%3C/svg%3E");
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+}
+
+/* WARNING icon - triangle exclamation */
+.WARNING::before {
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath d='M248.4 84.3c1.6-2.7 4.5-4.3 7.6-4.3s6 1.6 7.6 4.3L461.9 410c1.4 2.3 2.1 4.9 2.1 7.5c0 8-6.5 14.5-14.5 14.5H62.5c-8 0-14.5-6.5-14.5-14.5c0-2.7 .7-5.3 2.1-7.5L248.4 84.3zm-41-25L9.1 385c-6 9.8-9.1 21-9.1 32.5C0 442.6 19.9 464 44.5 464h423c25.1 0 45.5-20.4 45.5-45.5c0-11.5-3.1-22.7-9.1-32.5L305.6 60.3C296.3 45.1 276.8 32 256 32s-40.3 13.1-49.6 28.3zM288 368a32 32 0 1 0 -64 0 32 32 0 1 0 64 0zm-8-184c0-13.3-10.7-24-24-24s-24 10.7-24 24v96c0 13.3 10.7 24 24 24s24-10.7 24-24V184z'/%3E%3C/svg%3E");
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath d='M248.4 84.3c1.6-2.7 4.5-4.3 7.6-4.3s6 1.6 7.6 4.3L461.9 410c1.4 2.3 2.1 4.9 2.1 7.5c0 8-6.5 14.5-14.5 14.5H62.5c-8 0-14.5-6.5-14.5-14.5c0-2.7 .7-5.3 2.1-7.5L248.4 84.3zm-41-25L9.1 385c-6 9.8-9.1 21-9.1 32.5C0 442.6 19.9 464 44.5 464h423c25.1 0 45.5-20.4 45.5-45.5c0-11.5-3.1-22.7-9.1-32.5L305.6 60.3C296.3 45.1 276.8 32 256 32s-40.3 13.1-49.6 28.3zM288 368a32 32 0 1 0 -64 0 32 32 0 1 0 64 0zm-8-184c0-13.3-10.7-24-24-24s-24 10.7-24 24v96c0 13.3 10.7 24 24 24s24-10.7 24-24V184z'/%3E%3C/svg%3E");
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+}
+
+/* CAUTION icon - octagon exclamation */
+.CAUTION::before {
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath d='M340.5 48l123 123c6 6 9.4 14.1 9.4 22.6V318.5c0 8.5-3.4 16.6-9.4 22.6l-123 123c-6 6-14.1 9.4-22.6 9.4H193.5c-8.5 0-16.6-3.4-22.6-9.4l-123-123c-6-6-9.4-14.1-9.4-22.6V193.5c0-8.5 3.4-16.6 9.4-22.6l123-123c6-6 14.1-9.4 22.6-9.4H318.5c8.5 0 16.6 3.4 22.6 9.4zM193.5 0c-17 0-33.3 6.7-45.3 18.7l-123 123c-12 12-18.7 28.3-18.7 45.3V324.9c0 17 6.7 33.3 18.7 45.3l123 123c12 12 28.3 18.7 45.3 18.7H330.5c17 0 33.3-6.7 45.3-18.7l123-123c12-12 18.7-28.3 18.7-45.3V187.1c0-17-6.7-33.3-18.7-45.3l-123-123C363.7 6.7 347.4 0 330.5 0H193.5zM256 128c13.3 0 24 10.7 24 24V264c0 13.3-10.7 24-24 24s-24-10.7-24-24V152c0-13.3 10.7-24 24-24zm32 224a32 32 0 1 1 -64 0 32 32 0 1 1 64 0z'/%3E%3C/svg%3E");
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath d='M340.5 48l123 123c6 6 9.4 14.1 9.4 22.6V318.5c0 8.5-3.4 16.6-9.4 22.6l-123 123c-6 6-14.1 9.4-22.6 9.4H193.5c-8.5 0-16.6-3.4-22.6-9.4l-123-123c-6-6-9.4-14.1-9.4-22.6V193.5c0-8.5 3.4-16.6 9.4-22.6l123-123c6-6 14.1-9.4 22.6-9.4H318.5c8.5 0 16.6 3.4 22.6 9.4zM193.5 0c-17 0-33.3 6.7-45.3 18.7l-123 123c-12 12-18.7 28.3-18.7 45.3V324.9c0 17 6.7 33.3 18.7 45.3l123 123c12 12 28.3 18.7 45.3 18.7H330.5c17 0 33.3-6.7 45.3-18.7l123-123c12-12 18.7-28.3 18.7-45.3V187.1c0-17-6.7-33.3-18.7-45.3l-123-123C363.7 6.7 347.4 0 330.5 0H193.5zM256 128c13.3 0 24 10.7 24 24V264c0 13.3-10.7 24-24 24s-24-10.7-24-24V152c0-13.3 10.7-24 24-24zm32 224a32 32 0 1 1 -64 0 32 32 0 1 1 64 0z'/%3E%3C/svg%3E");
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+}
+
+/* Alert content styling */
+.TIP > *:first-child:not(h5),
+.NOTE > *:first-child:not(h5),
+.IMPORTANT > *:first-child:not(h5),
+.WARNING > *:first-child:not(h5),
+.CAUTION > *:first-child:not(h5) {
+  margin-top: 0;
+}
+
+/* Remove top margin from paragraphs in callout blocks to align with icons */
+.TIP p,
+.NOTE p,
+.IMPORTANT p,
+.WARNING p,
+.CAUTION p {
+  margin-top: 0;
+}
+
+.TIP > *:last-child,
+.NOTE > *:last-child,
+.IMPORTANT > *:last-child,
+.WARNING > *:last-child,
+.CAUTION > *:last-child {
+  margin-bottom: 0;
+}
+
+/* Ensure proper spacing for nested content */
+.TIP ul,
+.NOTE ul,
+.IMPORTANT ul,
+.WARNING ul,
+.CAUTION ul,
+.TIP ol,
+.NOTE ol,
+.IMPORTANT ol,
+.WARNING ol,
+.CAUTION ol {
+  margin-top: 8px;
+  margin-bottom: 8px;
+  padding-left: 24px;
+}
+
+.TIP li,
+.NOTE li,
+.IMPORTANT li,
+.WARNING li,
+.CAUTION li {
+  margin-bottom: 4px;
+}
+
+.TIP code,
+.NOTE code,
+.IMPORTANT code,
+.WARNING code,
+.CAUTION code {
+  background-color: rgba(0, 0, 0, 0.05);
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-size: 0.85em;
+}
+
+[data-bs-theme="dark"] .TIP code,
+[data-bs-theme="dark"] .NOTE code,
+[data-bs-theme="dark"] .IMPORTANT code,
+[data-bs-theme="dark"] .WARNING code,
+[data-bs-theme="dark"] .CAUTION code {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Ensure links in alerts use GitBook-style blue */
+.TIP a,
+.NOTE a,
+.IMPORTANT a,
+.WARNING a,
+.CAUTION a {
+  color: #3b82f6;
+  text-decoration: none;
+}
+
+.TIP a:hover,
+.NOTE a:hover,
+.IMPORTANT a:hover,
+.WARNING a:hover,
+.CAUTION a:hover {
+  color: #60a5fa;
+  text-decoration: underline;
+}
+
+[data-bs-theme="light"] .TIP a,
+[data-bs-theme="light"] .NOTE a,
+[data-bs-theme="light"] .IMPORTANT a,
+[data-bs-theme="light"] .WARNING a,
+[data-bs-theme="light"] .CAUTION a {
+  color: #2563eb;
+}
+
+[data-bs-theme="light"] .TIP a:hover,
+[data-bs-theme="light"] .NOTE a:hover,
+[data-bs-theme="light"] .IMPORTANT a:hover,
+[data-bs-theme="light"] .WARNING a:hover,
+[data-bs-theme="light"] .CAUTION a:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
+}
+
+/* Adaptive Images for Dark Mode */
+/* Add white background to all integration icons in dark mode */
+[data-bs-theme="dark"] img[style*="height:20px"] {
+  background-color: white;
+  padding: 2px;
+  border-radius: 4px;
+}
+
+/* Last Modified Date Styling */
+.last-modified {
+  margin-top: 48px;
+  padding-top: 24px;
+  color: var(--xmpro-text-muted);
+  font-size: 0.875rem;
+}
+
+.last-modified hr {
+  margin-bottom: 12px;
+  border-color: var(--xmpro-border-color);
+  opacity: 0.25;
+}
+
+.last-modified p {
+  margin: 0;
+}
+
+.last-modified em {
+  font-style: normal;
+}
+
+/* Always make XMPro Platform (first nav item) active */
+.navbar-nav > li:first-child > a,
+.navbar-nav > li:first-child.nav-item > a.nav-link,
+.navbar-nav > .nav-item:first-child > .nav-link {
+  color: var(--bs-navbar-active-color) !important;
+}
+
+/* Non-Production Banner Styles */
+.nonprod-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: #ff8c00;
+  color: #ffffff;
+  z-index: 9999;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-family: var(--xmpro-font-family);
+  pointer-events: none;
+}
+
+[data-bs-theme="dark"] .nonprod-banner {
+  background-color: #ff8c00;
+  color: #ffffff;
+}
+
+.nonprod-banner-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  min-height: 48px;
+  overflow: visible;
+}
+
+.nonprod-banner-icon {
+  display: flex;
+  align-items: center;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.nonprod-banner-icon svg {
+  fill: currentColor;
+}
+
+.nonprod-banner-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  text-align: center;
+  max-width: 100%;
+  overflow: visible;
+}
+
+.nonprod-banner-main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.nonprod-banner-text strong {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.nonprod-banner-pr {
+  background-color: rgba(128, 128, 128, 0.8);
+  color: #ffffff;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+[data-bs-theme="dark"] .nonprod-banner-pr {
+  background-color: rgba(128, 128, 128, 0.8);
+  color: #ffffff;
+}
+
+.nonprod-banner-message {
+  font-size: 0.875rem;
+  opacity: 0.9;
+  flex: 1;
+  min-width: 0;
+}
+
+.nonprod-banner-link {
+  color: #ffffff;
+  text-decoration: underline;
+  font-size: 0.875rem;
+  font-weight: 500;
+  white-space: nowrap;
+  pointer-events: auto;
+}
+
+.nonprod-banner-link:hover {
+  color: #f0f0f0;
+  text-decoration: none;
+}
+
+[data-bs-theme="dark"] .nonprod-banner-link {
+  color: #ffffff;
+}
+
+[data-bs-theme="dark"] .nonprod-banner-link:hover {
+  color: #f0f0f0;
+}
+
+/* Adjust layout when non-production banner is present */
+body.has-nonprod-banner {
+  padding-top: 64px;
+}
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+  .nonprod-banner-content {
+    padding: 8px 15px;
+    min-height: 36px;
+  }
+
+  .nonprod-banner-text {
+    font-size: 0.813rem;
+    gap: 8px;
+  }
+
+  .nonprod-banner-message {
+    display: block;
+    width: 100%;
+    white-space: normal;
+    text-overflow: unset;
+  }
+
+  body.has-nonprod-banner {
+    padding-top: 44px;
+  }
+}
+
+/* Table column width consistency */
+article table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+/* Software Requirements table - wider Details column */
+article h3:has(+ table) + table th:nth-child(1),
+article h3:has(+ table) + table td:nth-child(1) {
+  width: 20%;
+}
+
+article h3:has(+ table) + table th:nth-child(2),
+article h3:has(+ table) + table td:nth-child(2) {
+  width: 15%;
+}
+
+article h3:has(+ table) + table th:nth-child(3),
+article h3:has(+ table) + table td:nth-child(3) {
+  width: 65%;
+}
+
+/* Configuration tables - equal column widths */
+article h4 + table th:nth-child(1),
+article h4 + table td:nth-child(1),
+article h5 + table th:nth-child(1),
+article h5 + table td:nth-child(1),
+article h4 + blockquote + table th:nth-child(1),
+article h4 + blockquote + table td:nth-child(1),
+article h5 + blockquote + table th:nth-child(1),
+article h5 + blockquote + table td:nth-child(1) {
+  width: 25%;
+}
+
+article h4 + table th:nth-child(2),
+article h4 + table td:nth-child(2),
+article h5 + table th:nth-child(2),
+article h5 + table td:nth-child(2),
+article h4 + blockquote + table th:nth-child(2),
+article h4 + blockquote + table td:nth-child(2),
+article h5 + blockquote + table th:nth-child(2),
+article h5 + blockquote + table td:nth-child(2) {
+  width: 50%;
+}
+
+article h4 + table th:nth-child(3),
+article h4 + table td:nth-child(3),
+article h5 + table th:nth-child(3),
+article h5 + table td:nth-child(3),
+article h4 + blockquote + table th:nth-child(3),
+article h4 + blockquote + table td:nth-child(3),
+article h5 + blockquote + table th:nth-child(3),
+article h5 + blockquote + table td:nth-child(3) {
+  width: 25%;
+}
+
+/* Ensure table cells wrap content properly */
+article table td,
+article table th {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+}
+
+

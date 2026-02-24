@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Troubleshooting | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Troubleshooting | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../../toc.html">
+      <meta name="docfx:tocrel" content="../../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/deployment/windows-server-2022/troubleshooting.md&amp;version=GBrelease-4.6&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../../index.html">
+            <img id="logo" class="svg" src="../../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="troubleshooting">Troubleshooting</h1>
+
+<p>This guide helps you resolve common issues when installing XMPro on Windows Server 2022.</p>
+<div class="TIP">
+<h5>Tip</h5>
+<p><strong>Quick fixes that solve most issues:</strong></p>
+<ul>
+<li>Restart IIS: <code>iisreset /restart</code></li>
+<li>Restart SQL Server: <code>Restart-Service MSSQLSERVER</code></li>
+<li>Check Windows Firewall is not blocking ports 443, 5202, 5203, 1433</li>
+<li>Verify you're running PowerShell as Administrator</li>
+<li><strong>View Application Logs:</strong> Check <a href="../../../technical-reference/xmpro-log-events/index.html">XMPro Log Events documentation</a> for log file locations and troubleshooting guidance</li>
+</ul>
+</div>
+<h2 id="installation-issues">Installation Issues</h2>
+<h3 id="installer-script-execution-blocked">Installer Script Execution Blocked</h3>
+<p><strong>Error:</strong></p>
+<pre><code class="lang-text">.\install-xmpro-application.ps1 : File cannot be loaded because running scripts is disabled on this system.
+</code></pre>
+<p><strong>Solution:</strong></p>
+<pre><code class="lang-powershell"># Run PowerShell as Administrator, then:
+Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
+
+# Then run installer:
+.\install-xmpro-application.ps1
+</code></pre>
+<h3 id="prerequisites-not-met">Prerequisites Not Met</h3>
+<p><strong>Error:</strong></p>
+<pre><code class="lang-text">Validation failed: IIS is not installed
+</code></pre>
+<p><strong>Solution:</strong>
+Check the <a href="index.html#prerequisites">Prerequisites</a> and install missing components:</p>
+<ul>
+<li>IIS with required features</li>
+<li>.NET Framework 4.8</li>
+<li>.NET 8 Hosting Bundle</li>
+<li>SQL Server</li>
+<li>Certificates</li>
+</ul>
+<p><strong>Quick check:</strong></p>
+<pre><code class="lang-powershell"># Verify IIS
+Get-Service W3SVC
+
+# Verify .NET 8
+dotnet --list-runtimes
+
+# Verify SQL Server
+Get-Service MSSQLSERVER
+</code></pre>
+<h3 id="configuration-file-missing">Configuration File Missing</h3>
+<p><strong>Error:</strong></p>
+<pre><code class="lang-text">Global-variables.json not found
+</code></pre>
+<p><strong>Solution:</strong></p>
+<p>If running application installer for the first time:</p>
+<pre><code class="lang-powershell"># Create configuration directory
+New-Item -Path &quot;C:\XMPro&quot; -ItemType Directory -Force
+
+# Run installer (will create configuration)
+.\install-xmpro-application.ps1
+</code></pre>
+<p>If configuration was accidentally deleted:</p>
+<ul>
+<li>The installer will recreate it during first run</li>
+<li>You'll need to re-enter all configuration values</li>
+</ul>
+<h3 id="installation-failure-recovery">Installation Failure Recovery</h3>
+<p><strong>If installation fails on any server:</strong></p>
+<ol>
+<li><strong>Resolve the underlying issue</strong> - See relevant troubleshooting sections below for your specific error</li>
+<li><strong>Re-run the installer:</strong>
+<pre><code class="lang-powershell">.\install-xmpro-application.ps1
+</code></pre>
+</li>
+</ol>
+<p>The installer will:</p>
+<ul>
+<li>Completely reinstall IIS applications</li>
+<li>Preserve database data (migration is idempotent)</li>
+<li>Use existing configuration from C:\XMPro</li>
+</ul>
+<h2 id="database-issues">Database Issues</h2>
+<h3 id="cannot-connect-to-sql-server">Cannot Connect to SQL Server</h3>
+<p><strong>Error:</strong></p>
+<pre><code class="lang-text">A network-related or instance-specific error occurred while establishing a connection to SQL Server
+</code></pre>
+<p><strong>Common causes and solutions:</strong></p>
+<p><strong>1. SQL Server service not running:</strong></p>
+<pre><code class="lang-powershell"># Check service status
+Get-Service MSSQLSERVER
+
+# Start service if stopped
+Start-Service MSSQLSERVER
+</code></pre>
+<p><strong>2. TCP/IP protocol disabled:</strong></p>
+<pre><code class="lang-powershell"># Enable TCP/IP using SQL Server Configuration Manager
+# Or PowerShell:
+$wmi = New-Object Microsoft.SqlServer.Management.Smo.Wmi.ManagedComputer
+$tcp = $wmi.ServerInstances['MSSQLSERVER'].ServerProtocols['Tcp']
+$tcp.IsEnabled = $true
+$tcp.Alter()
+
+# Restart SQL Server
+Restart-Service MSSQLSERVER
+</code></pre>
+<p><strong>3. Firewall blocking SQL Server:</strong></p>
+<pre><code class="lang-powershell"># Allow SQL Server through firewall
+New-NetFirewallRule -DisplayName &quot;SQL Server&quot; -Direction Inbound -Protocol TCP -LocalPort 1433 -Action Allow
+</code></pre>
+<p><strong>4. Wrong credentials:</strong></p>
+<pre><code class="lang-powershell"># Test SQL Server connection
+sqlcmd -S hostname -U sa -P YourPassword
+
+# If this fails, verify:
+# - Username is correct (default: sa)
+# - Password is correct
+# - Mixed Mode Authentication is enabled
+</code></pre>
+<h3 id="sql-server-certificate-trust-error">SQL Server Certificate Trust Error</h3>
+<p><strong>Symptoms:</strong></p>
+<ul>
+<li>Application fails to start or connect to database</li>
+<li>Event Viewer shows SQL connection errors</li>
+<li>Error message mentioning &quot;certificate chain&quot; or &quot;trust relationship&quot;</li>
+</ul>
+<p><strong>Error Example:</strong></p>
+<pre><code class="lang-text">A connection was successfully established with the server, but then an error occurred during the login process.
+(provider: SSL Provider, error: 0 - The certificate chain was issued by an authority that is not trusted.)
+</code></pre>
+<p><strong>Root Cause:</strong>
+The web server does not trust the SQL Server's SSL/TLS certificate.</p>
+<p><strong>Solutions:</strong></p>
+<h4 id="production-environment-recommended">Production Environment (Recommended)</h4>
+<p>Configure the Windows Server to trust the SQL Server certificate by following Microsoft's official documentation:</p>
+<p><strong>See:</strong> <a href="https://learn.microsoft.com/en-us/sql/database-engine/configure-windows/certificate-procedures?view=sql-server-ver17">SQL Server Certificate Procedures - Export and Import Certificates</a></p>
+<p>After importing the certificate, restart IIS:</p>
+<pre><code class="lang-powershell">iisreset
+</code></pre>
+<h4 id="non-production-environment-quick-fix">Non-Production Environment (Quick Fix)</h4>
+<p>Rerun the installer and answer <code>Y</code> (Yes) when prompted &quot;Trust SQL Server Certificate?&quot;:</p>
+<pre><code class="lang-cmd">powershell.exe -ExecutionPolicy Bypass -Command &quot;$env:SCRIPT_URL='{{INSTALL_URL_PREFIX}}{{VERSION}}/install-xmpro-application.ps1'; iex (irm $env:SCRIPT_URL)&quot;
+</code></pre>
+<p>When prompted, select:</p>
+<ul>
+<li><strong>Trust SQL Server Certificate</strong>: <code>Y</code> (Yes)</li>
+<li>Keep all other settings the same as your original installation</li>
+</ul>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>Setting &quot;Trust SQL Server Certificate&quot; to <code>Y</code> disables certificate validation and should only be used in non-production environments.</p>
+</div>
+<p><strong>Reference:</strong> <a href="https://learn.microsoft.com/en-us/dotnet/api/system.data.sqlclient.sqlconnectionstringbuilder.trustservercertificate">TrustServerCertificate Documentation</a></p>
+<h3 id="database-migration-fails">Database Migration Fails</h3>
+<p><strong>Error:</strong></p>
+<pre><code class="lang-text">Database migration failed for SM database
+</code></pre>
+<p><strong>Solutions:</strong></p>
+<p><strong>Check database connection:</strong></p>
+<pre><code class="lang-powershell"># Test connection with credentials from installer
+sqlcmd -S your-hostname -U sa -P YourPassword -Q &quot;SELECT @@VERSION&quot;
+</code></pre>
+<p><strong>Check disk space:</strong></p>
+<pre><code class="lang-powershell"># Verify enough disk space for databases
+Get-PSDrive C | Select-Object Used,Free
+</code></pre>
+<p><strong>Check SQL Server error logs:</strong></p>
+<pre><code class="lang-powershell"># View SQL Server error log
+Get-Content &quot;C:\Program Files\Microsoft SQL Server\MSSQL16.MSSQLSERVER\MSSQL\Log\ERRORLOG&quot;
+</code></pre>
+<p><strong>Manual database creation test:</strong></p>
+<pre><code class="lang-powershell">sqlcmd -S hostname -U sa -P YourPassword
+# At prompt, type:
+CREATE DATABASE TestDB
+GO
+DROP DATABASE TestDB
+GO
+# If this fails, SQL Server has permission or configuration issues
+</code></pre>
+<h3 id="database-creation-timeout">Database Creation Timeout</h3>
+<p><strong>Error:</strong></p>
+<pre><code class="lang-text">Unhandled exception. Microsoft.Data.SqlClient.SqlException (0x80131904): Execution Timeout Expired. The timeout period elapsed prior to completion of the operation or the server is not responding.
+CREATE DATABASE operation failed. Internal service error.
+Operation cancelled by user.
+Error Number:-2,State:0,Class:11
+SM/AD/DS database migration failed: database migration failed with exit code -532462766
+Installation failed: database migration failed with exit code -532462766
+</code></pre>
+<p><strong>What's happening:</strong></p>
+<ul>
+<li>SQL Server is creating the database in the background</li>
+<li>The migration tool times out before the database creation completes</li>
+<li>The database will eventually be created successfully, but the installer exits with an error</li>
+</ul>
+<p><strong>Root Cause:</strong>
+Database provisioning takes longer than the migration tool's timeout period.</p>
+<p><strong>Solutions:</strong></p>
+<h4 id="option-1-rerun-the-installer">Option 1: Rerun the Installer</h4>
+<p>Simply rerun the installation script. The database has been created in the background and the installer will detect it exists and continue with the migration:</p>
+<pre><code class="lang-cmd">powershell.exe -ExecutionPolicy Bypass -Command &quot;$env:SCRIPT_URL='{{INSTALL_URL_PREFIX}}{{VERSION}}/install-xmpro-application.ps1'; iex (irm $env:SCRIPT_URL)&quot;
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>You may encounter this timeout for each database (SM, AD, DS) during first-time installation. Simply rerun the installer each time until all databases are created and migrated successfully.</p>
+</div>
+<h4 id="option-2-manually-create-databases-before-installation">Option 2: Manually Create Databases Before Installation</h4>
+<p>Create the databases manually using your SQL admin account (e.g., <code>xmadmin</code>) before running the installer:</p>
+<pre><code class="lang-sql">-- Connect to Azure SQL Database using your admin account
+-- Example using Azure Data Studio or SQL Server Management Studio
+
+-- Create databases
+CREATE DATABASE SM;
+CREATE DATABASE AD;
+CREATE DATABASE DS;
+</code></pre>
+<p>Then run the installer normally. It will detect the databases exist and proceed with the migration.</p>
+<h3 id="database-already-exists-warning">Database Already Exists Warning</h3>
+<p><strong>Message:</strong></p>
+<pre><code class="lang-text">We've noticed that the SM database 'SM' already exists (45 tables found)
+Please ensure that you've performed a backup before proceeding
+</code></pre>
+<p><strong>What this means:</strong></p>
+<ul>
+<li>Installer detected existing XMPro database</li>
+<li>Database migration will modify/upgrade existing data</li>
+</ul>
+<p><strong>Solutions:</strong></p>
+<h4 id="option-1-backup-and-continue-recommended-for-upgrades">Option 1: Backup and continue (recommended for upgrades)</h4>
+<pre><code class="lang-powershell"># Backup existing database first
+sqlcmd -S hostname -U sa -P YourPassword -Q &quot;BACKUP DATABASE SM TO DISK='C:\Backup\SM.bak'&quot;
+
+# Then press Enter in installer to continue
+</code></pre>
+<h4 id="option-2-use-different-database-name">Option 2: Use different database name</h4>
+<ul>
+<li>Cancel installer (Ctrl+C)</li>
+<li>Re-run with custom database name:
+<pre><code class="lang-text">SM Database Name: SM_New
+</code></pre>
+</li>
+</ul>
+<h3 id="data-stream-designer-database-errors">Data Stream Designer Database Errors</h3>
+<p><strong>Problem:</strong> &quot;Violation of PRIMARY KEY constraint&quot; errors during Data Stream Designer startup</p>
+<p><strong>Solution:</strong></p>
+<ol>
+<li><p>Restart IIS using <code>iisreset /restart</code></p>
+</li>
+<li><p>If errors persist, check SQL database for corruption or manually resolve conflicts</p>
+</li>
+<li><p>Verify DS database integrity:</p>
+</li>
+</ol>
+<pre><code class="lang-powershell"># Check for duplicate keys or data issues
+sqlcmd -S hostname -U sa -P YourPassword -d DS -Q &quot;DBCC CHECKDB (DS)&quot;
+</code></pre>
+<ol start="4">
+<li>If database corruption is detected, restore from backup or re-run database migration:</li>
+</ol>
+<pre><code class="lang-powershell"># Re-run DS database migration
+.\install-xmpro-application.ps1 -Products @('DS')
+</code></pre>
+<h2 id="iis-configuration-issues">IIS Configuration Issues</h2>
+<h3 id="iis-application-pool-not-starting">IIS Application Pool Not Starting</h3>
+<p><strong>Error:</strong> Application pool stops immediately after starting</p>
+<p><strong>Check event logs:</strong></p>
+<pre><code class="lang-powershell"># View Application event log
+Get-EventLog -LogName Application -Newest 50 | Where-Object {$_.Source -like &quot;*IIS*&quot;}
+</code></pre>
+<p><strong>Common causes:</strong></p>
+<p><strong>1. .NET runtime not installed:</strong></p>
+<pre><code class="lang-powershell"># Verify .NET 8 Hosting Bundle
+dotnet --list-runtimes | Select-String &quot;Microsoft.AspNetCore.App 8&quot;
+
+# If missing, download and install:
+# https://dotnet.microsoft.com/en-us/download/dotnet/8.0
+</code></pre>
+<p><strong>2. Application pool identity permissions:</strong></p>
+<pre><code class="lang-powershell"># Reset application pool identity
+Import-Module WebAdministration
+Set-ItemProperty IIS:\AppPools\XMPro-SM -Name processModel.identityType -Value ApplicationPoolIdentity
+Restart-WebAppPool -Name &quot;XMPro-SM&quot;
+</code></pre>
+<p><strong>3. Port conflict:</strong></p>
+<pre><code class="lang-powershell"># Check if port is already in use
+netstat -ano | findstr &quot;:443&quot;
+netstat -ano | findstr &quot;:5202&quot;
+netstat -ano | findstr &quot;:5203&quot;
+
+# If port is in use, you can:
+# - Stop the conflicting application
+# - Change XMPro application port in IIS Manager
+</code></pre>
+<h3 id="cannot-access-xmpro-application">Cannot Access XMPro Application</h3>
+<p><strong>Problem:</strong> Browser shows &quot;This site can't be reached&quot; or connection timeout</p>
+<p><strong>Solutions:</strong></p>
+<p><strong>1. Check Windows Firewall:</strong></p>
+<pre><code class="lang-powershell"># Allow inbound connections on XMPro ports
+New-NetFirewallRule -DisplayName &quot;XMPro SM&quot; -Direction Inbound -Protocol TCP -LocalPort 443 -Action Allow
+New-NetFirewallRule -DisplayName &quot;XMPro AD&quot; -Direction Inbound -Protocol TCP -LocalPort 5202 -Action Allow
+New-NetFirewallRule -DisplayName &quot;XMPro DS&quot; -Direction Inbound -Protocol TCP -LocalPort 5203 -Action Allow
+</code></pre>
+<p><strong>2. Verify IIS bindings:</strong></p>
+<pre><code class="lang-powershell"># Check IIS site bindings
+Import-Module WebAdministration
+Get-WebBinding -Name &quot;XMPro-SM&quot;
+Get-WebBinding -Name &quot;XMPro-AD&quot;
+Get-WebBinding -Name &quot;XMPro-DS&quot;
+</code></pre>
+<p><strong>3. Test from localhost first:</strong></p>
+<pre><code class="lang-powershell"># Test connection from server itself
+Invoke-WebRequest -Uri &quot;https://localhost/&quot; -UseBasicParsing
+Invoke-WebRequest -Uri &quot;https://localhost:5202/&quot; -UseBasicParsing
+Invoke-WebRequest -Uri &quot;https://localhost:5203/&quot; -UseBasicParsing
+</code></pre>
+<p><strong>4. Check application is running:</strong></p>
+<pre><code class="lang-powershell"># Verify application pools are started
+Get-IISAppPool | Where-Object {$_.Name -like &quot;XMPro*&quot;} | Select-Object Name, State
+</code></pre>
+<h3 id="http-error-50019---configuration-error">HTTP Error 500.19 - Configuration Error</h3>
+<p><strong>Error:</strong></p>
+<pre><code class="lang-text">HTTP Error 500.19 - Internal Server Error
+Cannot read configuration file
+</code></pre>
+<p><strong>Solutions:</strong></p>
+<p><strong>1. IIS URL Rewrite module not installed:</strong></p>
+<pre><code class="lang-powershell"># Download and install:
+# https://www.iis.net/downloads/microsoft/url-rewrite
+
+# Verify installation:
+Get-WebConfiguration -Filter &quot;system.webServer/rewrite/rules&quot;
+</code></pre>
+<p><strong>2. web.config file corrupted:</strong></p>
+<pre><code class="lang-powershell"># Check web.config exists and is readable
+Test-Path &quot;C:\inetpub\wwwroot\XMPro-SM\web.config&quot;
+
+# View web.config for XML errors
+Get-Content &quot;C:\inetpub\wwwroot\XMPro-SM\web.config&quot;
+</code></pre>
+<p><strong>3. File permissions:</strong></p>
+<pre><code class="lang-powershell"># Grant IIS_IUSRS read access to application directory
+$acl = Get-Acl &quot;C:\inetpub\wwwroot\XMPro-SM&quot;
+$rule = New-Object System.Security.AccessControl.FileSystemAccessRule(&quot;IIS_IUSRS&quot;,&quot;ReadAndExecute&quot;,&quot;ContainerInherit,ObjectInherit&quot;,&quot;None&quot;,&quot;Allow&quot;)
+$acl.SetAccessRule($rule)
+Set-Acl &quot;C:\inetpub\wwwroot\XMPro-SM&quot; $acl
+</code></pre>
+<h3 id="http-error-40415---request-url-too-long">HTTP Error 404.15 - Request URL Too Long</h3>
+<p><strong>Error:</strong> Request URL too long error when accessing XMPro applications</p>
+<p><strong>Solution:</strong></p>
+<p>You need to make two changes to fix this issue:</p>
+<ol>
+<li>Increase the httpRuntime maxQueryStringLength and maxUrlLength in the system.web section</li>
+<li>Add requestFiltering settings in the system.webServer section</li>
+</ol>
+<p><strong>Steps:</strong></p>
+<ol>
+<li><p>Navigate to <code>C:\inetpub\wwwroot\XMPro-SM</code> and open <code>web.config</code> in a text editor</p>
+</li>
+<li><p>Update the httpRuntime line in the system.web section:</p>
+</li>
+</ol>
+<pre><code class="lang-xml">&lt;!-- Find this line --&gt;
+&lt;httpRuntime targetFramework=&quot;4.8&quot; maxUrlLength=&quot;1024&quot; /&gt;
+
+&lt;!-- Change it to this --&gt;
+&lt;httpRuntime targetFramework=&quot;4.8&quot; maxUrlLength=&quot;8192&quot; maxQueryStringLength=&quot;8192&quot; /&gt;
+</code></pre>
+<ol start="3">
+<li><p>Repeat for AD and DS web.config files:</p>
+<ul>
+<li><code>C:\inetpub\wwwroot\XMPro-AD\web.config</code></li>
+<li><code>C:\inetpub\wwwroot\XMPro-DS\web.config</code></li>
+</ul>
+</li>
+<li><p>Restart IIS:</p>
+</li>
+</ol>
+<pre><code class="lang-powershell">iisreset /restart
+</code></pre>
+<h3 id="http-error-400---bad-request-request-too-long">HTTP Error 400 - Bad Request (Request Too Long)</h3>
+<p><strong>Error:</strong> HTTP 400 error due to large request headers</p>
+<p><strong>Solution:</strong></p>
+<p>This issue requires registry changes to increase HTTP.sys limits:</p>
+<ol>
+<li><p>Open Registry Editor by pressing Win+R, typing &quot;regedit&quot; and pressing Enter</p>
+</li>
+<li><p>Navigate to: <code>HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\HTTP\Parameters</code></p>
+</li>
+<li><p>Look for these two registry keys:</p>
+<ul>
+<li><code>MaxFieldLength</code></li>
+<li><code>MaxRequestBytes</code></li>
+</ul>
+</li>
+<li><p>If they don't exist, create them as DWORD (32-bit) values:</p>
+<ul>
+<li>Right-click in the right pane and select &quot;New&quot; → &quot;DWORD (32-bit) Value&quot;</li>
+</ul>
+</li>
+<li><p>Name the first value <code>MaxFieldLength</code>:</p>
+<ul>
+<li>Double-click it to edit</li>
+<li>Select &quot;Decimal&quot; as the base</li>
+<li>Enter a value of 65536 (or higher if needed)</li>
+<li>Click OK</li>
+</ul>
+</li>
+<li><p>Right-click again and add a second DWORD value:</p>
+<ul>
+<li>Name it <code>MaxRequestBytes</code></li>
+<li>Double-click to edit</li>
+<li>Select &quot;Decimal&quot; as the base</li>
+<li>Enter a value of 65536 (or higher if needed)</li>
+<li>Click OK</li>
+</ul>
+</li>
+<li><p>After adding or modifying these values, restart HTTP service and IIS:</p>
+</li>
+</ol>
+<pre><code class="lang-cmd">net stop http /y
+net start http
+iisreset
+</code></pre>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>Stopping the HTTP service will temporarily interrupt all IIS websites and services on the server.</p>
+</div>
+<h2 id="certificate-issues">Certificate Issues</h2>
+<h3 id="browser-shows-certificate-warning">Browser Shows Certificate Warning</h3>
+<p><strong>Warning:</strong> &quot;Your connection is not private&quot; or &quot;NET::ERR_CERT_AUTHORITY_INVALID&quot;</p>
+<p><strong>Cause:</strong> Self-signed certificate not trusted by browser</p>
+<p><strong>Solutions:</strong></p>
+<p><strong>Option 1: Trust the certificate (for testing):</strong></p>
+<ol>
+<li>In browser, click &quot;Advanced&quot;</li>
+<li>Click &quot;Proceed to hostname (unsafe)&quot;</li>
+<li>Certificate will be trusted for this session</li>
+</ol>
+<p><strong>Option 2: Install root certificate in browser:</strong></p>
+<pre><code class="lang-powershell"># Export root certificate
+Export-Certificate -Cert (Get-ChildItem Cert:\LocalMachine\My | Where-Object {$_.Subject -like &quot;*XMPro Root CA*&quot;}) -FilePath &quot;C:\XMPro\XMProRootCA.cer&quot;
+
+# Manually import to browser:
+# - Open certificate file
+# - Install to &quot;Trusted Root Certification Authorities&quot;
+</code></pre>
+<p><strong>Option 3: Use production certificate (recommended):</strong></p>
+<ul>
+<li>Obtain certificate from trusted Certificate Authority</li>
+<li>Import to Windows Certificate Store</li>
+<li>Update IIS bindings to use new certificate</li>
+</ul>
+<h3 id="certificate-private-key-not-accessible">Certificate Private Key Not Accessible</h3>
+<p><strong>Error:</strong></p>
+<pre><code class="lang-text">Cannot access private key for certificate
+</code></pre>
+<p><strong>Solution:</strong></p>
+<pre><code class="lang-powershell"># Grant IIS application pool permission to certificate private key
+
+# Find certificate thumbprint
+Get-ChildItem Cert:\LocalMachine\My | Where-Object {$_.Subject -like &quot;*hostname*&quot;}
+
+# Grant permission using certificate MMC:
+# 1. Run: certlm.msc
+# 2. Navigate to Personal &gt; Certificates
+# 3. Right-click certificate &gt; All Tasks &gt; Manage Private Keys
+# 4. Add &quot;IIS AppPool\XMPro-SM&quot; with Read permission
+# 5. Repeat for AD and DS application pools
+</code></pre>
+<h3 id="jwt-token-signing-certificate-error">JWT Token Signing Certificate Error</h3>
+<p><strong>Error:</strong></p>
+<pre><code class="lang-text">Failed to load signing certificate for JWT tokens
+</code></pre>
+<p><strong>Solution:</strong></p>
+<pre><code class="lang-powershell"># Verify JWT certificate exists
+Get-ChildItem Cert:\LocalMachine\My | Where-Object {$_.Subject -like &quot;*JWT*&quot;}
+</code></pre>
+<p><strong>If certificate is missing, create a new signing certificate:</strong></p>
+<pre><code class="lang-powershell"># Configuration
+$certPath = &quot;C:\XMPro\Certificates\sign.crt&quot;
+$pfxPath = &quot;C:\XMPro\Certificates\sign.pfx&quot;
+$certPassword = &quot;xmpro123&quot;  # Change this to a secure password
+
+# Create directory if needed
+New-Item -Path &quot;C:\XMPro\Certificates&quot; -ItemType Directory -Force | Out-Null
+
+# Create self-signed certificate
+$cert = New-SelfSignedCertificate -Subject &quot;CN=sm&quot; `
+    -KeyLength 4096 -KeyAlgorithm RSA -HashAlgorithm SHA256 `
+    -NotAfter (Get-Date).AddYears(1) `
+    -CertStoreLocation &quot;Cert:\LocalMachine\My&quot; `
+    -KeyUsage DigitalSignature -KeyExportPolicy Exportable -KeySpec KeyExchange
+
+# Export certificate files
+$securePassword = ConvertTo-SecureString -String $certPassword -Force -AsPlainText
+Export-Certificate -Cert $cert -FilePath $certPath -Type CERT | Out-Null
+Export-PfxCertificate -Cert $cert -FilePath $pfxPath -Password $securePassword | Out-Null
+
+# Remove from store (we only need the files)
+Remove-Item -Path &quot;Cert:\LocalMachine\My\$($cert.Thumbprint)&quot; -Force
+
+Write-Host &quot;Signing certificate created at: $pfxPath&quot;
+Write-Host &quot;Password: $certPassword&quot;
+</code></pre>
+<p><strong>Update configuration to use the new certificate:</strong></p>
+<pre><code class="lang-powershell"># Update appsettings.json with correct certificate path
+$config = Get-Content &quot;C:\inetpub\wwwroot\XMPro-SM\appsettings.json&quot; | ConvertFrom-Json
+$config.JwtSettings.CertificatePath
+# Should point to: C:\XMPro\Certificates\sign.pfx
+</code></pre>
+<h2 id="smtp-configuration-issues">SMTP Configuration Issues</h2>
+<h3 id="email-not-sending">Email Not Sending</h3>
+<p><strong>Problem:</strong> Password reset emails, notifications not being sent</p>
+<p><strong>Check SMTP configuration:</strong></p>
+<p><strong>1. Verify SMTP settings in configuration:</strong></p>
+<pre><code class="lang-powershell"># Check Global-variables.json
+Get-Content &quot;C:\XMPro\Global-variables.json&quot; | ConvertFrom-Json | Select-Object -ExpandProperty database | Select-Object -ExpandProperty smtp
+</code></pre>
+<p><strong>2. Test SMTP connection:</strong></p>
+<pre><code class="lang-powershell"># Test SMTP server connectivity
+Test-NetConnection -ComputerName smtp.example.com -Port 587
+
+# Send test email
+Send-MailMessage -From &quot;test@example.com&quot; -To &quot;test@example.com&quot; `
+  -Subject &quot;Test&quot; -Body &quot;Test&quot; `
+  -SmtpServer &quot;smtp.example.com&quot; -Port 587 `
+  -UseSsl -Credential (Get-Credential)
+</code></pre>
+<p><strong>3. Check IIS environment variables:</strong></p>
+<pre><code class="lang-powershell"># Verify EMAIL_* environment variables set for SM application
+Get-WebConfigurationProperty -PSPath &quot;IIS:\Sites\XMPro-SM&quot; -Filter &quot;system.webServer/aspNetCore&quot; -Name &quot;environmentVariables&quot;
+</code></pre>
+<p><strong>4. Common SMTP issues:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Issue</th>
+<th>Solution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Port blocked</strong></td>
+<td>Check firewall allows outbound on port 587 or 465</td>
+</tr>
+<tr>
+<td><strong>Authentication failed</strong></td>
+<td>Verify username/password, may need app-specific password (Gmail)</td>
+</tr>
+<tr>
+<td><strong>TLS/SSL error</strong></td>
+<td>Ensure <code>enableSsl: true</code> for port 587, check TLS version support</td>
+</tr>
+<tr>
+<td><strong>Relay denied</strong></td>
+<td>SMTP server must allow relay from Windows Server IP</td>
+</tr>
+</tbody>
+</table>
+<p><strong>5. Re-configure SMTP:</strong></p>
+<pre><code class="lang-powershell"># Edit Global-variables.json and re-run installer
+.\install-xmpro-application.ps1 -SkipDatabaseMigration
+</code></pre>
+<h2 id="stream-host-service-issues">Stream Host Service Issues</h2>
+<h3 id="stream-host-service-wont-start">Stream Host Service Won't Start</h3>
+<p><strong>Error:</strong> StreamHost-{hostname} service fails to start</p>
+<p><strong>Check service status:</strong></p>
+<pre><code class="lang-powershell"># Get Stream Host service name
+$serviceName = Get-Service | Where-Object {$_.Name -like &quot;StreamHost*&quot;} | Select-Object -ExpandProperty Name
+
+# Check service status
+Get-Service $serviceName
+
+# View service error
+Get-EventLog -LogName Application -Source $serviceName -Newest 10
+</code></pre>
+<p><strong>Common causes:</strong></p>
+<p><strong>1. CollectionId or Secret missing:</strong></p>
+<pre><code class="lang-powershell"># Verify Global-settings.json contains collection info
+Get-Content &quot;C:\XMPro\Global-settings.json&quot; | ConvertFrom-Json | Select-Object CollectionId, CollectionSecret
+
+# If missing, DS database migration failed
+# Re-run installer with DS selected
+</code></pre>
+<p><strong>2. Cannot connect to DS:</strong></p>
+<pre><code class="lang-powershell"># Test DS connectivity
+Invoke-WebRequest -Uri &quot;https://hostname:5203/version&quot; -UseBasicParsing
+
+# Check Stream Host config file
+Get-Content &quot;C:\Program Files\XMPro\StreamHost\appsettings.json&quot;
+# Verify DataStreamDesignerUrl is correct
+</code></pre>
+<p><strong>3. Permission issues:</strong></p>
+<pre><code class="lang-powershell"># Stream Host service runs as NetworkService by default
+# Grant NetworkService access to installation directory
+$acl = Get-Acl &quot;C:\Program Files\XMPro\StreamHost&quot;
+$rule = New-Object System.Security.AccessControl.FileSystemAccessRule(&quot;NT AUTHORITY\NetworkService&quot;,&quot;FullControl&quot;,&quot;ContainerInherit,ObjectInherit&quot;,&quot;None&quot;,&quot;Allow&quot;)
+$acl.SetAccessRule($rule)
+Set-Acl &quot;C:\Program Files\XMPro\StreamHost&quot; $acl
+</code></pre>
+<p><strong>4. Reinstall Stream Host:</strong></p>
+<pre><code class="lang-powershell"># Uninstall service
+$serviceName = Get-Service | Where-Object {$_.Name -like &quot;StreamHost*&quot;} | Select-Object -ExpandProperty Name
+Stop-Service $serviceName
+sc.exe delete $serviceName
+
+# Re-run installer
+.\install-xmpro-application.ps1 -Products @('SH')
+</code></pre>
+<h2 id="authentication-and-login-issues">Authentication and Login Issues</h2>
+<h3 id="cannot-login-with-admin-credentials">Cannot Login with Admin Credentials</h3>
+<p><strong>Problem:</strong> Login fails with correct username/password</p>
+<p><strong>Solutions:</strong></p>
+<p><strong>1. Verify credentials:</strong></p>
+<ul>
+<li>Username format: <code>admin@xmpro.onxmpro.com</code> (super admin) or <code>firstname.lastname@companyname.onxmpro.com</code> (company admin)</li>
+<li>Password: Must meet complexity requirements (8+ chars, uppercase, lowercase, number, special char)</li>
+</ul>
+<p><strong>2. Check SM application is running:</strong></p>
+<pre><code class="lang-powershell"># Verify SM application pool
+Get-IISAppPool -Name &quot;XMPro-SM&quot; | Select-Object Name, State
+
+# Restart if stopped
+Start-WebAppPool -Name &quot;XMPro-SM&quot;
+</code></pre>
+<p><strong>3. Check SM database:</strong></p>
+<pre><code class="lang-powershell"># Verify SM database exists and has data
+sqlcmd -S hostname -U sa -P YourPassword -Q &quot;SELECT TOP 5 * FROM SM.dbo.Users&quot;
+</code></pre>
+<p><strong>4. Reset admin password (if forgotten):</strong></p>
+<pre><code class="lang-powershell"># Contact XMPro Support for password reset procedure
+# Or re-run database migration (will reset passwords)
+.\install-xmpro-application.ps1 -SkipPrompts
+# Select SM for migration
+</code></pre>
+<h3 id="401-unauthorized-after-login">401 Unauthorized After Login</h3>
+<p><strong>Problem:</strong> Login succeeds but redirects show 401 Unauthorized</p>
+<p><strong>Cause:</strong> OIDC (OpenID Connect) hostname case sensitivity issue</p>
+<p><strong>Solution:</strong></p>
+<pre><code class="lang-powershell"># Check hostname case
+[System.Net.Dns]::GetHostName()
+
+# Hostname must be lowercase in all configurations
+# Edit Global-variables.json if needed and re-run installer
+</code></pre>
+<h2 id="performance-and-stability-issues">Performance and Stability Issues</h2>
+<h3 id="high-cpu-usage">High CPU Usage</h3>
+<p><strong>Check which process:</strong></p>
+<pre><code class="lang-powershell"># Identify top CPU consumers
+Get-Process | Sort-Object CPU -Descending | Select-Object -First 10 Name, CPU, Id
+</code></pre>
+<p><strong>Common causes:</strong></p>
+<ul>
+<li><strong>w3wp.exe</strong>: IIS worker process (normal during data processing)</li>
+<li><strong>sqlservr.exe</strong>: SQL Server (check for slow queries)</li>
+<li><strong>StreamHost service</strong>: Processing data streams (normal during active streams)</li>
+</ul>
+<p><strong>Solutions:</strong></p>
+<ul>
+<li>Increase server CPU resources</li>
+<li>Optimize data stream configurations</li>
+<li>Add additional Stream Host services for load distribution</li>
+</ul>
+<h3 id="memory-issues">Memory Issues</h3>
+<p><strong>Check memory usage:</strong></p>
+<pre><code class="lang-powershell"># View available memory
+Get-CimInstance Win32_OperatingSystem | Select-Object TotalVisibleMemorySize, FreePhysicalMemory
+
+# Check application pool memory
+Get-Process w3wp | Select-Object Id, ProcessName, WorkingSet, PrivateMemorySize
+</code></pre>
+<p><strong>Solutions:</strong></p>
+<ul>
+<li>Increase server RAM</li>
+<li>Configure application pool recycling</li>
+<li>Monitor for memory leaks in data streams</li>
+</ul>
+<h2 id="getting-more-help">Getting More Help</h2>
+<h3 id="collect-information-for-support">Collect Information for Support</h3>
+<p>When contacting XMPro Support, provide:</p>
+<pre><code class="lang-powershell"># 1. System information
+Get-ComputerInfo | Select-Object WindowsVersion, OsHardwareAbstractionLayer
+
+# 2. Installed .NET versions
+dotnet --list-runtimes
+
+# 3. IIS application pools status
+Get-IISAppPool | Where-Object {$_.Name -like &quot;XMPro*&quot;} | Format-Table Name, State
+
+# 4. Service status
+Get-Service | Where-Object {$_.Name -like &quot;*XMPro*&quot; -or $_.Name -like &quot;StreamHost*&quot;} | Format-Table Name, Status
+
+# 5. Recent errors
+Get-EventLog -LogName Application -EntryType Error -Newest 20 | Format-Table TimeGenerated, Source, Message
+
+# 6. Installation logs
+Get-Content &quot;C:\XMPro\Prerequisites\XMPro-Prerequisites-Install.log&quot; -Tail 50
+Get-Content &quot;$env:TEMP\XMPro-Application-Install.log&quot; -Tail 50
+</code></pre>
+<h3 id="xmpro-support-resources">XMPro Support Resources</h3>
+<ul>
+<li><strong>Support Portal</strong>: <a href="https://xmpro.na1.teamsupport.com/">https://xmpro.na1.teamsupport.com/</a></li>
+<li><strong>Documentation</strong>: <a href="https://documentation.xmpro.com/">https://documentation.xmpro.com/</a></li>
+<li><strong>Community Forum</strong>: <a href="https://community.xmpro.com/">https://community.xmpro.com/</a></li>
+</ul>
+<h3 id="additional-resources">Additional Resources</h3>
+<ul>
+<li><a href="index.html">Installation Guide</a> - Main deployment documentation</li>
+<li><a href="multi-server-deployment.html">Multi-Server Deployment</a> - Distributed deployments</li>
+<li><a href="airgapped-deployment.html">Airgapped Deployment</a> - Offline installation</li>
+<li><a href="https://github.com/XMPro/xmpro-development/tree/main/install">Installer README</a> - Complete technical reference</li>
+</ul>
+<hr>
+<div class="NOTE">
+<h5>Note</h5>
+<p>For issues specific to the optional prerequisites script (<code>install-xmpro-prerequisites.ps1</code>), note that this tool is <strong>not supported by XMPro</strong>. For prerequisites issues, refer to the <a href="index.html#prerequisites">Prerequisites</a> section in the installation guide.</p>
+</div>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: February 24, 2026</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

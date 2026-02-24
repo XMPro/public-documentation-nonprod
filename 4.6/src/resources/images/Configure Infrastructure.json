@@ -1,0 +1,287 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "Subscription Manager Vault Name": {
+            "type": "string",
+            "minLength": 1,
+            "defaultValue": "xmpro-sm-vault"
+        },
+        "Data Stream Designer Vault Name": {
+            "type": "string",
+            "minLength": 1,
+            "defaultValue": "xmpro-ds-vault"
+        },
+        "App Designer Vault Name": {
+            "type": "string",
+            "minLength": 1,
+            "defaultValue": "xmpro-ad-vault"
+        },
+        "DS Product Key": {
+            "type": "string",
+            "minLength": 1
+        },
+        "AD Product Key": {
+            "type": "string",
+            "minLength": 1
+        },
+        "Enable Email Notification": {
+            "type": "string",
+            "defaultValue": "false",
+     		 "allowedValues": [
+       			"true",
+        		"false"
+      ]
+        },
+        "SMTP Server": {
+            "type": "string",
+            "minLength": 1,
+            "defaultValue": "sinprd0310.outlook.com"
+        },
+        "SMTP Username": {
+            "type": "string",
+            "minLength": 1,
+            "defaultValue": "sample@email.com"
+        },
+        "SMTP Password": {
+            "type": "SecureString",
+            "minLength": 1,
+            "defaultValue": ""
+        },
+        "SMTP Port": {
+            "type": "int",
+            "defaultValue": 25
+        },
+        "Enable SSL": {
+            "type": "string",
+            "defaultValue": "true",
+     		 "allowedValues": [
+       			"true",
+        		"false"
+      ]
+	}		
+},
+    "variables": {
+    },
+    "resources": [
+        {
+            "type": "Microsoft.KeyVault/vaults/secrets",
+            "apiVersion": "2019-09-01",
+            "name": "[concat(parameters('Data Stream Designer Vault Name'), '/', 'xmpro--xmidentity--client--sharedkey')]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+            ],
+            "tags": {
+                "displayName": "ds-secret-sharedkey"
+            },
+            "properties": {
+                "value": "[parameters('DS Product Key')]"
+            }
+        },
+        {
+            "type": "Microsoft.KeyVault/vaults/secrets",
+            "apiVersion": "2019-09-01",
+            "name": "[concat(parameters('App Designer Vault Name'), '/', 'xmpro--appDesigner--encryptionKey')]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+            ],
+            "tags": {
+                "displayName": "ad-secret-encryptionkey"
+            },
+            "properties": {
+                "value": "[uniqueString(resourceGroup().id, parameters('AD Product Key'), 'ad-secret-encryptionkey')]"
+            }
+        },
+        {
+            "type": "Microsoft.KeyVault/vaults/secrets",
+            "apiVersion": "2019-09-01",
+            "name": "[concat(parameters('App Designer Vault Name'), '/', 'xmpro--xmidentity--client--sharedkey')]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+            ],
+            "tags": {
+                "displayName": "ad-secret-sharedkey"
+            },
+            "properties": {
+                "value": "[parameters('AD Product Key')]"
+            }
+        },
+        {
+            "type": "Microsoft.KeyVault/vaults/secrets",
+            "apiVersion": "2019-09-01",
+            "name": "[concat(parameters('App Designer Vault Name'), '/', 'xmpro--xmnotification--email--enable')]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+            ],
+            "tags": {
+                "displayName": "ad-email-enable"
+            },
+            "properties": {
+                "value": "[parameters('Enable Email Notification')]"
+            }
+        },
+        {
+			"condition": "[equals(parameters('Enable Email Notification'),'true')]",
+            "type": "Microsoft.KeyVault/vaults/secrets",
+            "apiVersion": "2019-09-01",
+            "name": "[concat(parameters('App Designer Vault Name'), '/', 'xmpro--xmnotification--email--smtpServer')]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+            ],
+            "tags": {
+                "displayName": "ad-email-server"
+            },
+            "properties": {
+                "value": "[parameters('SMTP Server')]"
+            }
+        },
+        {
+			"condition": "[equals(parameters('Enable Email Notification'),'true')]",
+            "type": "Microsoft.KeyVault/vaults/secrets",
+            "apiVersion": "2019-09-01",
+            "name": "[concat(parameters('App Designer Vault Name'), '/', 'xmpro--xmnotification--email--userName')]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+            ],
+            "tags": {
+                "displayName": "ad-email-usernane"
+            },
+            "properties": {
+                "value": "[parameters('SMTP Username')]"
+            }
+        },
+        {
+			"condition": "[equals(parameters('Enable Email Notification'),'true')]",
+            "type": "Microsoft.KeyVault/vaults/secrets",
+            "apiVersion": "2019-09-01",
+            "name": "[concat(parameters('App Designer Vault Name'), '/', 'xmpro--xmnotification--email--password')]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+            ],
+            "tags": {
+                "displayName": "ad-email-password"
+            },
+            "properties": {
+                "value": "[parameters('SMTP Password')]"
+            }
+        },
+        {
+            "type": "Microsoft.KeyVault/vaults/secrets",
+            "apiVersion": "2019-09-01",
+            "name": "[concat(parameters('App Designer Vault Name'), '/', 'xmpro--xmnotification--email--port')]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+            ],
+            "tags": {
+                "displayName": "ad-email-port"
+            },
+            "properties": {
+                "value": "[parameters('SMTP Port')]"
+            }
+        },
+        {
+            "type": "Microsoft.KeyVault/vaults/secrets",
+            "apiVersion": "2019-09-01",
+            "name": "[concat(parameters('App Designer Vault Name'), '/', 'xmpro--xmnotification--email--enableSsl')]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+            ],
+            "tags": {
+                "displayName": "ad-email-ssl"
+            },
+            "properties": {
+                "value": "[parameters('Enable SSL')]"
+            }
+        },
+        {
+            "type": "Microsoft.KeyVault/vaults/secrets",
+            "apiVersion": "2019-09-01",
+            "name": "[concat(parameters('Subscription Manager Vault Name'), '/', 'SMTPENABLE')]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+            ],
+            "tags": {
+                "displayName": "sm-email-enable"
+            },
+            "properties": {
+                "value": "[parameters('Enable Email Notification')]"
+            }
+        },
+        {
+			"condition": "[equals(parameters('Enable Email Notification'),'true')]",
+            "type": "Microsoft.KeyVault/vaults/secrets",
+            "apiVersion": "2019-09-01",
+            "name": "[concat(parameters('Subscription Manager Vault Name'), '/', 'SMTPSERVER')]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+            ],
+            "tags": {
+                "displayName": "sm-email-server"
+            },
+            "properties": {
+                "value": "[parameters('SMTP Server')]"
+            }
+        },
+        {
+			"condition": "[equals(parameters('Enable Email Notification'),'true')]",
+            "type": "Microsoft.KeyVault/vaults/secrets",
+            "apiVersion": "2019-09-01",
+            "name": "[concat(parameters('Subscription Manager Vault Name'), '/', 'SMTPUSER')]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+            ],
+            "tags": {
+                "displayName": "sm-email-username"
+            },
+            "properties": {
+                "value": "[parameters('SMTP Username')]"
+            }
+        },
+        {
+			"condition": "[equals(parameters('Enable Email Notification'),'true')]",
+            "type": "Microsoft.KeyVault/vaults/secrets",
+            "apiVersion": "2019-09-01",
+            "name": "[concat(parameters('Subscription Manager Vault Name'), '/', 'SMTPPASS')]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+            ],
+            "tags": {
+                "displayName": "sm-email-password"
+            },
+            "properties": {
+                "value": "[parameters('SMTP Password')]"
+            }
+        },
+        {
+            "type": "Microsoft.KeyVault/vaults/secrets",
+            "apiVersion": "2019-09-01",
+            "name": "[concat(parameters('Subscription Manager Vault Name'), '/', 'SMTPPORT')]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+            ],
+            "tags": {
+                "displayName": "sm-email-port"
+            },
+            "properties": {
+                "value": "[parameters('SMTP Port')]"
+            }
+        },
+        {
+            "type": "Microsoft.KeyVault/vaults/secrets",
+            "apiVersion": "2019-09-01",
+            "name": "[concat(parameters('Subscription Manager Vault Name'), '/', 'SMTPENABLESSL')]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+            ],
+            "tags": {
+                "displayName": "sm-email-ssl"
+            },
+            "properties": {
+                "value": "[parameters('Enable SSL')]"
+            }
+        }
+    ],
+    "outputs": {
+		
+	}
+}

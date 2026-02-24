@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Subscription Manager Log Events | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Subscription Manager Log Events | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/technical-reference/xmpro-log-events/subscription-manager-log-events.md&amp;version=GBrelease-4.6&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="subscription-manager-log-events">Subscription Manager Log Events</h1>
+
+<p>Subscription Manager generates log events that monitor identity and subscription management operations across the XMPro platform. These events cover user authentication and registration processes, database migration operations, email notification activities, license and subscription management, assembly loading diagnostics for system components, and OWIN/WebAPI request processing for service operations.</p>
+<p>The tables below organize log events by severity level, with each entry showing the message template you'll see in your logs and the context explaining what triggers that event. The levels are:</p>
+<ul>
+<li>Error</li>
+<li>Warning</li>
+<li>Information</li>
+<li>Debug</li>
+<li>Verbose</li>
+</ul>
+<h2 id="error-level">Error Level</h2>
+<p>Error events indicate serious problems that prevent normal operation but don't necessarily cause application termination. These require prompt investigation and resolution.</p>
+<table>
+<thead>
+<tr>
+<th>Message Template</th>
+<th>Context Summary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&quot;Application_Start() failed&quot;</td>
+<td>Application startup failure</td>
+</tr>
+<tr>
+<td>&quot;Error loading {dllFile}&quot;</td>
+<td>Assembly loading diagnostics - DLL file loading failure</td>
+</tr>
+<tr>
+<td>&quot;Error loading reference {referenceName}&quot;</td>
+<td>Assembly loading diagnostics - reference loading failure</td>
+</tr>
+<tr>
+<td>&quot;Error loading type from {AssemblyName}&quot;</td>
+<td>Assembly loading diagnostics - type loading failure</td>
+</tr>
+<tr>
+<td>&quot;Cannot send User Invite. Email notification is disabled&quot;</td>
+<td>Registration service - user invitation blocked</td>
+</tr>
+<tr>
+<td>&quot;Unexpected Error in sending Email&quot;</td>
+<td>Registration service - email sending failure</td>
+</tr>
+<tr>
+<td>&quot;Cannot send Reset Password Request. Email notification is disabled&quot;</td>
+<td>Registration service - password reset blocked</td>
+</tr>
+<tr>
+<td>&quot;Cannot send email. Notification is Disabled&quot;</td>
+<td>Email notification service - disabled notification</td>
+</tr>
+<tr>
+<td>&quot;Unexpected error inside Email Module&quot;</td>
+<td>Email notification service - general email failure</td>
+</tr>
+<tr>
+<td>&quot;Unhandled exception in ASP.NET WebAPI controller&quot;</td>
+<td>WebAPI exception logging</td>
+</tr>
+<tr>
+<td>&quot;Unhandled exception processing OWIN request&quot;</td>
+<td>OWIN request processing failure</td>
+</tr>
+<tr>
+<td>&quot;Cookie authentication exception&quot;</td>
+<td>Cookie authentication error</td>
+</tr>
+<tr>
+<td>&quot;Registration request failed for {username} with error:{errorMessage}&quot;</td>
+<td>User registration failure</td>
+</tr>
+<tr>
+<td>&quot;Password reset failed with error: {error}&quot;</td>
+<td>Password reset failure</td>
+</tr>
+<tr>
+<td>&quot;Error encountered when sending invite user request: {errorMessage}&quot;</td>
+<td>User invitation failure</td>
+</tr>
+<tr>
+<td>&quot;No valid username claim found for external registration&quot;</td>
+<td>External registration claim validation</td>
+</tr>
+</tbody>
+</table>
+<h2 id="warning-level">Warning Level</h2>
+<p>Warning events indicate potential issues or unusual conditions that don't prevent operation but may lead to problems if not addressed. Monitor these for trends.</p>
+<table>
+<thead>
+<tr>
+<th>Message Template</th>
+<th>Context Summary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&quot;Unable to mitigate duplicate Content-Length header, client may complain or fail&quot;</td>
+<td>HTTP header mitigation failure</td>
+</tr>
+<tr>
+<td>&quot;{assemblyName} references {referenceName} {referenceVersion} but lower {loadedVersion} in use&quot;</td>
+<td>Assembly version mismatch warning</td>
+</tr>
+</tbody>
+</table>
+<h2 id="information-level">Information Level</h2>
+<p>Information events track normal system operations and user activities. These provide audit trails and operational insights for system monitoring.</p>
+<table>
+<thead>
+<tr>
+<th>Message Template</th>
+<th>Context Summary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&quot;Preloading all assemblies to check for issues&quot;</td>
+<td>Assembly loading diagnostics startup</td>
+</tr>
+<tr>
+<td>&quot;Running SM database migrations&quot;</td>
+<td>Database migration execution</td>
+</tr>
+<tr>
+<td>&quot;Skipping SM database migrations&quot;</td>
+<td>Database migration skip</td>
+</tr>
+<tr>
+<td>&quot;Registration requested by {username} for {company} Company&quot;</td>
+<td>User registration initiation</td>
+</tr>
+<tr>
+<td>&quot;Password reset requested for {UserName}&quot;</td>
+<td>Password reset initiation</td>
+</tr>
+<tr>
+<td>&quot;Verifying password reset details for {UserName}&quot;</td>
+<td>Password reset verification</td>
+</tr>
+<tr>
+<td>&quot;Processing password reset for {UserName}&quot;</td>
+<td>Password reset processing</td>
+</tr>
+<tr>
+<td>&quot;Subscription Requested: {SubscriptionProductId}&quot;</td>
+<td>License service subscription request</td>
+</tr>
+<tr>
+<td>&quot;User {UserId} deleted categories: {CategoryIds}&quot;</td>
+<td>Category management</td>
+</tr>
+<tr>
+<td>&quot;Saving Server Variables for User {UserId}&quot;</td>
+<td>Server variable management</td>
+</tr>
+<tr>
+<td>&quot;User {UserId} is deleting variables: {Variables}&quot;</td>
+<td>Variable deletion</td>
+</tr>
+<tr>
+<td>&quot;User {UserId} is deleting variable categories: {VariableCategories}&quot;</td>
+<td>Variable category deletion</td>
+</tr>
+<tr>
+<td>&quot;Deleting user: {deleteUserId}&quot;</td>
+<td>User deletion</td>
+</tr>
+<tr>
+<td>&quot;Saving Profile Request for User: {UserId}&quot;</td>
+<td>User profile management</td>
+</tr>
+<tr>
+<td>&quot;Requesting License for {CompanyRequest} Company by User {UserId}&quot;</td>
+<td>License request</td>
+</tr>
+<tr>
+<td>&quot;Rejecting access request for user {0}&quot;</td>
+<td>Access request rejection</td>
+</tr>
+<tr>
+<td>&quot;Sending email to reject access request for user {0}&quot;</td>
+<td>Access rejection notification</td>
+</tr>
+<tr>
+<td>&quot;Rejecting subscription request for user {0}&quot;</td>
+<td>Subscription rejection</td>
+</tr>
+<tr>
+<td>&quot;Sending email to reject Subscription: {0}&quot;</td>
+<td>Subscription rejection notification</td>
+</tr>
+<tr>
+<td>&quot;Adjusted request URL from {originalUrl} to {adjustedUrl}&quot;</td>
+<td>Identity client URL adjustment</td>
+</tr>
+</tbody>
+</table>
+<h2 id="debug-level">Debug Level</h2>
+<p>Debug events provide detailed technical information for troubleshooting specific operations. These are typically enabled only when investigating particular issues.</p>
+<table>
+<thead>
+<tr>
+<th>Message Template</th>
+<th>Context Summary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&quot;Beginning Application_Start()&quot;</td>
+<td>Application startup initialization</td>
+</tr>
+<tr>
+<td>&quot;Beginning OwinStartup&quot;</td>
+<td>OWIN startup initialization</td>
+</tr>
+</tbody>
+</table>
+<h2 id="verbose-level">Verbose Level</h2>
+<p>Verbose events provide extremely detailed logging for comprehensive system tracing. These generate high volume logs and should be used sparingly.</p>
+<table>
+<thead>
+<tr>
+<th>Message Template</th>
+<th>Context Summary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&quot;Preloading main assembly&quot;</td>
+<td>Assembly loading diagnostics</td>
+</tr>
+<tr>
+<td>&quot;Preloading assembly from {dllFile}&quot;</td>
+<td>Assembly loading from DLL</td>
+</tr>
+<tr>
+<td>&quot;Preloading {assemblyName}&quot;</td>
+<td>Individual assembly preloading</td>
+</tr>
+<tr>
+<td>&quot;Loading reference {referenceName}&quot;</td>
+<td>Reference assembly loading</td>
+</tr>
+<tr>
+<td>&quot;Incoming OWIN request&quot;</td>
+<td>OWIN request logging</td>
+</tr>
+<tr>
+<td>&quot;Outgoing OWIN response&quot;</td>
+<td>OWIN response logging</td>
+</tr>
+<tr>
+<td>&quot;Cookie authentication redirect to {url}&quot;</td>
+<td>Cookie authentication redirect</td>
+</tr>
+<tr>
+<td>&quot;Cookie authentication signed in&quot;</td>
+<td>Cookie authentication success</td>
+</tr>
+<tr>
+<td>&quot;Cookie authentication sign in&quot;</td>
+<td>Cookie authentication attempt</td>
+</tr>
+<tr>
+<td>&quot;Cookie authentication sign out&quot;</td>
+<td>Cookie authentication logout</td>
+</tr>
+<tr>
+<td>&quot;Cookie authentication identity validated&quot;</td>
+<td>Cookie identity validation</td>
+</tr>
+<tr>
+<td>&quot;Making request&quot;</td>
+<td>Identity client HTTP request</td>
+</tr>
+<tr>
+<td>&quot;Received response {status}&quot;</td>
+<td>Identity client HTTP response</td>
+</tr>
+<tr>
+<td>&quot;Adjusted request URL&quot;</td>
+<td>Identity client URL adjustment</td>
+</tr>
+<tr>
+<td>&quot;Adjusted URLs in .well-known/openid-configuration response&quot;</td>
+<td>OpenID configuration adjustment</td>
+</tr>
+</tbody>
+</table>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: February 24, 2026</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Use Variables &amp; Expressions | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Use Variables &amp; Expressions | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/how-tos/apps/use-variables-and-expressions.md&amp;version=GBrelease-4.6&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="use-variables--expressions">Use Variables &amp; Expressions</h1>
+
+<p>Variables are placeholders used to hold and maintain certain values. In some cases, it is possible to not know some of the values that you might want to display or use within the Application. In this case, you can use Variables where the real value can be substituted in later. Expressions can also be configured and are useful for doing certain calculations and returning results which can also be used in the Application.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>It is recommended that you read the article listed below to improve your understanding of Variables and Expressions.</p>
+<ul>
+<li><a href="../../concepts/application/variables-and-expressions.html">Variables and Expressions</a></li>
+<li><a href="manage-pages.html">How to Manage Pages</a></li>
+</ul>
+</div>
+<h2 id="adding-a-variable">Adding a Variable</h2>
+<p>To add a Variable to the Application, follow the steps below:</p>
+<ol>
+<li><p>Open the editor for the Application.</p>
+<p><img src="../../images/apps/variables/open-app-editor.png" alt="Screenshot showing how to open the application editor by clicking the edit button"></p>
+</li>
+<li><p>Open the page the Variable will be stored in.</p>
+</li>
+<li><p>Click on <em>Page Data</em>.</p>
+</li>
+<li><p>Click on the <em>plus</em> symbol to add a new Variable.</p>
+<p><img src="../../images/apps/variables/add-new-variable.png" alt="Screenshot showing the Page Data tab with the plus button highlighted to add a new variable"></p>
+</li>
+<li><p>Type the name of the Variable.</p>
+</li>
+<li><p>Enter the type and whether it is a value or expression.</p>
+</li>
+<li><p>Click on <em>Save</em>.</p>
+<p><img src="../../images/apps/variables/configure-variable.png" alt="Screenshot showing the variable configuration panel with name, type, and value/expression options"></p>
+</li>
+</ol>
+<p>The Variable should show in the list of Variables.</p>
+<p><img src="../../images/apps/variables/variable-list.png" alt="Screenshot showing a list of variables in the Page Data panel"></p>
+<h2 id="using-a-variable">Using a Variable</h2>
+<p>To use a Variable, follow the steps below:</p>
+<ol>
+<li>Highlight the Block you want to bind the Variable to. In this case, it is a textbox for the user's input.</li>
+<li>Click on <em>Block Properties</em>.</li>
+<li>Expand <em>Value</em>.</li>
+<li>Select the Variable</li>
+<li>Click on <em>Save</em>.</li>
+</ol>
+<p><img src="../../images/apps/variables/use-variable.png" alt="Screenshot showing how to bind a variable to a block by selecting it in the Block Properties panel"></p>
+<h2 id="adding-expressions">Adding Expressions</h2>
+<p>When adding a Variable, there is an option to build an expression. The example below shows an expression that multiplies the values of two variables together. To build an expression, follow the steps below:</p>
+<ol>
+<li>Change the mode to <em>expression</em>.</li>
+<li>Select the expression box.</li>
+<li>Select from a range of parameters, Variables, and other functions to build an expression. When a value is selected it will appear in the expression box.</li>
+</ol>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Numbers are identified as integers by default. Convert to other data types using:</p>
+<ul>
+<li>a method e.g.<code>ToLong(0)</code>for the value 0 as a long</li>
+<li><code>2.0</code>for the value 2 as a double</li>
+</ul>
+</div>
+<p><img src="../../images/apps/variables/expression-builder.png" alt="Screenshot showing the expression builder interface with functions, variables, and operators"></p>
+<ol start="4">
+<li>Click on <em>Save</em>.</li>
+</ol>
+<p><img src="../../images/apps/variables/save-expression.png" alt="Screenshot showing the completed expression with the Save button highlighted"></p>
+<h2 id="deleting-a-variable">Deleting a Variable</h2>
+<p>To delete a Variable, follow the steps below:</p>
+<ol>
+<li>Click on <em>Page Data</em>.</li>
+<li>Click on <em>Edit</em> to edit the Variable.</li>
+<li>Click on <em>Delete</em>.</li>
+</ol>
+<p><img src="../../images/apps/variables/delete-variable.png" alt="Screenshot showing the edit panel for a variable with the Delete button highlighted"></p>
+<ol start="4">
+<li>Confirm that you want to delete the Variable.</li>
+</ol>
+<p><img src="../../images/apps/variables/confirm-delete.png" alt="Screenshot showing the confirmation dialog for deleting a variable"></p>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: February 24, 2026</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

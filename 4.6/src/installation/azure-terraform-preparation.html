@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Step 1: Prepare Your Environment | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Step 1: Prepare Your Environment | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../images/favicon.png">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/azure-terraform-preparation.md&amp;version=GBrelease-4.6&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="step-1-prepare-your-environment">Step 1: Prepare Your Environment</h1>
+
+<p>Before you can deploy XMPro on Azure, you need to prepare your computer and Azure account. This page walks you through everything you need, step by step.</p>
+<div class="TIP">
+<h5>Tip</h5>
+<p><strong>Time needed</strong>: About 30 minutes to complete all steps</p>
+<p><strong>What you'll have when done</strong>: A working environment ready to deploy XMPro</p>
+</div>
+<h2 id="quick-overview">Quick Overview</h2>
+<p>You'll need to:</p>
+<ol>
+<li><strong>Install 3 tools</strong> on your computer (Terraform, Azure CLI, and optionally Docker)</li>
+<li><strong>Set up Azure authentication</strong> so Terraform can create resources</li>
+<li><strong>Test everything works</strong> before moving to deployment</li>
+</ol>
+<p>Let's get started!</p>
+<h2 id="what-you-need">What You Need</h2>
+<h3 id="your-computer">Your Computer</h3>
+<ul>
+<li><strong>Windows, Mac, or Linux</strong> - any modern computer will work</li>
+<li><strong>Internet connection</strong> - for downloading tools and deploying to Azure</li>
+</ul>
+<h3 id="azure-account">Azure Account</h3>
+<ul>
+<li><strong>Azure subscription</strong> - Pay-as-you-go or company subscription</li>
+<li><strong>Contributor permissions</strong> - to create resources in Azure</li>
+<li><strong>Credit card or billing setup</strong> - deployment costs approximately $50-200/month depending on usage</li>
+</ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p><strong>New to Azure?</strong> You can get a <a href="https://azure.microsoft.com/en-us/free/">free Azure account</a> with $200 credit to get started.</p>
+</div>
+<h3 id="cost-estimate">Cost Estimate</h3>
+<ul>
+<li><strong>Small deployment</strong> (testing/evaluation): ~$50-100/month</li>
+<li><strong>Medium deployment</strong> (production): ~$100-200/month</li>
+<li><strong>Large deployment</strong> (enterprise): ~$300+/month</li>
+</ul>
+<div class="TIP">
+<h5>Tip</h5>
+<p><strong>Don't worry about sizing right now!</strong> The default deployment configuration works great for most scenarios. You can always scale up or down later based on your actual usage.</p>
+</div>
+<h2 id="install-required-tools">Install Required Tools</h2>
+<p>You need to install 3 tools on your computer. Don't worry - this is straightforward!</p>
+<h3 id="step-1-install-terraform">Step 1: Install Terraform</h3>
+<p>Terraform is the tool that creates Azure resources for you.</p>
+<ol>
+<li><strong>Download Terraform</strong>: Go to <a href="https://developer.hashicorp.com/terraform/install">terraform.io/downloads</a></li>
+<li><strong>Follow the installation guide</strong> for your operating system</li>
+<li><strong>Test it works</strong>: Open a terminal/command prompt and run:
+<pre><code class="lang-bash">terraform version
+</code></pre>
+You should see version information (like <code>Terraform v1.5.0</code>)</li>
+</ol>
+<h3 id="step-2-install-azure-cli">Step 2: Install Azure CLI</h3>
+<p>The Azure CLI lets Terraform talk to your Azure account.</p>
+<ol>
+<li><strong>Download Azure CLI</strong>: Go to <a href="https://learn.microsoft.com/en-us/cli/azure/install-azure-cli">Azure CLI installation guide</a></li>
+<li><strong>Follow the installation guide</strong> for your operating system</li>
+<li><strong>Test it works</strong>: In your terminal/command prompt, run:
+<pre><code class="lang-bash">az version
+</code></pre>
+You should see version information</li>
+</ol>
+<h3 id="step-3-install-docker-optional">Step 3: Install Docker (Optional)</h3>
+<p>Docker helps test that everything is working. This step is optional but recommended.</p>
+<ol>
+<li><strong>Download Docker Desktop</strong>: Go to <a href="https://docs.docker.com/desktop/">docker.com/get-started</a></li>
+<li><strong>Install and start Docker Desktop</strong></li>
+<li><strong>Test it works</strong>: In your terminal/command prompt, run:
+<pre><code class="lang-bash">docker --version
+</code></pre>
+</li>
+</ol>
+<div class="TIP">
+<h5>Tip</h5>
+<p><strong>Stuck on installation?</strong> Each tool has detailed installation guides. Take your time - getting these tools installed correctly is important for the next steps.</p>
+</div>
+<h2 id="connect-to-your-azure-account">Connect to Your Azure Account</h2>
+<p>Now you need to connect Terraform to your Azure account so it can create resources.</p>
+<h3 id="step-1-login-to-azure">Step 1: Login to Azure</h3>
+<ol>
+<li><strong>Open your terminal/command prompt</strong></li>
+<li><strong>Login to Azure</strong>:
+<pre><code class="lang-bash">az login
+</code></pre>
+</li>
+<li><strong>A web browser will open</strong> - login with your Azure account</li>
+<li><strong>Return to terminal</strong> - you should see your subscription information</li>
+</ol>
+<h3 id="step-2-set-your-subscription-if-you-have-multiple">Step 2: Set Your Subscription (If You Have Multiple)</h3>
+<p>If you have multiple Azure subscriptions, choose which one to use:</p>
+<ol>
+<li><strong>List your subscriptions</strong>:
+<pre><code class="lang-bash">az account list --output table
+</code></pre>
+</li>
+<li><strong>Set the subscription</strong> you want to use:
+<pre><code class="lang-bash">az account set --subscription &quot;Your Subscription Name&quot;
+</code></pre>
+</li>
+</ol>
+<h3 id="step-3-verify-your-access">Step 3: Verify Your Access</h3>
+<p>Make sure you have the right permissions to create resources in Azure:</p>
+<pre><code class="lang-bash"># Check your current account
+az account show
+
+# Verify you have Contributor or Owner role
+az role assignment list --assignee $(az account show --query user.name -o tsv)
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p><strong>That's it!</strong> Terraform will use your Azure CLI login to authenticate. No service principal needed!</p>
+</div>
+<h2 id="test-everything-works">Test Everything Works</h2>
+<p>Let's make sure all your tools are installed correctly before moving to deployment.</p>
+<h3 id="quick-test">Quick Test</h3>
+<p>Run these commands to verify everything is ready:</p>
+<pre><code class="lang-bash"># Test Terraform
+terraform version
+
+# Test Azure CLI
+az account show
+
+# Test Docker (if you installed it)
+docker --version
+</code></pre>
+<p><strong>What you should see</strong>:</p>
+<ul>
+<li>✅ Terraform shows a version number</li>
+<li>✅ Azure CLI shows your account information</li>
+<li>✅ Docker shows a version number (if installed)</li>
+</ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p><strong>Something not working?</strong> Don't worry! Review the installation steps above or check the troubleshooting section below.</p>
+</div>
+<h2 id="need-help">Need Help?</h2>
+<p><strong>Common Problems and Solutions:</strong></p>
+<p><strong>&quot;terraform: command not found&quot;</strong></p>
+<ul>
+<li>Make sure you downloaded Terraform for your operating system</li>
+<li>Try restarting your terminal/command prompt</li>
+<li>Check the <a href="https://developer.hashicorp.com/terraform/install">Terraform installation guide</a></li>
+</ul>
+<p><strong>&quot;az: command not found&quot;</strong></p>
+<ul>
+<li>Make sure you downloaded Azure CLI for your operating system</li>
+<li>Try restarting your terminal/command prompt</li>
+<li>Check the <a href="https://learn.microsoft.com/en-us/cli/azure/install-azure-cli">Azure CLI installation guide</a></li>
+</ul>
+<p><strong>Azure login problems</strong></p>
+<ul>
+<li>Try: <code>az logout</code> then <code>az login --use-device-code</code></li>
+<li>Make sure you have the right permissions in your Azure subscription</li>
+<li>Contact your Azure administrator if you can't create resources</li>
+</ul>
+<p><strong>Still stuck?</strong></p>
+<ul>
+<li>Double-check you followed each step above</li>
+<li>Make sure you're using the latest versions of the tools</li>
+<li>Try the installation on a different computer to isolate the issue</li>
+</ul>
+<h2 id="youre-ready">You're Ready!</h2>
+<p>🎉 <strong>Congratulations!</strong> Your environment is prepared. Now you can deploy XMPro to Azure.</p>
+<p><strong><a href="deployment/azure-terraform/index.html">👉 Step 2: Deploy XMPro</a></strong> - Follow the simple deployment guide to get XMPro running on Azure.</p>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: February 24, 2026</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

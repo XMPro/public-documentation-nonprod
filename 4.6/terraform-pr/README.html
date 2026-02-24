@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>XMPro Documentation PR Preview Infrastructure | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="XMPro Documentation PR Preview Infrastructure | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../images/favicon.png">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/terraform-pr/README.md&amp;version=GBrelease-4.6&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="xmpro-documentation-pr-preview-infrastructure">XMPro Documentation PR Preview Infrastructure</h1>
+
+<p>This Terraform module creates temporary Azure infrastructure for previewing XMPro documentation pull requests. It provides isolated environments for each PR to enable reviewers to see documentation changes before they're merged.</p>
+<h2 id="overview">Overview</h2>
+<p>When a PR is created against the documentation, this module:</p>
+<ol>
+<li><strong>Creates isolated Azure resources</strong> - Each PR gets its own resource group and storage account</li>
+<li><strong>Deploys static website hosting</strong> - Azure Storage Account with static website features enabled</li>
+<li><strong>Uploads DocFX documentation</strong> - Pipeline builds and uploads the documentation site</li>
+<li><strong>Provides preview URL</strong> - Public URL for reviewers to preview documentation changes</li>
+<li><strong>Automatic cleanup</strong> - Resources are destroyed when the PR is closed</li>
+</ol>
+<h2 id="architecture">Architecture</h2>
+<h3 id="resource-layout">Resource Layout</h3>
+<pre><code>Resource Group (rg-xmpro-docs-pr-preview-{pr_number})
+└── Storage Account (xmprodocpr{pr_number})
+    └── Static Website ($web container)
+        └── DocFX documentation site
+</code></pre>
+<h3 id="state-management">State Management</h3>
+<pre><code>Azure Storage Backend
+├── Container: terraform-state-docs
+├── State Files:
+│   ├── docs-pr-1234.tfstate    # PR #1234 state
+│   ├── docs-pr-1235.tfstate    # PR #1235 state
+│   └── docs-pr-1236.tfstate    # PR #1236 state
+└── Concurrent Build Support: ✓ No locking conflicts
+</code></pre>
+<p><strong>Key Design Principles:</strong></p>
+<ul>
+<li><strong>Complete Isolation</strong>: Each PR gets separate resource group and storage account</li>
+<li><strong>Concurrent Safety</strong>: PR-specific state files prevent locking conflicts</li>
+<li><strong>Cost Effective</strong>: Uses cheapest Azure storage options</li>
+<li><strong>Automatic Cleanup</strong>: Resources destroyed when PR closes</li>
+</ul>
+<h2 id="usage">Usage</h2>
+<p>This module is <strong>automatically used by Azure DevOps pipelines</strong> when PRs are created. It's not intended for manual deployment.</p>
+<h3 id="automated-pipeline-integration">Automated Pipeline Integration</h3>
+<p><strong>PR Creation/Update:</strong></p>
+<ul>
+<li>Pipeline: <code>docs/docs-build-pr.yml</code></li>
+<li>Trigger: Pull request to <code>main</code> or <code>release-*</code> branches</li>
+<li>Actions: Build documentation → Deploy preview → Comment on PR with URL</li>
+</ul>
+<p><strong>PR Closure:</strong></p>
+<ul>
+<li>Pipeline: <code>docs/docs-cleanup-pr.yml</code></li>
+<li>Trigger: Pull request closed</li>
+<li>Actions: Destroy Azure resources → Remove state file</li>
+</ul>
+<h2 id="state-management-details">State Management Details</h2>
+<h3 id="backend-configuration">Backend Configuration</h3>
+<p>The module uses a <strong>direct initialization process</strong> with PR-specific state files:</p>
+<pre><code class="lang-hcl"># main.tf includes backend configuration
+terraform {
+  required_providers {
+    azurerm = {
+      source  = &quot;hashicorp/azurerm&quot;
+      version = &quot;~&gt; 4.0&quot;
+    }
+  }
+  
+  backend &quot;azurerm&quot; {
+    # Backend configuration provided via -backend-config during init
+  }
+}
+</code></pre>
+<p><strong>Initialization Process</strong>:</p>
+<pre><code class="lang-bash"># Direct initialization with PR-specific state file
+terraform init \
+  -backend-config=&quot;storage_account_name=$(storageaccount)&quot; \
+  -backend-config=&quot;container_name=terraform-state-docs&quot; \
+  -backend-config=&quot;key=docs-pr-${PR_NUMBER}.tfstate&quot;
+</code></pre>
+<h3 id="why-this-approach">Why This Approach?</h3>
+<p><strong>Problem</strong>: Multiple PRs building simultaneously would conflict on the same state file
+<strong>Solution</strong>: Each PR gets its own state file: <code>docs-pr-{pr_number}.tfstate</code>
+<strong>Benefits</strong>:</p>
+<ul>
+<li>No state locking conflicts between concurrent PR builds</li>
+<li>Isolated state management per PR</li>
+<li>Direct backend configuration prevents state file mismatches</li>
+<li>Consistent state management across pipeline steps</li>
+</ul>
+<h2 id="pipeline-workflow">Pipeline Workflow</h2>
+<h3 id="1-pr-build-pipeline-docsdocs-build-pryml">1. PR Build Pipeline (<code>docs/docs-build-pr.yml</code>)</h3>
+<p><strong>Triggers</strong>: Pull request to <code>main</code> or <code>release-*</code> branches</p>
+<p><strong>Stages</strong>:</p>
+<pre><code class="lang-mermaid">graph LR
+    A[Build DocFX] --&gt; B[Deploy Preview]
+    B --&gt; C[Upload Docs]
+    C --&gt; D[Comment on PR]
+</code></pre>
+<p><strong>Detailed Steps</strong>:</p>
+<ol>
+<li><strong>Build Stage</strong>: DocFX builds documentation, creates <code>_site</code> artifact</li>
+<li><strong>Deploy Stage</strong>:
+<ul>
+<li>Initialize Terraform directly with PR-specific state file</li>
+<li>Apply Terraform to create/update Azure resources</li>
+<li>Sync documentation to storage account using <code>az storage blob sync</code></li>
+<li>Display preview URL with changed documentation pages</li>
+</ul>
+</li>
+</ol>
+<h3 id="2-pr-cleanup-pipeline-docsdocs-cleanup-pryml">2. PR Cleanup Pipeline (<code>docs/docs-cleanup-pr.yml</code>)</h3>
+<p><strong>Triggers</strong>: Pull request closed</p>
+<p><strong>Actions</strong>:</p>
+<ol>
+<li>Initialize Terraform with PR-specific state file</li>
+<li>Run <code>terraform destroy</code> to remove all Azure resources</li>
+<li>State file is automatically removed during destroy</li>
+</ol>
+<h2 id="variables">Variables</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Type</th>
+<th>Default</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pr_number</code></td>
+<td>Pull request number</td>
+<td>string</td>
+<td>Required</td>
+<td>Used in resource naming</td>
+</tr>
+<tr>
+<td><code>build_id</code></td>
+<td>Azure DevOps build ID</td>
+<td>string</td>
+<td>Required</td>
+<td>Used for tagging</td>
+</tr>
+<tr>
+<td><code>location</code></td>
+<td>Azure region for resources</td>
+<td>string</td>
+<td><code>eastus</code></td>
+<td>Where resources are created</td>
+</tr>
+<tr>
+<td><code>resource_group_name</code></td>
+<td>Base name of resource group</td>
+<td>string</td>
+<td><code>rg-xmpro-docs-pr-preview</code></td>
+<td>PR number is appended</td>
+</tr>
+</tbody>
+</table>
+<h2 id="outputs">Outputs</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>docs_preview_url</code></td>
+<td>Static website URL</td>
+<td>Posted in PR comments for reviewers</td>
+</tr>
+<tr>
+<td><code>storage_account_name</code></td>
+<td>Storage account name</td>
+<td>Used by pipeline to upload files</td>
+</tr>
+<tr>
+<td><code>storage_account_key</code></td>
+<td>Storage account access key</td>
+<td>Used by pipeline for authentication</td>
+</tr>
+<tr>
+<td><code>resource_group_name</code></td>
+<td>Full resource group name</td>
+<td>Used for resource management</td>
+</tr>
+</tbody>
+</table>
+<h2 id="azure-resources-created">Azure Resources Created</h2>
+<h3 id="per-pr-resources">Per PR Resources</h3>
+<pre><code class="lang-bash"># Resource Group
+rg-xmpro-docs-pr-preview-{pr_number}
+
+# Storage Account (with static website)
+xmprodocpr{pr_number}
+├── $web container (static website files)
+├── Primary web endpoint (public URL)
+└── Access keys (for upload authentication)
+</code></pre>
+<h3 id="resource-naming-rules">Resource Naming Rules</h3>
+<ul>
+<li><strong>Storage Account</strong>: <code>xmprodocpr{pr_number}</code> (max 24 chars, lowercase only)</li>
+<li><strong>Resource Group</strong>: <code>rg-xmpro-docs-pr-preview-{pr_number}</code></li>
+<li><strong>State File</strong>: <code>docs-pr-{pr_number}.tfstate</code></li>
+</ul>
+<h2 id="dependencies">Dependencies</h2>
+<h3 id="azure-devops-variable-groups">Azure DevOps Variable Groups</h3>
+<ul>
+<li><strong><code>terraform-devtestplan-state</code></strong>: Contains backend configuration
+<ul>
+<li><code>service_name</code>: Azure service connection name</li>
+<li><code>key_vault_name</code>: Key Vault containing secrets</li>
+<li><code>storageaccount</code>: Terraform state storage account</li>
+<li><code>container</code>: Container name (overridden to <code>terraform-state-docs</code>)</li>
+</ul>
+</li>
+</ul>
+<h3 id="azure-key-vault-secrets">Azure Key Vault Secrets</h3>
+<p>Retrieved automatically via <code>terraform-devtestplan-state</code> group:</p>
+<ul>
+<li><code>sas-token</code>: Storage account SAS token for state backend</li>
+<li><code>az-client-id</code>: Service principal client ID</li>
+<li><code>az-client-secret</code>: Service principal secret</li>
+<li><code>az-subscription</code>: Azure subscription ID</li>
+<li><code>az-tenant</code>: Azure tenant ID</li>
+</ul>
+<h2 id="cost-considerations">Cost Considerations</h2>
+<p><strong>Resource Costs Per PR</strong>:</p>
+<ul>
+<li><strong>Storage Account</strong>: ~$0.05/month (Standard LRS, minimal usage)</li>
+<li><strong>Static Website</strong>: No additional cost</li>
+<li><strong>Resource Group</strong>: No cost</li>
+</ul>
+<p><strong>Cost Management</strong>:</p>
+<ul>
+<li>Resources are automatically cleaned up when PRs are closed</li>
+<li>Maximum lifetime: Duration of PR (typically days, not months)</li>
+<li><strong>Estimated cost per PR</strong>: &lt; $0.50 USD total</li>
+</ul>
+<p><strong>Cost Optimization</strong>:</p>
+<ul>
+<li>Uses cheapest storage replication (LRS)</li>
+<li>No compute resources (static hosting only)</li>
+<li>Automatic cleanup prevents cost accumulation</li>
+</ul>
+<h2 id="security">Security</h2>
+<h3 id="data-protection">Data Protection</h3>
+<ul>
+<li><strong>Static websites are publicly accessible</strong> (by design for PR reviews)</li>
+<li><strong>HTTPS enforced</strong> on all storage account endpoints</li>
+<li><strong>No sensitive data</strong> should be included in documentation</li>
+<li><strong>Access keys marked sensitive</strong> in Terraform outputs</li>
+</ul>
+<h3 id="authentication--authorization">Authentication &amp; Authorization</h3>
+<ul>
+<li><strong>Service Principal authentication</strong> for Terraform operations</li>
+<li><strong>Azure Key Vault</strong> for secret management</li>
+<li><strong>RBAC permissions</strong> controlled via Azure DevOps service connections</li>
+<li><strong>State file access</strong> controlled via storage account permissions</li>
+</ul>
+<h3 id="security-best-practices">Security Best Practices</h3>
+<ul>
+<li>Documentation contains only public information</li>
+<li>No API keys, passwords, or internal URLs in docs</li>
+<li>Preview URLs are time-limited (PR lifetime only)</li>
+<li>Regular cleanup prevents data persistence</li>
+</ul>
+<h2 id="cleanup-process">Cleanup Process</h2>
+<h3 id="automatic-cleanup-triggers">Automatic Cleanup Triggers</h3>
+<p>Resources are automatically cleaned up when:</p>
+<ul>
+<li><strong>PR is closed</strong> (merged or abandoned)</li>
+<li><strong>PR cleanup pipeline</strong> runs successfully</li>
+</ul>
+<h3 id="manual-cleanup-if-needed">Manual Cleanup (if needed)</h3>
+<pre><code class="lang-bash"># If automatic cleanup fails, manually run:
+cd docs/terraform-pr
+terraform init \
+  -backend-config=&quot;storage_account_name=STORAGE_ACCOUNT&quot; \
+  -backend-config=&quot;container_name=terraform-state-docs&quot; \
+  -backend-config=&quot;key=docs-pr-{PR_NUMBER}.tfstate&quot; \
+  -reconfigure
+
+terraform destroy \
+  -var=&quot;pr_number={PR_NUMBER}&quot; \
+  -var=&quot;build_id=manual-cleanup&quot; \
+  -auto-approve
+</code></pre>
+<h3 id="cleanup-verification">Cleanup Verification</h3>
+<ul>
+<li>Check Azure Portal: Resource group should be deleted</li>
+<li>Check state storage: <code>docs-pr-{pr_number}.tfstate</code> should be removed</li>
+<li>No ongoing costs should appear in Azure billing</li>
+</ul>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="common-issues">Common Issues</h3>
+<h4 id="1-preview-url-not-working">1. Preview URL Not Working</h4>
+<p><strong>Symptoms</strong>: 404 error or blank page
+<strong>Solutions</strong>:</p>
+<ul>
+<li>Verify storage account was created: <code>az storage account show -n xmprodocpr{pr_number}</code></li>
+<li>Check static website enabled: Look for <code>primary_web_endpoint</code> in outputs</li>
+<li>Confirm files uploaded: Check <code>$web</code> container contents</li>
+<li>Wait 2-3 minutes for DNS propagation</li>
+</ul>
+<h4 id="2-state-lock-issues">2. State Lock Issues</h4>
+<p><strong>Symptoms</strong>: &quot;Backend configuration changed&quot; or lock errors
+<strong>Solutions</strong>:</p>
+<ul>
+<li><strong>Concurrent builds</strong>: PR-specific state files prevent most locking conflicts</li>
+<li><strong>Stuck locks</strong>: Locks auto-expire after 15 minutes</li>
+<li><strong>Manual unlock</strong>: Use <code>terraform force-unlock</code> with lock ID</li>
+<li><strong>State mismatch</strong>: Ensure backend configuration includes proper azurerm block</li>
+</ul>
+<h4 id="3-storage-account-name-conflicts">3. Storage Account Name Conflicts</h4>
+<p><strong>Symptoms</strong>: &quot;Storage account name already exists&quot;
+<strong>Solutions</strong>:</p>
+<ul>
+<li>Check if previous cleanup failed: Look for existing <code>xmprodocpr{pr_number}</code></li>
+<li>Manual cleanup of orphaned resources</li>
+<li>Storage account names are globally unique across Azure</li>
+</ul>
+<h4 id="4-pipeline-authentication-failures">4. Pipeline Authentication Failures</h4>
+<p><strong>Symptoms</strong>: &quot;Unauthorized&quot; or &quot;Forbidden&quot; errors
+<strong>Solutions</strong>:</p>
+<ul>
+<li>Verify <code>terraform-devtestplan-state</code> variable group exists</li>
+<li>Check Azure Key Vault permissions for service principal</li>
+<li>Confirm service connection is valid and not expired</li>
+</ul>
+<h4 id="5-terraform-init-failures">5. Terraform Init Failures</h4>
+<p><strong>Symptoms</strong>: Backend initialization errors
+<strong>Solutions</strong>:</p>
+<ul>
+<li>Verify <code>terraform-state-docs</code> container exists in storage account</li>
+<li>Check SAS token permissions and expiration</li>
+<li>Ensure storage account allows Terraform operations</li>
+<li>Verify <code>main.tf</code> includes proper backend &quot;azurerm&quot; block</li>
+</ul>
+<h3 id="debug-information">Debug Information</h3>
+<h4 id="useful-commands">Useful Commands</h4>
+<pre><code class="lang-bash"># Check storage account details
+az storage account show -n xmprodocpr{pr_number} -g rg-xmpro-docs-pr-preview-{pr_number}
+
+# List state files
+az storage blob list --container-name terraform-state-docs --account-name {state_storage_account}
+
+# Check static website configuration
+az storage blob service-properties show --account-name xmprodocpr{pr_number}
+</code></pre>
+<h4 id="pipeline-variables-to-check">Pipeline Variables to Check</h4>
+<ul>
+<li><code>System.PullRequest.PullRequestId</code>: Should contain PR number</li>
+<li><code>storageaccount</code>: Backend storage account name</li>
+<li><code>sas-token</code>: Should not be empty or expired</li>
+<li><code>key_vault_name</code>: Key Vault containing secrets</li>
+</ul>
+<h3 id="getting-help">Getting Help</h3>
+<p>If issues persist:</p>
+<ol>
+<li><strong>Check Azure DevOps pipeline logs</strong> for detailed error messages</li>
+<li><strong>Verify Azure Portal</strong> for resource creation status</li>
+<li><strong>Check variable group values</strong> in Azure DevOps</li>
+<li><strong>Contact platform team</strong> with PR number and error details</li>
+</ol>
+<h2 id="maintenance">Maintenance</h2>
+<h3 id="regular-tasks">Regular Tasks</h3>
+<ul>
+<li><strong>Monitor costs</strong>: Review Azure billing for unexpected charges</li>
+<li><strong>Clean up orphaned resources</strong>: Check for resources not cleaned up automatically</li>
+<li><strong>Update documentation</strong>: Keep README current with any pipeline changes</li>
+<li><strong>Review security</strong>: Ensure no sensitive data in documentation</li>
+</ul>
+<h3 id="updates-required-when">Updates Required When</h3>
+<ul>
+<li><strong>Azure provider version changes</strong>: Update <code>required_providers</code> in <code>main.tf</code></li>
+<li><strong>Pipeline template changes</strong>: Update deployment template if process changes</li>
+<li><strong>Variable group changes</strong>: Update documentation if new secrets added</li>
+<li><strong>Naming conventions change</strong>: Update resource naming rules</li>
+</ul>
+<p>This module provides a robust, cost-effective solution for documentation PR previews with proper isolation and automatic cleanup.</p>
+
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

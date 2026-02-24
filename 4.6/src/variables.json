@@ -1,0 +1,8 @@
+{
+  "INSTALL_URL_PREFIX": "https://download.nonprod.xmprodev.com/",
+  "INSTALLER_SCRIPT": "install-xmpro-application.ps1",
+  "VERSION": "4.6.0-alpha",
+  "ACR_URL": "xmprononprod.azurecr.io",
+  "TERRAFORM_MODULE_URL": "https://github.com/XMPro/nonprod-terraform-azure",
+  "DOWNLOAD_URL": "https://download.nonprod.xmprodev.com"
+}
