@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../../../">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/deployment/windows-server-2022/index.md&amp;version=GBrelease-4.6&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/deployment/windows-server-2022/index.md&amp;version=GBrelease-4.6.0&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -374,6 +374,123 @@
 </tr>
 </tbody>
 </table>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p><strong>Microsoft 365 Users:</strong> If you use Microsoft 365 or Office 365 for SMTP, you must configure OAuth 2.0 authentication by <strong>March 2026</strong> due to Microsoft's deprecation of Basic Authentication.</p>
+<p>The installer (v4.6+) supports OAuth SMTP configuration during installation. See <a href="../../../technical-reference/oauth-smtp-configuration.html">OAuth SMTP Configuration</a> for complete setup instructions including Azure AD app registration.</p>
+</div>
+<h5 id="oauth-smtp-configuration-optional">OAuth SMTP Configuration (optional)</h5>
+<p>For Microsoft 365/Office 365 SMTP (required after March 2026), the installer prompts for OAuth settings:</p>
+<table>
+<thead>
+<tr>
+<th>Prompt</th>
+<th>What It Means</th>
+<th>Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Enable OAuth SMTP authentication? (y/n)</strong></td>
+<td>Use OAuth 2.0 instead of Basic Auth (required for Microsoft 365 after March 2026).</td>
+<td><code>n</code></td>
+</tr>
+</tbody>
+</table>
+<p>If you choose to enable OAuth SMTP, you'll be prompted for these additional settings:</p>
+<table>
+<thead>
+<tr>
+<th>Prompt</th>
+<th>What It Means</th>
+<th>Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>OAuth Token Endpoint</strong></td>
+<td>Azure AD token endpoint URL. Format: <code>https://login.microsoftonline.com/{tenant-id}/oauth2/v2.0/token</code></td>
+<td><em>(required - no default)</em></td>
+</tr>
+<tr>
+<td><strong>OAuth Client ID</strong></td>
+<td>Azure AD application (client) ID from your app registration.</td>
+<td><em>(required - no default)</em></td>
+</tr>
+<tr>
+<td><strong>OAuth Client Secret</strong></td>
+<td>Client secret value from your Azure AD app registration.</td>
+<td><em>(required - no default)</em></td>
+</tr>
+<tr>
+<td><strong>OAuth Scope</strong></td>
+<td>OAuth scope for Microsoft 365.</td>
+<td><code>https://outlook.office365.com/.default</code></td>
+</tr>
+</tbody>
+</table>
+<div class="NOTE">
+<h5>Note</h5>
+<p><strong>Prerequisites for OAuth SMTP:</strong> Before enabling OAuth during installation, you must create an Azure AD app registration with SMTP.SendAsApp and Mail.Send permissions. See the complete <a href="../../../technical-reference/oauth-smtp-configuration.html">OAuth SMTP Configuration Guide</a> for step-by-step Azure AD setup instructions.</p>
+</div>
+<h5 id="sso-configuration-if-enabled">SSO Configuration (if enabled)</h5>
+<p>The installer allows you to configure Single Sign-On (SSO) for Azure AD authentication, enabling users to sign in with their organizational accounts.</p>
+<table>
+<thead>
+<tr>
+<th>Prompt</th>
+<th>What It Means</th>
+<th>Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Enable SSO configuration? (y/n)</strong></td>
+<td>Configure Single Sign-On for Azure AD authentication.<br><em>Only asked if SM is selected.</em></td>
+<td><code>n</code></td>
+</tr>
+</tbody>
+</table>
+<p>If you choose to enable SSO, you'll be prompted for these additional settings:</p>
+<table>
+<thead>
+<tr>
+<th>Prompt</th>
+<th>What It Means</th>
+<th>Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Azure AD Client ID</strong></td>
+<td>The Application (client) ID from your Azure AD app registration.</td>
+<td><em>(required - no default)</em></td>
+</tr>
+<tr>
+<td><strong>Azure AD Secret</strong></td>
+<td>The client secret value from your Azure AD app registration.</td>
+<td><em>(required - no default)</em></td>
+</tr>
+<tr>
+<td><strong>Azure AD Tenant ID</strong></td>
+<td>Your Azure AD tenant ID (optional - can be left blank).</td>
+<td><em>(optional - press Enter to skip)</em></td>
+</tr>
+<tr>
+<td><strong>Business Role Claim</strong></td>
+<td>The claim name for business roles (e.g., <code>groups</code>).<br>Used to map Azure AD groups to XMPro roles.</td>
+<td><em>(optional - press Enter to skip)</em></td>
+</tr>
+</tbody>
+</table>
+<div class="NOTE">
+<h5>Note</h5>
+<p><strong>SSO Setup Requirements:</strong> Before enabling SSO during installation, you should have already registered an application in Azure AD and configured the necessary permissions. See <a href="../../../technical-reference/sso-azure-ad.html">SSO - Azure Entra ID</a> for detailed setup instructions.</p>
+</div>
+<div class="TIP">
+<h5>Tip</h5>
+<p><strong>When to enable SSO:</strong> Enable SSO if your organization uses Azure AD and you want users to authenticate with their organizational accounts instead of XMPro-specific credentials.</p>
+</div>
 <h4 id="3-product-configuration">3. Product Configuration</h4>
 <h5 id="basic-configuration">Basic Configuration</h5>
 <div class="NOTE">
@@ -648,7 +765,7 @@
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: February 24, 2026</em></small></p>
+    <p><small><em>Last modified: February 25, 2026</em></small></p>
   </div>
 </article>
 

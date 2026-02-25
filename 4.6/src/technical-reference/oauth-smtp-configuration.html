@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>OAuth SMTP Configuration for Microsoft 365 | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="OAuth SMTP Configuration for Microsoft 365 | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../images/favicon.png">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/technical-reference/oauth-smtp-configuration.md&amp;version=GBrelease-4.6.0&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="oauth-smtp-configuration-for-microsoft-365">OAuth SMTP Configuration for Microsoft 365</h1>
+
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p><strong>Microsoft is deprecating Basic Authentication for SMTP:</strong></p>
+<ul>
+<li><strong>March 1, 2026</strong>: Microsoft begins rejecting Basic Auth for SMTP submissions</li>
+<li><strong>April 30, 2026</strong>: 100% rejection of Basic Auth SMTP submissions</li>
+</ul>
+<p>If you use Microsoft 365 or Office 365 for SMTP, you must configure OAuth 2.0 authentication before March 2026.</p>
+</div>
+<div class="NOTE">
+<h5>Note</h5>
+<p><strong>Supported Versions:</strong> OAuth SMTP configuration is supported in XMPro 4.6 and later.</p>
+</div>
+<h2 id="overview">Overview</h2>
+<p>XMPro supports OAuth 2.0 authentication for SMTP using the client credentials grant flow. This is Microsoft's recommended replacement for Basic Authentication and provides enhanced security through token-based authentication.</p>
+<p>This guide covers Azure AD app registration, platform-specific configuration for each deployment method, testing and verification, troubleshooting common issues, and migration from Basic Auth.</p>
+<p><strong>When to use OAuth SMTP:</strong></p>
+<ul>
+<li><strong>Required</strong>: When using Microsoft 365 or Office 365 SMTP after March 2026</li>
+<li><strong>Recommended</strong>: For any email service that supports OAuth 2.0 authentication</li>
+<li><strong>Not Required</strong>: For SMTP servers that continue supporting Basic Authentication</li>
+</ul>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>Before configuring OAuth SMTP in XMPro, you need:</p>
+<ol>
+<li><p><strong>Azure Active Directory access</strong> with permissions to:</p>
+<ul>
+<li>Create app registrations</li>
+<li>Grant admin consent for API permissions</li>
+</ul>
+</li>
+<li><p><strong>Microsoft 365 mailbox</strong> configured for sending email</p>
+</li>
+<li><p><strong>XMPro deployment method</strong>:</p>
+<ul>
+<li>Azure Terraform</li>
+<li>Windows Server installer</li>
+</ul>
+</li>
+</ol>
+<h2 id="azure-ad-app-registration">Azure AD App Registration</h2>
+<h3 id="step-1-create-app-registration">Step 1: Create App Registration</h3>
+<ol>
+<li><p>Sign in to the <a href="https://portal.azure.com">Azure Portal</a></p>
+</li>
+<li><p>Navigate to <strong>Azure Active Directory</strong> &gt; <strong>App registrations</strong></p>
+</li>
+<li><p>Click <strong>New registration</strong>:</p>
+<ul>
+<li><strong>Name</strong>: <code>XMPro SMTP OAuth</code> (or your preferred name)</li>
+<li><strong>Supported account types</strong>: <strong>Accounts in this organizational directory only (Single tenant)</strong></li>
+<li><strong>Redirect URI</strong>: Leave blank</li>
+<li>Click <strong>Register</strong></li>
+</ul>
+</li>
+<li><p><strong>Note the following values</strong> (you'll need them for XMPro configuration):</p>
+<ul>
+<li><strong>Application (client) ID</strong> - Located on the Overview page</li>
+<li><strong>Directory (tenant) ID</strong> - Located on the Overview page</li>
+</ul>
+</li>
+</ol>
+<h3 id="step-2-create-client-secret">Step 2: Create Client Secret</h3>
+<ol>
+<li><p>In your app registration, go to <strong>Certificates &amp; secrets</strong></p>
+</li>
+<li><p>Click <strong>New client secret</strong>:</p>
+<ul>
+<li><strong>Description</strong>: <code>XMPro SMTP Secret</code> (or your preferred description)</li>
+<li><strong>Expires</strong>: Choose an appropriate expiration (Recommended: 12 or 24 months)</li>
+<li>Click <strong>Add</strong></li>
+</ul>
+</li>
+<li><p><strong>Copy the secret value immediately</strong> - You won't be able to see it again!</p>
+<ul>
+<li>Store this securely - you'll need it for XMPro configuration</li>
+</ul>
+</li>
+</ol>
+<div class="WARNING">
+<h5>Warning</h5>
+<p><strong>Secret Expiration</strong>: Client secrets expire after the chosen period. Set a calendar reminder to rotate the secret before it expires to avoid SMTP failures.</p>
+</div>
+<h3 id="step-3-configure-api-permissions">Step 3: Configure API Permissions</h3>
+<ol>
+<li><p>In your app registration, go to <strong>API permissions</strong></p>
+</li>
+<li><p>Click <strong>Add a permission</strong> &gt; <strong>APIs my organization uses</strong></p>
+</li>
+<li><p>Search for and select <strong>Office 365 Exchange Online</strong></p>
+</li>
+<li><p>Select <strong>Application permissions</strong> (not Delegated permissions)</p>
+</li>
+<li><p>Add these two permissions:</p>
+<ul>
+<li><strong>SMTP.SendAsApp</strong> - Send mail using SMTP AUTH protocol</li>
+<li><strong>Mail.Send</strong> - Send mail as any user</li>
+</ul>
+</li>
+<li><p>Click <strong>Add permissions</strong></p>
+</li>
+<li><p><strong>Grant admin consent</strong>:</p>
+<ul>
+<li>Click <strong>Grant admin consent for [Your Organization]</strong></li>
+<li>Confirm when prompted</li>
+<li>Wait for the status to show &quot;Granted for [Your Organization]&quot;</li>
+</ul>
+</li>
+</ol>
+<div class="NOTE">
+<h5>Note</h5>
+<p><strong>Admin Consent Required</strong>: Application permissions require admin consent. If you don't see the &quot;Grant admin consent&quot; button, contact your Azure AD administrator.</p>
+</div>
+<h3 id="step-4-enable-smtp-auth-in-exchange-online">Step 4: Enable SMTP AUTH in Exchange Online</h3>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p><strong>SMTP AUTH is disabled by default</strong> in Microsoft 365 for security. Even with OAuth 2.0, administrators must explicitly enable it.</p>
+</div>
+<p>Microsoft 365 tenants have SMTP authentication disabled by default. You must enable SMTP AUTH either globally or for specific mailboxes before OAuth SMTP will work.</p>
+<h4 id="option-1-enable-smtp-auth-globally-recommended-for-xmpro">Option 1: Enable SMTP AUTH Globally (Recommended for XMPro)</h4>
+<p>Use this option if XMPro will send emails from multiple mailboxes or if you want a simpler configuration.</p>
+<ol>
+<li><p><strong>Install Exchange Online PowerShell</strong> (if not already installed):</p>
+<pre><code class="lang-powershell">Install-Module -Name ExchangeOnlineManagement -Scope CurrentUser
+</code></pre>
+</li>
+<li><p><strong>Connect to Exchange Online</strong>:</p>
+<pre><code class="lang-powershell">Connect-ExchangeOnline
+</code></pre>
+<p>You'll be prompted to authenticate with your admin credentials.</p>
+</li>
+<li><p><strong>Enable SMTP AUTH globally</strong>:</p>
+<pre><code class="lang-powershell">Set-TransportConfig -SmtpClientAuthenticationDisabled $false
+</code></pre>
+</li>
+<li><p><strong>Verify the setting</strong>:</p>
+<pre><code class="lang-powershell">Get-TransportConfig | Format-List SmtpClientAuthenticationDisabled
+</code></pre>
+<p>Should return: <code>SmtpClientAuthenticationDisabled : False</code></p>
+</li>
+</ol>
+<h4 id="option-2-enable-smtp-auth-for-specific-mailbox">Option 2: Enable SMTP AUTH for Specific Mailbox</h4>
+<p>Use this option for a more restrictive security posture, enabling SMTP AUTH only for the mailbox XMPro will use.</p>
+<ol>
+<li><p><strong>Connect to Exchange Online</strong> (same as above)</p>
+</li>
+<li><p><strong>Enable SMTP AUTH for specific mailbox</strong>:</p>
+<pre><code class="lang-powershell">Set-CASMailbox -Identity your-email@yourdomain.com -SmtpClientAuthenticationDisabled $false
+</code></pre>
+<p>Replace <code>your-email@yourdomain.com</code> with the mailbox XMPro will use to send emails.</p>
+</li>
+<li><p><strong>Verify the setting</strong>:</p>
+<pre><code class="lang-powershell">Get-CASMailbox -Identity your-email@yourdomain.com | Format-List SmtpClientAuthenticationDisabled
+</code></pre>
+<p>Should return: <code>SmtpClientAuthenticationDisabled : False</code></p>
+</li>
+</ol>
+<p>For detailed instructions, see <a href="https://learn.microsoft.com/en-us/exchange/clients-and-mobile-in-exchange-online/authenticated-client-smtp-submission">Microsoft's official guide on enabling SMTP AUTH</a>.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p><strong>Security Defaults:</strong> If your organization has &quot;Security Defaults&quot; enabled in Azure AD, SMTP AUTH is disabled and cannot be enabled. You must disable Security Defaults first. See <a href="https://learn.microsoft.com/en-us/entra/fundamentals/security-defaults">Microsoft Security Defaults documentation</a> for more information.</p>
+</div>
+<h4 id="common-error-without-this-step">Common Error Without This Step</h4>
+<p>If you skip this step, you'll see this error when attempting to send email:</p>
+<pre><code class="lang-text">535 5.7.139 Authentication unsuccessful, SmtpClientAuthentication is disabled for the Tenant
+</code></pre>
+<p><strong>Solution:</strong> Complete this step to enable SMTP AUTH as shown above.</p>
+<h3 id="step-5-calculate-token-endpoint-url">Step 5: Calculate Token Endpoint URL</h3>
+<p>Using your Directory (tenant) ID from Step 1, construct the token endpoint URL that XMPro will use to request OAuth tokens.</p>
+<p>Your OAuth token endpoint URL follows this format:</p>
+<pre><code class="lang-text">https://login.microsoftonline.com/{tenant-id}/oauth2/v2.0/token
+</code></pre>
+<p>Replace <code>{tenant-id}</code> with your <strong>Directory (tenant) ID</strong> from Step 1.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="lang-text">https://login.microsoftonline.com/12345678-1234-1234-1234-123456789012/oauth2/v2.0/token
+</code></pre>
+<h2 id="xmpro-configuration-by-deployment-method">XMPro Configuration by Deployment Method</h2>
+<p>After completing the Azure AD app registration above, configure your XMPro deployment with the OAuth SMTP settings. Choose the section that matches your deployment method.</p>
+<h3 id="azure-terraform-deployment">Azure Terraform Deployment</h3>
+<p>Add these variables to your <code>terraform.tfvars</code> file:</p>
+<pre><code class="lang-hcl"># Enable email notifications (required - defaults to false)
+enable_email_notification = true
+
+# Enable OAuth SMTP authentication
+enable_email_oauth = true
+
+# OAuth token endpoint (replace {tenant-id} with your Directory tenant ID)
+email_oauth_token_endpoint = &quot;https://login.microsoftonline.com/{tenant-id}/oauth2/v2.0/token&quot;
+
+# Azure AD application credentials
+email_oauth_token_client_id     = &quot;your-application-client-id&quot;
+email_oauth_token_client_secret = &quot;your-client-secret-value&quot;
+
+# OAuth scope (use this exact value for Microsoft 365)
+email_oauth_token_scope = &quot;https://outlook.office365.com/.default&quot;
+
+# Basic SMTP settings (still required with OAuth)
+email_server          = &quot;smtp.office365.com&quot;
+email_server_ssl      = true
+email_server_port     = 587
+email_username        = &quot;notifications@yourdomain.com&quot;
+email_from_address    = &quot;notifications@yourdomain.com&quot;
+# Note: email_password is not used when OAuth is enabled
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The OAuth configuration applies to both SM and AD automatically in Terraform deployments.</p>
+</div>
+<p>For detailed Terraform configuration, see the <a href="{{TERRAFORM_MODULE_URL}}" target="_blank">Terraform module documentation</a>.</p>
+<h3 id="windows-server-deployment">Windows Server Deployment</h3>
+<h4 id="during-installation">During Installation</h4>
+<p>The Windows installer (v4.6+) supports OAuth SMTP configuration during installation:</p>
+<ol>
+<li><p>When prompted <strong>&quot;Enable SMTP configuration? (y/n)&quot;</strong>, answer <code>y</code></p>
+</li>
+<li><p>Provide standard SMTP settings:</p>
+<ul>
+<li><strong>SMTP Server</strong>: <code>smtp.office365.com</code></li>
+<li><strong>SMTP Port</strong>: <code>587</code></li>
+<li><strong>Enable SSL</strong>: <code>y</code></li>
+<li><strong>SMTP Username</strong>: <code>notifications@yourdomain.com</code></li>
+<li><strong>From Email Address</strong>: <code>notifications@yourdomain.com</code></li>
+</ul>
+</li>
+<li><p>When prompted <strong>&quot;Enable OAuth SMTP authentication? (y/n)&quot;</strong>, answer <code>y</code></p>
+</li>
+<li><p>Provide OAuth settings:</p>
+<ul>
+<li><strong>OAuth Token Endpoint</strong>: Your token endpoint URL from Azure</li>
+<li><strong>OAuth Client ID</strong>: Your Application (client) ID</li>
+<li><strong>OAuth Client Secret</strong>: Your client secret value</li>
+<li><strong>OAuth Scope</strong>: <code>https://outlook.office365.com/.default</code> (default)</li>
+</ul>
+</li>
+</ol>
+<h4 id="after-installation-manual-configuration">After Installation (Manual Configuration)</h4>
+<p>If you need to add or update OAuth SMTP after installation:</p>
+<ol>
+<li><p><strong>Stop XMPro services</strong> (SM and/or AD)</p>
+</li>
+<li><p><strong>Edit configuration file</strong>:</p>
+<ul>
+<li><code>C:\XMPro\Global-variables.json</code></li>
+</ul>
+</li>
+<li><p><strong>Add or update the <code>smtp</code> section</strong> in the file:</p>
+</li>
+</ol>
+<pre><code class="lang-json">{
+  &quot;smtp&quot;: {
+    &quot;enabled&quot;: true,
+    &quot;server&quot;: &quot;smtp.office365.com&quot;,
+    &quot;port&quot;: &quot;587&quot;,
+    &quot;enableSsl&quot;: true,
+    &quot;username&quot;: &quot;notifications@yourdomain.com&quot;,
+    &quot;fromAddress&quot;: &quot;notifications@yourdomain.com&quot;,
+    &quot;password&quot;: &quot;your-smtp-password&quot;,
+    &quot;oauth&quot;: {
+      &quot;enabled&quot;: true,
+      &quot;tokenEndpoint&quot;: &quot;https://login.microsoftonline.com/{tenant-id}/oauth2/v2.0/token&quot;,
+      &quot;clientId&quot;: &quot;your-application-client-id&quot;,
+      &quot;clientSecret&quot;: &quot;your-client-secret-value&quot;,
+      &quot;scope&quot;: &quot;https://outlook.office365.com/.default&quot;,
+      &quot;tokenMethod&quot;: &quot;POST&quot;,
+      &quot;grantType&quot;: &quot;client_credentials&quot;
+    }
+  }
+}
+</code></pre>
+<ol start="4">
+<li><strong>Start XMPro services</strong></li>
+</ol>
+<div class="TIP">
+<h5>Tip</h5>
+<p>Configuration files are located in <code>C:\XMPro\</code> by default. The installer preserves these files across reinstalls.</p>
+</div>
+<h2 id="testing-oauth-smtp-configuration">Testing OAuth SMTP Configuration</h2>
+<p>After configuring OAuth SMTP in your XMPro deployment, verify the configuration is working correctly by triggering an email and checking application logs for successful OAuth token acquisition and delivery.</p>
+<h3 id="quick-check">Quick Check</h3>
+<p>Use the <strong>Forgot Password</strong> flow on the Subscription Manager login page to trigger a test email. If the email is received, OAuth SMTP is configured correctly.</p>
+<h3 id="app-designer-ad">App Designer (AD)</h3>
+<ol>
+<li><p>Sign in to XMPro App Designer</p>
+</li>
+<li><p>Create a simple <a href="../concepts/recommendation/notification.html">notification</a> (or use an existing one)</p>
+</li>
+<li><p>Trigger the notification</p>
+</li>
+<li><p>Verify:</p>
+<ul>
+<li>Email is received</li>
+<li>No errors in application logs</li>
+</ul>
+</li>
+</ol>
+<h3 id="check-logs">Check Logs</h3>
+<p>Application logs will show OAuth token acquisition:</p>
+<p><strong>Success:</strong></p>
+<pre><code class="lang-text">[Information] Successfully acquired OAuth token for SMTP authentication
+[Information] Email sent successfully to: user@example.com
+</code></pre>
+<p><strong>Failure:</strong></p>
+<pre><code class="lang-text">[Error] Failed to acquire OAuth token: Invalid client secret
+[Error] SMTP authentication failed
+</code></pre>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<p>If you encounter issues with OAuth SMTP authentication, this section provides solutions to common problems and guidance on enabling detailed logging for diagnosis. Most issues stem from incorrect Azure AD configuration, expired secrets, or missing Exchange Online permissions. Start by checking the specific error message in your XMPro application logs, then refer to the corresponding solution below.</p>
+<h3 id="common-issues-and-solutions">Common Issues and Solutions</h3>
+<h4 id="insufficient-privileges-to-complete-the-operation">&quot;Insufficient privileges to complete the operation&quot;</h4>
+<p><strong>Cause</strong>: API permissions not granted or admin consent not provided</p>
+<p><strong>Solution</strong>:</p>
+<ol>
+<li>Go to your Azure AD app registration</li>
+<li>Navigate to <strong>API permissions</strong></li>
+<li>Verify <strong>SMTP.SendAsApp</strong> and <strong>Mail.Send</strong> are listed</li>
+<li>Ensure status shows &quot;Granted for [Your Organization]&quot;</li>
+<li>If not granted, click <strong>Grant admin consent</strong></li>
+</ol>
+<h4 id="invalid-client-secret">&quot;Invalid client secret&quot;</h4>
+<p><strong>Cause</strong>: Client secret expired or incorrectly copied</p>
+<p><strong>Solution</strong>:</p>
+<ol>
+<li>Go to <strong>Certificates &amp; secrets</strong> in your app registration</li>
+<li>Check if the secret has expired</li>
+<li>Create a new client secret if expired</li>
+<li>Update XMPro configuration with the new secret value</li>
+<li>Restart XMPro services</li>
+</ol>
+<h4 id="aadsts700016-application-with-identifier-not-found">&quot;AADSTS700016: Application with identifier not found&quot;</h4>
+<p><strong>Cause</strong>: Incorrect tenant ID in token endpoint URL</p>
+<p><strong>Solution</strong>:</p>
+<ol>
+<li>Verify the tenant ID in your token endpoint URL</li>
+<li>Check it matches the <strong>Directory (tenant) ID</strong> in Azure AD</li>
+<li>Update the endpoint URL in XMPro configuration</li>
+<li>Restart XMPro services</li>
+</ol>
+<h4 id="aadsts65001-the-user-or-administrator-has-not-consented">&quot;AADSTS65001: The user or administrator has not consented&quot;</h4>
+<p><strong>Cause</strong>: Admin consent not granted for application permissions</p>
+<p><strong>Solution</strong>:</p>
+<ol>
+<li>Have an Azure AD administrator grant admin consent</li>
+<li>Navigate to <strong>API permissions</strong> &gt; <strong>Grant admin consent</strong></li>
+<li>Wait a few minutes for the change to propagate</li>
+</ol>
+<h4 id="emails-not-sending-with-oauth-enabled">Emails not sending with OAuth enabled</h4>
+<p><strong>Possible causes</strong>:</p>
+<ol>
+<li><strong>Email notifications not enabled (Terraform)</strong>: <code>enable_email_notification</code> defaults to <code>false</code>. Even with all SMTP and OAuth settings configured, emails will not be sent unless <code>enable_email_notification = true</code> is set in your <code>terraform.tfvars</code></li>
+<li><strong>Email username doesn't match mailbox</strong>: Ensure the email username corresponds to a valid Microsoft 365 mailbox</li>
+<li><strong>Mailbox permissions</strong>: The Azure AD app needs permission to send from that mailbox</li>
+<li><strong>SMTP AUTH disabled</strong>: Ensure SMTP AUTH is enabled for the mailbox in Exchange Online</li>
+</ol>
+<p><strong>Solution</strong>:</p>
+<ol>
+<li>Verify the email username in XMPro configuration matches a valid mailbox</li>
+<li>Test SMTP connectivity using a tool like Telnet or PowerShell</li>
+<li>Check Exchange Online settings for the mailbox</li>
+</ol>
+<h3 id="enable-detailed-logging">Enable Detailed Logging</h3>
+<p>For Windows Server deployments, enable detailed logging:</p>
+<ol>
+<li>Edit <code>C:\XMPro\Global-variables.json</code></li>
+<li>Add or update: <code>&quot;LOG_LEVEL&quot;: &quot;Debug&quot;</code></li>
+<li>Restart the service</li>
+<li>Check logs in Event Viewer or application log files</li>
+</ol>
+<p>For Terraform deployments, set the log level environment variable:</p>
+<ul>
+<li><code>log_level = &quot;Debug&quot;</code> in terraform.tfvars</li>
+</ul>
+<h2 id="security-best-practices">Security Best Practices</h2>
+<h3 id="client-secret-management">Client Secret Management</h3>
+<ol>
+<li><p><strong>Use secure storage</strong>:</p>
+<ul>
+<li>Azure Key Vault (for Azure deployments)</li>
+<li>Windows Credential Manager (for Windows Server)</li>
+</ul>
+</li>
+<li><p><strong>Set expiration reminders</strong>:</p>
+<ul>
+<li>Create calendar alerts for secret expiration</li>
+<li>Plan to rotate secrets at least 30 days before expiration</li>
+</ul>
+</li>
+<li><p><strong>Limit access</strong>:</p>
+<ul>
+<li>Restrict who can view/modify client secrets</li>
+<li>Use separate app registrations for dev/test/prod environments</li>
+</ul>
+</li>
+</ol>
+<h3 id="application-permissions">Application Permissions</h3>
+<ol>
+<li><p><strong>Principle of least privilege</strong>:</p>
+<ul>
+<li>Only grant the required permissions (SMTP.SendAsApp, Mail.Send)</li>
+<li>Don't add additional permissions unless necessary</li>
+</ul>
+</li>
+<li><p><strong>Regular audits</strong>:</p>
+<ul>
+<li>Periodically review app permissions</li>
+<li>Remove unused app registrations</li>
+</ul>
+</li>
+</ol>
+<h3 id="monitoring">Monitoring</h3>
+<ol>
+<li><p><strong>Set up alerts</strong>:</p>
+<ul>
+<li>Monitor for SMTP authentication failures</li>
+<li>Alert on approaching secret expiration</li>
+</ul>
+</li>
+<li><p><strong>Review logs regularly</strong>:</p>
+<ul>
+<li>Check for unusual email patterns</li>
+<li>Monitor OAuth token acquisition errors</li>
+</ul>
+</li>
+</ol>
+<h2 id="migration-from-basic-auth">Migration from Basic Auth</h2>
+<p>If you're currently using Basic Authentication, follow these steps to migrate:</p>
+<h3 id="before-you-begin">Before You Begin</h3>
+<ol>
+<li><strong>Complete Azure AD app registration</strong> (Steps 1-4 above)</li>
+<li><strong>Test OAuth configuration</strong> in a non-production environment first</li>
+<li><strong>Document current SMTP settings</strong> for rollback if needed</li>
+</ol>
+<h3 id="migration-steps">Migration Steps</h3>
+<ol>
+<li><p><strong>Update XMPro configuration</strong> with OAuth settings (keep existing SMTP settings)</p>
+</li>
+<li><p><strong>Enable OAuth</strong>:</p>
+<ul>
+<li>Set <code>ENABLE_EMAIL_OAUTH=true</code> (or equivalent for your deployment method)</li>
+</ul>
+</li>
+<li><p><strong>Restart XMPro services</strong></p>
+</li>
+<li><p><strong>Test email functionality</strong>:</p>
+<ul>
+<li>Send test emails from SM</li>
+<li>Verify notifications work in AD</li>
+<li>Check logs for OAuth token acquisition</li>
+</ul>
+</li>
+<li><p><strong>Monitor for 24-48 hours</strong>:</p>
+<ul>
+<li>Watch for any email failures</li>
+<li>Review logs for authentication errors</li>
+</ul>
+</li>
+<li><p><strong>Optional: Remove password</strong> from configuration (for security):</p>
+<ul>
+<li>Password is not used when OAuth is enabled</li>
+<li>Can be removed from config files/variables</li>
+</ul>
+</li>
+</ol>
+<h3 id="rollback-plan">Rollback Plan</h3>
+<p>If issues occur after enabling OAuth:</p>
+<ol>
+<li><strong>Set</strong> <code>ENABLE_EMAIL_OAUTH=false</code></li>
+<li><strong>Restart XMPro services</strong></li>
+<li><strong>Verify email works with Basic Auth</strong> again</li>
+<li><strong>Investigate</strong> the OAuth issue before re-attempting</li>
+</ol>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Keep Basic Auth configured initially as a fallback. Remove it only after OAuth is proven stable.</p>
+</div>
+<h2 id="additional-resources">Additional Resources</h2>
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/exchange/client-developer/legacy-protocols/how-to-authenticate-an-imap-pop-smtp-application-by-using-oauth">Microsoft Learn: Authenticate SMTP using OAuth</a></li>
+<li><a href="https://learn.microsoft.com/en-us/exchange/clients-and-mobile-in-exchange-online/deprecation-of-basic-authentication-exchange-online">Exchange Online SMTP AUTH deprecation</a></li>
+<li><a href="https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app">Azure AD app registrations</a></li>
+</ul>
+<h2 id="need-help">Need Help?</h2>
+<p>If you encounter issues not covered in this guide:</p>
+<ol>
+<li><strong>Check XMPro logs</strong> for specific error messages</li>
+<li><strong>Review Azure AD app configuration</strong> for missing permissions</li>
+<li><strong>Contact XMPro Support</strong> with:
+<ul>
+<li>XMPro version</li>
+<li>Deployment method (Terraform, Windows Server)</li>
+<li>Error messages from logs</li>
+<li>Steps already attempted</li>
+</ul>
+</li>
+</ol>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: February 25, 2026</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
