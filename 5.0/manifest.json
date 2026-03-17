@@ -25267,6 +25267,16 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "src/images/stream-connector-azure-architecture.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/stream-connector-azure-architecture.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "src/images/stream-host-clean-logs-confirm.png",
       "output": {
         "resource": {
@@ -25961,6 +25971,16 @@
       "output": {
         "resource": {
           "relative_path": "src/images/zoom.mp4"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "src/installation/complete-installation/deploy-stream-connector-infrastructure.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/installation/complete-installation/deploy-stream-connector-infrastructure.html"
         }
       },
       "version": ""
