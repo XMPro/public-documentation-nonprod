@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Use Live View | XMPro </title>
+      <title>Event-Level Streaming vs. Agent-Level Streaming | XMPro </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Use Live View | XMPro ">
+      <meta name="title" content="Event-Level Streaming vs. Agent-Level Streaming | XMPro ">
       <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
       
       <link rel="icon" href="../../../images/favicon.png">
@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../../">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/how-tos/data-streams/use-live-view.md&amp;version=GBrelease-4.6&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/concepts/agent/event-level-streaming-vs-agent-level-streaming.md&amp;version=GBrelease-4.6&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -85,39 +85,25 @@
         </div>
 
         <article data-uid="">
-<h1 id="use-live-view">Use Live View</h1>
+<h1 id="event-level-streaming-vs-agent-level-streaming">Event-Level Streaming vs. Agent-Level Streaming</h1>
 
-<p>When a Data Stream is published, the Live View option becomes visible to allow you to view the data that is being processed by the Agents in the Stream. The way the data is displayed can be changed from a grid view to a gauge or a chart. This is useful for viewing the flow of data in real time and is also, therefore, a good tool to use when debugging.</p>
+<p>Data Streams support two agent communication models for how agents receive and process events from a Stream Host. Understanding the difference helps you choose the right approach when building or updating agents.</p>
 <div class="NOTE">
 <h5>Note</h5>
-<p>It is recommended that you read the article listed below to improve your understanding of Live Data.</p>
+<p>Both communication models produce identical outputs. Switching to Event-Level Streaming does not change stream logic or results, only how memory is used during processing.</p>
+</div>
+<h2 id="agent-level-streaming">Agent-Level Streaming</h2>
+<p>In the Agent-Level Streaming model, incoming events are accumulated into a batch and passed to the agent all at once as a <code>JArray</code>. The entire dataset is held in memory until the agent finishes processing.</p>
+<p>All agents support this model. Agents that have not yet been updated to implement Event-Level Streaming continue to receive batches automatically, and no changes to existing stream designs are required.</p>
+<h2 id="event-level-streaming">Event-Level Streaming</h2>
+<p>In the Event-Level Streaming model, each event is delivered to the agent individually as it arrives. The agent handles one event at a time, and memory is released as soon as each event is forwarded downstream.</p>
+<p>This brings two key benefits:</p>
 <ul>
-<li><a href="../../concepts/data-stream/running-data-streams.html">Running Data Streams</a></li>
-<li><a href="manage-data-streams.html">How to Manage Data Streams</a></li>
+<li><strong>Lower memory usage</strong>: events are never accumulated into a large in-memory batch, so memory is released as soon as each event is forwarded downstream.</li>
+<li><strong>Earlier downstream processing</strong>: if the next agent also supports Event-Level Streaming, it can start processing each event immediately rather than waiting for the upstream agent to finish handling all events first.</li>
 </ul>
-</div>
-<h2 id="viewing-live-data">Viewing Live Data</h2>
-<p>To view this data, publish your Stream first, then select the &quot;Live View&quot; button. Follow the steps below:</p>
-<ol>
-<li>Select Live View after publishing your Stream.</li>
-<li>Select the Agents you would like to view data for.</li>
-</ol>
-<div class="NOTE">
-<h5>Note</h5>
-<p>Make sure your Data Stream is published before trying to open the <em>Live View</em>.</p>
-<p>Prior to v4.3.7, it was important to always close the <em>Live View</em> before navigating away. Otherwise, connections were left open. If these build up over time and affect performance, an admin can reset them <a href="../manage-site-settings.html#live-view-usage">here</a>.</p>
-</div>
-<p><img src="../../images/data-streams/lv-1.png" alt="Selecting Live View option after publishing a Data Stream"></p>
-<p><img src="../../images/data-streams/lv-2.png" alt="Selecting agents to view live data"></p>
-<h2 id="change-live-data-display">Change Live Data Display</h2>
-<p>To change the type of control the live data is displayed in, follow the steps below:</p>
-<ol>
-<li>Select the <em>settings</em> icon from the Live View page.</li>
-<li>Choose the type of control you would like to use.</li>
-<li>Configure the values of the control.</li>
-<li>Click <em>Save.</em></li>
-</ol>
-<p><img src="../../images/data-streams/image-1678.png" alt="Configuring Live View display settings"></p>
+<p>Agents that require a full dataset before processing, such as applying time-series data to a model, continue to receive events in batches regardless of whether Event-Level Streaming is enabled.</p>
+<p>Agents opt in to Event-Level Streaming by implementing the new constructor methods and publishing overloads. See <a href="../../how-tos/agents/building-agents.html#upgrading-to-event-level-streaming">Building Agents</a> for details on the XMPro.IoT.Framework's <code>PollAsync</code> method, <code>ReceiveAsync</code> method, and <code>IAsyncEnumerable&lt;byte[]&gt;</code> overload of <code>OnPublishArgs</code>.</p>
 
 
   <div class="last-modified">

@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../../">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/how-tos/agents/building-agents.md&amp;version=GBrelease-4.6.0&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/how-tos/agents/building-agents.md&amp;version=GBrelease-4.6&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -88,10 +88,12 @@
 <h1 id="building-agents">Building Agents</h1>
 
 <h2 id="overview">Overview</h2>
-<p>To get started with developing a new Agent, create a new C# library project in Visual Studio and import the <a href="https://www.nuget.org/packages/XMPro.IOT.Framework/">XMPro.IoT.Framework</a> NuGet package. When writing the code for an Agent, you will have to implement a number of interfaces. Which interfaces to implement depends on the category under which your Agent will fall:</p>
+<p>To get started with developing a new Agent, create a new C# library project in Visual Studio and import the <a href="https://www.nuget.org/packages/XMPro.IOT.Framework/">XMPro.IoT.Framework</a> NuGet package. This article covers the agent categories and the interfaces available for each, detailed documentation for each interface, and a complete MQTT Listener example.</p>
+<h2 id="categories">Categories</h2>
+<p>When writing the code for an Agent, you will have to implement a number of interfaces. Which interfaces to implement depends on the category under which your Agent will fall:</p>
 <h3 id="listeners">Listeners</h3>
 <p>Listeners are created by implementing <em>IAgent</em> and <em>IPollingAgent</em> interfaces. To push the events to the next receiver, the <em>OnPublish</em> event should be invoked and the events should be passed as arguments.</p>
-<h3 id="action-agents-functions">Action Agents/ Functions</h3>
+<h3 id="action-agents--functions">Action Agents / Functions</h3>
 <p>Action Agents are created by implementing the <em>IAgent</em> and <em>IReceivingAgent</em> interfaces. The <em>Receive</em> method will be called every time events are received by this Agent. To publish these events again, the same logic as per the Listener Agent can be used.</p>
 <h3 id="context-providers">Context Providers</h3>
 <p>Context Providers are created by implementing the <em>IAgent</em>, <em>IPollingAgent</em> interfaces. They are very similar to Listeners; however, Context Providers publish all available records/events when polled instead of only publishing the newer/changed ones.</p>
@@ -104,6 +106,13 @@ throw new NotImplementedException();
 
 }
 </code></pre>
+<h3 id="connectors">Connectors</h3>
+<p>Connector Agents handle read, insert, update, and delete requests for a specific data source. They are used with the <a href="https://xmpro.gitbook.io/integrations/xmpro-stream">XMPro Stream Connector</a> in Application Designer and implement the <em>IAgent</em> and <em>IMapAndReceiveAgent</em> interfaces.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The current Connector Agents wrap existing Connectors using a shared base class. Documentation on how to build custom Connector Agents will be provided in a future release.</p>
+</div>
+<h2 id="interfaces">Interfaces</h2>
 <p>The interfaces that can be implemented are as follows:</p>
 <ul>
 <li><a href="building-agents.html#iagent">IAgent</a></li>
@@ -120,6 +129,7 @@ throw new NotImplementedException();
 <th>IAgent</th>
 <th>IPollingAgent</th>
 <th>IReceivingAgent</th>
+<th>IMapAndReceiveAgent</th>
 <th>IPublishesError</th>
 <th>IAgentLogger</th>
 </tr>
@@ -130,6 +140,7 @@ throw new NotImplementedException();
 <td>Required</td>
 <td>Recommended</td>
 <td>Optional</td>
+<td>-</td>
 <td>Optional</td>
 <td>Optional</td>
 </tr>
@@ -138,6 +149,7 @@ throw new NotImplementedException();
 <td>Required</td>
 <td>Recommended</td>
 <td>Optional</td>
+<td>-</td>
 <td>Optional</td>
 <td>Optional</td>
 </tr>
@@ -146,14 +158,16 @@ throw new NotImplementedException();
 <td>Required</td>
 <td>Optional</td>
 <td>Required</td>
+<td>-</td>
 <td>Optional</td>
 <td>Optional</td>
 </tr>
 <tr>
-<td><em>Action Agent/ Function</em></td>
+<td><em>Action Agent / Function</em></td>
 <td>Required</td>
 <td>Optional</td>
 <td>Required</td>
+<td>-</td>
 <td>Optional</td>
 <td>Optional</td>
 </tr>
@@ -161,6 +175,16 @@ throw new NotImplementedException();
 <td><em>AI &amp; Machine Learning / Gen AI</em></td>
 <td>Required</td>
 <td>Optional</td>
+<td>Required</td>
+<td>-</td>
+<td>Optional</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td><em>Connector</em></td>
+<td>Required</td>
+<td>-</td>
+<td>-</td>
 <td>Required</td>
 <td>Optional</td>
 <td>Optional</td>
@@ -265,12 +289,14 @@ return errors.ToArray();
 <pre><code class="lang-csharp">void Destroy()
 </code></pre>
 <h3 id="publishing-events">Publishing Events</h3>
-<p>To push the events to the next Agent, your Agent should invoke the <em>OnPublish</em> event with the events passed as arguments:</p>
-<pre><code class="lang-csharp">this.OnPublish?.Invoke(this, new OnPublishArgs(new JArray(), &quot;EndpointName&quot;));
+<p>To push the events to the next Agent, your Agent should invoke the <em>OnPublish</em> event with the events passed as arguments. Using the streaming overload is recommended to enable <a href="#upgrading-to-event-level-streaming">Event-Level Streaming</a>:</p>
+<pre><code class="lang-csharp">this.OnPublish?.Invoke(this, new OnPublishArgs(eventStream, &quot;EndpointName&quot;));
 </code></pre>
+<p>The <code>eventStream</code> variable is an instance of <code>IAsyncEnumerable&lt;byte[]&gt;</code>.</p>
+<p><code>OnPublishArgs</code> automatically converts between <code>JArray</code> and <code>IAsyncEnumerable&lt;byte[]&gt;</code>, so downstream agents consuming either format will receive data correctly.</p>
 <div class="NOTE">
 <h5>Note</h5>
-<p>Events are represented as JSON Objects and have to be pushed as a collection, i.e. JArray.</p>
+<p>Use the legacy <code>JArray</code> overload for <a href="../../concepts/agent/event-level-streaming-vs-agent-level-streaming.html#agent-level-streaming">Agent-Level Streaming</a>: <code>this.OnPublish?.Invoke(this, new OnPublishArgs(eventJArray, &quot;EndpointName&quot;))</code> where <code>eventJArray</code> is a <code>JArray</code>.</p>
 </div>
 <div class="CAUTION">
 <h5>Caution</h5>
@@ -284,14 +310,19 @@ var decryptedVal = request.DecryptedValue;
 </code></pre>
 <h3 id="custom-events">Custom Events</h3>
 <p>While building your Agent, you may need to use external libraries or third-party event subscriptions to handle custom events. If these are used, you must catch any exceptions from the event handlers yourself, to prevent uncaught exceptions that could possibly crash the Data Stream if they get through.</p>
-<h2 id="ipolling-agent">IPolling Agent</h2>
-<p>The <em>IPollingAgent</em> interface allows time-based operations. Implementing this interface, and opting in to Polling by returning true from the <em>RequiresPolling</em> method, will automatically add a <em>PollingInterval</em> setting to the configuration template of your Agent, which can be used by the user to specify the interval for polling. The <em>Poll</em> method will be invoked every time the poll interval elapses.</p>
-<pre><code class="lang-csharp">void Poll()
+<h2 id="ipollingagent">IPollingAgent</h2>
+<p>The <em>IPollingAgent</em> interface allows time-based operations. Implementing this interface, and opting in to Polling by returning true from the <em>RequiresPolling</em> method, will automatically add a <em>PollingInterval</em> setting to the configuration template of your Agent, which can be used by the user to specify the interval for polling.</p>
+<p>Using <code>PollAsync</code> is recommended to enable <a href="#upgrading-to-event-level-streaming">Event-Level Streaming</a>. These methods will be called at regular intervals according to the Configuration settings, and can be used to perform any work or logic you wish, for example, querying a third-party system for changes.</p>
+<pre><code class="lang-csharp">async Task PollAsync(CancellationToken cancellationToken = default)
 </code></pre>
-<p>This method will be called at regular intervals according to the Configuration settings, and can be used to perform any work or logic you wish, for example, querying a third-party system for changes.</p>
+<p>When implementing <code>PollAsync</code>, use the streaming <code>OnPublishArgs</code> overload (passing <code>IAsyncEnumerable&lt;byte[]&gt;</code>) when publishing output to avoid materialising events into a <code>JArray</code>.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Use the legacy <code>Poll</code> method (<code>void Poll()</code>) for <a href="../../concepts/agent/event-level-streaming-vs-agent-level-streaming.html#agent-level-streaming">Agent-Level Streaming</a>. If <code>PollAsync</code> is not implemented, the Stream Host automatically calls <code>Poll</code> instead, and existing agents require no changes.</p>
+</div>
 <pre><code class="lang-csharp">bool RequiresPolling(IDictionary&lt;string, string&gt; parameters)
 </code></pre>
-<p>The RequiresPolling method is an advanced option. It is expected that in most cases, this method should simply return a true value, which will not change the behaviour of the Agent. The <em>PollingInterval</em> setting will display as normal, and the <em>Poll</em> method will be called at that interval, as normal.</p>
+<p>The RequiresPolling method is an advanced option. It is expected that in most cases, this method should simply return a true value, which will not change the behaviour of the Agent. The <em>PollingInterval</em> setting will display as normal, and the <em>Poll</em> or <em>PollAsync</em> methods will be called at that interval, as normal.</p>
 <p>Advanced users, however, can use this method to decide to opt-out of Polling settings, by returning false. The <em>parameters</em> method parameter will contain the Stream Object's Configuration, allowing you to determine whether to return true to opt-in, or false to opt out, depending on what settings the user has selected. Opting out will cause the PollingInterval setting to not appear in the configuration tab, and the Poll method to never be called when the Stream is published.</p>
 <p>This may be useful when the agent you are building can be configured to either actively query its configured third-party system for data at regular intervals, or set up a persistent connection to the third-party service and passively wait for that connection to deliver data.</p>
 <p>If the Agent does not need to query for data at regular intervals, or perform other work or logic on a specific schedule, it is recommended to not implement <em>IPollingAgent</em> rather than always returning false from the <em>RequiresPolling</em> method.</p>
@@ -313,13 +344,18 @@ this.OnRequestParentOutputAttributes.Invoke(this, args);
 var pOuts = args.ParentOutputs;
 </code></pre>
 <h3 id="receiving-events">Receiving Events</h3>
-<p>Events published to a receiving Agent can be received by implementing the following method:</p>
-<pre><code class="lang-csharp">void Receive(string endpointName, JArray events)
+<p>Events published to a receiving Agent can be received by implementing the following method. Using <code>ReceiveAsync</code> is recommended to enable <a href="#upgrading-to-event-level-streaming">Event-Level Streaming</a>:</p>
+<pre><code class="lang-csharp">async Task ReceiveAsync(string endpointName, IAsyncEnumerable&lt;byte[]&gt; events, CancellationToken cancellationToken = default)
 </code></pre>
+<p>When implementing <code>ReceiveAsync</code>, use the streaming <code>OnPublishArgs</code> overload (passing <code>IAsyncEnumerable&lt;byte[]&gt;</code>) when publishing output to avoid materialising events into a <code>JArray</code>.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Use the legacy <code>Receive</code> method for <a href="../../concepts/agent/event-level-streaming-vs-agent-level-streaming.html#agent-level-streaming">Agent-Level Streaming</a>: <code>void Receive(string endpointName, JArray events)</code>. If <code>ReceiveAsync</code> is not implemented, the Stream Host automatically calls <code>Receive</code> instead after converting the stream to a <code>JArray</code>, and existing agents require no changes.</p>
+</div>
 <p>The <em>endpointName</em> parameter will identify which endpoint the events have been received at.</p>
 <div class="NOTE">
 <h5>Note</h5>
-<p>It is not guaranteed that the <em>Start</em> method will be invoked before the <em>Receive</em> method. Use the <em>Create</em> method to execute any logic that needs to be executed before the <em>Receive</em> method is called.</p>
+<p>It is not guaranteed that the <em>Start</em> method will be invoked before the <em>Receive</em> or <em>ReceiveAsync</em> methods. Use the <em>Create</em> method to execute any logic that needs to be executed before the <em>Receive</em> or <em>ReceiveAsync</em> methods are called.</p>
 </div>
 <h2 id="ipublisherror">IPublishError</h2>
 <p>An Agent can publish messages to an error endpoint by implementing the <em>IPublishesError</em> interface. An unhandled error in an Agent will be captured and error information will be published to the error endpoint.</p>
@@ -448,6 +484,145 @@ protected void LogError(Exception? ex, string message)
 </code></pre>
 </li>
 </ol>
+<h2 id="upgrading-to-event-level-streaming">Upgrading to Event-Level Streaming</h2>
+<p>Agent developers upgrading to <a href="../../concepts/agent/event-level-streaming-vs-agent-level-streaming.html#event-level-streaming">Event-Level Streaming</a> can use the helper class below. It provides extension methods for converting between <code>IAsyncEnumerable&lt;byte[]&gt;</code> and commonly-used enumerable types:</p>
+<pre><code class="lang-csharp">using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+
+namespace XMPro.AgentStreaming
+{
+    /// &lt;summary&gt;
+    /// Shared helper utilities for streaming agent implementations.
+    /// Provides JSON serialization/deserialization over byte streams and
+    /// conversion helpers between synchronous and asynchronous enumerables.
+    /// &lt;/summary&gt;
+    public static class AgentStreamingHelpers
+    {
+        /// &lt;summary&gt;
+        /// UTF-8 encoding without a byte-order mark (BOM), for consistent JSON byte stream handling.
+        /// &lt;/summary&gt;
+        public static readonly Encoding Utf8NoBOM = new UTF8Encoding(encoderShouldEmitUTF8Identifier: false);
+
+        /// &lt;summary&gt;
+        /// Deserializes a stream of UTF-8 JSON byte arrays into a stream of &lt;see cref=&quot;JToken&quot;/&gt; objects.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;events&quot;&gt;The async stream of raw JSON bytes, one JSON value per element.&lt;/param&gt;
+        /// &lt;param name=&quot;encoding&quot;&gt;The text encoding to use when reading each byte array. Defaults to &lt;see cref=&quot;Utf8NoBOM&quot;/&gt;.&lt;/param&gt;
+        /// &lt;param name=&quot;cancellationToken&quot;&gt;Token to cancel enumeration.&lt;/param&gt;
+        /// &lt;returns&gt;An async stream of deserialized &lt;see cref=&quot;JToken&quot;/&gt; values.&lt;/returns&gt;
+        public static async IAsyncEnumerable&lt;JToken&gt; Deserialize(
+            this IAsyncEnumerable&lt;byte[]&gt; events,
+            Encoding? encoding = null,
+            [EnumeratorCancellation] CancellationToken cancellationToken = default)
+        {
+            encoding ??= Utf8NoBOM;
+            await foreach (var eventBytes in events.WithCancellation(cancellationToken))
+            {
+                using (var stream = new MemoryStream(eventBytes))
+                using (var reader = new StreamReader(stream, encoding))
+                using (var jsonReader = new JsonTextReader(reader))
+                {
+                    yield return await JToken.ReadFromAsync(jsonReader, cancellationToken);
+                }
+            }
+        }
+
+        /// &lt;summary&gt;
+        /// Serializes a stream of &lt;see cref=&quot;JToken&quot;/&gt; objects into a stream of UTF-8 JSON byte arrays.
+        /// The underlying &lt;see cref=&quot;MemoryStream&quot;/&gt; is reused across iterations to minimise allocations;
+        /// each yielded &lt;c&gt;byte[]&lt;/c&gt; is an independent, caller-owned copy safe to retain indefinitely.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;events&quot;&gt;The async stream of &lt;see cref=&quot;JToken&quot;/&gt; values to serialize.&lt;/param&gt;
+        /// &lt;param name=&quot;encoding&quot;&gt;The text encoding to use when writing each token. Defaults to &lt;see cref=&quot;Utf8NoBOM&quot;/&gt;.&lt;/param&gt;
+        /// &lt;param name=&quot;cancellationToken&quot;&gt;Token to cancel enumeration.&lt;/param&gt;
+        /// &lt;returns&gt;An async stream of serialized JSON byte arrays.&lt;/returns&gt;
+        public static async IAsyncEnumerable&lt;byte[]&gt; Serialize(
+            this IAsyncEnumerable&lt;JToken&gt; events,
+            Encoding? encoding = null,
+            [EnumeratorCancellation] CancellationToken cancellationToken = default)
+        {
+            encoding ??= Utf8NoBOM;
+            using (var stream = new MemoryStream())
+            {
+                await foreach (var eventToken in events.WithCancellation(cancellationToken))
+                {
+                    stream.SetLength(0);
+                    stream.Position = 0;
+                    using (var writer = new StreamWriter(stream, encoding, 1024, leaveOpen: true))
+                    using (var jsonWriter = new JsonTextWriter(writer))
+                    {
+                        await eventToken.WriteToAsync(jsonWriter, cancellationToken);
+                        await jsonWriter.FlushAsync(cancellationToken);
+                    }
+                    yield return stream.ToArray();
+                }
+            }
+        }
+
+        /// &lt;summary&gt;
+        /// Converts an &lt;see cref=&quot;IAsyncEnumerable{T}&quot;/&gt; to a blocking &lt;see cref=&quot;IEnumerable{T}&quot;/&gt;
+        /// by synchronously waiting for each element.
+        /// Useful for bridging streaming &lt;c&gt;ReceiveAsync&lt;/c&gt; pipelines with legacy &lt;c&gt;Receive&lt;/c&gt; code.
+        /// &lt;/summary&gt;
+        /// &lt;typeparam name=&quot;T&quot;&gt;The element type.&lt;/typeparam&gt;
+        /// &lt;param name=&quot;source&quot;&gt;The async enumerable to consume.&lt;/param&gt;
+        /// &lt;returns&gt;A synchronous enumerable that blocks on each element.&lt;/returns&gt;
+        public static IEnumerable&lt;T&gt; ToBlockingEnumerable&lt;T&gt;(this IAsyncEnumerable&lt;T&gt; source)
+        {
+            var enumerator = source.GetAsyncEnumerator();
+            try
+            {
+                while (true)
+                {
+                    if (!enumerator.MoveNextAsync().AsTask().GetAwaiter().GetResult())
+                        break;
+                    yield return enumerator.Current;
+                }
+            }
+            finally
+            {
+                // Suppress disposal exceptions to avoid masking the original enumeration error.
+                // When the source stream fails (e.g., network error, deserialization failure),
+                // both MoveNextAsync() AND DisposeAsync() may throw if the underlying connection
+                // is already in a bad state. Without this suppression, the disposal exception
+                // would replace and hide the original error, making root cause analysis extremely
+                // difficult. This is a standard C# pattern (see IEnumerator&lt;T&gt;.Dispose documentation
+                // and .NET's ConfigureAwait infrastructure) — we prioritize propagating the original
+                // enumeration error over secondary cleanup failures.
+                try { enumerator.DisposeAsync().AsTask().Wait(); } catch { /* suppress disposal exceptions */ }
+            }
+        }
+
+        /// &lt;summary&gt;
+        /// Wraps a synchronous &lt;see cref=&quot;IEnumerable{T}&quot;/&gt; as an &lt;see cref=&quot;IAsyncEnumerable{T}&quot;/&gt;,
+        /// yielding each item with an &lt;see cref=&quot;Task.Yield&quot;/&gt; to allow other async work to proceed.
+        /// Useful for feeding legacy synchronous data into a streaming pipeline.
+        /// &lt;/summary&gt;
+        /// &lt;typeparam name=&quot;T&quot;&gt;The element type.&lt;/typeparam&gt;
+        /// &lt;param name=&quot;items&quot;&gt;The synchronous sequence to adapt.&lt;/param&gt;
+        /// &lt;param name=&quot;cancellationToken&quot;&gt;Token to cancel enumeration.&lt;/param&gt;
+        /// &lt;returns&gt;An async enumerable that yields each item from &lt;paramref name=&quot;items&quot;/&gt;.&lt;/returns&gt;
+        public static async IAsyncEnumerable&lt;T&gt; ToAsyncEnumerable&lt;T&gt;(
+            this IEnumerable&lt;T&gt; items,
+            [EnumeratorCancellation] CancellationToken cancellationToken = default)
+        {
+            foreach (var item in items)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                yield return item;
+                await Task.Yield();
+            }
+        }
+    }
+}
+</code></pre>
 <h2 id="example">Example</h2>
 <p>The code below is an example of a basic MQTT Listener Agent. Take note of how the interfaces and methods have been implemented.</p>
 <div class="NOTE">
@@ -496,15 +671,21 @@ using XMIoT.Framework.Settings.Enums;namespace XMPro.MQTTAgents
         {
             try
             {
-                var message = Encoding.UTF8.GetString(e.Message);
-                this.OnPublish?.Invoke(this, new OnPublishArgs(JArray.Parse(message), &quot;Output&quot;));
+                this.OnPublish?.Invoke(this, new OnPublishArgs(ToEventStream(e.Message), &quot;Output&quot;));
             }
             catch (Exception ex)
             {
                 Console.WriteLine($&quot;{DateTime.UtcNow}|ERROR|XMPro.MQTTAgents.Listener|{ex.ToString()}&quot;);
             }
         }
-        
+
+        private static async IAsyncEnumerable&lt;byte[]&gt; ToEventStream(byte[] messageBytes)
+        {
+            var array = JArray.Parse(Encoding.UTF8.GetString(messageBytes));
+            foreach (JToken token in array)
+                yield return Encoding.UTF8.GetBytes(token.ToString(Newtonsoft.Json.Formatting.None));
+        }
+
         public void Destroy()
         {
             if (this.client?.IsConnected == true)
@@ -559,7 +740,7 @@ using XMIoT.Framework.Settings.Enums;namespace XMPro.MQTTAgents
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: February 25, 2026</em></small></p>
+    <p><small><em>Last modified: March 18, 2026</em></small></p>
   </div>
 </article>
 

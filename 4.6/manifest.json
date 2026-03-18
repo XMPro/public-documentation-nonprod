@@ -3316,6 +3316,16 @@
       "version": ""
     },
     {
+      "type": "Conceptual",
+      "source_relative_path": "src/concepts/agent/event-level-streaming-vs-agent-level-streaming.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/concepts/agent/event-level-streaming-vs-agent-level-streaming.html"
+        }
+      },
+      "version": ""
+    },
+    {
       "type": "Resource",
       "source_relative_path": "src/concepts/agent/images/Virtual_vs_Non-Virtual.png",
       "output": {
@@ -25117,6 +25127,16 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "src/images/stream-connector-azure-architecture.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/stream-connector-azure-architecture.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "src/images/stream-host-clean-logs-confirm.png",
       "output": {
         "resource": {
@@ -25821,6 +25841,16 @@
       "output": {
         ".html": {
           "relative_path": "src/installation/azure-terraform-preparation.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "src/installation/complete-installation/deploy-stream-connector-infrastructure.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/installation/complete-installation/deploy-stream-connector-infrastructure.html"
         }
       },
       "version": ""

@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/concepts/collection.md&amp;version=GBrelease-4.6.0&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/concepts/collection.md&amp;version=GBrelease-4.6&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -104,6 +104,7 @@
 <h3 id="stream-hosts">Stream Hosts</h3>
 <p>A Stream Host is an application that can be <a href="#stream-host-installation">installed</a> as a Docker container, a Windows Service, or a Console Application. Stream Hosts enable Data Streams to run and execute actions and are also responsible for getting the configurations of <a href="agent/virtual-vs-non-virtual-agents.html">Non-Virtual Agents</a>. In other words, the Stream Host application needs to be running for <a href="agent/index.html">Agents</a> in a <a href="data-stream/index.html">Data Stream</a> to process the data, according to the design of the Stream.</p>
 <p>Both <a href="agent/virtual-vs-non-virtual-agents.html">Virtual and Non-Virtual</a> Agents essentially run on a Stream Host, but how they are handled at design time differs greatly. Non-Virtual Agents require a Stream Host to be online for Data Stream Designer to be able to get their configurations, but Virtual Agents don't need a Stream Host to be running.</p>
+<p>Data Streams support two agent communication models for how Agents receive and process events from Stream Hosts. Event-Level Streaming Agents receive events one at a time as they arrive, keeping memory usage low. Agent-Level Streaming is the legacy model, where Agents continue to receive events in batches as before, so no existing stream designs are affected. For a detailed explanation of both models, see <a href="agent/event-level-streaming-vs-agent-level-streaming.html">Event-Level Streaming vs. Agent-Level Streaming</a>.</p>
 <div class="embeddedvideo"><iframe src="https://www.youtube-nocookie.com/embed/-f2TRr-OQSY?rel=0" frameborder="0" allowfullscreen="true"></iframe></div>
 <h3 id="collections">Collections</h3>
 <p>Stream Hosts are grouped into different Collections, which are created and maintained in Data Stream Designer. A Collection can be defined as a Category that contains a set of Stream Hosts that run the same Data Streams. Each Stream Host is associated with a Collection by keeping the ID of the Collection in the <em>appsettings.json</em> file of the Stream Host, which can be found in the location where the Stream Host has been installed. Thus, all the Stream Hosts that have the same Collection ID stored in this file, will automatically fall under the Collection that has that ID.</p>
@@ -347,7 +348,7 @@
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: February 25, 2026</em></small></p>
+    <p><small><em>Last modified: March 18, 2026</em></small></p>
   </div>
 </article>
 
