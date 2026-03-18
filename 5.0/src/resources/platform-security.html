@@ -101,7 +101,7 @@
 <p>Dynamic Application Security Testing (DAST) analyzes a web application through the front end to find vulnerabilities through simulated attacks. This is also called Penetration testing.</p>
 <h3 id="software-composition-analysis-sca">Software Composition Analysis (SCA)</h3>
 <p>Software Composition Analysis scans all the components used in an application for security risks and vulnerabilities.</p>
-<h2 id="results">Results</h2>
+<h2 id="application-security-results">Application Security Results</h2>
 <table>
 <thead>
 <tr>
@@ -144,13 +144,43 @@
 </tr>
 </tbody>
 </table>
+<h2 id="container-security-scanning">Container Security Scanning</h2>
+<p>In addition to application-level security testing, XMPro performs container image vulnerability scanning on every release using <a href="https://trivy.dev/">Trivy</a>, an open-source vulnerability scanner. All container images published to the XMPro Azure Container Registry are scanned for known vulnerabilities in OS packages and application dependencies.</p>
+<p>Each scan report includes:</p>
+<ul>
+<li>Vulnerability counts by severity (Critical, High, Medium, Low)</li>
+<li>False positive analysis for all Critical and High findings</li>
+<li>Affected packages and CVE identifiers</li>
+<li>Replication commands for independent verification</li>
+</ul>
+<h3 id="container-scan-reports">Container Scan Reports</h3>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Scan Date</th>
+<th>Scanner</th>
+<th>Images Scanned</th>
+<th>Report</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4.6.0</td>
+<td>17 Mar 26</td>
+<td>Trivy v0.61.0</td>
+<td>6</td>
+<td><a href="container-scan-4-6-0.html">View Report</a></td>
+</tr>
+</tbody>
+</table>
 <h2 id="support-and-recommendations">Support and Recommendations</h2>
 <p>.NET versions are supported by Microsoft for 3 years after release, as detailed in their <a href="https://dotnet.microsoft.com/en-us/platform/support/policy">support policy</a>. To ensure you have the most secure XMPro offerings, we recommend upgrading at least every 3 months to take advantage of the latest security updates and features.</p>
 
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: March 17, 2026</em></small></p>
+    <p><small><em>Last modified: March 18, 2026</em></small></p>
   </div>
 </article>
 

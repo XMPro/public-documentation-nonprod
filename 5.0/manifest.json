@@ -26197,6 +26197,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "src/resources/container-scan-4-6-0.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/resources/container-scan-4-6-0.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "src/resources/faqs/agent-faqs.md",
       "output": {
         ".html": {
