@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Container Security Scan Report - XMPro 4.6.0 | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Container Security Scan Report - XMPro 4.6.0 | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      <meta name="description" content="Trivy container vulnerability scan results for XMPro 4.6.0 images, including per-image findings and false positive analysis.">
+      <link rel="icon" href="../../images/favicon.png">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/resources/container-scan-4-6-0.md&amp;version=GBrelease-4.6&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="container-security-scan-report---xmpro-460">Container Security Scan Report - XMPro 4.6.0</h1>
+
+<p><strong>Registry:</strong> xmpro.azurecr.io
+<strong>Version:</strong> 4.6.0
+<strong>Scan Date:</strong> March 17, 2026
+<strong>Scanner:</strong> Trivy v0.61.0
+<strong>Vulnerability Database:</strong> 2026-03-17</p>
+<h2 id="executive-summary">Executive Summary</h2>
+<p>Security vulnerability scan of all XMPro 4.6.0 container images from <code>xmpro.azurecr.io</code>, including three Stream Host variants (bookworm-slim, bookworm-slim-python3.12, alpine3.21).</p>
+<p>All <strong>Critical</strong> and <strong>High</strong> severity findings have been investigated and confirmed as <strong>false positives</strong>. Investigation and mitigation of the remaining Medium and Low severity findings did not make the 4.6.0 release schedule. These will be reviewed and addressed in upcoming releases as part of our ongoing security improvement process.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The totals below cover the four core product images: ad, ds, ai, and stream-host (bookworm-slim default). The <a href="#per-image-overview">per-image overview</a> below shows counts for all six image variants individually.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Severity</th>
+<th>Count</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Critical</td>
+<td>1</td>
+</tr>
+<tr>
+<td>High</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Medium</td>
+<td>36</td>
+</tr>
+<tr>
+<td>Low</td>
+<td>113</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td><strong>153</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="per-image-overview">Per-Image Overview</h2>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Counts are per image variant. CVEs that appear in multiple images (e.g. a system library vulnerability present in both bookworm-slim and bookworm-slim-python3.12) are counted separately in each row.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Image</th>
+<th>Critical</th>
+<th>High</th>
+<th>Medium</th>
+<th>Low</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ad</strong> - App Designer</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>0</td>
+<td><strong>2</strong></td>
+</tr>
+<tr>
+<td><strong>ds</strong> - Data Stream Designer</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>0</td>
+<td><strong>2</strong></td>
+</tr>
+<tr>
+<td><strong>ai</strong> - AI</td>
+<td>0</td>
+<td>0</td>
+<td>7</td>
+<td>2</td>
+<td><strong>9</strong></td>
+</tr>
+<tr>
+<td><strong>stream-host</strong> - bookworm-slim (default)</td>
+<td>1</td>
+<td>3</td>
+<td>25</td>
+<td>111</td>
+<td><strong>140</strong></td>
+</tr>
+<tr>
+<td><strong>stream-host</strong> - bookworm-slim-python3.12</td>
+<td>2</td>
+<td>3</td>
+<td>28</td>
+<td>116</td>
+<td><strong>149</strong></td>
+</tr>
+<tr>
+<td><strong>stream-host</strong> - alpine3.21</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td><strong>0</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="image-details">Image Details</h2>
+<h3 id="ad---app-designer">ad - App Designer</h3>
+<p><code>xmpro.azurecr.io/ad:4.6.0</code></p>
+<p><strong>Scan result:</strong> 0 Critical, 0 High, 2 Medium, 0 Low</p>
+<p><strong>Medium severity (2):</strong></p>
+<ul>
+<li><strong>MimeKit:</strong> CVE-2026-30227 (2 instances)</li>
+</ul>
+<hr>
+<h3 id="ds---data-stream-designer">ds - Data Stream Designer</h3>
+<p><code>xmpro.azurecr.io/ds:4.6.0</code></p>
+<p><strong>Scan result:</strong> 0 Critical, 0 High, 2 Medium, 0 Low</p>
+<p><strong>Medium severity (2):</strong></p>
+<ul>
+<li><strong>MimeKit:</strong> CVE-2026-30227 (2 instances)</li>
+</ul>
+<hr>
+<h3 id="ai---ai">ai - AI</h3>
+<p><code>xmpro.azurecr.io/ai:4.6.0</code></p>
+<p><strong>Scan result:</strong> 0 Critical, 0 High, 7 Medium, 2 Low</p>
+<p><strong>Medium severity (7):</strong></p>
+<ul>
+<li><strong>Azure.Identity:</strong> CVE-2024-29992, CVE-2024-35255</li>
+<li><strong>Microsoft.Identity.Client:</strong> CVE-2024-35255</li>
+<li><strong>System.Security.Cryptography.Xml:</strong> CVE-2022-34716</li>
+</ul>
+<p><strong>Low severity (2):</strong> Low and negligible severity vulnerabilities in system libraries.</p>
+<hr>
+<h3 id="stream-host---bookworm-slim-default">stream-host - bookworm-slim (default)</h3>
+<p><code>xmpro.azurecr.io/stream-host:4.6.0</code></p>
+<p><strong>Scan result:</strong> 1 Critical, 3 High, 25 Medium, 111 Low</p>
+<h4 id="critical-severity-1---confirmed-false-positive">Critical Severity (1) - Confirmed False Positive</h4>
+<table>
+<thead>
+<tr>
+<th>CVE ID</th>
+<th>Package</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CVE-2023-45853</td>
+<td>zlib1g (1:1.2.13.dfsg-1)</td>
+<td><strong>FALSE POSITIVE</strong> - zlib integer overflow in MiniZip contrib. XMPro uses .NET System.IO.Compression, not MiniZip.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="high-severity-3---all-confirmed-false-positives">High Severity (3) - All Confirmed False Positives</h4>
+<table>
+<thead>
+<tr>
+<th>CVE ID</th>
+<th>Package</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CVE-2026-0861</td>
+<td>libc-bin (2.36-9+deb12u13)</td>
+<td><strong>FALSE POSITIVE</strong> - glibc size/alignment params not reachable in container.</td>
+</tr>
+<tr>
+<td>CVE-2026-0861</td>
+<td>libc6 (2.36-9+deb12u13)</td>
+<td><strong>FALSE POSITIVE</strong> - glibc size/alignment params not reachable in container.</td>
+</tr>
+<tr>
+<td>CVE-2023-2953</td>
+<td>libldap-2.5-0 (2.5.13+dfsg-5)</td>
+<td><strong>FALSE POSITIVE</strong> - libldap null pointer deref. Library installed but unused.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="medium-severity-25">Medium Severity (25)</h4>
+<p>Key affected packages:</p>
+<ul>
+<li><strong>curl / libcurl4:</strong> CVE-2026-1965, CVE-2026-3783 and others. <em>curl is installed but .NET HttpClient is used instead.</em></li>
+<li><strong>gpgv:</strong> CVE-2025-30258, CVE-2025-68972. <em>gpgv not used by application.</em></li>
+<li><strong>libc-bin / libc6:</strong> CVE-2025-15281, CVE-2026-0915. <em>wordexp/getnetbyaddr not called by application.</em></li>
+<li><strong>libpam-modules / libpam-modules-bin / libpam-runtime / libpam0g:</strong> CVE-2024-10041</li>
+<li><strong>libsystemd0:</strong> CVE-2026-4105</li>
+</ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p><strong>False positive summary:</strong> 1 Critical + 3 High + 8 Medium CVEs are confirmed false positives. Remaining real findings: 0 Critical, 0 High, 17 Medium.</p>
+</div>
+<h4 id="low-severity-111">Low Severity (111)</h4>
+<p>Low and negligible severity vulnerabilities in system libraries and packages.</p>
+<hr>
+<h3 id="stream-host---bookworm-slim-python312">stream-host - bookworm-slim-python3.12</h3>
+<p><code>xmpro.azurecr.io/stream-host:4.6.0-bookworm-slim-python3.12</code></p>
+<p><strong>Scan result:</strong> 2 Critical, 3 High, 28 Medium, 116 Low</p>
+<h4 id="critical-severity-2---all-confirmed-false-positives">Critical Severity (2) - All Confirmed False Positives</h4>
+<table>
+<thead>
+<tr>
+<th>CVE ID</th>
+<th>Package</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CVE-2025-7458</td>
+<td>libsqlite3-0 (3.40.1-2+deb12u2)</td>
+<td><strong>FALSE POSITIVE</strong> - SQLite integer overflow. Python variant dependency, not used by .NET app.</td>
+</tr>
+<tr>
+<td>CVE-2023-45853</td>
+<td>zlib1g (1:1.2.13.dfsg-1)</td>
+<td><strong>FALSE POSITIVE</strong> - zlib integer overflow in MiniZip contrib. XMPro uses .NET System.IO.Compression, not MiniZip.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="high-severity-3---all-confirmed-false-positives-1">High Severity (3) - All Confirmed False Positives</h4>
+<table>
+<thead>
+<tr>
+<th>CVE ID</th>
+<th>Package</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CVE-2026-0861</td>
+<td>libc-bin (2.36-9+deb12u13)</td>
+<td><strong>FALSE POSITIVE</strong> - glibc size/alignment params not reachable in container.</td>
+</tr>
+<tr>
+<td>CVE-2026-0861</td>
+<td>libc6 (2.36-9+deb12u13)</td>
+<td><strong>FALSE POSITIVE</strong> - glibc size/alignment params not reachable in container.</td>
+</tr>
+<tr>
+<td>CVE-2023-2953</td>
+<td>libldap-2.5-0 (2.5.13+dfsg-5)</td>
+<td><strong>FALSE POSITIVE</strong> - libldap null pointer deref. Library installed but unused.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="medium-severity-28">Medium Severity (28)</h4>
+<p>Key affected packages:</p>
+<ul>
+<li><strong>curl / libcurl4:</strong> CVE-2026-1965, CVE-2026-3783 and others. <em>curl is installed but .NET HttpClient is used instead.</em></li>
+<li><strong>gpgv:</strong> CVE-2025-30258, CVE-2025-68972. <em>gpgv not used by application.</em></li>
+<li><strong>libc-bin / libc6:</strong> CVE-2025-15281, CVE-2026-0915. <em>wordexp/getnetbyaddr not called by application.</em></li>
+<li><strong>libncursesw6:</strong> CVE-2023-50495</li>
+<li><strong>libpam-modules / libpam-modules-bin / libpam-runtime / libpam0g:</strong> CVE-2024-10041</li>
+</ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p><strong>False positive summary:</strong> 2 Critical + 3 High + 8 Medium CVEs are confirmed false positives. Remaining real findings: 0 Critical, 0 High, 20 Medium.</p>
+</div>
+<h4 id="low-severity-116">Low Severity (116)</h4>
+<p>Low and negligible severity vulnerabilities in system libraries and packages.</p>
+<hr>
+<h3 id="stream-host---alpine321">stream-host - alpine3.21</h3>
+<p><code>xmpro.azurecr.io/stream-host:4.6.0-alpine3.21</code></p>
+<p><strong>Scan result:</strong> 0 Critical, 0 High, 0 Medium, 0 Low</p>
+<div class="TIP">
+<h5>Tip</h5>
+<p>No vulnerabilities detected. This image has the smallest attack surface of all Stream Host variants.</p>
+</div>
+<h2 id="false-positive-assessments">False Positive Assessments</h2>
+<p>Related: <a href="../release-notes/index.html#v460">v4.6.0 Release Notes</a></p>
+<p>The following CVEs were assessed as false positives. The affected components are either not present in XMPro deployments or are not reachable in the container runtime environment.</p>
+<ul>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2005-2541">CVE-2005-2541</a>: GNU tar setuid extraction is intended POSIX behavior; Debian and Red Hat classify as &quot;won't fix&quot;.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2010-4756">CVE-2010-4756</a>: glibc glob() resource consumption is POSIX-specified behavior; won't fix.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2015-3276">CVE-2015-3276</a>: openldap TLS cipher acceptance issue; XMPro uses .NET LDAP, not libldap directly.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2016-2781">CVE-2016-2781</a>: coreutils chroot TIOCSTI escape; kernel mitigated since Linux 6.4.4.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2017-17740">CVE-2017-17740</a>: openldap contrib/slapd-modules DoS; Debian doesn't build contrib modules.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2017-18018">CVE-2017-18018</a>: coreutils chown race condition; kernel hardening (fs.protected_regular) mitigates.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2018-5709">CVE-2018-5709</a>: krb5 integer overflow in policy lifetime; trusted admin input only.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2018-6829">CVE-2018-6829</a>: libgcrypt20 ElGamal side-channel; XMPro uses OpenSSL, hybrid mode unaffected.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2018-20225">CVE-2018-20225</a>: pip vulnerable --extra-index-url option is never used in XMPro Stream Host.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2018-20796">CVE-2018-20796</a>: glibc regex recursion DoS; disputed, glibc maintainers don't consider this a security issue.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2019-1010022">CVE-2019-1010022</a>: libc-bin (glibc) disputed CVE; glibc upstream states &quot;not a real threat&quot;, requires prior stack overflow.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2019-1010023">CVE-2019-1010023</a>: glibc ldd requires user to run on malicious ELF; documented behavior.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2019-1010024">CVE-2019-1010024</a>: glibc ASLR bypass via exception messages; kernel security feature, not glibc bug.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2019-9192">CVE-2019-9192</a>: glibc regex recursion DoS; same issue as CVE-2018-20796.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2022-0563">CVE-2022-0563</a>: util-linux chfn/chsh readline echo; Debian uses shadow package instead.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2022-27943">CVE-2022-27943</a>: gcc libiberty Rust demangling in dev tools only; negligible impact.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2023-2953">CVE-2023-2953</a>: libldap-2.5-0 null pointer dereference; no LDAP functionality used in Stream Host containers.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2023-31486">CVE-2023-31486</a>: perl HTTP::Tiny TLS verification issue; XMPro uses .NET HttpClient, not Perl.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2023-42465">CVE-2023-42465</a>: sudo ROWHAMMER hardware attack; impractical in cloud environments with ECC RAM.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2023-45853">CVE-2023-45853</a>: zlib integer overflow in MiniZip contrib; XMPro uses .NET System.IO.Compression, not MiniZip.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2024-1013">CVE-2024-1013</a>: Alpine unixodbc example code only, not compiled in XMPro containers.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-6020">CVE-2025-6020</a>: libpam requires pam_namespace polyinstantiation, not used in XMPro containers.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-6297">CVE-2025-6297</a>: dpkg only affects manual dpkg-deb extraction, not used in XMPro containers.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-7458">CVE-2025-7458</a>: libsqlite3-0 Python variant only; requires crafted SQL with large ORDER BY, not possible in XMPro containers.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-9086">CVE-2025-9086</a>: curl is installed but not invoked at runtime; Stream Host runs as non-root app user with no curl usage in entrypoint or application code.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-9708">CVE-2025-9708</a>: KubernetesClient 4.0.26 is a transitive dependency of AspNetCore.HealthChecks.UI that XMPro does not use.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-10148">CVE-2025-10148</a>: curl WebSocket payload masking issue; XMPro uses .NET HttpClient, not curl.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-13034">CVE-2025-13034</a>: curl QUIC TLS key pinning issue; XMPro uses .NET HttpClient, not curl.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-13151">CVE-2025-13151</a>: libtasn1-6 vulnerable code never executed; XMPro uses OpenSSL not GnuTLS.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-14104">CVE-2025-14104</a>: util-linux setpwnam race condition; SUID utilities not used in XMPro containers.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-14524">CVE-2025-14524</a>: curl OAuth2 Bearer token leak; XMPro uses .NET HttpClient, not curl.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-14819">CVE-2025-14819</a>: curl CA certificate store caching issue; XMPro uses .NET TLS, not curl.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-15281">CVE-2025-15281</a>: libc-bin (glibc) requires wordexp() with WRDE_REUSE+WRDE_APPEND flags; not used by XMPro applications.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-30258">CVE-2025-30258</a>: gpgv certificate import DoS; XMPro doesn't import GnuPG keys.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-68972">CVE-2025-68972</a>: gpgv plaintext injection in signed messages; XMPro doesn't verify GPG signatures.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-68973">CVE-2025-68973</a>: gpgv scanner data lag; Debian shows 2.2.40-1.1+deb12u2 is already fixed.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-0861">CVE-2026-0861</a>: glibc requires attacker control of both size and alignment parameters; not possible in XMPro managed code.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-0915">CVE-2026-0915</a>: glibc requires getnetbyaddr() with zero-valued network parameter; XMPro applications don't call this function.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-2219">CVE-2026-2219</a>: dpkg zstd decompression infinite loop; only affects processing untrusted .deb archives, not done in XMPro containers.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-3805">CVE-2026-3805</a>: curl vulnerability in Debian Trixie; XMPro uses .NET HttpClient for all HTTP operations, not curl. No fix available from Debian.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-22184">CVE-2026-22184</a>: zlib (npm) untgz utility not present in browserify-zlib/minizlib; pure JS packages unaffected.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-24882">CVE-2026-24882</a>: gpgv vulnerability in tpm2daemon not included in gpgv package; gpgv is only a signature verification tool.</li>
+</ul>
+<h2 id="disclosure">Disclosure</h2>
+<p>All images were scanned on March 17, 2026 using Trivy v0.61.0 with the latest vulnerability database. All Critical and High severity findings have been investigated and confirmed as false positives. Investigation and mitigation of the remaining Medium and Low severity findings did not make the cut for the 4.6.0 release. These will be reviewed and addressed in upcoming releases as part of our ongoing security improvement process.</p>
+<h2 id="replication">Replication</h2>
+<p>To independently verify these scan results:</p>
+<pre><code class="lang-bash">trivy image xmpro.azurecr.io/ad:4.6.0
+trivy image xmpro.azurecr.io/ds:4.6.0
+trivy image xmpro.azurecr.io/ai:4.6.0
+trivy image xmpro.azurecr.io/stream-host:4.6.0
+trivy image xmpro.azurecr.io/stream-host:4.6.0-bookworm-slim-python3.12
+trivy image xmpro.azurecr.io/stream-host:4.6.0-alpine3.21
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Results may vary depending on the Trivy version and vulnerability database date used.</p>
+</div>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: March 19, 2026</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
