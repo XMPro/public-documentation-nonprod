@@ -129,7 +129,6 @@
 </tr>
 </tbody>
 </table>
-<p>For detailed false positive investigation reports for each CVE, see the Security section of the <a href="../release-notes/index.html">v4.6.0 Release Notes</a>.</p>
 <h2 id="per-image-overview">Per-Image Overview</h2>
 <div class="NOTE">
 <h5>Note</h5>
@@ -363,6 +362,53 @@
 <h5>Tip</h5>
 <p>No vulnerabilities detected. This image has the smallest attack surface of all Stream Host variants.</p>
 </div>
+<h2 id="false-positive-assessments">False Positive Assessments</h2>
+<p>Related: <a href="../release-notes/index.html#v460">v4.6.0 Release Notes</a></p>
+<p>The following CVEs were assessed as false positives. The affected components are either not present in XMPro deployments or are not reachable in the container runtime environment.</p>
+<ul>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2005-2541">CVE-2005-2541</a>: GNU tar setuid extraction is intended POSIX behavior; Debian and Red Hat classify as &quot;won't fix&quot;.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2010-4756">CVE-2010-4756</a>: glibc glob() resource consumption is POSIX-specified behavior; won't fix.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2015-3276">CVE-2015-3276</a>: openldap TLS cipher acceptance issue; XMPro uses .NET LDAP, not libldap directly.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2016-2781">CVE-2016-2781</a>: coreutils chroot TIOCSTI escape; kernel mitigated since Linux 6.4.4.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2017-17740">CVE-2017-17740</a>: openldap contrib/slapd-modules DoS; Debian doesn't build contrib modules.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2017-18018">CVE-2017-18018</a>: coreutils chown race condition; kernel hardening (fs.protected_regular) mitigates.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2018-5709">CVE-2018-5709</a>: krb5 integer overflow in policy lifetime; trusted admin input only.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2018-6829">CVE-2018-6829</a>: libgcrypt20 ElGamal side-channel; XMPro uses OpenSSL, hybrid mode unaffected.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2018-20225">CVE-2018-20225</a>: pip vulnerable --extra-index-url option is never used in XMPro Stream Host.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2018-20796">CVE-2018-20796</a>: glibc regex recursion DoS; disputed, glibc maintainers don't consider this a security issue.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2019-1010022">CVE-2019-1010022</a>: libc-bin (glibc) disputed CVE; glibc upstream states &quot;not a real threat&quot;, requires prior stack overflow.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2019-1010023">CVE-2019-1010023</a>: glibc ldd requires user to run on malicious ELF; documented behavior.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2019-1010024">CVE-2019-1010024</a>: glibc ASLR bypass via exception messages; kernel security feature, not glibc bug.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2019-9192">CVE-2019-9192</a>: glibc regex recursion DoS; same issue as CVE-2018-20796.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2022-0563">CVE-2022-0563</a>: util-linux chfn/chsh readline echo; Debian uses shadow package instead.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2022-27943">CVE-2022-27943</a>: gcc libiberty Rust demangling in dev tools only; negligible impact.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2023-2953">CVE-2023-2953</a>: libldap-2.5-0 null pointer dereference; no LDAP functionality used in Stream Host containers.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2023-31486">CVE-2023-31486</a>: perl HTTP::Tiny TLS verification issue; XMPro uses .NET HttpClient, not Perl.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2023-42465">CVE-2023-42465</a>: sudo ROWHAMMER hardware attack; impractical in cloud environments with ECC RAM.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2023-45853">CVE-2023-45853</a>: zlib integer overflow in MiniZip contrib; XMPro uses .NET System.IO.Compression, not MiniZip.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2024-1013">CVE-2024-1013</a>: Alpine unixodbc example code only, not compiled in XMPro containers.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-6020">CVE-2025-6020</a>: libpam requires pam_namespace polyinstantiation, not used in XMPro containers.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-6297">CVE-2025-6297</a>: dpkg only affects manual dpkg-deb extraction, not used in XMPro containers.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-7458">CVE-2025-7458</a>: libsqlite3-0 Python variant only; requires crafted SQL with large ORDER BY, not possible in XMPro containers.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-9086">CVE-2025-9086</a>: curl is installed but not invoked at runtime; Stream Host runs as non-root app user with no curl usage in entrypoint or application code.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-9708">CVE-2025-9708</a>: KubernetesClient 4.0.26 is a transitive dependency of AspNetCore.HealthChecks.UI that XMPro does not use.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-10148">CVE-2025-10148</a>: curl WebSocket payload masking issue; XMPro uses .NET HttpClient, not curl.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-13034">CVE-2025-13034</a>: curl QUIC TLS key pinning issue; XMPro uses .NET HttpClient, not curl.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-13151">CVE-2025-13151</a>: libtasn1-6 vulnerable code never executed; XMPro uses OpenSSL not GnuTLS.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-14104">CVE-2025-14104</a>: util-linux setpwnam race condition; SUID utilities not used in XMPro containers.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-14524">CVE-2025-14524</a>: curl OAuth2 Bearer token leak; XMPro uses .NET HttpClient, not curl.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-14819">CVE-2025-14819</a>: curl CA certificate store caching issue; XMPro uses .NET TLS, not curl.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-15281">CVE-2025-15281</a>: libc-bin (glibc) requires wordexp() with WRDE_REUSE+WRDE_APPEND flags; not used by XMPro applications.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-30258">CVE-2025-30258</a>: gpgv certificate import DoS; XMPro doesn't import GnuPG keys.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-68972">CVE-2025-68972</a>: gpgv plaintext injection in signed messages; XMPro doesn't verify GPG signatures.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-68973">CVE-2025-68973</a>: gpgv scanner data lag; Debian shows 2.2.40-1.1+deb12u2 is already fixed.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-0861">CVE-2026-0861</a>: glibc requires attacker control of both size and alignment parameters; not possible in XMPro managed code.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-0915">CVE-2026-0915</a>: glibc requires getnetbyaddr() with zero-valued network parameter; XMPro applications don't call this function.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-2219">CVE-2026-2219</a>: dpkg zstd decompression infinite loop; only affects processing untrusted .deb archives, not done in XMPro containers.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-3805">CVE-2026-3805</a>: curl vulnerability in Debian Trixie; XMPro uses .NET HttpClient for all HTTP operations, not curl. No fix available from Debian.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-22184">CVE-2026-22184</a>: zlib (npm) untgz utility not present in browserify-zlib/minizlib; pure JS packages unaffected.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-24882">CVE-2026-24882</a>: gpgv vulnerability in tpm2daemon not included in gpgv package; gpgv is only a signature verification tool.</li>
+</ul>
 <h2 id="disclosure">Disclosure</h2>
 <p>All images were scanned on March 17, 2026 using Trivy v0.61.0 with the latest vulnerability database. All Critical and High severity findings have been investigated and confirmed as false positives. Investigation and mitigation of the remaining Medium and Low severity findings did not make the cut for the 4.6.0 release. These will be reviewed and addressed in upcoming releases as part of our ongoing security improvement process.</p>
 <h2 id="replication">Replication</h2>
@@ -382,7 +428,7 @@ trivy image xmpro.azurecr.io/stream-host:4.6.0-alpine3.21
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: March 18, 2026</em></small></p>
+    <p><small><em>Last modified: March 19, 2026</em></small></p>
   </div>
 </article>
 
