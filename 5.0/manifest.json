@@ -127,6 +127,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "scsetup/selenium-framework-test-execution.md",
+      "output": {
+        ".html": {
+          "relative_path": "scsetup/selenium-framework-test-execution.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "src/administration/administrative-accounts.md",
       "output": {
         ".html": {
