@@ -2,11 +2,11 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Category | XMPro </title>
+      <title>v4.4.23 | XMPro </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Category | XMPro ">
+      <meta name="title" content="v4.4.23 | XMPro ">
       <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
-      
+      <meta name="description" content="Apr 2026">
       <link rel="icon" href="../../images/favicon.png">
       <link rel="stylesheet" href="../../public/docfx.min.css">
       <link rel="stylesheet" href="../../public/main.css">
@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/concepts/category.md&amp;version=GBrelease-4.4.23&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/release-notes/v4.4.23.md&amp;version=GBrelease-4.4.23&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -85,38 +85,54 @@
         </div>
 
         <article data-uid="">
-<h1 id="category">Category</h1>
+<h1 id="v4423">v4.4.23</h1>
 
-<h2 id="overview">Overview</h2>
-<p>A Category is a container that groups related <a href="data-stream/index.html">Data Streams</a> and <a href="application/index.html">Applications</a>. Categories are shared between core XMPro Products to provide a homogenous environment. They are displayed as cards on the home page of the Data Stream Designer and App Designer. Clicking on the card will navigate to a dashboard showing the Data Streams or Apps associated with that Category.</p>
-<p>Categories are useful as they allow you to group your Data Streams, Applications, or other XMPro Objects into logical areas. Organizations have the flexibility to create Categories based on their specific requirements such as the organizational structure of their asset hierarchy.</p>
-<div class="embeddedvideo"><iframe src="https://www.youtube-nocookie.com/embed/2GznBa2cKHo?rel=0" frameborder="0" allowfullscreen="true"></iframe></div>
-<h2 id="finding-categories">Finding Categories</h2>
-<p>The search bar can be used to find any specific Categories that you may be looking for. There is a dropdown option where you can specify to search through everything in App Designer, or only for Categories.</p>
-<p><img src="../images/search-categories.png" alt="Search Categories"></p>
-<h2 id="empty-categories">Empty Categories</h2>
-<p>A Category that doesn't have any Apps or Data Streams inside it will not be shown on the dashboard.</p>
-<h2 id="app-and-data-stream-indicators">App and Data Stream Indicators</h2>
-<p>An indication of the state of the items contained within a Category is shown at the bottom of each tile. What the numbers represent is as follows:</p>
-<ol>
-<li>The number of published Apps or Data Streams.</li>
-<li>The number of unpublished Apps or Data Streams.</li>
-</ol>
-<p><img src="../images/app-data-stream-indicators.png" alt="App and Data Stream Indicators"></p>
-<h2 id="default-category">Default Category</h2>
-<p>The Data Stream Designer or App Designer will have one Category defined after it is initially installed, called &quot;My Sandbox&quot;. This Category is used as a default Category as there is a requirement for all Data Streams or Apps to belong to a Category. In terms of the Application, no <a href="data-stream/index.html">Data Stream</a> or <a href="application/index.html">Application</a> is allowed to exist if it doesn't belong to a Category.</p>
-<p>After installing Data Stream Designer or App Designer, you can create any Category you like. However, when the default Category is left empty (not containing any Data Streams or Apps), it will not display on the landing page after at least one other Category is created. You will still be able to see it on the Categories page and create Data Streams or Apps in it. Once you've created a Data Stream or App in it, it will show up on the landing page once again.</p>
-<p><img src="../images/default-category.png" alt="Default Category"></p>
-<h2 id="deleting-a-category">Deleting a Category</h2>
-<p>If you delete a Category, all of the Apps or Data Streams inside of that Category get put into My Sandbox.</p>
-<h2 id="order">Order</h2>
-<p>The way Categories are displayed on the list can be reordered. This can be done by selecting the reorder option and selecting and dragging the Categories to reorder them.</p>
-<p><img src="../images/category-reordering-1.png" alt="Category Reordering 1"></p>
-<p><img src="../images/category-reordering-2.png" alt="Category Reordering 2"></p>
-<h2 id="further-reading">Further Reading</h2>
-<ul>
-<li><a href="../how-tos/manage-categories.html">How to Create and Manage Categories</a></li>
-</ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Security patch: Addresses penetration test findings and resolves high-severity SCA vulnerabilities across all products.</p>
+</div>
+<h2 id="common">Common</h2>
+<table>
+<thead>
+<tr>
+<th>Change Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Security</td>
+<td><strong>Security hardening</strong>: Several security improvements have been applied across all products:<br> • Resolved unauthenticated access to certain internal API endpoints<br> • Improved input sanitization to prevent injection vulnerabilities<br> • Hardened HTTP response headers to reduce information disclosure<br> • Error responses no longer expose internal application details</td>
+</tr>
+<tr>
+<td>Security</td>
+<td><strong>Product security and stability</strong>: We've mitigated several high-severity SCA vulnerabilities by upgrading the corresponding NuGet and npm packages:<br> • <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-32933">CVE-2026-32933</a>: Upgraded Entity Framework from 7.0 to 8.0.20 and Breeze from 7.1.0 to 7.5.0 in App Designer as a prerequisite for the HealthChecks.UI 8.x upgrade<br> • <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-32933">CVE-2026-32933</a>: Upgraded AspNetCore.HealthChecks.UI and related packages from 6.x to 8.x in App Designer, Data Stream Designer, and XMPro AI, removing transitive AutoMapper 9.0 dependency<br> • <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-32933">CVE-2026-32933</a>: Removed AutoMapper 5.0 dependency in Subscription Manager and replaced with plain C# mapping<br> • <a href="https://nvd.nist.gov/vuln/detail/CVE-2023-26136">CVE-2023-26136</a>: Overrode tough-cookie to 4.1.3 in Subscription Manager<br> • <a href="https://nvd.nist.gov/vuln/detail/CVE-2025-7783">CVE-2025-7783</a>: Overrode form-data to 4.0.4 in Subscription Manager<br> • <a href="https://nvd.nist.gov/vuln/detail/CVE-2024-4068">CVE-2024-4068</a>: Overrode braces to 3.0.3 in Subscription Manager<br> • <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-4599">CVE-2026-4599</a>: Overrode jsrsasign to 11.1.0 in Subscription Manager<br> • <a href="https://nvd.nist.gov/vuln/detail/CVE-2020-11022">CVE-2020-11022</a> / <a href="https://nvd.nist.gov/vuln/detail/CVE-2020-11023">CVE-2020-11023</a>: Upgraded jQuery from 3.2.1 to 3.5.0 in Subscription Manager<br> • <a href="https://nvd.nist.gov/vuln/detail/CVE-2021-32803">CVE-2021-32803</a>: Overrode tar to 7.5.10 in App Designer<br> • <a href="https://cwe.mitre.org/data/definitions/1321.html">CWE-1321</a>: Overrode unset-value to 2.0.1 in Subscription Manager to resolve Prototype Pollution<br> • Removed unused npm dependencies and NuGet packages in App Designer to reduce attack surface</td>
+</tr>
+<tr>
+<td>Documentation</td>
+<td><strong>AI-Powered Documentation Assistant</strong>: The XMPro documentation site now includes an AI-powered assistant to help you find answers faster.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="app-designer">App Designer</h2>
+<table>
+<thead>
+<tr>
+<th>Change Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fix</td>
+<td><em>When importing a large application (file size greater than ~195 MB), the upload fails silently with no error or feedback.</em><br>The web.config request size limit was incorrectly set below 200 MB, causing a silent 413 error. The limit has been corrected to 200 MB, and a clear error message is now shown when exceeded.</td>
+</tr>
+<tr>
+<td>Performance</td>
+<td><strong>App pages performance</strong>: Replaced the earlier short-term ToListAsync workaround with the long-term fix from Breeze 7.3.0+ (upgraded to 7.5.0) in App Designer. No change in user-facing responsiveness.</td>
+</tr>
+</tbody>
+</table>
 
 
   <div class="last-modified">
