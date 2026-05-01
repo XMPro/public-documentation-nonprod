@@ -104,14 +104,11 @@
 </ol>
 <div class="NOTE">
 <h5>Note</h5>
-<p>Field names containing periods (<code>.</code>) will not display data in Live View:</p>
 <ul>
-<li>Field names using dot-notation (e.g. <code>12FIC2101.PIDA.SP</code>) will not show data.</li>
-<li>Rename the field before publishing to avoid this issue.</li>
-<li>Use hyphens or underscores as separators (e.g. <code>12FIC2101-PIDA-SP</code> or <code>12FIC2101_PIDA_SP</code>).</li>
+<li>Field names containing periods (<code>.</code>) will not display data in Live View. If your data source uses dot-notation field names (e.g. <code>12FIC2101.PIDA.SP</code>), rename them using hyphens or underscores before publishing (e.g. <code>12FIC2101-PIDA-SP</code> or <code>12FIC2101_PIDA_SP</code>).</li>
+<li>Make sure your Data Stream is published before trying to open the <em>Live View</em>.</li>
+<li>Prior to v4.3.7, it was important to always close the <em>Live View</em> before navigating away. Otherwise, connections were left open. If these build up over time and affect performance, an admin can reset them <a href="../manage-site-settings.html#live-view-usage">here</a>.</li>
 </ul>
-<p>Make sure your Data Stream is published before trying to open the <em>Live View</em>.</p>
-<p>Prior to v4.3.7, it was important to always close the <em>Live View</em> before navigating away. Otherwise, connections were left open. If these build up over time and affect performance, an admin can reset them <a href="../manage-site-settings.html#live-view-usage">here</a>.</p>
 </div>
 <p><img src="../../images/data-streams/lv-1.png" alt="Selecting Live View option after publishing a Data Stream"></p>
 <p><img src="../../images/data-streams/lv-2.png" alt="Selecting agents to view live data"></p>
@@ -128,7 +125,7 @@
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: April 27, 2026</em></small></p>
+    <p><small><em>Last modified: May 01, 2026</em></small></p>
   </div>
 </article>
 
