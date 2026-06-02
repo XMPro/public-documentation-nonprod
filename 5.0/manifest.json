@@ -24897,36 +24897,6 @@
     },
     {
       "type": "Resource",
-      "source_relative_path": "src/images/resources/xmpro-notebook_license.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/images/resources/xmpro-notebook_license.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "src/images/resources/xmpro-notebook_mlflow-output.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/images/resources/xmpro-notebook_mlflow-output.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "src/images/resources/xmpro-notebook_waffle_menu.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/images/resources/xmpro-notebook_waffle_menu.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
       "source_relative_path": "src/images/resources/yellow-error.png",
       "output": {
         "resource": {
@@ -31211,36 +31181,6 @@
       "output": {
         "resource": {
           "relative_path": "src/resources/images/xmpro-app.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "src/resources/images/xmpro-notebook_license.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/resources/images/xmpro-notebook_license.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "src/resources/images/xmpro-notebook_mlflow-output.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/resources/images/xmpro-notebook_mlflow-output.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "src/resources/images/xmpro-notebook_waffle_menu.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/resources/images/xmpro-notebook_waffle_menu.png"
         }
       },
       "version": ""
