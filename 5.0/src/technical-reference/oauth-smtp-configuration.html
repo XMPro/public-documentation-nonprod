@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/technical-reference/oauth-smtp-configuration.md&amp;version=GBmain&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/technical-reference/oauth-smtp-configuration.md&amp;version=GBrelease-5.0.0-alpha&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -251,17 +251,17 @@
 </div>
 <h4 id="common-error-without-this-step">Common Error Without This Step</h4>
 <p>If you skip this step, you'll see this error when attempting to send email:</p>
-<pre><code class="lang-text">535 5.7.139 Authentication unsuccessful, SmtpClientAuthentication is disabled for the Tenant
+<pre><code>535 5.7.139 Authentication unsuccessful, SmtpClientAuthentication is disabled for the Tenant
 </code></pre>
 <p><strong>Solution:</strong> Complete this step to enable SMTP AUTH as shown above.</p>
 <h3 id="step-5-calculate-token-endpoint-url">Step 5: Calculate Token Endpoint URL</h3>
 <p>Using your Directory (tenant) ID from Step 1, construct the token endpoint URL that XMPro will use to request OAuth tokens.</p>
 <p>Your OAuth token endpoint URL follows this format:</p>
-<pre><code class="lang-text">https://login.microsoftonline.com/{tenant-id}/oauth2/v2.0/token
+<pre><code>https://login.microsoftonline.com/{tenant-id}/oauth2/v2.0/token
 </code></pre>
 <p>Replace <code>{tenant-id}</code> with your <strong>Directory (tenant) ID</strong> from Step 1.</p>
 <p><strong>Example:</strong></p>
-<pre><code class="lang-text">https://login.microsoftonline.com/12345678-1234-1234-1234-123456789012/oauth2/v2.0/token
+<pre><code>https://login.microsoftonline.com/12345678-1234-1234-1234-123456789012/oauth2/v2.0/token
 </code></pre>
 <h2 id="xmpro-configuration-by-deployment-method">XMPro Configuration by Deployment Method</h2>
 <p>After completing the Azure AD app registration above, configure your XMPro deployment with the OAuth SMTP settings. Choose the section that matches your deployment method.</p>
@@ -385,11 +385,11 @@ email_from_address    = &quot;notifications@yourdomain.com&quot;
 <h3 id="check-logs">Check Logs</h3>
 <p>Application logs will show OAuth token acquisition:</p>
 <p><strong>Success:</strong></p>
-<pre><code class="lang-text">[Information] Successfully acquired OAuth token for SMTP authentication
+<pre><code>[Information] Successfully acquired OAuth token for SMTP authentication
 [Information] Email sent successfully to: user@example.com
 </code></pre>
 <p><strong>Failure:</strong></p>
-<pre><code class="lang-text">[Error] Failed to acquire OAuth token: Invalid client secret
+<pre><code>[Error] Failed to acquire OAuth token: Invalid client secret
 [Error] SMTP authentication failed
 </code></pre>
 <h2 id="troubleshooting">Troubleshooting</h2>
@@ -585,7 +585,7 @@ email_from_address    = &quot;notifications@yourdomain.com&quot;
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: June 02, 2026</em></small></p>
+    <p><small><em>Last modified: June 24, 2026</em></small></p>
   </div>
 </article>
 

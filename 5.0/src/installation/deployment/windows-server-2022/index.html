@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../../../">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/deployment/windows-server-2022/index.md&amp;version=GBmain&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/deployment/windows-server-2022/index.md&amp;version=GBrelease-5.0.0-alpha&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -99,7 +99,7 @@
 </div>
 <div class="TIP">
 <h5>Tip</h5>
-<p>This guide deploys all XMPro products to a single server by default. This is suitable for development and evaluation. For production sizing recommendations based on your workload, see the <a href="windows-sizing.html">Sizing Guideline</a>.</p>
+<p>This guide deploys all XMPro products to a single server by default. This is suitable for development and evaluation. For production sizing recommendations based on your workload, see the <a href="windows-sizing.html">Sizing Recommendations</a> guide.</p>
 </div>
 <h2 id="single-server-architecture">Single-Server Architecture</h2>
 <p><img src="../../../images/xmpro-single-server-deployment-architecture.jpg" alt="XMPro Single-Server Deployment Architecture"></p>
@@ -753,7 +753,7 @@
 <h3 id="more-resources">More Resources</h3>
 <ul>
 <li><a href="upgrade-from-legacy.html">Upgrade from Legacy Windows Installer</a> - Upgrade from v4.4.x to v4.5</li>
-<li><a href="windows-sizing.html">Sizing Guideline</a> - Production sizing guideline</li>
+<li><a href="windows-sizing.html">Sizing Recommendations</a> - Production sizing guidelines</li>
 <li><a href="troubleshooting.html">Troubleshooting Guide</a> - Fix common issues</li>
 <li><a href="multi-server-deployment.html">Multi-Server Deployment</a> - Deploy across multiple servers</li>
 <li><a href="airgapped-deployment.html">Airgapped Deployment</a> - Offline installation</li>
@@ -768,15 +768,30 @@
 .\install-xmpro-application.ps1 -SkipPrompts
 </code></pre>
 <hr>
+<h1 id="windows-server-2022">Windows Server 2022</h1>
+<p>This document will guide you through how to deploy the XMPro Platform on a single Windows Server 2022 machine. For custom deployments, including multi machine deployments, contact XMPro for additional instructions.</p>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>IMPORTANT: These installation instructions are intended for System Administrators with full administrator access to the Windows environment. Administrative privileges are required throughout the installation process.</p>
+</div>
 <div class="NOTE">
 <h5>Note</h5>
-<p>This installer uses <strong>native IIS deployment</strong> - not Docker containers. All XMPro applications run as standard IIS web applications with dedicated application pools.</p>
+<p>TIME REQUIREMENT: The complete installation process typically takes approximately 3 hours. Please plan accordingly and ensure uninterrupted access to the system during this time.</p>
 </div>
+<ul>
+<li><a href="prerequisites.md">Prerequisites</a></li>
+<li><a href="install.md">Install</a></li>
+<li><a href="upgrade.md">Upgrade</a></li>
+<li><a href="troubleshooting.html">Troubleshooting</a></li>
+</ul>
+<h2 id="architecture">Architecture</h2>
+<p>The following deployment diagram shows an example on-premise architecture and the necessary resources for the XMPro platform in Microsoft Windows.</p>
+<p><img src="../../../images/windows-architecture.png" alt="Fig 1: Example XMPro architecture in Windows Server"></p>
 
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: June 02, 2026</em></small></p>
+    <p><small><em>Last modified: June 24, 2026</em></small></p>
   </div>
 </article>
 

@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/resources/platform-security.md&amp;version=GBmain&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/resources/platform-security.md&amp;version=GBrelease-5.0.0-alpha&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -113,34 +113,34 @@
 </thead>
 <tbody>
 <tr>
-<td>Subscription Manager 4.4.18</td>
-<td>92</td>
-<td>95</td>
-<td>20 Mar 25</td>
-</tr>
-<tr>
-<td>App Designer 4.4.18</td>
-<td>78</td>
-<td>95</td>
-<td>20 Mar 25</td>
-</tr>
-<tr>
-<td>Data Stream Designer 4.4.18</td>
-<td>89</td>
-<td>95</td>
-<td>20 Mar 25</td>
-</tr>
-<tr>
-<td>XMPro AI 4.4.18</td>
+<td>Subscription Manager 4.6.1</td>
+<td>97</td>
 <td>96</td>
+<td>20 May 26</td>
+</tr>
+<tr>
+<td>App Designer 4.6.1</td>
 <td>95</td>
-<td>20 Mar 25</td>
+<td>96</td>
+<td>20 May 26</td>
+</tr>
+<tr>
+<td>Data Stream Designer 4.6.1</td>
+<td>95</td>
+<td>96</td>
+<td>20 May 26</td>
+</tr>
+<tr>
+<td>XMPro AI 4.6.1</td>
+<td>95</td>
+<td>96</td>
+<td>20 May 26</td>
 </tr>
 <tr>
 <td>WorkFlow</td>
-<td>97</td>
-<td>91</td>
-<td>20 Mar 25</td>
+<td>95</td>
+<td>96</td>
+<td>20 May 26</td>
 </tr>
 </tbody>
 </table>
@@ -159,7 +159,7 @@
 <tr>
 <th>Version</th>
 <th>Scan Date</th>
-<th>Images Scanned</th>
+<th>Documented FPs</th>
 <th>Report</th>
 </tr>
 </thead>
@@ -167,56 +167,77 @@
 <tr>
 <td>4.6.0</td>
 <td>17 Mar 26</td>
-<td>6</td>
+<td>—</td>
 <td><a href="container-scan-4-6-0.html">View Report</a></td>
+</tr>
+<tr>
+<td>4.6.1</td>
+<td>13 May 26</td>
+<td>54 (18 new)</td>
+<td><a href="container-scan-4-6-1.html">View Report</a></td>
 </tr>
 </tbody>
 </table>
 <h3 id="known-false-positives">Known False Positives</h3>
 <p>The following CVEs have been assessed as false positives across XMPro container images. The affected components are either not present in XMPro deployments, not reachable in the container runtime environment, or are disputed by upstream maintainers. This list is cumulative and updated as new CVEs are investigated.</p>
 <ul>
-<li><a href="https://www.cve.org/CVERecord?id=CVE-2005-2541">CVE-2005-2541</a>: GNU tar setuid extraction is intended POSIX behavior; Debian and Red Hat classify as &quot;won't fix&quot;.</li>
-<li><a href="https://www.cve.org/CVERecord?id=CVE-2010-4756">CVE-2010-4756</a>: glibc glob() resource consumption is POSIX-specified behavior; won't fix.</li>
-<li><a href="https://www.cve.org/CVERecord?id=CVE-2015-3276">CVE-2015-3276</a>: openldap TLS cipher acceptance issue; XMPro uses .NET LDAP, not libldap directly.</li>
-<li><a href="https://www.cve.org/CVERecord?id=CVE-2016-2781">CVE-2016-2781</a>: coreutils chroot TIOCSTI escape; kernel mitigated since Linux 6.4.4.</li>
-<li><a href="https://www.cve.org/CVERecord?id=CVE-2017-17740">CVE-2017-17740</a>: openldap contrib/slapd-modules DoS; Debian doesn't build contrib modules.</li>
-<li><a href="https://www.cve.org/CVERecord?id=CVE-2017-18018">CVE-2017-18018</a>: coreutils chown race condition; kernel hardening (fs.protected_regular) mitigates.</li>
-<li><a href="https://www.cve.org/CVERecord?id=CVE-2018-5709">CVE-2018-5709</a>: krb5 integer overflow in policy lifetime; trusted admin input only.</li>
-<li><a href="https://www.cve.org/CVERecord?id=CVE-2018-6829">CVE-2018-6829</a>: libgcrypt20 ElGamal side-channel; XMPro uses OpenSSL, hybrid mode unaffected.</li>
-<li><a href="https://www.cve.org/CVERecord?id=CVE-2018-20225">CVE-2018-20225</a>: pip vulnerable --extra-index-url option is never used in XMPro Stream Host.</li>
-<li><a href="https://www.cve.org/CVERecord?id=CVE-2018-20796">CVE-2018-20796</a>: glibc regex recursion DoS; disputed, glibc maintainers don't consider this a security issue.</li>
-<li><a href="https://www.cve.org/CVERecord?id=CVE-2019-1010022">CVE-2019-1010022</a>: libc-bin (glibc) disputed CVE; glibc upstream states &quot;not a real threat&quot;, requires prior stack overflow.</li>
-<li><a href="https://www.cve.org/CVERecord?id=CVE-2019-1010023">CVE-2019-1010023</a>: glibc ldd requires user to run on malicious ELF; documented behavior.</li>
-<li><a href="https://www.cve.org/CVERecord?id=CVE-2019-1010024">CVE-2019-1010024</a>: glibc ASLR bypass via exception messages; kernel security feature, not glibc bug.</li>
-<li><a href="https://www.cve.org/CVERecord?id=CVE-2019-9192">CVE-2019-9192</a>: glibc regex recursion DoS; same issue as CVE-2018-20796.</li>
-<li><a href="https://www.cve.org/CVERecord?id=CVE-2022-0563">CVE-2022-0563</a>: util-linux chfn/chsh readline echo; Debian uses shadow package instead.</li>
-<li><a href="https://www.cve.org/CVERecord?id=CVE-2022-27943">CVE-2022-27943</a>: gcc libiberty Rust demangling in dev tools only; negligible impact.</li>
-<li><a href="https://www.cve.org/CVERecord?id=CVE-2023-2953">CVE-2023-2953</a>: libldap-2.5-0 null pointer dereference; no LDAP functionality used in Stream Host containers.</li>
-<li><a href="https://www.cve.org/CVERecord?id=CVE-2023-31486">CVE-2023-31486</a>: perl HTTP::Tiny TLS verification issue; XMPro uses .NET HttpClient, not Perl.</li>
-<li><a href="https://www.cve.org/CVERecord?id=CVE-2023-42465">CVE-2023-42465</a>: sudo ROWHAMMER hardware attack; impractical in cloud environments with ECC RAM.</li>
-<li><a href="https://www.cve.org/CVERecord?id=CVE-2023-45853">CVE-2023-45853</a>: zlib integer overflow in MiniZip contrib; XMPro uses .NET System.IO.Compression, not MiniZip.</li>
-<li><a href="https://www.cve.org/CVERecord?id=CVE-2024-1013">CVE-2024-1013</a>: Alpine unixodbc example code only, not compiled in XMPro containers.</li>
-<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-6020">CVE-2025-6020</a>: libpam requires pam_namespace polyinstantiation, not used in XMPro containers.</li>
-<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-6297">CVE-2025-6297</a>: dpkg only affects manual dpkg-deb extraction, not used in XMPro containers.</li>
-<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-7458">CVE-2025-7458</a>: libsqlite3-0 Python variant only; requires crafted SQL with large ORDER BY, not possible in XMPro containers.</li>
-<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-9086">CVE-2025-9086</a>: curl is installed but not invoked at runtime; Stream Host runs as non-root app user with no curl usage in entrypoint or application code.</li>
-<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-9708">CVE-2025-9708</a>: KubernetesClient 4.0.26 is a transitive dependency of AspNetCore.HealthChecks.UI that XMPro does not use.</li>
-<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-10148">CVE-2025-10148</a>: curl WebSocket payload masking issue; XMPro uses .NET HttpClient, not curl.</li>
-<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-13034">CVE-2025-13034</a>: curl QUIC TLS key pinning issue; XMPro uses .NET HttpClient, not curl.</li>
-<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-13151">CVE-2025-13151</a>: libtasn1-6 vulnerable code never executed; XMPro uses OpenSSL not GnuTLS.</li>
-<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-14104">CVE-2025-14104</a>: util-linux setpwnam race condition; SUID utilities not used in XMPro containers.</li>
-<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-14524">CVE-2025-14524</a>: curl OAuth2 Bearer token leak; XMPro uses .NET HttpClient, not curl.</li>
-<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-14819">CVE-2025-14819</a>: curl CA certificate store caching issue; XMPro uses .NET TLS, not curl.</li>
-<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-15281">CVE-2025-15281</a>: libc-bin (glibc) requires wordexp() with WRDE_REUSE+WRDE_APPEND flags; not used by XMPro applications.</li>
-<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-30258">CVE-2025-30258</a>: gpgv certificate import DoS; XMPro doesn't import GnuPG keys.</li>
-<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-68972">CVE-2025-68972</a>: gpgv plaintext injection in signed messages; XMPro doesn't verify GPG signatures.</li>
-<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-68973">CVE-2025-68973</a>: gpgv scanner data lag; Debian shows 2.2.40-1.1+deb12u2 is already fixed.</li>
-<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-0861">CVE-2026-0861</a>: glibc requires attacker control of both size and alignment parameters; not possible in XMPro managed code.</li>
-<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-0915">CVE-2026-0915</a>: glibc requires getnetbyaddr() with zero-valued network parameter; XMPro applications don't call this function.</li>
-<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-2219">CVE-2026-2219</a>: dpkg zstd decompression infinite loop; only affects processing untrusted .deb archives, not done in XMPro containers.</li>
-<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-3805">CVE-2026-3805</a>: curl vulnerability in Debian Trixie; XMPro uses .NET HttpClient for all HTTP operations, not curl. No fix available from Debian.</li>
-<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-22184">CVE-2026-22184</a>: zlib (npm) untgz utility not present in browserify-zlib/minizlib; pure JS packages unaffected.</li>
-<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-24882">CVE-2026-24882</a>: gpgv vulnerability in tpm2daemon not included in gpgv package; gpgv is only a signature verification tool.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2005-2541">CVE-2005-2541</a>: tar — Setuid extraction; intended POSIX behavior, won't fix.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2010-4756">CVE-2010-4756</a>: glibc — Won't fix: glob resource consumption is POSIX-specified behavior.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2015-3276">CVE-2015-3276</a>: openldap — TLS cipher acceptance; XMPro uses .NET LDAP, not libldap.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2016-2781">CVE-2016-2781</a>: coreutils — chroot TIOCSTI escape; kernel mitigated since Linux 6.4.4.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2017-17740">CVE-2017-17740</a>: openldap — contrib/slapd-modules/nops DoS; Debian doesn't build contrib modules.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2017-18018">CVE-2017-18018</a>: coreutils — chown race condition; kernel hardening (fs.protected_regular) mitigates.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2018-5709">CVE-2018-5709</a>: krb5 — Integer overflow in policy lifetime; trusted admin input only.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2018-6829">CVE-2018-6829</a>: libgcrypt20 — ElGamal side-channel; .NET uses OpenSSL, hybrid mode unaffected.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2018-20225">CVE-2018-20225</a>: pip &lt; 19.2 — Vulnerable --extra-index-url option never used.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2018-20796">CVE-2018-20796</a>: glibc — Disputed regex recursion DoS; glibc maintainers do not consider this a security issue.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2019-1010022">CVE-2019-1010022</a>: libc-bin (glibc) — Disputed CVE; glibc upstream states &quot;not a real threat&quot;; requires prior stack overflow.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2019-1010023">CVE-2019-1010023</a>: glibc — Disputed: ldd requires user to run on malicious ELF; documented behavior.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2019-1010024">CVE-2019-1010024</a>: glibc — Disputed ASLR bypass via exception messages; kernel security feature.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2019-9192">CVE-2019-9192</a>: glibc — Disputed regex recursion DoS; same as CVE-2018-20796.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2022-0563">CVE-2022-0563</a>: util-linux — chfn/chsh readline echo; Debian uses shadow package instead.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2022-27943">CVE-2022-27943</a>: gcc — libiberty Rust demangling; dev tools only, negligible impact.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2023-2953">CVE-2023-2953</a>: libldap-2.5-0 — No LDAP functionality used in Stream Host containers.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2023-31486">CVE-2023-31486</a>: perl — HTTP::Tiny TLS verification; XMPro uses .NET HttpClient.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2023-42465">CVE-2023-42465</a>: sudo — ROWHAMMER hardware attack; impractical in cloud with ECC RAM.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2024-1013">CVE-2024-1013</a>: Alpine unixodbc — Example code only, not compiled.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-6297">CVE-2025-6297</a>: dpkg — Only affects manual dpkg-deb extraction, not used in containers.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-7458">CVE-2025-7458</a>: libsqlite3-0 — Python variant only; requires crafted SQL with large ORDER BY, not possible in containers.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-10148">CVE-2025-10148</a>: curl — WebSocket payload masking; XMPro uses .NET HttpClient.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-13034">CVE-2025-13034</a>: curl — QUIC TLS key pinning; XMPro uses .NET HttpClient.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-13151">CVE-2025-13151</a>: libtasn1-6 — .NET uses OpenSSL not GnuTLS; vulnerable code never executed; no base image fix available.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-14104">CVE-2025-14104</a>: util-linux — setpwnam race condition; SUID utilities not used in containers.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-14524">CVE-2025-14524</a>: curl — OAuth2 Bearer token leak; XMPro uses .NET HttpClient.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-14819">CVE-2025-14819</a>: curl — CA certificate store caching; XMPro uses .NET TLS.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-15281">CVE-2025-15281</a>: libc-bin (glibc) — Requires wordexp() with WRDE_REUSE+WRDE_APPEND flags; not used by .NET applications.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-30258">CVE-2025-30258</a>: gpgv — Certificate import DoS; XMPro doesn't import GnuPG keys.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-68972">CVE-2025-68972</a>: gpgv — Plaintext injection in signed messages; XMPro doesn't verify signatures.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-0861">CVE-2026-0861</a>: glibc — Requires attacker control of both size and alignment parameters; not possible in .NET managed code.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-2219">CVE-2026-2219</a>: dpkg — zstd decompression infinite loop; only affects processing untrusted .deb archives.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-3805">CVE-2026-3805</a>: curl / libcurl4t64 — Debian Trixie curl vulnerability; XMPro uses .NET HttpClient, not curl.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-22184">CVE-2026-22184</a>: zlib (npm) — untgz utility not in browserify-zlib/minizlib; pure JS packages.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-24882">CVE-2026-24882</a>: gpgv — Vulnerability in tpm2daemon not included in gpgv package; only signature verification tool.</li>
+</ul>
+<h4 id="new-in-461">New in 4.6.1</h4>
+<ul>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-2673">CVE-2026-2673</a>: OpenSSL (libcrypto3, libssl3, openssl) — Alpine 3.23 / Debian Trixie OpenSSL 3.5.5; no upstream fix available, cannot be exploited through normal application use.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-3833">CVE-2026-3833</a>: GnuTLS — Case-sensitive nameConstraints comparison violating RFC 5280 §7.2; XMPro uses .NET TLS (OpenSSL-backed), no libgnutls PInvoke; libgnutls30 transitive via curl, build-time only.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-4046">CVE-2026-4046</a>: glibc — iconv() assertion failure with IBM1390/IBM1399 character sets; .NET uses managed System.Text.Encoding, not glibc iconv().</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-4878">CVE-2026-4878</a>: libcap2 — TOCTOU race in cap_set_file() requires local attacker + privileged setcap caller; XMPro containers never invoke setcap/getcap and run unprivileged.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-5435">CVE-2026-5435</a>: glibc — OOB write in deprecated DNS-record-printing helpers (TSIG); .NET uses managed networking via getaddrinfo, not libresolv print API.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-5450">CVE-2026-5450</a>: glibc — scanf %mc 1-byte heap overflow with width &gt; 1024; .NET applications use managed parsing APIs, not glibc scanf.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-5928">CVE-2026-5928</a>: glibc — ungetwc buffer under-read on wide-char streams; .NET uses managed StreamReader / UTF-8, not glibc wide-character stdio.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-7598">CVE-2026-7598</a>: libssh2 — Integer overflow in userauth_password; XMPro has no SSH/SCP/SFTP usage; libssh2 transitive via curl, build-time only.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-28388">CVE-2026-28388</a>: OpenSSL — NULL deref in delta CRL processing; XMPro does not process CRLs; OpenSSL rates as Low.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-28389">CVE-2026-28389</a>: OpenSSL — NULL deref in CMS EnvelopedData KeyAgreeRecipientInfo; XMPro does not process CMS; OpenSSL rates as Low.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-28390">CVE-2026-28390</a>: OpenSSL — NULL deref in CMS EnvelopedData KeyTransportRecipientInfo (RSA-OAEP); XMPro does not process CMS; OpenSSL rates as Low.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-31790">CVE-2026-31790</a>: OpenSSL — Uninitialized memory in RSASVE key encapsulation; XMPro does not use RSASVE; OpenSSL rates as Moderate.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-33845">CVE-2026-33845</a>: GnuTLS — Integer underflow in DTLS handshake fragment reassembly; XMPro uses .NET TLS (OpenSSL-backed), no DTLS endpoints, no gnutls PInvoke.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-33846">CVE-2026-33846</a>: GnuTLS — Heap buffer overflow in DTLS handshake fragment reassembly (sibling of CVE-2026-33845); same reasoning.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-35535">CVE-2026-35535</a>: sudo — Privilege escalation via mailer privilege drop failure; sudo mailer not configured in XMPro containers; sudo used only for NOPASSWD operations.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-40200">CVE-2026-40200</a>: musl libc — Stack corruption in qsort with &gt;7M elements on 32-bit; XMPro is 64-bit and .NET uses managed sort.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-42010">CVE-2026-42010</a>: GnuTLS — RSA-PSK auth bypass via NUL bytes in usernames; XMPro doesn't use RSA-PSK ciphersuites or libgnutls.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-42011">CVE-2026-42011</a>: GnuTLS — nameConstraints chain-walking flaw; XMPro uses .NET TLS (OpenSSL chain validation), no libgnutls PInvoke.</li>
 </ul>
 <h2 id="support-and-recommendations">Support and Recommendations</h2>
 <p>.NET versions are supported by Microsoft for 3 years after release, as detailed in their <a href="https://dotnet.microsoft.com/en-us/platform/support/policy">support policy</a>. To ensure you have the most secure XMPro offerings, we recommend upgrading at least every 3 months to take advantage of the latest security updates and features.</p>
@@ -224,7 +245,7 @@
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: June 02, 2026</em></small></p>
+    <p><small><em>Last modified: June 24, 2026</em></small></p>
   </div>
 </article>
 

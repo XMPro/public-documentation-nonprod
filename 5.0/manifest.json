@@ -1,6 +1,6 @@
 {
   "sitemap": {
-    "baseUrl": "https://documentation.xmpro.com/4.5/",
+    "baseUrl": "https://xmpro.github.io/public-documentation/",
     "changefreq": "daily",
     "priority": 0.5
   },
@@ -31,16 +31,6 @@
       "output": {
         "resource": {
           "relative_path": "404.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "favicon.ico",
-      "output": {
-        "resource": {
-          "relative_path": "favicon.ico"
         }
       },
       "version": ""
@@ -121,6 +111,26 @@
       "output": {
         ".html": {
           "relative_path": "index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "pipeline-scripts/README.md",
+      "output": {
+        ".html": {
+          "relative_path": "pipeline-scripts/README.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "pipeline-templates/README.md",
+      "output": {
+        ".html": {
+          "relative_path": "pipeline-templates/README.html"
         }
       },
       "version": ""
@@ -3361,6 +3371,16 @@
       "output": {
         ".html": {
           "relative_path": "src/blocks-toolbox/widgets.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "src/concepts/agent/event-level-streaming-vs-agent-level-streaming.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/concepts/agent/event-level-streaming-vs-agent-level-streaming.html"
         }
       },
       "version": ""
@@ -25947,6 +25967,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "src/installation/azure-terraform-preparation.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/installation/azure-terraform-preparation.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "src/installation/complete-installation/deploy-stream-connector-infrastructure.md",
       "output": {
         ".html": {
@@ -26041,6 +26071,16 @@
       "output": {
         ".html": {
           "relative_path": "src/installation/deployment/azure-terraform/azure-sizing.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "src/installation/deployment/azure-terraform/implementation-guide.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/installation/deployment/azure-terraform/implementation-guide.html"
         }
       },
       "version": ""
@@ -26147,6 +26187,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "src/installation/install.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/installation/install.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "src/installation/overview.md",
       "output": {
         ".html": {
@@ -26171,6 +26221,16 @@
       "output": {
         ".html": {
           "relative_path": "src/resources/container-scan-4-6-0.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "src/resources/container-scan-4-6-1.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/resources/container-scan-4-6-1.html"
         }
       },
       "version": ""
@@ -31369,11 +31429,11 @@
       "type": "Toc",
       "source_relative_path": "src/toc.yml",
       "output": {
-        ".json": {
-          "relative_path": "src/toc.json"
-        },
         ".html": {
           "relative_path": "src/toc.html"
+        },
+        ".json": {
+          "relative_path": "src/toc.json"
         }
       },
       "version": ""
@@ -31402,11 +31462,11 @@
       "type": "Toc",
       "source_relative_path": "toc.yml",
       "output": {
-        ".json": {
-          "relative_path": "toc.json"
-        },
         ".html": {
           "relative_path": "toc.html"
+        },
+        ".json": {
+          "relative_path": "toc.json"
         }
       },
       "version": ""

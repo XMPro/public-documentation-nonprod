@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/how-tos/manage-site-settings.md&amp;version=GBmain&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/how-tos/manage-site-settings.md&amp;version=GBrelease-5.0.0-alpha&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -223,8 +223,66 @@
 <h4 id="agent-polling-interval-report">Agent Polling Interval Report</h4>
 <p>This report shows the polling intervals configured on all Agents that have the Polling Interval option. Additional information includes the Agent Name, Agent Category, Data Stream name, Data Stream version, Data Stream owner, the Collection name, the Stream Object name, and whether the Data Stream is published.</p>
 <p>This master list empowers the administrator to locate those set too short (1s) that may be causing performance issues. 10 seconds may be appropriate during initial testing, but ill-advised in a QA or Production environment.</p>
-<h2 id="subscription-manager-settings">Subscription Manager Settings</h2>
+<h2 id="ai-settings">AI Settings</h2>
 <h3 id="security-2">Security</h3>
+<h4 id="encryption-key-2">Encryption Key</h4>
+<p>The encryption key is used to encrypt and decrypt sensitive configuration values stored by the AI service when they are stored or retrieved from the database, for example, passwords and API keys.</p>
+<h3 id="database">Database</h3>
+<h4 id="database-provider">Database Provider</h4>
+<p>Select the graph database provider that XMPro AI will use to store and query its knowledge graph. The available options are determined by the supported providers.</p>
+<h4 id="database-name">Database Name</h4>
+<p>The name of the database instance within the selected provider. XMPro AI uses this database to store its knowledge graph and agent data.</p>
+<h4 id="neo4j-connection-uri">Neo4j Connection URI</h4>
+<p>The full HTTPS connection URI for Neo4j database instance.</p>
+<h4 id="neo4j-username">Neo4j Username</h4>
+<p>The username used to authenticate with the Neo4j database.</p>
+<h4 id="neo4j-password">Neo4j Password</h4>
+<p>The password associated with the Neo4j username. This value is stored encrypted.</p>
+<h4 id="connection-timeout-seconds">Connection Timeout (seconds)</h4>
+<p><em>Advanced setting</em></p>
+<p>The number of seconds the system will wait when attempting to establish a connection to Neo4j before timing out. Increase this value if the database server is under heavy load or is located across a high-latency network.</p>
+<h4 id="max-connection-pool-size">Max Connection Pool Size</h4>
+<p><em>Advanced setting</em></p>
+<p>The maximum number of simultaneous connections maintained in the Neo4j connection pool. Increasing this value can improve throughput under higher concurrency workloads.</p>
+<h3 id="model">Model</h3>
+<h4 id="model-provider">Model Provider</h4>
+<p>Select the AI model provider from the available options. The models available in the Model Name field will update based on the provider selected.</p>
+<h4 id="model-name">Model Name</h4>
+<p>The specific AI model to use from the selected provider. The available options depend on the provider selected in Model Provider.</p>
+<h4 id="model-api-key">Model API Key</h4>
+<p>The API key issued by the model provider, used to authenticate all requests made by XMPro AI. This value is stored encrypted.</p>
+<h4 id="maxtokens">MaxTokens</h4>
+<p><em>Advanced setting</em></p>
+<p>The maximum number of tokens the model is allowed to generate in a single response. Higher values allow longer outputs but may increase response time and cost. If no value is provided, the provider's default applies.</p>
+<h4 id="temperature-00--10">Temperature (0.0 – 1.0)</h4>
+<p><em>Advanced setting</em></p>
+<p>Controls the randomness of the model's responses. A value of <code>0.0</code> produces deterministic and precise responses, while <code>1.0</code> produces highly creative and varied responses.</p>
+<h4 id="connection-timeout-seconds-1">Connection Timeout (seconds)</h4>
+<p><em>Advanced setting</em></p>
+<p>The number of seconds to wait for a response from the model API before timing out. Increase this value if large requests are regularly timing out.</p>
+<h4 id="max-retries">Max Retries</h4>
+<p><em>Advanced setting</em></p>
+<p>The number of times the system will automatically retry a failed API request before returning an error to the caller.</p>
+<h4 id="model-base-url">Model Base Url</h4>
+<p>The base endpoint URL for the model provider's API. This is pre-filled automatically based on the selected provider and does not usually need to be changed.</p>
+<h4 id="api-version">API Version</h4>
+<p>The API version string required by the model provider. Refer to your provider's documentation for the correct value.</p>
+<h3 id="audit">Audit</h3>
+<h4 id="database-host">Database Host</h4>
+<p>The hostname or IP address of the server hosting the audit database.</p>
+<h4 id="port">Port</h4>
+<p>The TCP port number used to connect to the audit database.</p>
+<h4 id="database-name-1">Database Name</h4>
+<p>The name of the audit database where XMPro AI will write its audit logs and event history.</p>
+<h4 id="username">Username</h4>
+<p>The username used to authenticate with the audit database.</p>
+<h4 id="password">Password</h4>
+<p>The password for the audit database user. This value is stored encrypted.</p>
+<h4 id="connection-timeout-seconds-2">Connection Timeout (seconds)</h4>
+<p><em>Advanced setting</em></p>
+<p>The number of seconds the system will wait when connecting to the audit database before timing out.</p>
+<h2 id="subscription-manager-settings">Subscription Manager Settings</h2>
+<h3 id="security-3">Security</h3>
 <h4 id="hide-users-outside-business-role-branch">Hide Users Outside Business Role Branch</h4>
 <p>When enabled, users can see the information of users in their business role and any of its parent business roles up to the root. They cannot see any child or sibling business roles and their users.</p>
 <p>For example, a user cannot tag/search users outside their business role tree path in a comment on a recommendation alert.</p>
@@ -260,7 +318,7 @@
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: June 02, 2026</em></small></p>
+    <p><small><em>Last modified: June 24, 2026</em></small></p>
   </div>
 </article>
 
