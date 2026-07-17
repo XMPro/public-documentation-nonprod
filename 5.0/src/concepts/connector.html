@@ -170,6 +170,20 @@
 </tr>
 </tbody>
 </table>
+<h2 id="connector-pooling">Connector Pooling</h2>
+<p><em>Added v5.0.0</em></p>
+<p>To improve performance, App Designer reuses the connector handler instances that back your Connectors rather than recreating them on every request. These reused instances are kept in a single pool that is shared across the entire App Designer deployment.</p>
+<p>When a Connector is needed, App Designer serves it as a <strong>warm load</strong> when a handler is already in the pool (reused immediately) or a <strong>cold load</strong> when one is not (a fresh instance is built, which is slower). A Connector loads cold on its first use, after its pooled entry is evicted, or after the pool is cleared.</p>
+<p>The pool has a fixed maximum size that applies across all companies. When it is full, App Designer evicts the least recently used (LRU) handler - the one that has gone the longest without being accessed - to make room for a new one. This keeps memory usage bounded while still avoiding the cost of recreating frequently used handlers.</p>
+<p>The pool also refreshes itself when a Connection changes: saving or deleting a Connection evicts its pooled handler, so the next use is a cold load that picks up the change. Configuration changes therefore take effect automatically, without needing to clear the pool.</p>
+<p>Connectors that are actively pushing live data (live Connectors) are released automatically when their last subscriber disconnects. Data Stream Connectors, however, stay resident even with no subscribers until App Designer restarts.</p>
+<p>Administrators can observe and manage the pool from the App Designer Settings page. The reports and the Clear Pool action apply to your own company's entries within the shared pool:</p>
+<ul>
+<li><a href="../how-tos/manage-site-settings.html#connector-pool-report">Connector Pool Report</a> - lists the connector handlers currently pooled, including their eviction order.</li>
+<li><a href="../how-tos/manage-site-settings.html#live-connector-pool-report">Live Connector Pool Report</a> - lists the pooled handlers that back live Connectors, along with their subscriptions.</li>
+<li><a href="../how-tos/manage-site-settings.html#connector-pool">Clear Pool</a> - lets a company administrator evict all pooled connector handlers for their company.</li>
+</ul>
+<p>The maximum pool size is set at deployment time. See <a href="../installation/deployment/azure-terraform/advanced-configuration.html#connector-pool">Connector Pool configuration</a>.</p>
 <h2 id="further-reading">Further Reading</h2>
 <ul>
 <li><a href="../how-tos/connectors/manage-connectors.html">How to Create and Manage Connectors</a></li>
@@ -178,7 +192,7 @@
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: June 24, 2026</em></small></p>
+    <p><small><em>Last modified: July 17, 2026</em></small></p>
   </div>
 </article>
 

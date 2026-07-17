@@ -146,6 +146,19 @@
 <li><a href="../../../how-tos/apps/check-connector-logs.html">Connector Logs</a></li>
 </ul>
 </div>
+<h2 id="connector-pool">Connector Pool</h2>
+<p><em>Added v5.0.0</em></p>
+<p>App Designer keeps a pool of reused connector handler instances, shared across the whole deployment, to avoid recreating them on every request. The pool size is capped, and when it is full the least recently used handler is evicted. For how pooling works, see <a href="../../../concepts/connector.html#connector-pooling">Connector Pooling</a>.</p>
+<h3 id="configuring-the-pool-size">Configuring the Pool Size</h3>
+<p>Set the maximum pool size in your <code>terraform.tfvars</code> file:</p>
+<pre><code class="lang-hcl"># Maximum number of pooled connector handlers per App Designer instance (default: 128).
+ad_connector_pool_global_cap = 128
+</code></pre>
+<p>The default of <code>128</code> suits most deployments. Increase it if App Designer serves many connections and the <a href="../../../how-tos/manage-site-settings.html#connector-pool-report">Connector Pool Report</a> shows the pool consistently at capacity.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p><code>ad_connector_pool_global_cap</code> is available on the Azure App Service, AKS, and EKS deployment modules. It maps to the <code>xmpro:appDesigner:connectorPool:globalCap</code> application setting (supplied to the container as the <code>XM__XMPRO__APPDESIGNER__CONNECTORPOOL__GLOBALCAP</code> environment variable). On Helm-based deployments the equivalent value is <code>ad.connectorPool.globalCap</code>.</p>
+</div>
 <h2 id="smtp-email-configuration">SMTP Email Configuration</h2>
 <p>XMPro supports email notifications for password resets, user invitations, and system alerts. Configure SMTP in your <code>terraform.tfvars</code> file.</p>
 <h3 id="basic-smtp-configuration">Basic SMTP Configuration</h3>
@@ -220,7 +233,7 @@ email_from_address = &quot;notifications@yourcompany.com&quot;
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: June 24, 2026</em></small></p>
+    <p><small><em>Last modified: July 17, 2026</em></small></p>
   </div>
 </article>
 
