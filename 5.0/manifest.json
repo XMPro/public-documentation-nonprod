@@ -13687,16 +13687,6 @@
     },
     {
       "type": "Resource",
-      "source_relative_path": "src/images/health-ui.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/images/health-ui.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
       "source_relative_path": "src/images/hide-legend.png",
       "output": {
         "resource": {
@@ -24757,16 +24747,6 @@
     },
     {
       "type": "Resource",
-      "source_relative_path": "src/images/resources/whats-new/health-ui.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/images/resources/whats-new/health-ui.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
       "source_relative_path": "src/images/resources/widget-1.png",
       "output": {
         "resource": {
@@ -28491,16 +28471,6 @@
       "output": {
         "resource": {
           "relative_path": "src/resources/images/health-endpoint-result.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "src/resources/images/health-ui.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/resources/images/health-ui.png"
         }
       },
       "version": ""

@@ -91,17 +91,17 @@
 <h2 id="health-monitoring-automatically-configured">Health Monitoring (Automatically Configured)</h2>
 <p>Health monitoring is automatically enabled for all XMPro services. No configuration needed!</p>
 <h3 id="whats-included">What's Included</h3>
-<p>✅ <strong>Real-time health checks</strong> - Services monitor each other automatically<br>
-✅ <strong>Health dashboard</strong> - Visual status at <code>/health-ui</code> on App Designer and Data Stream Designer<br>
+<p>✅ <strong>Health endpoints</strong> - Each service exposes <code>/health</code> (JSON status) and <code>/health/ping</code> (liveness probe)
 ✅ <strong>Application Insights</strong> - Full monitoring and alerting in Azure Portal</p>
 <h3 id="viewing-health-status">Viewing Health Status</h3>
-<p><strong>Option 1: Health Dashboard (Recommended)</strong></p>
-<p>Access the built-in health dashboard UI:</p>
+<p><strong>Option 1: Direct API Endpoints</strong></p>
+<p>For programmatic access or troubleshooting:</p>
 <ul>
-<li>App Designer: <code>https://ad-yourcompany.azurewebsites.net/health-ui</code></li>
-<li>Data Stream Designer: <code>https://ds-yourcompany.azurewebsites.net/health-ui</code></li>
+<li>App Designer: <code>https://ad-yourcompany.azurewebsites.net/health</code></li>
+<li>Data Stream Designer: <code>https://ds-yourcompany.azurewebsites.net/health</code></li>
+<li>Subscription Manager: <code>https://sm-yourcompany.azurewebsites.net/health</code></li>
+<li>XMPro AI: <code>https://ai-yourcompany.azurewebsites.net/health</code></li>
 </ul>
-<p>This provides a visual dashboard showing the real-time status of all components.</p>
 <p><strong>Option 2: Application Insights</strong></p>
 <p>For detailed monitoring and historical data:</p>
 <ol>
@@ -110,13 +110,8 @@
 <li>Click on Application Insights</li>
 <li>View the Application Map to see all services and dependencies</li>
 </ol>
-<p><strong>Option 3: Direct API Endpoints</strong></p>
-<p>For programmatic access or troubleshooting:</p>
-<ul>
-<li>App Designer: <code>https://ad-yourcompany.azurewebsites.net/health</code></li>
-<li>Data Stream Designer: <code>https://ds-yourcompany.azurewebsites.net/health</code></li>
-<li>Subscription Manager: <code>https://sm-yourcompany.azurewebsites.net/version</code></li>
-</ul>
+<p><strong>Option 3: Azure App Service Health Check</strong></p>
+<p>For integrated monitoring within Azure Portal, configure the built-in App Service health check probe against the <code>/health/ping</code> endpoint.</p>
 <h2 id="logging-automatically-configured">Logging (Automatically Configured)</h2>
 <p>All logging is automatically set up. No configuration needed!</p>
 <h3 id="whats-included-1">What's Included</h3>
@@ -233,7 +228,7 @@ email_from_address = &quot;notifications@yourcompany.com&quot;
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: July 17, 2026</em></small></p>
+    <p><small><em>Last modified: July 27, 2026</em></small></p>
   </div>
 </article>
 
