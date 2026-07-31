@@ -26037,6 +26037,46 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "src/installation/deployment/aks-kubernetes/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/installation/deployment/aks-kubernetes/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "src/installation/deployment/aks-kubernetes/upgrade-from-app-service.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/installation/deployment/aks-kubernetes/upgrade-from-app-service.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "src/installation/deployment/aws-eks/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/installation/deployment/aws-eks/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "src/installation/deployment/aws-eks/upgrade-from-legacy.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/installation/deployment/aws-eks/upgrade-from-legacy.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "src/installation/deployment/azure-terraform/advanced-configuration.md",
       "output": {
         ".html": {

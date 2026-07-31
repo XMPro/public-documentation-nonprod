@@ -220,6 +220,11 @@
 <td><code>xmpro-ds-app</code></td>
 </tr>
 <tr>
+<td><strong>AD Encryption Key</strong></td>
+<td>AD App Service → Configuration → <code>xm__xmpro__appDesigner__encryptionKey</code> (or its Key Vault reference)</td>
+<td>base64 / string</td>
+</tr>
+<tr>
 <td><strong>Custom Domain Names</strong></td>
 <td>Azure Portal → App Services → Custom Domains</td>
 <td><code>xmpro.yourcompany.com</code></td>
@@ -305,6 +310,10 @@ az sql server list --resource-group &lt;your-resource-group&gt; --output table
 # Get SQL Database details
 az sql db list --resource-group &lt;your-resource-group&gt; --server &lt;sql-server-name&gt; --output table
 </code></pre>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p><strong>Carry over the AD encryption key.</strong> App Designer encrypts certain stored values (e.g. data-source connection strings) with the encryption key <code>xm__xmpro__appDesigner__encryptionKey</code>, which AD reads from its configuration at startup and <strong>never stores in the database</strong>. The upgraded AD database carries the existing encrypted values forward, so if the new deployment generates a <em>different</em> key, those values can't be decrypted — AD starts, but data-source connections fail. Capture the current value (above) and supply it as <code>ad_encryption_key</code> so AD reuses the same key. Data Stream Designer and AI keys live in their own databases and carry over automatically — only the AD key needs to be supplied.</p>
+</div>
 <hr>
 <h2 id="backup-before-upgrading">Backup Before Upgrading</h2>
 <div class="CAUTION">
@@ -398,11 +407,20 @@ sm_app_service_name     = &quot;xmpro-sm-app&quot;
 ad_app_service_name     = &quot;xmpro-ad-app&quot;
 ds_app_service_name     = &quot;xmpro-ds-app&quot;
 
+# Carry over the AD encryption key captured from your v4.4 deployment so the
+# upgraded App Designer can decrypt its existing data. Leaving it empty
+# generates a fresh key, which cannot decrypt the migrated data.
+ad_encryption_key       = &quot;&lt;your v4.4 xm__xmpro__appDesigner__encryptionKey&gt;&quot;
+
 # Preserve existing custom domains if configured
 custom_domain_name      = &quot;xmpro.yourcompany.com&quot;
 
 # Other settings...
 </code></pre>
+<div class="CAUTION">
+<h5>Caution</h5>
+<p>Set <code>ad_encryption_key</code> <strong>before the first apply</strong>. App Designer reads the key at startup and never stores it, so if it starts with a freshly generated key it will write new data under that key and the original encrypted values will no longer decrypt.</p>
+</div>
 <h3 id="3-review-terraform-plan">3. Review Terraform Plan</h3>
 <p>Before applying, review what Terraform will change:</p>
 <pre><code class="lang-bash"># Initialize Terraform (if needed)
@@ -613,7 +631,7 @@ curl -k https://&lt;sm-app-service&gt;.azurewebsites.net/health
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: July 27, 2026</em></small></p>
+    <p><small><em>Last modified: July 30, 2026</em></small></p>
   </div>
 </article>
 
