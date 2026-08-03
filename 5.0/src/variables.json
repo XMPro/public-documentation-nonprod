@@ -4,5 +4,7 @@
     "VERSION": "5.0.0-alpha",
     "ACR_URL": "xmpro.azurecr.io",
     "TERRAFORM_MODULE_URL": "https://github.com/XMPro/terraform-xmpro-azure",
+    "TERRAFORM_AKS_MODULE_URL": "https://github.com/XMPro/terraform-xmpro-aks",
+    "TERRAFORM_EKS_MODULE_URL": "https://github.com/XMPro/terraform-xmpro-eks",
     "DOWNLOAD_URL": "https://download.xmpro.com"
 }

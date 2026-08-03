@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../../../">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/deployment/aws-eks/upgrade-from-legacy.md&amp;version=GBrelease-5.0.0-alpha&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/deployment/aws-kubernetes/upgrade-from-legacy.md&amp;version=GBrelease-5.0.0-alpha&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -106,7 +106,7 @@
 <tr>
 <td><strong>Products</strong></td>
 <td>SM, AD, DS</td>
-<td>SM2 + IS (identity split out), AD, DS, optional AI</td>
+<td>SM + IS (identity split out), AD, DS, optional AI</td>
 </tr>
 <tr>
 <td><strong>Database</strong></td>
@@ -116,7 +116,7 @@
 <tr>
 <td><strong>Caching</strong></td>
 <td>ElastiCache Redis</td>
-<td>Not used — autoscale (Redis's only consumer) is <strong>not currently supported</strong> on Kubernetes (in development)</td>
+<td>Not used - autoscale (Redis's only consumer) is <strong>not currently supported</strong> on Kubernetes (in development)</td>
 </tr>
 <tr>
 <td><strong>TLS</strong></td>
@@ -246,7 +246,7 @@
 <p><strong>Carry over the encryption material.</strong> XMPro encrypts certain stored values (e.g. data-source connection strings in AD) with the application's encryption keys. If the v5.0 deployment uses <em>different</em> keys than the v4.4 environment that wrote the data, those encrypted values can't be decrypted after migration. Capture the v4.4 encryption keys/salt (above) and supply the matching values to the v5.0 application layer rather than letting it generate fresh ones.</p>
 </div>
 <p><strong>Finding values from the AWS CLI:</strong></p>
-<pre><code class="lang-bash"># RDS instances (note EngineVersion — the new instance must be &gt;= this)
+<pre><code class="lang-bash"># RDS instances (note EngineVersion - the new instance must be &gt;= this)
 aws rds describe-db-instances \
   --query 'DBInstances[*].[DBInstanceIdentifier,Endpoint.Address,Engine,EngineVersion]' --output table
 
@@ -262,12 +262,12 @@ aws ssm describe-parameters \
 <h2 id="backup-before-migrating">Backup Before Migrating</h2>
 <div class="CAUTION">
 <h5>Caution</h5>
-<p><strong>Always back up before migrating.</strong> The migration restores <em>copies</em> of your databases — the originals are never modified — but backups are still your recovery path if anything goes wrong with the source environment during the migration window.</p>
+<p><strong>Always back up before migrating.</strong> The migration restores <em>copies</em> of your databases (the originals are never modified) but backups are still your recovery path if anything goes wrong with the source environment during the migration window.</p>
 </div>
-<p>You have two ways to move the databases. <strong>Native <code>.bak</code> backup/restore</strong> (below) is the documented, portable path and fits the layered Terraform flow (a fresh Terraform-managed RDS that you restore into). <strong>RDS snapshot-restore</strong> is a simpler same-account/region alternative — see <a href="#alternative-rds-snapshot-restore">Alternative: RDS snapshot-restore</a>.</p>
+<p>You have two ways to move the databases. <strong>Native <code>.bak</code> backup/restore</strong> (below) is the documented, portable path and fits the layered Terraform flow (a fresh Terraform-managed RDS that you restore into). <strong>RDS snapshot-restore</strong> is a simpler same-account/region alternative - see <a href="#alternative-rds-snapshot-restore">Alternative: RDS snapshot-restore</a>.</p>
 <div class="IMPORTANT">
 <h5>Important</h5>
-<p><strong>Engine version:</strong> a SQL Server <code>.bak</code> (and an RDS snapshot) can only be restored into the <strong>same or a newer</strong> engine version — never older. Check your source <code>EngineVersion</code> and set the new instance's <code>db_engine_version</code> to match or exceed it (e.g. a SQL Server 2022 / <code>16.00</code> source needs <code>db_engine_version = &quot;16.00&quot;</code> on the target; the example's <code>sqlserver-ex 15.00</code> default would reject it). The example <code>_infra</code> module derives the parameter-group family and option-group major version from <code>db_engine</code>/<code>db_engine_version</code>, so setting these is enough.</p>
+<p><strong>Engine version:</strong> a SQL Server <code>.bak</code> (and an RDS snapshot) can only be restored into the <strong>same or a newer</strong> engine version, never older. Check your source <code>EngineVersion</code> and set the new instance's <code>db_engine_version</code> to match or exceed it (e.g. a SQL Server 2022 / <code>16.00</code> source needs <code>db_engine_version = &quot;16.00&quot;</code> on the target; the example's <code>sqlserver-ex 15.00</code> default would reject it). The example <code>_infra</code> module derives the parameter-group family and option-group major version from <code>db_engine</code>/<code>db_engine_version</code>, so setting these is enough.</p>
 </div>
 <h3 id="sql-server-target-compatibility-checklist">SQL Server target compatibility checklist</h3>
 <p>Confirm these against your source databases (<code>SELECT name, collation_name, compatibility_level, is_encrypted FROM sys.databases</code>) before restoring:</p>
@@ -285,7 +285,7 @@ aws ssm describe-parameters \
 </tr>
 <tr>
 <td><strong>Edition</strong></td>
-<td>Restore Standard/Enterprise sources into <code>sqlserver-se</code>/<code>-ee</code>, <strong>not Express</strong> — Express has a 10 GB/DB cap and rejects SE/EE-only features (partitioning, In-Memory OLTP, some compression).</td>
+<td>Restore Standard/Enterprise sources into <code>sqlserver-se</code>/<code>-ee</code>, <strong>not Express</strong> - Express has a 10 GB/DB cap and rejects SE/EE-only features (partitioning, In-Memory OLTP, some compression).</td>
 </tr>
 <tr>
 <td><strong>Compatibility level</strong></td>
@@ -301,7 +301,7 @@ aws ssm describe-parameters \
 </tr>
 <tr>
 <td><strong>Logins</strong></td>
-<td>SQL <em>logins</em> are server-level and are <strong>not</strong> in a <code>.bak</code> — only DB users are. XMPro authenticates application users from inside the SM database and connects as the RDS master, so app users carry over; any SQL-login-based access would need remapping.</td>
+<td>SQL <em>logins</em> are server-level and are <strong>not</strong> in a <code>.bak</code> - only DB users are. XMPro authenticates application users from inside the SM database and connects as the RDS master, so app users carry over; any SQL-login-based access would need remapping.</td>
 </tr>
 </tbody>
 </table>
@@ -335,7 +335,7 @@ aws rds modify-db-instance \
 </code></pre>
 <div class="NOTE">
 <h5>Note</h5>
-<p>An RDS option group binds to the VPC of the first instance it's attached to. The <code>-src</code> suffix is deliberate — you'll create a <strong>second</strong> option group for the new RDS's VPC in the restore step. The <code>rds-s3-backup-role</code> can be reused for both.</p>
+<p>An RDS option group binds to the VPC of the first instance it's attached to. The <code>-src</code> suffix is deliberate: you'll create a <strong>second</strong> option group for the new RDS's VPC in the restore step. The <code>rds-s3-backup-role</code> can be reused for both.</p>
 </div>
 <h3 id="2-back-up-each-database-to-s3">2. Back up each database to S3</h3>
 <p>Connect to the source RDS instance with <code>sqlcmd</code> (or SSMS) and run:</p>
@@ -349,11 +349,14 @@ exec msdb.dbo.rds_task_status @db_name = 'SM';   -- watch for SUCCESS
 <p>Wait for each task to report <code>SUCCESS</code> before continuing.</p>
 <hr>
 <h2 id="running-the-migration">Running the Migration</h2>
-<p>These steps use the <strong><code>migration4.4</code> example</strong> in the AWS Terraform module. It mirrors the standard layered deployment (<code>infra-k8s</code> → <code>infra</code> → <code>app</code>) but inserts a <strong><code>migration</code></strong> stage between your database restore and the application start. That stage reconciles your restored data to the new environment automatically, so all you do is supply a few clearly-labelled inputs and run one apply per stage — there is no SQL to write.</p>
+<p>These steps use the <strong><code>migration4.4</code> example</strong> in the AWS Terraform module. It mirrors the standard layered deployment, layer 1 cluster (<code>infra-k8s</code>), layer 2 site infrastructure (<code>infra</code>), layer 3 application (<code>app</code>), and adds one extra <strong><code>migration</code></strong> stage that runs <strong>after</strong> the application layer to reconcile the references your restored databases carried over from the source environment. You supply a few clearly-labelled inputs and run one apply per stage: there is no SQL to write.</p>
+<p>The apply order (matching the example's <code>README.md</code>) is:</p>
+<pre><code>infra-k8s  →  infra  →  [restore .bak into RDS]  →  app  →  migration
+</code></pre>
 <h3 id="1-deploy-the-cluster-and-site-infrastructure">1. Deploy the cluster and site infrastructure</h3>
-<p>From the <code>migration4.4</code> example, apply the <code>infra-k8s</code> (cluster) and <code>infra</code> (site infrastructure, including the new RDS instance) stages, following the <a href="index.html">AWS EKS deployment guide</a> with four adjustments:</p>
+<p>From the <code>migration4.4</code> example, apply the <code>infra-k8s</code> (cluster) and <code>infra</code> (site infrastructure, including the new RDS instance) stages, following the <a href="index.html">AWS Kubernetes (EKS) deployment guide</a> with four adjustments:</p>
 <ol>
-<li><p><strong>Use a temporary DNS zone for validation — and delegate it before the app layer.</strong> Don't reuse your production hostnames yet — deploy with a staging zone (e.g. <code>staging.xmpro.yourco.com</code>) so the new environment is fully testable while production traffic still flows to the legacy environment. The <code>infra</code> layer creates the zone, but you must <strong>delegate it in the parent zone</strong> (add the staging zone's NS records to <code>xmpro.yourco.com</code>) before applying the <code>app</code> layer. If the staging hostnames don't resolve, cert-manager's HTTP-01 challenge can't complete, the Let's Encrypt certificate stays <code>pending</code>, and the <code>is</code>/<code>sm2</code> pods block waiting on the TLS secret.</p>
+<li><p><strong>Use a temporary DNS zone for validation, and delegate it before the app layer.</strong> Don't reuse your production hostnames yet: deploy with a staging zone (e.g. <code>staging.xmpro.yourco.com</code>) so the new environment is fully testable while production traffic still flows to the legacy environment. The <code>infra</code> layer creates the zone, but you must <strong>delegate it in the parent zone</strong> (add the staging zone's NS records to <code>xmpro.yourco.com</code>) before applying the <code>app</code> layer. If the staging hostnames don't resolve, cert-manager's HTTP-01 challenge can't complete, the Let's Encrypt certificate stays <code>pending</code>, and the <code>is</code>/<code>sm</code> pods block waiting on the TLS secret.</p>
 </li>
 <li><p><strong>Set the target engine version</strong> in the layer-2 (<code>infra</code>) tfvars to match or exceed your source (see the engine-version note above), and use <code>sqlserver-se</code> if your source is Standard/Enterprise edition.</p>
 </li>
@@ -363,18 +366,18 @@ ad_database_name = &quot;AD&quot;
 ds_database_name = &quot;DS&quot;
 </code></pre>
 </li>
-<li><p><strong>Carry over the AD encryption key.</strong> In the same layer-3 (<code>app</code>) tfvars, set <code>ad_encryption_key</code> to the v4.4 AD encryption key you captured above so the migrated AD can decrypt its existing data-source connection strings. Leaving it empty generates a fresh key, which cannot decrypt migrated data. It must be set <strong>before the first <code>app</code>-layer apply</strong> — AD reads the key at startup and never stores it. DS and AI encryption keys are held in their own databases and carry over automatically, so only the AD key needs to be supplied.</p>
+<li><p><strong>Carry over the AD encryption key.</strong> In the same layer-3 (<code>app</code>) tfvars, set <code>ad_encryption_key</code> to the v4.4 AD encryption key you captured above so the migrated AD can decrypt its existing data-source connection strings. Leaving it empty generates a fresh key, which cannot decrypt migrated data. It must be set <strong>before the first <code>app</code>-layer apply</strong>: AD reads the key at startup and never stores it. DS and AI encryption keys are held in their own databases and carry over automatically, so only the AD key needs to be supplied.</p>
 <pre><code class="lang-hcl">ad_encryption_key = &quot;&lt;your v4.4 xmpro:appDesigner:encryptionKey&gt;&quot;
 </code></pre>
 </li>
 </ol>
 <div class="IMPORTANT">
 <h5>Important</h5>
-<p>Apply the <code>infra-k8s</code> and <code>infra</code> stages, but <strong>stop before the <code>migration</code> and <code>app</code> stages</strong>. The databases must be restored first — otherwise the migration stage has nothing to reconcile and the app stage's <code>dbmigrate</code> Jobs initialize fresh empty databases instead of upgrading yours.</p>
+<p>Apply the <code>infra-k8s</code> and <code>infra</code> stages, but <strong>stop before the <code>app</code> and <code>migration</code> stages</strong>. The databases must be restored first: otherwise the <code>app</code> stage's <code>dbmigrate</code> Jobs initialize fresh empty databases instead of upgrading yours, and the <code>migration</code> stage has nothing to reconcile.</p>
 </div>
 <h3 id="2-restore-the-databases-into-the-new-rds-instance">2. Restore the databases into the new RDS instance</h3>
 <p>The new <code>infra</code> layer created an RDS instance. Because option groups are VPC-scoped, create a <strong>separate</strong> <code>SQLSERVER_BACKUP_RESTORE</code> option group for the new instance's VPC (reusing the same <code>rds-s3-backup-role</code>), attach it, then restore:</p>
-<pre><code class="lang-bash"># Second option group — bound to the NEW cluster VPC (match the TARGET engine major version)
+<pre><code class="lang-bash"># Second option group - bound to the NEW cluster VPC (match the TARGET engine major version)
 aws rds create-option-group \
   --option-group-name xmpro-backup-restore-tgt \
   --engine-name sqlserver-se --major-engine-version 16.00 \
@@ -398,29 +401,9 @@ exec msdb.dbo.rds_restore_database
 exec msdb.dbo.rds_task_status @db_name = 'SM';
 </code></pre>
 <p>Wait for all restores to report <code>SUCCESS</code>.</p>
-<h3 id="3-run-the-migration-stage">3. Run the migration stage</h3>
-<p>With the databases restored, apply the <strong><code>migration</code></strong> stage of the example. It runs a Kubernetes Job that connects to your restored databases and reconciles everything still pointing at the old environment — automatically, with no SQL to write:</p>
-<ul>
-<li><strong>Product URLs</strong> — rewrites the App Designer and Data Stream Designer URL references your databases carried over from the source, so OIDC sign-in to those products succeeds instead of failing with &quot;Access Denied&quot;.</li>
-</ul>
-<p>You provide the database connection (the restored RDS endpoint, the admin user, and its password) and the new hostnames — the stage is self-contained and runs before the app, so it creates its own in-cluster secret for the helper Job:</p>
-<pre><code class="lang-hcl">rds_endpoint      = &quot;&lt;new-rds-endpoint&gt;&quot;   # terraform output rds_endpoint (from infra)
-db_admin_username = &quot;xmadmin&quot;
-
-ad_url = &quot;https://ad.staging.xmpro.yourco.com&quot;
-ds_url = &quot;https://ds.staging.xmpro.yourco.com&quot;
-# ai_url = &quot;https://ai.staging.xmpro.yourco.com&quot;   # only if AI is deployed
-</code></pre>
-<pre><code class="lang-powershell">cd examples/migration4.4/migration
-$env:TF_VAR_db_admin_password = &quot;&lt;db admin password&gt;&quot;
-terraform apply
-</code></pre>
-<div class="NOTE">
-<h5>Note</h5>
-<p>The migration stage operates only on your restored databases — it never touches the source environment — and is safe to re-run if you change hostnames. It rewrites only XMPro's own App Designer / Data Stream Designer URL references, leaving any third-party URLs (e.g. cloud-service endpoints) untouched.</p>
-</div>
-<h3 id="4-apply-the-application-stage">4. Apply the application stage</h3>
-<p>Now apply the <strong><code>app</code></strong> stage. Supply the product IDs and keys from your source <code>SM</code> database so each deployed product matches its registered OIDC client — read them from <code>dbo.Product</code> (IDs) and <code>dbo.ProductKey</code> (keys), and enter the IDs in <strong>lowercase</strong>:</p>
+<h3 id="3-apply-the-application-stage">3. Apply the application stage</h3>
+<p>Apply the <strong><code>app</code></strong> stage next, before the <code>migration</code> stage. On startup, its <code>dbmigrate</code> Jobs detect the existing 4.4 schema in each restored database and <strong>upgrade it in place to 5.0</strong>, including the SM schema changes for the SM/IS split.</p>
+<p>Supply the product IDs and keys from your source <code>SM</code> database so each deployed product matches its registered OIDC client: read them from <code>dbo.Product</code> (IDs) and <code>dbo.ProductKey</code> (keys), and enter the IDs in <strong>lowercase</strong>:</p>
 <pre><code class="lang-hcl">sm_product_id  = &quot;&lt;source SM product id, lowercase&gt;&quot;
 sm_product_key = &quot;&lt;source SM product key&gt;&quot;
 ad_product_id  = &quot;&lt;source AD product id, lowercase&gt;&quot;
@@ -428,12 +411,11 @@ ad_product_key = &quot;&lt;source AD product key&gt;&quot;
 ds_product_id  = &quot;&lt;source DS product id, lowercase&gt;&quot;
 ds_product_key = &quot;&lt;source DS product key&gt;&quot;
 </code></pre>
-<p>(The <code>ad_encryption_key</code> is also set in this stage — see the carry-over adjustment above.)</p>
-<p>On startup, the <code>dbmigrate</code> Jobs detect the existing 4.4 schema in each database and <strong>upgrade it in place to 5.0</strong> — including the SM schema changes for the SM2/IS split. Because the migration stage already ran, the application pods start pointed at the reconciled URLs.</p>
+<p>(The <code>ad_encryption_key</code> is also set in this stage, see the carry-over adjustment above.)</p>
 <pre><code class="lang-powershell">cd examples/migration4.4/app
 terraform apply
 </code></pre>
-<p>Watch the migration Jobs complete (replace <code>&lt;name_suffix&gt;</code> with your site's, e.g. <code>site1</code>):</p>
+<p>Watch the dbmigrate Jobs complete (replace <code>&lt;name_suffix&gt;</code> with your site's, e.g. <code>site1</code>):</p>
 <pre><code class="lang-bash">kubectl get jobs -n &lt;name_suffix&gt;
 kubectl logs -n &lt;name_suffix&gt; job/xmpro-sm-dbmigrate --tail=50
 kubectl logs -n &lt;name_suffix&gt; job/xmpro-ad-dbmigrate --tail=50
@@ -441,16 +423,39 @@ kubectl logs -n &lt;name_suffix&gt; job/xmpro-ds-dbmigrate --tail=50
 </code></pre>
 <div class="NOTE">
 <h5>Note</h5>
-<p>Schema migrations are cumulative — the Jobs apply every migration between your source version and 5.0 in sequence. For large databases this can take significantly longer than a fresh install. If a Job hits its backoff limit, check its logs before re-running; contact XMPro support if a specific migration step fails repeatedly.</p>
+<p>Schema migrations are cumulative: the Jobs apply every migration between your source version and 5.0 in sequence. For large databases this can take significantly longer than a fresh install. If a Job hits its backoff limit, check its logs before re-running; contact XMPro support if a specific migration step fails repeatedly.</p>
+</div>
+<h3 id="4-run-the-migration-stage">4. Run the migration stage</h3>
+<p>With the app deployed, apply the <strong><code>migration</code></strong> stage. It runs a Kubernetes Job that connects to your restored databases and reconciles everything still pointing at the old environment, automatically, with no SQL to write:</p>
+<ul>
+<li><strong>Product URLs</strong> - rewrites the App Designer and Data Stream Designer URL references your databases carried over from the source, so OIDC sign-in to those products succeeds instead of failing with &quot;Access Denied&quot;.</li>
+</ul>
+<p>The stage runs <strong>after</strong> the <code>app</code> stage and reuses the app's in-cluster secret for the database password (and its image pull secret): no passwords are entered here. Copy <code>migration/terraform.tfvars.example</code> to <code>terraform.tfvars</code> and set:</p>
+<pre><code class="lang-hcl">rds_endpoint      = &quot;&lt;new-rds-endpoint&gt;&quot;   # terraform output rds_endpoint (from infra)
+db_admin_username = &quot;xmadmin&quot;
+
+# Must match the app stage's name_suffix - the Job runs in the app's namespace
+namespace = &quot;site1&quot;
+
+ad_url = &quot;https://ad.staging.xmpro.yourco.com&quot;
+ds_url = &quot;https://ds.staging.xmpro.yourco.com&quot;
+# ai_url = &quot;https://ai.staging.xmpro.yourco.com&quot;   # only if AI is deployed
+</code></pre>
+<pre><code class="lang-powershell">cd examples/migration4.4/migration
+terraform apply
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The migration stage operates only on your restored databases (it never touches the source environment) and is safe to re-run if you change hostnames. It rewrites only XMPro's own App Designer / Data Stream Designer URL references, leaving any third-party URLs (e.g. cloud-service endpoints) untouched.</p>
 </div>
 <div class="TIP">
 <h5>Tip</h5>
-<p>If OIDC sign-in to App Designer or Data Stream Designer still returns &quot;Access Denied&quot; after the app stage, the most common cause is a hostname that changed after the migration stage ran. Re-apply the <code>migration</code> stage with the corrected hostnames, then restart the affected pods. As a last-resort manual check you can log in to the new SM with your existing admin credentials → menu (☰) → <strong>Products</strong> and confirm the <strong>Product URL</strong> / <strong>Product Log Out URL</strong> for each product match your new hostnames.</p>
+<p>If OIDC sign-in to App Designer or Data Stream Designer still returns &quot;Access Denied&quot; after the migration stage, the most common cause is a hostname that changed after the migration stage ran. Re-apply the <code>migration</code> stage with the corrected hostnames, then restart the affected pods. As a last-resort manual check you can log in to the new SM with your existing admin credentials → menu (☰) → <strong>Products</strong> and confirm the <strong>Product URL</strong> / <strong>Product Log Out URL</strong> for each product match your new hostnames.</p>
 </div>
 <h3 id="5-deploy-and-reconnect-stream-hosts">5. Deploy and reconnect Stream Hosts</h3>
 <p>v4.4 stream hosts are not compatible with the v5.0 platform, and v5.0 deploys no in-cluster Stream Host by default. Deploy a v5.0 Stream Host through the <a href="index.html#9-optional-deploy-stream-hosts">stream-hosts layer</a>:</p>
 <ol>
-<li>Use the <strong>same Collection ID and Secret</strong> as before — these carried over in the DS database, so existing data stream bindings reconnect automatically.</li>
+<li>Use the <strong>same Collection ID and Secret</strong> as before: these carried over in the DS database, so existing data stream bindings reconnect automatically.</li>
 <li>Point <code>ds_server_url</code> at the new DS hostname.</li>
 <li>Apply the <code>stream-hosts</code> layer and confirm the host shows <strong>online</strong> in the new DS.</li>
 </ol>
@@ -463,7 +468,7 @@ kubectl logs -n &lt;name_suffix&gt; job/xmpro-ds-dbmigrate --tail=50
 </ol>
 <hr>
 <h2 id="alternative-rds-snapshot-restore">Alternative: RDS snapshot-restore</h2>
-<p>For a same-account, same-region move you can skip the <code>.bak</code>/S3/option-group choreography and clone the whole instance with a snapshot. This brings <strong>all</strong> databases at once (and the source master credentials), so it doesn't fit the &quot;fresh Terraform-managed RDS&quot; flow as cleanly — you point the app layer at the restored instance instead of the one the <code>infra</code> layer would create.</p>
+<p>For a same-account, same-region move you can skip the <code>.bak</code>/S3/option-group choreography and clone the whole instance with a snapshot. This brings <strong>all</strong> databases at once (and the source master credentials), so it doesn't fit the &quot;fresh Terraform-managed RDS&quot; flow as cleanly: you point the app layer at the restored instance instead of the one the <code>infra</code> layer would create.</p>
 <pre><code class="lang-bash"># Snapshot the source (read-only to the source), then restore into the cluster VPC
 aws rds create-db-snapshot --db-instance-identifier xmpro-production-db \
   --db-snapshot-identifier xmpro-premigration
@@ -474,7 +479,7 @@ aws rds restore-db-instance-from-db-snapshot \
   --db-subnet-group-name &lt;cluster-db-subnet-group&gt; \
   --vpc-security-group-ids &lt;sg-allowing-the-cluster&gt;
 </code></pre>
-<p>Then set the example's <code>rds_endpoint</code> (and DB names) to the restored instance, skip the <code>infra</code> stage's RDS creation, and continue from <a href="#3-run-the-migration-stage">Run the migration stage</a>. The restored instance keeps the source engine version (no downgrade concern).</p>
+<p>Then set the example's <code>rds_endpoint</code> (and DB names) to the restored instance, skip the <code>infra</code> stage's RDS creation, and continue from <a href="#3-apply-the-application-stage">Apply the application stage</a>. The restored instance keeps the source engine version (no downgrade concern).</p>
 <hr>
 <h2 id="post-migration-validation">Post-Migration Validation</h2>
 <h3 id="1-platform-health">1. Platform health</h3>
@@ -486,11 +491,11 @@ curl -s -o /dev/null -w &quot;%{http_code}&quot; https://ds.&lt;zone&gt;/   # 30
 </code></pre>
 <h3 id="2-data-integrity">2. Data integrity</h3>
 <ul>
-<li><strong>Login with pre-migration credentials</strong> — users carried over in the SM database</li>
-<li><strong>Companies and roles</strong> — spot-check in SM that companies, users, and role assignments match the legacy environment</li>
-<li><strong>Applications</strong> — open your most important applications in AD; verify pages render and data connections work (this also confirms the encryption keys carried over)</li>
-<li><strong>Data streams</strong> — open existing streams in DS; verify canvases, agent configurations, and run state</li>
-<li><strong>Stream hosts</strong> — all hosts online, streams executing, data flowing end to end</li>
+<li><strong>Login with pre-migration credentials</strong> - users carried over in the SM database</li>
+<li><strong>Companies and roles</strong> - spot-check in SM that companies, users, and role assignments match the legacy environment</li>
+<li><strong>Applications</strong> - open your most important applications in AD; verify pages render and data connections work (this also confirms the encryption keys carried over)</li>
+<li><strong>Data streams</strong> - open existing streams in DS; verify canvases, agent configurations, and run state</li>
+<li><strong>Stream hosts</strong> - all hosts online, streams executing, data flowing end to end</li>
 </ul>
 <h3 id="3-integrations">3. Integrations</h3>
 <ul>
@@ -507,7 +512,7 @@ curl -s -o /dev/null -w &quot;%{http_code}&quot; https://ds.&lt;zone&gt;/   # 30
 </ol>
 <div class="CAUTION">
 <h5>Caution</h5>
-<p>Any data created in the new environment <strong>after cutover</strong> lives only in the new databases. If you must roll back after running in production, plan a reverse data reconciliation before re-cutting over — or accept the gap. This is the strongest argument for a generous validation period before decommissioning the legacy environment.</p>
+<p>Any data created in the new environment <strong>after cutover</strong> lives only in the new databases. If you must roll back after running in production, plan a reverse data reconciliation before re-cutting over, or accept the gap. This is the strongest argument for a generous validation period before decommissioning the legacy environment.</p>
 </div>
 <p>When you're confident in the new environment, decommission the legacy stack: terminate the Beanstalk environments, snapshot-and-delete the old RDS instance, and remove the old ElastiCache cluster and Parameter Store entries.</p>
 <div class="TIP">
@@ -518,7 +523,7 @@ curl -s -o /dev/null -w &quot;%{http_code}&quot; https://ds.&lt;zone&gt;/   # 30
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: July 30, 2026</em></small></p>
+    <p><small><em>Last modified: August 03, 2026</em></small></p>
   </div>
 </article>
 
