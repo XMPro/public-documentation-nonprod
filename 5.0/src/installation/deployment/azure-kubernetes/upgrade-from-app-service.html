@@ -151,6 +151,7 @@
 <li>All users, roles, companies, and product registrations (SM database)</li>
 <li>All applications and pages (AD database)</li>
 <li>All data streams, collections, and stream host registrations (DS database)</li>
+<li>AI content, if your environment runs AI and you choose to carry its database over (AI database)</li>
 </ul>
 <p>The v5.0 database migration Jobs upgrade the schema from 4.x to 5.0 automatically on first deploy against the copied databases.</p>
 </div>
@@ -195,6 +196,11 @@
 <td><strong>SM / AD / DS Database Names</strong></td>
 <td>Azure Portal → SQL databases</td>
 <td><code>SM</code>, <code>AD</code>, <code>DS</code></td>
+</tr>
+<tr>
+<td><strong>AI Database Name</strong> <em>(only if your environment runs AI)</em></td>
+<td>Azure Portal → SQL databases</td>
+<td><code>AI</code></td>
 </tr>
 <tr>
 <td><strong>Per-database SQL users (if used)</strong></td>
@@ -269,7 +275,7 @@ az webapp config appsettings list --resource-group rg-yourco-prod --name app-you
 </div>
 <div class="IMPORTANT">
 <h5>Important</h5>
-<p><strong>Carry over the AD encryption key.</strong> XMPro encrypts certain stored values (e.g. data-source connection strings in AD) with the App Designer encryption key. If the v5.0 deployment generates a <em>different</em> key than the App Service environment that wrote the data, those values can't be decrypted after migration. Capture the v4.x App Designer encryption key (above) and supply it to the v5.0 application layer rather than letting it generate a fresh one. On an Azure Terraform 4.x App Service deployment it is the <code>XMPRO__APPDESIGNER__ENCRYPTIONKEY</code> app setting, whose value is usually a Key Vault reference to the secret <code>xmpro--appDesigner--encryptionKey</code>; on other 4.x deployments look for the App Designer encryption key setting or secret. DS and AI encryption keys live in their own databases and carry over automatically. Only the AD key needs to be supplied.</p>
+<p><strong>Carry over the AD encryption key.</strong> XMPro encrypts certain stored values (e.g. data-source connection strings in AD) with the App Designer encryption key. If the v5.0 deployment generates a <em>different</em> key than the App Service environment that wrote the data, those values can't be decrypted after migration. Capture the v4.x App Designer encryption key (above) and supply it to the v5.0 application layer rather than letting it generate a fresh one. On an Azure Terraform 4.x App Service deployment it is the <code>XMPRO__APPDESIGNER__ENCRYPTIONKEY</code> app setting, whose value is usually a Key Vault reference to the secret <code>xmpro--appDesigner--encryptionKey</code>; on other 4.x deployments look for the App Designer encryption key setting or secret. The DS encryption key lives in its own database and carries over automatically, so the AD key is the only one supplied here. If you are also carrying an AI database over, see the AI caveat in <a href="#3-apply-the-application-stage">step 3</a>.</p>
 </div>
 <hr>
 <h2 id="backup-before-migrating">Backup Before Migrating</h2>
@@ -278,7 +284,7 @@ az webapp config appsettings list --resource-group rg-yourco-prod --name app-you
 <p><strong>Always back up before migrating.</strong> The migration copies your databases (the originals are never modified) but backups are still your recovery path.</p>
 </div>
 <h3 id="1-export-each-database-to-a-bacpac">1. Export each database to a BACPAC</h3>
-<pre><code class="lang-bash"># Repeat for SM, AD, DS
+<pre><code class="lang-bash"># Repeat for SM, AD, DS (and AI, if your environment runs it)
 az sql db export \
   --resource-group rg-yourco-prod \
   --server sql-yourco-prod \
@@ -313,7 +319,7 @@ foreach ($app in 'app-yourco-sm', 'app-yourco-ad', 'app-yourco-ds') {
 <h3 id="1-deploy-the-cluster-and-site-infrastructure">1. Deploy the cluster and site infrastructure</h3>
 <p>From the <code>migration4.6</code> example, apply the <code>infra-k8s</code> (cluster) and <code>infra</code> (site infrastructure) stages, following the <a href="index.html">AKS deployment guide</a>, including its <strong>two-phase greenfield apply</strong> for <code>infra-k8s</code>. Each stage ships only a <code>terraform.tfvars.example</code>: copy it to <code>terraform.tfvars</code> and fill in the marked values before applying. Two adjustments for a migration:</p>
 <p><strong>Use a temporary DNS subzone for validation, and delegate it before layer 3.</strong> Deploy with a staging zone (e.g. <code>staging.xmpro.yourco.com</code>) so the new environment is fully testable while production traffic still flows to App Service. Layer 2 creates the Azure DNS zone, but you must <strong>delegate it in the parent zone</strong> (add the staging zone's NS records to <code>xmpro.yourco.com</code>, wherever that parent is hosted) before applying layer 3: if the parent zone is an Azure DNS zone in the same subscription, layer 2 can do this for you via <code>manage_parent_dns_delegation = true</code> and the <code>parent_dns_zone_*</code> variables (option (2) in its <code>terraform.tfvars.example</code>). If the staging hostnames don't resolve, cert-manager's HTTP-01 challenge can't complete, the Let's Encrypt certificate stays <code>pending</code>, and the <code>is</code>/<code>sm</code> pods block waiting on the TLS secret.</p>
-<p><strong>Layer 2 creates the SQL server, but no databases.</strong> The migration example sets <code>use_existing_databases = true</code> in its <code>infra</code> stage: the server exists purely as the copy target. Your production databases are copied in <strong>under their original names</strong> in the next step, and the <code>app</code> and <code>migration</code> stages are then pointed at those names.</p>
+<p><strong>Layer 2 creates the SQL server, but no databases.</strong> The migration example sets <code>use_existing_databases = true</code> in its <code>infra</code> stage: the server exists purely as the copy target. Your production databases are copied in <strong>under their original names</strong> in the next step, and the <code>app</code> and <code>migration</code> stages are then pointed at those names. This applies to AI as well: leave <code>enable_ai = false</code> in the <code>infra</code> stage even if you plan to carry an AI database over, because with <code>use_existing_databases = true</code> it creates no database and the name it emits would not match your copy. AI is enabled in the <code>app</code> stage instead.</p>
 <div class="IMPORTANT">
 <h5>Important</h5>
 <p>Apply the <code>infra-k8s</code> and <code>infra</code> stages, but <strong>stop before the <code>app</code> and <code>migration</code> stages</strong>. The databases must be copied in before <code>app</code>: otherwise the <code>app</code> stage's <code>dbmigrate</code> Jobs initialize the fresh empty databases instead of upgrading yours.</p>
@@ -333,6 +339,11 @@ az sql db copy \
   --resource-group rg-yourco-prod --server sql-yourco-prod --name DS \
   --dest-resource-group rg-aks-yourco-site1 --dest-server sql-aks-yourco-site1 --dest-name DS
 </code></pre>
+<p><strong>Optional - the AI database.</strong> If your v4.x environment runs the <strong>AI product</strong>, copy its database the same way, then set the extra AI inputs in the <code>app</code> and <code>migration</code> stages (called out where they apply in the next two steps). Skip this if you don't run AI, which is the common case:</p>
+<pre><code class="lang-bash">az sql db copy \
+  --resource-group rg-yourco-prod --server sql-yourco-prod --name AI \
+  --dest-resource-group rg-aks-yourco-site1 --dest-server sql-aks-yourco-site1 --dest-name AI
+</code></pre>
 <div class="NOTE">
 <h5>Note</h5>
 <p>Cross-server copy requires the servers to be in the same tenant and your identity to have access to both. If the servers are in different tenants or you prefer an offline transfer, use the BACPAC export from the backup step with <code>az sql db import</code> instead.</p>
@@ -349,7 +360,11 @@ az sql db copy \
 <h3 id="3-apply-the-application-stage">3. Apply the application stage</h3>
 <div class="NOTE">
 <h5>Note</h5>
-<p>The <strong>AI product</strong> is off by default and has no 4.x counterpart to migrate: most migrations skip it. It can be enabled later, before or after the migration, by re-applying the <code>app</code> stage; see <a href="index.html#enabling-the-ai-product-later">Enabling the AI Product Later</a> in the AKS deployment guide.</p>
+<p>The <strong>AI product</strong> is off by default (<code>enable_ai = false</code>) and most migrations leave it that way. There are two exceptions:</p>
+<ul>
+<li>Your v4.x environment <strong>runs AI</strong> and you copied its database in step 2: keep reading, the optional AI inputs are covered below.</li>
+<li>You want AI as a <strong>new</strong> capability, with no existing data behind it: leave it off through the migration and enable it afterwards by re-applying the <code>app</code> stage; see <a href="index.html#enabling-the-ai-product-later">Enabling the AI Product Later</a> in the AKS deployment guide. That path provisions a fresh AI database rather than upgrading a copied one.</li>
+</ul>
 </div>
 <p>Apply the <strong><code>app</code></strong> stage next, before the <code>migration</code> stage. On startup, its <code>dbmigrate</code> Jobs detect the existing 4.x schema in each copied database and <strong>upgrade it in place to 5.0</strong>, including the SM schema changes for the SM/IS split.</p>
 <p>Copy <code>app/terraform.tfvars.example</code> to <code>terraform.tfvars</code> (it marks every migration-specific value with a <code>REPLACE_</code> placeholder) and set:</p>
@@ -375,10 +390,10 @@ ds_product_key = &quot;&lt;source DS product key&gt;&quot;
 ad_encryption_key = &quot;&lt;your v4.x XMPRO__APPDESIGNER__ENCRYPTIONKEY value&gt;&quot;
 </code></pre>
 <p><strong>Capture the product IDs and keys from the source environment</strong> (the IDs must be entered in lowercase: 5.0 validates the OIDC audience case-sensitively). Two ways to get them:</p>
-<p><strong>Option A - from the SM UI (no SQL needed).</strong> Log in to the source SM as the <strong>Site Admin</strong> and open <strong>Products</strong> in the left navigation. Click each product: the detail panel shows a <strong>Product ID</strong> field with a copy button; the <strong>Product Keys</strong> toolbar button opens the key list. Capture the ID and key for each of the three products.</p>
+<p><strong>Option A - from the SM UI (no SQL needed).</strong> Log in to the source SM as the <strong>Site Admin</strong> and open <strong>Products</strong> in the left navigation. Click each product: the detail panel shows a <strong>Product ID</strong> field with a copy button; the <strong>Product Keys</strong> toolbar button opens the key list. Capture the ID and key for each product you're migrating.</p>
 <div class="NOTE">
 <h5>Note</h5>
-<p>The products are listed under their full names: <strong>XMPro</strong> is the Subscription Manager (its ID/key go into <code>sm_product_id</code>/<code>sm_product_key</code>), <strong>App Designer</strong> → <code>ad_product_id</code>/<code>ad_product_key</code>, <strong>Data Stream Designer</strong> → <code>ds_product_id</code>/<code>ds_product_key</code>.</p>
+<p>The products are listed under their full names: <strong>XMPro</strong> is the Subscription Manager (its ID/key go into <code>sm_product_id</code>/<code>sm_product_key</code>), <strong>App Designer</strong> → <code>ad_product_id</code>/<code>ad_product_key</code>, <strong>Data Stream Designer</strong> → <code>ds_product_id</code>/<code>ds_product_key</code>. An <strong>AI</strong> entry appears only if the source environment runs AI → <code>ai_product_id</code>/<code>ai_product_key</code>.</p>
 </div>
 <p><strong>Option B - query the source SM database:</strong></p>
 <pre><code class="lang-sql">SELECT
@@ -422,6 +437,23 @@ jq -r '.[] | select(.name == &quot;XMPRO__APPDESIGNER__ENCRYPTIONKEY&quot;) | .v
 <pre><code class="lang-bash">az keyvault secret show --vault-name &lt;source-kv&gt; \
   --name xmpro--appDesigner--encryptionKey --query value -o tsv
 </code></pre>
+<p><strong>Optional - carrying over the AI database.</strong> Only if you copied an AI database in step 2. Uncomment the AI block at the end of <code>app/terraform.tfvars.example</code> and set:</p>
+<pre><code class="lang-hcl">enable_ai = true
+
+# The COPIED AI database (source name), not a name generated by the infra stage
+ai_database_name = &quot;AI&quot;
+
+# From the same source SM query as the other products - the row named &quot;AI&quot;.
+# Enter the ID in lowercase.
+ai_product_id  = &quot;&lt;source AI product id, lowercase&gt;&quot;
+ai_product_key = &quot;&lt;source AI product key&gt;&quot;
+</code></pre>
+<p>The <code>app</code> stage then runs an <code>aidbmigrate</code> Job that upgrades the copied AI database in place, exactly as it does for SM/AD/DS, and the <code>ai.</code> hostname starts routing.</p>
+<p>The <strong>RAG feature</strong> is separate and optional on top of this: setting <code>enable_ai_rag = true</code> also requires <code>ai_timescaledb_connection_string</code> and <code>ai_neo4j_connection_string</code>, and Terraform fails the plan if either is missing. Those services aren't part of the migration path, deploy them first with the <code>infra-ai</code> template as described in <a href="index.html#enabling-the-ai-product-later">Enabling the AI Product Later</a>. Leaving <code>enable_ai_rag = false</code> needs no connection strings.</p>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p><strong>LLM provider credentials don't survive the AI carry-over.</strong> AI encrypts stored LLM provider credentials (API keys, secrets) with an infrastructure key that the <code>app</code> stage generates fresh on every deployment, and there is no input to supply the source environment's key. Everything else in the AI database carries over: re-enter the LLM provider credentials in AI once the new environment is up.</p>
+</div>
 <p>Then apply:</p>
 <pre><code class="lang-powershell">cd examples/migration4.6/app
 terraform apply
@@ -431,6 +463,7 @@ terraform apply
 kubectl logs -n site1 job/xmpro-sm-dbmigrate --tail=50
 kubectl logs -n site1 job/xmpro-ad-dbmigrate --tail=50
 kubectl logs -n site1 job/xmpro-ds-dbmigrate --tail=50
+kubectl logs -n site1 job/xmpro-ai-dbmigrate --tail=50   # only when enable_ai = true
 </code></pre>
 <div class="NOTE">
 <h5>Note</h5>
@@ -439,7 +472,7 @@ kubectl logs -n site1 job/xmpro-ds-dbmigrate --tail=50
 <h3 id="4-run-the-migration-stage">4. Run the migration stage</h3>
 <p>With the app deployed, apply the <strong><code>migration</code></strong> stage. It runs a Kubernetes Job that connects to your copied databases and reconciles everything still pointing at the old environment, automatically, with no SQL to write:</p>
 <ul>
-<li><strong>SM</strong> - rewrites each product's <strong>Product URL</strong> / <strong>Log Out URL</strong>, and aligns the SM <code>ProductKey</code> row with the key this deployment presents (the <code>sm_product_key</code> you set in step 3)</li>
+<li><strong>SM</strong> - rewrites each product's <strong>Product URL</strong> / <strong>Log Out URL</strong> (App Designer, Data Stream Designer, and AI when its URL is supplied), and aligns the SM <code>ProductKey</code> row with the key this deployment presents (the <code>sm_product_key</code> you set in step 3)</li>
 <li><strong>AD</strong> - rewrites the server URL reference in <code>XMGlobalSetting</code></li>
 <li><strong>DS</strong> - rewrites the server URL references in <code>ServerVariables</code></li>
 </ul>
@@ -458,8 +491,12 @@ namespace = &quot;site1&quot;
 
 ad_url = &quot;https://ad.staging.xmpro.yourco.com&quot;
 ds_url = &quot;https://ds.staging.xmpro.yourco.com&quot;
-# ai_url = &quot;https://ai.staging.xmpro.yourco.com&quot;   # only if AI is deployed
+
+# Optional - uncomment only when the app stage was applied with enable_ai = true.
+# Left empty (the default), the Job skips AI entirely.
+# ai_url = &quot;https://ai.staging.xmpro.yourco.com&quot;
 </code></pre>
+<p>There is no AI database name here: the reconcile Job only rewrites SM's record of the AI product URL, it doesn't touch the AI database itself.</p>
 <pre><code class="lang-powershell">cd examples/migration4.6/migration
 terraform apply
 </code></pre>
@@ -501,6 +538,7 @@ terraform apply
 <li><strong>Data streams</strong> - open existing streams in DS; verify canvases, agent configurations, and run state</li>
 <li><strong>Stream hosts</strong> - all hosts online, streams executing, data flowing end to end</li>
 <li><strong>Email</strong> - trigger a password reset for a quick SMTP end-to-end check</li>
+<li><strong>AI</strong> <em>(only if you carried an AI database over)</em> - open AI, confirm your existing content is there, and re-enter the LLM provider credentials</li>
 </ul>
 <hr>
 <h2 id="common-issues">Common Issues</h2>
@@ -512,6 +550,8 @@ terraform apply
 → The staging hostnames aren't resolving publicly, so cert-manager's HTTP-01 challenge can't complete. Delegate the staging subzone (or add its A records) and confirm <code>dig ad.&lt;zone&gt; +short</code> returns the gateway Public IP before re-applying the <code>app</code> stage.</p>
 <p><strong>Login works, but App Designer data sources fail to decrypt or connect.</strong>
 → The AD encryption key wasn't carried over: a freshly generated key can't decrypt values written by the v4.x environment. Set <code>ad_encryption_key</code> to the source App Designer encryption key (the <code>XMPRO__APPDESIGNER__ENCRYPTIONKEY</code> value) in the <code>app</code> stage and re-apply; it must be supplied before AD first starts.</p>
+<p><strong>AI was carried over, but its LLM provider calls fail with authentication errors.</strong>
+→ Expected: the stored provider credentials were encrypted with the source environment's infrastructure key, and the <code>app</code> stage generates a fresh one. Re-enter the LLM provider credentials in AI. (See <a href="#3-apply-the-application-stage">step 3</a>.)</p>
 <p><strong>AD and DS log in fine, but Subscription Manager shows &quot;We could not grant you access to the requested subscription&quot;.</strong>
 → The <code>app</code> stage was applied with <code>sm_product_id</code> left at its default instead of the source environment's SM product id, so SM's OIDC client looks for a product entry the copied database stores under a different id (the migration Job also logs <code>SKIP: SM ProductKey (no Product row ...)</code>). Set all product IDs and keys from the source database as described in <a href="#3-apply-the-application-stage">step 3</a> and re-apply the <code>app</code> and <code>migration</code> stages.</p>
 <h2 id="rollback-if-needed">Rollback (if needed)</h2>
