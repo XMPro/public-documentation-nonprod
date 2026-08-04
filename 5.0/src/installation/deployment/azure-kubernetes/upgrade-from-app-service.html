@@ -512,6 +512,8 @@ terraform apply
 → The staging hostnames aren't resolving publicly, so cert-manager's HTTP-01 challenge can't complete. Delegate the staging subzone (or add its A records) and confirm <code>dig ad.&lt;zone&gt; +short</code> returns the gateway Public IP before re-applying the <code>app</code> stage.</p>
 <p><strong>Login works, but App Designer data sources fail to decrypt or connect.</strong>
 → The AD encryption key wasn't carried over: a freshly generated key can't decrypt values written by the v4.x environment. Set <code>ad_encryption_key</code> to the source App Designer encryption key (the <code>XMPRO__APPDESIGNER__ENCRYPTIONKEY</code> value) in the <code>app</code> stage and re-apply; it must be supplied before AD first starts.</p>
+<p><strong>AD and DS log in fine, but Subscription Manager shows &quot;We could not grant you access to the requested subscription&quot;.</strong>
+→ The <code>app</code> stage was applied with <code>sm_product_id</code> left at its default instead of the source environment's SM product id, so SM's OIDC client looks for a product entry the copied database stores under a different id (the migration Job also logs <code>SKIP: SM ProductKey (no Product row ...)</code>). Set all product IDs and keys from the source database as described in <a href="#3-apply-the-application-stage">step 3</a> and re-apply the <code>app</code> and <code>migration</code> stages.</p>
 <h2 id="rollback-if-needed">Rollback (if needed)</h2>
 <p>The App Service environment was never modified, so rollback is a DNS operation:</p>
 <ol>
@@ -531,7 +533,7 @@ terraform apply
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: August 03, 2026</em></small></p>
+    <p><small><em>Last modified: August 04, 2026</em></small></p>
   </div>
 </article>
 

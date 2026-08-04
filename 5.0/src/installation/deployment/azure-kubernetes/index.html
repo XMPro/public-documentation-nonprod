@@ -102,7 +102,7 @@
 <tr>
 <td><strong>1 - Cluster</strong> (<a href="%7B%7BTERRAFORM_AKS_MODULE_URL%7D%7D/tree/main/terraform-xmpro-aks/examples/layered/infra-k8s"><code>infra-k8s</code></a>)</td>
 <td>Once per cluster</td>
-<td>AKS cluster, VNet, Envoy Gateway, cert-manager, Log Analytics, shared gateway Public IP</td>
+<td>AKS cluster, VNet, Envoy Gateway, cert-manager, External Secrets Operator, Log Analytics, shared gateway Public IP</td>
 </tr>
 <tr>
 <td><strong>2 - Site infrastructure</strong> (<a href="%7B%7BTERRAFORM_AKS_MODULE_URL%7D%7D/tree/main/terraform-xmpro-aks/examples/layered/infra"><code>infra</code></a>)</td>
@@ -222,6 +222,7 @@
 │  - VNet + AKS subnet                                           │
 │  - Envoy Gateway controller (cluster-wide)                     │
 │  - cert-manager with Gateway API support (cluster-wide)        │
+│  - External Secrets Operator + its managed identity            │
 │  - Log Analytics + Application Insights                        │
 │  - Static gateway Public IP (shared by all sites)              │
 └────────────────────────────────────────────────────────────────┘
@@ -239,7 +240,7 @@
 ┌────────────────────────────────────────────────────────────────┐
 │  Layer 3 - Site application (examples/layered/app)             │
 │  Apply once PER SITE                                           │
-│  - External Secrets Operator (installed once, reused per site) │
+│  - External Secrets Operator wiring (KV access + secret sync)  │
 │  - Per-site Gateway + Let's Encrypt Issuer                     │
 │  - XMPro Helm release: SM, IS, AD, DS, optional AI,            │
 │    Stream Host, dbmigrate + licenses Jobs                      │
@@ -269,7 +270,7 @@
 <p>Install these on your computer:</p>
 <ul>
 <li><strong>Git</strong>: <a href="https://git-scm.com/downloads">Download here</a></li>
-<li><strong>Terraform</strong>: <a href="https://developer.hashicorp.com/terraform/install">Download here</a> (&gt;= 1.5)</li>
+<li><strong>Terraform</strong>: <a href="https://developer.hashicorp.com/terraform/install">Download here</a> (&gt;= 1.7)</li>
 <li><strong>Azure CLI</strong>: <a href="https://learn.microsoft.com/en-us/cli/azure/install-azure-cli">Download here</a> (&gt;= 2.50)</li>
 <li><strong>kubectl</strong>: <a href="https://kubernetes.io/docs/tasks/tools/">Download here</a> (1.30+)</li>
 </ul>
@@ -491,7 +492,7 @@ company_admin_password = &quot;YourCompanyPassword123!&quot;
 site_admin_password    = &quot;YourSitePassword123!&quot;
 
 # [from layer 2] terraform output resource_group_name - the site RG, not the cluster RG
-resource_group_name     = &quot;rg-aks-yourco-site1&quot; # RG holding the site Key Vault; ESO's identity + KV role assignment are created here
+resource_group_name     = &quot;rg-aks-yourco-site1&quot; # RG holding the site Key Vault; ESO's KV role assignment is created here
 
 # [from layer 1] terraform output cluster_name / resource_group_name
 cluster_name            = &quot;aks-yourco-dev&quot;
@@ -507,10 +508,10 @@ ad_database_name = &quot;sqldb-aks-yourco-site1-ad&quot;
 ds_database_name = &quot;sqldb-aks-yourco-site1-ds&quot;
 sm_database_name = &quot;sqldb-aks-yourco-site1-sm&quot;
 
-# External Secrets Operator: the app layer installs ESO. This first site installs
-# it (false); later sites on the same cluster set true to reuse it - see note below.
-eso_already_installed     = false
-# existing_eso_principal_id = &quot;&quot;   # required only when eso_already_installed = true - see note below
+# External Secrets Operator: installed by the cluster layer (layer 1). The site
+# auto-reads the ESO identity's principal ID from the ESO ServiceAccount
+# annotation - nothing to set here. See the note below for the override.
+# existing_eso_principal_id = &quot;&quot;   # override only - see note below
 
 # --- Container images ---
 image_registry = &quot;{{ACR_URL}}&quot;
@@ -552,7 +553,7 @@ pod_security_standard     = &quot;baseline&quot;     # audit/warn only; no enfor
 </div>
 <div class="IMPORTANT">
 <h5>Important</h5>
-<p><strong>The app layer installs ESO, on the first site only.</strong> The first site you deploy (<code>eso_already_installed = false</code>) installs the External Secrets Operator and creates its managed identity, <code>uami-eso-&lt;name_suffix&gt;</code>, in the resource group you set as <code>resource_group_name</code>. Every later site on the same cluster sets <code>eso_already_installed = true</code> and reuses that identity, so <strong>capture its principal ID after the first site's apply</strong> and pass it as <code>existing_eso_principal_id</code>: <code>az identity show -g &lt;resource_group_name&gt; -n uami-eso-&lt;first-site-name_suffix&gt; --query principalId -o tsv</code>. Setting <code>eso_already_installed = true</code> with an empty <code>existing_eso_principal_id</code> fails: the Key Vault role assignment is given an empty principal. Do <strong>not</strong> use the cluster's kubelet identity: ESO authenticates as its own identity, so granting the kubelet identity access to the Key Vault leaves ESO with a <code>403 ForbiddenByRbac</code>, <code>xmpro-secrets</code> is never created, and the dbmigrate pre-install hook times out (rolling back the whole atomic release).</p>
+<p><strong>The cluster layer installs ESO; sites only consume it.</strong> Layer 1 installs the External Secrets Operator once per cluster, creates its managed identity (<code>uami-eso-&lt;name_suffix&gt;</code>, in the cluster resource group), and stamps the identity's principal ID onto the ESO ServiceAccount as the <code>xmpro.com/eso-principal-id</code> annotation. Each site's app layer reads that annotation automatically and grants the identity Key Vault access on the site's vault - there is nothing to configure per site. Set <code>existing_eso_principal_id</code> <strong>only</strong> when ESO was installed outside the cluster layer and the annotation is absent: <code>az identity show -g &lt;cluster-rg&gt; -n uami-eso-&lt;cluster-name_suffix&gt; --query principalId -o tsv</code>. If neither the annotation nor the override yields a principal, the apply fails with an explicit error rather than creating an empty role assignment. Do <strong>not</strong> use the cluster's kubelet identity: ESO authenticates as its own identity, so granting the kubelet identity access to the Key Vault leaves ESO with a <code>403 ForbiddenByRbac</code>, <code>xmpro-secrets</code> is never created, and the dbmigrate pre-install hook times out (rolling back the whole atomic release).</p>
 </div>
 <p>Deploy:</p>
 <p><strong>All platforms:</strong></p>
@@ -630,7 +631,7 @@ xmpro-le-tls   True    xmpro-le-tls   5m
 <pre><code class="lang-bash"># Layer 2 with name_suffix = &quot;site2&quot;, dns_zone_name = &quot;site2.xmpro.yourco.com&quot;
 # Layer 3 with the matching outputs
 </code></pre>
-<p>Each site gets its own namespace, databases, Key Vault, DNS subzone, and TLS certificates, fully isolated, sharing only the cluster, controllers, and gateway IP. In each additional site's <code>app</code> tfvars, set <code>eso_already_installed = true</code> and <code>existing_eso_principal_id</code> to the ESO identity's principal ID captured after the first site's apply (see <a href="#7-deploy-the-site-application-layer">Step 7</a>), so the site reuses the shared ESO install instead of trying to install a second one.</p>
+<p>Each site gets its own namespace, databases, Key Vault, DNS subzone, and TLS certificates, fully isolated, sharing only the cluster, controllers, and gateway IP. No per-site ESO configuration is needed: every site reuses the cluster layer's ESO install and resolves its identity automatically from the ESO ServiceAccount annotation (see <a href="#7-deploy-the-site-application-layer">Step 7</a>).</p>
 <h2 id="enabling-the-ai-product-later">Enabling the AI Product Later</h2>
 <p>Deployed without AI and want to add it (with the RAG feature) afterwards? No redeployment is needed, re-apply the existing stages in this order:</p>
 <ol>
@@ -717,7 +718,7 @@ cd ../infra-k8s              &amp;&amp; terraform destroy
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: August 03, 2026</em></small></p>
+    <p><small><em>Last modified: August 04, 2026</em></small></p>
   </div>
 </article>
 
