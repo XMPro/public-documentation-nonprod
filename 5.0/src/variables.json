@@ -1,7 +1,7 @@
 {
     "INSTALL_URL_PREFIX": "https://download.app.xmpro.com/",
     "INSTALLER_SCRIPT": "install-xmpro-application.ps1",
-    "VERSION": "5.0.0-alpha",
+    "VERSION": "5.0.0",
     "ACR_URL": "xmpro.azurecr.io",
     "TERRAFORM_MODULE_URL": "https://github.com/XMPro/terraform-xmpro-azure",
     "TERRAFORM_AKS_MODULE_URL": "https://github.com/XMPro/terraform-xmpro-aks",
