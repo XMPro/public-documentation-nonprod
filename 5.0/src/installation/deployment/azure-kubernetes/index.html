@@ -173,6 +173,11 @@
 </tr>
 <tr>
 <td>Cluster-level</td>
+<td><strong>External Secrets Operator</strong></td>
+<td>Installed cluster-wide (<code>external-secrets</code> namespace), with a managed identity that each site grants access to its own Key Vault</td>
+</tr>
+<tr>
+<td>Cluster-level</td>
 <td><strong>Static Public IP</strong></td>
 <td>In the node resource group, used by the gateway service</td>
 </tr>
@@ -258,6 +263,53 @@
 └────────────────────────────────────────────────────────────────┘
 </code></pre>
 <p>Traffic flow: <code>https://{ad,ds,sm,ai}.&lt;site-zone&gt;</code> → gateway Public IP → Envoy Gateway → HTTPRoute → product Service. The <code>sm.</code> hostname is path-split: <code>/identity/*</code> routes to the Identity Server (IS); everything else routes to Subscription Manager (SM).</p>
+<h2 id="cluster-level-components">Cluster-Level Components</h2>
+<p>Layer 1 installs a fixed set of platform components into the cluster, once per cluster. Every site's application layer assumes they are already present: layer 3 creates only per-site resources - the Key Vault wiring, Gateway, Issuer, HTTPRoutes and Helm release - and binds them to these shared components. Adding a site never installs or upgrades any of them.</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Namespace</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Envoy Gateway</strong></td>
+<td><code>envoy-gateway-system</code></td>
+<td>Gateway API data plane; provides the GatewayClass the sites' Gateway resources bind to</td>
+</tr>
+<tr>
+<td><strong>cert-manager</strong></td>
+<td><code>cert-manager</code></td>
+<td>Issues Let's Encrypt certificates for product hostnames via HTTP-01</td>
+</tr>
+<tr>
+<td><strong>External Secrets Operator</strong></td>
+<td><code>external-secrets</code></td>
+<td>Syncs Azure Key Vault secrets into Kubernetes Secrets the chart consumes</td>
+</tr>
+<tr>
+<td><strong>istio-base</strong></td>
+<td><code>istio-system</code></td>
+<td>Istio CRDs</td>
+</tr>
+<tr>
+<td><strong>istiod</strong></td>
+<td><code>istio-system</code></td>
+<td>Istio control plane and sidecar injection</td>
+</tr>
+</tbody>
+</table>
+<p>There is no load balancer controller in this list because Azure provisions the gateway's load balancer natively from its Kubernetes Service, using the static Public IP the cluster layer creates. If you build the cluster yourself instead of applying layer 1, these are the components you install; <a href="#provision-infrastructure-your-own-way">Provision Infrastructure Your Own Way?</a> lists them alongside the rest of the infrastructure the application layer expects.</p>
+<p>To confirm what an existing cluster already has:</p>
+<p><strong>All platforms:</strong></p>
+<pre><code class="lang-powershell">helm list -A
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p><strong>No Istio CNI, so Pod Security is not enforced.</strong> The cluster layer does not install the Istio CNI plugin, so injected pods use the classic Istio sidecar init container, which requires <code>NET_ADMIN</code> and root. Pod Security <code>baseline</code> rejects that container, so the application layer's <code>pod_security_enforce</code> defaults to <code>&quot;&quot;</code>: enforcement is disabled, and <code>pod_security_standard = &quot;baseline&quot;</code> applies audit and warn labels only. The <a href="../aws-kubernetes/index.html">AWS Kubernetes deployment</a> does install Istio CNI and therefore defaults <code>pod_security_enforce</code> to <code>baseline</code>.</p>
+</div>
 <h2 id="prerequisites">Prerequisites</h2>
 <p>You need:</p>
 <ul>
@@ -336,7 +388,7 @@ terraform apply                                             # Phase 2: everythin
 <h5>Important</h5>
 <p>Running a plain <code>terraform apply</code> first on a greenfield deployment fails: the k8s-backed providers cannot authenticate against a cluster that doesn't exist yet. The two-phase apply is only needed once; subsequent applies against the existing cluster are single-phase.</p>
 </div>
-<p>This creates the AKS cluster, VNet, Envoy Gateway, cert-manager, Istio (with the shared gateway joined to the mesh), monitoring, and the shared gateway Public IP. <strong>Takes about 10-15 minutes.</strong> You only do this once per cluster, additional sites reuse it.</p>
+<p>This creates the AKS cluster, VNet, Envoy Gateway, cert-manager, External Secrets Operator, Istio (with the shared gateway joined to the mesh), monitoring, and the shared gateway Public IP. <strong>Takes about 10-15 minutes.</strong> You only do this once per cluster, additional sites reuse it. See <a href="#cluster-level-components">Cluster-Level Components</a> for what each of these controllers does and the namespace it lands in.</p>
 <p>Point kubectl at the new cluster. Run <code>terraform output</code> and copy the values into the command (layers 2 and 3 reuse these too):</p>
 <p><strong>All platforms:</strong></p>
 <pre><code class="lang-powershell">terraform output
@@ -525,7 +577,7 @@ company_admin_email_address = &quot;admin.user@yourco.com&quot;
 # --- Ingress / DNS / TLS ---
 enable_custom_domain = true
 dns_zone_name        = &quot;site1.xmpro.yourco.com&quot;
-letsencrypt_email    = &quot;ops@yourco.com&quot;
+letsencrypt_email    = &quot;ops@yourco.com&quot;   # receives Let's Encrypt expiry notices
 gateway_class_name   = &quot;eg&quot;      # [from layer 1] terraform output gateway_class_name
 
 # --- Features ---

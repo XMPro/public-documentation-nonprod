@@ -130,26 +130,26 @@
 <tbody>
 <tr>
 <td>Subscription Manager (SM)</td>
-<td>25m</td>
-<td>384Mi</td>
-<td>768Mi</td>
+<td>100m</td>
+<td>512Mi</td>
+<td>1Gi</td>
 </tr>
 <tr>
 <td>Identity Server (IS)</td>
-<td>25m</td>
-<td>512Mi</td>
+<td>100m</td>
+<td>1Gi</td>
 <td>2Gi</td>
 </tr>
 <tr>
 <td>App Designer (AD)</td>
-<td>100m</td>
-<td>512Mi</td>
+<td>150m</td>
+<td>1Gi</td>
 <td>4Gi</td>
 </tr>
 <tr>
 <td>Data Stream Designer (DS)</td>
-<td>25m</td>
-<td>1Gi</td>
+<td>150m</td>
+<td>2Gi</td>
 <td>4Gi</td>
 </tr>
 <tr>
@@ -160,9 +160,9 @@
 </tr>
 <tr>
 <td><strong>Total (SM+IS+AD+DS+SH)</strong></td>
-<td><strong>200m</strong></td>
-<td><strong>~2.6Gi</strong></td>
-<td><strong>~11.3Gi</strong></td>
+<td><strong>525m</strong></td>
+<td><strong>~4.75Gi</strong></td>
+<td><strong>~11.5Gi</strong></td>
 </tr>
 <tr>
 <td>AI (optional, adds)</td>
@@ -172,7 +172,7 @@
 </tr>
 </tbody>
 </table>
-<p>Enabling AI raises the standard totals to roughly <strong>225m</strong> CPU request, <strong>~3Gi</strong> memory request, and <strong>~12Gi</strong> memory limit.</p>
+<p>Enabling AI raises the standard totals to roughly <strong>550m</strong> CPU request, <strong>~5.1Gi</strong> memory request, and <strong>~12.25Gi</strong> memory limit.</p>
 <div class="NOTE">
 <h5>Note</h5>
 <p>Database-migration and licensing steps (<code>ad-dbmigrate</code>, <code>ds-dbmigrate</code>, <code>sm-dbmigrate</code>, <code>ai-dbmigrate</code>, <code>licenses</code>) run as short-lived Helm Jobs during install, each requesting 100m CPU / 256Mi and capped at 200m CPU / 512Mi. They finish before the products reach steady state, so they do not count toward the always-on total above, but the application pool must have room to schedule them during the initial deploy.</p>
@@ -181,9 +181,9 @@
 <p>Node capacity is not the same as the VM's advertised size. Kubernetes reserves some of every node's CPU and memory for the kubelet and system processes; what remains is the node's <strong>allocatable</strong> capacity: the portion actually available to pods. A node advertised as 8 GiB does not offer a full 8 GiB to workloads.</p>
 <p>To choose <code>app_node_vm_size</code> and <code>app_node_count</code>:</p>
 <ol>
-<li>Start from the request total above (~200m CPU, ~2.6Gi memory for the standard product set; ~225m / ~3Gi with AI).</li>
+<li>Start from the request total above (~525m CPU, ~4.75Gi memory for the standard product set; ~550m / ~5.1Gi with AI).</li>
 <li>Look up the vCPU and RAM of a candidate VM SKU in the <a href="https://learn.microsoft.com/en-us/azure/virtual-machines/sizes">Azure VM sizes documentation</a>, then subtract the AKS system reservation to get its allocatable capacity.</li>
-<li>Because the product memory <em>limits</em> (~11.3Gi combined) are far higher than the memory <em>requests</em>, memory pressure under real load, not the request total, is what sizes a production pool. Size the application nodes toward the limit envelope, and confirm the true figure by measuring actual pod memory usage under representative load rather than trusting a static estimate.</li>
+<li>Because the product memory <em>limits</em> (~11.5Gi combined) are far higher than the memory <em>requests</em>, memory pressure under real load, not the request total, is what sizes a production pool. Size the application nodes toward the limit envelope, and confirm the true figure by measuring actual pod memory usage under representative load rather than trusting a static estimate.</li>
 <li>Set <code>app_node_count</code> (or enable the cluster autoscaler) so the pool's combined allocatable capacity comfortably exceeds the workload, with headroom for node maintenance and pod rescheduling.</li>
 </ol>
 <p>The defaults are a single application node and a single system node, which is why they are evaluation-grade: neither pool has redundancy. For production, run at least two system nodes (so CoreDNS and metrics-server survive a node loss) and size the application pool to your measured load.</p>
@@ -268,57 +268,58 @@
 <h3 id="scaling-out">Scaling out</h3>
 <p>Beyond making nodes bigger, XMPro can scale horizontally by running more replicas of a product, but this requires shared-state coordination. The application layer (<code>app</code>) exposes <code>enable_autoscale</code> (default <code>false</code>), which turns on Redis-backed distributed caching so multiple replicas can coordinate; per-product replica counts (<code>ad_replica_count</code>, <code>ds_replica_count</code>, <code>sm_replica_count</code>, and so on) default to <code>1</code>, and <code>enforce_single_replica</code> (default <code>false</code>) hard-blocks any product from exceeding one replica when set. At the cluster level, <code>app_autoscaling_enabled</code> turns on the AKS cluster autoscaler to add and remove application nodes automatically within the <code>app_min_count</code>/<code>app_max_count</code> bounds. Note that per-product Horizontal Pod Autoscalers (HPAs) are still a chart follow-up (the chart's HPA template is currently a single-target stub), so horizontal scaling today means setting replica counts explicitly rather than relying on CPU-driven autoscaling of the pods themselves.</p>
 <h3 id="cost-reference-dev-defaults">Cost reference (dev defaults)</h3>
-<p>The table below reproduces the AKS module's dev-defaults cost estimate for <strong>Australia East</strong>, using the evaluation defaults described in this section. It is an approximate monthly figure, not a quote.</p>
+<p>The billable components of a single-site development deployment are:</p>
 <table>
 <thead>
 <tr>
-<th>Resource</th>
-<th>Default Spec</th>
-<th>Monthly</th>
+<th>Component</th>
+<th>Default spec</th>
+<th>Quantity</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>AKS Control Plane</td>
+<td>AKS control plane</td>
 <td>Free tier</td>
-<td>$0</td>
+<td>1</td>
 </tr>
 <tr>
-<td>System Node</td>
-<td>1x Standard_B2s</td>
-<td>~$39</td>
+<td>System node</td>
+<td><code>Standard_B2s_v2</code></td>
+<td>1</td>
 </tr>
 <tr>
-<td>App Node</td>
-<td>1x Standard_B2ms</td>
-<td>~$77</td>
+<td>Application node</td>
+<td><code>Standard_B2s_v2</code></td>
+<td>1 per site</td>
 </tr>
 <tr>
-<td>SQL Databases (3x)</td>
-<td>S0, 10 DTU</td>
-<td>~$48</td>
+<td>Azure SQL databases</td>
+<td>Shared 50 eDTU elastic pool (SM, AD, DS)</td>
+<td>1 pool per site</td>
 </tr>
 <tr>
-<td>Load Balancer + IP</td>
+<td>Load Balancer + public IP</td>
 <td>Standard</td>
-<td>~$22</td>
+<td>1 shared per cluster</td>
 </tr>
 <tr>
-<td>DNS Zone</td>
+<td>DNS zone</td>
 <td>1 zone</td>
-<td>~$1</td>
-</tr>
-<tr>
-<td><strong>Total</strong></td>
-<td></td>
-<td><strong>~$187/mo</strong></td>
+<td>1 per site</td>
 </tr>
 </tbody>
 </table>
-<div class="NOTE">
-<h5>Note</h5>
-<p>This estimate predates a couple of current defaults: the node-pool variables now default to <code>Standard_B2s_v2</code> for both pools (see <a href="#node-pool-knobs">Node-pool knobs</a>), and the databases now default to a shared 50 eDTU elastic pool rather than standalone S0 databases (see <a href="#database-sizing">Database Sizing</a>). Your actual bill will differ accordingly and with region: override <code>app_node_vm_size</code>, <code>app_node_count</code>, <code>aks_sku_tier</code>, and the database variables for production sizing.</p>
-</div>
+<p>Prices vary by region and change over time, so this guide does not quote figures. Price the components above for your own region using Azure's published pricing:</p>
+<ul>
+<li><a href="https://azure.microsoft.com/en-us/pricing/calculator/">Azure Pricing Calculator</a> - build a full estimate from the table above</li>
+<li><a href="https://azure.microsoft.com/en-us/pricing/details/kubernetes-service/">Azure Kubernetes Service pricing</a></li>
+<li><a href="https://azure.microsoft.com/en-us/pricing/details/virtual-machines/linux/">Virtual Machines pricing</a> - node VM sizes</li>
+<li><a href="https://azure.microsoft.com/en-us/pricing/details/azure-sql-database/single/">Azure SQL Database pricing</a></li>
+<li><a href="https://azure.microsoft.com/en-us/pricing/details/load-balancer/">Load Balancer pricing</a></li>
+<li><a href="https://azure.microsoft.com/en-us/pricing/details/dns/">Azure DNS pricing</a></li>
+</ul>
+<p>The largest cost levers are <strong>node VM size and count</strong> and the <strong>database tier</strong>. Override <code>app_node_vm_size</code>, <code>app_node_count</code>, <code>system_node_count</code> (production wants at least 2), <code>aks_sku_tier</code> and the database variables for production sizing. When <code>app_autoscaling_enabled = true</code>, the active capacity bounds are <code>app_min_count</code> and <code>app_max_count</code> rather than <code>app_node_count</code>.</p>
 <h2 id="database-sizing">Database Sizing</h2>
 <p>XMPro uses <strong>Azure SQL Database</strong>. Each deployment gets its own SM, AD, and DS databases (plus an AI database when the AI product is enabled).</p>
 <p>The following per-database sizing estimates use the Standard service tier and the DTU-based purchasing model (a blended measure of compute, storage, and IO resources).</p>

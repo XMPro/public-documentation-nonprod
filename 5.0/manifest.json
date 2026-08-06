@@ -26037,6 +26037,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "src/installation/deployment/aws-kubernetes/eks-sizing.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/installation/deployment/aws-kubernetes/eks-sizing.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "src/installation/deployment/aws-kubernetes/index.md",
       "output": {
         ".html": {
