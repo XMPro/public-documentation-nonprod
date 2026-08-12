@@ -310,6 +310,15 @@ foreach ($app in 'app-yourco-sm', 'app-yourco-ad', 'app-yourco-ds') {
 }
 </code></pre>
 <hr>
+<h2 id="registry-access">Registry Access</h2>
+<p>Before you start, confirm you can pull the 5.0 images. A migrating installation is more likely to trip on this than a fresh one: your existing 4.6 deployment pulled anonymously from <code>xmpro.azurecr.io</code> and has no pull secret anywhere, so nothing carries over.</p>
+<pre><code class="lang-bash">read -rs GHE_PAT            # prompts, so the token never lands in shell history
+printf '%s' &quot;$GHE_PAT&quot; | docker login containers.xmpro.ghe.com -u YOUR-GHE-USERNAME --password-stdin
+docker manifest inspect {{ACR_URL}}/ad:{{VERSION}}
+</code></pre>
+<p>If either command fails, see <a href="index.html#3-registry-authentication">Registry authentication</a> in the deployment guide. Set <code>registry_username</code> and <code>registry_password</code> in the <code>app</code> stage's tfvars, then pass the resulting secret name to the <code>migration</code> stage:</p>
+<pre><code class="lang-hcl">image_pull_secret = &quot;xmpro-registry&quot;   # app stage's image_pull_secret_name output
+</code></pre>
 <h2 id="running-the-migration">Running the Migration</h2>
 <p>These steps use the <strong><a href="%7B%7BTERRAFORM_AKS_MODULE_URL%7D%7D/tree/main/terraform-xmpro-aks/examples/migration4.6"><code>migration4.6</code> example</a></strong> in the AKS Terraform module. It mirrors the standard layered deployment, layer 1 cluster (<code>infra-k8s</code>), layer 2 site infrastructure (<code>infra</code>), layer 3 application (<code>app</code>), and adds one extra <strong><code>migration</code></strong> stage that runs <strong>after</strong> the application layer to reconcile the references your copied databases carried over from the source environment. You supply a few clearly-labelled inputs and run one apply per stage: there is no SQL to write.</p>
 <p>The apply order (matching the example's <a href="%7B%7BTERRAFORM_AKS_MODULE_URL%7D%7D/blob/main/terraform-xmpro-aks/examples/migration4.6/README.md"><code>README.md</code></a>) is:</p>

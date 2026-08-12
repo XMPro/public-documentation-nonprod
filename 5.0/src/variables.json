@@ -2,9 +2,9 @@
     "INSTALL_URL_PREFIX": "https://download.app.xmpro.com/",
     "INSTALLER_SCRIPT": "install-xmpro-application.ps1",
     "VERSION": "5.0.0",
-    "ACR_URL": "xmpro.azurecr.io",
+    "ACR_URL": "containers.xmpro.ghe.com/xmpro/prod",
     "TERRAFORM_MODULE_URL": "https://github.com/XMPro/terraform-xmpro-azure",
-    "TERRAFORM_AKS_MODULE_URL": "https://github.com/XMPro/terraform-xmpro-aks",
-    "TERRAFORM_EKS_MODULE_URL": "https://github.com/XMPro/terraform-xmpro-eks",
+    "TERRAFORM_AKS_MODULE_URL": "https://xmpro.ghe.com/xmpro/infra-kubernetes",
+    "TERRAFORM_EKS_MODULE_URL": "https://xmpro.ghe.com/xmpro/infra-kubernetes",
     "DOWNLOAD_URL": "https://download.xmpro.com"
 }

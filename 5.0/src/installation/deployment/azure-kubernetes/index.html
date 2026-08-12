@@ -193,8 +193,8 @@
 </tr>
 <tr>
 <td>Per site</td>
-<td><strong>Container registry pull credential</strong></td>
-<td>For {{ACR_URL}} (or your own ACR with mirrored images)</td>
+<td><strong>Container registry pull secret</strong></td>
+<td>Created by the application layer from your GHE credentials; see <a href="#3-registry-authentication">Registry authentication</a></td>
 </tr>
 <tr>
 <td>Per site</td>
@@ -218,7 +218,7 @@
 </tr>
 </tbody>
 </table>
-<p>Once you've created these resources, skip to <a href="#7-deploy-the-site-application-layer">Step 7: Deploy the Site Application Layer</a> and provide the details in your configuration.</p>
+<p>Once you've created these resources, skip to <a href="#8-deploy-the-site-application-layer">Step 8: Deploy the Site Application Layer</a> and provide the details in your configuration.</p>
 <h2 id="architecture">Architecture</h2>
 <pre><code>┌────────────────────────────────────────────────────────────────┐
 │  Layer 1 - Cluster (examples/layered/infra-k8s)                │
@@ -315,8 +315,13 @@
 <ul>
 <li>An Azure subscription with <strong>Contributor</strong> (or equivalent) role</li>
 <li>A computer with internet access</li>
-<li>Access to XMPro's container registry ({{ACR_URL}}) with a pull credential</li>
+<li>A GHE account with read access to <code>{{TERRAFORM_AKS_MODULE_URL}}</code>, for cloning the deployment files</li>
+<li>A GHE personal access token with <code>read:packages</code>, for pulling the container images from <code>{{ACR_URL}}</code></li>
 </ul>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p><strong>How to get access.</strong> Request it through your XMPro point of contact, consultant, or personnel. They raise it internally; XMPro provisions your named users and grants your organisation read access to the deployment repository and container images. Access is per-person and tied to the account XMPro issues you — there is no public download and no self-signup.</p>
+</div>
 <h2 id="quick-deployment">Quick Deployment</h2>
 <h3 id="1-install-required-tools">1. Install Required Tools</h3>
 <p>Install these on your computer:</p>
@@ -343,7 +348,33 @@ az account show
 <h5>Tip</h5>
 <p>Terraform automatically uses your Azure CLI credentials. For CI/CD pipelines, use OIDC workload identity federation (<code>ARM_USE_OIDC=true</code>) or a service principal via <code>ARM_CLIENT_ID</code> / <code>ARM_CLIENT_SECRET</code> environment variables.</p>
 </div>
-<h3 id="3-get-the-deployment-files">3. Get the Deployment Files</h3>
+<h3 id="3-registry-authentication">3. Registry Authentication</h3>
+<p>XMPro's container images live in <code>{{ACR_URL}}</code> and are not anonymously pullable. Confirm your credential works now — this fails in seconds, where a bad or expired token otherwise surfaces as <code>ImagePullBackOff</code> fifteen minutes into an apply.</p>
+<p><strong>All platforms:</strong></p>
+<pre><code class="lang-bash">read -rs GHE_PAT            # prompts, so the token never lands in shell history
+printf '%s' &quot;$GHE_PAT&quot; | docker login containers.xmpro.ghe.com -u YOUR-GHE-USERNAME --password-stdin
+docker manifest inspect {{ACR_URL}}/ad:{{VERSION}}
+</code></pre>
+<p>Both commands must succeed before you continue.</p>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>That login authenticates <strong>you</strong>, not the cluster. Terraform does not pull images — the cluster nodes do, using a pull secret inside the namespace. You supply the credentials once, in the <strong>application layer</strong> (step 8), and it creates that secret for you. Logging in locally and skipping the Terraform variables leaves every pod in <code>ImagePullBackOff</code>.</p>
+</div>
+<p>Pull secrets are namespaced, so one is created per site rather than per cluster. If you would rather the credentials never touch Terraform state, create the secret yourself and pass only its name.</p>
+<p>The namespace has to exist first. It is the site's <code>name_suffix</code>, and the application layer creates it — so either run this after the first application-layer apply, or create the namespace up front with <code>kubectl create namespace &lt;name_suffix&gt;</code> and the application layer will adopt it.</p>
+<pre><code class="lang-bash">export GHE_USERNAME=your-ghe-username
+read -rs GHE_PAT            # prompts, so the token never lands in shell history
+
+tmp=&quot;$(mktemp -d)&quot;; trap 'rm -rf &quot;$tmp&quot;' EXIT
+printf '%s' &quot;$GHE_PAT&quot; | DOCKER_CONFIG=&quot;$tmp&quot; docker login containers.xmpro.ghe.com \
+  -u &quot;$GHE_USERNAME&quot; --password-stdin
+kubectl create secret generic xmpro-registry \
+  --from-file=.dockerconfigjson=&quot;$tmp/config.json&quot; \
+  --type=kubernetes.io/dockerconfigjson \
+  -n &lt;name_suffix&gt;
+</code></pre>
+<p>Then set <code>image_pull_secrets = [&quot;xmpro-registry&quot;]</code> in the application layer and leave <code>registry_username</code> and <code>registry_password</code> empty.</p>
+<h3 id="4-get-the-deployment-files">4. Get the Deployment Files</h3>
 <p><strong>Windows (PowerShell):</strong></p>
 <pre><code class="lang-powershell">git clone {{TERRAFORM_AKS_MODULE_URL}}.git terraform-k8s
 cd terraform-k8s\terraform-xmpro-aks\examples\layered\infra-k8s
@@ -377,7 +408,7 @@ gateway_public_ip_name = &quot;pip-gateway-cluster&quot;
 <h5>Warning</h5>
 <p>Do not use <code>xmpro</code> as <code>company_name</code> for a site. It collides with a hardcoded <code>XMPro</code> company in the SM database migration scripts (case-insensitive unique constraint).</p>
 </div>
-<h3 id="4-deploy-layer-1---cluster">4. Deploy Layer 1 - Cluster</h3>
+<h3 id="5-deploy-layer-1---cluster">5. Deploy Layer 1 - Cluster</h3>
 <p>A fresh cluster needs a <strong>two-phase apply</strong>: the Kubernetes, Helm, and kubectl providers must connect to the cluster, which doesn't exist until the first targeted apply creates it.</p>
 <p><strong>All platforms:</strong></p>
 <pre><code class="lang-powershell">terraform init
@@ -409,7 +440,7 @@ resource_group_name            = &quot;rg-aks-yourco-dev&quot;
   --resource-group &quot;$(terraform output -raw resource_group_name)&quot; \
   --name &quot;$(terraform output -raw cluster_name)&quot;
 </code></pre>
-<h3 id="5-deploy-layer-2---site-infrastructure">5. Deploy Layer 2 - Site Infrastructure</h3>
+<h3 id="6-deploy-layer-2---site-infrastructure">6. Deploy Layer 2 - Site Infrastructure</h3>
 <p><strong>Windows (PowerShell):</strong></p>
 <pre><code class="lang-powershell">cd ..\infra
 Copy-Item terraform.tfvars.example terraform.tfvars
@@ -473,14 +504,14 @@ key_vault_name        = &quot;kv-yourco-site1&quot;
 key_vault_uri         = &quot;https://kv-yourco-site1.vault.azure.net/&quot;
 sql_server_fqdn       = &quot;sql-aks-yourco-site1.database.windows.net&quot;
 </code></pre>
-<h3 id="6-point-dns-at-the-gateway">6. Point DNS at the Gateway</h3>
+<h3 id="7-point-dns-at-the-gateway">7. Point DNS at the Gateway</h3>
 <p>Before deploying the application layer, the product hostnames (<code>ad.</code>, <code>ds.</code>, <code>sm.</code>, and <code>ai.</code> if enabled, under your <code>dns_zone_name</code>) must resolve publicly to the gateway Public IP (<code>cluster_pip_ip</code> from layer 1). cert-manager's Let's Encrypt HTTP-01 challenge issues the site's TLS certificate over those hostnames, so they must resolve before the app layer runs. Pick whichever path fits how your domain is hosted.</p>
 <div class="NOTE">
 <h5>Note</h5>
-<p>Both paths below keep <code>enable_custom_domain = true</code> in the <strong>application layer</strong> (the default in step 7): that is what creates the per-product HTTPRoutes and the Let's Encrypt certificate. Setting <code>enable_custom_domain = false</code> in the app layer creates <strong>no HTTPRoutes and no TLS at all</strong>; the products are then reachable only via <code>kubectl port-forward</code> to their Services, so use it for smoke tests only.</p>
+<p>Both paths below keep <code>enable_custom_domain = true</code> in the <strong>application layer</strong> (the default in step 8): that is what creates the per-product HTTPRoutes and the Let's Encrypt certificate. Setting <code>enable_custom_domain = false</code> in the app layer creates <strong>no HTTPRoutes and no TLS at all</strong>; the products are then reachable only via <code>kubectl port-forward</code> to their Services, so use it for smoke tests only.</p>
 </div>
 <h4 id="option-a---point-a-records-at-the-gateway-simplest">Option A - Point A records at the gateway (simplest)</h4>
-<p>If you host your domain's DNS anywhere with an A-record editor (Azure DNS, GoDaddy, Cloudflare, Route 53, …), you don't need an Azure-managed subzone: set <code>enable_custom_domain = false</code> in the <strong>layer 2</strong> tfvars (step 5) to skip creating the Azure DNS zone, then create an A record for each product hostname pointing at the gateway Public IP:</p>
+<p>If you host your domain's DNS anywhere with an A-record editor (Azure DNS, GoDaddy, Cloudflare, Route 53, …), you don't need an Azure-managed subzone: set <code>enable_custom_domain = false</code> in the <strong>layer 2</strong> tfvars (step 6) to skip creating the Azure DNS zone, then create an A record for each product hostname pointing at the gateway Public IP:</p>
 <pre><code class="lang-text">ad.site1.xmpro.yourco.com   A   20.53.12.34
 ds.site1.xmpro.yourco.com   A   20.53.12.34
 sm.site1.xmpro.yourco.com   A   20.53.12.34
@@ -488,7 +519,7 @@ sm.site1.xmpro.yourco.com   A   20.53.12.34
 </code></pre>
 <p>A single wildcard record (<code>*.site1.xmpro.yourco.com</code> → the gateway IP) works too.</p>
 <h4 id="option-b---delegate-an-azure-subzone-if-you-own-the-parent-zone-in-azure">Option B - Delegate an Azure subzone (if you own the parent zone in Azure)</h4>
-<p>If you set <code>enable_custom_domain = true</code> in layer 2 (as shown in step 5), that stage created the <code>site1.xmpro.yourco.com</code> subzone with a wildcard A record at the gateway IP. Delegate that subzone from its parent zone so it resolves publicly.</p>
+<p>If you set <code>enable_custom_domain = true</code> in layer 2 (as shown in step 6), that stage created the <code>site1.xmpro.yourco.com</code> subzone with a wildcard A record at the gateway IP. Delegate that subzone from its parent zone so it resolves publicly.</p>
 <div class="TIP">
 <h5>Tip</h5>
 <p>If the parent zone is an Azure DNS zone <strong>in the same subscription</strong>, layer 2 can create the delegation for you, no manual steps: set <code>manage_parent_dns_delegation = true</code>, <code>parent_dns_zone_name</code>, and <code>parent_dns_zone_resource_group</code> in the layer-2 <code>terraform.tfvars</code> (the option (2) block in its <code>terraform.tfvars.example</code>) and apply. The manual steps below are only needed when the parent zone lives elsewhere.</p>
@@ -518,7 +549,7 @@ done
 <pre><code class="lang-bash">dig ad.site1.xmpro.yourco.com +short
 # Should return the gateway Public IP
 </code></pre>
-<h3 id="7-deploy-the-site-application-layer">7. Deploy the Site Application Layer</h3>
+<h3 id="8-deploy-the-site-application-layer">8. Deploy the Site Application Layer</h3>
 <p><strong>Windows (PowerShell):</strong></p>
 <pre><code class="lang-powershell">cd ..\app
 Copy-Item terraform.tfvars.example terraform.tfvars
@@ -567,7 +598,12 @@ sm_database_name = &quot;sqldb-aks-yourco-site1-sm&quot;
 
 # --- Container images ---
 image_registry = &quot;{{ACR_URL}}&quot;
-image_tag        = &quot;{{VERSION}}&quot;
+image_tag      = &quot;{{VERSION}}&quot;
+
+# Creates the pull secret in this site's namespace. Both values are written to
+# Terraform state; see step 3 for the out-of-band alternative.
+registry_username = &quot;YOUR-GHE-USERNAME&quot;
+registry_password = &quot;YOUR-GHE-PAT&quot;
 
 # --- Company admin ---
 company_admin_first_name    = &quot;Admin&quot;
@@ -618,7 +654,7 @@ terraform apply
 <h5>Note</h5>
 <p><strong>First deploys are the slowest.</strong> Every container image is pulled cold and the database-migration and licensing Jobs run inside the Helm install (timeout 30 minutes). Pods can keep converging for several minutes after <code>terraform apply</code> returns: check <code>kubectl get pods -n &lt;name_suffix&gt;</code> and wait for all products to reach <code>Running</code> before judging a deploy failed.</p>
 </div>
-<h3 id="8-access-xmpro">8. Access XMPro</h3>
+<h3 id="9-access-xmpro">9. Access XMPro</h3>
 <p><strong>All platforms:</strong></p>
 <pre><code class="lang-powershell">kubectl get pods -n &lt;name_suffix&gt;
 kubectl get certificate -n &lt;name_suffix&gt;
@@ -683,7 +719,7 @@ xmpro-le-tls   True    xmpro-le-tls   5m
 <pre><code class="lang-bash"># Layer 2 with name_suffix = &quot;site2&quot;, dns_zone_name = &quot;site2.xmpro.yourco.com&quot;
 # Layer 3 with the matching outputs
 </code></pre>
-<p>Each site gets its own namespace, databases, Key Vault, DNS subzone, and TLS certificates, fully isolated, sharing only the cluster, controllers, and gateway IP. No per-site ESO configuration is needed: every site reuses the cluster layer's ESO install and resolves its identity automatically from the ESO ServiceAccount annotation (see <a href="#7-deploy-the-site-application-layer">Step 7</a>).</p>
+<p>Each site gets its own namespace, databases, Key Vault, DNS subzone, and TLS certificates, fully isolated, sharing only the cluster, controllers, and gateway IP. No per-site ESO configuration is needed: every site reuses the cluster layer's ESO install and resolves its identity automatically from the ESO ServiceAccount annotation (see <a href="#8-deploy-the-site-application-layer">Step 8</a>).</p>
 <h2 id="enabling-the-ai-product-later">Enabling the AI Product Later</h2>
 <p>Deployed without AI and want to add it (with the RAG feature) afterwards? No redeployment is needed, re-apply the existing stages in this order:</p>
 <ol>
@@ -734,7 +770,13 @@ Re-apply. The AI database-migration Job runs the SQL, TimescaleDB, and Neo4j mig
 <p><strong>Certificates stuck at <code>READY=False</code></strong>
 → NS delegation likely missing or not propagated. Verify <code>dig ad.&lt;site-zone&gt; +short</code> (Windows: <code>Resolve-DnsName ad.&lt;site-zone&gt; -Type A</code>) returns the gateway Public IP. Then <code>kubectl describe certificate -n &lt;name_suffix&gt;</code> for the cert-manager error detail.</p>
 <p><strong>Pods stuck in <code>ImagePullBackOff</code></strong>
-→ XMPro's registry ({{ACR_URL}}) is anonymous-pull, so this is normally a wrong <code>image_tag</code>, a mistyped <code>image_registry</code>, or nodes that can't reach the registry rather than a credentials problem. Run <code>kubectl describe pod &lt;pod&gt; -n &lt;name_suffix&gt;</code> and read the pull error at the bottom. If you mirror the images to your own authenticated registry, note that the module does not currently wire a pull secret: you would need to create one in the namespace and reference it yourself.</p>
+→ Run <code>kubectl describe pod &lt;pod&gt; -n &lt;name_suffix&gt;</code> and read the pull error at the bottom. Check in this order:</p>
+<ol>
+<li><strong>The pull secret exists.</strong> <code>kubectl get secret xmpro-registry -n &lt;name_suffix&gt;</code>. If it is missing, <code>registry_username</code> and <code>registry_password</code> were not set in the application layer.</li>
+<li><strong>The PAT is valid and scoped.</strong> It needs <code>read:packages</code> and must not have expired. Re-run the step 3 preflight to confirm.</li>
+<li><strong>The tag exists.</strong> A wrong <code>image_tag</code> or a mistyped <code>image_registry</code> produces the same symptom. Compare against <code>docker manifest inspect {{ACR_URL}}/ad:{{VERSION}}</code>.</li>
+<li><strong>The nodes can reach the registry.</strong> Egress restrictions on the cluster will block the pull regardless of credentials.</li>
+</ol>
 <p><strong>SQL connection failures during the dbmigrate Jobs</strong>
 → Confirm <code>db_admin_password</code> matched between the layer 2 and layer 3 tfvars, and that the SQL server's firewall allows Azure services (the example module enables this by default).</p>
 <p><strong>Apply takes longer than 30 minutes</strong>
