@@ -834,6 +834,10 @@ terraform apply
 <li>✅ IRSA-scoped IAM: no static AWS credentials inside the cluster</li>
 <li>✅ Multi-site ready: add sites without touching the cluster layer</li>
 </ul>
+<div class="TIP">
+<h5>Tip</h5>
+<p>The Azure-native monitoring services are not available on EKS, so OTLP export is the primary route for getting XMPro telemetry into an observability backend. XMPro can export traces, metrics, and logs to any OTLP endpoint you nominate. See <a href="../../../technical-reference/observability/configure-opentelemetry.html">Configure OpenTelemetry</a>.</p>
+</div>
 <h2 id="whats-next">What's Next?</h2>
 <p>For guides on setting up your first tenant, uploading agents and connectors, or deploying additional stream hosts, refer to the <strong><a href="../../complete-installation/index.html">Post Deployment Guide</a></strong>.</p>
 <p>Migrating from an existing XMPro v4.4 AWS deployment? See the <strong><a href="upgrade-from-legacy.html">Migration Guide from Legacy AWS Deployment</a></strong>.</p>
@@ -910,7 +914,7 @@ cd ../infra-k8s           &amp;&amp; terraform destroy
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: August 06, 2026</em></small></p>
+    <p><small><em>Last modified: August 12, 2026</em></small></p>
   </div>
 </article>
 

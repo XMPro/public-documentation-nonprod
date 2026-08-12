@@ -171,11 +171,15 @@
 }
 </code></pre>
 <p>The <code>/health/ping</code> endpoint returns the plain text string <code>pong</code> and is suitable for use as a liveness probe (e.g. Azure App Service health check).</p>
+<div class="TIP">
+<h5>Tip</h5>
+<p>Because health endpoints are polled frequently, <code>/health</code> and <code>/health/ping</code> are excluded from OpenTelemetry trace spans by default, along with <code>/version</code>. Requests to them still appear in request metrics. See <a href="observability/configure-opentelemetry.html#excluding-paths-from-traces">Excluding Paths From Traces</a>.</p>
+</div>
 
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: August 06, 2026</em></small></p>
+    <p><small><em>Last modified: August 12, 2026</em></small></p>
   </div>
 </article>
 

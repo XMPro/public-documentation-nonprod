@@ -112,13 +112,17 @@
 <h5>Tip</h5>
 <p>For Azure Terraform deployments, see the <a href="../../installation/deployment/azure-terraform/troubleshooting.html#view-logs-in-azure-portal">Azure Terraform Troubleshooting Guide</a> for information on accessing logs through Application Insights.</p>
 </div>
+<div class="TIP">
+<h5>Tip</h5>
+<p>These log events can also be exported to your own observability backend over OTLP. When a log event is written during an active trace it carries the trace and span identifiers, so your backend can link it to the request that produced it. See <a href="../observability/index.html">Observability and OpenTelemetry</a>.</p>
+</div>
 <h2 id="summary">Summary</h2>
 <p>XMPro log events provide structured diagnostic information across all platform components, enabling rapid issue identification and system health monitoring. Use the product-specific event references above to decode system behavior, assess issue severity, and maintain optimal XMPro performance.</p>
 
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: August 06, 2026</em></small></p>
+    <p><small><em>Last modified: August 12, 2026</em></small></p>
   </div>
 </article>
 

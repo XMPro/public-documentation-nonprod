@@ -31367,6 +31367,36 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "src/technical-reference/observability/backends.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/technical-reference/observability/backends.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "src/technical-reference/observability/configure-opentelemetry.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/technical-reference/observability/configure-opentelemetry.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "src/technical-reference/observability/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/technical-reference/observability/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "src/technical-reference/redis-cache-implementation.md",
       "output": {
         ".html": {
