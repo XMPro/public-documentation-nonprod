@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/technical-reference/redis-cache-implementation.md&amp;version=GBrelease-4.6&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/technical-reference/redis-cache-implementation.md&amp;version=GBmain&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -89,7 +89,7 @@
 
 <div class="NOTE">
 <h5>Note</h5>
-<p>For Azure Terraform deployments, see the <a href="../installation/deployment/azure-terraform/implementation-guide.html#configure-autoscale">Azure Terraform Implementation Guide</a> to enable autoscaling with Redis.</p>
+<p>For Azure Terraform deployments, Redis autoscaling is automatically configured when enabled.</p>
 </div>
 <h2 id="introduction">Introduction</h2>
 <p>XMPro uses Redis as a distributed caching solution to improve performance and enable scalability across multiple application instances. Redis is automatically activated when you enable AutoScale in your XMPro configuration and will gracefully fall back to single-server operation when disabled.</p>
@@ -128,7 +128,7 @@
 </table>
 <h3 id="data-caching">Data Caching</h3>
 <ul>
-<li><strong>Purpose</strong>: Caches real-time Data Stream data sent by the <a href="https://xmpro.gitbook.io/xmpro-app/">XMPro App Agent</a> to App Designer via the <a href="https://xmpro.gitbook.io/data-streams-connector/">Data Streams Connector</a> Data Source. This allows preservation of temporary data even if the App Designer server restarts and avoids consuming the server's memory.</li>
+<li><strong>Purpose</strong>: Caches real-time Data Stream data sent by the <a href="https://xmpro.gitbook.io/integrations/xmpro-app/">XMPro App Agent</a> to App Designer via the <a href="https://xmpro.gitbook.io/integrations/data-streams-connector/">Data Streams Connector</a> Data Source. This allows preservation of temporary data even if the App Designer server restarts and avoids consuming the server's memory.</li>
 <li><strong>Structure</strong>: Key Values are stored in the Redis Cache as a mix of Hash and List types. Groups of Keys are created for each Connection created with the <strong>Data Streams Connector</strong>. The keys are prefixed to indicate their grouping with the following format: <code>DS:&lt;AD Connection Id&gt;-&lt;DS Stream Object Id&gt;:*</code></li>
 </ul>
 <h3 id="signalr-backplane">SignalR Backplane</h3>
@@ -137,7 +137,7 @@
 <li><strong>Single Server Performance</strong>: Even on a single server deployment, Redis backplane can improve SignalR performance by offloading message routing from server memory to Redis, reducing memory pressure and improving scalability for high-frequency real-time updates.</li>
 </ul>
 <h2 id="redis-cache-capacity-and-expiry-configuration-in-xmpro">Redis Cache Capacity and Expiry Configuration in XMPro</h2>
-<p>The <a href="https://xmpro.gitbook.io/xmpro-app/how-to-use/configuration-guide#server">XMPro App Agent</a> and <a href="https://xmpro.gitbook.io/data-streams-connector/how-to-use/configuration#cache">Data Streams Connector</a> provide options to configure how data is stored: Cache Size limits, Sliding Expiry, and Cache Clearing.</p>
+<p>The <a href="https://xmpro.gitbook.io/integrations/xmpro-app/how-to-use/configuration-guide#server">XMPro App Agent</a> and <a href="https://xmpro.gitbook.io/integrations/data-streams-connector/how-to-use/configuration#cache">Data Streams Connector</a> provide options to configure how data is stored: Cache Size limits, Sliding Expiry, and Cache Clearing.</p>
 <ol>
 <li><p><strong>Cache Size Limits</strong>:</p>
 <ul>
@@ -222,7 +222,7 @@
 <h2 id="redis-server-configuration">Redis Server Configuration</h2>
 <div class="NOTE">
 <h5>Note</h5>
-<p>For Azure Terraform deployments, see the <a href="../installation/deployment/azure-terraform/implementation-guide.html#configure-autoscale">Azure Terraform Implementation Guide</a> for details on how to enable autoscaling with Redis.</p>
+<p>For Azure Terraform deployments, Redis autoscaling is automatically configured when enabled.</p>
 </div>
 <h3 id="connection-configuration">Connection Configuration</h3>
 <ul>
@@ -301,7 +301,7 @@ redis-cli CONFIG GET maxmemory-policy
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: July 17, 2026</em></small></p>
+    <p><small><em>Last modified: August 19, 2026</em></small></p>
   </div>
 </article>
 

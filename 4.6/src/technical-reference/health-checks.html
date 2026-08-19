@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/technical-reference/health-checks.md&amp;version=GBrelease-4.6&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/technical-reference/health-checks.md&amp;version=GBmain&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -89,7 +89,7 @@
 
 <div class="NOTE">
 <h5>Note</h5>
-<p>For Azure Terraform deployments, see the <a href="../installation/deployment/azure-terraform/implementation-guide.html#health-checks-configuration">Azure Terraform Implementation Guide</a> for automated health checks configuration.</p>
+<p>For Azure Terraform deployments, health checks are automatically configured and enabled.</p>
 </div>
 <div class="video-container">
     <iframe width="560" height="315" src="https://www.youtube.com/embed/W1LWcSUrgTs" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -101,72 +101,85 @@
 <li>Database connectivity</li>
 <li>Redis Cache status (when configured)</li>
 </ul>
-<p>Health checks are disabled by default but are highly recommended for production environments to ensure service reliability and enable automatic recovery mechanisms.</p>
+<p>Health checks are always enabled in all XMPro products.</p>
 <h2 id="health-endpoints">Health Endpoints</h2>
 <p>Each XMPro application exposes health check endpoints:</p>
 <table>
 <thead>
 <tr>
 <th>Application</th>
-<th>Health Endpoint</th>
-<th>Health UI</th>
+<th>Endpoint</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Application Designer (AD)</td>
 <td><code>/health</code></td>
-<td><code>/health-ui</code></td>
+<td>JSON health status</td>
+</tr>
+<tr>
+<td>Application Designer (AD)</td>
+<td><code>/health/ping</code></td>
+<td>Liveness probe (returns <code>pong</code>)</td>
 </tr>
 <tr>
 <td>Data Stream Designer (DS)</td>
 <td><code>/health</code></td>
-<td><code>/health-ui</code></td>
+<td>JSON health status</td>
+</tr>
+<tr>
+<td>Data Stream Designer (DS)</td>
+<td><code>/health/ping</code></td>
+<td>Liveness probe (returns <code>pong</code>)</td>
 </tr>
 <tr>
 <td>Subscription Manager (SM)</td>
 <td><code>/health</code></td>
-<td><code>/health-ui</code></td>
+<td>JSON health status</td>
+</tr>
+<tr>
+<td>Subscription Manager (SM)</td>
+<td><code>/health/ping</code></td>
+<td>Liveness probe (returns <code>pong</code>)</td>
 </tr>
 <tr>
 <td>XMPro AI</td>
 <td><code>/health</code></td>
-<td><code>/health-ui</code></td>
+<td>JSON health status</td>
+</tr>
+<tr>
+<td>XMPro AI</td>
+<td><code>/health/ping</code></td>
+<td>Liveness probe (returns <code>pong</code>)</td>
 </tr>
 </tbody>
 </table>
-<p>The health endpoint returns JSON with detailed status information:</p>
+<p>The <code>/health</code> endpoint returns JSON with detailed status information:</p>
 <pre><code class="lang-json">{
   &quot;status&quot;: &quot;Healthy&quot;,
-  &quot;data&quot;: {},
-  &quot;description&quot;: &quot;Service is running&quot;,
-  &quot;duration&quot;: &quot;00:00:00.0123456&quot;,
-  &quot;tags&quot;: [&quot;database&quot;, &quot;cache&quot;]
+  &quot;totalDuration&quot;: &quot;00:00:00.0123456&quot;,
+  &quot;entries&quot;: {
+    &quot;database&quot;: {
+      &quot;data&quot;: {},
+      &quot;description&quot;: null,
+      &quot;duration&quot;: &quot;00:00:00.0050000&quot;,
+      &quot;status&quot;: &quot;Healthy&quot;,
+      &quot;tags&quot;: [&quot;database&quot;]
+    }
+  }
 }
 </code></pre>
-<h2 id="health-ui">Health UI</h2>
-<p>The Health UI provides a user-friendly display of health check results:</p>
-<ul>
-<li>Accessible via <code>/health-ui</code> path</li>
-<li>Shows real-time status of all configured health checks</li>
-<li>Displays response times and error details</li>
-<li>Provides historical health data</li>
-</ul>
-<h2 id="configure-health-checks">Configure Health Checks</h2>
-<div class="NOTE">
-<h5>Note</h5>
-<p>For Azure Terraform deployments, health checks are automatically configured and enabled. See the <a href="../installation/deployment/azure-terraform/implementation-guide.html#health-checks-configuration">Azure Terraform Implementation Guide</a> for details.</p>
-</div>
-<h2 id="adding-third-party-endpoints">Adding Third-Party Endpoints</h2>
-<div class="NOTE">
-<h5>Note</h5>
-<p>For Azure Terraform deployments, third-party endpoints can be configured through environment variables. See the <a href="../installation/deployment/azure-terraform/implementation-guide.html#health-checks-configuration">Azure Terraform Implementation Guide</a> for details.</p>
+<p>The <code>/health/ping</code> endpoint returns the plain text string <code>pong</code> and is suitable for use as a liveness probe (e.g. Azure App Service health check).</p>
+<div class="TIP">
+<h5>Tip</h5>
+<p>Because health endpoints are polled frequently, <code>/health</code> and <code>/health/ping</code> are excluded from OpenTelemetry trace spans by default, along with <code>/version</code>. Requests to them still appear in request metrics. See <a href="observability/configure-opentelemetry.html#excluding-paths-from-traces">Excluding Paths From Traces</a>.</p>
 </div>
 
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: July 17, 2026</em></small></p>
+    <p><small><em>Last modified: August 19, 2026</em></small></p>
   </div>
 </article>
 

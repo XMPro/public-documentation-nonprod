@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../../../">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/deployment/azure-terraform/implementation-guide.md&amp;version=GBrelease-4.6&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/deployment/azure-terraform/implementation-guide.md&amp;version=GBmain&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -92,7 +92,7 @@
 <h2 id="prerequisites">Prerequisites</h2>
 <p>Before starting, ensure you have:</p>
 <ul>
-<li>Completed all <a href="../../install.md">Common Prerequisites</a></li>
+<li>Completed all <a href="../../install.html">Common Prerequisites</a></li>
 <li>Completed all <a href="../../azure-terraform-preparation.html">Azure-specific requirements</a></li>
 </ul>
 <h2 id="deployment-options">Deployment Options</h2>
@@ -212,9 +212,7 @@ az keyvault secret show --vault-name &quot;kv-sm-xmpro-xxx&quot; --name &quot;RE
 <p>To learn more about Redis configuration and its impact on XMPro performance, see the <a href="../../../technical-reference/redis-cache-implementation.html">Redis Cache Implementation</a>.</p>
 </div>
 <h3 id="health-checks-configuration">Health Checks Configuration</h3>
-<p>The module automatically configures comprehensive health checks for Application Designer (AD) and Data Stream Designer (DS) services. Health checks are enabled by default via feature flags.</p>
-<h4 id="automatic-health-check-configuration">Automatic Health Check Configuration</h4>
-<p>Health checks are automatically enabled by default for Application Designer (AD) and Data Stream Designer (DS) services.</p>
+<p>Health checks are automatically configured and always enabled for Application Designer (AD), Data Stream Designer (DS), Subscription Manager (SM), and XMPro AI services.</p>
 <h4 id="health-check-endpoints">Health Check Endpoints</h4>
 <p>The following services expose health check endpoints:</p>
 <table>
@@ -222,49 +220,35 @@ az keyvault secret show --vault-name &quot;kv-sm-xmpro-xxx&quot; --name &quot;RE
 <tr>
 <th>Service</th>
 <th>Health Check URL</th>
-<th>Health UI URL</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Application Designer</td>
 <td><code>/health</code></td>
-<td><code>/health-ui</code></td>
 </tr>
 <tr>
 <td>Data Stream Designer</td>
 <td><code>/health</code></td>
-<td><code>/health-ui</code></td>
+</tr>
+<tr>
+<td>Subscription Manager</td>
+<td><code>/health</code></td>
+</tr>
+<tr>
+<td>XMPro AI</td>
+<td><code>/health</code></td>
 </tr>
 </tbody>
 </table>
-<div class="NOTE">
-<h5>Note</h5>
-<p>Subscription Manager (SM) does not expose health check endpoints. It uses traditional Windows Web App monitoring. To verify SM is running, use the <code>/version</code> endpoint instead.</p>
-</div>
-<h4 id="cross-service-monitoring">Cross-Service Monitoring</h4>
-<p>Each service (AD, DS) is automatically configured to monitor other services that expose health endpoints.</p>
 <h4 id="monitoring-health-status">Monitoring Health Status</h4>
 <p>To verify service status:</p>
 <pre><code class="lang-bash"># Check individual service health
 curl &quot;$(terraform output -raw ad_app_url)/health&quot;
 curl &quot;$(terraform output -raw ds_app_url)/health&quot;
-
-# Check SM version (alternative to health check)
-curl &quot;$(terraform output -raw sm_app_url)/version&quot;
-
-# Access Health UI dashboard in browser
-&quot;$(terraform output -raw ad_app_url)/health-ui&quot;
+curl &quot;$(terraform output -raw sm_app_url)/health&quot;
 </code></pre>
-<p>Expected response: <code>200 OK</code> with health status JSON showing the status of all monitored services.</p>
-<h4 id="health-dashboard">Health Dashboard</h4>
-<p>The Health UI provides a visual dashboard accessible at <code>/health-ui</code> on AD and DS services. The dashboard shows:</p>
-<ul>
-<li>Real-time status of all XMPro services</li>
-<li>Response times and availability metrics</li>
-<li>Service dependency health status</li>
-<li>Historical health data</li>
-</ul>
+<p>Expected response: <code>200 OK</code> with health status JSON.</p>
 <div class="NOTE">
 <h5>Note</h5>
 <p>For detailed health check configuration and troubleshooting, see the <a href="../../../technical-reference/health-checks.html">Health Checks</a> technical reference.</p>
@@ -415,7 +399,7 @@ curl -f &quot;$(terraform output -raw sm_app_url)/version&quot;
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: July 17, 2026</em></small></p>
+    <p><small><em>Last modified: August 19, 2026</em></small></p>
   </div>
 </article>
 

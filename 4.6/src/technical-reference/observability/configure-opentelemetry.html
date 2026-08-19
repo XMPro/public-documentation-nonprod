@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Configure OpenTelemetry | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Configure OpenTelemetry | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      <meta name="description" content="Enable OTLP telemetry export from XMPro products and configure the endpoint, protocol, authentication, trace filtering, and log export level">
+      <link rel="icon" href="../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/technical-reference/observability/configure-opentelemetry.md&amp;version=GBmain&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="configure-opentelemetry">Configure OpenTelemetry</h1>
+
+<div class="NOTE">
+<h5>Note</h5>
+<p>OpenTelemetry export is opt-in. Every XMPro product ships with it disabled, and no telemetry is sent until you supply an OTLP endpoint.</p>
+</div>
+<h2 id="introduction">Introduction</h2>
+<p>XMPro products export traces, metrics, and logs over OTLP to an endpoint you provide, either a collector you run or a vendor service that accepts OTLP directly. Configuration uses the same <code>OpenTelemetry</code> section in every product, so once you have configured one service the rest follow the same shape. The standard OpenTelemetry environment variables are also honoured, which means an existing collector deployment usually needs little XMPro-specific configuration.</p>
+<p>This guide covers what must be set before export starts, the full list of configuration keys, how environment variables interact with <code>appsettings.json</code>, configuration for each deployment type, and troubleshooting when telemetry doesn't arrive. If you are new to XMPro's telemetry, read <a href="index.html">Observability and OpenTelemetry</a> first.</p>
+<h2 id="minimum-configuration">Minimum Configuration</h2>
+<p>For most deployments the whole task is four values. Set them, then point your collector at whichever backend you run:</p>
+<pre><code class="lang-json">{
+  &quot;OpenTelemetry&quot;: {
+    &quot;Enabled&quot;: true,
+    &quot;Endpoint&quot;: &quot;http://collector:4317&quot;,
+    &quot;Protocol&quot;: &quot;Grpc&quot;,
+    &quot;Headers&quot;: &quot;Authorization=Bearer your-token-here&quot;
+  }
+}
+</code></pre>
+<p>Give the base URL only. For <code>HttpProtobuf</code> the exporter appends the signal path itself, as described in <a href="#choosing-a-protocol">Choosing a Protocol</a>. Drop <code>Headers</code> if your collector does not require authentication.</p>
+<p>That is the complete setup. <a href="backends.html">Exporting to a Backend</a> covers routing the signals onward. The rest of this page is detail for tuning and for when something does not arrive.</p>
+<h2 id="enabling-opentelemetry">Enabling OpenTelemetry</h2>
+<p>Three conditions must all be satisfied before a product exports anything. They are evaluated in order:</p>
+<ol>
+<li><strong>The kill switch must not be set.</strong> If <code>OTEL_SDK_DISABLED</code> is <code>true</code>, OpenTelemetry is disabled regardless of every other setting.</li>
+<li><strong>The feature must be enabled.</strong> <code>OpenTelemetry:Enabled</code> must be <code>true</code>.</li>
+<li><strong>An endpoint must resolve.</strong> Either <code>OTEL_EXPORTER_OTLP_ENDPOINT</code> or <code>OpenTelemetry:Endpoint</code> must contain a value.</li>
+</ol>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>If any of the three conditions is not met, the product starts normally and exports nothing. No error is logged and no warning is raised, because a disabled telemetry pipeline is a valid configuration. If telemetry is missing, check these three conditions first.</p>
+</div>
+<h2 id="configuration-keys">Configuration Keys</h2>
+<p>All keys live under the <code>OpenTelemetry</code> section:</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Enabled</code></td>
+<td><code>false</code></td>
+<td>Master switch for OTLP export. Must be <code>true</code> to export anything.</td>
+</tr>
+<tr>
+<td><code>Endpoint</code></td>
+<td><em>(empty)</em></td>
+<td>OTLP endpoint, for example <code>http://collector:4317</code>. Required unless supplied by <code>OTEL_EXPORTER_OTLP_ENDPOINT</code>.</td>
+</tr>
+<tr>
+<td><code>Protocol</code></td>
+<td><code>Grpc</code></td>
+<td>Either <code>Grpc</code> or <code>HttpProtobuf</code>.</td>
+</tr>
+<tr>
+<td><code>Headers</code></td>
+<td><em>(empty)</em></td>
+<td>Export headers in <code>key=value,key2=value2</code> format, used for authentication.</td>
+</tr>
+<tr>
+<td><code>Tracing:ExcludedPaths</code></td>
+<td><code>/version</code>, <code>/health</code>, <code>/health/ping</code></td>
+<td>Request paths that do not produce trace spans.</td>
+</tr>
+<tr>
+<td><code>Logging:MinimumLevel</code></td>
+<td><code>Information</code></td>
+<td>Minimum severity for log export. Accepts <code>Verbose</code>, <code>Debug</code>, <code>Information</code>, <code>Warning</code>, <code>Error</code>, or <code>Fatal</code>.</td>
+</tr>
+</tbody>
+</table>
+<p>A complete <code>appsettings.json</code> section looks like this:</p>
+<pre><code class="lang-json">{
+  &quot;OpenTelemetry&quot;: {
+    &quot;Enabled&quot;: true,
+    &quot;Endpoint&quot;: &quot;http://collector:4317&quot;,
+    &quot;Protocol&quot;: &quot;Grpc&quot;,
+    &quot;Headers&quot;: &quot;Authorization=Bearer your-token-here&quot;,
+    &quot;Tracing&quot;: {
+      &quot;ExcludedPaths&quot;: [ &quot;/version&quot;, &quot;/health&quot;, &quot;/health/ping&quot; ]
+    },
+    &quot;Logging&quot;: {
+      &quot;MinimumLevel&quot;: &quot;Information&quot;
+    }
+  }
+}
+</code></pre>
+<p>Stream Host has no HTTP server, so <code>Tracing:ExcludedPaths</code> has no effect there and is omitted from its configuration file.</p>
+<h2 id="using-environment-variables">Using Environment Variables</h2>
+<p>XMPro reads configuration from environment variables as well as <code>appsettings.json</code>, which is usually the better choice for Kubernetes and container deployments.</p>
+<p>XMPro keys use the <code>xm__</code> prefix with double underscores replacing the colons:</p>
+<pre><code class="lang-bash">xm__OpenTelemetry__Enabled=true
+xm__OpenTelemetry__Endpoint=http://collector:4317
+xm__OpenTelemetry__Protocol=HttpProtobuf
+xm__OpenTelemetry__Tracing__ExcludedPaths__0=/health
+xm__OpenTelemetry__Tracing__ExcludedPaths__1=/version
+xm__OpenTelemetry__Logging__MinimumLevel=Warning
+</code></pre>
+<p>The standard OpenTelemetry environment variables are also read, and they take priority over the equivalent <code>appsettings.json</code> values:</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>OTEL_SDK_DISABLED</code></td>
+<td>When <code>true</code>, disables OpenTelemetry entirely.</td>
+</tr>
+<tr>
+<td><code>OTEL_EXPORTER_OTLP_ENDPOINT</code></td>
+<td>Overrides <code>OpenTelemetry:Endpoint</code>.</td>
+</tr>
+<tr>
+<td><code>OTEL_EXPORTER_OTLP_HEADERS</code></td>
+<td>Overrides <code>OpenTelemetry:Headers</code>.</td>
+</tr>
+<tr>
+<td><code>OTEL_RESOURCE_ATTRIBUTES</code></td>
+<td>Adds resource attributes to every signal.</td>
+</tr>
+</tbody>
+</table>
+<div class="WARNING">
+<h5>Warning</h5>
+<p><code>OTEL_EXPORTER_OTLP_HEADERS</code> replaces <code>OpenTelemetry:Headers</code> completely. The two values are not merged. If you set an API key in <code>appsettings.json</code> and a tracing header in the environment variable, only the environment variable is used and the API key is lost.</p>
+</div>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The standard variables in the table above do not apply to Stream Host, which reads only <code>xm__</code>-prefixed names. Use <code>xm__OpenTelemetry__Endpoint</code> and <code>xm__OpenTelemetry__Headers</code> there. This also has the advantage of covering the log sink, as described under <a href="#stream-host">Stream Host</a>.</p>
+</div>
+<h2 id="choosing-a-protocol">Choosing a Protocol</h2>
+<p>Both OTLP transports are supported, and the port your collector listens on differs between them:</p>
+<table>
+<thead>
+<tr>
+<th>Protocol</th>
+<th>Default collector port</th>
+<th>When to use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Grpc</code></td>
+<td>4317</td>
+<td>Direct connections to a collector, typically inside the same network or cluster.</td>
+</tr>
+<tr>
+<td><code>HttpProtobuf</code></td>
+<td>4318</td>
+<td>Collectors reached through an HTTP ingress, load balancer, or proxy.</td>
+</tr>
+</tbody>
+</table>
+<p>When <code>HttpProtobuf</code> is used, the exporter appends the signal path to your endpoint, so supply the base URL only. An endpoint of <code>https://collector.example.com</code> becomes <code>https://collector.example.com/v1/traces</code> for traces and <code>https://collector.example.com/v1/metrics</code> for metrics.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The application default is <code>Grpc</code>, but the XMPro Helm charts set <code>HttpProtobuf</code> because Kubernetes deployments usually reach the collector through an ingress. If you deploy with Helm and expect gRPC, set the protocol explicitly.</p>
+</div>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p><strong>Identity Server is an exception: it always uses <code>HttpProtobuf</code> and cannot be changed.</strong> The protocol is fixed in the product rather than read from configuration. The <code>is.otel.protocol</code> Helm value exists, but it is ignored, so setting it has no effect. If your collector listens for gRPC on 4317, Identity Server still sends HTTP/protobuf and its telemetry will not arrive, with no error raised. Make sure your collector also accepts OTLP over HTTP on 4318, and point Identity Server at that port. Every other service honours the <code>Protocol</code> setting.</p>
+</div>
+<h2 id="excluding-paths-from-traces">Excluding Paths From Traces</h2>
+<p>High-frequency utility endpoints generate spans that add cost without adding insight. Three paths are excluded by default: <code>/version</code>, <code>/health</code>, and <code>/health/ping</code>. These are the endpoints described in <a href="../health-checks.html">Health Checks</a>.</p>
+<p>Pattern matching works as follows:</p>
+<ul>
+<li>Matching is case-insensitive.</li>
+<li>A pattern matches that exact path only, unless it ends with <code>/*</code>.</li>
+<li>A pattern ending in <code>/*</code> matches the prefix and everything beneath it. <code>/health</code> matches only <code>/health</code>, while <code>/health/*</code> also matches <code>/health/ping</code>.</li>
+<li>Leading slashes are added if you omit them, blank entries are dropped, and duplicates are removed.</li>
+<li>The catch-all entries <code>/</code> and <code>/*</code> are ignored, so you cannot accidentally disable all tracing this way.</li>
+</ul>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>The catch-all protection above does not currently apply to Identity Server. Identity Server accepts <code>/*</code> as a pattern, and because it matches every request this silently disables all of its trace spans. Avoid <code>/*</code> in the Identity Server excluded paths and list the paths you want dropped instead.</p>
+</div>
+<p><strong>Example:</strong> to exclude a metrics scrape endpoint in addition to the defaults, list the full set rather than just the new value:</p>
+<pre><code class="lang-json">{
+  &quot;OpenTelemetry&quot;: {
+    &quot;Tracing&quot;: {
+      &quot;ExcludedPaths&quot;: [ &quot;/version&quot;, &quot;/health/*&quot;, &quot;/internal/metrics&quot; ]
+    }
+  }
+}
+</code></pre>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>Excluded paths apply to trace spans only. Requests to excluded paths still appear in ASP.NET Core request metrics, which is deliberate because those metrics are low cardinality and remain useful for availability monitoring. If you exclude <code>/health</code> and still see health requests in <code>http.server.*</code> metrics, that is expected behaviour.</p>
+</div>
+<h2 id="configuring-log-export">Configuring Log Export</h2>
+<p>Logs are exported by Serilog rather than by the OpenTelemetry SDK, and <code>OpenTelemetry:Logging:MinimumLevel</code> sets the floor for what reaches the OTLP endpoint. The default is <code>Information</code>.</p>
+<p>This setting can only filter further, not add detail. Your root Serilog configuration decides which events are produced at all, and only those events are offered to the OTLP exporter. Raising <code>Logging:MinimumLevel</code> to <code>Debug</code> will not produce debug logs if your Serilog minimum level is <code>Information</code>. To export more detail, lower the Serilog level first, then set the export floor.</p>
+<p>Values outside the accepted range fall back to <code>Information</code> rather than suppressing export, so a typo will not silently stop your logs.</p>
+<p>Log events written inside an active trace carry the trace and span identifiers automatically, so your backend can link a log line to the request that produced it. No additional configuration is required for this correlation.</p>
+<h2 id="deployment-specific-configuration">Deployment-Specific Configuration</h2>
+<p>The keys are the same everywhere, but how you supply them depends on how XMPro is deployed.</p>
+<h3 id="kubernetes-with-helm">Kubernetes With Helm</h3>
+<p>This section covers the XMPro chart, which deploys App Designer, Data Stream Designer, Subscription Manager, Identity Server, XMPro AI, and Stream Host. Each has an <code>otel</code> block in the Helm values:</p>
+<pre><code class="lang-yaml">ad:
+  otel:
+    enabled: true
+    protocol: &quot;HttpProtobuf&quot;
+    clusterName: &quot;my-cluster&quot;
+    tracing:
+      excludedPaths: []
+    logging:
+      minimumLevel: &quot;&quot;
+</code></pre>
+<p>Not every service supports every key. Identity Server and Stream Host each accept a subset:</p>
+<table>
+<thead>
+<tr>
+<th>Service</th>
+<th>Values key</th>
+<th>Supported settings</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>App Designer</td>
+<td><code>ad.otel</code></td>
+<td><code>enabled</code>, <code>protocol</code>, <code>clusterName</code>, <code>tracing.excludedPaths</code>, <code>logging.minimumLevel</code></td>
+</tr>
+<tr>
+<td>Data Stream Designer</td>
+<td><code>ds.otel</code></td>
+<td>As above</td>
+</tr>
+<tr>
+<td>Subscription Manager</td>
+<td><code>sm.otel</code></td>
+<td>As above</td>
+</tr>
+<tr>
+<td>XMPro AI</td>
+<td><code>ai.otel</code></td>
+<td>As above</td>
+</tr>
+<tr>
+<td>Identity Server</td>
+<td><code>is.otel</code></td>
+<td><code>enabled</code>, <code>clusterName</code>, <code>tracing.excludedPaths</code>. Does <strong>not</strong> accept <code>protocol</code> or <code>logging.minimumLevel</code>. Identity Server always uses <code>HttpProtobuf</code>, so it needs the HTTP port (4318) rather than the gRPC port. Its log export level is the application default, <code>Information</code>.</td>
+</tr>
+<tr>
+<td>Stream Host</td>
+<td><code>sh.otel</code></td>
+<td><code>enabled</code>, <code>protocol</code>, <code>clusterName</code>, <code>logging.minimumLevel</code>. Has no <code>tracing</code> block, because Stream Host serves no HTTP traffic.</td>
+</tr>
+</tbody>
+</table>
+<p>The endpoint and authentication headers are never set in values. They are read from the secret named by <code>global.secretsName</code>, using the keys <code>xmpro-otel-endpoint</code> and <code>xmpro-otel-headers</code>.</p>
+<p>Kubernetes resource attributes are wired automatically. <code>OTEL_RESOURCE_ATTRIBUTES</code> is populated with <code>k8s.namespace.name</code> and <code>k8s.pod.name</code> from the pod metadata, plus <code>k8s.cluster.name</code> from <code>clusterName</code>.</p>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>Stream Host reads configuration only from <code>xm__</code>-prefixed environment variables, so the chart supplies its endpoint and headers as <code>xm__OpenTelemetry__Endpoint</code> and <code>xm__OpenTelemetry__Headers</code>. The standard <code>OTEL_EXPORTER_OTLP_ENDPOINT</code> and <code>OTEL_EXPORTER_OTLP_HEADERS</code> variables described in <a href="#using-environment-variables">Using Environment Variables</a> do <strong>not</strong> apply to Stream Host. If you deploy Stream Host with the standalone chart instead of the bundled one, supply those two <code>xm__</code> names through <code>sh.envSecretRefs</code>.</p>
+</div>
+<div class="WARNING">
+<h5>Warning</h5>
+<p><code>excludedPaths</code> in Helm values overrides the application defaults by index rather than appending to them. Because the chart writes each entry as <code>xm__OpenTelemetry__Tracing__ExcludedPaths__{index}</code>, supplying two entries replaces only the first two defaults and leaves the third in place. Always list the complete set of paths you want, or leave the list empty to keep the defaults.</p>
+</div>
+<p>On an AKS deployment, the Application Insights connection provisioned with the cluster continues to operate independently. Enabling OpenTelemetry does not disable it, and no Application Insights setting needs to change.</p>
+<h3 id="terraform">Terraform</h3>
+<p>If you deploy AKS or EKS with the XMPro Terraform modules, you set these values as module variables rather than editing Helm values directly. The site application layer exposes:</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Type</th>
+<th>Default</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>enable_otel</code></td>
+<td>bool</td>
+<td><code>false</code></td>
+<td>Master switch for OTLP export</td>
+</tr>
+<tr>
+<td><code>otel_endpoint</code></td>
+<td>string</td>
+<td><code>&quot;&quot;</code></td>
+<td>Written to the <code>xmpro-otel-endpoint</code> secret key</td>
+</tr>
+<tr>
+<td><code>otel_headers</code></td>
+<td>string</td>
+<td><code>&quot;&quot;</code></td>
+<td>Marked <strong>sensitive</strong>; written to the <code>xmpro-otel-headers</code> secret key</td>
+</tr>
+<tr>
+<td><code>otel_protocol</code></td>
+<td>string</td>
+<td><code>&quot;HttpProtobuf&quot;</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>otel_cluster_name</code></td>
+<td>string</td>
+<td><code>&quot;&quot;</code></td>
+<td>Becomes the <code>k8s.cluster.name</code> resource attribute</td>
+</tr>
+<tr>
+<td><code>otel_tracing_excluded_paths</code></td>
+<td>list(string)</td>
+<td><code>[]</code></td>
+<td>Empty keeps the application defaults</td>
+</tr>
+<tr>
+<td><code>otel_logging_minimum_level</code></td>
+<td>string</td>
+<td><code>&quot;&quot;</code></td>
+<td>Empty uses the application default, <code>Information</code></td>
+</tr>
+</tbody>
+</table>
+<p>This is where the secret keys in the Helm section come from: the module writes <code>otel_endpoint</code> and <code>otel_headers</code> into the secret store under those names.</p>
+<p>A minimal set of values:</p>
+<pre><code class="lang-hcl">enable_otel       = true
+otel_endpoint     = &quot;https://collector.example.com&quot;
+otel_cluster_name = &quot;my-aks-cluster&quot;
+# otel_headers supplied via TF_VAR_otel_headers, not committed
+</code></pre>
+<p>Because <code>otel_headers</code> is marked sensitive, supply it through a pipeline variable or <code>TF_VAR_otel_headers</code> rather than committing it to a <code>.tfvars</code> file.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p><code>otel_logging_minimum_level</code> is validated at plan time against <code>Verbose</code>, <code>Debug</code>, <code>Information</code>, <code>Warning</code>, <code>Error</code>, and <code>Fatal</code>. An invalid value fails the plan. This is stricter than the application itself, which falls back to <code>Information</code> when the value is not recognised.</p>
+</div>
+<div class="WARNING">
+<h5>Warning</h5>
+<p><strong><code>enable_otel</code> means something different in the Azure App Service deployment.</strong> In the <code>terraform-xmpro-azure</code> module it does not enable OTLP export. It creates Azure diagnostic settings on the App Services and container instances to ship logs to an Event Hub, and it requires <code>observability_eventhub_rule_id</code> to be set as well. The in-application telemetry path on Azure App Service is Application Insights, not the OpenTelemetry export described on this page. Everything here applies to the Kubernetes deployments.</p>
+</div>
+<h3 id="stream-host">Stream Host</h3>
+<p>Stream Host runs as a worker process on Docker, as a Windows service, or as a console application. Configure it through <code>appsettings.json</code> or environment variables:</p>
+<pre><code class="lang-json">{
+  &quot;OpenTelemetry&quot;: {
+    &quot;Enabled&quot;: true,
+    &quot;Endpoint&quot;: &quot;http://collector:4317&quot;,
+    &quot;Protocol&quot;: &quot;Grpc&quot;,
+    &quot;Logging&quot;: {
+      &quot;MinimumLevel&quot;: &quot;Information&quot;
+    }
+  }
+}
+</code></pre>
+<p>Because Stream Host serves no HTTP traffic, it produces no ASP.NET Core spans or metrics and the <code>Tracing</code> section does not apply. It does emit its own stream and agent instruments in addition to the standard runtime and process metrics.</p>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>On Stream Host, set authentication headers with <code>OpenTelemetry:Headers</code> (or <code>xm__OpenTelemetry__Headers</code>) rather than the standard <code>OTEL_EXPORTER_OTLP_HEADERS</code> variable. The standard variable reaches the trace and metric exporters, but not the log sink, so an authenticated collector accepts traces and metrics while rejecting logs. Setting the value in configuration covers all three signals.</p>
+</div>
+<h2 id="verifying-the-configuration">Verifying the Configuration</h2>
+<p>Once you have enabled export and restarted the service, confirm telemetry is arriving:</p>
+<ol>
+<li><strong>Check your collector is receiving data.</strong> Most collectors expose their own metrics for received spans and metric points. A collector that reports zero received items means the problem is on the XMPro side or in the network path.</li>
+<li><strong>Look for the service name.</strong> Search your backend for the <code>service.name</code> values listed in <a href="index.html">Observability and OpenTelemetry</a>. A service that has never exported will not appear at all.</li>
+<li><strong>Generate traffic on a path that is not excluded.</strong> Requests to <code>/health</code> produce no spans by design, so use a normal application page or API call when testing traces.</li>
+<li><strong>Confirm resource attributes.</strong> Each signal should carry <code>service.version</code> and <code>xmpro.build.commit</code>. Their presence confirms the resource configuration is being applied.</li>
+</ol>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<ol>
+<li><p><strong>No telemetry of any kind arrives</strong></p>
+<p><strong>Fix</strong>: Work through the three activation conditions in <a href="#enabling-opentelemetry">Enabling OpenTelemetry</a>. Confirm <code>OTEL_SDK_DISABLED</code> is not set to <code>true</code> anywhere in the environment, confirm <code>OpenTelemetry:Enabled</code> is <code>true</code>, and confirm an endpoint is present in either <code>OTEL_EXPORTER_OTLP_ENDPOINT</code> or <code>OpenTelemetry:Endpoint</code>.</p>
+</li>
+<li><p><strong>Connection refused or timeouts in the service logs</strong></p>
+<p><strong>Fix</strong>: Check the protocol and port agree. <code>Grpc</code> normally uses 4317 and <code>HttpProtobuf</code> uses 4318. Sending gRPC to an HTTP receiver, or the reverse, fails even when the host and port are reachable.</p>
+</li>
+<li><p><strong>Traces and metrics arrive but logs do not</strong></p>
+<p><strong>Fix</strong>: Logs use a separate export path through Serilog. Check <code>OpenTelemetry:Logging:MinimumLevel</code> and confirm your root Serilog minimum level is producing events at that severity or lower.</p>
+<p>If your collector requires authentication and you set the credentials with <code>OTEL_EXPORTER_OTLP_HEADERS</code>, that variable does not reach the Stream Host log sink, so the collector rejects the logs while still accepting traces and metrics. Set <code>OpenTelemetry:Headers</code> in configuration instead, which covers all three signals.</p>
+</li>
+<li><p><strong>Authentication failures at the collector</strong></p>
+<p><strong>Fix</strong>: Confirm the header format is <code>key=value,key2=value2</code> with no surrounding quotes. Remember that <code>OTEL_EXPORTER_OTLP_HEADERS</code> replaces the <code>appsettings.json</code> value rather than merging with it, so a header set in both places may not be what you expect.</p>
+</li>
+<li><p><strong>Requests to health endpoints still appear in metrics</strong></p>
+<p><strong>Fix</strong>: This is expected. Excluded paths suppress trace spans only. See <a href="#excluding-paths-from-traces">Excluding Paths From Traces</a>.</p>
+</li>
+<li><p><strong>A path added to <code>excludedPaths</code> in Helm is still traced</strong></p>
+<p><strong>Fix</strong>: Helm overrides the defaults by index rather than appending. List the complete set of paths you want excluded, including the defaults you wish to keep.</p>
+</li>
+</ol>
+<h2 id="security-considerations">Security Considerations</h2>
+<div class="CAUTION">
+<h5>Caution</h5>
+<p>Exported log events may contain values from your data and configuration. Treat the OTLP endpoint as a destination that receives potentially sensitive information, and secure it accordingly.</p>
+</div>
+<p>Before enabling export in production:</p>
+<ul>
+<li>Use TLS for the OTLP endpoint, and prefer <code>https</code> over <code>http</code> for <code>HttpProtobuf</code>.</li>
+<li>Authenticate the export path using <code>Headers</code>, and store the value in a secret store rather than in <code>appsettings.json</code>.</li>
+<li>Review <code>OpenTelemetry:Logging:MinimumLevel</code>. Lower severities produce more detail and therefore more opportunity to export values you would rather keep inside the deployment.</li>
+<li>Restrict network access to the endpoint so that only XMPro services can reach it.</li>
+</ul>
+<h2 id="summary">Summary</h2>
+<p>Export starts only when the kill switch is clear, <code>OpenTelemetry:Enabled</code> is <code>true</code>, and an endpoint resolves, and a failure in any of the three is silent by design. Configuration is identical across products, with standard OpenTelemetry environment variables taking priority over <code>appsettings.json</code> and headers replacing rather than merging. Excluded paths reduce trace volume without affecting metrics, and log export runs through Serilog with its own severity floor that can filter but never add detail. Once telemetry is flowing, see <a href="backends.html">Exporting to a Backend</a> for routing it to your observability stack.</p>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: August 19, 2026</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

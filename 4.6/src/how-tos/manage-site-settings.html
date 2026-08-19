@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/how-tos/manage-site-settings.md&amp;version=GBrelease-4.6&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/how-tos/manage-site-settings.md&amp;version=GBmain&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -119,16 +119,6 @@
 <p><em>Added v4.4.0</em></p>
 <h4 id="enable-metablocks">Enable Metablocks</h4>
 <p>Enabling this setting results in <a href="../concepts/application/metablocks.html">Metablocks</a> appearing in the Blocks blade.</p>
-<h3 id="reports">Reports</h3>
-<p><em>Added v4.3.7</em></p>
-<p>Standard reports give the administrator a view into where (which Applications) and how (which version) Connectors have been used. The information is presented in a grid that can be sorted, filtered, reorganized, and grouped. It can also be exported as an XLSX file.</p>
-<p><img src="../images/manage-site-settings-2.png" alt="Fig 2: Example App Designer Report"></p>
-<h4 id="connector-usage-report">Connector Usage Report</h4>
-<p>This report shows all loaded Connectors, their versions, and how many times each version is used in an Application, if any.</p>
-<p>This master list shows the administrator which Connectors are installed and their utilization. This assists in identifying new Connectors or versions not yet added.</p>
-<h4 id="connector-usage-details-report">Connector Usage Details Report</h4>
-<p>This report shows the Applications in which a Connector version has been used. Additional information includes the Application's owner and category.</p>
-<p>This detailed report assists in gauging the impact of upgrading one or more Connector versions.</p>
 <h3 id="scripts">Scripts</h3>
 <h4 id="embed-script">Embed Script</h4>
 <p>Added in v4.4.17, the supplied html script tag is inserted into every App Designer html page. Use this to load an external JavaScript script, such as to provide localized support or track user usage. For example, the below script embeds a chatbot into App Designer.</p>
@@ -161,6 +151,34 @@
 </li>
 </ol>
 <p>For guidance on how to use this setting effectively, please contact your XMPro representative.</p>
+<h3 id="behavior">Behavior</h3>
+<h4 id="connector-pool">Connector Pool</h4>
+<p><em>Added v5.0.0</em></p>
+<p>App Designer pools reused <a href="../concepts/connector.html">Connector</a> handler instances to improve performance. This setting shows how many handlers your company currently has pooled and provides a <strong>Clear</strong> button that evicts them all at once; it is disabled when the count is 0 and prompts for confirmation before clearing.</p>
+<p>Clearing does not change your Connectors or their configuration - it only discards the cached instances, so each one is rebuilt on its next use. For how pooling works (warm and cold loads, automatic refresh when Connections change, and eviction), see <a href="../concepts/connector.html#connector-pooling">Connector Pooling</a>.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Clearing the pool only affects your own company's pooled connector handlers. Handlers pooled for other companies are not affected.</p>
+</div>
+<p>Refer to the <a href="manage-site-settings.html#connector-pool-report">Connector Pool Report</a> for a detailed view of what is currently pooled.</p>
+<h3 id="reports">Reports</h3>
+<p><em>Added v4.3.7</em></p>
+<p>Standard reports give the administrator a view into where (which Applications) and how (which version) Connectors have been used. The information is presented in a grid that can be sorted, filtered, reorganized, and grouped. It can also be exported as an XLSX file.</p>
+<p><img src="../images/manage-site-settings-2.png" alt="Fig 2: Example App Designer Report"></p>
+<h4 id="connector-usage-report">Connector Usage Report</h4>
+<p>This report shows all loaded Connectors, their versions, and how many times each version is used in an Application, if any.</p>
+<p>This master list shows the administrator which Connectors are installed and their utilization. This assists in identifying new Connectors or versions not yet added.</p>
+<h4 id="connector-usage-details-report">Connector Usage Details Report</h4>
+<p>This report shows the Applications in which a Connector version has been used. Additional information includes the Application's owner and category.</p>
+<p>This detailed report assists in gauging the impact of upgrading one or more Connector versions.</p>
+<h4 id="connector-pool-report">Connector Pool Report</h4>
+<p><em>Added v5.0.0</em></p>
+<p>This report lists the connector handlers your company currently has in the <a href="../concepts/connector.html#connector-pooling">pool</a>, and shows how many of the shared pool slots are in use across all companies. For each pooled handler it shows the Connector Name, Connector Version, Application Name, Application Version, Connection Name, Last Used time, and Eviction Order.</p>
+<p>The pool has a fixed number of slots shared across the whole deployment (see <a href="../installation/deployment/azure-terraform/advanced-configuration.html#connector-pool">Connector Pool configuration</a>). When the pool is full, the least recently used handler is evicted first - the row with an <strong>Eviction Order</strong> of 1 is next to be removed.</p>
+<h4 id="live-connector-pool-report">Live Connector Pool Report</h4>
+<p><em>Added v5.0.0</em></p>
+<p>This report lists the <a href="../concepts/connector.html#connector-pooling">pooled</a> handlers that back live Connectors - those actively pushing data. For each one it shows the Connector Name, Connector Version, Application Name, Application Version, Connection Name, Last Push time, and the number of Subscriptions.</p>
+<p>Live Connectors are released when their last subscriber disconnects. Data Stream Connectors, however, stay resident even with zero subscriptions until App Designer restarts, so they are not automatically evicted.</p>
 <h2 id="data-stream-designer-settings">Data Stream Designer Settings</h2>
 <h3 id="security-1">Security</h3>
 <h4 id="encryption-key-1">Encryption Key</h4>
@@ -172,7 +190,7 @@
 <p>Enables the Canvas arrow highlight which is shown if the arrow's configuration doesn't have mappings. This is useful for demos where the complete configuration has intentionally not been provided.</p>
 <h4 id="enable-stream-metrics">Enable Stream Metrics</h4>
 <p>Enables the logging and display of stream metrics (<a href="data-streams/use-stream-metrics.html#stream-load">Stream Load</a> and <a href="data-streams/use-stream-metrics.html#stream-errors">Stream Errors</a>) in Data Streams. Refresh the page for the setting to be applied to the Data Stream Canvas.</p>
-<h3 id="behavior">Behavior</h3>
+<h3 id="behavior-1">Behavior</h3>
 <h4 id="default-polling-interval-seconds">Default Polling Interval (seconds)</h4>
 <p><em>Added v4.3.7</em></p>
 <p>The default value that is used for the polling interval when a Polling Agent is added to a <a href="../concepts/data-stream/index.html">Streaming</a> type Data Stream.</p>
@@ -233,7 +251,7 @@
 <h4 id="database-name">Database Name</h4>
 <p>The name of the database instance within the selected provider. XMPro AI uses this database to store its knowledge graph and agent data.</p>
 <h4 id="neo4j-connection-uri">Neo4j Connection URI</h4>
-<p>The full connection URI for the Neo4j database instance. This can be an Aura cloud URI or a self-hosted bolt or HTTP address.</p>
+<p>The full HTTPS connection URI for Neo4j database instance.</p>
 <h4 id="neo4j-username">Neo4j Username</h4>
 <p>The username used to authenticate with the Neo4j database.</p>
 <h4 id="neo4j-password">Neo4j Password</h4>
@@ -318,7 +336,7 @@
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: July 17, 2026</em></small></p>
+    <p><small><em>Last modified: August 19, 2026</em></small></p>
   </div>
 </article>
 

@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Migrate from Legacy AWS Deployment (v4.4) to EKS | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Migrate from Legacy AWS Deployment (v4.4) to EKS | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../../toc.html">
+      <meta name="docfx:tocrel" content="../../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/deployment/aws-kubernetes/upgrade-from-legacy.md&amp;version=GBmain&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../../index.html">
+            <img id="logo" class="svg" src="../../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="migrate-from-legacy-aws-deployment-v44-to-eks">Migrate from Legacy AWS Deployment (v4.4) to EKS</h1>
+
+<p>If you're currently running XMPro v4.4.x on AWS using the legacy Elastic Beanstalk deployment and planning to upgrade to v5.0 on EKS, this guide walks through a side-by-side migration: deploy the new EKS environment, restore your databases into it, reconcile them to the new environment, let the schema migration Jobs upgrade them, validate, then cut DNS over.</p>
+<p>The legacy and new architectures differ substantially, so this is a <strong>migration</strong>, not an in-place upgrade:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Legacy v4.4</th>
+<th>v5.0 EKS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Compute</strong></td>
+<td>Elastic Beanstalk environments (EC2, Windows) per product</td>
+<td>EKS cluster, Linux containers per product</td>
+</tr>
+<tr>
+<td><strong>Products</strong></td>
+<td>SM, AD, DS</td>
+<td>SM + IS (identity split out), AD, DS, optional AI</td>
+</tr>
+<tr>
+<td><strong>Database</strong></td>
+<td>Amazon RDS SQL Server</td>
+<td>Amazon RDS SQL Server (new instance, <strong>same or newer engine version</strong>)</td>
+</tr>
+<tr>
+<td><strong>Caching</strong></td>
+<td>ElastiCache Redis</td>
+<td>Not used - autoscale (Redis's only consumer) is <strong>not currently supported</strong> on Kubernetes (in development)</td>
+</tr>
+<tr>
+<td><strong>TLS</strong></td>
+<td>ACM certificates on ALB</td>
+<td>Let's Encrypt via cert-manager, terminated at Envoy Gateway</td>
+</tr>
+<tr>
+<td><strong>Ingress</strong></td>
+<td>ALB per Beanstalk environment</td>
+<td>One NLB on static EIPs → Envoy Gateway → HTTPRoutes</td>
+</tr>
+<tr>
+<td><strong>Secrets</strong></td>
+<td>Systems Manager Parameter Store</td>
+<td>Secrets Manager (one aggregate bundle) + External Secrets Operator</td>
+</tr>
+<tr>
+<td><strong>Deployment</strong></td>
+<td>ZIP packages uploaded to Beanstalk</td>
+<td>Terraform (3-layer) + Helm</td>
+</tr>
+<tr>
+<td><strong>Namespace</strong></td>
+<td>n/a</td>
+<td>Per-site Kubernetes namespace (<code>name_suffix</code>)</td>
+</tr>
+</tbody>
+</table>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>Your data survives the migration. The databases carry everything that matters:</p>
+<ul>
+<li>All users, roles, companies, and product registrations (SM database)</li>
+<li>All applications and pages (AD database)</li>
+<li>All data streams, collections, and stream host registrations (DS database)</li>
+</ul>
+<p>The v5.0 database migration Jobs upgrade the schema from 4.4 to 5.0 automatically on first deploy against the restored databases.</p>
+</div>
+<div class="CAUTION">
+<h5>Caution</h5>
+<p>The side-by-side approach means your legacy environment <strong>keeps running untouched</strong> until you've validated the new one. Do not decommission anything until the <a href="#post-migration-validation">post-migration validation</a> passes.</p>
+</div>
+<hr>
+<h2 id="required-information-from-your-existing-installation">Required Information from Your Existing Installation</h2>
+<p>Document these values from your v4.4 deployment before starting.</p>
+<h3 id="1-aws-resource-information">1. AWS Resource Information</h3>
+<table>
+<thead>
+<tr>
+<th>Configuration Item</th>
+<th>Where to Find</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>AWS Region</strong></td>
+<td>Beanstalk console</td>
+<td><code>us-west-2</code></td>
+</tr>
+<tr>
+<td><strong>RDS Instance Identifier</strong></td>
+<td>RDS console</td>
+<td><code>xmpro-production-db</code></td>
+</tr>
+<tr>
+<td><strong>RDS Endpoint + Engine Version</strong></td>
+<td>RDS console → Connectivity / Configuration</td>
+<td><code>xmpro-prod.xxxx.rds.amazonaws.com</code>, <code>sqlserver-se 15.00</code></td>
+</tr>
+<tr>
+<td><strong>DB Admin Username/Password</strong></td>
+<td>Parameter Store (<code>/&lt;app&gt;/xmpro/data/connectionString</code>) or secure storage</td>
+<td><code>xmadmin</code> / <em>(your password)</em></td>
+</tr>
+<tr>
+<td><strong>SM / AD / DS Database Names</strong></td>
+<td>SQL Server (<code>SELECT name FROM sys.databases</code>)</td>
+<td><code>SM</code>, <code>AD</code>, <code>DS</code></td>
+</tr>
+<tr>
+<td><strong>Route53 Hosted Zone</strong></td>
+<td>Route53 console</td>
+<td><code>xmpro.yourco.com</code></td>
+</tr>
+<tr>
+<td><strong>Current Product URLs</strong></td>
+<td>Beanstalk environment URLs / Route53 records</td>
+<td><code>https://sm.xmpro.yourco.com</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="2-application-configuration">2. Application Configuration</h3>
+<table>
+<thead>
+<tr>
+<th>Configuration Item</th>
+<th>Where to Find</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Encryption keys / salt</strong></td>
+<td>Parameter Store (<code>/&lt;app&gt;/xmpro/appDesigner/encryptionKey</code>, <code>&lt;app&gt;_SALT</code>, identity shared key)</td>
+<td>base64 / hex strings</td>
+</tr>
+<tr>
+<td><strong>Company Names</strong></td>
+<td>SM → Companies</td>
+<td><code>YourCo</code></td>
+</tr>
+<tr>
+<td><strong>Stream Host Collection IDs/Secrets</strong></td>
+<td>DS → Collections</td>
+<td>GUIDs</td>
+</tr>
+<tr>
+<td><strong>SMTP Configuration</strong></td>
+<td>Beanstalk env vars / Parameter Store</td>
+<td>Server, port, credentials</td>
+</tr>
+</tbody>
+</table>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p><strong>Carry over the encryption material.</strong> XMPro encrypts certain stored values (e.g. data-source connection strings in AD) with the application's encryption keys. If the v5.0 deployment uses <em>different</em> keys than the v4.4 environment that wrote the data, those encrypted values can't be decrypted after migration. Capture the v4.4 encryption keys/salt (above) and supply the matching values to the v5.0 application layer rather than letting it generate fresh ones.</p>
+</div>
+<p><strong>Finding values from the AWS CLI:</strong></p>
+<pre><code class="lang-bash"># RDS instances (note EngineVersion - the new instance must be &gt;= this)
+aws rds describe-db-instances \
+  --query 'DBInstances[*].[DBInstanceIdentifier,Endpoint.Address,Engine,EngineVersion]' --output table
+
+# Beanstalk environments
+aws elasticbeanstalk describe-environments \
+  --query 'Environments[*].[EnvironmentName,CNAME,Status]' --output table
+
+# Parameter Store entries (legacy secrets, incl. DB creds + encryption keys)
+aws ssm describe-parameters \
+  --query 'Parameters[?contains(Name, `xmpro`)].Name' --output table
+</code></pre>
+<hr>
+<h2 id="backup-before-migrating">Backup Before Migrating</h2>
+<div class="CAUTION">
+<h5>Caution</h5>
+<p><strong>Always back up before migrating.</strong> The migration restores <em>copies</em> of your databases (the originals are never modified) but backups are still your recovery path if anything goes wrong with the source environment during the migration window.</p>
+</div>
+<p>You have two ways to move the databases. <strong>Native <code>.bak</code> backup/restore</strong> (below) is the documented, portable path and fits the layered Terraform flow (a fresh Terraform-managed RDS that you restore into). <strong>RDS snapshot-restore</strong> is a simpler same-account/region alternative - see <a href="#alternative-rds-snapshot-restore">Alternative: RDS snapshot-restore</a>.</p>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p><strong>Engine version:</strong> a SQL Server <code>.bak</code> (and an RDS snapshot) can only be restored into the <strong>same or a newer</strong> engine version, never older. Check your source <code>EngineVersion</code> and set the new instance's <code>db_engine_version</code> to match or exceed it (e.g. a SQL Server 2022 / <code>16.00</code> source needs <code>db_engine_version = &quot;16.00&quot;</code> on the target; the example's <code>sqlserver-ex 15.00</code> default would reject it). The example <code>_infra</code> module derives the parameter-group family and option-group major version from <code>db_engine</code>/<code>db_engine_version</code>, so setting these is enough.</p>
+</div>
+<h3 id="sql-server-target-compatibility-checklist">SQL Server target compatibility checklist</h3>
+<p>Confirm these against your source databases (<code>SELECT name, collation_name, compatibility_level, is_encrypted FROM sys.databases</code>) before restoring:</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Engine version</strong></td>
+<td>Target ≥ source major version (restore can't downgrade).</td>
+</tr>
+<tr>
+<td><strong>Edition</strong></td>
+<td>Restore Standard/Enterprise sources into <code>sqlserver-se</code>/<code>-ee</code>, <strong>not Express</strong> - Express has a 10 GB/DB cap and rejects SE/EE-only features (partitioning, In-Memory OLTP, some compression).</td>
+</tr>
+<tr>
+<td><strong>Compatibility level</strong></td>
+<td>Restored DBs keep their source <code>compatibility_level</code>; a newer server runs them fine. Optionally bump to the new level after migration.</td>
+</tr>
+<tr>
+<td><strong>Collation</strong></td>
+<td>Match the target RDS server collation to the source to avoid <code>Cannot resolve collation conflict</code> on tempdb/cross-DB operations. The RDS default <code>SQL_Latin1_General_CP1_CI_AS</code> matches a standard XMPro source.</td>
+</tr>
+<tr>
+<td><strong>TDE</strong></td>
+<td>If the source uses Transparent Data Encryption (<code>is_encrypted = 1</code>), replicate the certificate/key on the target (RDS TDE option group + KMS) or the encrypted <code>.bak</code> won't restore. Standard XMPro deployments don't use TDE.</td>
+</tr>
+<tr>
+<td><strong>Logins</strong></td>
+<td>SQL <em>logins</em> are server-level and are <strong>not</strong> in a <code>.bak</code> - only DB users are. XMPro authenticates application users from inside the SM database and connects as the RDS master, so app users carry over; any SQL-login-based access would need remapping.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="1-set-up-native-backup-on-the-source-rds-instance">1. Set up native backup on the source RDS instance</h3>
+<p>RDS SQL Server uses an option group for native <code>.bak</code> backup/restore to S3. If your source instance doesn't already have it:</p>
+<pre><code class="lang-bash"># Create an S3 bucket for the backup transfer
+aws s3 mb s3://yourco-xmpro-migration --region us-west-2
+
+# Create the IAM role RDS assumes to read/write the bucket
+aws iam create-role --role-name rds-s3-backup-role \
+  --assume-role-policy-document '{&quot;Version&quot;:&quot;2012-10-17&quot;,&quot;Statement&quot;:[{&quot;Effect&quot;:&quot;Allow&quot;,&quot;Principal&quot;:{&quot;Service&quot;:&quot;rds.amazonaws.com&quot;},&quot;Action&quot;:&quot;sts:AssumeRole&quot;}]}'
+aws iam put-role-policy --role-name rds-s3-backup-role --policy-name s3-migration-access \
+  --policy-document '{&quot;Version&quot;:&quot;2012-10-17&quot;,&quot;Statement&quot;:[
+    {&quot;Effect&quot;:&quot;Allow&quot;,&quot;Action&quot;:[&quot;s3:ListBucket&quot;,&quot;s3:GetBucketLocation&quot;],&quot;Resource&quot;:&quot;arn:aws:s3:::yourco-xmpro-migration&quot;},
+    {&quot;Effect&quot;:&quot;Allow&quot;,&quot;Action&quot;:[&quot;s3:GetObject&quot;,&quot;s3:PutObject&quot;,&quot;s3:ListMultipartUploadParts&quot;,&quot;s3:AbortMultipartUpload&quot;],&quot;Resource&quot;:&quot;arn:aws:s3:::yourco-xmpro-migration/*&quot;}]}'
+
+# Create an option group with SQLSERVER_BACKUP_RESTORE (match your SOURCE engine major version)
+aws rds create-option-group \
+  --option-group-name xmpro-backup-restore-src \
+  --engine-name sqlserver-se --major-engine-version 15.00 \
+  --option-group-description &quot;Native backup/restore for migration (source VPC)&quot;
+
+aws rds add-option-to-option-group \
+  --option-group-name xmpro-backup-restore-src \
+  --options &quot;OptionName=SQLSERVER_BACKUP_RESTORE,OptionSettings=[{Name=IAM_ROLE_ARN,Value=arn:aws:iam::&lt;account&gt;:role/rds-s3-backup-role}]&quot; \
+  --apply-immediately
+
+aws rds modify-db-instance \
+  --db-instance-identifier xmpro-production-db \
+  --option-group-name xmpro-backup-restore-src --apply-immediately
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>An RDS option group binds to the VPC of the first instance it's attached to. The <code>-src</code> suffix is deliberate: you'll create a <strong>second</strong> option group for the new RDS's VPC in the restore step. The <code>rds-s3-backup-role</code> can be reused for both.</p>
+</div>
+<h3 id="2-back-up-each-database-to-s3">2. Back up each database to S3</h3>
+<p>Connect to the source RDS instance with <code>sqlcmd</code> (or SSMS) and run:</p>
+<pre><code class="lang-sql">-- Repeat for SM, AD, DS (and AI if present)
+exec msdb.dbo.rds_backup_database
+  @source_db_name = 'SM',
+  @s3_arn_to_backup_to = 'arn:aws:s3:::yourco-xmpro-migration/SM_PreMigration_v44.bak';
+
+exec msdb.dbo.rds_task_status @db_name = 'SM';   -- watch for SUCCESS
+</code></pre>
+<p>Wait for each task to report <code>SUCCESS</code> before continuing.</p>
+<hr>
+<h2 id="registry-access">Registry Access</h2>
+<p>Before you start, confirm you can pull the 5.0 images. A migrating installation is more likely to trip on this than a fresh one: your existing 4.4 deployment pulled anonymously from <code>xmpro.azurecr.io</code> and has no pull secret anywhere, so nothing carries over.</p>
+<pre><code class="lang-bash">read -rs GHE_PAT            # prompts, so the token never lands in shell history
+printf '%s' &quot;$GHE_PAT&quot; | docker login containers.xmpro.ghe.com -u YOUR-GHE-USERNAME --password-stdin
+docker manifest inspect {{ACR_URL}}/ad:{{VERSION}}
+</code></pre>
+<p>If either command fails, see <a href="index.html#3-registry-authentication">Registry authentication</a> in the deployment guide. Set <code>registry_username</code> and <code>registry_password</code> in the <code>app</code> stage's tfvars, then pass the resulting secret name to the <code>migration</code> stage:</p>
+<pre><code class="lang-hcl">image_pull_secret = &quot;xmpro-registry&quot;   # app stage's image_pull_secret_name output
+</code></pre>
+<h2 id="running-the-migration">Running the Migration</h2>
+<p>These steps use the <strong><code>migration4.4</code> example</strong> in the AWS Terraform module. It mirrors the standard layered deployment, layer 1 cluster (<code>infra-k8s</code>), layer 2 site infrastructure (<code>infra</code>), layer 3 application (<code>app</code>), and adds one extra <strong><code>migration</code></strong> stage that runs <strong>after</strong> the application layer to reconcile the references your restored databases carried over from the source environment. You supply a few clearly-labelled inputs and run one apply per stage: there is no SQL to write.</p>
+<p>The apply order (matching the example's <code>README.md</code>) is:</p>
+<pre><code>infra-k8s  →  infra  →  [restore .bak into RDS]  →  app  →  migration
+</code></pre>
+<h3 id="1-deploy-the-cluster-and-site-infrastructure">1. Deploy the cluster and site infrastructure</h3>
+<p>From the <code>migration4.4</code> example, apply the <code>infra-k8s</code> (cluster) and <code>infra</code> (site infrastructure, including the new RDS instance) stages, following the <a href="index.html">AWS Kubernetes (EKS) deployment guide</a> with four adjustments:</p>
+<ol>
+<li><p><strong>Use a temporary DNS zone for validation, and delegate it before the app layer.</strong> Don't reuse your production hostnames yet: deploy with a staging zone (e.g. <code>staging.xmpro.yourco.com</code>) so the new environment is fully testable while production traffic still flows to the legacy environment. The <code>infra</code> layer creates the zone, but you must <strong>delegate it in the parent zone</strong> (add the staging zone's NS records to <code>xmpro.yourco.com</code>) before applying the <code>app</code> layer. If the staging hostnames don't resolve, cert-manager's HTTP-01 challenge can't complete, the Let's Encrypt certificate stays <code>pending</code>, and the <code>is</code>/<code>sm</code> pods block waiting on the TLS secret.</p>
+</li>
+<li><p><strong>Set the target engine version</strong> in the layer-2 (<code>infra</code>) tfvars to match or exceed your source (see the engine-version note above), and use <code>sqlserver-se</code> if your source is Standard/Enterprise edition.</p>
+</li>
+<li><p><strong>Match your database names.</strong> In the layer-3 (<code>app</code>) tfvars, point the database name variables at the names your restored databases will have:</p>
+<pre><code class="lang-hcl">sm_database_name = &quot;SM&quot;
+ad_database_name = &quot;AD&quot;
+ds_database_name = &quot;DS&quot;
+</code></pre>
+</li>
+<li><p><strong>Carry over the AD encryption key.</strong> In the same layer-3 (<code>app</code>) tfvars, set <code>ad_encryption_key</code> to the v4.4 AD encryption key you captured above so the migrated AD can decrypt its existing data-source connection strings. Leaving it empty generates a fresh key, which cannot decrypt migrated data. It must be set <strong>before the first <code>app</code>-layer apply</strong>: AD reads the key at startup and never stores it. DS and AI encryption keys are held in their own databases and carry over automatically, so only the AD key needs to be supplied.</p>
+<pre><code class="lang-hcl">ad_encryption_key = &quot;&lt;your v4.4 xmpro:appDesigner:encryptionKey&gt;&quot;
+</code></pre>
+</li>
+</ol>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>Apply the <code>infra-k8s</code> and <code>infra</code> stages, but <strong>stop before the <code>app</code> and <code>migration</code> stages</strong>. The databases must be restored first: otherwise the <code>app</code> stage's <code>dbmigrate</code> Jobs initialize fresh empty databases instead of upgrading yours, and the <code>migration</code> stage has nothing to reconcile.</p>
+</div>
+<h3 id="2-restore-the-databases-into-the-new-rds-instance">2. Restore the databases into the new RDS instance</h3>
+<p>The new <code>infra</code> layer created an RDS instance. Because option groups are VPC-scoped, create a <strong>separate</strong> <code>SQLSERVER_BACKUP_RESTORE</code> option group for the new instance's VPC (reusing the same <code>rds-s3-backup-role</code>), attach it, then restore:</p>
+<pre><code class="lang-bash"># Second option group - bound to the NEW cluster VPC (match the TARGET engine major version)
+aws rds create-option-group \
+  --option-group-name xmpro-backup-restore-tgt \
+  --engine-name sqlserver-se --major-engine-version 16.00 \
+  --option-group-description &quot;Native backup/restore for migration (target VPC)&quot;
+
+aws rds add-option-to-option-group \
+  --option-group-name xmpro-backup-restore-tgt \
+  --options &quot;OptionName=SQLSERVER_BACKUP_RESTORE,OptionSettings=[{Name=IAM_ROLE_ARN,Value=arn:aws:iam::&lt;account&gt;:role/rds-s3-backup-role}]&quot; \
+  --apply-immediately
+
+aws rds modify-db-instance \
+  --db-instance-identifier &lt;new-rds-identifier&gt; \
+  --option-group-name xmpro-backup-restore-tgt --apply-immediately
+</code></pre>
+<pre><code class="lang-sql">-- Connect to the NEW RDS instance (endpoint from `terraform output rds_endpoint`)
+-- Repeat for SM, AD, DS
+exec msdb.dbo.rds_restore_database
+  @restore_db_name = 'SM',
+  @s3_arn_to_restore_from = 'arn:aws:s3:::yourco-xmpro-migration/SM_PreMigration_v44.bak';
+
+exec msdb.dbo.rds_task_status @db_name = 'SM';
+</code></pre>
+<p>Wait for all restores to report <code>SUCCESS</code>.</p>
+<h3 id="3-apply-the-application-stage">3. Apply the application stage</h3>
+<p>Apply the <strong><code>app</code></strong> stage next, before the <code>migration</code> stage. On startup, its <code>dbmigrate</code> Jobs detect the existing 4.4 schema in each restored database and <strong>upgrade it in place to 5.0</strong>, including the SM schema changes for the SM/IS split.</p>
+<p>Supply the product IDs and keys from your source <code>SM</code> database so each deployed product matches its registered OIDC client: read them from <code>dbo.Product</code> (IDs) and <code>dbo.ProductKey</code> (keys), and enter the IDs in <strong>lowercase</strong>:</p>
+<pre><code class="lang-hcl">sm_product_id  = &quot;&lt;source SM product id, lowercase&gt;&quot;
+sm_product_key = &quot;&lt;source SM product key&gt;&quot;
+ad_product_id  = &quot;&lt;source AD product id, lowercase&gt;&quot;
+ad_product_key = &quot;&lt;source AD product key&gt;&quot;
+ds_product_id  = &quot;&lt;source DS product id, lowercase&gt;&quot;
+ds_product_key = &quot;&lt;source DS product key&gt;&quot;
+</code></pre>
+<p>(The <code>ad_encryption_key</code> is also set in this stage, see the carry-over adjustment above.)</p>
+<pre><code class="lang-powershell">cd examples/migration4.4/app
+terraform apply
+</code></pre>
+<p>Watch the dbmigrate Jobs complete (replace <code>&lt;name_suffix&gt;</code> with your site's, e.g. <code>site1</code>):</p>
+<pre><code class="lang-bash">kubectl get jobs -n &lt;name_suffix&gt;
+kubectl logs -n &lt;name_suffix&gt; job/xmpro-sm-dbmigrate --tail=50
+kubectl logs -n &lt;name_suffix&gt; job/xmpro-ad-dbmigrate --tail=50
+kubectl logs -n &lt;name_suffix&gt; job/xmpro-ds-dbmigrate --tail=50
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Schema migrations are cumulative: the Jobs apply every migration between your source version and 5.0 in sequence. For large databases this can take significantly longer than a fresh install. If a Job hits its backoff limit, check its logs before re-running; contact XMPro support if a specific migration step fails repeatedly.</p>
+</div>
+<h3 id="4-run-the-migration-stage">4. Run the migration stage</h3>
+<p>With the app deployed, apply the <strong><code>migration</code></strong> stage. It runs a Kubernetes Job that connects to your restored databases and reconciles everything still pointing at the old environment, automatically, with no SQL to write:</p>
+<ul>
+<li><strong>Product URLs</strong> - rewrites the App Designer and Data Stream Designer URL references your databases carried over from the source, so OIDC sign-in to those products succeeds instead of failing with &quot;Access Denied&quot;.</li>
+</ul>
+<p>The stage runs <strong>after</strong> the <code>app</code> stage and reuses the app's in-cluster secret for the database password (and its image pull secret): no passwords are entered here. Copy <code>migration/terraform.tfvars.example</code> to <code>terraform.tfvars</code> and set:</p>
+<pre><code class="lang-hcl">rds_endpoint      = &quot;&lt;new-rds-endpoint&gt;&quot;   # terraform output rds_endpoint (from infra)
+db_admin_username = &quot;xmadmin&quot;
+
+# Must match the app stage's name_suffix - the Job runs in the app's namespace
+namespace = &quot;site1&quot;
+
+ad_url = &quot;https://ad.staging.xmpro.yourco.com&quot;
+ds_url = &quot;https://ds.staging.xmpro.yourco.com&quot;
+# ai_url = &quot;https://ai.staging.xmpro.yourco.com&quot;   # only if AI is deployed
+</code></pre>
+<pre><code class="lang-powershell">cd examples/migration4.4/migration
+terraform apply
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The migration stage operates only on your restored databases (it never touches the source environment) and is safe to re-run if you change hostnames. It rewrites only XMPro's own App Designer / Data Stream Designer URL references, leaving any third-party URLs (e.g. cloud-service endpoints) untouched.</p>
+</div>
+<div class="TIP">
+<h5>Tip</h5>
+<p>If OIDC sign-in to App Designer or Data Stream Designer still returns &quot;Access Denied&quot; after the migration stage, the most common cause is a hostname that changed after the migration stage ran. Re-apply the <code>migration</code> stage with the corrected hostnames, then restart the affected pods. As a last-resort manual check you can log in to the new SM with your existing admin credentials → menu (☰) → <strong>Products</strong> and confirm the <strong>Product URL</strong> / <strong>Product Log Out URL</strong> for each product match your new hostnames.</p>
+</div>
+<h3 id="5-deploy-and-reconnect-stream-hosts">5. Deploy and reconnect Stream Hosts</h3>
+<p>v4.4 stream hosts are not compatible with the v5.0 platform, and v5.0 deploys no in-cluster Stream Host by default. Deploy a v5.0 Stream Host through the <a href="index.html#9-optional-deploy-stream-hosts">stream-hosts layer</a>:</p>
+<ol>
+<li>Use the <strong>same Collection ID and Secret</strong> as before: these carried over in the DS database, so existing data stream bindings reconnect automatically.</li>
+<li>Point <code>ds_server_url</code> at the new DS hostname.</li>
+<li>Apply the <code>stream-hosts</code> layer and confirm the host shows <strong>online</strong> in the new DS.</li>
+</ol>
+<h3 id="6-validate-then-cut-over-dns">6. Validate, then cut over DNS</h3>
+<p>Run the full <a href="#post-migration-validation">post-migration validation</a> below against the staging hostnames. When everything passes:</p>
+<ol>
+<li>Update your production Route53 records (<code>sm.</code>, <code>ad.</code>, <code>ds.</code>) to point at the new gateway EIPs (or re-deploy the <code>infra</code>/<code>app</code> layers with the production <code>dns_zone_name</code> and delegate it).</li>
+<li>Lower the record TTLs ahead of cutover (e.g. 300s) so rollback is fast.</li>
+<li>After cutover, monitor the new environment for an agreed soak period before decommissioning.</li>
+</ol>
+<hr>
+<h2 id="alternative-rds-snapshot-restore">Alternative: RDS snapshot-restore</h2>
+<p>For a same-account, same-region move you can skip the <code>.bak</code>/S3/option-group choreography and clone the whole instance with a snapshot. This brings <strong>all</strong> databases at once (and the source master credentials), so it doesn't fit the &quot;fresh Terraform-managed RDS&quot; flow as cleanly: you point the app layer at the restored instance instead of the one the <code>infra</code> layer would create.</p>
+<pre><code class="lang-bash"># Snapshot the source (read-only to the source), then restore into the cluster VPC
+aws rds create-db-snapshot --db-instance-identifier xmpro-production-db \
+  --db-snapshot-identifier xmpro-premigration
+
+aws rds restore-db-instance-from-db-snapshot \
+  --db-instance-identifier xmpro-v5 \
+  --db-snapshot-identifier xmpro-premigration \
+  --db-subnet-group-name &lt;cluster-db-subnet-group&gt; \
+  --vpc-security-group-ids &lt;sg-allowing-the-cluster&gt;
+</code></pre>
+<p>Then set the example's <code>rds_endpoint</code> (and DB names) to the restored instance, skip the <code>infra</code> stage's RDS creation, and continue from <a href="#3-apply-the-application-stage">Apply the application stage</a>. The restored instance keeps the source engine version (no downgrade concern).</p>
+<hr>
+<h2 id="post-migration-validation">Post-Migration Validation</h2>
+<h3 id="1-platform-health">1. Platform health</h3>
+<pre><code class="lang-bash">kubectl get pods -n &lt;name_suffix&gt;                 # All Running
+kubectl get certificate -n &lt;name_suffix&gt;          # READY=True
+curl -s -o /dev/null -w &quot;%{http_code}&quot; https://sm.&lt;zone&gt;/   # 302
+curl -s -o /dev/null -w &quot;%{http_code}&quot; https://ad.&lt;zone&gt;/   # 302
+curl -s -o /dev/null -w &quot;%{http_code}&quot; https://ds.&lt;zone&gt;/   # 302
+</code></pre>
+<h3 id="2-data-integrity">2. Data integrity</h3>
+<ul>
+<li><strong>Login with pre-migration credentials</strong> - users carried over in the SM database</li>
+<li><strong>Companies and roles</strong> - spot-check in SM that companies, users, and role assignments match the legacy environment</li>
+<li><strong>Applications</strong> - open your most important applications in AD; verify pages render and data connections work (this also confirms the encryption keys carried over)</li>
+<li><strong>Data streams</strong> - open existing streams in DS; verify canvases, agent configurations, and run state</li>
+<li><strong>Stream hosts</strong> - all hosts online, streams executing, data flowing end to end</li>
+</ul>
+<h3 id="3-integrations">3. Integrations</h3>
+<ul>
+<li>Verify any external systems calling XMPro APIs work against the new hostnames</li>
+<li>Re-test SMTP (password reset email is a quick end-to-end check)</li>
+<li>Confirm any agents using AWS resources (S3, Kinesis, etc.) still have network reachability from the new VPC</li>
+</ul>
+<hr>
+<h2 id="rollback-if-needed">Rollback (if needed)</h2>
+<p>The legacy environment was never modified, so rollback is a DNS operation:</p>
+<ol>
+<li><strong>Revert the Route53 records</strong> to the legacy ALB targets</li>
+<li>Users are back on v4.4 within the record TTL</li>
+</ol>
+<div class="CAUTION">
+<h5>Caution</h5>
+<p>Any data created in the new environment <strong>after cutover</strong> lives only in the new databases. If you must roll back after running in production, plan a reverse data reconciliation before re-cutting over, or accept the gap. This is the strongest argument for a generous validation period before decommissioning the legacy environment.</p>
+</div>
+<p>When you're confident in the new environment, decommission the legacy stack: terminate the Beanstalk environments, snapshot-and-delete the old RDS instance, and remove the old ElastiCache cluster and Parameter Store entries.</p>
+<div class="TIP">
+<h5>Tip</h5>
+<p><strong>Need assistance?</strong> Contact XMPro Support or your Implementation Partner for help with migration planning, schema upgrade validation, or rollback procedures.</p>
+</div>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: August 19, 2026</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../../">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/deployment/index.md&amp;version=GBrelease-4.6&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/deployment/index.md&amp;version=GBmain&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -87,43 +87,22 @@
         <article data-uid="">
 <h1 id="deploy-xmpro">Deploy XMPro</h1>
 
-<p>XMPro Platform can be installed using a range of Infrastructure, please choose the option below that best suits your requirements:</p>
-<h2 id="container-based-deployments">Container-Based Deployments</h2>
-<h3 id="azure-terraform-deployment"><a href="azure-terraform/index.html">Azure Terraform Deployment</a></h3>
+<p>XMPro 5.0 is deployed on <strong>Kubernetes</strong>. Choose the platform that best suits your environment:</p>
+<h2 id="kubernetes-deployments">Kubernetes Deployments</h2>
+<h3 id="aws-kubernetes-eks-deployment"><a href="aws-kubernetes/index.html">AWS Kubernetes (EKS) Deployment</a></h3>
 <div class="TIP">
 <h5>Tip</h5>
-<p><strong>Full Platform</strong>: Complete XMPro deployment with all components (includes Stream Host by default)</p>
+<p><strong>Kubernetes on AWS</strong>: Full XMPro platform on Amazon Elastic Kubernetes Service with RDS SQL Server, optional ElastiCache Redis, IRSA, and Envoy Gateway. Three-layer Terraform (cluster + per-site infrastructure + per-site application) with Let's Encrypt TLS.</p>
+</div>
+<h3 id="azure-kubernetes-aks-deployment"><a href="azure-kubernetes/index.html">Azure Kubernetes (AKS) Deployment</a></h3>
+<div class="TIP">
+<h5>Tip</h5>
+<p><strong>Kubernetes on Azure</strong>: Full XMPro platform on Azure Kubernetes Service with Azure SQL, Key Vault, Workload Identity, and Envoy Gateway. Three-layer Terraform (infrastructure + cluster platform + per-site application) with Let's Encrypt TLS.</p>
 </div>
 <div class="NOTE">
 <h5>Note</h5>
-<p>The following features are not yet available in Azure Terraform Deployment:</p>
-<ul>
-<li>SMTP OAuth configuration</li>
-<li>Redis/Autoscale setup</li>
-<li>SSO Azure Entra ID integration</li>
-<li>SSO ADFS integration</li>
-<li>Custom environment variables</li>
-<li>Custom health checks configuration</li>
-</ul>
+<p>A <strong>Windows Server 2022</strong> deployment option is planned for a later 5.0 update. Migrating from an existing v4.x Azure App Service or legacy AWS deployment? Each Kubernetes guide includes a migration path.</p>
 </div>
-<h3 id="windows-server-2022-deployment"><a href="windows-server-2022/index.html">Windows Server 2022 Deployment</a></h3>
-<div class="TIP">
-<h5>Tip</h5>
-<p><strong>On-Premises</strong>: Native IIS deployment for Windows Server environments with full control over infrastructure</p>
-</div>
-<h3 id="aws-terraform-deployment">AWS Terraform Deployment</h3>
-<div class="NOTE">
-<h5>Note</h5>
-<p>AWS container deployment is coming soon for XMPro v4.5+.</p>
-</div>
-<h2 id="legacy-installers">Legacy Installers</h2>
-<p>Traditional installation methods for XMPro v4.4 and earlier versions.</p>
-<h3 id="azure-arm-template-deployment"><a href="https://documentation.xmpro.com/4.4/src/installation/deployment/azure.html">Azure ARM Template Deployment</a></h3>
-<p>Traditional ARM template deployment approach for existing v4.4 installations.</p>
-<h3 id="aws-deployment"><a href="https://documentation.xmpro.com/4.4/src/installation/deployment/aws.html">AWS Deployment</a></h3>
-<p>Deploy XMPro on Amazon Web Services using Kubernetes and Helm charts.</p>
-<h3 id="windows-server-2022-deployment-1"><a href="https://documentation.xmpro.com/4.4/src/installation/deployment/windows-server-2022/index.html">Windows Server 2022 Deployment</a></h3>
-<p>On-premises deployment for Windows Server environments.</p>
 <hr>
 <h2 id="next-steps">Next Steps</h2>
 <p>After completing your infrastructure deployment, proceed to:</p>
@@ -132,7 +111,7 @@
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: July 17, 2026</em></small></p>
+    <p><small><em>Last modified: August 19, 2026</em></small></p>
   </div>
 </article>
 
