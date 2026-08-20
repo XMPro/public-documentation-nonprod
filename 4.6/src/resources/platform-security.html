@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/resources/platform-security.md&amp;version=GBmain&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/resources/platform-security.md&amp;version=GBrelease-4.6&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -220,6 +220,7 @@
 </ul>
 <h4 id="new-in-461">New in 4.6.1</h4>
 <ul>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2025-8869">CVE-2025-8869</a>: pip — Fallback tar extraction symlink traversal; XMPro uses Python 3.12 (PEP 706), so the vulnerable fallback path is never invoked.</li>
 <li><a href="https://www.cve.org/CVERecord?id=CVE-2026-2673">CVE-2026-2673</a>: OpenSSL (libcrypto3, libssl3, openssl) — Alpine 3.23 / Debian Trixie OpenSSL 3.5.5; no upstream fix available, cannot be exploited through normal application use.</li>
 <li><a href="https://www.cve.org/CVERecord?id=CVE-2026-3833">CVE-2026-3833</a>: GnuTLS — Case-sensitive nameConstraints comparison violating RFC 5280 §7.2; XMPro uses .NET TLS (OpenSSL-backed), no libgnutls PInvoke; libgnutls30 transitive via curl, build-time only.</li>
 <li><a href="https://www.cve.org/CVERecord?id=CVE-2026-4046">CVE-2026-4046</a>: glibc — iconv() assertion failure with IBM1390/IBM1399 character sets; .NET uses managed System.Text.Encoding, not glibc iconv().</li>
@@ -245,7 +246,7 @@
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: August 19, 2026</em></small></p>
+    <p><small><em>Last modified: August 20, 2026</em></small></p>
   </div>
 </article>
 

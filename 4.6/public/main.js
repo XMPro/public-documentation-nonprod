@@ -266,11 +266,6 @@ function loadAndReplaceVariables() {
         'gis'
       );
       content = content.replace(spanWrappedPlaceholder, variables[key]);
-
-      // Handle URL-encoded placeholders: %7B%7BKEY%7D%7D
-      // DocFX percent-encodes the braces when the placeholder is inside a link href
-      const encodedPlaceholder = new RegExp(`%7B%7B${key}%7D%7D`, 'gi');
-      content = content.replace(encodedPlaceholder, variables[key]);
     });
     
     contentArea.innerHTML = content;

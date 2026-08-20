@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/release-notes/index.md&amp;version=GBmain&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/release-notes/index.md&amp;version=GBrelease-4.6&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -105,6 +105,62 @@
       <td>v4.5.5</td>
       <td>Pending</td>
     </tr>
+    <tr>
+      <td>Data Stream Designer</td>
+      <td>Ticket ID17822 Incorrect Spanish translation in DS: When you use Data Stream Designer with Spanish set as your language, the labels "Save", "Discard", and "Listener" are translated incorrectly (as "Ahorrar", "Desechar", and "Oyentes" - meanings unrelated to the UI action).</td>
+      <td>v4.5.5</td>
+      <td>v4.6.1</td>
+    </tr>
+  </tbody>
+</table>
+<h2 id="v461">v4.6.1</h2>
+<p>Date Released: 25 Jun 2026</p>
+<table>
+  <thead>
+    <tr>
+      <th width="120">Change Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Security</td>
+      <td>
+        <p><b>Product security and stability</b>: We've addressed several additional security vulnerabilities in this patch release.</p>
+        <p><i>Mitigated:</i></p>
+        <ul>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2026-4599">CVE-2026-4599</a> and <a href="https://www.cve.org/CVERecord?id=CVE-2026-4600">CVE-2026-4600</a>: Upgraded jsrsasign from 11.0.0 to 11.1.3 in App Designer, XMPro AI, and Data Stream Designer.</li>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2025-13465">CVE-2025-13465</a>: Forced lodash to ^4.18.1 via npm overrides in Subscription Manager, and lodash-es to ^4.18.1 via npm overrides in App Designer.</li>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2026-27903">CVE-2026-27903</a> and <a href="https://www.cve.org/CVERecord?id=CVE-2026-26996">CVE-2026-26996</a>: Forced minimatch to ^5.1.8 via npm overrides in App Designer.</li>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2025-27789">CVE-2025-27789</a>: Forced @babel/helpers to ^7.26.10 via npm overrides in Data Stream Designer.</li>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2022-0235">CVE-2022-0235</a>: Removed the unused aspnet-prerendering dependency (which transitively brought in vulnerable node-fetch 1.7.3) from Data Stream Designer.</li>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2022-21802">CVE-2022-21802</a>: Removed the unused grapesjs 0.16.18 library from Data Stream Designer.</li>
+        </ul>
+        <p><i>Assessed as Mitigated by Design (vulnerable code paths are not reachable in XMPro deployments):</i></p>
+        <ul>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2026-32933">CVE-2026-32933</a>: AutoMapper 5.0.2 stack-overflow DoS in Subscription Manager - only invoked on bounded admin-managed mapping graphs through the IdentityServer3 admin store; durable fix awaits the SM .NET modernisation effort.</li>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2023-28155">CVE-2023-28155</a> (SSRF in <code>request</code> 2.88.2) and <a href="https://www.cve.org/CVERecord?id=CVE-2023-26136">CVE-2023-26136</a> (tough-cookie prototype pollution) in App Designer and Subscription Manager - <code>request</code> appears only as a transitive dependency (via xliffmerge and tsiclient in App Designer; via jsdom in Subscription Manager). No XMPro source code consumes it, and its HTTP-issuing code paths are unreachable in both build-time tooling and browser-targeted runtimes.</li>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2024-29415">CVE-2024-29415</a>: <code>ip</code> 1.1.5 in App Designer - package is bundled inside the tsiclient npm CLI tarball and is not consumed by XMPro code.</li>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2025-69873">CVE-2025-69873</a>: ajv 6.12.3 ReDoS in Data Stream Designer - package is a build-time transitive dependency of DevExtreme Angular schematics and is not shipped in the runtime browser bundle.</li>
+          <li><a href="https://cwe.mitre.org/data/definitions/117.html">CWE-117</a> log-injection findings on five Data Stream Designer controller actions - the logged inputs are strongly-typed (<code>long</code>, <code>Guid</code>, <code>long[]</code>) or already wrapped in <code>WebUtility.UrlEncode</code>, so cannot carry CRLF sequences.</li>
+        </ul>
+        <p>For false positive assessments and container scan results, see the <a href="../resources/container-scan-4-6-1.html">Container Security Scan Report - XMPro 4.6.1</a>.</p>
+      </td>
+    </tr>
+    <tr>
+      <td>Enhancement</td>
+      <td>
+        <p><b>Stream as Connector reliability and security improvements</b>: Targeted enhancements to the <b>Streams as Connectors</b> architecture introduced in v4.6.0.</p>
+        <ul>
+          <li><b>Faster connector requests</b>: Removed the redundant MQTT health check that previously ran before every Stream Connector request, reducing cumulative App Page load times for pages that issue multiple Stream Connector requests in sequence.</li>
+          <li><b>Encrypted context values over MQTT</b>: Sensitive context variables passed from App Designer into a connected Data Stream are now encrypted in transit over MQTT.<br><i>If you are using the SQL Server Connector Agent or Azure SQL Connector Agent with a Stream Connector, upgrade those agents to v2.27+ when applying this patch. Earlier connector agent versions cannot decrypt the new context value payload and the connector request will fail.</i></li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td>Ticket ID17822 <b>Incorrect Spanish translation in DS</b>: <i>When you use Data Stream Designer with Spanish set as your language, the labels "Save", "Discard", and "Listener" are translated incorrectly (as "Ahorrar", "Desechar", and "Oyentes" - meanings unrelated to the UI action).</i><br>Corrected translations: "Save" is now "Guardar", "Discard" is now "Borrar", and "Listener" is now "Escuchadores".</td>
+    </tr>
   </tbody>
 </table>
 <h2 id="v460">v4.6.0</h2>
@@ -123,7 +179,7 @@
       <td>
         <p><b>Streams as Connectors</b>: New architecture that allows App Designer applications to use a published Data Stream as a data source.</p>
         <p>The <b>XMPro Stream Connector</b> is used in App Designer to connect to a published Data Stream, supporting read, insert, update, and delete operations. The backing Data Stream comprises a <b>XMPro Stream Listener</b>, a Connector Agent (new category), and a <b>XMPro Stream Action Agent</b>. Agent configuration values are passed directly into the connected stream at runtime by App Designer. With Connectors now available in both App Designer and Data Stream Designer, attempting to import an integration file (.xmp) into the wrong product returns a clear error identifying which product the file belongs to.</p>
-        <p>Using this new feature results in much faster App Page page loads and less infrastructure to run the XMPro platform, but does require a MQTT broker to use it.</p>
+        <p>Using this new feature results in more resilient App Page page loads and less infrastructure to run the XMPro platform, but does require a MQTT broker to use it.</p>
         <p><i>If you are upgrading, a migration script is available to transition your existing connections. Contact your XMPro account manager for assistance.</i></p>
       </td>
     </tr>
@@ -159,50 +215,7 @@
           <li><a href="https://cwe.mitre.org/data/definitions/117.html">CWE-117</a>: Applied log output sanitization to neutralize CRLF injection in App Designer and Data Stream Designer.</li>
           <li><a href="https://cwe.mitre.org/data/definitions/285.html">CWE-285</a>: Added class-level [Authorize] attributes in App Designer and Data Stream Designer to enforce authentication by default, with explicit [AllowAnonymous] exemptions for public endpoints such as error pages and silent token renewal.</li>
         </ul>
-        <p><i>Assessed as false positives (affected components are not present in XMPro deployments):</i></p>
-        <ul>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2005-2541">CVE-2005-2541</a>: GNU tar setuid extraction is intended POSIX behavior; Debian and Red Hat classify as "won't fix".</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2010-4756">CVE-2010-4756</a>: glibc glob() resource consumption is POSIX-specified behavior; won't fix.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2015-3276">CVE-2015-3276</a>: openldap TLS cipher acceptance issue; XMPro uses .NET LDAP, not libldap directly.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2016-2781">CVE-2016-2781</a>: coreutils chroot TIOCSTI escape; kernel mitigated since Linux 6.4.4.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2017-17740">CVE-2017-17740</a>: openldap contrib/slapd-modules DoS; Debian doesn't build contrib modules.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2017-18018">CVE-2017-18018</a>: coreutils chown race condition; kernel hardening (fs.protected_regular) mitigates.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2018-5709">CVE-2018-5709</a>: krb5 integer overflow in policy lifetime; trusted admin input only.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2018-6829">CVE-2018-6829</a>: libgcrypt20 ElGamal side-channel; XMPro uses OpenSSL, hybrid mode unaffected.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2018-20225">CVE-2018-20225</a>: pip vulnerable --extra-index-url option is never used in XMPro Stream Host.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2018-20796">CVE-2018-20796</a>: glibc regex recursion DoS; disputed, glibc maintainers don't consider this a security issue.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2019-1010022">CVE-2019-1010022</a>: libc-bin (glibc) disputed CVE; glibc upstream states "not a real threat", requires prior stack overflow.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2019-1010023">CVE-2019-1010023</a>: glibc ldd requires user to run on malicious ELF; documented behavior.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2019-1010024">CVE-2019-1010024</a>: glibc ASLR bypass via exception messages; kernel security feature, not glibc bug.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2019-9192">CVE-2019-9192</a>: glibc regex recursion DoS; same issue as CVE-2018-20796.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2022-0563">CVE-2022-0563</a>: util-linux chfn/chsh readline echo; Debian uses shadow package instead.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2022-27943">CVE-2022-27943</a>: gcc libiberty Rust demangling in dev tools only; negligible impact.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2023-2953">CVE-2023-2953</a>: libldap-2.5-0 null pointer dereference; no LDAP functionality used in Stream Host containers.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2023-31486">CVE-2023-31486</a>: perl HTTP::Tiny TLS verification issue; XMPro uses .NET HttpClient, not Perl.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2023-42465">CVE-2023-42465</a>: sudo ROWHAMMER hardware attack; impractical in cloud environments with ECC RAM.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2024-1013">CVE-2024-1013</a>: Alpine unixodbc example code only, not compiled in XMPro containers.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2025-6020">CVE-2025-6020</a>: libpam requires pam_namespace polyinstantiation, not used in XMPro containers.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2025-6297">CVE-2025-6297</a>: dpkg only affects manual dpkg-deb extraction, not used in XMPro containers.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2025-7458">CVE-2025-7458</a>: libsqlite3-0 Python variant only; requires crafted SQL with large ORDER BY, not possible in XMPro containers.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2025-9086">CVE-2025-9086</a>: curl is installed but not invoked at runtime; Stream Host runs as non-root app user with no curl usage in entrypoint or application code.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2025-9708">CVE-2025-9708</a>: KubernetesClient 4.0.26 is a transitive dependency of AspNetCore.HealthChecks.UI that XMPro does not use.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2025-10148">CVE-2025-10148</a>: curl WebSocket payload masking issue; XMPro uses .NET HttpClient, not curl.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2025-13034">CVE-2025-13034</a>: curl QUIC TLS key pinning issue; XMPro uses .NET HttpClient, not curl.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2025-13151">CVE-2025-13151</a>: libtasn1-6 vulnerable code never executed; XMPro uses OpenSSL not GnuTLS.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2025-14104">CVE-2025-14104</a>: util-linux setpwnam race condition; SUID utilities not used in XMPro containers.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2025-14524">CVE-2025-14524</a>: curl OAuth2 Bearer token leak; XMPro uses .NET HttpClient, not curl.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2025-14819">CVE-2025-14819</a>: curl CA certificate store caching issue; XMPro uses .NET TLS, not curl.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2025-15281">CVE-2025-15281</a>: libc-bin (glibc) requires wordexp() with WRDE_REUSE+WRDE_APPEND flags; not used by XMPro applications.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2025-30258">CVE-2025-30258</a>: gpgv certificate import DoS; XMPro doesn't import GnuPG keys.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2025-68972">CVE-2025-68972</a>: gpgv plaintext injection in signed messages; XMPro doesn't verify GPG signatures.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2025-68973">CVE-2025-68973</a>: gpgv scanner data lag; Debian shows 2.2.40-1.1+deb12u2 is already fixed.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2026-0861">CVE-2026-0861</a>: glibc requires attacker control of both size and alignment parameters; not possible in XMPro managed code.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2026-0915">CVE-2026-0915</a>: glibc requires getnetbyaddr() with zero-valued network parameter; XMPro applications don't call this function.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2026-2219">CVE-2026-2219</a>: dpkg zstd decompression infinite loop; only affects processing untrusted .deb archives, not done in XMPro containers.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2026-3805">CVE-2026-3805</a>: curl vulnerability in Debian Trixie; XMPro uses .NET HttpClient for all HTTP operations, not curl. No fix available from Debian.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2026-22184">CVE-2026-22184</a>: zlib (npm) untgz utility not present in browserify-zlib/minizlib; pure JS packages unaffected.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2026-24882">CVE-2026-24882</a>: gpgv vulnerability in tpm2daemon not included in gpgv package; gpgv is only a signature verification tool.</li>
-        </ul>
+        <p>For false positive assessments and container scan results, see the <a href="../resources/container-scan-4-6-0.html">Container Security Scan Report - XMPro 4.6.0</a>.</p>
       </td>
     </tr>
   </tbody>
@@ -236,7 +249,7 @@
       <td>
         <p>This release introduces a set of improvements that together deliver a more reliable, efficient, and upgrade-friendly Stream Host:</p>
         <ul>
-          <li><b>Memory Optimisation</b>: Rearchitected with Event-Level Streaming Architecture, processing data one event at a time through a chain of agents rather than accumulating large in-memory batches.
+          <li><b>Memory Optimisation</b>: Rearchitected with <a href="../concepts/agent/event-level-streaming-vs-agent-level-streaming.html">Event-Level Streaming Architecture</a>, processing data one event at a time through a chain of agents rather than accumulating large in-memory batches.
   <ul>
   <li>Each agent releases memory as soon as it forwards an event, preventing unnecessary retention of intermediate results and significantly reducing RAM usage.</li>
   <li>Downstream agents begin processing immediately upon receiving each event, without waiting for the full batch from the preceding agent.</li>
@@ -269,7 +282,7 @@
     </tr>
   </tbody>
 </table>
-<h2 id="app-designer">App Designer</h2>
+<h3 id="nuget-packages">NuGet Packages</h3>
 <h4 id="agent-development">Agent Development</h4>
 <h5 id="xmproiotframework">XMPro.IOT.Framework</h5>
 <table>
@@ -296,28 +309,13 @@
     </tr>
   </tbody>
 </table>
-<h3 id="connector-development">Connector Development</h3>
+<h4 id="connector-development">Connector Development</h4>
 <p>No changes to XMPro.Integration.Framework, XMPro.Integration.Helpers, or XMPro.Integration.Settings.</p>
-<h2 id="known-issues-1">Known Issues</h2>
-<table>
-<thead>
-<tr>
-<th>Product</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td></td>
-<td>None reported for this release.</td>
-</tr>
-</tbody>
-</table>
 
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: August 19, 2026</em></small></p>
+    <p><small><em>Last modified: August 20, 2026</em></small></p>
   </div>
 </article>
 

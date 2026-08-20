@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../../../">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/deployment/azure-terraform/advanced-configuration.md&amp;version=GBmain&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/deployment/azure-terraform/advanced-configuration.md&amp;version=GBrelease-4.6&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -91,17 +91,17 @@
 <h2 id="health-monitoring-automatically-configured">Health Monitoring (Automatically Configured)</h2>
 <p>Health monitoring is automatically enabled for all XMPro services. No configuration needed!</p>
 <h3 id="whats-included">What's Included</h3>
-<p>✅ <strong>Health endpoints</strong> - Each service exposes <code>/health</code> (JSON status) and <code>/health/ping</code> (liveness probe)
+<p>✅ <strong>Real-time health checks</strong> - Services monitor each other automatically<br>
+✅ <strong>Health dashboard</strong> - Visual status at <code>/health-ui</code> on App Designer and Data Stream Designer<br>
 ✅ <strong>Application Insights</strong> - Full monitoring and alerting in Azure Portal</p>
 <h3 id="viewing-health-status">Viewing Health Status</h3>
-<p><strong>Option 1: Direct API Endpoints</strong></p>
-<p>For programmatic access or troubleshooting:</p>
+<p><strong>Option 1: Health Dashboard (Recommended)</strong></p>
+<p>Access the built-in health dashboard UI:</p>
 <ul>
-<li>App Designer: <code>https://ad-yourcompany.azurewebsites.net/health</code></li>
-<li>Data Stream Designer: <code>https://ds-yourcompany.azurewebsites.net/health</code></li>
-<li>Subscription Manager: <code>https://sm-yourcompany.azurewebsites.net/health</code></li>
-<li>XMPro AI: <code>https://ai-yourcompany.azurewebsites.net/health</code></li>
+<li>App Designer: <code>https://ad-yourcompany.azurewebsites.net/health-ui</code></li>
+<li>Data Stream Designer: <code>https://ds-yourcompany.azurewebsites.net/health-ui</code></li>
 </ul>
+<p>This provides a visual dashboard showing the real-time status of all components.</p>
 <p><strong>Option 2: Application Insights</strong></p>
 <p>For detailed monitoring and historical data:</p>
 <ol>
@@ -110,8 +110,13 @@
 <li>Click on Application Insights</li>
 <li>View the Application Map to see all services and dependencies</li>
 </ol>
-<p><strong>Option 3: Azure App Service Health Check</strong></p>
-<p>For integrated monitoring within Azure Portal, configure the built-in App Service health check probe against the <code>/health/ping</code> endpoint.</p>
+<p><strong>Option 3: Direct API Endpoints</strong></p>
+<p>For programmatic access or troubleshooting:</p>
+<ul>
+<li>App Designer: <code>https://ad-yourcompany.azurewebsites.net/health</code></li>
+<li>Data Stream Designer: <code>https://ds-yourcompany.azurewebsites.net/health</code></li>
+<li>Subscription Manager: <code>https://sm-yourcompany.azurewebsites.net/version</code></li>
+</ul>
 <h2 id="logging-automatically-configured">Logging (Automatically Configured)</h2>
 <p>All logging is automatically set up. No configuration needed!</p>
 <h3 id="whats-included-1">What's Included</h3>
@@ -140,19 +145,6 @@
 <li><a href="../../../how-tos/data-streams/check-data-stream-logs.html">Data Stream Logs</a></li>
 <li><a href="../../../how-tos/apps/check-connector-logs.html">Connector Logs</a></li>
 </ul>
-</div>
-<h2 id="connector-pool">Connector Pool</h2>
-<p><em>Added v5.0.0</em></p>
-<p>App Designer keeps a pool of reused connector handler instances, shared across the whole deployment, to avoid recreating them on every request. The pool size is capped, and when it is full the least recently used handler is evicted. For how pooling works, see <a href="../../../concepts/connector.html#connector-pooling">Connector Pooling</a>.</p>
-<h3 id="configuring-the-pool-size">Configuring the Pool Size</h3>
-<p>Set the maximum pool size in your <code>terraform.tfvars</code> file:</p>
-<pre><code class="lang-hcl"># Maximum number of pooled connector handlers per App Designer instance (default: 128).
-ad_connector_pool_global_cap = 128
-</code></pre>
-<p>The default of <code>128</code> suits most deployments. Increase it if App Designer serves many connections and the <a href="../../../how-tos/manage-site-settings.html#connector-pool-report">Connector Pool Report</a> shows the pool consistently at capacity.</p>
-<div class="NOTE">
-<h5>Note</h5>
-<p><code>ad_connector_pool_global_cap</code> is available on the Azure App Service, AKS, and EKS deployment modules. It maps to the <code>xmpro:appDesigner:connectorPool:globalCap</code> application setting (supplied to the container as the <code>XM__XMPRO__APPDESIGNER__CONNECTORPOOL__GLOBALCAP</code> environment variable). On Helm-based deployments the equivalent value is <code>ad.connectorPool.globalCap</code>.</p>
 </div>
 <h2 id="smtp-email-configuration">SMTP Email Configuration</h2>
 <p>XMPro supports email notifications for password resets, user invitations, and system alerts. Configure SMTP in your <code>terraform.tfvars</code> file.</p>
@@ -228,7 +220,7 @@ email_from_address = &quot;notifications@yourcompany.com&quot;
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: August 19, 2026</em></small></p>
+    <p><small><em>Last modified: August 20, 2026</em></small></p>
   </div>
 </article>
 

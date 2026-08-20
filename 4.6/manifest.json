@@ -1,6 +1,6 @@
 {
   "sitemap": {
-    "baseUrl": "https://xmpro.github.io/public-documentation/",
+    "baseUrl": "https://documentation.xmpro.com/4.5/",
     "changefreq": "daily",
     "priority": 0.5
   },
@@ -27,40 +27,10 @@
     },
     {
       "type": "Resource",
-      "source_relative_path": "404.html",
-      "output": {
-        "resource": {
-          "relative_path": "404.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
       "source_relative_path": "images/beta-icon.png",
       "output": {
         "resource": {
           "relative_path": "images/beta-icon.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "images/contributing/pr_build.png",
-      "output": {
-        "resource": {
-          "relative_path": "images/contributing/pr_build.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "images/contributing/pr_number.png",
-      "output": {
-        "resource": {
-          "relative_path": "images/contributing/pr_number.png"
         }
       },
       "version": ""
@@ -111,36 +81,6 @@
       "output": {
         ".html": {
           "relative_path": "index.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "pipeline-scripts/README.md",
-      "output": {
-        ".html": {
-          "relative_path": "pipeline-scripts/README.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "pipeline-templates/README.md",
-      "output": {
-        ".html": {
-          "relative_path": "pipeline-templates/README.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "scsetup/selenium-framework-test-execution.md",
-      "output": {
-        ".html": {
-          "relative_path": "scsetup/selenium-framework-test-execution.html"
         }
       },
       "version": ""
@@ -13277,96 +13217,6 @@
     },
     {
       "type": "Resource",
-      "source_relative_path": "src/images/existing-database/ad-product-details.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/images/existing-database/ad-product-details.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "src/images/existing-database/ai-product-details.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/images/existing-database/ai-product-details.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "src/images/existing-database/ds-product-details.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/images/existing-database/ds-product-details.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "src/images/existing-database/product-logout-url-update.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/images/existing-database/product-logout-url-update.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "src/images/existing-database/product-url-update.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/images/existing-database/product-url-update.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "src/images/existing-database/sm-login.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/images/existing-database/sm-login.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "src/images/existing-database/sm-product-details.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/images/existing-database/sm-product-details.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "src/images/existing-database/sm-product-list.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/images/existing-database/sm-product-list.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "src/images/existing-database/sm-product-menu.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/images/existing-database/sm-product-menu.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
       "source_relative_path": "src/images/faq-run-recommendation.png",
       "output": {
         "resource": {
@@ -13681,6 +13531,16 @@
       "output": {
         "resource": {
           "relative_path": "src/images/health-endpoint-result.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/images/health-ui.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/health-ui.png"
         }
       },
       "version": ""
@@ -18981,26 +18841,6 @@
       "output": {
         "resource": {
           "relative_path": "src/images/installation/windows-server-2022-install-9.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "src/images/installation/windows-server-2022-upgrade-52.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/images/installation/windows-server-2022-upgrade-52.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "src/images/installation/windows-server-2022-upgrade-53.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/images/installation/windows-server-2022-upgrade-53.png"
         }
       },
       "version": ""
@@ -24747,6 +24587,16 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "src/images/resources/whats-new/health-ui.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/resources/whats-new/health-ui.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "src/images/resources/widget-1.png",
       "output": {
         "resource": {
@@ -24891,6 +24741,36 @@
       "output": {
         "resource": {
           "relative_path": "src/images/resources/xmpro-app.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/images/resources/xmpro-notebook_license.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/resources/xmpro-notebook_license.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/images/resources/xmpro-notebook_mlflow-output.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/resources/xmpro-notebook_mlflow-output.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/images/resources/xmpro-notebook_waffle_menu.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/resources/xmpro-notebook_waffle_menu.png"
         }
       },
       "version": ""
@@ -26037,66 +25917,6 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "src/installation/deployment/aws-kubernetes/eks-sizing.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/installation/deployment/aws-kubernetes/eks-sizing.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "src/installation/deployment/aws-kubernetes/index.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/installation/deployment/aws-kubernetes/index.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "src/installation/deployment/aws-kubernetes/upgrade-from-legacy.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/installation/deployment/aws-kubernetes/upgrade-from-legacy.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "src/installation/deployment/azure-kubernetes/aks-sizing.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/installation/deployment/azure-kubernetes/aks-sizing.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "src/installation/deployment/azure-kubernetes/index.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/installation/deployment/azure-kubernetes/index.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "src/installation/deployment/azure-kubernetes/upgrade-from-app-service.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/installation/deployment/azure-kubernetes/upgrade-from-app-service.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
       "source_relative_path": "src/installation/deployment/azure-terraform/advanced-configuration.md",
       "output": {
         ".html": {
@@ -26141,16 +25961,6 @@
       "output": {
         ".html": {
           "relative_path": "src/installation/deployment/azure-terraform/troubleshooting.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "src/installation/deployment/azure-terraform/upgrade-from-legacy.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/installation/deployment/azure-terraform/upgrade-from-legacy.html"
         }
       },
       "version": ""
@@ -26207,30 +26017,10 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "src/installation/deployment/windows-server-2022/upgrade-from-legacy.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/installation/deployment/windows-server-2022/upgrade-from-legacy.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
       "source_relative_path": "src/installation/deployment/windows-server-2022/windows-sizing.md",
       "output": {
         ".html": {
           "relative_path": "src/installation/deployment/windows-server-2022/windows-sizing.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "src/installation/install.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/installation/install.html"
         }
       },
       "version": ""
@@ -28531,6 +28321,16 @@
       "output": {
         "resource": {
           "relative_path": "src/resources/images/health-endpoint-result.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/resources/images/health-ui.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/resources/images/health-ui.png"
         }
       },
       "version": ""
@@ -31277,6 +31077,36 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "src/resources/images/xmpro-notebook_license.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/resources/images/xmpro-notebook_license.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/resources/images/xmpro-notebook_mlflow-output.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/resources/images/xmpro-notebook_mlflow-output.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/resources/images/xmpro-notebook_waffle_menu.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/resources/images/xmpro-notebook_waffle_menu.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "src/resources/images/yellow-error.png",
       "output": {
         "resource": {
@@ -31361,36 +31191,6 @@
       "output": {
         ".html": {
           "relative_path": "src/technical-reference/oauth-smtp-configuration.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "src/technical-reference/observability/backends.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/technical-reference/observability/backends.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "src/technical-reference/observability/configure-opentelemetry.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/technical-reference/observability/configure-opentelemetry.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "src/technical-reference/observability/index.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/technical-reference/observability/index.html"
         }
       },
       "version": ""

@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/overview.md&amp;version=GBmain&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/overview.md&amp;version=GBrelease-4.6&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -88,10 +88,6 @@
 <h1 id="xmpro-deployment-overview">XMPro Deployment Overview</h1>
 
 <p>XMPro platform deployment follows a <strong>two-phase responsibility model</strong> designed to leverage customer infrastructure expertise while ensuring successful application deployment. This approach separates infrastructure provisioning (customer responsibility) from application deployment (XMPro/Implementation Partner responsibility), enabling efficient deployment across Azure cloud and Windows Server environments.</p>
-<div class="NOTE">
-<h5>Note</h5>
-<p><strong>XMPro 5.0 deploys on Kubernetes.</strong> Start with the <a href="deployment/azure-kubernetes/index.html">Azure Kubernetes (AKS)</a> or <a href="deployment/aws-kubernetes/index.html">AWS Kubernetes (EKS)</a> deployment guide. A <strong>Windows installer / Windows Server 2022</strong> deployment option will follow in a later 5.0.0 release.</p>
-</div>
 <p><strong>Key Benefits:</strong></p>
 <ul>
 <li><strong>Clear Ownership:</strong> Defined responsibility boundaries prevent deployment delays</li>
@@ -134,39 +130,6 @@
 </tr>
 </tbody>
 </table>
-<h2 id="getting-the-deployment-assets">Getting the deployment assets</h2>
-<p>From 5.0 onward the Kubernetes deployment scripts, the container images, and the security artifacts (SBOMs and scan results) are distributed through XMPro's GitHub Enterprise instance rather than public endpoints. There is no anonymous download.</p>
-<table>
-<thead>
-<tr>
-<th>Asset</th>
-<th>Where it lives</th>
-<th>What you need</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Terraform modules (AKS, EKS) and Helm charts</td>
-<td><code>https://xmpro.ghe.com/xmpro/infra-kubernetes</code></td>
-<td>Read access to the repository</td>
-</tr>
-<tr>
-<td>Container images</td>
-<td><code>containers.xmpro.ghe.com/xmpro/prod</code></td>
-<td>A personal access token with <code>read:packages</code></td>
-</tr>
-<tr>
-<td>SBOMs, SAST/DAST and container scan results</td>
-<td><code>https://xmpro.ghe.com/xmpro/security-artifacts</code></td>
-<td>Read access to the repository</td>
-</tr>
-</tbody>
-</table>
-<div class="IMPORTANT">
-<h5>Important</h5>
-<p><strong>How to get access.</strong> Request it through your XMPro point of contact, consultant, or personnel. They raise it internally; XMPro provisions your named users and grants your organisation read access to the deployment repository and container images. Access is per-person and tied to the account XMPro issues you — there is no public download and no self-signup.</p>
-</div>
-<p>Access is a customer-side prerequisite: named users must be provisioned before Phase 1 begins, because the infrastructure templates and the images are both behind it.</p>
 <h2 id="two-phase-deployment-model">Two-Phase Deployment Model</h2>
 <p>XMPro deployments follow a <strong>two-phase approach</strong> that separates infrastructure provisioning from application deployment:</p>
 <h3 id="phase-1-infrastructure-provisioning">Phase 1: Infrastructure Provisioning</h3>
@@ -321,7 +284,7 @@
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: August 19, 2026</em></small></p>
+    <p><small><em>Last modified: August 20, 2026</em></small></p>
   </div>
 </article>
 
