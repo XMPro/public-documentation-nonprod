@@ -101,12 +101,26 @@
   <source src="../../images/6a0xucyk8u.mp4" type="video/mp4">
 </video>
 <h3 id="behavior">Behavior</h3>
+<h4 id="authentication-mode">Authentication Mode</h4>
+<p>Choose how the Esri Map authenticates with ArcGIS: <em>API Key</em> (default) or <em>App Authentication (OAuth 2.0)</em>.</p>
+<p><strong>API Key</strong> uses a single key to unlock private <a href="esri-map.html#feature-layers">feature layers</a>; leave it blank if you are not using feature layers. See <a href="esri-map.html#use-variables">Use Variables</a> and <a href="esri-map.html#api-key">API Key</a> below.</p>
+<p><strong>App Authentication (OAuth 2.0)</strong> authenticates as a registered ArcGIS OAuth 2.0 application, using the client credentials grant. Access tokens refresh automatically before they expire, so no user sign-in is required. Register an OAuth 2.0 application in ArcGIS (ArcGIS Online or ArcGIS Enterprise) with the <strong>Client Credentials</strong> grant type, then see <a href="esri-map.html#client-id">Client ID</a>, <a href="esri-map.html#client-secret">Client Secret</a>, and <a href="esri-map.html#portal-url">Portal URL</a> below. For more details, <a href="https://developers.arcgis.com/documentation/security-and-authentication/types-of-authentication/#app-authentication">visit the official Esri App Authentication documentation</a>.</p>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>An incorrect Client ID, Client Secret, or Portal URL shows an authentication error instead of loading the map.</p>
+</div>
 <h4 id="use-variables">Use Variables</h4>
-<p>This allows you to choose between manually entering a value for the <em>API Key</em> or selecting from a static variable.</p>
+<p>This allows you to choose between manually entering a value for the <em>API Key</em> or selecting from a static variable (applies to API Key Authentication Mode only).</p>
 <p><img src="../../images/esri-map-api-key.gif" alt="Esri Map API Key configuration interface"></p>
 <h4 id="api-key">API Key</h4>
-<p>The API key is used to get the private <a href="esri-map.html#feature-layers">feature layers</a>. For more details, <a href="https://developers.arcgis.com/documentation/mapping-apis-and-services/security/api-keys/">visit the official Esri map documentation</a>.</p>
-<p>The API Key property is required for the Esri Map when there are feature layers added.</p>
+<p>The API key unlocks private <a href="esri-map.html#feature-layers">feature layers</a>. For more details, <a href="https://developers.arcgis.com/documentation/mapping-apis-and-services/security/api-keys/">visit the official Esri map documentation</a>.</p>
+<p>Required when feature layers are configured (applies to API Key Authentication Mode only).</p>
+<h4 id="client-id">Client ID</h4>
+<p>The ArcGIS OAuth application's unencrypted Variable holding its Client ID. Required (applies to App Authentication (OAuth 2.0) Authentication Mode only).</p>
+<h4 id="client-secret">Client Secret</h4>
+<p>The ArcGIS OAuth application's encrypted Variable holding its Client Secret. Required (applies to App Authentication (OAuth 2.0) Authentication Mode only).</p>
+<h4 id="portal-url">Portal URL</h4>
+<p>The ArcGIS portal to authenticate against. Defaults to <code>https://www.arcgis.com</code>; for ArcGIS Enterprise (on-premises) deployments, enter your organization's portal URL instead, for example <code>https://gis.example.com/portal</code>. Must use HTTPS (applies to App Authentication (OAuth 2.0) Authentication Mode only).</p>
 <h4 id="show-basemap-gallery">Show Basemap Gallery</h4>
 <p>This will add a button on the map and give the option to change the <a href="esri-map.html#base-map">Base Map</a> layout.</p>
 <h4 id="allow-show-current-location">Allow Show Current Location</h4>
@@ -131,7 +145,7 @@
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: September 04, 2026</em></small></p>
+    <p><small><em>Last modified: September 08, 2026</em></small></p>
   </div>
 </article>
 
