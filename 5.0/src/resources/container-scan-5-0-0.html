@@ -2,21 +2,21 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>AI Log Events | XMPro </title>
+      <title>Container Security Scan - XMPro 5.0.0 | XMPro </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="AI Log Events | XMPro ">
+      <meta name="title" content="Container Security Scan - XMPro 5.0.0 | XMPro ">
       <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      <meta name="description" content="Container vulnerability scan results for XMPro 5.0.0 images.">
+      <link rel="icon" href="../../images/favicon.png">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
       
-      <link rel="icon" href="../../../images/favicon.png">
-      <link rel="stylesheet" href="../../../public/docfx.min.css">
-      <link rel="stylesheet" href="../../../public/main.css">
-      <meta name="docfx:navrel" content="../../../toc.html">
-      <meta name="docfx:tocrel" content="../../toc.html">
-      
-      <meta name="docfx:rel" content="../../../">
+      <meta name="docfx:rel" content="../../">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/technical-reference/xmpro-log-events/ai-log-events.md&amp;version=GBrelease-5.0&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/resources/container-scan-5-0-0.md&amp;version=GBrelease-5.0&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -30,7 +30,7 @@
       <meta name="loc:copy" content="Copy">
       <meta name="loc:downloadPdf" content="Download PDF">
 
-      <script type="module" src="./../../../public/docfx.min.js"></script>
+      <script type="module" src="./../../public/docfx.min.js"></script>
 
       <script>
         const theme = localStorage.getItem('theme') || 'auto'
@@ -43,8 +43,8 @@
     <header class="bg-body border-bottom">
       <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
         <div class="container-xxl flex-nowrap">
-          <a class="navbar-brand" href="../../../index.html">
-            <img id="logo" class="svg" src="../../../images/logo-light.png" alt="">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/logo-light.png" alt="">
             
           </a>
           <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
@@ -85,67 +85,40 @@
         </div>
 
         <article data-uid="">
-<h1 id="ai-log-events">AI Log Events</h1>
+<h1 id="container-security-scan---xmpro-500">Container Security Scan - XMPro 5.0.0</h1>
 
-<p>AI generates log events that monitor the core application operations including web application lifecycle, file upload activities, and HTTP request processing. These events provide essential monitoring and troubleshooting information for the AI platform.</p>
-<p>The tables below organize log events by severity level, with each entry showing the message template you'll see in your logs and the context explaining what triggers that event. The levels are:</p>
-<ul>
-<li>Fatal</li>
-<li>Error</li>
-<li>Information</li>
-</ul>
-<h2 id="fatal-level">Fatal Level</h2>
-<p>Fatal events indicate critical system failures that cause the application to terminate unexpectedly. These require immediate attention as they represent complete system breakdown.</p>
+<p><strong>Registry:</strong> xmpro.azurecr.io
+<strong>Version:</strong> 5.0.0
+<strong>Release Date:</strong> 13 August 2026</p>
+<h2 id="executive-summary">Executive Summary</h2>
+<p>All <strong>Critical</strong> and <strong>High</strong> severity findings across XMPro 5.0.0 container images have been investigated and confirmed as <strong>false positives</strong> (see <a href="platform-security.html#known-false-positives">Known False Positives</a>). No actionable Critical or High vulnerabilities exist in any XMPro container image.</p>
+<p>Two new false positives were assessed since the 4.6.1 release; the remaining entries carry forward from earlier releases.</p>
 <table>
 <thead>
 <tr>
-<th>Message Template</th>
-<th>Context Summary</th>
+<th>Status</th>
+<th>Count</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>&quot;Application terminated unexpectedly&quot;</td>
-<td>Application startup failure causing termination</td>
+<td>Total documented false positives at 5.0.0</td>
+<td>57</td>
+</tr>
+<tr>
+<td>New since 4.6.1</td>
+<td>2</td>
+</tr>
+<tr>
+<td>Carried forward from 4.6.1</td>
+<td>55</td>
 </tr>
 </tbody>
 </table>
-<h2 id="error-level">Error Level</h2>
-<p>Error events indicate serious problems that prevent normal operation but don't necessarily cause application termination. These require prompt investigation and resolution.</p>
-<table>
-<thead>
-<tr>
-<th>Message Template</th>
-<th>Context Summary</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>&quot;An error occurred on {RequestPath} with {Message}&quot;</td>
-<td>HTTP request processing errors</td>
-</tr>
-</tbody>
-</table>
-<h2 id="information-level">Information Level</h2>
-<p>Information events track normal system operations and user activities. These provide audit trails and operational insights for system monitoring.</p>
-<table>
-<thead>
-<tr>
-<th>Message Template</th>
-<th>Context Summary</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>&quot;Starting web application&quot;</td>
-<td>Application startup logging</td>
-</tr>
-<tr>
-<td>&quot;Uploading file with max width {MaxWidth} and height {MaxHeight}&quot;</td>
-<td>File upload operations</td>
-</tr>
-</tbody>
-</table>
+<div class="NOTE">
+<h5>Note</h5>
+<p>A CVE listed on <a href="platform-security.html#known-false-positives">Known False Positives</a> means a security scanner has flagged the vulnerability in an XMPro container image, but engineering has reviewed the issue and confirmed it does not affect XMPro at runtime. Common reasons include: the vulnerable code path is never executed, the affected library is transitively installed but not invoked, or the vulnerability requires preconditions that do not exist in XMPro deployments. Genuine vulnerabilities (true positives) are addressed in the release itself and do not appear on this page.</p>
+</div>
 
 
   <div class="last-modified">

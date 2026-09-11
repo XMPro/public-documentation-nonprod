@@ -176,6 +176,12 @@
 <td>54 (18 new)</td>
 <td><a href="container-scan-4-6-1.html">View Report</a></td>
 </tr>
+<tr>
+<td>5.0.0</td>
+<td>13 Aug 26</td>
+<td>57 (2 new)</td>
+<td><a href="container-scan-5-0-0.html">View Report</a></td>
+</tr>
 </tbody>
 </table>
 <h3 id="known-false-positives">Known False Positives</h3>
@@ -240,13 +246,18 @@
 <li><a href="https://www.cve.org/CVERecord?id=CVE-2026-42010">CVE-2026-42010</a>: GnuTLS — RSA-PSK auth bypass via NUL bytes in usernames; XMPro doesn't use RSA-PSK ciphersuites or libgnutls.</li>
 <li><a href="https://www.cve.org/CVERecord?id=CVE-2026-42011">CVE-2026-42011</a>: GnuTLS — nameConstraints chain-walking flaw; XMPro uses .NET TLS (OpenSSL chain validation), no libgnutls PInvoke.</li>
 </ul>
+<h4 id="new-in-500">New in 5.0.0</h4>
+<ul>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-26171">CVE-2026-26171</a>: System.Security.Cryptography.Xml (NuGet) — EncryptedXml uncontrolled resource consumption on transform reference chains; XMPro never calls EncryptedXml/SignedXml, the package is transitive via AppDesigner.Core / AIDesigner and the assembly is never loaded.</li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-33116">CVE-2026-33116</a>: System.Security.Cryptography.Xml (NuGet) — EncryptedXml infinite loop on circular CipherReference chains; sibling of CVE-2026-26171, same reasoning. Both are reported by Veracode under their GHSA aliases (GHSA-w3x6-4m5h-cxqf, GHSA-37gx-xxp4-5rgx).</li>
+</ul>
 <h2 id="support-and-recommendations">Support and Recommendations</h2>
 <p>.NET versions are supported by Microsoft for 3 years after release, as detailed in their <a href="https://dotnet.microsoft.com/en-us/platform/support/policy">support policy</a>. To ensure you have the most secure XMPro offerings, we recommend upgrading at least every 3 months to take advantage of the latest security updates and features.</p>
 
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: September 08, 2026</em></small></p>
+    <p><small><em>Last modified: September 11, 2026</em></small></p>
   </div>
 </article>
 
