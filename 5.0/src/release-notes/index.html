@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>v4.6 Release Notes | XMPro </title>
+      <title>v5.0 Release Notes | XMPro </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="v4.6 Release Notes | XMPro ">
+      <meta name="title" content="v5.0 Release Notes | XMPro ">
       <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
       
       <link rel="icon" href="../../images/favicon.png">
@@ -85,10 +85,22 @@
         </div>
 
         <article data-uid="">
-<h1 id="v46-release-notes">v4.6 Release Notes</h1>
+<h1 id="v50-release-notes">v5.0 Release Notes</h1>
 
-<p>This section contains the release notes for XMPro v4.6 platform, providing information about new features, improvements, and bug fixes across all core products. Key highlights include the Streams as Connectors architecture, Stream Host Event-Level Streaming architecture, OAuth SMTP support, and security enhancements across all products.</p>
-<h2 id="known-issues">Known Issues</h2>
+<p>This section contains the release notes for XMPro v5.0 platform, providing information about new features, improvements, and bug fixes across all core products. Key highlights include MAGS reaching general availability in XMPro AI, the re-platforming of Subscription Manager into a modernised Subscription Manager and a new Identity Server, Kubernetes-native deployment on Azure and AWS, OpenTelemetry observability across all services, the platform upgrade to .NET 10 and Angular 21, and App Designer Connector Pooling.</p>
+<div class="WARNING">
+<h5>Warning</h5>
+<p><strong>Forward-only release</strong>: Once you upgrade to v5.0.0 there is no supported path back to v4.x. Test the upgrade in a non-production environment first.</p>
+<p><strong>Breaking changes</strong>: The following have been retired in v5.0.0. Check each one against your deployment before upgrading.</p>
+<ul>
+<li><strong>Ubuntu Stream Host</strong>: no longer available to download from the Collections page. See <a href="../installation/complete-installation/install-stream-host/index.html">Deploy Stream Host</a> for the remaining options.</li>
+<li><strong>XMPro Notebooks (Jupyter)</strong>: disabled in v4.5.4 and now removed entirely, including its product registration and database migrations. XMPro AI is unaffected.</li>
+<li><strong>Autodesk Forge block</strong>: can no longer be added to applications, and has not worked at runtime for some time. Existing blocks stay viewable at design time. To display Autodesk models, use the <a href="../blocks-toolbox/advanced/metablock.html#autodesk-visualize-2d--3d-models">Metablock Autodesk example</a>.</li>
+<li><strong>Mosquitto</strong>: removed from the XMPro container registry, as it is not part of the product suite. A Stream Connector still requires an MQTT broker, which you now supply.</li>
+<li><strong>Swagger endpoints and the <code>/health-ui</code> dashboard</strong>: no longer served. The <code>/health</code> and <code>/health/ping</code> endpoints are unaffected.</li>
+</ul>
+</div>
+<h2 id="known-issues-reported-and-fixed">Known Issues Reported and Fixed</h2>
 <table>
   <thead>
     <tr>
@@ -100,16 +112,190 @@
   </thead>
   <tbody>
     <tr>
+      <td>App Designer</td>
+      <td>Ticket ID17911 The selected validation group is not retained: When you reopen a block's properties, the validation group selected on a button is not retained, so the validation configuration has to be reapplied.</td>
+      <td>v4.5.3</td>
+      <td>v5.0.0</td>
+    </tr>
+    <tr>
       <td>Data Stream Designer</td>
       <td>Ticket ID17421 Data Stream Designer Hangs on Publish/Unpublish: When you publish or unpublish a Data Stream, the browser occasionally becomes unresponsive and requires a page refresh to recover.</td>
       <td>v4.5.5</td>
+      <td>v5.0.0</td>
+    </tr>
+    <tr>
+      <td>Common</td>
+      <td>Ticket ID18105 Low-risk container vulnerabilities reported in container images: A customer scan reported low-risk findings across the App Designer, Data Stream Designer, and Stream Host images. Most are confirmed false positives or resolved by base-image updates, but CVE-2026-1703 in <code>pip</code> on the Stream Host image remains outstanding.</td>
+      <td>v4.6.0</td>
+      <td>Pending</td>
+    </tr>
+    <tr>
+      <td>Data Stream Designer</td>
+      <td>Bug 24700 Large agent upload fails: Uploading a large agent package to Data Stream Designer fails even when the package is below the 100 MB limit.</td>
+      <td>v5.0.0</td>
+      <td>Pending</td>
+    </tr>
+    <tr>
+      <td>Subscription Manager</td>
+      <td>Bug 24896 Identity Server memory grows until the container restarts: Under sustained sign-in load Identity Server memory is not returned to the operating system, so the container eventually restarts and briefly interrupts sign-in for every product. The growth is in the Mono runtime rather than in XMPro code. Scheduled restarts are the current mitigation.</td>
+      <td>v5.0.0</td>
+      <td>Pending</td>
+    </tr>
+    <tr>
+      <td>App Designer</td>
+      <td>Defect 25021 TreeGrid expand and collapse carets do not render: On every group row in the TreeGrid block the expand and collapse indicator renders as nothing. The control still works and keeps its normal position, so rows can be expanded by clicking where the caret should be, but there is no visual cue to discover it.</td>
+      <td>v5.0.0</td>
+      <td>Pending</td>
+    </tr>
+    <tr>
+      <td>Data Stream Designer</td>
+      <td>Bug 25045 Stream Hosts list renders a blank grid: A collection with no registered Stream Hosts shows an empty grid instead of the "No data" message.</td>
+      <td>v5.0.0</td>
+      <td>Pending</td>
+    </tr>
+    <tr>
+      <td>App Designer</td>
+      <td>Defect 25050 Autodesk Platform Services Viewer does not render its model: In an App Designer Metablock the viewer's panel, heading and scrollbars load, but the content area stays empty and the 3D model never appears.</td>
+      <td>v5.0.0</td>
+      <td>Pending</td>
+    </tr>
+    <tr>
+      <td>Data Stream Designer</td>
+      <td>Bug 25253 <a href="../installation/complete-installation/deploy-stream-connector-infrastructure.html">MQTT Stream Connector</a> cannot connect over WebSockets: Only the TCP transport is implemented, so a broker exposing MQTT over WebSockets (<code>ws</code> or <code>wss</code>) is unreachable, and the failure is reported as a protocol violation rather than an unsupported transport. Brokers reached over TCP or TLS are unaffected.</td>
+      <td>v5.0.0</td>
       <td>Pending</td>
     </tr>
   </tbody>
 </table>
-<h2 id="v460">v4.6.0</h2>
-<p>Date Released: 13 Mar 2026</p>
+<h2 id="v500">v5.0.0</h2>
+<p>Date Released: Pending</p>
 <h3 id="common">Common</h3>
+<table>
+  <thead>
+    <tr>
+      <th width="120">Change Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Deployment</td>
+      <td>
+        <p><b>Kubernetes-Native Deployment on Azure and AWS</b>: XMPro v5.0 deploys to Kubernetes through a fully supported Helm chart, validated against both <a href="../installation/deployment/azure-kubernetes/index.html">Azure Kubernetes Service (AKS)</a> and <a href="../installation/deployment/aws-kubernetes/index.html">Amazon Elastic Kubernetes Service (EKS)</a>. Every product deploys through that one chart, including the modernised Subscription Manager and the new Identity Server, so all of them are installed, upgraded, and monitored the same way.</p>
+        <p>A single cluster can host multiple isolated XMPro environments, each with its own databases, domain, TLS certificates, and secrets, so development, QA, and production can run side by side without duplicating infrastructure. Certificate issuance, secrets management, and database migration are handled as part of the deployment.</p>
+        <p>Terraform modules for Azure and AWS are provided as unsupported reference templates for standing up the underlying cloud infrastructure. Provisioning your cloud infrastructure and administering your Kubernetes cluster remain your responsibility.</p>
+        <p><b>The Windows Server installer is not available in v5.0.0.</b> Subscription Manager, Identity Server, App Designer, Data Stream Designer, and XMPro AI deploy through Docker or Kubernetes only. Stream Host is unaffected and remains supported on Windows, as either a Console application or a Windows Service.</p>
+        <p>Existing App Service and legacy deployments are unaffected until you migrate. <i>If you run the web products on Windows Server today, plan your migration before upgrading.</i> See <a href="../installation/deployment/index.html">Deploy XMPro</a>, and the <a href="../installation/deployment/azure-kubernetes/upgrade-from-app-service.html">Azure</a> and <a href="../installation/deployment/aws-kubernetes/upgrade-from-legacy.html">AWS</a> migration articles.</p>
+      </td>
+    </tr>
+    <tr>
+      <td>Feature</td>
+      <td>
+        <p><b>Subscription Manager re-platformed and split into two components</b>: Subscription Manager has been rebuilt as a modernised, containerised application, and the identity provider it previously contained is now a standalone Identity Server, path-routed at <code>/identity</code>.</p>
+        <p>Separating the two means authentication can be scaled, monitored, and patched independently of subscription management, and it removes the legacy hosting stack that tied Subscription Manager to Windows.</p>
+        <p>Existing App Designer, Data Stream Designer, and XMPro AI installations remain fully compatible and no application-level changes are required on your side.</p>
+      </td>
+    </tr>
+    <tr>
+      <td>Feature</td>
+      <td>
+        <p><b><a href="../technical-reference/observability/index.html">Observability and OpenTelemetry</a></b>: XMPro products now export telemetry using OpenTelemetry, the vendor-neutral standard for traces, metrics, and structured logs. All six services (App Designer, Data Stream Designer, Subscription Manager, Identity Server, XMPro AI, and Stream Host) emit telemetry over the OpenTelemetry Protocol (OTLP) to an endpoint you provide, whether an OpenTelemetry Collector you run or a vendor service that accepts OTLP directly.</p>
+        <p>This means XMPro telemetry can be routed to the observability backend your organisation already operates, such as Grafana, Datadog, Splunk, or Azure Monitor, rather than being tied to a single platform. Export is opt-in and disabled by default; no telemetry leaves your deployment until you <a href="../technical-reference/observability/configure-opentelemetry.html">configure an endpoint</a>.</p>
+        <p>For Azure Kubernetes deployments, OpenTelemetry runs alongside existing Application Insights monitoring as an additional export path. For AWS Kubernetes deployments, where Azure-native monitoring is not available, it provides the primary observability channel.</p>
+      </td>
+    </tr>
+    <tr>
+      <td>Security</td>
+      <td>
+        <p><b>Product security and stability</b>: This release consolidates a large body of security work across the platform:</p>
+        <ul>
+          <li><b>Supported .NET runtime</b>: App Designer, Data Stream Designer, Stream Host, XMPro AI, and Subscription Manager now run on .NET 10, together with their container base images and build pipelines. .NET 10 is supported until November 2028, whereas .NET 8 reaches end of support in November 2026, so the platform stays on a runtime that continues to receive security patches. Feature parity is preserved and the Subscription Manager legacy stack is unchanged.</li>
+          <li><b>Supported Angular framework</b>: The App Designer, Data Stream Designer, Subscription Manager, and XMPro AI interfaces moved from Angular 15, which is out of support, to Angular 21, along with major dependencies including DevExtreme, Monaco Editor, and JSPlumb. This restores security patch coverage for those four interfaces and cleared a large set of dependency findings that could not be resolved on the older framework. Existing functionality and supported browsers are unchanged. <i>The Identity Server sign-in interface remains on Angular 5 and is scheduled for replacement rather than an in-place upgrade; its four outstanding dependency findings (three in <code>@angular/common</code>, one in <code>uuid</code>) have been assessed as not exploitable in XMPro's usage.</i></li>
+          <li><b>Dependency remediation</b>: Software composition analysis findings were cleared across App Designer, Data Stream Designer, XMPro AI, Subscription Manager, and Identity Server. Packages upgraded or pinned include <code>ws</code>, <code>fast-uri</code>, <code>brace-expansion</code>, <code>lodash</code>, <code>jsrsasign</code>, and <code>HtmlSanitizer</code>. Unused direct dependencies were removed rather than patched where they were not needed at all.</li>
+          <li><b>Slimmer container images</b>: <code>curl</code> and its dependency chain were removed from the Debian-based Stream Host and xmpro-run base images, as they were not used at runtime, and the licenses container was moved off Ubuntu 16.04. Both changes eliminate whole classes of vulnerability finding at source rather than suppressing them.</li>
+          <li><b>Reduced attack surface</b>: Swagger endpoints and the <code>/health-ui</code> dashboard are no longer served, and the redundant <code>SecureText</code> setting type has been removed in favour of explicit interface masking for plain text secrets. See the breaking changes at the top of this page.</li>
+          <li><b>Penetration test findings</b>: three findings against App Designer were remediated.
+            <ul>
+              <li>Ticket ID17586, medium severity, CVSS v4.0 score 6.9: the application, connector, and variable metadata endpoints, which describe an application's internal structure, could be read by unauthenticated users. Authentication is now enforced on those endpoints.</li>
+              <li>Ticket ID17589, low severity, CVSS v4.0 score 2.7: content entered into fields such as Notes was stored and later rendered without sufficient sanitisation, so a crafted element with inline styles and an external link could render as a convincing security notice. Input validation and context-aware output encoding are now applied.</li>
+              <li>Ticket ID17949, low severity, CVSS v4.0 score 2.3: adding a single quote to a request parameter returned an HTTP 500 response carrying validation detail and trace identifiers, which could be used to inflate log volume and obscure other activity. Invalid input is now rejected as a validation failure.</li>
+            </ul>
+          </li>
+          <li><b>Deprecated Azure AD Graph API</b>: Ticket ID17325 Subscription Manager's remaining calls to the deprecated Azure AD Graph API now target Microsoft Graph. The calls caused no functional problem, but infrastructure teams were being notified that an application was using deprecated APIs.</li>
+          <li><b>Transport and header hardening</b>: <code>minTlsCipherSuite</code> is now applied through Terraform for all App Service deployments, with a documented manual procedure for deployments not managed by Terraform, and Cross-Origin Embedder Policy and Cross-Origin Resource Policy headers are supported without breaking the Identity Server OIDC iframe flow.</li>
+          <li><a href="https://cwe.mitre.org/data/definitions/522.html">CWE-522</a>: The Linux database migration container entrypoints traced their fully expanded command line to standard output, disclosing the SQL administrator password, the company and site administrator passwords, all product keys, and the collection secret in plain text to anyone able to read container logs. The shell trace has been removed. <i>This affects released versions from v4.5.4 onward, so treat any credentials that appeared in the logs of an existing deployment as exposed and rotate them.</i></li>
+        </ul>
+        <p><i>Mitigated in .NET packages:</i></p>
+        <ul>
+          <li><a href="https://github.com/advisories/GHSA-m5vv-6r4h-3vj9">GHSA-m5vv-6r4h-3vj9</a> and <a href="https://github.com/advisories/GHSA-wvxc-855f-jvrv">GHSA-wvxc-855f-jvrv</a>: Upgraded Azure.Identity from 1.10.3 to 1.11.4, and Microsoft.Identity.Client from 4.56.0 to 4.61.3, in XMPro AI and the App Designer Database Console.</li>
+          <li><a href="https://github.com/advisories/GHSA-59j7-ghrg-fj52">GHSA-59j7-ghrg-fj52</a>: Upgraded Microsoft.IdentityModel.JsonWebTokens and System.IdentityModel.Tokens.Jwt from 6.24.0 to 6.34.0 in the App Designer Database Console.</li>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2026-30227">CVE-2026-30227</a>: Upgraded MailKit from 4.7.1.1 to 4.15.1 in App Designer and Data Stream Designer, through XMPro.Notification.</li>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2022-34716">CVE-2022-34716</a>: Upgraded System.Security.Cryptography.Xml from 5.0.0 to 6.0.1 in XMPro AI.</li>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2023-29331">CVE-2023-29331</a>: Upgraded System.Security.Cryptography.Pkcs to 6.0.3 in XMPro AI.</li>
+          <li><a href="https://github.com/advisories/GHSA-447r-wph3-92pm">GHSA-447r-wph3-92pm</a>: Upgraded System.Formats.Asn1 from 5.0.0 to 6.0.1 in the App Designer Database Console.</li>
+          <li><a href="https://github.com/advisories/GHSA-5crp-9r3c-p9vr">GHSA-5crp-9r3c-p9vr</a> and <a href="https://www.cve.org/CVERecord?id=CVE-2024-30105">CVE-2024-30105</a>: Upgraded Newtonsoft.Json from 11.0.2 to 13.0.3, and System.Text.Json from 8.0.0 to 8.0.5, in XMPro AI Graph. System.Text.Json was upgraded to 8.0.4 across the other products in v4.4.17; AI Graph was still on 8.0.0.</li>
+          <li><a href="https://github.com/advisories/GHSA-pgww-w46g-26qg">GHSA-pgww-w46g-26qg</a>: Upgraded HtmlSanitizer from 9.0.892 to 9.1.973 in App Designer, which takes its AngleSharp dependency past 1.6.0.</li>
+          <li><a href="https://github.com/advisories/GHSA-3wcj-rg8q-9cqv">GHSA-3wcj-rg8q-9cqv</a>: Removed the unused Swashbuckle.AspNetCore dependency from XMPro AI.</li>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2025-9708">CVE-2025-9708</a>: Excluded the unused KubernetesClient transitive dependency, which arrived through AspNetCore.HealthChecks.UI, from XMPro.HealthCheck. The HealthChecks UI has since been removed entirely.</li>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2026-32933">CVE-2026-32933</a>: Removed AutoMapper from IdentityServer3.EntityFramework in Identity Server, replacing it with hand-written mapping. This was assessed as mitigated by design in v4.6.1 and is now eliminated at source.</li>
+        </ul>
+        <p><i>Mitigated in npm packages:</i></p>
+        <ul>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2026-54265">CVE-2026-54265</a>, <a href="https://www.cve.org/CVERecord?id=CVE-2026-54266">CVE-2026-54266</a>, <a href="https://www.cve.org/CVERecord?id=CVE-2026-54267">CVE-2026-54267</a>, and <a href="https://www.cve.org/CVERecord?id=CVE-2026-54268">CVE-2026-54268</a>: Upgraded @angular/common, @angular/core, and @angular/compiler from 21.2.15 to 21.2.17 in Subscription Manager.</li>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2026-69151">CVE-2026-69151</a> and <a href="https://www.cve.org/CVERecord?id=CVE-2026-68945">CVE-2026-68945</a>: Upgraded Angular from 21.2.17 to 21.2.19 in App Designer, Data Stream Designer, XMPro AI, and Subscription Manager.</li>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2026-48779">CVE-2026-48779</a>: Pinned ws to a patched release in Subscription Manager, XMPro AI, App Designer, and Data Stream Designer, and to 5.2.5 in Identity Server.</li>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2026-6321">CVE-2026-6321</a>, <a href="https://www.cve.org/CVERecord?id=CVE-2026-6322">CVE-2026-6322</a>, and <a href="https://www.cve.org/CVERecord?id=CVE-2026-18446">CVE-2026-18446</a>: Raised fast-uri to 3.1.4 and subsequently to 3.1.5 across App Designer, Data Stream Designer, XMPro AI, Subscription Manager, and Identity Server.</li>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2026-14257">CVE-2026-14257</a>, <a href="https://www.cve.org/CVERecord?id=CVE-2026-13149">CVE-2026-13149</a>, <a href="https://www.cve.org/CVERecord?id=CVE-2026-13676">CVE-2026-13676</a>, and <a href="https://www.cve.org/CVERecord?id=CVE-2026-16221">CVE-2026-16221</a>: Refreshed brace-expansion to 2.1.3 in App Designer and to 1.1.17 in Data Stream Designer.</li>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2026-4800">CVE-2026-4800</a> and <a href="https://www.cve.org/CVERecord?id=CVE-2021-23337">CVE-2021-23337</a>: Forced lodash to 4.18.1 in Identity Server.</li>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2026-4598">CVE-2026-4598</a>, <a href="https://www.cve.org/CVERecord?id=CVE-2026-4599">CVE-2026-4599</a>, <a href="https://www.cve.org/CVERecord?id=CVE-2026-4600">CVE-2026-4600</a>, <a href="https://www.cve.org/CVERecord?id=CVE-2026-4601">CVE-2026-4601</a>, and <a href="https://www.cve.org/CVERecord?id=CVE-2026-4602">CVE-2026-4602</a>: Raised the jsrsasign override from 11.1.0 to 11.1.1 in Identity Server. App Designer, XMPro AI, and Data Stream Designer were addressed in v4.6.1.</li>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2026-33671">CVE-2026-33671</a> and <a href="https://www.cve.org/CVERecord?id=CVE-2026-48815">CVE-2026-48815</a>: Raised picomatch to 4.0.4 in Identity Server, and removed the unused npm command-line package from the App Designer client app. That single declaration vendored a 196-package subtree, which is where the picomatch and sigstore findings originated.</li>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2026-31802">CVE-2026-31802</a> and <a href="https://www.cve.org/CVERecord?id=CVE-2026-53655">CVE-2026-53655</a>: Raised the tar override from 7.5.10 to 7.5.16 in App Designer, and from 2.2.2 to 7.5.16 in Data Stream Designer.</li>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2022-21802">CVE-2022-21802</a>: Upgraded grapesjs from 0.16.30 in App Designer. The unused copy in Data Stream Designer was removed in v4.6.1.</li>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2025-7783">CVE-2025-7783</a> and <a href="https://www.cve.org/CVERecord?id=CVE-2026-12143">CVE-2026-12143</a>: Overrode form-data to 4.0.6 in Data Stream Designer and Identity Server. Subscription Manager was overridden to 4.0.4 in v4.4.23.</li>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2026-49356">CVE-2026-49356</a>: Overrode @babel/core from 7.29.0 to 7.29.6 in Subscription Manager.</li>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2019-11358">CVE-2019-11358</a>: Addressed the vulnerable jQuery library reported by customer dynamic analysis scanning.</li>
+          <li>Forced patched versions of tough-cookie, cross-spawn, minimatch, picomatch, scss-tokenizer, semver, tar, trim-newlines, uuid, ajv, dompurify, and @babel/core through npm overrides in Data Stream Designer, clearing the remaining Critical and High client-side findings.</li>
+        </ul>
+        <p><i>Mitigated in container base images:</i></p>
+        <ul>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2025-32988">CVE-2025-32988</a>, <a href="https://www.cve.org/CVERecord?id=CVE-2025-32989">CVE-2025-32989</a>, and <a href="https://www.cve.org/CVERecord?id=CVE-2025-32990">CVE-2025-32990</a>: Upgraded libgnutls30 in the Stream Host container images.</li>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2019-3462">CVE-2019-3462</a>, <a href="https://www.cve.org/CVERecord?id=CVE-2023-38545">CVE-2023-38545</a>, <a href="https://www.cve.org/CVERecord?id=CVE-2018-1000001">CVE-2018-1000001</a>, <a href="https://www.cve.org/CVERecord?id=CVE-2023-4911">CVE-2023-4911</a>, <a href="https://www.cve.org/CVERecord?id=CVE-2020-1971">CVE-2020-1971</a>, <a href="https://www.cve.org/CVERecord?id=CVE-2021-3711">CVE-2021-3711</a>, <a href="https://www.cve.org/CVERecord?id=CVE-2022-3602">CVE-2022-3602</a>, <a href="https://www.cve.org/CVERecord?id=CVE-2022-3786">CVE-2022-3786</a>, <a href="https://www.cve.org/CVERecord?id=CVE-2023-0286">CVE-2023-0286</a>, <a href="https://www.cve.org/CVERecord?id=CVE-2018-16864">CVE-2018-16864</a>, <a href="https://www.cve.org/CVERecord?id=CVE-2018-16865">CVE-2018-16865</a>, and <a href="https://www.cve.org/CVERecord?id=CVE-2021-33910">CVE-2021-33910</a>: Moved the licenses container off Ubuntu 16.04, which reached end of life in April 2021, clearing 36 high-severity findings in apt, curl, libc6, OpenSSL, and systemd.</li>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2026-5773">CVE-2026-5773</a> and <a href="https://www.cve.org/CVERecord?id=CVE-2026-6276">CVE-2026-6276</a>: Removed curl from the xmpro-run base images, replacing it with wget in the two ASP.NET runner health checks.</li>
+          <li>Removed curl and its dependency chain from the Debian Bookworm and Trixie Stream Host base images, eliminating 10 high-severity findings on Trixie and 8 on Bookworm.</li>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2018-20225">CVE-2018-20225</a>: Introduced a Debian bookworm-slim Stream Host variant that provides Python functionality without shipping pip in the image.</li>
+        </ul>
+        <p>For false positive assessments and container scan results, see the <a href="../resources/container-scan-5-0-0.html">Container Security Scan Report - XMPro 5.0.0</a>.</p>
+      </td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td><b>Audit Trail Database Growth</b>: <i>The App Designer and Data Stream Designer databases grew quickly, and in severe cases applications and data streams could no longer be saved.</i><br>Every save wrote the complete entity into the audit trail alongside the change metadata, so a single application containing images produced a very large record. The audit trail now records only the change metadata, and a database migration strips entity data from existing records to reclaim the space already consumed.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td>Ticket ID16477 <b>Variable Value Cleared on Encrypt</b>: <i>When adding a variable in App Designer or Data Stream Designer, entering a value and then selecting Encrypt Value cleared the value, so it had to be typed again.</i><br>The Add blade ordered its fields Name, Category, Value, then Encrypt Value, whereas the Edit blade placed Encrypt Value first. The Add blade now follows the same field order as Edit, so the value survives toggling encryption.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td>Ticket ID17615 <b>Large Application Import</b>: <i>When importing a large application (file size greater than ~195 MB), the upload fails silently with no error or feedback.</i><br>The web.config request size limit was incorrectly set below 200 MB, causing a silent 413 error. The limit has been corrected to 200 MB, and a clear error message is now shown when exceeded.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td>Ticket ID17711 <b>Browser Memory Growth with Browser Extensions</b>: <i>Users running Microsoft Edge with the PDF-XChange extension experienced steadily growing browser memory and eventual unresponsiveness on App Designer, Data Stream Designer, and Subscription Manager.</i><br>The Identity Server session-monitoring page, embedded as a hidden iframe by all three products, replied to every message it received using the sender reference. The extension posts a message into each frame's own window, so the page replied to itself and re-triggered its own handler, producing an endless message loop. The page now validates the message origin before replying.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td><b>Translation Coverage</b>: <i>Several interface elements were not translated for Brazilian Portuguese and Spanish users, leaving an inconsistent experience in non-English environments.</i><br>Translations have been added for:
+        <ul>
+          <li>The license expiry banner in App Designer, Data Stream Designer, and XMPro AI, where the leading sentence came from the licensing module and sat outside the translated resource set.</li>
+          <li>Settings blade labels in App Designer and Data Stream Designer. The English label "Embed Scripts" has also been corrected to "Embedded Scripts".</li>
+          <li>The Subscription Manager subscription request form and its confirmation dialog, including field labels and buttons.</li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h3 id="app-designer">App Designer</h3>
 <table>
   <thead>
     <tr>
@@ -121,89 +307,95 @@
     <tr>
       <td>Feature</td>
       <td>
-        <p><b>Streams as Connectors</b>: New architecture that allows App Designer applications to use a published Data Stream as a data source.</p>
-        <p>The <b>XMPro Stream Connector</b> is used in App Designer to connect to a published Data Stream, supporting read, insert, update, and delete operations. The backing Data Stream comprises a <b>XMPro Stream Listener</b>, a Connector Agent (new category), and a <b>XMPro Stream Action Agent</b>. Agent configuration values are passed directly into the connected stream at runtime by App Designer. With Connectors now available in both App Designer and Data Stream Designer, attempting to import an integration file (.xmp) into the wrong product returns a clear error identifying which product the file belongs to.</p>
-        <p>Using this new feature results in much faster App Page page loads and less infrastructure to run the XMPro platform, but does require a MQTT broker to use it.</p>
-        <p><i>If you are upgrading, a migration script is available to transition your existing connections. Contact your XMPro account manager for assistance.</i></p>
+        <p><b><a href="../concepts/connector.html#connector-pooling">Connector Pooling</a></b>: Connector Pooling reuses Connector handler instances across the environment to improve Application load performance.</p>
+        <p>Frequently used Connectors are served from the pool as a warm load rather than being recreated on each request, reducing load times for pages with multiple Connectors. The pool evicts the least recently used handler to stay within a configurable size limit, keeping memory usage predictable, and saving or deleting a Connection evicts its pooled handler so configuration changes take effect without any manual step.</p>
+        <p>Together with a connector-side change that caches App Designer's user-info response instead of calling it on every read, this raises the fast-query connector ceiling from roughly 30 to over 250 concurrent users, and changes the behaviour beyond that ceiling from errors for every user to graceful degradation. <i>The connector-side half of that gain ships in the Azure SQL Connector and SQL Server Connector v2.29+, so upgrade those connectors to see the full benefit.</i></p>
+        <p>Company administrators can observe and manage their own company's entries from the App Designer Settings page, using the <a href="../how-tos/manage-site-settings.html#connector-pool-report">Connector Pool Report</a>, the <a href="../how-tos/manage-site-settings.html#live-connector-pool-report">Live Connector Pool Report</a>, and the <a href="../how-tos/manage-site-settings.html#connector-pool">Clear Pool</a> action. The maximum pool size is set at deployment time.</p>
       </td>
     </tr>
     <tr>
       <td>Enhancement</td>
       <td>
-        <p><b><a href="../technical-reference/oauth-smtp-configuration.html">OAuth SMTP Configuration Support</a></b>: Platform administrators can now configure OAuth 2.0 authentication for XMPro's outbound email notifications instead of username and password credentials.</p>
-        <p>OAuth SMTP authentication is supported across all deployment methods, including the Windows Server installer, Terraform modules, and Docker (xmpro-run). Administrators can configure the OAuth client ID, client secret, and token endpoint to match their email provider's requirements.</p>
-        <p>Modern email providers such as Microsoft 365 and Google Workspace are phasing out basic authentication for SMTP. OAuth support ensures XMPro's email notifications, including recommendation alerts, user invitations, and system notifications, remain fully operational in environments where basic auth has been disabled, while improving the overall security posture of your deployment.</p>
+        <p>Ticket ID17887 <b><a href="../blocks-toolbox/visualizations/esri-map.html#authentication-mode">Esri Map OAuth 2.0 support</a></b>: The Esri Map block now supports App Authentication (OAuth 2.0) as an alternative to API Key authentication.</p>
+        <p>The block authenticates with ArcGIS as a registered OAuth 2.0 application using the client credentials grant, with access tokens refreshed automatically so no user sign-in is required. Client credentials are stored as XMPro Variables, with the Client Secret encrypted so that it is resolved server-side only and never exposed to the browser.</p>
+        <p>This gives you application-scoped, rotatable credentials in place of a shared long-lived API key, and supports both ArcGIS Online and ArcGIS Enterprise (on-premises) portals. Existing API Key configurations continue to work unchanged, and API Key remains the default Authentication Mode.</p>
       </td>
     </tr>
     <tr>
-      <td>Deployment</td>
-      <td>
-        <p><b>Azure Container Instance Enhancements</b>: Two improvements to Stream Host deployments using Azure Container Instances (ACI):</p>
-        <ul>
-          <li><b>Virtual Network Integration</b>: ACI deployments can now be connected to an Azure Virtual Network, enabling private networking without public-facing container endpoints and meeting enterprise security and compliance requirements.</li>
-          <li><b>Right-Sized Default Configuration</b>: Default CPU and memory allocations have been updated to better reflect production workload requirements, reducing the need for manual configuration adjustments after initial deployment.</li>
-        </ul>
-      </td>
+      <td>Enhancement</td>
+      <td><b>Tree Grid Recursive Selection</b>: A new Recursive Selection property has been added under Behavior on the Tree Grid block, visible only when Allow multiple select is enabled. When enabled, selecting a parent row automatically selects all of its children, and deselecting one child leaves the parent partially selected. It defaults to False, matching the previous behaviour, so existing applications are unaffected until you opt in.</td>
     </tr>
     <tr>
-      <td>Security</td>
-      <td>
-        <p><b>Product security and stability</b>: We've addressed several security vulnerabilities in this release:</p>
-        <ul>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2022-26907">CVE-2022-26907</a>: Upgraded Microsoft.Rest.ClientRuntime from 2.3.20 to 2.3.24 in App Designer and from 2.3.11 to 2.3.24 in Data Stream Designer.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2022-34716">CVE-2022-34716</a>: Upgraded System.Security.Cryptography.Xml from 4.4.2 to 6.0.1 in App Designer.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2023-29331">CVE-2023-29331</a>: Added System.Security.Cryptography.Pkcs 6.0.3 to App Designer.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2025-54575">CVE-2025-54575</a>: Upgraded SixLabors.ImageSharp from 3.1.7 to 3.1.11 in App Designer and Data Stream Designer.</li>
-          <li><a href="https://github.com/advisories/GHSA-4vgm-c2wm-63mw">GHSA-4vgm-c2wm-63mw</a>: Upgraded Microsoft.AspNetCore.App.Runtime.linux-musl-x64 from 8.0.24 to 8.0.25 in Subscription Manager, App Designer, Data Stream Designer, and XMPro AI.</li>
-          <li>Removed unused npm dependencies and overrode transitive package versions in App Designer to resolve Veracode-identified vulnerabilities in tar and tsiclient.npm.</li>
-          <li><a href="https://cwe.mitre.org/data/definitions/117.html">CWE-117</a>: Applied log output sanitization to neutralize CRLF injection in App Designer and Data Stream Designer.</li>
-          <li><a href="https://cwe.mitre.org/data/definitions/285.html">CWE-285</a>: Added class-level [Authorize] attributes in App Designer and Data Stream Designer to enforce authentication by default, with explicit [AllowAnonymous] exemptions for public endpoints such as error pages and silent token renewal.</li>
-        </ul>
-        <p><i>Assessed as false positives (affected components are not present in XMPro deployments):</i></p>
-        <ul>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2005-2541">CVE-2005-2541</a>: GNU tar setuid extraction is intended POSIX behavior; Debian and Red Hat classify as "won't fix".</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2010-4756">CVE-2010-4756</a>: glibc glob() resource consumption is POSIX-specified behavior; won't fix.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2015-3276">CVE-2015-3276</a>: openldap TLS cipher acceptance issue; XMPro uses .NET LDAP, not libldap directly.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2016-2781">CVE-2016-2781</a>: coreutils chroot TIOCSTI escape; kernel mitigated since Linux 6.4.4.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2017-17740">CVE-2017-17740</a>: openldap contrib/slapd-modules DoS; Debian doesn't build contrib modules.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2017-18018">CVE-2017-18018</a>: coreutils chown race condition; kernel hardening (fs.protected_regular) mitigates.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2018-5709">CVE-2018-5709</a>: krb5 integer overflow in policy lifetime; trusted admin input only.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2018-6829">CVE-2018-6829</a>: libgcrypt20 ElGamal side-channel; XMPro uses OpenSSL, hybrid mode unaffected.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2018-20225">CVE-2018-20225</a>: pip vulnerable --extra-index-url option is never used in XMPro Stream Host.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2018-20796">CVE-2018-20796</a>: glibc regex recursion DoS; disputed, glibc maintainers don't consider this a security issue.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2019-1010022">CVE-2019-1010022</a>: libc-bin (glibc) disputed CVE; glibc upstream states "not a real threat", requires prior stack overflow.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2019-1010023">CVE-2019-1010023</a>: glibc ldd requires user to run on malicious ELF; documented behavior.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2019-1010024">CVE-2019-1010024</a>: glibc ASLR bypass via exception messages; kernel security feature, not glibc bug.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2019-9192">CVE-2019-9192</a>: glibc regex recursion DoS; same issue as CVE-2018-20796.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2022-0563">CVE-2022-0563</a>: util-linux chfn/chsh readline echo; Debian uses shadow package instead.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2022-27943">CVE-2022-27943</a>: gcc libiberty Rust demangling in dev tools only; negligible impact.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2023-2953">CVE-2023-2953</a>: libldap-2.5-0 null pointer dereference; no LDAP functionality used in Stream Host containers.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2023-31486">CVE-2023-31486</a>: perl HTTP::Tiny TLS verification issue; XMPro uses .NET HttpClient, not Perl.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2023-42465">CVE-2023-42465</a>: sudo ROWHAMMER hardware attack; impractical in cloud environments with ECC RAM.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2024-1013">CVE-2024-1013</a>: Alpine unixodbc example code only, not compiled in XMPro containers.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2025-6020">CVE-2025-6020</a>: libpam requires pam_namespace polyinstantiation, not used in XMPro containers.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2025-6297">CVE-2025-6297</a>: dpkg only affects manual dpkg-deb extraction, not used in XMPro containers.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2025-7458">CVE-2025-7458</a>: libsqlite3-0 Python variant only; requires crafted SQL with large ORDER BY, not possible in XMPro containers.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2025-9086">CVE-2025-9086</a>: curl is installed but not invoked at runtime; Stream Host runs as non-root app user with no curl usage in entrypoint or application code.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2025-9708">CVE-2025-9708</a>: KubernetesClient 4.0.26 is a transitive dependency of AspNetCore.HealthChecks.UI that XMPro does not use.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2025-10148">CVE-2025-10148</a>: curl WebSocket payload masking issue; XMPro uses .NET HttpClient, not curl.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2025-13034">CVE-2025-13034</a>: curl QUIC TLS key pinning issue; XMPro uses .NET HttpClient, not curl.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2025-13151">CVE-2025-13151</a>: libtasn1-6 vulnerable code never executed; XMPro uses OpenSSL not GnuTLS.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2025-14104">CVE-2025-14104</a>: util-linux setpwnam race condition; SUID utilities not used in XMPro containers.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2025-14524">CVE-2025-14524</a>: curl OAuth2 Bearer token leak; XMPro uses .NET HttpClient, not curl.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2025-14819">CVE-2025-14819</a>: curl CA certificate store caching issue; XMPro uses .NET TLS, not curl.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2025-15281">CVE-2025-15281</a>: libc-bin (glibc) requires wordexp() with WRDE_REUSE+WRDE_APPEND flags; not used by XMPro applications.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2025-30258">CVE-2025-30258</a>: gpgv certificate import DoS; XMPro doesn't import GnuPG keys.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2025-68972">CVE-2025-68972</a>: gpgv plaintext injection in signed messages; XMPro doesn't verify GPG signatures.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2025-68973">CVE-2025-68973</a>: gpgv scanner data lag; Debian shows 2.2.40-1.1+deb12u2 is already fixed.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2026-0861">CVE-2026-0861</a>: glibc requires attacker control of both size and alignment parameters; not possible in XMPro managed code.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2026-0915">CVE-2026-0915</a>: glibc requires getnetbyaddr() with zero-valued network parameter; XMPro applications don't call this function.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2026-2219">CVE-2026-2219</a>: dpkg zstd decompression infinite loop; only affects processing untrusted .deb archives, not done in XMPro containers.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2026-3805">CVE-2026-3805</a>: curl vulnerability in Debian Trixie; XMPro uses .NET HttpClient for all HTTP operations, not curl. No fix available from Debian.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2026-22184">CVE-2026-22184</a>: zlib (npm) untgz utility not present in browserify-zlib/minizlib; pure JS packages unaffected.</li>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2026-24882">CVE-2026-24882</a>: gpgv vulnerability in tpm2daemon not included in gpgv package; gpgv is only a signature verification tool.</li>
-        </ul>
-      </td>
+      <td>Enhancement</td>
+      <td>Ticket ID16144 <b>Expressions Read Data from Any Ancestor Component</b>: Components in App Designer can be deeply nested, for example a chart inside a tab inside a container inside a page. Expressions now support multi-level parent references such as <code>{Parent.Parent.fieldName}</code> and deeper, traversing up the component hierarchy within a safe depth limit and failing gracefully rather than returning empty values. Reading from multiple sibling parents shipped in v4.5.0; this adds deep chain traversal. Existing single-level <code>{Parent.fieldName}</code> expressions are unchanged.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td>Ticket ID15733 <b>Connector Logs</b>: <i>Opening the connector logs showed nothing even though log records existed in the database, and one connection's error was reported as a new error against every connection using the same connector.</i><br>Connector logs now display correctly, the logs icon appears only for connections that have logs, and error indicators apply only to the connection that produced the error.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td>Ticket ID16713 <b>Boolean Data Grid Column Validation</b>: <i>A Boolean column backed by a required database column could be saved without a value. The save then failed with a database error, and the connector logs showed an attempted null insert.</i><br>The checkbox editor's third, indeterminate state produced a null value, and the standard required-field validation did not treat null as missing for Boolean columns. Boolean columns now use validation that rejects null while still accepting <code>false</code>, so the constraint is caught in the interface rather than by the database.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td>Ticket ID16753 <b>Expression Replace Function</b>: <i>The <code>Replace</code> function replaced only the first occurrence found in the string, so <code>Replace("aabc abcd abcde abcdef","abc","")</code> did not return <code>a d de def</code>.</i><br><code>Replace</code> now applies to every matching occurrence in the given text.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td>Ticket ID16754 <b>Application Import File Name</b>: <i>During an application import, the top of the selected file name was clipped and could not be read in full.</i><br>The selected file name now displays in full.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td>Ticket ID16936 <b>Editing an Application from the Applications Blade</b>: <i>Selecting Edit from the Applications blade opened an older version, while selecting Edit on the application card correctly opened the latest version.</i><br>Both entry points now open the latest version.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td><b>Recommendation Version Title Truncation</b>: <i>A recommendation version title appeared truncated when that version was selected in the version list.</i><br>Titles now display in full. This extends the recommendation version handling corrected for Ticket ID16939 in v4.5.4.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td>Ticket ID17625 <b>Large Connector Upload</b>: <i>Uploading a large connector returned <code>ERR_INPUT_VALIDATION_MAXIMUM_LENGTH</code>, and files that had uploaded successfully on earlier versions were rejected, blocking connector version updates.</i><br>The upload endpoint enforced an input length limit smaller than the connector payloads being uploaded, and it was not configurable. The limit has been raised and made configurable.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td>Ticket ID17666 <b>SQL Connector with Windows Authentication</b>: <i>With Use SQL Authentication cleared, the SQL Connector caused App Designer to log "Cannot load library libgssapi_krb5.so.2" and then restart.</i><br>The App Designer container image did not include the Kerberos library that the driver loads for integrated authentication. The library is now present, so the SQL Connector works with both authentication modes.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td>Ticket ID17459 <b>Live Data Updates Across a Filter Boundary</b>: <i>Where a data grid filtered on a field, a record whose value changed so that it no longer matched the filter stayed in the view, and a record that changed so that it now matched did not appear.</i><br>Live data changes were filtered against each subscription's filter before being sent, and because a Connector publishes only the new values there was no way to know that a record had previously matched. Updates that could cross a filter boundary are now sent regardless of the subscription filter, and the client converts them into an insert or a removal as appropriate.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td>Ticket ID14579 <b>Application File Upload Size</b>: <i>Uploading an application file above roughly 30 MB failed silently or with a generic error, even though the configuration allowed 200 MB. A 150 MB application containing Unity models could not be uploaded.</i><br>The upload endpoint was missing the request size limit that the other upload endpoints already carried, so it fell back to the framework default. The limit has been added, bringing application file uploads in line with connector uploads and application import.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td>Ticket ID17911 <b>Validation Group Persistence</b>: <i>The validation group selected on a button was not retained when the block's properties were reopened, so the validation configuration had to be reapplied.</i><br>The selected validation group now persists. The related problem of the button itself not responding was corrected in v4.6.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td><b>Recommendation Alert Manager Column Filters</b>: <i>Selecting a column filter, choosing Select All, then clearing some options and confirming produced an error.</i><br>Clearing items in a multi-select grid filter now applies without error, and the results correctly exclude the cleared items.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td><b>HTML Tags in Recommendation Connector Data</b>: <i>When a data grid was bound to the recommendation connector's Alerts or Alerts With Data entities, the Title, Description, ActionDescription, and Comments columns contained raw HTML tags.</i><br>Those columns now return their text content without HTML tags.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td><b>Alert Notes Updated by the Update Recommendation Agent</b>: <i>Where an alert's Comments field was updated by the Update Recommendation agent while the alert was open, the user was prompted that a change had occurred, but accepting it left the notes field unchanged.</i><br>Values written by the agent contain no HTML tags, so the rich text editor wrapped the value and marked the local copy as modified; on accepting the incoming change it reapplied the same edit before the new values arrived, and the modified flag suppressed the update. The editor no longer alters the value while incoming values are being retrieved.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td>Ticket ID14904 <b>Recommendation Analytics Block Labels and Fonts</b>: <i>The Recommendation Analytics block used fixed, oversized fonts for its values, its heading wrapped across the Period and Alert ranking selections, and the identifier used for filtering was not shown.</i><br>Font sizes are now consistent across the block's values, the heading sits below the Period and Alert ranking selections, and the identifier used for filtering is shown.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td><b>Typed Dates with a Single-Digit Day</b>: <i>Typing a non-padded date whose day is 1, 2, or 3 into a form Datebox changed the value: <code>8/3/2026</code> committed as <code>8/2/2026</code>. The altered value was the one that saved.</i><br>The date mask does not advance to the next section on a typed separator while a single-digit day could still become a valid two-digit day, so the first digit of the year merged into the day. An explicit zero-padded display format is now applied. Zero-padded entry and calendar selection were never affected.</td>
+    </tr>
+    <tr>
+      <td>Documentation</td>
+      <td>Ticket ID16979 <b>Native Date Picker Format</b>: <i>With Picker Type set to Native, the Date Selector ignored the browser locale and defaulted to dd/MM/yyyy for English, while applying the expected format for other languages.</i><br>This is the documented behaviour of the underlying control, which uses the device locale when the picker type is native, so it cannot be changed in XMPro code. The <a href="../blocks-toolbox/basic/date-selector.html#picker-type">Date Selector documentation</a> now states that the native option uses the device's local settings, while the default and calendar options follow the browser's display language. Set Picker Type to Default or Calendar if you need browser-locale formatting.</td>
     </tr>
   </tbody>
 </table>
@@ -217,8 +409,32 @@
   </thead>
   <tbody>
     <tr>
+      <td>Enhancement</td>
+      <td>Ticket ID16846 <b>Special Characters in Agent Configuration Values</b>: Where a source system uses scientific or mathematical symbols in a value, for example the ohm sign in a unit of measure, that value is now stored as entered rather than narrowed to the closest ASCII character. Agents that compare their stored configuration against the live source value no longer find a mismatch, so attributes are no longer incorrectly marked as invalid while data flows correctly.</td>
+    </tr>
+    <tr>
       <td>Fix</td>
-      <td><b>DropDown and TokenBox Not Displaying When Options Array Is Empty</b>: <i>When a DropDown or TokenBox property on an agent is configured with an empty options array, the control does not render in the agent configuration panel, making the property inaccessible.</i><br>DropDown and TokenBox controls now render correctly regardless of whether the options array is empty at the time the configuration panel is opened.</td>
+      <td>Ticket ID17421 <b>Publishing and Unpublishing from the Collections and Agents Blades</b>: <i>Selecting one or more Data Streams from a Collection or from an agent version and choosing Publish or Unpublish returned "Validation Failed - has an unknown validation error".</i><br>The blade sent the selected streams as a JSON array while the endpoint expected a JSON object, so the request failed to deserialize. Data Streams can now be published and unpublished from both blades.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td>Ticket ID16828 <b>Agent Version Usage Pane</b>: <i>Checking which Data Streams used a particular agent version listed the latest version of each stream rather than the versions that actually used that agent.</i><br>The endpoint returned the latest or published version of each matching stream regardless of which versions referenced the queried agent. It now returns the individual stream versions that use the specified agent version.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td>Ticket ID16715 <b>Log Access for Read-Only Users</b>: <i>A user with read access to a Data Stream and the View Host Logs permission found the Logs command greyed out.</i><br>The command is now available to users holding log access with or without write access, and remains unavailable to users without it.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td>Ticket ID16714 <b>Collection List Sorting</b>: <i>The Collection dropdown shown when creating a new Data Stream was not in alphabetical order.</i><br>It is now sorted alphabetically.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td>Ticket ID16645 <b>Saving a Data Stream with Many Agents</b>: <i>Saving a Data Stream that used a large number of agents completed the save but then returned an error, with the agent versions request failing with HTTP 404.</i><br>Saving large Data Streams now completes without error.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td>Ticket ID16482 <b>Bulk Agent Upload Save Button</b>: <i>After uploading a zip of agents and selecting Save, the grid reported each agent's status but Save and Discard both remained enabled. Selecting Save again reprocessed every agent to no effect.</i><br>Save is now disabled once selected and stays disabled when the upload completes, re-enabling only on a service error so that you can retry, with a loading indicator shown while the save is in progress.</td>
     </tr>
   </tbody>
 </table>
@@ -232,28 +448,53 @@
   </thead>
   <tbody>
     <tr>
-      <td>Feature</td>
-      <td>
-        <p>This release introduces a set of improvements that together deliver a more reliable, efficient, and upgrade-friendly Stream Host:</p>
-        <ul>
-          <li><b>Memory Optimisation</b>: Rearchitected with Event-Level Streaming Architecture, processing data one event at a time through a chain of agents rather than accumulating large in-memory batches.
-  <ul>
-  <li>Each agent releases memory as soon as it forwards an event, preventing unnecessary retention of intermediate results and significantly reducing RAM usage.</li>
-  <li>Downstream agents begin processing immediately upon receiving each event, without waiting for the full batch from the preceding agent.</li>
-  <li>Supports both event-level and batch processing: Event-Level Streaming for agents that can process each event independently and Agent-Level Streaming retained for agents that require full datasets (e.g. time-series for model-based analysis).</li>
-  </ul>
-  </li>
-          <li><b>Backward Compatibility</b>: Event-Level Streaming-enabled agents can run on pre 4.6 Stream Host instances, enabling rolling upgrades without downtime, but they will revert to Agent-Level Streaming behavior.</li>
-          <li><b>Process Isolation</b>: Errors in a data stream are contained and no longer affect other streams running on the same Stream Host instance.</li>
-          <li><b>Stable Assembly Versions</b>: Agent DLLs now maintain a consistent assembly version across builds, so developers no longer need to recompile custom agents after a Stream Host update.</li>
-        </ul>
-        <p>Process isolation and some memory improvements apply immediately without any changes to existing agents. To take full advantage of Event-Level Streaming, agents must be updated to implement the new async methods and overloads - see XMPro.IOT.Framework under NuGet Packages below.</p>
-      </td>
+      <td>Fix</td>
+      <td>Ticket ID18194 <b>Streams Containing Disabled Agents</b>: <i>Publishing a Data Stream that contained disabled agents caused the Stream Host to throw an out-of-range exception during startup, so the stream never ran. The workaround was to delete disabled agents before publishing.</i><br>When a link pointed at a disabled agent, the link resolution logic followed the chain to find an enabled agent but accessed the first outgoing link without checking for a null or empty collection. Both cases are now handled, and streams start correctly with any mix of enabled and disabled agents.</td>
     </tr>
   </tbody>
 </table>
 <h3 id="subscription-manager">Subscription Manager</h3>
-<p>No changes in this release.</p>
+<table>
+  <thead>
+    <tr>
+      <th width="120">Change Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Fix</td>
+      <td>Ticket ID17963 <b>Frequent HTTP 4xx Errors</b>: <i>Monitoring reported HTTP 4xx error counts breaching alert thresholds every hour, continuously from Subscription Manager and periodically from App Designer.</i><br>The DevExtreme icon font files were present on the server but had no MIME type registered, so every page request produced 404 responses for them. The MIME types are now registered and the fonts are served correctly.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td><b>Browser Console Errors on Sign-Out</b>: <i>Signing out of Subscription Manager produced browser console errors.</i><br>The signed-out page referenced a script it does not require. The reference has been removed.</td>
+    </tr>
+  </tbody>
+</table>
+<h3 id="xmpro-ai">XMPro AI</h3>
+<table>
+  <thead>
+    <tr>
+      <th width="120">Change Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Feature</td>
+      <td>
+        <p><b>MAGS reaches General Availability</b>: MAGS (Multi-Agent Generative Systems) is the multi-agent capability within the XMPro AI product, and reaches general availability in this release. The capability has been delivered for some time through applications built in App Designer; from v5.0 onwards it moves into XMPro AI.</p>
+        <p>MAGS is built around ORPA (Observe, Reflect, Plan, Act), a cognitive framework that lets an agent reason more like a domain expert than a workflow script: agents weigh the strength of their own evidence, flag when they are uncertain, and recall relevant past situations before acting, rather than following a fixed decision tree. Two areas are delivered in v5.0.0:</p>
+        <ul>
+          <li><b>MAGS Configuration</b>: define the agent teams that do the work, along with the profiles, tools, actions, measures, and policy constraints they draw on. A guided wizard walks you through creating a team.</li>
+          <li><b>Agent RAG</b>: build and manage the retrieval collections that give agents their grounding, covering documents, embedding models, and chunking strategies, with a dashboard and quality testing to check what an agent will actually retrieve.</li>
+        </ul>
+        <p>For you this means agent behaviour is configured and governed in one place as part of a product, rather than assembled inside individual applications.</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
 <h3 id="package-manager">Package Manager</h3>
 <table>
   <thead>
@@ -264,12 +505,12 @@
   </thead>
   <tbody>
     <tr>
-      <td>Enhancement</td>
-      <td><b>Connector Category Support for Agent Packaging</b>: Agents can now be packaged using the new Connector category for use in Data Stream Designer. This category supports the <b>Streams as Connectors</b> feature - see Common above.</td>
+      <td>Fix</td>
+      <td><b>Nested and Duplicate Settings Translations</b>: <i>When packaging certain agents, some settings and options were left untranslated. This affected agents with two dropdowns sharing identical options in the same group, a token box whose key matched its group's caption, and dropdowns whose options shared display values.</i><br>Four defects were found in the translation logic: the duplicate-skip counter reset on each recursive call; batching at ten items reset the duplicate tracking, so items after a batch boundary lost their disambiguating suffix; the property search matched on any property rather than the one used to generate the translation key; and option keys were generated without parent context. All four are corrected, and existing packaged agents are unaffected.</td>
     </tr>
   </tbody>
 </table>
-<h2 id="app-designer">App Designer</h2>
+<h3 id="nuget-packages">NuGet Packages</h3>
 <h4 id="agent-development">Agent Development</h4>
 <h5 id="xmproiotframework">XMPro.IOT.Framework</h5>
 <table>
@@ -282,42 +523,32 @@
   <tbody>
     <tr>
       <td>Enhancement</td>
-      <td>
-        <p>The following async methods and constructor overloads were added to existing interfaces and args classes to support <b>Event-Level Streaming</b> feature - see Stream Hosts above:</p>
-        <ul>
-          <li><code>IPollingAgent</code>: new <code>PollAsync()</code> overload for async polling.</li>
-          <li><code>IReceivingAgent</code>: new <code>ReceiveAsync(string, IAsyncEnumerable&lt;byte[]&gt;)</code> overload for continuous stream ingestion.</li>
-          <li><code>IMapAndReceiveAgent</code>: new <code>ReceiveAsync(string, IAsyncEnumerable<(byte[], byte[])>)</code> overload for Agents that receive a mapped/typed stream of data evenets.</li>
-          <li><code>OnPublishArgs</code>: new constructors accepting <code>IAsyncEnumerable&lt;byte[]&gt;</code> and <code>IAsyncEnumerable&lt;string&gt;</code> for streaming event publishing.</li>
-          <li><code>OnErrorArgs</code>: new constructor accepting <code>IEnumerable&lt;JToken&gt;</code> for streaming error data.</li>
-        </ul>
-        <p>Agents that do not implement the async methods and overloads continue to work without any changes.</p>
-      </td>
+      <td><b>Dependency updates</b>: Microsoft.Extensions.Logging.Abstractions was upgraded from 8.0.0 to 10.0.9 and Newtonsoft.Json from 13.0.3 to 13.0.4. There are no API changes. The package still targets <code>netstandard2.1</code>, so existing agents do not need to be retargeted or recompiled for the platform's move to .NET 10.</td>
     </tr>
   </tbody>
 </table>
-<h3 id="connector-development">Connector Development</h3>
-<p>No changes to XMPro.Integration.Framework, XMPro.Integration.Helpers, or XMPro.Integration.Settings.</p>
-<h2 id="known-issues-1">Known Issues</h2>
+<h4 id="connector-development">Connector Development</h4>
+<h5 id="xmprointegrationhelpers">XMPro.Integration.Helpers</h5>
 <table>
-<thead>
-<tr>
-<th>Product</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td></td>
-<td>None reported for this release.</td>
-</tr>
-</tbody>
+  <thead>
+    <tr>
+      <th width="120">Change Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Enhancement</td>
+      <td><b>Dependency update</b>: Newtonsoft.Json was upgraded from 11.0.1 to 13.0.4. There are no API changes, and the package still targets <code>netstandard2.1</code>.</td>
+    </tr>
+  </tbody>
 </table>
+<p>No changes to XMPro.Integration.Framework or XMPro.Integration.Settings.</p>
 
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: September 11, 2026</em></small></p>
+    <p><small><em>Last modified: September 14, 2026</em></small></p>
   </div>
 </article>
 
