@@ -25907,16 +25907,6 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "src/installation/azure-terraform-preparation.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/installation/azure-terraform-preparation.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
       "source_relative_path": "src/installation/complete-installation/deploy-stream-connector-infrastructure.md",
       "output": {
         ".html": {
@@ -26077,16 +26067,6 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "src/installation/deployment/azure-terraform/implementation-guide.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/installation/deployment/azure-terraform/implementation-guide.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
       "source_relative_path": "src/installation/deployment/azure-terraform/index.md",
       "output": {
         ".html": {
@@ -26181,16 +26161,6 @@
       "output": {
         ".html": {
           "relative_path": "src/installation/deployment/windows-server-2022/windows-sizing.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "src/installation/install.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/installation/install.html"
         }
       },
       "version": ""
