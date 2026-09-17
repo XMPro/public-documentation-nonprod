@@ -88,7 +88,7 @@
 <h1 id="v46-release-notes">v4.6 Release Notes</h1>
 
 <p>This section contains the release notes for XMPro v4.6 platform, providing information about new features, improvements, and bug fixes across all core products. Key highlights include the Streams as Connectors architecture, Stream Host Event-Level Streaming architecture, OAuth SMTP support, and security enhancements across all products.</p>
-<h2 id="known-issues">Known Issues</h2>
+<h2 id="known-issues-reported-and-fixed">Known Issues Reported and Fixed</h2>
 <table>
   <thead>
     <tr>
@@ -100,16 +100,28 @@
   </thead>
   <tbody>
     <tr>
+      <td>App Designer</td>
+      <td>Ticket ID17911 The selected validation group is not retained: When you reopen a block's properties, the validation group selected on a button is not retained, so the validation configuration has to be reapplied.</td>
+      <td>v4.5.3</td>
+      <td>v5.0.0</td>
+    </tr>
+    <tr>
       <td>Data Stream Designer</td>
       <td>Ticket ID17421 Data Stream Designer Hangs on Publish/Unpublish: When you publish or unpublish a Data Stream, the browser occasionally becomes unresponsive and requires a page refresh to recover.</td>
       <td>v4.5.5</td>
-      <td>Pending</td>
+      <td>v5.0.0</td>
     </tr>
     <tr>
       <td>Data Stream Designer</td>
       <td>Ticket ID17822 Incorrect Spanish translation in DS: When you use Data Stream Designer with Spanish set as your language, the labels "Save", "Discard", and "Listener" are translated incorrectly (as "Ahorrar", "Desechar", and "Oyentes" - meanings unrelated to the UI action).</td>
       <td>v4.5.5</td>
       <td>v4.6.1</td>
+    </tr>
+    <tr>
+      <td>Common</td>
+      <td>Ticket ID18105 Low-risk container vulnerabilities reported in container images: A customer scan reported low-risk findings across the App Designer, Data Stream Designer, and Stream Host images. Most are confirmed false positives or resolved by base-image updates, but CVE-2026-1703 in <code>pip</code> on the Stream Host image remains outstanding.</td>
+      <td>v4.6.0</td>
+      <td>Pending</td>
     </tr>
   </tbody>
 </table>
@@ -315,7 +327,7 @@
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: September 15, 2026</em></small></p>
+    <p><small><em>Last modified: September 17, 2026</em></small></p>
   </div>
 </article>
 
