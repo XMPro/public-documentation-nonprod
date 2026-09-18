@@ -4787,30 +4787,10 @@
     },
     {
       "type": "Resource",
-      "source_relative_path": "src/concepts/xmpro-ai/images/AI_Overview_Copilot_Notebook.mp4",
-      "output": {
-        "resource": {
-          "relative_path": "src/concepts/xmpro-ai/images/AI_Overview_Copilot_Notebook.mp4"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
       "source_relative_path": "src/concepts/xmpro-ai/images/AI_Overview_ML_Recommendations.png",
       "output": {
         "resource": {
           "relative_path": "src/concepts/xmpro-ai/images/AI_Overview_ML_Recommendations.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "src/concepts/xmpro-ai/images/AI_Overview_XMPro_Notebook.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/concepts/xmpro-ai/images/AI_Overview_XMPro_Notebook.png"
         }
       },
       "version": ""
@@ -4821,16 +4801,6 @@
       "output": {
         ".html": {
           "relative_path": "src/concepts/xmpro-ai/index.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "src/concepts/xmpro-ai/xmpro-notebook.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/concepts/xmpro-ai/xmpro-notebook.html"
         }
       },
       "version": ""
@@ -12047,30 +12017,10 @@
     },
     {
       "type": "Resource",
-      "source_relative_path": "src/images/concepts/xmpro-ai/AI_Overview_Copilot_Notebook.mp4",
-      "output": {
-        "resource": {
-          "relative_path": "src/images/concepts/xmpro-ai/AI_Overview_Copilot_Notebook.mp4"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
       "source_relative_path": "src/images/concepts/xmpro-ai/AI_Overview_ML_Recommendations.png",
       "output": {
         "resource": {
           "relative_path": "src/images/concepts/xmpro-ai/AI_Overview_ML_Recommendations.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "src/images/concepts/xmpro-ai/AI_Overview_XMPro_Notebook.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/images/concepts/xmpro-ai/AI_Overview_XMPro_Notebook.png"
         }
       },
       "version": ""
