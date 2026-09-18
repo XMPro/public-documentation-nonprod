@@ -31147,6 +31147,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "src/technical-reference/connector-pool-configuration.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/technical-reference/connector-pool-configuration.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "src/technical-reference/health-checks.md",
       "output": {
         ".html": {
