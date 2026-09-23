@@ -88,8 +88,8 @@
 <h1 id="deploy-xmpro-on-azure-kubernetes-aks">Deploy XMPro on Azure Kubernetes (AKS)</h1>
 
 <h2 id="introduction">Introduction</h2>
-<p>Get XMPro running on Azure Kubernetes Service (AKS) with Terraform automation. This is the <strong>Kubernetes-native</strong> Azure deployment for the 5.0 platform, distinct from the <a href="../azure-terraform/index.html">Azure App Service deployment</a>, which remains available for customers staying on the App Service architecture.</p>
-<p>Deployment uses a three-layer model designed for <strong>shared clusters</strong>: one AKS cluster (with its platform controllers) can host multiple isolated XMPro sites, each with its own databases, Key Vault, DNS subzone, and Helm release. An optional fourth layer provides the backing services for the AI product.</p>
+<p>Get XMPro running on Azure Kubernetes Service (AKS) with Terraform automation. This is the <strong>Kubernetes-native</strong> Azure deployment for the 5.0 platform.</p>
+<p>Deployment uses a multi-layer model designed for <strong>shared clusters</strong>: one AKS cluster (with its platform controllers) can host multiple isolated XMPro sites, each with its own databases, Key Vault, DNS subzone, and Helm release. The two optional layers are Stream Hosts for a site, and the backing services for the AI product's RAG features.</p>
 <table>
 <thead>
 <tr>
@@ -100,22 +100,27 @@
 </thead>
 <tbody>
 <tr>
-<td><strong>1 - Cluster</strong> (<a href="%7B%7BTERRAFORM_AKS_MODULE_URL%7D%7D/tree/main/terraform-xmpro-aks/examples/layered/infra-k8s"><code>infra-k8s</code></a>)</td>
+<td><strong>1 - Cluster</strong> (<code>infra-k8s</code>)</td>
 <td>Once per cluster</td>
-<td>AKS cluster, VNet, Envoy Gateway, cert-manager, External Secrets Operator, Log Analytics, shared gateway Public IP</td>
+<td>VNet, AKS cluster, Envoy Gateway, cert-manager, External Secrets Operator, Log Analytics, shared gateway Public IP</td>
 </tr>
 <tr>
-<td><strong>2 - Site infrastructure</strong> (<a href="%7B%7BTERRAFORM_AKS_MODULE_URL%7D%7D/tree/main/terraform-xmpro-aks/examples/layered/infra"><code>infra</code></a>)</td>
+<td><strong>2 - Site infrastructure</strong> (<code>infra</code>)</td>
 <td>Once per site</td>
-<td>Key Vault, DNS subzone, SQL Server + databases, DNS A record</td>
+<td>Azure SQL Server + databases, Key Vault, DNS subzone + wildcard A record</td>
 </tr>
 <tr>
-<td><strong>3 - Site application</strong> (<a href="%7B%7BTERRAFORM_AKS_MODULE_URL%7D%7D/tree/main/terraform-xmpro-aks/examples/layered/app"><code>app</code></a>)</td>
+<td><strong>3 - Site application</strong> (<code>app</code>)</td>
 <td>Once per site</td>
-<td>External Secrets Operator wiring, per-site Gateway + Issuer, XMPro Helm release, HTTPRoutes</td>
+<td>Per-site secret store (Key Vault → Kubernetes), per-site Gateway + Let's Encrypt Issuer, XMPro Helm release, HTTPRoutes</td>
 </tr>
 <tr>
-<td><strong>4 (optional) - AI backing services</strong> (<a href="%7B%7BTERRAFORM_AKS_MODULE_URL%7D%7D/tree/main/terraform-xmpro-aks/examples/layered/infra-ai"><code>infra-ai</code></a>)</td>
+<td><strong>4 (optional) - Stream Hosts</strong> (<code>stream-hosts</code>)</td>
+<td>Per site, as needed</td>
+<td>One standalone Stream Host per Collection</td>
+</tr>
+<tr>
+<td><strong>5 (optional) - AI backing services</strong> (<code>infra-ai</code>)</td>
 <td>Once per cluster (shared by all sites)</td>
 <td>Dedicated node pool, RAG namespace (strict mTLS), Milvus, Neo4j, TimescaleDB, Mosquitto, per-stack Key Vault + storage account</td>
 </tr>
@@ -132,15 +137,14 @@
 </div>
 <div class="TIP">
 <h5>Tip</h5>
-<p>The example module uses <strong>Standard_B2as_v2</strong> node SKUs and an <strong>S0</strong> Azure SQL Database by default, suitable for development and evaluation. For production, override <code>app_node_vm_size</code>, <code>app_node_count</code>, <code>aks_sku_tier</code>, and <code>db_sku_name</code> in your tfvars: see the <a href="aks-sizing.html">Sizing Guideline</a>.</p>
+<p>The example module uses <strong>Standard_B2s_v2</strong> nodes and an <strong>S0 Azure SQL Database</strong> by default, suitable for development and evaluation. B- and D-class VM SKUs are for test, development, or evaluation only, not production. See the <a href="aks-sizing.html">Sizing Guideline</a> for production sizing.</p>
 </div>
 <p>You can provision the required infrastructure using:</p>
 <ul>
 <li>The example Terraform module (community-supported)</li>
-<li>Azure Portal (ClickOps)</li>
+<li>The Azure Portal (ClickOps)</li>
 <li>Your organization's infrastructure-as-code tools</li>
 </ul>
-<p>Summary of resources created by the infra-* layers:</p>
 <p>The table below lists the resources the template layers (<code>infra-k8s</code>, <code>infra</code>, <code>infra-ai</code>) provision. Provision them yourself any way you like, the application layer (<code>app</code>) only consumes them.</p>
 <table>
 <thead>
@@ -153,13 +157,23 @@
 <tbody>
 <tr>
 <td>Cluster-level</td>
+<td><strong>Virtual Network</strong></td>
+<td>VNet with a subnet for the AKS nodes</td>
+</tr>
+<tr>
+<td>Cluster-level</td>
 <td><strong>AKS cluster</strong></td>
 <td>Kubernetes 1.34+ (AKS long-term support version) with system + app node pools, OIDC issuer enabled</td>
 </tr>
 <tr>
 <td>Cluster-level</td>
+<td><strong>Load balancer</strong></td>
+<td>No controller to install: AKS provisions a Standard Azure Load Balancer from the gateway's Kubernetes Service, bound to the static Public IP below</td>
+</tr>
+<tr>
+<td>Cluster-level</td>
 <td><strong>Envoy Gateway controller</strong></td>
-<td>Installed cluster-wide (<code>envoy-gateway-system</code> namespace)</td>
+<td>Installed cluster-wide, with a GatewayClass (<code>eg</code>)</td>
 </tr>
 <tr>
 <td>Cluster-level</td>
@@ -169,7 +183,7 @@
 <tr>
 <td>Cluster-level</td>
 <td><strong>Istio (base + istiod)</strong></td>
-<td>Installed cluster-wide, <em>or</em> set <code>enable_istio = false</code> in the application layer</td>
+<td>Installed cluster-wide, <em>or</em> set <code>enable_istio = false</code> in the application layer. The AKS template does not install Istio CNI, so Pod Security is not enforced (see <a href="#cluster-level-components">Cluster-Level Components</a>)</td>
 </tr>
 <tr>
 <td>Cluster-level</td>
@@ -183,13 +197,13 @@
 </tr>
 <tr>
 <td>Per site</td>
-<td><strong>Key Vault</strong></td>
-<td>For application secrets, consumed by External Secrets Operator</td>
+<td><strong>Azure SQL Server</strong></td>
+<td>With 3-4 databases (SM, AD, DS, and optionally AI)</td>
 </tr>
 <tr>
 <td>Per site</td>
-<td><strong>Azure SQL Server</strong></td>
-<td>With 3-4 databases (SM, AD, DS, and optionally AI)</td>
+<td><strong>Key Vault</strong></td>
+<td>For application secrets, consumed by External Secrets Operator</td>
 </tr>
 <tr>
 <td>Per site</td>
@@ -209,7 +223,7 @@
 <tr>
 <td>Optional (AI RAG only)</td>
 <td><strong>AI services provisioning</strong></td>
-<td>The optional layer 4 template (<code>infra-ai</code>, <code>examples/layered/infra-ai</code>) provisions all of these, applied once per cluster and shared across its sites, alongside <code>infra-k8s</code></td>
+<td>The optional layer 5 template (<code>infra-ai</code>, <code>examples/layered/infra-ai</code>) provisions all of these on a dedicated node pool, applied once per cluster and shared across its sites</td>
 </tr>
 <tr>
 <td>Optional (AI RAG only)</td>
@@ -218,13 +232,15 @@
 </tr>
 </tbody>
 </table>
-<p>Once you've created these resources, skip to <a href="#8-deploy-the-site-application-layer">Step 8: Deploy the Site Application Layer</a> and provide the details in your configuration.</p>
+<p>Once you've created these resources, you still need Steps 1-4 (install the CLI tools, sign in to Azure, confirm your registry credential, and clone the module for its <code>app</code> layer), then skip ahead to <a href="#8-deploy-the-site-application-layer">Step 8: Deploy the Site Application Layer</a> and provide the details in your configuration.</p>
 <h2 id="architecture">Architecture</h2>
+<p><img src="../../../images/aks-kubernetes-architecture.png" alt="XMPro on AKS: Envoy Gateway in front of the IS, SM, DS, AD and Stream Host pods with Istio sidecars, migration and licence Jobs, Azure SQL databases, Key Vault via External Secrets Operator, Redis, Azure Files and the MQTT broker"></p>
+<p>The Terraform layers that build this:</p>
 <pre><code>┌────────────────────────────────────────────────────────────────┐
 │  Layer 1 - Cluster (examples/layered/infra-k8s)                │
 │  Apply ONCE per cluster                                        │
-│  - AKS cluster + system / app node pools, OIDC issuer          │
 │  - VNet + AKS subnet                                           │
+│  - AKS cluster + system / app node pools, OIDC issuer          │
 │  - Envoy Gateway controller (cluster-wide)                     │
 │  - cert-manager with Gateway API support (cluster-wide)        │
 │  - External Secrets Operator + its managed identity            │
@@ -236,8 +252,8 @@
 ┌────────────────────────────────────────────────────────────────┐
 │  Layer 2 - Site infrastructure (examples/layered/infra)        │
 │  Apply once PER SITE                                           │
-│  - Key Vault (per-site secrets)                                │
 │  - SQL Server + SM / AD / DS (/ AI) databases                  │
+│  - Key Vault (per-site secrets)                                │
 │  - DNS subzone + wildcard A record → gateway Public IP         │
 └────────────────────────────────────────────────────────────────┘
                               │
@@ -245,15 +261,21 @@
 ┌────────────────────────────────────────────────────────────────┐
 │  Layer 3 - Site application (examples/layered/app)             │
 │  Apply once PER SITE                                           │
-│  - External Secrets Operator wiring (KV access + secret sync)  │
+│  - Per-site secret store (Key Vault → K8s)                     │
 │  - Per-site Gateway + Let's Encrypt Issuer                     │
 │  - XMPro Helm release: SM, IS, AD, DS, optional AI,            │
-│    Stream Host, dbmigrate + licenses Jobs                      │
+│    default Stream Host, dbmigrate + licenses Jobs              │
 │  - Gateway API HTTPRoutes per product                          │
+└────────────────────────────────────────────────────────────────┘
+                              │
+                              ▼  per site, as needed
+┌────────────────────────────────────────────────────────────────┐
+│  Layer 4 (optional) - Stream Hosts (site-template/stream-hosts)│
+│  - One standalone Stream Host Helm release per Collection      │
 └────────────────────────────────────────────────────────────────┘
 
 ┌────────────────────────────────────────────────────────────────┐
-│  Layer 4 (optional) - AI backing services                      │
+│  Layer 5 (optional) - AI backing services                      │
 │  (examples/layered/infra-ai)                                   │
 │  Apply ONCE per cluster (shared by all sites)                  │
 │  - Dedicated AI node pool                                      │
@@ -262,9 +284,9 @@
 │  - Per-stack Key Vault + storage account                       │
 └────────────────────────────────────────────────────────────────┘
 </code></pre>
-<p>Traffic flow: <code>https://{ad,ds,sm,ai}.&lt;site-zone&gt;</code> → gateway Public IP → Envoy Gateway → HTTPRoute → product Service. The <code>sm.</code> hostname is path-split: <code>/identity/*</code> routes to the Identity Server (IS); everything else routes to Subscription Manager (SM).</p>
+<p>Traffic flow: <code>https://{ad,ds,sm,ai}.&lt;site-zone&gt;</code> → Azure Load Balancer (static Public IP) → Envoy Gateway → HTTPRoute → product Service. The <code>sm.</code> hostname is path-split: <code>/identity/*</code> routes to the Identity Server (IS); everything else routes to Subscription Manager (SM).</p>
 <h2 id="cluster-level-components">Cluster-Level Components</h2>
-<p>Layer 1 installs a fixed set of platform components into the cluster, once per cluster. Every site's application layer assumes they are already present: layer 3 creates only per-site resources - the Key Vault wiring, Gateway, Issuer, HTTPRoutes and Helm release - and binds them to these shared components. Adding a site never installs or upgrades any of them.</p>
+<p>Layer 1 installs a fixed set of platform components into the cluster, once per cluster. Every site's application layer assumes they are already present: layer 3 creates only per-site resources - the secret store, Gateway, Issuer, HTTPRoutes and Helm release - and binds them to these shared components. Adding a site never installs or upgrades any of them.</p>
 <table>
 <thead>
 <tr>
@@ -301,7 +323,7 @@
 </tr>
 </tbody>
 </table>
-<p>There is no load balancer controller in this list because Azure provisions the gateway's load balancer natively from its Kubernetes Service, using the static Public IP the cluster layer creates. If you build the cluster yourself instead of applying layer 1, these are the components you install; <a href="#provision-infrastructure-your-own-way">Provision Infrastructure Your Own Way?</a> lists them alongside the rest of the infrastructure the application layer expects.</p>
+<p>There is no load balancer controller in this list because Azure provisions the gateway's load balancer natively from its Kubernetes Service, using the static Public IP the cluster layer creates. If you build the cluster yourself instead of applying layer 1, these are the components you install. <a href="#provision-infrastructure-your-own-way">Provision Infrastructure Your Own Way?</a> lists them alongside the rest of the infrastructure the application layer expects.</p>
 <p>To confirm what an existing cluster already has:</p>
 <p><strong>All platforms:</strong></p>
 <pre><code class="lang-powershell">helm list -A
@@ -313,15 +335,12 @@
 <h2 id="prerequisites">Prerequisites</h2>
 <p>You need:</p>
 <ul>
-<li>An Azure subscription with <strong>Contributor</strong> (or equivalent) role</li>
+<li>An Azure subscription with permissions to create the resources in the layers you apply (Virtual Network, AKS, Virtual Machine Scale Sets, Azure SQL, Key Vault, Azure DNS, Public IP and Load Balancer, Managed Identity, Log Analytics and Application Insights; Azure Cache for Redis if you enable autoscale), which <strong>Contributor</strong> on the subscription or target resource groups covers, and with vCPU quota that leaves room for them</li>
 <li>A computer with internet access</li>
-<li>A GHE account with read access to <code>{{TERRAFORM_AKS_MODULE_URL}}</code>, for cloning the deployment files</li>
-<li>A GHE personal access token with <code>read:packages</code>, for pulling the container images from <code>{{ACR_URL}}</code></li>
+<li>Read access to the repository XMPro delivered the deployment files to</li>
+<li>Credentials for the container registry named in your delivery package (<code>{{ACR_URL}}</code> in this guide)</li>
 </ul>
-<div class="IMPORTANT">
-<h5>Important</h5>
-<p><strong>How to get access.</strong> Request it through your XMPro point of contact, consultant, or personnel. They raise it internally; XMPro provisions your named users and grants your organisation read access to the deployment repository and container images. Access is per-person and tied to the account XMPro issues you — there is no public download and no self-signup.</p>
-</div>
+<p>For how the deployment assets (Terraform modules, container images, and security artifacts) are delivered to your organisation, see <a href="../../overview.html#getting-the-deployment-assets">Getting the deployment assets</a> in the Installation Overview. The repository URL and container registry credentials used in this guide are confirmed as part of your delivery package.</p>
 <h2 id="quick-deployment">Quick Deployment</h2>
 <h3 id="1-install-required-tools">1. Install Required Tools</h3>
 <p>Install these on your computer:</p>
@@ -346,7 +365,7 @@ az account show
 </code></pre>
 <div class="TIP">
 <h5>Tip</h5>
-<p>Terraform automatically uses your Azure CLI credentials. For CI/CD pipelines, use OIDC workload identity federation (<code>ARM_USE_OIDC=true</code>) or a service principal via <code>ARM_CLIENT_ID</code> / <code>ARM_CLIENT_SECRET</code> environment variables.</p>
+<p>Terraform automatically uses your Azure CLI credentials. For CI/CD pipelines, prefer OIDC workload identity federation (<code>ARM_USE_OIDC=true</code>) over a long-lived service principal secret.</p>
 </div>
 <h3 id="3-registry-authentication">3. Registry Authentication</h3>
 <p>XMPro's container images live in <code>{{ACR_URL}}</code> and are not anonymously pullable. Confirm your credential works now — this fails in seconds, where a bad or expired token otherwise surfaces as <code>ImagePullBackOff</code> fifteen minutes into an apply.</p>
@@ -360,8 +379,8 @@ docker manifest inspect {{ACR_URL}}/ad:{{VERSION}}
 <h5>Important</h5>
 <p>That login authenticates <strong>you</strong>, not the cluster. Terraform does not pull images — the cluster nodes do, using a pull secret inside the namespace. You supply the credentials once, in the <strong>application layer</strong> (step 8), and it creates that secret for you. Logging in locally and skipping the Terraform variables leaves every pod in <code>ImagePullBackOff</code>.</p>
 </div>
-<p>Pull secrets are namespaced, so one is created per site rather than per cluster. If you would rather the credentials never touch Terraform state, create the secret yourself and pass only its name.</p>
-<p>The namespace has to exist first. It is the site's <code>name_suffix</code>, and the application layer creates it — so either run this after the first application-layer apply, or create the namespace up front with <code>kubectl create namespace &lt;name_suffix&gt;</code> and the application layer will adopt it.</p>
+<p>Pull secrets are namespaced, so one is created per site rather than per cluster. Either set <code>registry_username</code> and <code>registry_password</code> in the application layer and let it create the secret, or create the secret yourself and name it in <code>image_pull_secrets</code> so the credentials never touch Terraform state.</p>
+<p>To create the secret yourself, the namespace has to exist first. It is the site's <code>name_suffix</code>, and the application layer creates it — so either run this after the first application-layer apply, or create the namespace up front with <code>kubectl create namespace &lt;name_suffix&gt;</code> and the application layer will adopt it.</p>
 <pre><code class="lang-bash">export GHE_USERNAME=your-ghe-username
 read -rs GHE_PAT            # prompts, so the token never lands in shell history
 
@@ -375,18 +394,19 @@ kubectl create secret generic xmpro-registry \
 </code></pre>
 <p>Then set <code>image_pull_secrets = [&quot;xmpro-registry&quot;]</code> in the application layer and leave <code>registry_username</code> and <code>registry_password</code> empty.</p>
 <h3 id="4-get-the-deployment-files">4. Get the Deployment Files</h3>
+<p>Use the deployment repository URL from your delivery package as <code>&lt;deployment-repository-url&gt;</code> below.</p>
 <p><strong>Windows (PowerShell):</strong></p>
-<pre><code class="lang-powershell">git clone {{TERRAFORM_AKS_MODULE_URL}}.git terraform-k8s
+<pre><code class="lang-powershell">git clone &lt;deployment-repository-url&gt; terraform-k8s
 cd terraform-k8s\terraform-xmpro-aks\examples\layered\infra-k8s
 Copy-Item terraform.tfvars.example terraform.tfvars
 </code></pre>
 <p><strong>Windows (Command Prompt):</strong></p>
-<pre><code class="lang-cmd">git clone {{TERRAFORM_AKS_MODULE_URL}}.git terraform-k8s
+<pre><code class="lang-cmd">git clone &lt;deployment-repository-url&gt; terraform-k8s
 cd terraform-k8s\terraform-xmpro-aks\examples\layered\infra-k8s
 copy terraform.tfvars.example terraform.tfvars
 </code></pre>
 <p><strong>Mac/Linux:</strong></p>
-<pre><code class="lang-bash">git clone {{TERRAFORM_AKS_MODULE_URL}}.git terraform-k8s
+<pre><code class="lang-bash">git clone &lt;deployment-repository-url&gt; terraform-k8s
 cd terraform-k8s/terraform-xmpro-aks/examples/layered/infra-k8s
 cp terraform.tfvars.example terraform.tfvars
 </code></pre>
@@ -398,18 +418,24 @@ name_suffix  = &quot;dev&quot;             # Cluster identifier
 location     = &quot;australiaeast&quot;   # Your target region
 
 kubernetes_version  = &quot;1.34&quot;
-system_node_vm_size = &quot;Standard_B2as_v2&quot;
+system_node_vm_size = &quot;Standard_B2s_v2&quot;   # B/D-class is fine for test/dev/evaluation, not production
 system_node_count   = 1
+app_node_vm_size    = &quot;Standard_B2s_v2&quot;
+app_node_count      = 1          # see the sizing guide before the first apply
 
 # Shared by every site on this cluster
 gateway_public_ip_name = &quot;pip-gateway-cluster&quot;
 </code></pre>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p><strong>Size the application node pool before this first apply.</strong> The install peak (products plus the database-migration and licensing Jobs, each with an Istio sidecar) is well above the steady state. See the <a href="aks-sizing.html">Sizing Guideline</a> for how to choose the VM SKU and count, and how to resize an existing pool.</p>
+</div>
 <div class="WARNING">
 <h5>Warning</h5>
-<p>Do not use <code>xmpro</code> as <code>company_name</code> for a site. It collides with a hardcoded <code>XMPro</code> company in the SM database migration scripts (case-insensitive unique constraint).</p>
+<p>Do not use <code>xmpro</code> as <code>company_name</code>. It collides with a hardcoded <code>XMPro</code> company in the SM database migration scripts (case-insensitive unique constraint).</p>
 </div>
 <h3 id="5-deploy-layer-1---cluster">5. Deploy Layer 1 - Cluster</h3>
-<p>A fresh cluster needs a <strong>two-phase apply</strong>: the Kubernetes, Helm, and kubectl providers must connect to the cluster, which doesn't exist until the first targeted apply creates it.</p>
+<p>The cluster layer configures Kubernetes/Helm providers from the AKS cluster it creates, so a <strong>first (greenfield) apply must be done in two phases</strong>: create the cluster first, then apply the rest (the platform controllers, which need a reachable cluster):</p>
 <p><strong>All platforms:</strong></p>
 <pre><code class="lang-powershell">terraform init
 terraform apply -target=module.cluster.module.aks_cluster   # Phase 1: create the AKS cluster. Type 'yes' when asked
@@ -419,8 +445,8 @@ terraform apply                                             # Phase 2: everythin
 <h5>Important</h5>
 <p>Running a plain <code>terraform apply</code> first on a greenfield deployment fails: the k8s-backed providers cannot authenticate against a cluster that doesn't exist yet. The two-phase apply is only needed once; subsequent applies against the existing cluster are single-phase.</p>
 </div>
-<p>This creates the AKS cluster, VNet, Envoy Gateway, cert-manager, External Secrets Operator, Istio (with the shared gateway joined to the mesh), monitoring, and the shared gateway Public IP. <strong>Takes about 10-15 minutes.</strong> You only do this once per cluster, additional sites reuse it. See <a href="#cluster-level-components">Cluster-Level Components</a> for what each of these controllers does and the namespace it lands in.</p>
-<p>Point kubectl at the new cluster. Run <code>terraform output</code> and copy the values into the command (layers 2 and 3 reuse these too):</p>
+<p>This creates the VNet, AKS cluster, Envoy Gateway, cert-manager, External Secrets Operator, Istio (with the shared gateway joined to the mesh), monitoring, and the shared gateway Public IP. <strong>Takes about 10-15 minutes.</strong> You do this once per cluster, additional sites reuse it. See <a href="#cluster-level-components">Cluster-Level Components</a> for what each of these controllers does and the namespace it lands in.</p>
+<p>Point kubectl at the new cluster. Run <code>terraform output</code> and copy the values into the command (later steps reuse them):</p>
 <p><strong>All platforms:</strong></p>
 <pre><code class="lang-powershell">terraform output
 </code></pre>
@@ -431,7 +457,7 @@ cluster_pip_ip                 = &quot;20.53.12.34&quot;
 gateway_class_name             = &quot;eg&quot;
 resource_group_name            = &quot;rg-aks-yourco-dev&quot;
 </code></pre>
-<p>Then get cluster credentials using the <code>resource_group_name</code> and <code>cluster_name</code> values:</p>
+<p>Then point kubectl at the cluster using the <code>resource_group_name</code> and <code>cluster_name</code> values:</p>
 <p><strong>All platforms:</strong></p>
 <pre><code class="lang-powershell">az aks get-credentials --resource-group rg-aks-yourco-dev --name aks-yourco-dev
 </code></pre>
@@ -453,7 +479,7 @@ copy terraform.tfvars.example terraform.tfvars
 <pre><code class="lang-bash">cd ../infra
 cp terraform.tfvars.example terraform.tfvars
 </code></pre>
-<p><strong>Edit <code>terraform.tfvars</code></strong> with the values from layer 1. <code>terraform.tfvars</code> is gitignored, so the credentials you fill in stay local:</p>
+<p><strong>Edit <code>terraform.tfvars</code></strong> with the values from layer 1 (<code>terraform.tfvars</code> is gitignored, so the credentials you fill in stay local):</p>
 <pre><code class="lang-hcl">subscription_id = &quot;00000000-0000-0000-0000-000000000000&quot;
 
 company_name = &quot;yourco&quot;
@@ -479,10 +505,16 @@ db_max_size_gb    = 2
 </code></pre>
 <p>Apply:</p>
 <pre><code class="lang-powershell">terraform init
+terraform plan    # Validates config; most input mistakes fail here, not mid-apply
 terraform apply
 </code></pre>
-<p>This creates the site's own resource group (<code>rg-aks-yourco-site1</code>, separate from the cluster resource group) containing the site's Key Vault, DNS subzone (with wildcard A record at the gateway IP), and SQL Server with the SM, AD, and DS databases. <strong>Takes about 5 minutes.</strong></p>
-<p>Note the layer-2 outputs the application layer needs:</p>
+<div class="TIP">
+<h5>Tip</h5>
+<p>Always run <code>terraform plan</code> first. It validates the configuration and reads existing state without creating anything, so most input mistakes - a typo in an id, a missing required variable - cost you seconds instead of a failed apply you have to unpick. It does <strong>not</strong> perform service-side validation: a value the cloud rejects (such as a SQL password the server refuses) still plans cleanly and fails during <code>terraform apply</code>.</p>
+</div>
+<p>This creates the site's own resource group (<code>rg-aks-yourco-site1</code>, separate from the cluster resource group) containing the site's SQL Server with the SM, AD, and DS databases, Key Vault, and DNS subzone (with wildcard A record at the gateway IP). <strong>Takes about 5 minutes.</strong></p>
+<h4 id="verify-before-continuing">Verify before continuing</h4>
+<p>Collect the values Step 8 needs:</p>
 <p><strong>All platforms:</strong></p>
 <pre><code class="lang-powershell">terraform output
 </code></pre>
@@ -504,25 +536,29 @@ key_vault_name        = &quot;kv-yourco-site1&quot;
 key_vault_uri         = &quot;https://kv-yourco-site1.vault.azure.net/&quot;
 sql_server_fqdn       = &quot;sql-aks-yourco-site1.database.windows.net&quot;
 </code></pre>
+<div class="TIP">
+<h5>Tip</h5>
+<p>Keep this output open. Every value in it is copied into the application layer's <code>terraform.tfvars</code> in Step 8.</p>
+</div>
 <h3 id="7-point-dns-at-the-gateway">7. Point DNS at the Gateway</h3>
-<p>Before deploying the application layer, the product hostnames (<code>ad.</code>, <code>ds.</code>, <code>sm.</code>, and <code>ai.</code> if enabled, under your <code>dns_zone_name</code>) must resolve publicly to the gateway Public IP (<code>cluster_pip_ip</code> from layer 1). cert-manager's Let's Encrypt HTTP-01 challenge issues the site's TLS certificate over those hostnames, so they must resolve before the app layer runs. Pick whichever path fits how your domain is hosted.</p>
-<div class="NOTE">
-<h5>Note</h5>
-<p>Both paths below keep <code>enable_custom_domain = true</code> in the <strong>application layer</strong> (the default in step 8): that is what creates the per-product HTTPRoutes and the Let's Encrypt certificate. Setting <code>enable_custom_domain = false</code> in the app layer creates <strong>no HTTPRoutes and no TLS at all</strong>; the products are then reachable only via <code>kubectl port-forward</code> to their Services, so use it for smoke tests only.</p>
+<p>Before deploying the application layer, the product hostnames (<code>ad.</code>, <code>ds.</code>, <code>sm.</code>, and <code>ai.</code> if enabled, under your <code>dns_zone_name</code>) must resolve publicly to the gateway Public IP from layer 1. cert-manager's Let's Encrypt HTTP-01 challenge fails otherwise, and without a certificate the SM and IS products never start. Pick <strong>one</strong> of the two options below.</p>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>Both options keep <code>enable_custom_domain = true</code> in the <strong>application layer</strong> (as set in Step 8): that is what creates the per-product HTTPRoutes and the Let's Encrypt certificate. Setting it <code>false</code> in the application layer creates <strong>no HTTPRoutes and no TLS at all</strong>; the products are then reachable only via <code>kubectl port-forward</code> to their Services, so use it for smoke tests only.</p>
 </div>
 <h4 id="option-a---point-a-records-at-the-gateway-simplest">Option A - Point A records at the gateway (simplest)</h4>
-<p>If you host your domain's DNS anywhere with an A-record editor (Azure DNS, GoDaddy, Cloudflare, Route 53, …), you don't need an Azure-managed subzone: set <code>enable_custom_domain = false</code> in the <strong>layer 2</strong> tfvars (step 6) to skip creating the Azure DNS zone, then create an A record for each product hostname pointing at the gateway Public IP:</p>
+<p>Use this when your DNS is hosted anywhere with an A-record editor (Azure DNS, Route53, GoDaddy, Cloudflare, your corporate DNS), or when you want the fewest moving parts. Set <code>enable_custom_domain = false</code> in the <strong>layer 2</strong> <code>terraform.tfvars</code> so no Azure DNS subzone or wildcard record is created, then create an A record for each product hostname in the DNS provider you already use, all pointing at the gateway Public IP from layer 1 (<code>terraform output cluster_pip_ip</code>):</p>
 <pre><code class="lang-text">ad.site1.xmpro.yourco.com   A   20.53.12.34
 ds.site1.xmpro.yourco.com   A   20.53.12.34
 sm.site1.xmpro.yourco.com   A   20.53.12.34
-# ai.site1.xmpro.yourco.com A   20.53.12.34   # only if enable_ai = true
+ai.site1.xmpro.yourco.com   A   20.53.12.34   (only if enable_ai = true)
 </code></pre>
-<p>A single wildcard record (<code>*.site1.xmpro.yourco.com</code> → the gateway IP) works too.</p>
-<h4 id="option-b---delegate-an-azure-subzone-if-you-own-the-parent-zone-in-azure">Option B - Delegate an Azure subzone (if you own the parent zone in Azure)</h4>
-<p>If you set <code>enable_custom_domain = true</code> in layer 2 (as shown in step 6), that stage created the <code>site1.xmpro.yourco.com</code> subzone with a wildcard A record at the gateway IP. Delegate that subzone from its parent zone so it resolves publicly.</p>
+<p>A single wildcard record (<code>*.site1.xmpro.yourco.com</code> → the gateway Public IP) works too. Then skip to <a href="#verify-before-continuing-1">Verify before continuing</a>.</p>
+<h4 id="option-b---delegate-an-azure-dns-subzone-if-you-own-the-parent-zone-in-azure-dns">Option B - Delegate an Azure DNS subzone (if you own the parent zone in Azure DNS)</h4>
+<p>If you set <code>enable_custom_domain = true</code> in layer 2 (as shown in Step 6), that apply created the <code>site1.xmpro.yourco.com</code> subzone with a wildcard A record at the gateway Public IP. Its parent zone must delegate to it.</p>
 <div class="TIP">
 <h5>Tip</h5>
-<p>If the parent zone is an Azure DNS zone <strong>in the same subscription</strong>, layer 2 can create the delegation for you, no manual steps: set <code>manage_parent_dns_delegation = true</code>, <code>parent_dns_zone_name</code>, and <code>parent_dns_zone_resource_group</code> in the layer-2 <code>terraform.tfvars</code> (the option (2) block in its <code>terraform.tfvars.example</code>) and apply. The manual steps below are only needed when the parent zone lives elsewhere.</p>
+<p>If the parent zone is an Azure DNS zone <strong>in the same subscription</strong>, layer 2 can create the delegation for you, no manual steps: set <code>manage_parent_dns_delegation = true</code>, <code>parent_dns_zone_name</code> and <code>parent_dns_zone_resource_group</code> in the layer-2 <code>terraform.tfvars</code> (see its <code>terraform.tfvars.example</code>) and apply. The manual steps below are only needed when the parent zone lives elsewhere.</p>
 </div>
 <p>To delegate manually, get the subzone's nameservers:</p>
 <pre><code class="lang-bash">terraform output dns_zone_name_servers
@@ -540,15 +576,25 @@ for ns in $(terraform output -json dns_zone_name_servers | jq -r '.[]'); do
 done
 </code></pre>
 <p><strong>Using an external provider for the parent zone (GoDaddy, Cloudflare, etc.):</strong> create the same <code>NS</code> records for the subzone in your provider's console.</p>
-<h4 id="verify-before-continuing">Verify before continuing</h4>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>Wait for the delegation to propagate before applying the app layer. A freshly-delegated zone can take a few minutes to resolve from all of Let's Encrypt's validation vantage points: applying too early can make the first certificate order fail a challenge, after which cert-manager backs off (up to ~1 hour) before retrying. Recovery is to <code>kubectl delete certificate xmpro-le-tls -n &lt;name_suffix&gt;</code> and re-apply.</p>
+</div>
+<h4 id="verify-before-continuing-1">Verify before continuing</h4>
+<p>Whichever option you used, confirm <strong>every</strong> enabled hostname resolves to the gateway Public IP before applying the application layer. Option A creates one A record per product, so checking only <code>ad</code> will miss a record you forgot and the omission surfaces later as a failed certificate order. Check <code>ad</code>, <code>ds</code> and <code>sm</code>, plus <code>ai</code> when <code>enable_ai = true</code>:</p>
 <p><strong>Windows (PowerShell):</strong></p>
-<pre><code class="lang-powershell">Resolve-DnsName ad.site1.xmpro.yourco.com -Type A
-# Should return the gateway Public IP
+<pre><code class="lang-powershell">&quot;ad&quot;,&quot;ds&quot;,&quot;sm&quot;,&quot;ai&quot; | ForEach-Object { Resolve-DnsName &quot;$_.site1.xmpro.yourco.com&quot; -Type A }
 </code></pre>
 <p><strong>Mac/Linux:</strong></p>
-<pre><code class="lang-bash">dig ad.site1.xmpro.yourco.com +short
-# Should return the gateway Public IP
+<pre><code class="lang-bash">for h in ad ds sm ai; do echo -n &quot;$h: &quot;; dig +short $h.site1.xmpro.yourco.com; done
 </code></pre>
+<p>Sample output (your gateway IP will differ):</p>
+<pre><code class="lang-text">ad: 20.53.12.34
+ds: 20.53.12.34
+sm: 20.53.12.34
+ai: 20.53.12.34
+</code></pre>
+<p>Drop <code>ai</code> from the list when <code>enable_ai = false</code>. If any hostname returns nothing, or returns anything other than your gateway Public IP, <strong>stop here</strong>. Applying the application layer now will fail certificate issuance and put cert-manager into a back-off that takes up to an hour to clear.</p>
 <h3 id="8-deploy-the-site-application-layer">8. Deploy the Site Application Layer</h3>
 <p><strong>Windows (PowerShell):</strong></p>
 <pre><code class="lang-powershell">cd ..\app
@@ -562,7 +608,7 @@ copy terraform.tfvars.example terraform.tfvars
 <pre><code class="lang-bash">cd ../app
 cp terraform.tfvars.example terraform.tfvars
 </code></pre>
-<p><strong>Edit <code>terraform.tfvars</code></strong> with values from layers 1 and 2. <code>terraform.tfvars</code> is gitignored, so the credentials you fill in stay local:</p>
+<p><strong>Edit <code>terraform.tfvars</code></strong> with values from layers 1 and 2 (<code>terraform.tfvars</code> is gitignored, so the credentials you fill in stay local):</p>
 <pre><code class="lang-hcl">subscription_id = &quot;00000000-0000-0000-0000-000000000000&quot;
 
 company_name = &quot;yourco&quot;
@@ -592,8 +638,8 @@ ds_database_name = &quot;sqldb-aks-yourco-site1-ds&quot;
 sm_database_name = &quot;sqldb-aks-yourco-site1-sm&quot;
 
 # External Secrets Operator: installed by the cluster layer (layer 1). The site
-# auto-reads the ESO identity's principal ID from the ESO ServiceAccount
-# annotation - nothing to set here. See the note below for the override.
+# reads the ESO identity's principal ID from the ESO ServiceAccount annotation.
+# Nothing to set here; see the note below for the override.
 # existing_eso_principal_id = &quot;&quot;   # override only - see note below
 
 # --- Container images ---
@@ -618,8 +664,9 @@ gateway_class_name   = &quot;eg&quot;      # [from layer 1] terraform output gat
 
 # --- Features ---
 enable_ai                  = false
-enable_default_stream_host = true
+enable_default_stream_host = true   # one in-cluster Stream Host; more per Collection in layer 4 (Step 10)
 enable_licenses            = true
+enable_autoscale           = false  # Redis-backed multi-replica products; see the sizing guide
 
 # --- Service mesh + Pod Security (defaults shown) ---
 enable_istio              = true
@@ -631,51 +678,68 @@ pod_security_standard     = &quot;baseline&quot;     # audit/warn only; no enfor
 # sm_product_id  = &quot;&quot;
 # sm_product_key = &quot;&quot;
 </code></pre>
-<div class="IMPORTANT">
-<h5>Important</h5>
-<p><code>enable_istio = true</code> requires the cluster layer's Istio install: on a cluster without Istio set it <code>false</code>, or the apply fails on the <code>PeerAuthentication</code> CRD. <code>STRICT</code> requires the shared gateway inside the mesh (the cluster layer meshes it by default); an unmeshed gateway with <code>STRICT</code> refuses <strong>all</strong> ingress to the site.</p>
-</div>
 <div class="TIP">
 <h5>Tip</h5>
 <p>Leaving the product ID/key variables empty pins them to XMPro's public <strong>evaluation</strong> values, useful for demos and trials without supplying real licence material.</p>
 </div>
+<p><strong>Istio is on by default.</strong> The application layer deploys with Istio sidecar injection enabled and the <code>baseline</code> Pod Security Standard in audit and warn mode only (AKS has no Istio CNI, so it is not enforced). <code>enable_istio</code>, <code>istio_peer_authentication</code>, <code>pod_security_standard</code> and <code>pod_security_enforce</code> can all be set here. Istio injection needs istiod on the cluster, which the cluster layer installed in Step 5; on a cluster without Istio set <code>enable_istio = false</code>, or the apply fails on the <code>PeerAuthentication</code> CRD. <code>STRICT</code> requires the shared gateway inside the mesh (the cluster layer meshes it by default); an unmeshed gateway with <code>STRICT</code> refuses <strong>all</strong> ingress to the site.</p>
+<p><strong>External Secrets Operator is already there.</strong> The cluster layer installed it in Step 5 with its own managed identity (<code>uami-eso-&lt;name_suffix&gt;</code>, in the cluster resource group) and stamped that identity's principal ID on the operator's ServiceAccount as the <code>xmpro.com/eso-principal-id</code> annotation. This layer reads the annotation and grants the identity access to the site's Key Vault. There is nothing to set here, and nothing changes when you add more sites. All credentials live in one place: the site's Key Vault, which External Secrets Operator copies into the namespace as the <code>xmpro-secrets</code> Kubernetes Secret.</p>
 <div class="IMPORTANT">
 <h5>Important</h5>
-<p><strong>The cluster layer installs ESO; sites only consume it.</strong> Layer 1 installs the External Secrets Operator once per cluster, creates its managed identity (<code>uami-eso-&lt;name_suffix&gt;</code>, in the cluster resource group), and stamps the identity's principal ID onto the ESO ServiceAccount as the <code>xmpro.com/eso-principal-id</code> annotation. Each site's app layer reads that annotation automatically and grants the identity Key Vault access on the site's vault - there is nothing to configure per site. Set <code>existing_eso_principal_id</code> <strong>only</strong> when ESO was installed outside the cluster layer and the annotation is absent: <code>az identity show -g &lt;cluster-rg&gt; -n uami-eso-&lt;cluster-name_suffix&gt; --query principalId -o tsv</code>. If neither the annotation nor the override yields a principal, the apply fails with an explicit error rather than creating an empty role assignment. Do <strong>not</strong> use the cluster's kubelet identity: ESO authenticates as its own identity, so granting the kubelet identity access to the Key Vault leaves ESO with a <code>403 ForbiddenByRbac</code>, <code>xmpro-secrets</code> is never created, and the dbmigrate pre-install hook times out (rolling back the whole atomic release).</p>
+<p>Set <code>existing_eso_principal_id</code> only if External Secrets Operator was installed outside the cluster layer and the <code>xmpro.com/eso-principal-id</code> annotation is missing (<code>az identity show -g &lt;cluster-rg&gt; -n uami-eso-&lt;cluster-name_suffix&gt; --query principalId -o tsv</code>). Do <strong>not</strong> point it at the cluster's kubelet identity: the sync fails with <code>403 ForbiddenByRbac</code>, <code>xmpro-secrets</code> is never created, and the install rolls back.</p>
+</div>
+<div class="NOTE">
+<h5>Note</h5>
+<p><strong>Where the pull secret comes from.</strong> <code>registry_username</code> and <code>registry_password</code> make this layer create the <code>dockerconfigjson</code> secret in the site namespace and wire every workload to it. <code>image_pull_secrets</code> is for a secret you created yourself (Step 3); the two are merged. External Secrets Operator cannot serve this: its secrets are type <code>Opaque</code>, and Kubernetes ignores those for image pulls. Naming a secret that does not exist lets <code>terraform apply</code> succeed and then leaves the pods in <code>ImagePullBackOff</code>.</p>
 </div>
 <p>Deploy:</p>
 <p><strong>All platforms:</strong></p>
 <pre><code class="lang-powershell">terraform init
-terraform plan    # Validates config; most input mistakes fail here
+terraform plan    # Validates config; most input mistakes fail here, not mid-apply
 terraform apply
 </code></pre>
-<p>A single apply installs the per-site Gateway and Let's Encrypt Issuer, wires External Secrets Operator to the site's Key Vault, and deploys the XMPro Helm release with its database migration and licensing Jobs. <strong>Takes about 8-12 minutes.</strong></p>
+<p>A single apply installs the per-site Gateway and Let's Encrypt Issuer, wires External Secrets Operator to the site's Key Vault, and deploys the XMPro Helm release with its database migration and licensing Jobs. <strong>Takes about 8-12 minutes</strong>, including certificate issuance.</p>
 <div class="NOTE">
 <h5>Note</h5>
 <p><strong>First deploys are the slowest.</strong> Every container image is pulled cold and the database-migration and licensing Jobs run inside the Helm install (timeout 30 minutes). Pods can keep converging for several minutes after <code>terraform apply</code> returns: check <code>kubectl get pods -n &lt;name_suffix&gt;</code> and wait for all products to reach <code>Running</code> before judging a deploy failed.</p>
 </div>
 <h3 id="9-access-xmpro">9. Access XMPro</h3>
 <p><strong>All platforms:</strong></p>
-<pre><code class="lang-powershell">kubectl get pods -n &lt;name_suffix&gt;
-kubectl get certificate -n &lt;name_suffix&gt;
-kubectl get httproute -n &lt;name_suffix&gt;
+<pre><code class="lang-powershell">kubectl get pods -n site1
+kubectl get certificate -n site1
+kubectl get httproute -n site1
 </code></pre>
-<p>Sample <code>kubectl get pods</code> output: products <code>Running</code>, and the dbmigrate/licenses <strong>Jobs <code>Completed</code></strong> (for a Job, <code>Completed</code> is success, not failure). Pod name hashes will differ:</p>
-<pre><code class="lang-text">NAME                         READY   STATUS      RESTARTS   AGE
-xmpro-ad-6c9f8b7d5c-4x2kt    1/1     Running     0          6m
-xmpro-ds-7d8c6b5f4a-9pqr2    1/1     Running     0          6m
-xmpro-sm-5b7c9d8e6f-2mn4v    1/1     Running     0          6m
-xmpro-is-8f6d5c4b3a-7lk9w    1/1     Running     0          6m
-xmpro-sh-6b5c4d3e2f-3jh8x    1/1     Running     0          6m
-xmpro-sm-dbmigrate-abc12     0/1     Completed   0          8m
-xmpro-ad-dbmigrate-def34     0/1     Completed   0          8m
-xmpro-ds-dbmigrate-ghi56     0/1     Completed   0          8m
-xmpro-licenses-jkl78         0/1     Completed   0          8m
+<p>Sample output (pod name suffixes will differ):</p>
+<pre><code class="lang-text">NAME                        READY   STATUS      RESTARTS   AGE
+xmpro-ad-6c9f8b7d5c-4x2kt   2/2     Running     0          4m59s
+xmpro-ad-dbmigrate-def34    0/2     Completed   0          6m17s
+xmpro-ds-7d8c6b5f4a-9pqr2   2/2     Running     0          4m59s
+xmpro-ds-dbmigrate-ghi56    0/2     Completed   0          6m
+xmpro-is-8f6d5c4b3a-7lk9w   2/2     Running     0          4m59s
+xmpro-licenses-jkl78        0/2     Completed   0          5m26s
+xmpro-sh-6b5c4d3e2f-3jh8x   2/2     Running     0          4m59s
+xmpro-sm-5b7c9d8e6f-2mn4v   2/2     Running     0          4m59s
+xmpro-sm-dbmigrate-abc12    0/2     Completed   0          5m43s
+
+NAME             READY   SECRET                AGE
+xmpro-le-tls     True    xmpro-le-tls          6m46s
+xmpro-sm-token   True    xmpro-sm-token-cert   6m45s
+
+NAME                   HOSTNAMES                                                                                        AGE
+xmpro-ad               [&quot;ad.site1.xmpro.yourco.com&quot;]                                                                    5m
+xmpro-ds               [&quot;ds.site1.xmpro.yourco.com&quot;]                                                                    5m
+xmpro-https-redirect   [&quot;ad.site1.xmpro.yourco.com&quot;,&quot;ds.site1.xmpro.yourco.com&quot;,&quot;sm.site1.xmpro.yourco.com&quot;]            5m
+xmpro-sm               [&quot;sm.site1.xmpro.yourco.com&quot;]                                                                    5m
+xmpro-sm-identity      [&quot;sm.site1.xmpro.yourco.com&quot;]                                                                    5m
+xmpro-sm-root          [&quot;sm.site1.xmpro.yourco.com&quot;]                                                                    5m
 </code></pre>
-<p>Sample <code>kubectl get certificate</code> output: <code>READY</code> turns <code>True</code> once cert-manager completes the Let's Encrypt order:</p>
-<pre><code class="lang-text">NAME           READY   SECRET         AGE
-xmpro-le-tls   True    xmpro-le-tls   5m
-</code></pre>
+<p>What &quot;good&quot; looks like:</p>
+<ul>
+<li>Every product pod (<code>xmpro-ad</code>, <code>xmpro-ds</code>, <code>xmpro-is</code>, <code>xmpro-sm</code>, <code>xmpro-sh</code>) shows <code>Running</code> and <code>2/2</code> ready. The second container is the Istio sidecar; a pod stuck at <code>1/2</code> usually means sidecar injection failed.</li>
+<li>The four Jobs (<code>xmpro-ad-dbmigrate</code>, <code>xmpro-ds-dbmigrate</code>, <code>xmpro-sm-dbmigrate</code>, <code>xmpro-licenses</code>) show <code>Completed</code> with <code>0/2</code> ready. For a Job, <code>Completed</code> is success, not failure.</li>
+<li>Both certificates show <code>READY=True</code>. If either shows <code>False</code>, DNS is the usual cause; go back to Step 7.</li>
+<li>Six HTTPRoutes exist. <code>xmpro-sm</code>, <code>xmpro-sm-identity</code> and <code>xmpro-sm-root</code> all share the <code>sm.</code> hostname because that hostname is path-split between Subscription Manager and the Identity Server.</li>
+</ul>
 <p>Smoke-test the gateway:</p>
 <p><strong>Mac/Linux:</strong></p>
 <pre><code class="lang-bash">curl -s -o /dev/null -w &quot;%{http_code}&quot; https://ad.site1.xmpro.yourco.com/
@@ -712,40 +776,72 @@ xmpro-le-tls   True    xmpro-le-tls   5m
 </table>
 <div class="NOTE">
 <h5>Note</h5>
-<p>The username is built from your <code>company_admin_first_name</code>, <code>company_admin_last_name</code>, and <code>company_name</code> values as <code>firstname.lastname@&lt;company_name&gt;.onxmpro.com</code>.</p>
+<p>The company-admin username is built from your <code>company_admin_first_name</code>, <code>company_admin_last_name</code>, and <code>company_name</code> values as <code>firstname.lastname@&lt;company_name&gt;.onxmpro.com</code>.</p>
 </div>
+<h3 id="10-deploy-stream-hosts">10. Deploy Stream Hosts</h3>
+<p>On AKS the application layer installs <strong>one default in-cluster Stream Host</strong> (<code>enable_default_stream_host</code> defaults to <code>true</code>), which is the <code>xmpro-sh</code> pod above. It registers with DS on first start. Further Stream Hosts are deployed through the dedicated fourth layer: one Helm release per Collection, each with its own collection id and secret. Create the Collection in DS first (see <a href="../../complete-installation/index.html">Post Deployment Guide</a>), then:</p>
+<p><strong>Mac/Linux:</strong></p>
+<pre><code class="lang-bash"># Stream Hosts live in the site-template tree, not examples/layered
+cd ../../../environments/site-template/stream-hosts
+cp template.tfvars.example terraform.tfvars
+</code></pre>
+<pre><code class="lang-hcl">subscription_id           = &quot;00000000-0000-0000-0000-000000000000&quot;
+cluster_name              = &quot;aks-yourco-dev&quot;                 # layer 1
+name_suffix               = &quot;site1&quot;
+resource_group_name       = &quot;rg-aks-yourco-site1&quot;            # layer 2 (site RG)
+key_vault_name            = &quot;kv-yourco-site1&quot;                # layer 2
+namespace                 = &quot;site1&quot;
+cluster_secret_store_name = &quot;azurekv-site1&quot;                  # azurekv-&lt;name_suffix&gt; by default
+image_registry            = &quot;{{ACR_URL}}&quot;
+image_tag                 = &quot;{{VERSION}}&quot;
+ds_server_url             = &quot;https://ds.site1.xmpro.yourco.com/&quot;
+
+stream_hosts = {
+  ingest = {
+    collection_id     = &quot;&lt;collection-id-from-DS&gt;&quot;
+    collection_secret = &quot;&lt;collection-secret&gt;&quot;
+    gateway_name      = &quot;SH-AKS-site1-ingest&quot;
+  }
+}
+</code></pre>
+<pre><code class="lang-powershell">terraform init
+terraform apply
+</code></pre>
+<p>Confirm the Stream Host shows <strong>online</strong> in DS → Stream Hosts. Add an entry to <code>stream_hosts</code> for every further Collection and re-apply.</p>
 <h2 id="adding-more-sites-to-the-same-cluster">Adding More Sites to the Same Cluster</h2>
-<p>This is where the three-layer model pays off. For each additional site, repeat <strong>only layers 2 and 3</strong> with a new <code>name_suffix</code>:</p>
+<p>This is where the layered model pays off. For each additional site, repeat <strong>only layers 2, 3, and (as needed) 4</strong> with a new <code>name_suffix</code>:</p>
 <pre><code class="lang-bash"># Layer 2 with name_suffix = &quot;site2&quot;, dns_zone_name = &quot;site2.xmpro.yourco.com&quot;
 # Layer 3 with the matching outputs
+# Layer 4 for that site's Stream Hosts
 </code></pre>
-<p>Each site gets its own namespace, databases, Key Vault, DNS subzone, and TLS certificates, fully isolated, sharing only the cluster, controllers, and gateway IP. No per-site ESO configuration is needed: every site reuses the cluster layer's ESO install and resolves its identity automatically from the ESO ServiceAccount annotation (see <a href="#8-deploy-the-site-application-layer">Step 8</a>).</p>
+<p>Each site gets its own namespace, databases, Key Vault, DNS subzone, and TLS certificates, fully isolated, sharing only the cluster, controllers, and gateway IP. The cluster-wide controllers, External Secrets Operator among them, are reused as-is: no application-layer setting changes between the first site and the tenth.</p>
 <h2 id="enabling-the-ai-product-later">Enabling the AI Product Later</h2>
-<p>Deployed without AI and want to add it (with the RAG feature) afterwards? No redeployment is needed, re-apply the existing stages in this order:</p>
+<p>Deployed without AI and want to add it afterwards? No redeployment is needed. Re-apply the existing layers in this order:</p>
 <ol>
-<li><strong>AI backing services</strong> (once per cluster, skip if already applied): apply the <code>infra-ai</code> template (<code>examples/layered/infra-ai</code>). Note its TimescaleDB and Neo4j endpoints from <code>terraform output</code>, and the passwords you set in its tfvars.</li>
-<li><strong>Site infrastructure</strong> (<code>infra</code>): set <code>enable_ai = true</code> in the site's <code>terraform.tfvars</code> and re-apply: this adds the site's AI database to the existing SQL server. Nothing else changes.</li>
+<li><strong>AI backing services</strong> (only for the RAG feature; once per cluster, skip if already applied): apply the <code>infra-ai</code> template (<code>examples/layered/infra-ai</code>). Note its <code>timescaledb_endpoint</code> and <code>neo4j_bolt_uri</code> outputs, and the passwords you set in its tfvars.</li>
+<li><strong>Site infrastructure</strong> (<code>infra</code>): set <code>enable_ai = true</code> in the site's <code>terraform.tfvars</code> and re-apply. This adds the site's AI database to the existing SQL server. Note the <code>ai_database_name</code> output.</li>
 <li><strong>Site application</strong> (<code>app</code>): in the site's <code>terraform.tfvars</code> set:
-<pre><code class="lang-hcl">enable_ai     = true
-enable_ai_rag = true
+<pre><code class="lang-hcl">enable_ai        = true
+ai_database_name = &quot;sqldb-aks-yourco-site1-ai&quot;   # from step 2
 
-# Built from the infra-ai endpoints and the passwords you set there
+# RAG only - built from the infra-ai endpoints and the passwords you set there
+enable_ai_rag                    = true
 ai_timescaledb_connection_string = &quot;&lt;Npgsql connection string to the TimescaleDB endpoint&gt;&quot;
-ai_neo4j_connection_string      = &quot;&lt;connection string to the Neo4j bolt endpoint&gt;&quot;
+ai_neo4j_connection_string       = &quot;&lt;connection string to the Neo4j bolt endpoint&gt;&quot;
 </code></pre>
-Re-apply. The AI database-migration Job runs the SQL, TimescaleDB, and Neo4j migrations, the AI product deploys, and the <code>ai.</code> hostname starts routing.</li>
-<li><strong>Verify</strong>: <code>kubectl get pods -n &lt;name_suffix&gt;</code> shows the AI pods <code>Running</code> (the <code>aidbmigrate</code> Job shows <code>Completed</code>), and <code>https://ai.&lt;your-zone&gt;</code> redirects to sign-in.</li>
+Re-apply. The AI database-migration Job runs the SQL (and, with RAG, the TimescaleDB and Neo4j) migrations, the AI product deploys, and the <code>ai.</code> hostname starts routing. <strong>Takes about 5-8 minutes.</strong></li>
+<li><strong>Verify</strong>: <code>kubectl get pods -n &lt;name_suffix&gt;</code> shows the AI pod <code>Running</code> (the <code>ai-dbmigrate</code> Job shows <code>Completed</code>), and <code>https://ai.&lt;your-site-zone&gt;/</code> redirects to sign-in.</li>
 </ol>
 <div class="NOTE">
 <h5>Note</h5>
-<p>Enabling AI without RAG is simpler: skip step 1, leave <code>enable_ai_rag = false</code>, and no connection strings are needed: steps 2 and 3 with <code>enable_ai = true</code> are enough.</p>
+<p>Enabling AI without RAG is simpler: skip step 1, leave <code>enable_ai_rag = false</code>, and no connection strings are needed. Steps 2 and 3 with <code>enable_ai = true</code> are enough.</p>
 </div>
 <h2 id="thats-it">That's It!</h2>
-<p>XMPro is now running on Azure Kubernetes Service.</p>
+<p>XMPro is now running on Azure Kubernetes (AKS).</p>
 <p>Your deployment includes:</p>
 <ul>
 <li>✅ All XMPro applications (SM, IS, AD, DS, optional AI, Stream Host)</li>
-<li>✅ Azure SQL databases, schema migrated by Helm Jobs</li>
+<li>✅ Azure SQL Database with per-product databases, schema migrated by Helm Jobs</li>
 <li>✅ Envoy Gateway with per-product HTTPRoutes on a static Public IP</li>
 <li>✅ Auto-renewing Let's Encrypt TLS certificates (cert-manager)</li>
 <li>✅ Secrets in Azure Key Vault, materialized into the cluster by External Secrets Operator</li>
@@ -769,10 +865,14 @@ Re-apply. The AI database-migration Job runs the SQL, TimescaleDB, and Neo4j mig
 → Refresh kubeconfig: <code>az aks get-credentials --resource-group &lt;rg&gt; --name &lt;aks&gt; --overwrite-existing</code>.</p>
 <p><strong>Certificates stuck at <code>READY=False</code></strong>
 → NS delegation likely missing or not propagated. Verify <code>dig ad.&lt;site-zone&gt; +short</code> (Windows: <code>Resolve-DnsName ad.&lt;site-zone&gt; -Type A</code>) returns the gateway Public IP. Then <code>kubectl describe certificate -n &lt;name_suffix&gt;</code> for the cert-manager error detail.</p>
+<p><strong>The app layer times out and rolls back; a product pod was <code>Pending</code> with <code>FailedScheduling ... Insufficient memory</code></strong>
+→ The application node pool is too small for the install. The database-migration and licensing Jobs run alongside the products, and with Istio injection every one of those pods carries a sidecar, so the install peak is well above the steady-state total. The Helm release is atomic, so one unschedulable pod rolls the whole site back. Scale the pool (<code>az aks nodepool scale</code>) and re-apply; see the <a href="aks-sizing.html">Sizing Guideline</a>.</p>
+<p><strong><code>terraform apply</code> failed partway through</strong>
+→ This is normal and recoverable: Terraform records everything it already created, so re-running <code>terraform apply</code> continues from where it stopped rather than starting over. Fix the error it reported first. Two rules: do <strong>not</strong> delete the <code>terraform.tfstate</code> file, and do <strong>not</strong> manually delete resources in the Azure Portal - both leave Terraform unable to reconcile what exists. If you want to see what it believes exists so far, run <code>terraform state list</code>.</p>
 <p><strong>Pods stuck in <code>ImagePullBackOff</code></strong>
 → Run <code>kubectl describe pod &lt;pod&gt; -n &lt;name_suffix&gt;</code> and read the pull error at the bottom. Check in this order:</p>
 <ol>
-<li><strong>The pull secret exists.</strong> <code>kubectl get secret xmpro-registry -n &lt;name_suffix&gt;</code>. If it is missing, <code>registry_username</code> and <code>registry_password</code> were not set in the application layer.</li>
+<li><strong>The pull secret exists.</strong> <code>kubectl get secret xmpro-registry -n &lt;name_suffix&gt;</code>. If it is missing, <code>registry_username</code> and <code>registry_password</code> were not set in the application layer. A secret named in <code>image_pull_secrets</code> that does not exist, or is not of type <code>kubernetes.io/dockerconfigjson</code>, produces the same error.</li>
 <li><strong>The PAT is valid and scoped.</strong> It needs <code>read:packages</code> and must not have expired. Re-run the step 3 preflight to confirm.</li>
 <li><strong>The tag exists.</strong> A wrong <code>image_tag</code> or a mistyped <code>image_registry</code> produces the same symptom. Compare against <code>docker manifest inspect {{ACR_URL}}/ad:{{VERSION}}</code>.</li>
 <li><strong>The nodes can reach the registry.</strong> Egress restrictions on the cluster will block the pull regardless of credentials.</li>
@@ -785,29 +885,32 @@ Re-apply. The AI database-migration Job runs the SQL, TimescaleDB, and Neo4j mig
 <ul>
 <li><a href="upgrade-from-app-service.html">Migration from App Service</a> - Migrate a v4.x Azure App Service deployment</li>
 <li><a href="../azure-terraform/index.html">Azure App Service deployment</a> - The non-Kubernetes Azure option</li>
-<li><a href="%7B%7BTERRAFORM_AKS_MODULE_URL%7D%7D">Module README</a> - Full variable reference</li>
+<li>Module README in the deployment repository - Full variable reference</li>
 <li><a href="../../complete-installation/index.html">Post Deployment Guide</a> - First-tenant setup, agents, stream hosts</li>
 </ul>
 <h2 id="cleanup">Cleanup</h2>
 <p><strong>Tearing down one site (keeping the cluster):</strong></p>
-<pre><code class="lang-powershell"># Destroy layer 3 then layer 2 for that site only
+<pre><code class="lang-powershell"># Reverse order: stream-hosts → app → infra, for that site only
+# Stream Hosts (only if you deployed them) live in the site-template tree:
+(cd environments/site-template/stream-hosts &amp;&amp; terraform destroy)
 cd examples/layered/app   &amp;&amp; terraform destroy
 cd ../infra               &amp;&amp; terraform destroy
 </code></pre>
 <p>The cluster and its controllers stay available for the remaining sites.</p>
 <p><strong>Tearing down everything:</strong></p>
-<pre><code class="lang-powershell"># Reverse order of apply: app → infra (per site) → infra-k8s (cluster)
-cd examples/layered/app      &amp;&amp; terraform destroy
-cd ../infra                  &amp;&amp; terraform destroy
-cd ../infra-k8s              &amp;&amp; terraform destroy
+<pre><code class="lang-powershell">(cd environments/site-template/stream-hosts &amp;&amp; terraform destroy)
+cd examples/layered/app   &amp;&amp; terraform destroy
+cd ../infra               &amp;&amp; terraform destroy
+cd ../infra-ai            &amp;&amp; terraform destroy   # only if you deployed the AI backing services
+cd ../infra-k8s           &amp;&amp; terraform destroy
 </code></pre>
 <div class="IMPORTANT">
 <h5>Important</h5>
-<p>Destroy in the reverse of apply order. Destroying the cluster layer while site layers still reference it strands their Terraform state with unreachable resources.</p>
+<p>Destroy in the reverse of apply order. Destroying the cluster layer while site layers still reference it strands their Terraform state with unreachable resources, and the app layer's controllers create Azure resources (the gateway load balancer) outside Terraform state that only clean up in-band.</p>
 </div>
 <div class="CAUTION">
 <h5>Caution</h5>
-<p><strong>If the app-layer <code>terraform destroy</code> fails partway</strong>, most often because the Kubernetes/Helm providers can't reach the cluster API (flaky network, or the cluster was already deleted), it leaves resources orphaned that <strong>block redeploying the same <code>name_suffix</code></strong> (name collisions on the next apply) and can keep billing. After a failed destroy, sweep the site's leftovers before re-applying or reusing the name: the <strong>gateway load balancer / public IP</strong>, the <strong>External Secrets identity and its role assignment</strong>, and the site's <strong>Key Vault secrets</strong> (the Key Vault or its secrets are held for a soft-delete/purge window - purge them, or the redeploy collides). The pattern is the same one seen on EKS (orphaned gateway LB + ESO identity + secret store after a failed app destroy); confirm the exact Azure resource names for your deployment.</p>
+<p><strong>If the app-layer <code>terraform destroy</code> fails partway</strong>, most often because the Kubernetes/Helm providers can't reach the cluster API (flaky network, or the cluster was already deleted), it leaves resources orphaned that <strong>block redeploying the same <code>name_suffix</code></strong> (name collisions on the next apply) and can keep billing. After a failed destroy, sweep the site's leftovers before re-applying or reusing the name: the <strong>gateway load balancer / public IP</strong>, the <strong>External Secrets identity and its role assignment</strong>, and the site's <strong>Key Vault secrets</strong> (the Key Vault or its secrets are held for a soft-delete/purge window - purge them, or the redeploy collides).</p>
 </div>
 <h2 id="next-steps">Next Steps</h2>
 <p>After completing your infrastructure deployment, proceed to:</p>
@@ -816,7 +919,7 @@ cd ../infra-k8s              &amp;&amp; terraform destroy
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: September 18, 2026</em></small></p>
+    <p><small><em>Last modified: September 23, 2026</em></small></p>
   </div>
 </article>
 

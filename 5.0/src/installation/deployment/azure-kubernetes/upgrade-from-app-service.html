@@ -88,7 +88,7 @@
 <h1 id="migrate-from-azure-app-service-xmpro-v4x-to-aks-xmpro-v50">Migrate from Azure App Service (XMPro v4.x) to AKS (XMPro v5.0)</h1>
 
 <p>If you're currently running XMPro v4.x on Azure App Service (the <a href="../azure-terraform/index.html">Azure Terraform</a> or legacy ARM deployment) and planning to move to v5.0 on AKS, this guide walks through a side-by-side migration: deploy the new AKS environment, copy your databases into it, let the schema migration Jobs upgrade them, reconcile them to the new environment, validate, then cut DNS over.</p>
-<p>Both environments live in Azure, which makes this the gentlest of the platform migrations: database copies are a single <code>az sql db copy</code> command, and you can even run both environments in the same subscription during the transition.</p>
+<p>Both environments live in Azure, so the databases move with a single <code>az sql db copy</code> command, and you can run both environments in the same subscription during the transition.</p>
 <div class="NOTE">
 <h5>Note</h5>
 <p><strong>Infrastructure provisioning is your responsibility.</strong> This guide uses the example Terraform module's <code>migration4.6</code> stages, which are <strong>templates</strong>: community-supported examples of how XMPro provisions this infrastructure, not an officially supported product. As with the <a href="index.html#provision-infrastructure-your-own-way">AKS deployment guide</a>, you can use them as-is, adapt them, or provision the equivalent resources your own way; you are responsible for infrastructure configuration, maintenance, and support. See the <a href="../../overview.html#deployment-responsibility-matrix">Deployment Responsibility Matrix</a>.</p>
@@ -115,7 +115,12 @@
 <tr>
 <td><strong>Database</strong></td>
 <td>Azure SQL Database</td>
-<td>Azure SQL Database</td>
+<td>Azure SQL Database (new server, copied databases)</td>
+</tr>
+<tr>
+<td><strong>Caching</strong></td>
+<td>Azure Cache for Redis (if enabled)</td>
+<td>Optional Azure Cache for Redis, only for multi-replica products (<code>enable_autoscale</code>)</td>
 </tr>
 <tr>
 <td><strong>TLS</strong></td>
@@ -136,6 +141,11 @@
 <td><strong>Storage / persistence</strong></td>
 <td>App Service filesystem + storage account file shares</td>
 <td>PV/PVCs - RWX shared mounts (Azure Files) for multi-replica, e.g. the Data Protection key ring</td>
+</tr>
+<tr>
+<td><strong>Deployment</strong></td>
+<td>Terraform (Azure Terraform module) or ARM templates</td>
+<td>Terraform (layered) + Helm</td>
 </tr>
 <tr>
 <td><strong>Multi-environment</strong></td>
@@ -311,7 +321,7 @@ foreach ($app in 'app-yourco-sm', 'app-yourco-ad', 'app-yourco-ds') {
 </code></pre>
 <hr>
 <h2 id="registry-access">Registry Access</h2>
-<p>Before you start, confirm you can pull the 5.0 images. A migrating installation is more likely to trip on this than a fresh one: your existing 4.6 deployment pulled anonymously from <code>xmpro.azurecr.io</code> and has no pull secret anywhere, so nothing carries over.</p>
+<p>Before you start, confirm you can pull the 5.0 images. A migrating installation is more likely to trip on this than a fresh one: your existing 4.x deployment pulled anonymously from <code>xmpro.azurecr.io</code> and has no pull secret anywhere, so nothing carries over.</p>
 <pre><code class="lang-bash">read -rs GHE_PAT            # prompts, so the token never lands in shell history
 printf '%s' &quot;$GHE_PAT&quot; | docker login containers.xmpro.ghe.com -u YOUR-GHE-USERNAME --password-stdin
 docker manifest inspect {{ACR_URL}}/ad:{{VERSION}}
@@ -320,14 +330,14 @@ docker manifest inspect {{ACR_URL}}/ad:{{VERSION}}
 <pre><code class="lang-hcl">image_pull_secret = &quot;xmpro-registry&quot;   # app stage's image_pull_secret_name output
 </code></pre>
 <h2 id="running-the-migration">Running the Migration</h2>
-<p>These steps use the <strong><a href="%7B%7BTERRAFORM_AKS_MODULE_URL%7D%7D/tree/main/terraform-xmpro-aks/examples/migration4.6"><code>migration4.6</code> example</a></strong> in the AKS Terraform module. It mirrors the standard layered deployment, layer 1 cluster (<code>infra-k8s</code>), layer 2 site infrastructure (<code>infra</code>), layer 3 application (<code>app</code>), and adds one extra <strong><code>migration</code></strong> stage that runs <strong>after</strong> the application layer to reconcile the references your copied databases carried over from the source environment. You supply a few clearly-labelled inputs and run one apply per stage: there is no SQL to write.</p>
-<p>The apply order (matching the example's <a href="%7B%7BTERRAFORM_AKS_MODULE_URL%7D%7D/blob/main/terraform-xmpro-aks/examples/migration4.6/README.md"><code>README.md</code></a>) is:</p>
+<p>These steps use the <strong><code>migration4.6</code> example</strong> in the AKS Terraform module. It mirrors the standard layered deployment, layer 1 cluster (<code>infra-k8s</code>), layer 2 site infrastructure (<code>infra</code>), layer 3 application (<code>app</code>), and adds one extra <strong><code>migration</code></strong> stage that runs <strong>after</strong> the application layer to reconcile the references your copied databases carried over from the source environment. You supply a few clearly-labelled inputs and run one apply per stage: there is no SQL to write.</p>
+<p>The apply order (matching the example's <code>README.md</code>) is:</p>
 <pre><code>infra-k8s  →  infra  →  [az sql db copy]  →  app  →  migration
 </code></pre>
 <p>The <code>migration</code> stage runs <strong>after</strong> <code>app</code> because its reconcile Job reuses the database password from the in-cluster secret the <code>app</code> layer materializes (there is no separate password to supply) and it needs <code>app</code>'s <code>dbmigrate</code> Jobs to have settled the upgraded schema first.</p>
 <h3 id="1-deploy-the-cluster-and-site-infrastructure">1. Deploy the cluster and site infrastructure</h3>
 <p>From the <code>migration4.6</code> example, apply the <code>infra-k8s</code> (cluster) and <code>infra</code> (site infrastructure) stages, following the <a href="index.html">AKS deployment guide</a>, including its <strong>two-phase greenfield apply</strong> for <code>infra-k8s</code>. Each stage ships only a <code>terraform.tfvars.example</code>: copy it to <code>terraform.tfvars</code> and fill in the marked values before applying. Two adjustments for a migration:</p>
-<p><strong>Use a temporary DNS subzone for validation, and delegate it before layer 3.</strong> Deploy with a staging zone (e.g. <code>staging.xmpro.yourco.com</code>) so the new environment is fully testable while production traffic still flows to App Service. Layer 2 creates the Azure DNS zone, but you must <strong>delegate it in the parent zone</strong> (add the staging zone's NS records to <code>xmpro.yourco.com</code>, wherever that parent is hosted) before applying layer 3: if the parent zone is an Azure DNS zone in the same subscription, layer 2 can do this for you via <code>manage_parent_dns_delegation = true</code> and the <code>parent_dns_zone_*</code> variables (option (2) in its <code>terraform.tfvars.example</code>). If the staging hostnames don't resolve, cert-manager's HTTP-01 challenge can't complete, the Let's Encrypt certificate stays <code>pending</code>, and the <code>is</code>/<code>sm</code> pods block waiting on the TLS secret.</p>
+<p><strong>Use a temporary DNS subzone for validation, and delegate it before layer 3.</strong> Deploy with a staging zone (e.g. <code>staging.xmpro.yourco.com</code>) so the new environment is fully testable while production traffic still flows to App Service. Layer 2 creates the Azure DNS zone, but you must <strong>delegate it in the parent zone</strong> (add the staging zone's NS records to <code>xmpro.yourco.com</code>, wherever that parent is hosted) before applying layer 3: if the parent zone is an Azure DNS zone in the same subscription, layer 2 can do this for you via <code>manage_parent_dns_delegation = true</code>, <code>parent_dns_zone_name</code> and <code>parent_dns_zone_resource_group</code> (see its <code>terraform.tfvars.example</code>). If the staging hostnames don't resolve, cert-manager's HTTP-01 challenge can't complete, the Let's Encrypt certificate stays <code>pending</code>, and the <code>is</code>/<code>sm</code> pods block waiting on the TLS secret.</p>
 <p><strong>Layer 2 creates the SQL server, but no databases.</strong> The migration example sets <code>use_existing_databases = true</code> in its <code>infra</code> stage: the server exists purely as the copy target. Your production databases are copied in <strong>under their original names</strong> in the next step, and the <code>app</code> and <code>migration</code> stages are then pointed at those names. This applies to AI as well: leave <code>enable_ai = false</code> in the <code>infra</code> stage even if you plan to carry an AI database over, because with <code>use_existing_databases = true</code> it creates no database and the name it emits would not match your copy. AI is enabled in the <code>app</code> stage instead.</p>
 <div class="IMPORTANT">
 <h5>Important</h5>
@@ -457,7 +467,7 @@ ai_database_name = &quot;AI&quot;
 ai_product_id  = &quot;&lt;source AI product id, lowercase&gt;&quot;
 ai_product_key = &quot;&lt;source AI product key&gt;&quot;
 </code></pre>
-<p>The <code>app</code> stage then runs an <code>aidbmigrate</code> Job that upgrades the copied AI database in place, exactly as it does for SM/AD/DS, and the <code>ai.</code> hostname starts routing.</p>
+<p>The <code>app</code> stage then runs an <code>ai-dbmigrate</code> Job that upgrades the copied AI database in place, exactly as it does for SM/AD/DS, and the <code>ai.</code> hostname starts routing.</p>
 <p>The <strong>RAG feature</strong> is separate and optional on top of this: setting <code>enable_ai_rag = true</code> also requires <code>ai_timescaledb_connection_string</code> and <code>ai_neo4j_connection_string</code>, and Terraform fails the plan if either is missing. Those services aren't part of the migration path, deploy them first with the <code>infra-ai</code> template as described in <a href="index.html#enabling-the-ai-product-later">Enabling the AI Product Later</a>. Leaving <code>enable_ai_rag = false</code> needs no connection strings.</p>
 <div class="IMPORTANT">
 <h5>Important</h5>
@@ -518,17 +528,15 @@ terraform apply
 <p>If OIDC sign-in to App Designer or Data Stream Designer still returns &quot;Access Denied&quot; after the migration stage, the most common cause is a hostname that changed after the migration stage ran. Re-apply the <code>migration</code> stage with the corrected hostnames, then restart the affected pods. As a last-resort manual check you can log in to the new SM with your existing admin credentials → menu (☰) → <strong>Products</strong> and confirm the <strong>Product URL</strong> / <strong>Product Log Out URL</strong> for each product match your new hostnames.</p>
 </div>
 <h3 id="5-upgrade-and-reconnect-stream-hosts">5. Upgrade and reconnect Stream Hosts</h3>
-<p>v4.x stream hosts are not compatible with the v5.0 platform. For each stream host:</p>
-<ol>
-<li>Install the v5.0 stream host (download link is surfaced in DS → Stream Hosts)</li>
-<li>Configure it with the <strong>same Collection ID and Secret</strong> as before: these carried over in the DS database, so existing data stream bindings reconnect automatically</li>
-<li>Point its server URL at the new DS hostname</li>
-<li>Confirm it shows <strong>online</strong> in the new DS</li>
-</ol>
-<p>If your stream hosts run as Azure Container Instances from the App Service deployment, replace them with v5.0 containers (or run the default in-cluster stream host via <code>enable_default_stream_host = true</code> and migrate stream assignments to it).</p>
+<p>v4.x stream hosts are not compatible with the v5.0 platform. Replace each one with a v5.0 Stream Host, reusing the <strong>same Collection ID and Secret</strong> as before: these carried over in the DS database, so existing data stream bindings reconnect automatically.</p>
+<ul>
+<li><strong>In the cluster</strong> (including stream hosts that ran as Azure Container Instances from the App Service deployment): deploy through the <a href="index.html#10-deploy-stream-hosts">stream-hosts layer</a>, one Helm release per Collection, with <code>ds_server_url</code> pointing at the new DS hostname.</li>
+<li><strong>Outside the cluster</strong> (Windows services on plant networks, for example): install the v5.0 stream host (download link is surfaced in DS → Stream Hosts), configure the same Collection ID and Secret, and point its server URL at the new DS hostname.</li>
+</ul>
+<p>Confirm each host shows <strong>online</strong> in the new DS.</p>
 <div class="IMPORTANT">
 <h5>Important</h5>
-<p><strong>The in-cluster stream host needs credentials from your migrated DS.</strong> With <code>enable_default_stream_host = true</code>, also set <code>stream_host_collection_id</code> and <code>stream_host_collection_secret</code> in the <code>app</code> tfvars to a collection that exists in the <strong>migrated</strong> DS database (DS → <strong>Collections</strong> shows each collection's ID and secret). Left empty, the deployment generates fresh credentials that the migrated DS rejects: the stream host crash-loops with <code>Unauthorized</code>, and because the Helm release is atomic, the whole <code>app</code> apply fails with it.</p>
+<p><strong>The default in-cluster stream host needs credentials from your migrated DS.</strong> The AKS <code>app</code> stage deploys one by default (<code>enable_default_stream_host = true</code>), so also set <code>stream_host_collection_id</code> and <code>stream_host_collection_secret</code> in the <code>app</code> tfvars to a collection that exists in the <strong>migrated</strong> DS database (DS → <strong>Collections</strong> shows each collection's ID and secret). Left empty, the deployment generates fresh credentials that the migrated DS rejects: the stream host crash-loops with <code>Unauthorized</code>, and because the Helm release is atomic, the whole <code>app</code> apply fails with it.</p>
 </div>
 <h3 id="6-validate-then-cut-over-dns">6. Validate, then cut over DNS</h3>
 <p>Run the full <a href="#post-migration-validation">post-migration validation</a> below against the staging hostnames. When everything passes:</p>
@@ -547,6 +555,7 @@ terraform apply
 <li><strong>Data streams</strong> - open existing streams in DS; verify canvases, agent configurations, and run state</li>
 <li><strong>Stream hosts</strong> - all hosts online, streams executing, data flowing end to end</li>
 <li><strong>Email</strong> - trigger a password reset for a quick SMTP end-to-end check</li>
+<li><strong>Integrations</strong> - confirm any agents using Azure resources (Storage, Event Hubs, etc.) still have network reachability from the new VNet</li>
 <li><strong>AI</strong> <em>(only if you carried an AI database over)</em> - open AI, confirm your existing content is there, and re-enter the LLM provider credentials</li>
 </ul>
 <hr>
@@ -582,7 +591,7 @@ terraform apply
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: September 18, 2026</em></small></p>
+    <p><small><em>Last modified: September 23, 2026</em></small></p>
   </div>
 </article>
 

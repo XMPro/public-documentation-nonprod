@@ -6447,6 +6447,16 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "src/images/aks-kubernetes-architecture.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/aks-kubernetes-architecture.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "src/images/alert-action-enable-focus.gif",
       "output": {
         "resource": {
@@ -13081,6 +13091,16 @@
       "output": {
         "resource": {
           "relative_path": "src/images/edit-rule.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/images/eks-kubernetes-architecture.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/eks-kubernetes-architecture.png"
         }
       },
       "version": ""

@@ -110,52 +110,15 @@
 <h2 id="prerequisites">Prerequisites</h2>
 <p>Before installing XMPro applications, ensure your Windows Server has the following components installed.</p>
 <h3 id="software-requirements">Software Requirements</h3>
-<table>
-<thead>
-<tr>
-<th>Component</th>
-<th>Version</th>
-<th>Details</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Operating System</strong></td>
-<td>Windows Server 2022</td>
-<td>Standard or Datacenter edition, updated with the latest Windows Updates.</td>
-</tr>
-<tr>
-<td><strong>SQL Server</strong></td>
-<td>2022 (Standard)</td>
-<td>Mixed Mode authentication enabled.<br><br><strong>Database Account:</strong> Create a dedicated user account (e.g., <code>xmadmin</code>) with only required permissions (<code>dbcreator</code> and <code>securityadmin</code> roles) instead of using the built-in <code>sa</code> account.<br>• <code>dbcreator</code> allows creating databases<br>• <code>securityadmin</code> allows managing database logins<br><br><strong>Certificate Trust:</strong> In production, configure the Windows Server to trust the SQL Server certificate. For non-production environments, answer <code>Y</code> (Yes) when prompted &quot;Trust SQL Server Certificate?&quot; during installation (less secure). See <a href="troubleshooting.html#sql-server-certificate-trust-error">Troubleshooting</a> for detailed setup instructions.</td>
-</tr>
-<tr>
-<td><strong>IIS</strong></td>
-<td>10.0+</td>
-<td>Web Server role with required features:<br>• Common HTTP Features (Default Document, Static Content)<br>• Application Development (ASP.NET 4.8, .NET Extensibility 4.8)<br>• Health and Diagnostics (HTTP Logging)<br>• Security (Request Filtering)<br>• Management Tools (IIS Management Console)</td>
-</tr>
-<tr>
-<td><strong>IIS URL Rewrite Module</strong></td>
-<td>2.1+</td>
-<td>Required for application routing.</td>
-</tr>
-<tr>
-<td><strong>.NET Framework</strong></td>
-<td>4.8</td>
-<td>Required for legacy compatibility.</td>
-</tr>
-<tr>
-<td><strong>.NET 8 Hosting Bundle</strong></td>
-<td>8.0+</td>
-<td><strong>Critical</strong>: Must install the Hosting Bundle.</td>
-</tr>
-<tr>
-<td><strong>HTTP.sys Configuration</strong></td>
-<td>Registry settings</td>
-<td>Increase max header size to prevent HTTP 400 errors.<br><code>MaxFieldLength</code> = 65536<br><code>MaxRequestBytes</code> = 65536<br>See <a href="troubleshooting.html#http-error-400---bad-request-request-too-long">Troubleshooting Guide</a> for configuration steps.</td>
-</tr>
-</tbody>
-</table>
+<p>| Component | Version | Details |
+|-----------|---------|---------||
+| <strong>Operating System</strong> | Windows Server 2022 | Standard or Datacenter edition, updated with the latest Windows Updates. |
+| <strong>SQL Server</strong> | 2022 (Standard) | Mixed Mode authentication enabled.<br><br><strong>Database Account:</strong> Create a dedicated user account (e.g., <code>xmadmin</code>) with only required permissions (<code>dbcreator</code> and <code>securityadmin</code> roles) instead of using the built-in <code>sa</code> account.<br>• <code>dbcreator</code> allows creating databases<br>• <code>securityadmin</code> allows managing database logins<br><br><strong>Certificate Trust:</strong> In production, configure the Windows Server to trust the SQL Server certificate. For non-production environments, answer <code>Y</code> (Yes) when prompted &quot;Trust SQL Server Certificate?&quot; during installation (less secure). See <a href="troubleshooting.html#sql-server-certificate-trust-error">Troubleshooting</a> for detailed setup instructions. |
+| <strong>IIS</strong> | 10.0+ | Web Server role with required features:<br>• Common HTTP Features (Default Document, Static Content)<br>• Application Development (ASP.NET 4.8, .NET Extensibility 4.8)<br>• Health and Diagnostics (HTTP Logging)<br>• Security (Request Filtering)<br>• Management Tools (IIS Management Console) |
+| <strong>IIS URL Rewrite Module</strong> | 2.1+ | Required for application routing. |
+| <strong>.NET Framework</strong> | 4.8 | Required for legacy compatibility. |
+| <strong>.NET 8 Hosting Bundle</strong> | 8.0+ | <strong>Critical</strong>: Must install the Hosting Bundle. |
+| <strong>HTTP.sys Configuration</strong> | Registry settings | Increase max header size to prevent HTTP 400 errors.<br><code>MaxFieldLength</code> = 65536<br><code>MaxRequestBytes</code> = 65536<br>See <a href="troubleshooting.html#http-error-400---bad-request-request-too-long">Troubleshooting Guide</a> for configuration steps. |</p>
 <h3 id="certificate-requirements">Certificate Requirements</h3>
 <table>
 <thead>
@@ -795,7 +758,7 @@
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: September 18, 2026</em></small></p>
+    <p><small><em>Last modified: September 23, 2026</em></small></p>
   </div>
 </article>
 
