@@ -3167,6 +3167,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "src/blocks-toolbox/visualizations/autodesk-forge.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/blocks-toolbox/visualizations/autodesk-forge.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "src/blocks-toolbox/visualizations/azure-digital-twin-hierarchy.md",
       "output": {
         ".html": {
@@ -4787,10 +4797,30 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "src/concepts/xmpro-ai/images/AI_Overview_Copilot_Notebook.mp4",
+      "output": {
+        "resource": {
+          "relative_path": "src/concepts/xmpro-ai/images/AI_Overview_Copilot_Notebook.mp4"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "src/concepts/xmpro-ai/images/AI_Overview_ML_Recommendations.png",
       "output": {
         "resource": {
           "relative_path": "src/concepts/xmpro-ai/images/AI_Overview_ML_Recommendations.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/concepts/xmpro-ai/images/AI_Overview_XMPro_Notebook.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/concepts/xmpro-ai/images/AI_Overview_XMPro_Notebook.png"
         }
       },
       "version": ""
@@ -4801,6 +4831,16 @@
       "output": {
         ".html": {
           "relative_path": "src/concepts/xmpro-ai/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "src/concepts/xmpro-ai/xmpro-notebook.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/concepts/xmpro-ai/xmpro-notebook.html"
         }
       },
       "version": ""
@@ -6441,16 +6481,6 @@
       "output": {
         "resource": {
           "relative_path": "src/images/agent/searching-for-agent.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "src/images/aks-kubernetes-architecture.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/images/aks-kubernetes-architecture.png"
         }
       },
       "version": ""
@@ -8631,6 +8661,16 @@
       "output": {
         "resource": {
           "relative_path": "src/images/authentication-advanced-settings.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/images/autodesk-1.gif",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/autodesk-1.gif"
         }
       },
       "version": ""
@@ -12027,10 +12067,30 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "src/images/concepts/xmpro-ai/AI_Overview_Copilot_Notebook.mp4",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/concepts/xmpro-ai/AI_Overview_Copilot_Notebook.mp4"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "src/images/concepts/xmpro-ai/AI_Overview_ML_Recommendations.png",
       "output": {
         "resource": {
           "relative_path": "src/images/concepts/xmpro-ai/AI_Overview_ML_Recommendations.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/images/concepts/xmpro-ai/AI_Overview_XMPro_Notebook.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/concepts/xmpro-ai/AI_Overview_XMPro_Notebook.png"
         }
       },
       "version": ""
@@ -13091,16 +13151,6 @@
       "output": {
         "resource": {
           "relative_path": "src/images/edit-rule.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "src/images/eks-kubernetes-architecture.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/images/eks-kubernetes-architecture.png"
         }
       },
       "version": ""
@@ -21557,6 +21607,26 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "src/images/resources/autodesk-forge-icon-1.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/resources/autodesk-forge-icon-1.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/images/resources/autodesk-forge-viewer-with-auth-img.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/resources/autodesk-forge-viewer-with-auth-img.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "src/images/resources/azure-ai-document-intelligence.png",
       "output": {
         "resource": {
@@ -25877,6 +25947,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "src/installation/azure-terraform-preparation.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/installation/azure-terraform-preparation.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "src/installation/complete-installation/deploy-stream-connector-infrastructure.md",
       "output": {
         ".html": {
@@ -26037,6 +26117,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "src/installation/deployment/azure-terraform/implementation-guide.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/installation/deployment/azure-terraform/implementation-guide.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "src/installation/deployment/azure-terraform/index.md",
       "output": {
         ".html": {
@@ -26131,6 +26221,16 @@
       "output": {
         ".html": {
           "relative_path": "src/installation/deployment/windows-server-2022/windows-sizing.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "src/installation/install.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/installation/install.html"
         }
       },
       "version": ""
@@ -26937,10 +27037,40 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "src/resources/images/Metablock Autodesk Example.xapp",
+      "output": {
+        "resource": {
+          "relative_path": "src/resources/images/Metablock Autodesk Example.xapp"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/resources/images/Metablock Autodesk Example.zip",
+      "output": {
+        "resource": {
+          "relative_path": "src/resources/images/Metablock Autodesk Example.zip"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "src/resources/images/Metablock Example.xuc",
       "output": {
         "resource": {
           "relative_path": "src/resources/images/Metablock Example.xuc"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/resources/images/Metablock autodeskforge example.zip",
+      "output": {
+        "resource": {
+          "relative_path": "src/resources/images/Metablock autodeskforge example.zip"
         }
       },
       "version": ""
@@ -27581,6 +27711,36 @@
       "output": {
         "resource": {
           "relative_path": "src/resources/images/audio-wave.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/resources/images/autodesk-forge-icon-1.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/resources/images/autodesk-forge-icon-1.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/resources/images/autodesk-forge-viewer-img.jpg",
+      "output": {
+        "resource": {
+          "relative_path": "src/resources/images/autodesk-forge-viewer-img.jpg"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/resources/images/autodesk-forge-viewer-with-auth-img.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/resources/images/autodesk-forge-viewer-with-auth-img.png"
         }
       },
       "version": ""
@@ -31161,16 +31321,6 @@
       "output": {
         ".html": {
           "relative_path": "src/resources/practice-notes/unified-recommendation-alert-management.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "src/technical-reference/connector-pool-configuration.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/technical-reference/connector-pool-configuration.html"
         }
       },
       "version": ""

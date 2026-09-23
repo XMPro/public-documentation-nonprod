@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../../../">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/deployment/aws-kubernetes/eks-sizing.md&amp;version=GBrelease-5.0&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/deployment/aws-kubernetes/eks-sizing.md&amp;version=GBmain&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -87,38 +87,21 @@
         <article data-uid="">
 <h1 id="sizing-guideline">Sizing Guideline</h1>
 
-<p>This guide provides recommendations for sizing an XMPro deployment on Amazon Elastic Kubernetes Service (EKS): how large to make the cluster's node groups and how to size the databases. The <a href="../azure-kubernetes/aks-sizing.html">Azure Kubernetes (AKS) Sizing Guideline</a> follows the same structure; only the cloud-specific offerings differ.</p>
 <h2 id="overview">Overview</h2>
-<p>Small, medium, and large sizing estimates are provided. The small option starts with the minimum recommended resources and, generally, each subsequent size doubles the number of CPU cores and available RAM. Not all components experience the same increase in load, so the estimates may not increase at the same rate for all components.</p>
-<p>Many factors influence the number of Apps and Data Streams a deployment can effectively run. These factors include:</p>
+<p>This page explains how the EKS deployment is sized, what the shipped defaults give you, and what to change for a production site. It covers the node groups, the per-product resource requests, and the RDS instance.</p>
+<p>The defaults in the example Terraform module target <strong>development and evaluation</strong>. They are deliberately small and cheap. Do not run a production site on them without reading the production notes below.</p>
+<p>Two terms used throughout:</p>
 <ul>
-<li>the number of data streams,</li>
-<li>how frequently the streams process data,</li>
-<li>the size of the data payload,</li>
-<li>the number of recommendations to be monitored,</li>
-<li>the number of apps and event boards being served,</li>
-<li>the complexity of apps and event boards (the number of elements and integration points),</li>
-<li>and the number of concurrent users accessing the apps and event boards.</li>
+<li>A <strong>request</strong> is the amount of CPU or memory the Kubernetes scheduler reserves for a container. The sum of all requests on a node cannot exceed what that node offers, so requests decide how many pods fit.</li>
+<li>A <strong>limit</strong> is the ceiling a container may consume. Exceeding a memory limit gets the container killed and restarted.</li>
 </ul>
-<p>As a rough guide, an example workload for a <em>Medium</em>-sized deployment would be:</p>
-<ul>
-<li>~200 Data Streams running across ~15 Stream Hosts,</li>
-<li>serving data and triggering recommendations for ~10 Apps</li>
-</ul>
-<h2 id="node-group-sizing">Node Group Sizing</h2>
-<p>On Kubernetes, XMPro sizing means two things: making sure the cluster's node groups have enough capacity for the product containers, and sizing the databases (covered in <a href="#database-sizing">Database Sizing</a> below). The example EKS Terraform module ships with <strong>evaluation-grade defaults</strong> (a single small system node, a single small application node, and a small database), sized for demos, trials, and development, not production load. The variables below are how you scale up from there.</p>
-<p>Two Kubernetes terms are used throughout this section:</p>
-<ul>
-<li>A <strong>request</strong> is the amount of CPU or memory the Kubernetes scheduler reserves for a container. A node must have at least this much unreserved capacity free before a pod can be placed on it.</li>
-<li>A <strong>limit</strong> is the ceiling a container may consume. A container that exceeds its memory limit is terminated (OOM-killed); the XMPro chart deliberately sets memory limits but <strong>no CPU limits</strong>, so .NET startup is not CPU-throttled.</li>
-</ul>
-<p>Requests drive scheduling (can the pod fit?); limits drive worst-case sizing (how much can everything consume at once?). The node groups need capacity for both.</p>
 <div class="NOTE">
 <h5>Note</h5>
-<p><strong>Node capacity is smaller than the advertised size.</strong> A node advertised as 8 GiB does not offer a full 8 GiB to workloads. EKS reserves memory and CPU for the kubelet and system processes, and what remains is the node's <strong>allocatable</strong> capacity. Budget roughly 85-90% of the advertised figure as usable.</p>
+<p>A node advertised as 8 GiB does not offer a full 8 GiB to your workloads. EKS reserves memory and CPU for the kubelet, the container runtime and system DaemonSets. Budget roughly 85-90% of the advertised figure as usable.</p>
 </div>
+<h2 id="node-group-sizing">Node Group Sizing</h2>
 <h3 id="node-groups">Node groups</h3>
-<p>An EKS deployment runs two managed node groups: a <strong>system group</strong> that hosts cluster-critical add-ons (CoreDNS, kube-proxy, the VPC CNI) and the platform controllers (Envoy Gateway, cert-manager, External Secrets Operator, AWS Load Balancer Controller, Istio), and an <strong>application group</strong> that hosts the XMPro product pods. Sizing the application group means giving its nodes enough allocatable capacity for the sum of the product container requests, with headroom for the products to grow toward their limits under load.</p>
+<p>The cluster layer creates two managed node groups:</p>
 <table>
 <thead>
 <tr>
@@ -131,24 +114,22 @@
 <tbody>
 <tr>
 <td><code>system</code></td>
-<td>Add-ons, cluster controllers</td>
-<td><code>m6i.large</code> (2 vCPU, 8 GiB)</td>
+<td>Cluster controllers - Envoy Gateway, cert-manager, External Secrets Operator, AWS Load Balancer Controller, Istio</td>
+<td><code>t3.medium</code> (2 vCPU, 4 GiB)</td>
 <td>1</td>
 </tr>
 <tr>
 <td><code>app</code></td>
-<td>XMPro product pods</td>
-<td><code>m6i.large</code> (2 vCPU, 8 GiB)</td>
+<td>XMPro product pods, one set per site</td>
+<td><code>t3.large</code> (2 vCPU, 8 GiB)</td>
 <td>1 (min 1, max 3)</td>
 </tr>
 </tbody>
 </table>
-<div class="NOTE">
-<h5>Note</h5>
-<p><strong><code>t</code>-class instances are for test, development, or evaluation only.</strong> Burstable <code>t3</code> instances (<code>t3.medium</code> for the system group, <code>t3.large</code> for the application group) work for a test or evaluation cluster at lower cost. They bank CPU credits when idle and throttle when the credits run out, so do not run a production site on them.</p>
-</div>
+<p>The <code>app</code> default of a single <code>t3.large</code> is below what a site needs to install successfully, and the count cannot be changed once the node group exists. Read <a href="#translating-requests-into-node-size-and-count">Translating requests into node size and count</a> and <a href="#scaling-out">Scaling out</a> before your first apply of the cluster layer.</p>
 <h3 id="per-product-resource-requests-and-limits">Per-product resource requests and limits</h3>
-<p>The table below lists the CPU and memory each XMPro product container reserves (request) and its memory ceiling (limit), taken from the Helm chart defaults. There are no CPU limits by design. These are the same chart resources regardless of whether you run on AKS or EKS. Subscription Manager (SM), Identity Server (IS), App Designer (AD), and Data Stream Designer (DS) are always deployed. On EKS the default in-cluster Stream Host (SH) is off (<code>enable_default_stream_host = false</code>); Stream Hosts are deployed per Collection through the <code>stream-hosts</code> layer and use the same SH resources per instance. The AI product is optional.</p>
+<p>These are the chart defaults, applied to every site. Note there are <strong>no CPU limits</strong> - .NET startup is CPU-hungry and throttling it makes pods slow to become ready. Memory limits are set because memory is not compressible.</p>
+<p>The last two columns are what the scheduler actually reserves. <code>enable_istio</code> defaults to <strong>true</strong>, so every site namespace is labelled <code>istio-injection=enabled</code> and every product pod gets an Istio sidecar that requests a further <strong>25m CPU and 128 Mi</strong>. Size against those columns, not the chart request.</p>
 <table>
 <thead>
 <tr>
@@ -156,68 +137,76 @@
 <th>CPU request</th>
 <th>Memory request</th>
 <th>Memory limit</th>
+<th>Effective CPU (with sidecar)</th>
+<th>Effective memory (with sidecar)</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Subscription Manager (SM)</td>
-<td>100m</td>
-<td>512Mi</td>
-<td>1Gi</td>
-</tr>
-<tr>
-<td>Identity Server (IS)</td>
-<td>100m</td>
-<td>1Gi</td>
-<td>2Gi</td>
-</tr>
-<tr>
-<td>App Designer (AD)</td>
+<td>AD (App Designer)</td>
 <td>150m</td>
-<td>1Gi</td>
-<td>4Gi</td>
+<td>1 Gi</td>
+<td>4 Gi</td>
+<td>175m</td>
+<td>1152 Mi</td>
 </tr>
 <tr>
-<td>Data Stream Designer (DS)</td>
+<td>DS (Data Stream Designer)</td>
 <td>150m</td>
-<td>2Gi</td>
-<td>4Gi</td>
+<td>2 Gi</td>
+<td>4 Gi</td>
+<td>175m</td>
+<td>2176 Mi</td>
 </tr>
 <tr>
-<td>Stream Host (SH)</td>
-<td>25m</td>
-<td>256Mi</td>
-<td>512Mi</td>
+<td>SM (Subscription Manager)</td>
+<td>100m</td>
+<td>512 Mi</td>
+<td>1 Gi</td>
+<td>125m</td>
+<td>640 Mi</td>
+</tr>
+<tr>
+<td>IS (Identity Server)</td>
+<td>100m</td>
+<td>1 Gi</td>
+<td>2 Gi</td>
+<td>125m</td>
+<td>1152 Mi</td>
 </tr>
 <tr>
 <td>AI</td>
 <td>25m</td>
-<td>384Mi</td>
-<td>768Mi</td>
+<td>384 Mi</td>
+<td>768 Mi</td>
+<td>50m</td>
+<td>512 Mi</td>
+</tr>
+<tr>
+<td>Stream Host</td>
+<td>25m</td>
+<td>256 Mi</td>
+<td>512 Mi</td>
+<td>50m</td>
+<td>384 Mi</td>
 </tr>
 </tbody>
 </table>
-<p>The standard product set (SM, IS, AD, DS) requests <strong>500m CPU and 4.5Gi</strong> of memory, with a combined memory limit of <strong>11Gi</strong>. Each Stream Host adds 25m / 256Mi (limit 512Mi); AI adds 25m / 384Mi (limit 768Mi).</p>
 <div class="NOTE">
 <h5>Note</h5>
-<p><strong>Add the Istio sidecar to every pod.</strong> <code>enable_istio</code> defaults to <code>true</code>, so every product pod and every Job pod gets an <code>istio-proxy</code> sidecar that requests a further <strong>25m CPU and 128Mi</strong> (the cluster layer sets the proxy CPU request to 25m; memory is the Istio default). Istio runs the proxy as a native sidecar, so Kubernetes adds its request to the pod's own rather than absorbing it. For the standard product set that is another 100m / 512Mi, taking the steady-state request to <strong>600m CPU and 5Gi</strong>; each Stream Host adds 50m / 384Mi with its sidecar, and AI 50m / 512Mi. Setting <code>enable_istio = false</code> in the application layer removes this overhead.</p>
-</div>
-<div class="NOTE">
-<h5>Note</h5>
-<p><strong>Jobs run during install.</strong> Database-migration and licensing steps (<code>ad-dbmigrate</code>, <code>ds-dbmigrate</code>, <code>sm-dbmigrate</code>, <code>ai-dbmigrate</code>, <code>licenses</code>) run as short-lived Helm Jobs during install, each requesting 100m CPU / 256Mi (plus a sidecar) and capped at 200m CPU / 512Mi. They finish before the products reach steady state, so they do not count toward the always-on total above, but the application group must have room to schedule them alongside the products during the initial deploy.</p>
+<p><strong>The sidecar is not free, and it is not optional by default.</strong> Istio 1.30 runs <code>istio-proxy</code> as a <em>native</em> sidecar - an initContainer with <code>restartPolicy: Always</code> - so Kubernetes computes the pod's effective request as <code>max(sum of regular initContainers, sum of sidecars + sum of containers)</code>. The sidecar's 25m CPU and 128 Mi are therefore added to the product's own request, not absorbed by it. The cluster layer sets the proxy CPU request to 25m and leaves memory at the Istio default of 128 Mi. Deploying from <code>environments/site-template/app</code> with <code>enable_istio = false</code> removes this overhead; the <code>examples/layered/app</code> example always injects.</p>
 </div>
 <h3 id="translating-requests-into-node-size-and-count">Translating requests into node size and count</h3>
-<p>To choose <code>app_node_instance_type</code> and <code>app_node_count</code>:</p>
-<ol>
-<li>Start from the request total above (~600m CPU, ~5Gi memory for the standard product set with sidecars; add each additional Stream Host and AI as enabled).</li>
-<li>Look up the vCPU and RAM of a candidate instance type in the <a href="https://aws.amazon.com/ec2/instance-types/">Amazon EC2 instance types documentation</a>, then subtract the kubelet and system reservation to get its allocatable capacity.</li>
-<li><strong>Size for the install peak, not the steady state.</strong> During an install the database-migration and licensing Jobs run concurrently with the products, each with its own sidecar. The Helm release is atomic: if one pod cannot be scheduled, the whole install rolls back after the 30-minute timeout, leaving nothing to inspect. Make sure the group can hold the products and the Jobs at the same time.</li>
-<li>Because the product memory <em>limits</em> (~11Gi combined) are far higher than the memory <em>requests</em>, memory pressure under real load, not the request total, is what sizes a production group. Size the application nodes toward the limit envelope, and confirm the true figure by measuring actual pod memory usage under representative load rather than trusting a static estimate.</li>
-<li>Set <code>app_node_count</code> so the group's combined allocatable capacity comfortably exceeds the workload, with headroom for node maintenance and pod rescheduling. Memory runs out before CPU does; if you are deciding what to grow, grow memory.</li>
-</ol>
-<p>The defaults are a single application node and a single system node, which is why they are evaluation-grade: neither group has redundancy. For production, run at least two system nodes (so the add-ons and controllers survive a node loss) and size the application group to your measured load, adding capacity for each additional site on the cluster.</p>
+<p>A site running SM, IS, AD and DS requests 500m CPU and 4.5 GiB from the product containers alone. With the default Istio injection, the four sidecars add 100m CPU and 512 Mi, so the real steady-state figure is <strong>600m CPU and 5120 Mi (5 GiB)</strong>. Adding the AI product takes it to 650m and 5632 Mi (5.5 GiB).</p>
+<p><strong>Steady state is not what sizes the node - the install peak is.</strong> During an install the three database-migration Jobs and the licensing Job run <em>concurrently</em> with the products, and each of those Jobs is sidecar-injected too. On a measured single-site install the application node peaked at <strong>5324 Mi of 7078 Mi allocatable (75%) with 12 pods resident</strong> before the Jobs completed and released their memory.</p>
+<div class="WARNING">
+<h5>Warning</h5>
+<p><strong>A single <code>t3.large</code> application node cannot complete an install.</strong> With the shipped default of <code>app_node_count = 1</code>, the install failed: <code>xmpro-ds</code> never scheduled (<code>FailedScheduling: 0/2 nodes are available: 2 Insufficient memory</code>), the Helm release ran out its 1800-second timeout, and because the release is applied atomically the <strong>entire install was rolled back</strong> - leaving nothing to inspect and no partial site to repair.</p>
+</div>
+<p>Budget for the peak, not the steady state. The realistic floor for one site is <strong>two <code>t3.large</code> application nodes</strong>, or a single application node of at least 16 GiB (<code>t3.xlarge</code>, or <code>m6i.xlarge</code> for production). Add a node per additional site on the same cluster.</p>
+<p>Memory is the binding constraint, not CPU. If you are deciding what to grow, grow memory.</p>
 <h3 id="node-group-knobs">Node group knobs</h3>
-<p>All node group sizing lives in the EKS module's <strong>cluster layer</strong> (<code>infra-k8s</code>, deployed once per cluster). The table introduces each variable and its default.</p>
+<p>Set these in the cluster layer's <code>terraform.tfvars</code>:</p>
 <table>
 <thead>
 <tr>
@@ -229,42 +218,42 @@
 <tbody>
 <tr>
 <td><code>system_node_instance_type</code></td>
-<td><code>m6i.large</code></td>
-<td>Instance type for the system group (<code>t3</code>-class for test/dev/evaluation only)</td>
+<td><code>t3.medium</code></td>
+<td>Instance type for cluster controllers</td>
 </tr>
 <tr>
 <td><code>system_node_count</code></td>
-<td><code>1</code></td>
-<td>System group node count (2+ recommended for redundancy)</td>
+<td>1</td>
+<td>Number of system nodes</td>
 </tr>
 <tr>
 <td><code>app_node_instance_type</code></td>
-<td><code>m6i.large</code></td>
-<td>Instance type for the application group (<code>t3</code>-class for test/dev/evaluation only)</td>
+<td><code>t3.large</code></td>
+<td>Instance type for product pods</td>
 </tr>
 <tr>
 <td><code>app_node_count</code></td>
-<td><code>1</code></td>
-<td>Desired application node count</td>
+<td>1</td>
+<td>Desired application nodes, <strong>applied at node group creation only</strong> - see <a href="#scaling-out">Scaling out</a></td>
 </tr>
 <tr>
 <td><code>app_node_min_count</code></td>
-<td><code>1</code></td>
-<td>Lower bound for the application group</td>
+<td>1</td>
+<td>Lower bound for the node group</td>
 </tr>
 <tr>
 <td><code>app_node_max_count</code></td>
-<td><code>3</code></td>
-<td>Upper bound for the application group</td>
+<td>3</td>
+<td>Upper bound for the node group</td>
 </tr>
 <tr>
 <td><code>node_az_count</code></td>
-<td><code>1</code></td>
+<td>1</td>
 <td>How many AZs the node groups span</td>
 </tr>
 <tr>
 <td><code>gateway_eip_az_count</code></td>
-<td><code>0</code></td>
+<td>0</td>
 <td>Public AZs the gateway NLB spans (0 = match <code>node_az_count</code>)</td>
 </tr>
 <tr>
@@ -272,70 +261,30 @@
 <td><code>true</code></td>
 <td>One shared NAT gateway instead of one per AZ</td>
 </tr>
-<tr>
-<td><code>kubernetes_version</code></td>
-<td><code>1.34</code></td>
-<td>Kubernetes version of the cluster</td>
-</tr>
 </tbody>
 </table>
-<p>To resize an application group that already exists, change its scaling configuration directly and set <code>maxSize</code> in the same command when the new desired size would exceed the current upper bound:</p>
+<h3 id="scaling-out">Scaling out</h3>
+<p>Because a single replica per product is the supported topology today (see the autoscale note in the <a href="index.html">deployment guide</a>), you scale a cluster by <strong>adding nodes for additional sites</strong>, not by adding replicas of one site. Budget the floor from <a href="#translating-requests-into-node-size-and-count">Translating requests into node size and count</a> for each site you add.</p>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p><strong><code>app_node_count</code> binds when the node group is created and never again.</strong> The upstream EKS node group module deliberately ignores changes to the group's desired size after creation, because cluster autoscalers are expected to own that value at runtime. Raising <code>app_node_count</code> on an existing cluster plans clean and does nothing: <code>terraform apply</code> reports <code>Apply complete! Resources: 0 added, 0 changed, 0 destroyed.</code> and the node count is unchanged. Size the application node group <strong>before</strong> the first apply of the cluster layer.</p>
+</div>
+<p>To resize a node group that already exists, change its scaling configuration directly:</p>
 <pre><code class="lang-bash">aws eks list-nodegroups --cluster-name &lt;cluster&gt;
 
 aws eks update-nodegroup-config --cluster-name &lt;cluster&gt; --nodegroup-name &lt;ng&gt; \
   --scaling-config minSize=1,maxSize=3,desiredSize=2
 </code></pre>
-<h3 id="ai-and-rag-node-group">AI and RAG node group</h3>
-<p>When the AI product's RAG feature is enabled, its backing services (Milvus vector store, Neo4j graph database, TimescaleDB, and the Mosquitto MQTT broker) run on a <strong>dedicated node group</strong> provisioned by the optional AI infrastructure layer (<code>infra-ai</code>), applied once per cluster and shared by all sites. These services are memory-heavy, which is why they get their own group rather than sharing the application nodes.</p>
-<table>
-<thead>
-<tr>
-<th>Variable</th>
-<th>Default</th>
-<th>Controls</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>ai_node_instance_type</code></td>
-<td><code>r6i.xlarge</code></td>
-<td>Instance type for the dedicated AI group</td>
-</tr>
-<tr>
-<td><code>ai_node_count</code></td>
-<td><code>1</code></td>
-<td>AI group desired node count</td>
-</tr>
-<tr>
-<td><code>ai_node_min_count</code></td>
-<td><code>1</code></td>
-<td>Lower bound for the AI group</td>
-</tr>
-<tr>
-<td><code>ai_node_max_count</code></td>
-<td><code>2</code></td>
-<td>Upper bound for the AI group</td>
-</tr>
-<tr>
-<td><code>ai_node_disk_size</code></td>
-<td><code>128</code></td>
-<td>Node root disk (GiB)</td>
-</tr>
-</tbody>
-</table>
-<p>AI persistent volumes use the <code>gp3</code> storage class by default (<code>storage_class_name</code>). Size this group against the data volume you intend to embed and index; the single-node default is an evaluation starting point, not a production figure.</p>
-<h3 id="scaling-out">Scaling out</h3>
-<p>Beyond making nodes bigger, XMPro can scale horizontally by running more replicas of a product, but this requires shared-state coordination. The application layer (<code>app</code>) exposes <code>enable_autoscale</code> (default <code>false</code>), which turns on the Redis backplane (SignalR and distributed cache) so multiple replicas can coordinate. Redis can come from the site infrastructure layer (<code>create_redis_cache = true</code> provisions ElastiCache and outputs the connection string as a Secrets Manager secret) or from an existing Redis you supply through <code>redis_connection_string</code>. Per-product replica counts (<code>ad_replica_count</code>, <code>ds_replica_count</code>, <code>sm_replica_count</code>, <code>is_replica_count</code>, <code>ai_replica_count</code>) default to <code>1</code>, and <code>enforce_single_replica</code> (default <code>false</code>) hard-blocks any product from exceeding one replica when set. Products running more than one replica also need the <code>*_persistence</code> blocks enabled on an RWX-capable storage class (the cluster layer's <code>enable_efs</code> provisions <code>efs-sc</code> for this) so they share their Data Protection key ring.</p>
-<p>At the cluster level, <code>app_node_min_count</code> and <code>app_node_max_count</code> bound the application group; a cluster autoscaler, if you install one, moves the desired size within those bounds. Per-product Horizontal Pod Autoscalers (HPAs) are still a chart follow-up, so horizontal scaling today means setting replica counts explicitly rather than relying on CPU-driven autoscaling of the pods themselves.</p>
+<p><code>app_node_min_count</code> and <code>app_node_max_count</code> still update the group's bounds through Terraform, but bounds alone create no nodes - the desired size is what does, and after creation only the command above (or an autoscaler) moves it. Set <code>maxSize</code> in the same command when the new desired size would exceed the current upper bound.</p>
 <h3 id="production-notes">Production notes</h3>
 <ul>
-<li><strong><code>t</code>-class instances are for test, development, or evaluation only.</strong> For production use general-purpose (<code>m6i</code>, <code>m7i</code>) or memory-optimized (<code>r6i</code>, <code>r7i</code>) classes sized from measured load.</li>
+<li><strong><code>t3</code> instances are burstable.</strong> They accrue CPU credits when idle and throttle when exhausted. That is fine for evaluation and poor for sustained production load. Move to <code>m6i</code> or <code>m7i</code> for production.</li>
 <li><strong><code>node_az_count = 1</code> is single-AZ.</strong> The default keeps cost down by confining nodes to one availability zone, which means an AZ failure takes the site down. Raise it for real availability, and raise <code>gateway_eip_az_count</code> with it so the gateway NLB spans the same AZs.</li>
-<li><strong>AZ width alone does not spread the workload.</strong> <code>node_az_count</code> only widens where nodes <em>may</em> be placed. With the defaults of <code>system_node_count = 1</code> and <code>app_node_count = 1</code> there is still exactly one node of each type, and single-replica products still all land in one AZ. Raise <code>system_node_count</code> to at least 2 and <code>app_node_count</code> to at least one node per AZ you want covered.</li>
+<li><strong>AZ width alone does not spread the workload.</strong> <code>node_az_count</code> only widens where nodes <em>may</em> be placed. With the defaults of <code>system_node_count = 1</code> and <code>app_node_count = 1</code> there is still exactly one node of each type, and single-replica products still all land in one AZ. Raise <code>system_node_count</code> to at least 2 and <code>app_node_count</code> to at least one node per AZ you want covered, so the node groups actually have nodes in more than one zone. Do this before the first apply of the cluster layer - afterwards the app group has to be resized with <code>aws eks update-nodegroup-config</code> (see <a href="#scaling-out">Scaling out</a>).</li>
 <li><strong><code>single_nat_gateway = true</code> is a single point of failure</strong> and a cost saving. Set it <code>false</code> for production.</li>
 </ul>
 <h2 id="database-sizing">Database Sizing</h2>
-<p>XMPro uses <strong>Amazon RDS for SQL Server</strong>. The site infrastructure layer creates one RDS instance per site, holding the SM, AD, and DS databases (plus an AI database when the AI product is enabled).</p>
+<p>The site infrastructure layer creates one RDS SQL Server instance per site.</p>
 <table>
 <thead>
 <tr>
@@ -358,16 +307,16 @@ aws eks update-nodegroup-config --cluster-name &lt;cluster&gt; --nodegroup-name 
 <tr>
 <td><code>db_instance_class</code></td>
 <td><code>db.t3.small</code></td>
-<td>2 vCPU, 2 GiB (<code>db.t3</code>-class for test/dev/evaluation only)</td>
+<td>2 vCPU, 2 GiB</td>
 </tr>
 <tr>
 <td><code>db_allocated_storage</code></td>
-<td><code>20</code></td>
+<td>20</td>
 <td>GiB</td>
 </tr>
 <tr>
 <td><code>rds_backup_retention_period</code></td>
-<td><code>1</code></td>
+<td>1</td>
 <td>Days</td>
 </tr>
 <tr>
@@ -384,18 +333,92 @@ aws eks update-nodegroup-config --cluster-name &lt;cluster&gt; --nodegroup-name 
 </table>
 <div class="WARNING">
 <h5>Warning</h5>
-<p><strong>SQL Server Express has a hard 10 GB per-database cap</strong> and is limited to roughly 1.4 GB of RAM and 4 cores regardless of the instance class you pick. It is suitable for evaluation only.</p>
+<p><strong>SQL Server Express has a hard 10 GB per-database cap</strong> and is limited to roughly 1.4 GB of RAM and 4 cores regardless of the instance class you pick. It is suitable for evaluation only. Use <code>sqlserver-se</code> (Standard) or higher for production, and size <code>db_instance_class</code> to at least <code>db.t3.medium</code>.</p>
 </div>
-<p>For production, set <code>db_engine</code> to <code>sqlserver-se</code> (Standard) or higher, set <code>db_instance_class</code> to a <code>db.m6i</code> or <code>db.r6i</code> class sized for your workload (<code>db.t3</code> is test, development, or evaluation only), raise <code>db_allocated_storage</code> and <code>rds_backup_retention_period</code> to your data volume and retention policy, and set <code>rds_deletion_protection = true</code> and <code>rds_skip_final_snapshot = false</code>. High volumes of recommendations may require additional compute and storage.</p>
-<h2 id="mags-sizing">MAGS Sizing</h2>
-<p>MAGS (Multi-Agent Generative Systems) has its own sizing guidance, covering its database, application and GPU knowledge tiers, in <a href="../windows-server-2022/windows-sizing.html#mags-sizing">MAGS Sizing</a>. The node group figures on this page do not include it.</p>
+<h3 id="production-database-checklist">Production database checklist</h3>
+<ul>
+<li>[ ] <code>db_engine</code> set to <code>sqlserver-se</code> or higher</li>
+<li>[ ] <code>db_instance_class</code> sized for your workload, not left at <code>db.t3.small</code></li>
+<li>[ ] <code>db_allocated_storage</code> raised above 20 GiB</li>
+<li>[ ] <code>rds_backup_retention_period</code> raised to your retention policy</li>
+<li>[ ] <code>rds_deletion_protection = true</code></li>
+<li>[ ] <code>rds_skip_final_snapshot = false</code></li>
+</ul>
+<h2 id="cost">Cost</h2>
+<p>The main billable components of a single-site development deployment are:</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Default size</th>
+<th>Quantity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>EKS control plane</td>
+<td>-</td>
+<td>1 per cluster</td>
+</tr>
+<tr>
+<td>System node</td>
+<td><code>t3.medium</code></td>
+<td>1</td>
+</tr>
+<tr>
+<td>Application node</td>
+<td><code>t3.large</code></td>
+<td>2 per site (the install floor)</td>
+</tr>
+<tr>
+<td>RDS instance</td>
+<td><code>db.t3.small</code>, <code>sqlserver-ex</code>, 20 GiB</td>
+<td>1 per site</td>
+</tr>
+<tr>
+<td>NAT gateway</td>
+<td>-</td>
+<td>1 (shared, <code>single_nat_gateway = true</code>)</td>
+</tr>
+<tr>
+<td>Network Load Balancer</td>
+<td>-</td>
+<td>1 (shared across all sites on the cluster)</td>
+</tr>
+<tr>
+<td>Elastic IP</td>
+<td>-</td>
+<td>1 per gateway AZ</td>
+</tr>
+<tr>
+<td>Route53 hosted zone</td>
+<td>-</td>
+<td>1 per site</td>
+</tr>
+<tr>
+<td>EBS volumes</td>
+<td>gp3, node root disks</td>
+<td>1 per node</td>
+</tr>
+</tbody>
+</table>
+<p>Prices vary by region and change over time, so this guide does not quote figures. Price the components above for your own region using AWS's published pricing:</p>
+<ul>
+<li><a href="https://calculator.aws/">AWS Pricing Calculator</a> - build a full estimate from the table above</li>
+<li><a href="https://aws.amazon.com/eks/pricing/">Amazon EKS pricing</a></li>
+<li><a href="https://aws.amazon.com/ec2/pricing/on-demand/">Amazon EC2 pricing</a> - node instance types</li>
+<li><a href="https://aws.amazon.com/rds/sqlserver/pricing/">Amazon RDS for SQL Server pricing</a></li>
+<li><a href="https://aws.amazon.com/vpc/pricing/">Amazon VPC pricing</a> - NAT gateways</li>
+<li><a href="https://aws.amazon.com/elasticloadbalancing/pricing/">Elastic Load Balancing pricing</a></li>
+<li><a href="https://aws.amazon.com/route53/pricing/">Amazon Route53 pricing</a></li>
+</ul>
+<p>The two largest cost levers, in order, are <strong>NAT gateways</strong> (<code>single_nat_gateway = false</code> multiplies both the hourly charge and per-AZ data processing) and <strong>node instance type and count</strong>.</p>
+<p>Sharing one cluster across many sites is what makes this architecture economical - the cluster, its controllers, the NAT gateway and the load balancer are paid for once and amortised across every site on it.</p>
 <h2 id="additional-resources">Additional Resources</h2>
 <ul>
 <li><a href="index.html">Deploy XMPro on AWS Kubernetes (EKS)</a> - the deployment guide</li>
-<li>Module README in the deployment repository - full variable reference</li>
+<li><a href="%7B%7BTERRAFORM_EKS_MODULE_URL%7D%7D">Module README</a> - full variable reference</li>
 <li><a href="https://docs.aws.amazon.com/eks/latest/best-practices/scalability.html">Amazon EKS best practices for scalability</a></li>
-<li><a href="https://aws.amazon.com/ec2/instance-types/">Amazon EC2 instance types</a></li>
-<li><a href="https://aws.amazon.com/rds/sqlserver/">Amazon RDS for SQL Server</a></li>
 </ul>
 
 

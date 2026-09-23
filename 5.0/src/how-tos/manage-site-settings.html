@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/how-tos/manage-site-settings.md&amp;version=GBrelease-5.0&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/how-tos/manage-site-settings.md&amp;version=GBmain&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -112,14 +112,16 @@
 <h4 id="mobile--landing-page">Mobile  Landing Page</h4>
 <p>Optionally override the default <a href="../concepts/landing-pages.html">landing page</a> to use a published Application for the whole company when using a mobile device.</p>
 <h4 id="enable-mobile-app-1">Enable Mobile App</h4>
+<p><em>Added v4.4.4</em></p>
 <p>This defaults to true on new installations. Toggle it off to hide the mobile app icon on the toolbar.</p>
 <p>This defaults to true on new installations. Toggle it off to hide the mobile app icon on the toolbar.</p>
 <h3 id="metablocks">Metablocks</h3>
+<p><em>Added v4.4.0</em></p>
 <h4 id="enable-metablocks">Enable Metablocks</h4>
 <p>Enabling this setting results in <a href="../concepts/application/metablocks.html">Metablocks</a> appearing in the Blocks blade.</p>
 <h3 id="scripts">Scripts</h3>
 <h4 id="embed-script">Embed Script</h4>
-<p>The supplied html script tag is inserted into every App Designer html page. Use this to load an external JavaScript script, such as to provide localized support or track user usage. For example, the below script embeds a chatbot into App Designer.</p>
+<p>Added in v4.4.17, the supplied html script tag is inserted into every App Designer html page. Use this to load an external JavaScript script, such as to provide localized support or track user usage. For example, the below script embeds a chatbot into App Designer.</p>
 <pre><code class="lang-javascript">// example script to embed a fastbot trained on appropriate documentation
 &lt;script defer src=&quot;https://app.fastbots.ai/embed.js&quot; data-bot-id=&quot;abc&quot;&gt;&lt;/script&gt;
 </code></pre>
@@ -151,13 +153,16 @@
 <p>For guidance on how to use this setting effectively, please contact your XMPro representative.</p>
 <h3 id="behavior">Behavior</h3>
 <h4 id="connector-pool">Connector Pool</h4>
-<p>This setting shows how many <a href="../concepts/connector.html">Connector</a> handler instances your company currently has pooled. The <strong>Clear</strong> button evicts them all at once and is disabled when the count is 0. For how pooling works (warm and cold loads, automatic refresh when Connections change, and eviction), see <a href="../concepts/connector.html#connector-pooling">Connector Pooling</a>.</p>
+<p><em>Added v5.0.0</em></p>
+<p>App Designer pools reused <a href="../concepts/connector.html">Connector</a> handler instances to improve performance. This setting shows how many handlers your company currently has pooled and provides a <strong>Clear</strong> button that evicts them all at once; it is disabled when the count is 0 and prompts for confirmation before clearing.</p>
+<p>Clearing does not change your Connectors or their configuration - it only discards the cached instances, so each one is rebuilt on its next use. For how pooling works (warm and cold loads, automatic refresh when Connections change, and eviction), see <a href="../concepts/connector.html#connector-pooling">Connector Pooling</a>.</p>
 <div class="NOTE">
 <h5>Note</h5>
-<p>Clearing the pool only affects your own company's pooled Connector handlers. Handlers pooled for other companies are not affected.</p>
+<p>Clearing the pool only affects your own company's pooled connector handlers. Handlers pooled for other companies are not affected.</p>
 </div>
 <p>Refer to the <a href="manage-site-settings.html#connector-pool-report">Connector Pool Report</a> for a detailed view of what is currently pooled.</p>
 <h3 id="reports">Reports</h3>
+<p><em>Added v4.3.7</em></p>
 <p>Standard reports give the administrator a view into where (which Applications) and how (which version) Connectors have been used. The information is presented in a grid that can be sorted, filtered, reorganized, and grouped. It can also be exported as an XLSX file.</p>
 <p><img src="../images/manage-site-settings-2.png" alt="Fig 2: Example App Designer Report"></p>
 <h4 id="connector-usage-report">Connector Usage Report</h4>
@@ -167,10 +172,12 @@
 <p>This report shows the Applications in which a Connector version has been used. Additional information includes the Application's owner and category.</p>
 <p>This detailed report assists in gauging the impact of upgrading one or more Connector versions.</p>
 <h4 id="connector-pool-report">Connector Pool Report</h4>
-<p>This report lists the Connector handlers your company currently has in the <a href="../concepts/connector.html#connector-pooling">pool</a>, and shows how many of the shared pool slots are in use across all companies. For each pooled handler it shows the Connector Name, Connector Version, Application Name, Application Version, Connection Name, Last Used time, and Eviction Order.</p>
-<p>The pool has a fixed number of slots shared across the whole deployment (see <a href="../technical-reference/connector-pool-configuration.html">Connector Pool Configuration</a>). When the pool is full, the least recently used handler is evicted first. The row with an <strong>Eviction Order</strong> of 1 is next to be removed.</p>
+<p><em>Added v5.0.0</em></p>
+<p>This report lists the connector handlers your company currently has in the <a href="../concepts/connector.html#connector-pooling">pool</a>, and shows how many of the shared pool slots are in use across all companies. For each pooled handler it shows the Connector Name, Connector Version, Application Name, Application Version, Connection Name, Last Used time, and Eviction Order.</p>
+<p>The pool has a fixed number of slots shared across the whole deployment (see <a href="../installation/deployment/azure-terraform/advanced-configuration.html#connector-pool">Connector Pool configuration</a>). When the pool is full, the least recently used handler is evicted first - the row with an <strong>Eviction Order</strong> of 1 is next to be removed.</p>
 <h4 id="live-connector-pool-report">Live Connector Pool Report</h4>
-<p>This report lists the <a href="../concepts/connector.html#connector-pooling">pooled</a> handlers that back live Connectors, which are those actively pushing data. For each one it shows the Connector Name, Connector Version, Application Name, Application Version, Connection Name, Last Push time, and the number of Subscriptions.</p>
+<p><em>Added v5.0.0</em></p>
+<p>This report lists the <a href="../concepts/connector.html#connector-pooling">pooled</a> handlers that back live Connectors - those actively pushing data. For each one it shows the Connector Name, Connector Version, Application Name, Application Version, Connection Name, Last Push time, and the number of Subscriptions.</p>
 <p>Live Connectors are released when their last subscriber disconnects. Data Stream Connectors, however, stay resident even with zero subscriptions until App Designer restarts, so they are not automatically evicted.</p>
 <h2 id="data-stream-designer-settings">Data Stream Designer Settings</h2>
 <h3 id="security-1">Security</h3>
@@ -185,6 +192,7 @@
 <p>Enables the logging and display of stream metrics (<a href="data-streams/use-stream-metrics.html#stream-load">Stream Load</a> and <a href="data-streams/use-stream-metrics.html#stream-errors">Stream Errors</a>) in Data Streams. Refresh the page for the setting to be applied to the Data Stream Canvas.</p>
 <h3 id="behavior-1">Behavior</h3>
 <h4 id="default-polling-interval-seconds">Default Polling Interval (seconds)</h4>
+<p><em>Added v4.3.7</em></p>
 <p>The default value that is used for the polling interval when a Polling Agent is added to a <a href="../concepts/data-stream/index.html">Streaming</a> type Data Stream.</p>
 <p>If there is no value provided for this setting, the polling interval defaults to 3600 seconds (1 hour).</p>
 <div class="NOTE">
@@ -192,6 +200,7 @@
 <p>The default is applied when the Agent is added to the canvas. A change to this site setting will only take effect for Agents added afterward.</p>
 </div>
 <h4 id="live-view-usage">Live View Usage</h4>
+<p><em>Added v4.3.6</em></p>
 <p>Over time, if users did not close the <a href="../concepts/data-stream/running-data-streams.html#viewing-live-data">Live View</a>, these open connections placed an additional load on the Data Stream Designer (DS) as the Stream Hosts continued to send live data back to DS. This reduced overall performance and reliability, and increased infrastructure costs.</p>
 <p>We recommend that users always close the Live View of a published Data Stream before navigating away. When in doubt, an administrator can force a reset to close all open Live View connections.</p>
 <p>The Live View Usage includes the following:</p>
@@ -217,6 +226,7 @@
 <p>If you've upgraded to v4.3.7, use the Reset Live View button once to ensure all connections are closed.</p>
 </div>
 <h3 id="reports-1">Reports</h3>
+<p><em>Added v4.3.7</em></p>
 <p>Standard reports give the administrator a view into where (which Data Stream) and how (which version) Agents have been used. The information is presented in a grid that can be sorted, filtered, reorganized, and grouped. It can also be exported as an XLSX file.</p>
 <p><img src="../images/manage-site-settings-4.png" alt="Fig 4: Example Data Stream Designer Report"></p>
 <h4 id="live-view-usage-report">Live View Usage Report</h4>
@@ -300,6 +310,7 @@
 <p>The exception for this setting is a user with an Administrator role for the Subscription Manager product. They can assign access to XMPro objects to any user or business role in the company.</p>
 </div>
 <h3 id="global-notification">Global Notification</h3>
+<p><em>Added v4.4.0</em></p>
 <p>Global Administrators can display a global notification across the top of all products in the XMPro suite for a specific period. This aids in communicating important information to users, such as a notice advising of planned maintenance downtime and a hyperlink to release notes.</p>
 <p>Choose a type of hint, warning, or error to set the notification icon and banner color. The banner can be dismissed for a session.</p>
 <h4 id="discard-global-notification-settings">Discard &quot;Global Notification&quot; Settings</h4>

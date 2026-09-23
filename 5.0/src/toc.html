@@ -260,7 +260,14 @@
                               <a href="concepts/version.html" name="" title="Version">Version</a>
                           </li>
                           <li>
+                              <span class="expand-stub"></span>
                               <a href="concepts/xmpro-ai/index.html" name="" title="XMPro AI">XMPro AI</a>
+
+                              <ul class="nav level3">
+                                    <li>
+                                        <a href="concepts/xmpro-ai/xmpro-notebook.html" name="" title="XMPro Notebook">XMPro Notebook</a>
+                                    </li>
+                              </ul>
                           </li>
                     </ul>
                 </li>
@@ -739,6 +746,9 @@
 
                               <ul class="nav level3">
                                     <li>
+                                        <a href="blocks-toolbox/visualizations/autodesk-forge.html" name="" title="Autodesk Forge">Autodesk Forge</a>
+                                    </li>
+                                    <li>
                                         <a href="blocks-toolbox/visualizations/azure-digital-twin-hierarchy.html" name="" title="Azure Digital Twin Hierarchy">Azure Digital Twin Hierarchy</a>
                                     </li>
                                     <li>
@@ -880,12 +890,18 @@
                 </li>
                 <li>
                     <span class="expand-stub"></span>
-                    <a href="installation/overview.html" name="" title="Deployment">Deployment</a>
+                    <a>Installation</a>
 
                     <ul class="nav level2">
                           <li>
+                              <a href="installation/overview.html" name="" title="Overview">Overview</a>
+                          </li>
+                          <li>
+                              <a href="installation/install.html" name="" title="1. Preparation">1. Preparation</a>
+                          </li>
+                          <li>
                               <span class="expand-stub"></span>
-                              <a href="installation/deployment/index.html" name="" title="Deploy XMPro">Deploy XMPro</a>
+                              <a href="installation/deployment/index.html" name="" title="2. Install XMPro">2. Install XMPro</a>
 
                               <ul class="nav level3">
                                     <li>
@@ -914,78 +930,66 @@
                                               </li>
                                         </ul>
                                     </li>
-                                    <li>
-                                        <span class="expand-stub"></span>
-                                        <a href="installation/deployment/azure-terraform/index.html" name="" title="Azure Terraform">Azure Terraform</a>
-
-                                        <ul class="nav level4">
-                                              <li>
-                                                  <a href="installation/deployment/azure-terraform/azure-sizing.html" name="" title="Sizing Guideline">Sizing Guideline</a>
-                                              </li>
-                                              <li>
-                                                  <a href="installation/deployment/azure-terraform/troubleshooting.html" name="" title="Troubleshooting">Troubleshooting</a>
-                                              </li>
-                                              <li>
-                                                  <a href="installation/deployment/azure-terraform/advanced-configuration.html" name="" title="Advanced Configuration">Advanced Configuration</a>
-                                              </li>
-                                              <li>
-                                                  <a href="installation/deployment/azure-terraform/upgrade-from-legacy.html" name="" title="Upgrade from Legacy ARM Deployment">Upgrade from Legacy ARM Deployment</a>
-                                              </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <span class="expand-stub"></span>
-                                        <a href="installation/deployment/windows-server-2022/index.html" name="" title="Windows Server 2022 (v4.x)">Windows Server 2022 (v4.x)</a>
-
-                                        <ul class="nav level4">
-                                              <li>
-                                                  <a href="installation/deployment/windows-server-2022/upgrade-from-legacy.html" name="" title="Upgrade from Legacy Windows Installer">Upgrade from Legacy Windows Installer</a>
-                                              </li>
-                                              <li>
-                                                  <a href="installation/deployment/windows-server-2022/windows-sizing.html" name="" title="Sizing Guideline">Sizing Guideline</a>
-                                              </li>
-                                              <li>
-                                                  <a href="installation/deployment/windows-server-2022/troubleshooting.html" name="" title="Troubleshooting">Troubleshooting</a>
-                                              </li>
-                                              <li>
-                                                  <a href="installation/deployment/windows-server-2022/multi-server-deployment.html" name="" title="Multi-Server Deployment">Multi-Server Deployment</a>
-                                              </li>
-                                              <li>
-                                                  <a href="installation/deployment/windows-server-2022/airgapped-deployment.html" name="" title="Airgapped Deployment">Airgapped Deployment</a>
-                                              </li>
-                                        </ul>
-                                    </li>
                               </ul>
                           </li>
                           <li>
                               <span class="expand-stub"></span>
-                              <a href="installation/complete-installation/index.html" name="" title="Post-deployment">Post-deployment</a>
+                              <a href="installation/complete-installation/index.html" name="" title="3. Complete Installation">3. Complete Installation</a>
 
                               <ul class="nav level3">
                                     <li>
-                                        <a href="installation/complete-installation/set-up-a-tenant-company.html" name="" title="Setup your First Tenant">Setup your First Tenant</a>
+                                        <a href="installation/complete-installation/configure-auto-scale-optional.md" name="" title="Configure Auto Scale (Optional)">Configure Auto Scale (Optional)</a>
                                     </li>
                                     <li>
-                                        <a href="installation/complete-installation/install-connectors.html" name="" title="Upload Agents and Connectors">Upload Agents and Connectors</a>
+                                        <a href="installation/complete-installation/configure-health-checks-optional.md" name="" title="Configure Health Checks (Optional)">Configure Health Checks (Optional)</a>
+                                    </li>
+                                    <li>
+                                        <a href="installation/complete-installation/configure-logging-optional.md" name="" title="Configure Logging (Optional)">Configure Logging (Optional)</a>
                                     </li>
                                     <li>
                                         <span class="expand-stub"></span>
-                                        <a href="installation/complete-installation/install-stream-host/index.html" name="" title="Deploy Stream Host">Deploy Stream Host</a>
+                                        <a href="installation/complete-installation/index.html" name="" title="Configure SSO (Optional)">Configure SSO (Optional)</a>
 
                                         <ul class="nav level4">
                                               <li>
-                                                  <a href="installation/complete-installation/install-stream-host/azure-terraform.html" name="" title="Azure Terraform">Azure Terraform</a>
+                                                  <a href="installation/complete-installation/configure-sso-optional/sso-adfs.md" name="" title="SSO with ADFS">SSO with ADFS</a>
                                               </li>
                                               <li>
+                                                  <a href="installation/complete-installation/configure-sso-optional/sso-azure-ad.md" name="" title="SSO with Azure AD">SSO with Azure AD</a>
+                                              </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="installation/complete-installation/set-up-a-tenant-company.html" name="" title="Create Base Company">Create Base Company</a>
+                                    </li>
+                                    <li>
+                                        <a href="installation/complete-installation/install-connectors.html" name="" title="Install Agents &amp; Connectors">Install Agents &amp; Connectors</a>
+                                    </li>
+                                    <li>
+                                        <span class="expand-stub"></span>
+                                        <a href="installation/complete-installation/install-stream-host/index.html" name="" title="Install Stream Host">Install Stream Host</a>
+
+                                        <ul class="nav level4">
+                                              <li>
+                                                  <a href="installation/complete-installation/install-stream-host/azure-web-job.md" name="" title="Azure Web Job">Azure Web Job</a>
+                                              </li>
+                                              <li>
+                                                  <span class="expand-stub"></span>
                                                   <a href="installation/complete-installation/install-stream-host/docker.html" name="" title="Docker">Docker</a>
+
+                                                  <ul class="nav level5">
+                                                        <li>
+                                                            <a href="installation/complete-installation/install-stream-host/docker-legacy.md" name="" title="Docker v4.4.2 - v4.4.18">Docker v4.4.2 - v4.4.18</a>
+                                                        </li>
+                                                  </ul>
+                                              </li>
+                                              <li>
+                                                  <a href="installation/complete-installation/install-stream-host/ubuntu-16.04%2B-x64.md" name="" title="Ubuntu 16.04+ (x64)">Ubuntu 16.04+ (x64)</a>
                                               </li>
                                               <li>
                                                   <a href="installation/complete-installation/install-stream-host/windows-x64.html" name="" title="Windows (x64)">Windows (x64)</a>
                                               </li>
                                         </ul>
-                                    </li>
-                                    <li>
-                                        <a href="installation/complete-installation/deploy-stream-connector-infrastructure.html" name="" title="Deploy Stream Connector Infrastructure (Optional)">Deploy Stream Connector Infrastructure (Optional)</a>
                                     </li>
                               </ul>
                           </li>
@@ -996,9 +1000,6 @@
                     <a>Technical Reference</a>
 
                     <ul class="nav level2">
-                          <li>
-                              <a href="technical-reference/connector-pool-configuration.html" name="" title="Connector Pool Configuration">Connector Pool Configuration</a>
-                          </li>
                           <li>
                               <a href="technical-reference/mosquitto-mqtt-broker.html" name="" title="Mosquitto MQTT Broker">Mosquitto MQTT Broker</a>
                           </li>

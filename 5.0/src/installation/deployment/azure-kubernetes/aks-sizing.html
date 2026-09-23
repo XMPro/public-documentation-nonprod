@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../../../">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/deployment/azure-kubernetes/aks-sizing.md&amp;version=GBrelease-5.0&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/deployment/azure-kubernetes/aks-sizing.md&amp;version=GBmain&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -87,7 +87,7 @@
         <article data-uid="">
 <h1 id="sizing-guideline">Sizing Guideline</h1>
 
-<p>This guide provides recommendations for sizing an XMPro deployment on Azure Kubernetes Service (AKS): how large to make the cluster's node pools and how to size the databases. The <a href="../aws-kubernetes/eks-sizing.html">AWS Kubernetes (EKS) Sizing Guideline</a> follows the same structure; only the cloud-specific offerings differ.</p>
+<p>This guide provides recommendations for sizing an XMPro deployment on Azure Kubernetes Service (AKS): how large to make the cluster's node pools and how to size the databases. For the Azure App Service (4.x) deployment model, see the <a href="../azure-terraform/azure-sizing.html">App Service Sizing Guideline</a>.</p>
 <h2 id="overview">Overview</h2>
 <p>Small, medium, and large sizing estimates are provided. The small option starts with the minimum recommended resources and, generally, each subsequent size doubles the number of CPU cores and available RAM. Not all components experience the same increase in load, so the estimates may not increase at the same rate for all components.</p>
 <p>Many factors influence the number of Apps and Data Streams a deployment can effectively run. These factors include:</p>
@@ -114,42 +114,10 @@
 <li>A <strong>limit</strong> is the ceiling a container may consume. A container that exceeds its memory limit is terminated (OOM-killed); the XMPro chart deliberately sets memory limits but <strong>no CPU limits</strong>, so .NET startup is not CPU-throttled.</li>
 </ul>
 <p>Requests drive scheduling (can the pod fit?); limits drive worst-case sizing (how much can everything consume at once?). The node pools need capacity for both.</p>
-<div class="NOTE">
-<h5>Note</h5>
-<p><strong>Node capacity is smaller than the advertised size.</strong> A node advertised as 8 GiB does not offer a full 8 GiB to workloads. AKS reserves memory and CPU for the kubelet and system processes, and what remains is the node's <strong>allocatable</strong> capacity. Budget roughly 85-90% of the advertised figure as usable.</p>
-</div>
 <h3 id="node-pools">Node pools</h3>
-<p>An AKS deployment runs two node pools: a <strong>system pool</strong> that hosts cluster-critical add-ons (CoreDNS, metrics-server, the AKS management components) and the platform controllers (Envoy Gateway, cert-manager, External Secrets Operator, Istio), and an <strong>application pool</strong> that hosts the XMPro product pods. Sizing the application pool means giving its nodes enough allocatable capacity for the sum of the product container requests, with headroom for the products to grow toward their limits under load.</p>
-<table>
-<thead>
-<tr>
-<th>Node pool</th>
-<th>Purpose</th>
-<th>Default VM SKU</th>
-<th>Default count</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>system</code></td>
-<td>Add-ons, cluster controllers</td>
-<td><code>Standard_B2s_v2</code> (2 vCPU, 8 GiB)</td>
-<td>1</td>
-</tr>
-<tr>
-<td><code>app</code></td>
-<td>XMPro product pods</td>
-<td><code>Standard_B2s_v2</code> (2 vCPU, 8 GiB)</td>
-<td>1</td>
-</tr>
-</tbody>
-</table>
-<div class="NOTE">
-<h5>Note</h5>
-<p><strong>B- and D-class VM SKUs are for test, development, or evaluation only.</strong> The <code>Standard_B2s_v2</code> default, or a <code>Standard_D</code>-series SKU, works for a test or evaluation cluster at lower cost. B-series banks CPU credits when idle and throttles when the credits run out, so do not run a production site on it.</p>
-</div>
+<p>An AKS deployment runs two node pools: a <strong>system pool</strong> that hosts cluster-critical add-ons (CoreDNS, metrics-server, and the AKS management components) and an <strong>application pool</strong> that hosts the XMPro product pods. Sizing the application pool means giving its nodes enough allocatable capacity for the sum of the product container requests, with headroom for the products to grow toward their limits under load.</p>
 <h3 id="per-product-resource-requests-and-limits">Per-product resource requests and limits</h3>
-<p>The table below lists the CPU and memory each XMPro product container reserves (request) and its memory ceiling (limit), taken from the Helm chart defaults. There are no CPU limits by design. These are the same chart resources regardless of whether you run on AKS or EKS. Subscription Manager (SM), Identity Server (IS), App Designer (AD), and Data Stream Designer (DS) are always deployed. On AKS the default in-cluster Stream Host (SH) is on (<code>enable_default_stream_host = true</code>); further Stream Hosts deployed per Collection through the <code>stream-hosts</code> layer use the same SH resources per instance. The AI product is optional.</p>
+<p>The table below lists the CPU and memory each XMPro product container reserves (request) and its memory ceiling (limit), taken from the Helm chart defaults. There are no CPU limits by design. These are the same chart resources regardless of whether you run on AKS or EKS. Stream Host (SH), App Designer (AD), and Data Stream Designer (DS) are enabled by default; on a deployed site the application layer also always deploys Subscription Manager (SM) and Identity Server (IS). The AI product is optional.</p>
 <table>
 <thead>
 <tr>
@@ -191,34 +159,36 @@
 <td>512Mi</td>
 </tr>
 <tr>
-<td>AI</td>
+<td><strong>Total (SM+IS+AD+DS+SH)</strong></td>
+<td><strong>525m</strong></td>
+<td><strong>~4.75Gi</strong></td>
+<td><strong>~11.5Gi</strong></td>
+</tr>
+<tr>
+<td>AI (optional, adds)</td>
 <td>25m</td>
 <td>384Mi</td>
 <td>768Mi</td>
 </tr>
 </tbody>
 </table>
-<p>The standard product set (SM, IS, AD, DS) requests <strong>500m CPU and 4.5Gi</strong> of memory, with a combined memory limit of <strong>11Gi</strong>. Each Stream Host adds 25m / 256Mi (limit 512Mi); AI adds 25m / 384Mi (limit 768Mi).</p>
+<p>Enabling AI raises the standard totals to roughly <strong>550m</strong> CPU request, <strong>~5.1Gi</strong> memory request, and <strong>~12.25Gi</strong> memory limit.</p>
 <div class="NOTE">
 <h5>Note</h5>
-<p><strong>Add the Istio sidecar to every pod.</strong> <code>enable_istio</code> defaults to <code>true</code>, so every product pod and every Job pod gets an <code>istio-proxy</code> sidecar that requests a further <strong>25m CPU and 128Mi</strong> (the cluster layer sets the proxy CPU request to 25m; memory is the Istio default). Istio runs the proxy as a native sidecar, so Kubernetes adds its request to the pod's own rather than absorbing it. For the standard product set that is another 100m / 512Mi, taking the steady-state request to <strong>600m CPU and 5Gi</strong>; each Stream Host adds 50m / 384Mi with its sidecar, and AI 50m / 512Mi. Setting <code>enable_istio = false</code> in the application layer removes this overhead.</p>
-</div>
-<div class="NOTE">
-<h5>Note</h5>
-<p><strong>Jobs run during install.</strong> Database-migration and licensing steps (<code>ad-dbmigrate</code>, <code>ds-dbmigrate</code>, <code>sm-dbmigrate</code>, <code>ai-dbmigrate</code>, <code>licenses</code>) run as short-lived Helm Jobs during install, each requesting 100m CPU / 256Mi (plus a sidecar) and capped at 200m CPU / 512Mi. They finish before the products reach steady state, so they do not count toward the always-on total above, but the application pool must have room to schedule them alongside the products during the initial deploy.</p>
+<p>Database-migration and licensing steps (<code>ad-dbmigrate</code>, <code>ds-dbmigrate</code>, <code>sm-dbmigrate</code>, <code>ai-dbmigrate</code>, <code>licenses</code>) run as short-lived Helm Jobs during install, each requesting 100m CPU / 256Mi and capped at 200m CPU / 512Mi. They finish before the products reach steady state, so they do not count toward the always-on total above, but the application pool must have room to schedule them during the initial deploy.</p>
 </div>
 <h3 id="translating-requests-into-node-size-and-count">Translating requests into node size and count</h3>
+<p>Node capacity is not the same as the VM's advertised size. Kubernetes reserves some of every node's CPU and memory for the kubelet and system processes; what remains is the node's <strong>allocatable</strong> capacity: the portion actually available to pods. A node advertised as 8 GiB does not offer a full 8 GiB to workloads.</p>
 <p>To choose <code>app_node_vm_size</code> and <code>app_node_count</code>:</p>
 <ol>
-<li>Start from the request total above (~600m CPU, ~5Gi memory for the standard product set with sidecars; add each additional Stream Host and AI as enabled).</li>
+<li>Start from the request total above (~525m CPU, ~4.75Gi memory for the standard product set; ~550m / ~5.1Gi with AI).</li>
 <li>Look up the vCPU and RAM of a candidate VM SKU in the <a href="https://learn.microsoft.com/en-us/azure/virtual-machines/sizes">Azure VM sizes documentation</a>, then subtract the AKS system reservation to get its allocatable capacity.</li>
-<li><strong>Size for the install peak, not the steady state.</strong> During an install the database-migration and licensing Jobs run concurrently with the products, each with its own sidecar. The Helm release is atomic: if one pod cannot be scheduled, the whole install rolls back after the 30-minute timeout, leaving nothing to inspect. Make sure the pool can hold the products and the Jobs at the same time.</li>
-<li>Because the product memory <em>limits</em> (~11Gi combined) are far higher than the memory <em>requests</em>, memory pressure under real load, not the request total, is what sizes a production pool. Size the application nodes toward the limit envelope, and confirm the true figure by measuring actual pod memory usage under representative load rather than trusting a static estimate.</li>
-<li>Set <code>app_node_count</code> so the pool's combined allocatable capacity comfortably exceeds the workload, with headroom for node maintenance and pod rescheduling. Memory runs out before CPU does; if you are deciding what to grow, grow memory.</li>
+<li>Because the product memory <em>limits</em> (~11.5Gi combined) are far higher than the memory <em>requests</em>, memory pressure under real load, not the request total, is what sizes a production pool. Size the application nodes toward the limit envelope, and confirm the true figure by measuring actual pod memory usage under representative load rather than trusting a static estimate.</li>
+<li>Set <code>app_node_count</code> (or enable the cluster autoscaler) so the pool's combined allocatable capacity comfortably exceeds the workload, with headroom for node maintenance and pod rescheduling.</li>
 </ol>
-<p>The defaults are a single application node and a single system node, which is why they are evaluation-grade: neither pool has redundancy. For production, run at least two system nodes (so the add-ons and controllers survive a node loss) and size the application pool to your measured load, adding capacity for each additional site on the cluster.</p>
-<h3 id="node-pool-knobs">Node pool knobs</h3>
-<p>All node pool sizing lives in the AKS module's <strong>cluster layer</strong> (<code>infra-k8s</code>, deployed once per cluster). The table introduces each variable and its default.</p>
+<p>The defaults are a single application node and a single system node, which is why they are evaluation-grade: neither pool has redundancy. For production, run at least two system nodes (so CoreDNS and metrics-server survive a node loss) and size the application pool to your measured load.</p>
+<h3 id="node-pool-knobs">Node-pool knobs</h3>
+<p>All node-pool sizing lives in the AKS module's <strong>cluster layer</strong> (<code>infra-k8s</code>, deployed once per cluster). The table introduces each variable and its default.</p>
 <table>
 <thead>
 <tr>
@@ -231,7 +201,7 @@
 <tr>
 <td><code>system_node_vm_size</code></td>
 <td><code>Standard_B2s_v2</code></td>
-<td>VM SKU for the system pool (B/D-class for test/dev/evaluation only)</td>
+<td>VM SKU for the system pool</td>
 </tr>
 <tr>
 <td><code>system_node_count</code></td>
@@ -241,12 +211,22 @@
 <tr>
 <td><code>app_node_vm_size</code></td>
 <td><code>Standard_B2s_v2</code></td>
-<td>VM SKU for the application pool (B/D-class for test/dev/evaluation only)</td>
+<td>VM SKU for the application pool</td>
 </tr>
 <tr>
 <td><code>app_node_count</code></td>
 <td><code>1</code></td>
 <td>Application pool node count (fixed size when autoscaling is off)</td>
+</tr>
+<tr>
+<td><code>app_autoscaling_enabled</code></td>
+<td><code>false</code></td>
+<td>Enable the AKS cluster autoscaler on the application pool</td>
+</tr>
+<tr>
+<td><code>app_min_count</code> / <code>app_max_count</code></td>
+<td><code>1</code> / <code>4</code></td>
+<td>Autoscaler bounds when <code>app_autoscaling_enabled = true</code></td>
 </tr>
 <tr>
 <td><code>kubernetes_version</code></td>
@@ -260,12 +240,9 @@
 </tr>
 </tbody>
 </table>
-<p>The root cluster module (<code>_infra-k8s</code>) also exposes <code>app_autoscaling_enabled</code> (default <code>false</code>) with <code>app_min_count</code> / <code>app_max_count</code> bounds for the AKS cluster autoscaler; the <code>examples/layered/infra-k8s</code> example does not pass these through, so add them to your own copy if you want the pool to autoscale.</p>
-<p>To resize an application pool that already exists, change <code>app_node_count</code> and re-apply the cluster layer, or scale it directly:</p>
-<pre><code class="lang-bash">az aks nodepool scale --resource-group &lt;cluster-rg&gt; --cluster-name &lt;cluster&gt; --name app --node-count 2
-</code></pre>
 <h3 id="ai-and-rag-node-pool">AI and RAG node pool</h3>
 <p>When the AI product's RAG feature is enabled, its backing services (Milvus vector store, Neo4j graph database, TimescaleDB, and the Mosquitto MQTT broker) run on a <strong>dedicated node pool</strong> provisioned by the optional AI infrastructure layer (<code>infra-ai</code>), applied once per cluster and shared by all sites. These services are memory-heavy, which is why they get their own pool rather than sharing the application nodes.</p>
+<p>The pool is sized by two variables in <code>infra-ai</code>, both larger than the application-pool defaults to accommodate the vector and graph workloads.</p>
 <table>
 <thead>
 <tr>
@@ -289,47 +266,62 @@
 </table>
 <p>AI persistent volumes use the <code>managed-csi-premium</code> storage class by default (<code>storage_class_name</code>). Size this pool against the data volume you intend to embed and index; the single-node default is an evaluation starting point, not a production figure.</p>
 <h3 id="scaling-out">Scaling out</h3>
-<p>Beyond making nodes bigger, XMPro can scale horizontally by running more replicas of a product, but this requires shared-state coordination. The application layer (<code>app</code>) exposes <code>enable_autoscale</code> (default <code>false</code>), which turns on the Redis backplane (SignalR and distributed cache) so multiple replicas can coordinate; Redis can come from the site infrastructure layer (<code>create_redis_cache = true</code> provisions Azure Cache for Redis and outputs the connection string) or from an existing Redis you supply through <code>redis_connection_string</code>. Per-product replica counts (<code>ad_replica_count</code>, <code>ds_replica_count</code>, <code>sm_replica_count</code>, <code>is_replica_count</code>, <code>ai_replica_count</code>) default to <code>1</code>, and <code>enforce_single_replica</code> (default <code>false</code>) hard-blocks any product from exceeding one replica when set. Products running more than one replica also need the <code>*_persistence</code> blocks enabled on an RWX-capable storage class (for example the AKS built-in <code>azurefile-csi</code>) so they share their Data Protection key ring.</p>
-<p>At the cluster level, the root module's <code>app_autoscaling_enabled</code> turns on the AKS cluster autoscaler to add and remove application nodes automatically within the <code>app_min_count</code> / <code>app_max_count</code> bounds (see <a href="#node-pool-knobs">Node pool knobs</a>). Per-product Horizontal Pod Autoscalers (HPAs) are still a chart follow-up, so horizontal scaling today means setting replica counts explicitly rather than relying on CPU-driven autoscaling of the pods themselves.</p>
-<h3 id="production-notes">Production notes</h3>
-<ul>
-<li><strong>B- and D-class VM SKUs are for test, development, or evaluation only.</strong> For production use a memory-optimized <code>Standard_E</code>-series SKU sized from measured load.</li>
-<li><strong>One node per pool is no redundancy.</strong> Raise <code>system_node_count</code> to at least 2 and size <code>app_node_count</code> (or the autoscaler bounds) so a node loss does not take the site down. Spread the pools across availability zones in regions that support them.</li>
-<li><strong><code>aks_sku_tier = &quot;Free&quot;</code> has no uptime SLA.</strong> Use <code>Standard</code> for production, or <code>Premium</code> if you need a long-term support Kubernetes version.</li>
-</ul>
-<h2 id="database-sizing">Database Sizing</h2>
-<p>XMPro uses <strong>Azure SQL Database</strong>. Each site gets its own SM, AD, and DS databases (plus an AI database when the AI product is enabled), on a SQL logical server created by the site infrastructure layer.</p>
+<p>Beyond making nodes bigger, XMPro can scale horizontally by running more replicas of a product, but this requires shared-state coordination. The application layer (<code>app</code>) exposes <code>enable_autoscale</code> (default <code>false</code>), which turns on Redis-backed distributed caching so multiple replicas can coordinate; per-product replica counts (<code>ad_replica_count</code>, <code>ds_replica_count</code>, <code>sm_replica_count</code>, and so on) default to <code>1</code>, and <code>enforce_single_replica</code> (default <code>false</code>) hard-blocks any product from exceeding one replica when set. At the cluster level, <code>app_autoscaling_enabled</code> turns on the AKS cluster autoscaler to add and remove application nodes automatically within the <code>app_min_count</code>/<code>app_max_count</code> bounds. Note that per-product Horizontal Pod Autoscalers (HPAs) are still a chart follow-up (the chart's HPA template is currently a single-target stub), so horizontal scaling today means setting replica counts explicitly rather than relying on CPU-driven autoscaling of the pods themselves.</p>
+<h3 id="cost-reference-dev-defaults">Cost reference (dev defaults)</h3>
+<p>The billable components of a single-site development deployment are:</p>
 <table>
 <thead>
 <tr>
-<th>Variable</th>
-<th>Default</th>
-<th>Notes</th>
+<th>Component</th>
+<th>Default spec</th>
+<th>Quantity</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>db_use_elastic_pool</code></td>
-<td><code>true</code></td>
-<td>Place the SM, AD and DS databases in one shared Standard elastic pool</td>
+<td>AKS control plane</td>
+<td>Free tier</td>
+<td>1</td>
 </tr>
 <tr>
-<td><code>db_elastic_pool_edtu</code></td>
-<td><code>50</code></td>
-<td>Capacity of that pool (eDTU)</td>
+<td>System node</td>
+<td><code>Standard_B2s_v2</code></td>
+<td>1</td>
 </tr>
 <tr>
-<td><code>db_sku_name</code></td>
-<td><code>S0</code></td>
-<td>Per-database tier when <code>db_use_elastic_pool = false</code></td>
+<td>Application node</td>
+<td><code>Standard_B2s_v2</code></td>
+<td>1 per site</td>
 </tr>
 <tr>
-<td><code>db_max_size_gb</code></td>
-<td><code>2</code></td>
-<td>Storage cap per database</td>
+<td>Azure SQL databases</td>
+<td>Shared 50 eDTU elastic pool (SM, AD, DS)</td>
+<td>1 pool per site</td>
+</tr>
+<tr>
+<td>Load Balancer + public IP</td>
+<td>Standard</td>
+<td>1 shared per cluster</td>
+</tr>
+<tr>
+<td>DNS zone</td>
+<td>1 zone</td>
+<td>1 per site</td>
 </tr>
 </tbody>
 </table>
+<p>Prices vary by region and change over time, so this guide does not quote figures. Price the components above for your own region using Azure's published pricing:</p>
+<ul>
+<li><a href="https://azure.microsoft.com/en-us/pricing/calculator/">Azure Pricing Calculator</a> - build a full estimate from the table above</li>
+<li><a href="https://azure.microsoft.com/en-us/pricing/details/kubernetes-service/">Azure Kubernetes Service pricing</a></li>
+<li><a href="https://azure.microsoft.com/en-us/pricing/details/virtual-machines/linux/">Virtual Machines pricing</a> - node VM sizes</li>
+<li><a href="https://azure.microsoft.com/en-us/pricing/details/azure-sql-database/single/">Azure SQL Database pricing</a></li>
+<li><a href="https://azure.microsoft.com/en-us/pricing/details/load-balancer/">Load Balancer pricing</a></li>
+<li><a href="https://azure.microsoft.com/en-us/pricing/details/dns/">Azure DNS pricing</a></li>
+</ul>
+<p>The largest cost levers are <strong>node VM size and count</strong> and the <strong>database tier</strong>. Override <code>app_node_vm_size</code>, <code>app_node_count</code>, <code>system_node_count</code> (production wants at least 2), <code>aks_sku_tier</code> and the database variables for production sizing. When <code>app_autoscaling_enabled = true</code>, the active capacity bounds are <code>app_min_count</code> and <code>app_max_count</code> rather than <code>app_node_count</code>.</p>
+<h2 id="database-sizing">Database Sizing</h2>
+<p>XMPro uses <strong>Azure SQL Database</strong>. Each deployment gets its own SM, AD, and DS databases (plus an AI database when the AI product is enabled).</p>
 <p>The following per-database sizing estimates use the Standard service tier and the DTU-based purchasing model (a blended measure of compute, storage, and IO resources).</p>
 <table>
 <thead>
@@ -357,16 +349,20 @@
 <h5>Note</h5>
 <p><strong>1</strong> High volumes of recommendations may require additional compute and storage.</p>
 </div>
-<p>For production you have two levers, both in the site infrastructure layer (<code>infra</code>): keep the elastic pool and raise <code>db_elastic_pool_edtu</code> so the shared budget matches your workload, or set <code>db_use_elastic_pool = false</code> and give each database its own tier through <code>db_sku_name</code> when you want a guaranteed, isolated allocation rather than a shared burst budget. Raise <code>db_max_size_gb</code> for production data volumes either way.</p>
-<h2 id="mags-sizing">MAGS Sizing</h2>
-<p>MAGS (Multi-Agent Generative Systems) has its own sizing guidance, covering its database, application and GPU knowledge tiers, in <a href="../windows-server-2022/windows-sizing.html#mags-sizing">MAGS Sizing</a>. The node pool figures on this page do not include it.</p>
-<h2 id="additional-resources">Additional Resources</h2>
+<h3 id="elastic-pool-default">Elastic pool default</h3>
+<p>Rather than giving each database its own SKU, the AKS module places the SM, AD, and DS databases in a <strong>shared Standard elastic pool</strong> by default (<code>db_use_elastic_pool = true</code>, <code>db_elastic_pool_edtu = 50</code>). An elastic pool lets any single database burst to the full pool capacity while total spend stays capped, a good fit when the databases have uneven, bursty load. The default 50 eDTU pool sits between the Small and Medium per-database estimates above once shared across three databases.</p>
+<p>For production sizing you have two levers, both in the site infrastructure layer (<code>infra</code>):</p>
 <ul>
-<li><a href="index.html">Deploy XMPro on Azure Kubernetes (AKS)</a> - the deployment guide</li>
-<li>Module README in the deployment repository - full variable reference</li>
-<li><a href="../azure-terraform/azure-sizing.html">App Service Sizing Guideline</a> - the 4.x Azure App Service deployment model</li>
-<li><a href="https://learn.microsoft.com/en-us/azure/virtual-machines/sizes">Azure VM sizes</a></li>
-<li><a href="https://learn.microsoft.com/en-us/azure/azure-sql/database/service-tiers-dtu">Azure SQL Database DTU-based purchasing model</a></li>
+<li><strong>Keep the pool, raise its capacity</strong> - increase <code>db_elastic_pool_edtu</code> (e.g. to 100 or higher) so the shared budget matches your Medium/Large workload.</li>
+<li><strong>Switch to standalone databases</strong> - set <code>db_use_elastic_pool = false</code> and set <code>db_sku_name</code> (default <code>S0</code>) to the per-database tier from the table above. Use this when you want a guaranteed, isolated allocation per database rather than a shared burst budget.</li>
+</ul>
+<p><code>db_max_size_gb</code> (default <code>2</code>) caps each database's storage and should be raised for production data volumes.</p>
+<h2 id="additional-resources">Additional Resources</h2>
+<p>For detailed Azure pricing information, see:</p>
+<ul>
+<li><a href="https://azure.microsoft.com/en-us/pricing/details/virtual-machines/linux/">Azure Virtual Machine Pricing</a></li>
+<li><a href="https://azure.microsoft.com/en-us/pricing/details/kubernetes-service/">Azure Kubernetes Service Pricing</a></li>
+<li><a href="https://azure.microsoft.com/en-us/pricing/details/azure-sql-database/single/#pricing">Azure SQL Database Pricing</a></li>
 </ul>
 
 
