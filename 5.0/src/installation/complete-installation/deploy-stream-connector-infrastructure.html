@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../../">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/complete-installation/deploy-stream-connector-infrastructure.md&amp;version=GBmain&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/complete-installation/deploy-stream-connector-infrastructure.md&amp;version=GBrelease-5.0&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -98,59 +98,16 @@
 <h2 id="prerequisites">Prerequisites</h2>
 <p>Before deploying Stream Connector infrastructure, ensure you have:</p>
 <ul>
-<li>A deployed XMPro platform (via <a href="../deployment/azure-terraform/index.html">Azure Terraform</a> or <a href="../deployment/windows-server-2022/index.html">Windows Server</a>)</li>
+<li>A deployed XMPro platform (via <a href="../deployment/aws-kubernetes/index.html">AWS Kubernetes (EKS)</a> or <a href="../deployment/azure-kubernetes/index.html">Azure Kubernetes (AKS)</a>)</li>
 <li>A Collection created in Data Stream Designer for the Stream Connector SH (see <a href="#getting-collection-credentials">Getting Collection Credentials</a>)</li>
 <li>An MQTT broker deployed and accessible (see Step 1)</li>
 </ul>
 <h2 id="step-1-deploy-mqtt-broker">Step 1: Deploy MQTT Broker</h2>
-<p>Stream Connector infrastructure requires an MQTT broker for message routing. Choose a deployment method based on your environment:</p>
-<table>
-<thead>
-<tr>
-<th>Deployment Method</th>
-<th>How to Deploy</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Terraform</td>
-<td>Set <code>enable_stream_connector = true</code> in your infrastructure layer variables. The module deploys an Eclipse Mosquitto broker on Azure Container Apps automatically. See the <a href="../deployment/azure-terraform/index.html">Azure Terraform deployment guide</a>.</td>
-</tr>
-<tr>
-<td>Docker</td>
-<td>Deploy your own Mosquitto broker using the <a href="../../technical-reference/mosquitto-mqtt-broker.html">Mosquitto MQTT Broker reference implementation</a>.</td>
-</tr>
-<tr>
-<td>Windows</td>
-<td>Deploy your own Mosquitto broker using the <a href="../../technical-reference/mosquitto-mqtt-broker.html">Mosquitto MQTT Broker reference implementation</a>.</td>
-</tr>
-</tbody>
-</table>
+<p>Stream Connector infrastructure requires an MQTT broker for message routing. Deploy an Eclipse Mosquitto broker using the <a href="../../technical-reference/mosquitto-mqtt-broker.html">Mosquitto MQTT Broker reference implementation</a>.</p>
 <p>Record the broker connection details (hostname, port, username, password) for use in Step 3.</p>
 <h2 id="step-2-deploy-stream-connector-stream-host">Step 2: Deploy Stream Connector Stream Host</h2>
 <p>Deploy a dedicated Stream Host for Stream Connector infrastructure. The Stream Connector SH requires its own Collection credentials - see <a href="#getting-collection-credentials">Getting Collection Credentials</a>.</p>
-<table>
-<thead>
-<tr>
-<th>Deployment Method</th>
-<th>How to Deploy</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Terraform</td>
-<td>Set <code>enable_stream_connector_stream_host = true</code> in your application layer variables and provide the collection credentials. See the <a href="../deployment/azure-terraform/index.html">Azure Terraform deployment guide</a>.</td>
-</tr>
-<tr>
-<td>Docker</td>
-<td>Follow the <a href="install-stream-host/docker.html">Docker Stream Host guide</a>, configuring the MQTT broker connection via environment variables.</td>
-</tr>
-<tr>
-<td>Windows</td>
-<td>Follow the <a href="install-stream-host/windows-x64.html">Windows Stream Host guide</a>, configuring the MQTT broker connection in the Stream Host settings.</td>
-</tr>
-</tbody>
-</table>
+<p>Deploy the Stream Host through the <code>stream-hosts</code> layer as described in <a href="install-stream-host/kubernetes.html">Stream Host Installation</a>, and supply the MQTT broker connection as environment variables on that Stream Host.</p>
 <h2 id="step-3-configure-server-variables">Step 3: Configure Server Variables</h2>
 <p>After deploying the MQTT broker and Stream Connector SH, configure the <code>StreamAsConnector:*</code> server variables in both <strong>Application Designer</strong> and <strong>Data Stream Designer</strong>. These variables provide the MQTT broker connection settings that enable communication between AD and the Connector Data Streams.</p>
 <p>For the full list of required server variables and multi-environment setup instructions, see the <a href="https://xmpro.gitbook.io/integrations/xmpro-stream">XMPro Stream Integration documentation</a>.</p>
@@ -197,7 +154,7 @@
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: September 23, 2026</em></small></p>
+    <p><small><em>Last modified: September 28, 2026</em></small></p>
   </div>
 </article>
 

@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../../../">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/complete-installation/install-stream-host/index.md&amp;version=GBmain&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/complete-installation/install-stream-host/index.md&amp;version=GBrelease-5.0&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -89,8 +89,7 @@
 
 <div class="NOTE">
 <h5>Note</h5>
-<p><strong>Want to run Stream Host in Docker?</strong> Please jump to &quot;<a href="docker.html">Docker instructions for Stream Host</a>&quot;.</p>
-<p><strong>Deploying XMPro with Azure Terraform?</strong> Stream Host is automatically included in the deployment. To add more Stream Hosts to your Azure environment, see &quot;<a href="azure-terraform.html">Azure Terraform Stream Host configuration</a>&quot;.</p>
+<p><strong>Deploying XMPro on Kubernetes (AKS/EKS)?</strong> Stream Hosts run in the cluster and are deployed with Terraform. See &quot;<a href="kubernetes.html">Kubernetes instructions for Stream Host</a>&quot;.</p>
 </div>
 <h2 id="download-the-connection-profile">Download the Connection Profile</h2>
 <p>Each Data Stream created in Data Stream Designer must belong to a <a href="../../../concepts/collection.html">Collection</a>. You can download the information in a Collection as a file, known as a Connection Profile. This profile includes the <em>device name, collection ID, server URL, secret,</em> and <em>key</em>.</p>
@@ -105,22 +104,10 @@
 <li>Click <em>Ok</em>. The Connection Profile will automatically begin to download.</li>
 </ol>
 <p><img src="../../../images/image-1761.png" alt="Fig 1. Steps to Set Up a Connection Profile"></p>
-<h2 id="download-the-installer">Download the Installer</h2>
-<p>Follow the steps below to download the XMPro Stream Host installer. From v4.4.7 onwards, ensure your network policy allows access to the <code>download.app.xmpro.com</code> domain.</p>
-<ol>
-<li>Log into Data Stream Designer and open the <em>Collections</em> page from the left-hand menu.</li>
-<li>Select the collection you wish to use.</li>
-<li>Click on <em>Download Host</em>.</li>
-<li>Select your desired platform.</li>
-<li>Click on the Download button to begin the download.</li>
-</ol>
-<p><img src="../../../images/stream-host-install-download.png" alt="Fig 2. Steps to Download the Installer"></p>
 <h2 id="choose-your-platform">Choose your Platform</h2>
 <p>Choose the platform where you will install the Stream Host:</p>
 <ul>
-<li><a href="windows-x64.html">Windows (x64)</a></li>
-<li><a href="docker.html">Docker</a></li>
-<li><a href="azure-terraform.html">Azure Terraform</a></li>
+<li><a href="kubernetes.html">Kubernetes</a></li>
 </ul>
 <h2 id="troubleshooting">Troubleshooting</h2>
 <p>If your Stream Host is not appearing in a Data Stream Collection, follow these steps to troubleshoot:</p>
@@ -170,7 +157,7 @@
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: September 23, 2026</em></small></p>
+    <p><small><em>Last modified: September 28, 2026</em></small></p>
   </div>
 </article>
 

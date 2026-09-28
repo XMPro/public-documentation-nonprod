@@ -1,4 +1,5 @@
 {
+  "docfx_version": "2.81.0+ba844df625370a6bd7c1ecab0d0ec4d1d9128ac4",
   "sitemap": {
     "baseUrl": "https://xmpro.github.io/public-documentation/",
     "changefreq": "daily",
@@ -3167,16 +3168,6 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "src/blocks-toolbox/visualizations/autodesk-forge.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/blocks-toolbox/visualizations/autodesk-forge.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
       "source_relative_path": "src/blocks-toolbox/visualizations/azure-digital-twin-hierarchy.md",
       "output": {
         ".html": {
@@ -4797,30 +4788,10 @@
     },
     {
       "type": "Resource",
-      "source_relative_path": "src/concepts/xmpro-ai/images/AI_Overview_Copilot_Notebook.mp4",
-      "output": {
-        "resource": {
-          "relative_path": "src/concepts/xmpro-ai/images/AI_Overview_Copilot_Notebook.mp4"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
       "source_relative_path": "src/concepts/xmpro-ai/images/AI_Overview_ML_Recommendations.png",
       "output": {
         "resource": {
           "relative_path": "src/concepts/xmpro-ai/images/AI_Overview_ML_Recommendations.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "src/concepts/xmpro-ai/images/AI_Overview_XMPro_Notebook.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/concepts/xmpro-ai/images/AI_Overview_XMPro_Notebook.png"
         }
       },
       "version": ""
@@ -4831,16 +4802,6 @@
       "output": {
         ".html": {
           "relative_path": "src/concepts/xmpro-ai/index.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "src/concepts/xmpro-ai/xmpro-notebook.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/concepts/xmpro-ai/xmpro-notebook.html"
         }
       },
       "version": ""
@@ -6481,6 +6442,16 @@
       "output": {
         "resource": {
           "relative_path": "src/images/agent/searching-for-agent.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/images/aks-kubernetes-architecture.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/aks-kubernetes-architecture.png"
         }
       },
       "version": ""
@@ -8661,16 +8632,6 @@
       "output": {
         "resource": {
           "relative_path": "src/images/authentication-advanced-settings.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "src/images/autodesk-1.gif",
-      "output": {
-        "resource": {
-          "relative_path": "src/images/autodesk-1.gif"
         }
       },
       "version": ""
@@ -12067,30 +12028,10 @@
     },
     {
       "type": "Resource",
-      "source_relative_path": "src/images/concepts/xmpro-ai/AI_Overview_Copilot_Notebook.mp4",
-      "output": {
-        "resource": {
-          "relative_path": "src/images/concepts/xmpro-ai/AI_Overview_Copilot_Notebook.mp4"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
       "source_relative_path": "src/images/concepts/xmpro-ai/AI_Overview_ML_Recommendations.png",
       "output": {
         "resource": {
           "relative_path": "src/images/concepts/xmpro-ai/AI_Overview_ML_Recommendations.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "src/images/concepts/xmpro-ai/AI_Overview_XMPro_Notebook.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/images/concepts/xmpro-ai/AI_Overview_XMPro_Notebook.png"
         }
       },
       "version": ""
@@ -13151,6 +13092,16 @@
       "output": {
         "resource": {
           "relative_path": "src/images/edit-rule.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "src/images/eks-kubernetes-architecture.png",
+      "output": {
+        "resource": {
+          "relative_path": "src/images/eks-kubernetes-architecture.png"
         }
       },
       "version": ""
@@ -14797,16 +14748,6 @@
     },
     {
       "type": "Resource",
-      "source_relative_path": "src/images/image-1391.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/images/image-1391.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
       "source_relative_path": "src/images/image-1394.png",
       "output": {
         "resource": {
@@ -15061,16 +15002,6 @@
       "output": {
         "resource": {
           "relative_path": "src/images/image-1488.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "src/images/image-1489.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/images/image-1489.png"
         }
       },
       "version": ""
@@ -15807,16 +15738,6 @@
     },
     {
       "type": "Resource",
-      "source_relative_path": "src/images/image-178.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/images/image-178.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
       "source_relative_path": "src/images/image-1789.png",
       "output": {
         "resource": {
@@ -16161,16 +16082,6 @@
       "output": {
         "resource": {
           "relative_path": "src/images/image-237.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "src/images/image-241.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/images/image-241.png"
         }
       },
       "version": ""
@@ -16957,16 +16868,6 @@
     },
     {
       "type": "Resource",
-      "source_relative_path": "src/images/image-552.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/images/image-552.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
       "source_relative_path": "src/images/image-558.png",
       "output": {
         "resource": {
@@ -17257,16 +17158,6 @@
     },
     {
       "type": "Resource",
-      "source_relative_path": "src/images/image-665.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/images/image-665.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
       "source_relative_path": "src/images/image-670.png",
       "output": {
         "resource": {
@@ -17427,16 +17318,6 @@
     },
     {
       "type": "Resource",
-      "source_relative_path": "src/images/image-713.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/images/image-713.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
       "source_relative_path": "src/images/image-715.png",
       "output": {
         "resource": {
@@ -17451,16 +17332,6 @@
       "output": {
         "resource": {
           "relative_path": "src/images/image-722.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "src/images/image-726.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/images/image-726.png"
         }
       },
       "version": ""
@@ -21607,26 +21478,6 @@
     },
     {
       "type": "Resource",
-      "source_relative_path": "src/images/resources/autodesk-forge-icon-1.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/images/resources/autodesk-forge-icon-1.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "src/images/resources/autodesk-forge-viewer-with-auth-img.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/images/resources/autodesk-forge-viewer-with-auth-img.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
       "source_relative_path": "src/images/resources/azure-ai-document-intelligence.png",
       "output": {
         "resource": {
@@ -25297,16 +25148,6 @@
     },
     {
       "type": "Resource",
-      "source_relative_path": "src/images/stream-host-install-download.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/images/stream-host-install-download.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
       "source_relative_path": "src/images/stream-host-log-level-ok.png",
       "output": {
         "resource": {
@@ -25887,30 +25728,10 @@
     },
     {
       "type": "Resource",
-      "source_relative_path": "src/images/xmpro-multi-server-deployment-architecture.jpg",
-      "output": {
-        "resource": {
-          "relative_path": "src/images/xmpro-multi-server-deployment-architecture.jpg"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
       "source_relative_path": "src/images/xmpro-package-manager-win-store.png",
       "output": {
         "resource": {
           "relative_path": "src/images/xmpro-package-manager-win-store.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "src/images/xmpro-single-server-deployment-architecture.jpg",
-      "output": {
-        "resource": {
-          "relative_path": "src/images/xmpro-single-server-deployment-architecture.jpg"
         }
       },
       "version": ""
@@ -25947,16 +25768,6 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "src/installation/azure-terraform-preparation.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/installation/azure-terraform-preparation.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
       "source_relative_path": "src/installation/complete-installation/deploy-stream-connector-infrastructure.md",
       "output": {
         ".html": {
@@ -25987,26 +25798,6 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "src/installation/complete-installation/install-stream-host/azure-terraform.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/installation/complete-installation/install-stream-host/azure-terraform.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "src/installation/complete-installation/install-stream-host/docker.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/installation/complete-installation/install-stream-host/docker.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
       "source_relative_path": "src/installation/complete-installation/install-stream-host/index.md",
       "output": {
         ".html": {
@@ -26017,10 +25808,10 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "src/installation/complete-installation/install-stream-host/windows-x64.md",
+      "source_relative_path": "src/installation/complete-installation/install-stream-host/kubernetes.md",
       "output": {
         ".html": {
-          "relative_path": "src/installation/complete-installation/install-stream-host/windows-x64.html"
+          "relative_path": "src/installation/complete-installation/install-stream-host/kubernetes.html"
         }
       },
       "version": ""
@@ -26097,140 +25888,10 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "src/installation/deployment/azure-terraform/advanced-configuration.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/installation/deployment/azure-terraform/advanced-configuration.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "src/installation/deployment/azure-terraform/azure-sizing.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/installation/deployment/azure-terraform/azure-sizing.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "src/installation/deployment/azure-terraform/implementation-guide.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/installation/deployment/azure-terraform/implementation-guide.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "src/installation/deployment/azure-terraform/index.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/installation/deployment/azure-terraform/index.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "src/installation/deployment/azure-terraform/troubleshooting.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/installation/deployment/azure-terraform/troubleshooting.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "src/installation/deployment/azure-terraform/upgrade-from-legacy.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/installation/deployment/azure-terraform/upgrade-from-legacy.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
       "source_relative_path": "src/installation/deployment/index.md",
       "output": {
         ".html": {
           "relative_path": "src/installation/deployment/index.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "src/installation/deployment/windows-server-2022/airgapped-deployment.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/installation/deployment/windows-server-2022/airgapped-deployment.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "src/installation/deployment/windows-server-2022/index.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/installation/deployment/windows-server-2022/index.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "src/installation/deployment/windows-server-2022/multi-server-deployment.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/installation/deployment/windows-server-2022/multi-server-deployment.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "src/installation/deployment/windows-server-2022/troubleshooting.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/installation/deployment/windows-server-2022/troubleshooting.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "src/installation/deployment/windows-server-2022/upgrade-from-legacy.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/installation/deployment/windows-server-2022/upgrade-from-legacy.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "src/installation/deployment/windows-server-2022/windows-sizing.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/installation/deployment/windows-server-2022/windows-sizing.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "src/installation/install.md",
-      "output": {
-        ".html": {
-          "relative_path": "src/installation/install.html"
         }
       },
       "version": ""
@@ -27037,40 +26698,10 @@
     },
     {
       "type": "Resource",
-      "source_relative_path": "src/resources/images/Metablock Autodesk Example.xapp",
-      "output": {
-        "resource": {
-          "relative_path": "src/resources/images/Metablock Autodesk Example.xapp"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "src/resources/images/Metablock Autodesk Example.zip",
-      "output": {
-        "resource": {
-          "relative_path": "src/resources/images/Metablock Autodesk Example.zip"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
       "source_relative_path": "src/resources/images/Metablock Example.xuc",
       "output": {
         "resource": {
           "relative_path": "src/resources/images/Metablock Example.xuc"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "src/resources/images/Metablock autodeskforge example.zip",
-      "output": {
-        "resource": {
-          "relative_path": "src/resources/images/Metablock autodeskforge example.zip"
         }
       },
       "version": ""
@@ -27711,36 +27342,6 @@
       "output": {
         "resource": {
           "relative_path": "src/resources/images/audio-wave.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "src/resources/images/autodesk-forge-icon-1.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/resources/images/autodesk-forge-icon-1.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "src/resources/images/autodesk-forge-viewer-img.jpg",
-      "output": {
-        "resource": {
-          "relative_path": "src/resources/images/autodesk-forge-viewer-img.jpg"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "src/resources/images/autodesk-forge-viewer-with-auth-img.png",
-      "output": {
-        "resource": {
-          "relative_path": "src/resources/images/autodesk-forge-viewer-with-auth-img.png"
         }
       },
       "version": ""
@@ -31321,6 +30922,16 @@
       "output": {
         ".html": {
           "relative_path": "src/resources/practice-notes/unified-recommendation-alert-management.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "src/technical-reference/connector-pool-configuration.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/technical-reference/connector-pool-configuration.html"
         }
       },
       "version": ""

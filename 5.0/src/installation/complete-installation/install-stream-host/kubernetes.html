@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Stream Host Installation | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Stream Host Installation | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../../toc.html">
+      <meta name="docfx:tocrel" content="../../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/complete-installation/install-stream-host/kubernetes.md&amp;version=GBrelease-5.0&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../../index.html">
+            <img id="logo" class="svg" src="../../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="stream-host-installation">Stream Host Installation</h1>
+
+<h2 id="overview">Overview</h2>
+<p>On XMPro 5.0, Stream Hosts run as pods in the same AKS or EKS cluster as the platform. There are two ways to deploy them, both driven by the layered Terraform deployment described in the <a href="../../deployment/aws-kubernetes/index.html">AWS Kubernetes (EKS)</a> and <a href="../../deployment/azure-kubernetes/index.html">Azure Kubernetes (AKS)</a> guides:</p>
+<ul>
+<li><strong>Default Stream Host</strong> - the site application layer (layer 3) can install one Stream Host alongside the platform. Its Collection is created for it during the DS database migration, so it registers with Data Stream Designer on first start.</li>
+<li><strong>Additional Stream Hosts</strong> - the Stream Hosts layer (layer 4, <code>examples/layered/stream-hosts</code>) deploys one standalone Stream Host per Collection. Each is its own Helm release of the <code>streamhost</code> chart with its own Collection ID and secret.</li>
+</ul>
+<p>One Stream Host serves one Collection. To add capacity, add Collections and Stream Hosts rather than pointing several Stream Hosts at the same Collection.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li>Layers 1 to 3 of the AKS or EKS deployment applied, with Data Stream Designer reachable at its public URL</li>
+<li><code>kubectl</code> access to the cluster and Terraform installed, as set up in the deployment guide</li>
+<li>A <a href="../../../concepts/collection.html">Collection</a> in Data Stream Designer for each additional Stream Host. See <a href="../../../how-tos/data-streams/manage-collections.html">Manage Collections</a> to create one and copy its ID and Secret.</li>
+<li>The outputs of the site infrastructure and application layers (see the tables below)</li>
+</ul>
+<h2 id="default-stream-host">Default Stream Host</h2>
+<p>The application layer's <code>enable_default_stream_host</code> variable controls the default Stream Host. It defaults to <code>true</code> on AKS and <code>false</code> on EKS, where the supported model is independent Stream Hosts through the Stream Hosts layer.</p>
+<table>
+<thead>
+<tr>
+<th>Application layer variable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>enable_default_stream_host</code></td>
+<td>Deploy the default in-cluster Stream Host with the platform.</td>
+</tr>
+<tr>
+<td><code>stream_host_collection_id</code></td>
+<td>Collection ID for the default Stream Host. Leave empty to generate one. The DS database migration creates the Collection.</td>
+</tr>
+<tr>
+<td><code>stream_host_collection_secret</code></td>
+<td>Collection secret for the default Stream Host. Leave empty to generate one.</td>
+</tr>
+<tr>
+<td><code>stream_host_replica_count</code></td>
+<td>Replica count for the default Stream Host. Defaults to <code>1</code>.</td>
+</tr>
+<tr>
+<td><code>stream_host_image_tag</code></td>
+<td>Stream Host image tag. Empty falls back to the platform <code>image_tag</code>.</td>
+</tr>
+</tbody>
+</table>
+<p>Set these in the application layer's <code>terraform.tfvars</code> and apply. The default Stream Host appears in Data Stream Designer under <strong>Stream Hosts</strong> once the pod is running.</p>
+<h2 id="additional-stream-hosts">Additional Stream Hosts</h2>
+<p>The Stream Hosts layer lives next to the other layers in the deployment repository and is applied after the application layer. From the application layer directory:</p>
+<p><strong>Mac/Linux:</strong></p>
+<pre><code class="lang-bash">cd ../stream-hosts
+cp terraform.tfvars.example terraform.tfvars
+</code></pre>
+<p><strong>Windows (PowerShell):</strong></p>
+<pre><code class="lang-powershell">cd ..\stream-hosts
+Copy-Item terraform.tfvars.example terraform.tfvars
+</code></pre>
+<h3 id="configure-the-layer">Configure the layer</h3>
+<p>Fill <code>terraform.tfvars</code> with the values from your site. Most come from the outputs of the infrastructure and application layers.</p>
+<p><strong>AKS:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>subscription_id</code></td>
+<td>Azure subscription</td>
+</tr>
+<tr>
+<td><code>cluster_name</code></td>
+<td>AKS cluster name, from layer 1</td>
+</tr>
+<tr>
+<td><code>name_suffix</code></td>
+<td>Site identifier, the same as the infrastructure and application layers</td>
+</tr>
+<tr>
+<td><code>aks_resource_group_name</code></td>
+<td>Resource group of the AKS cluster, from layer 1's <code>resource_group_name</code> output</td>
+</tr>
+<tr>
+<td><code>resource_group_name</code></td>
+<td>Site resource group, from the infrastructure layer output</td>
+</tr>
+<tr>
+<td><code>key_vault_name</code></td>
+<td>Site Key Vault, from the infrastructure layer output</td>
+</tr>
+<tr>
+<td><code>namespace</code></td>
+<td>Site namespace, from the application layer output</td>
+</tr>
+<tr>
+<td><code>cluster_secret_store_name</code></td>
+<td><code>azurekv-&lt;name_suffix&gt;</code> unless you renamed it in the application layer</td>
+</tr>
+<tr>
+<td><code>image_registry</code></td>
+<td><code>{{ACR_URL}}</code></td>
+</tr>
+<tr>
+<td><code>image_tag</code></td>
+<td><code>{{VERSION}}</code></td>
+</tr>
+<tr>
+<td><code>image_pull_secrets</code></td>
+<td>Required for the XMPro registry. A list holding the application layer's <code>image_pull_secret_name</code> output, <code>[&quot;xmpro-registry&quot;]</code> by default</td>
+</tr>
+<tr>
+<td><code>ds_server_url</code></td>
+<td>Data Stream Designer URL, from the application layer's <code>ds_url</code> output</td>
+</tr>
+</tbody>
+</table>
+<p><strong>EKS:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>aws_region</code></td>
+<td>AWS region, the same as the other layers</td>
+</tr>
+<tr>
+<td><code>name_suffix</code></td>
+<td>Site identifier, from the infrastructure layer output</td>
+</tr>
+<tr>
+<td><code>cluster_name</code></td>
+<td>EKS cluster name, from layer 1</td>
+</tr>
+<tr>
+<td><code>namespace</code></td>
+<td>Site namespace, <code>name_suffix</code> by default</td>
+</tr>
+<tr>
+<td><code>cluster_secret_store_name</code></td>
+<td><code>aws-secrets-&lt;name_suffix&gt;</code> unless you renamed it in the application layer</td>
+</tr>
+<tr>
+<td><code>secrets_kms_key_arn</code></td>
+<td>From the infrastructure layer's <code>secrets_kms_key_arn</code> output</td>
+</tr>
+<tr>
+<td><code>image_registry</code></td>
+<td><code>{{ACR_URL}}</code></td>
+</tr>
+<tr>
+<td><code>image_tag</code></td>
+<td><code>{{VERSION}}</code></td>
+</tr>
+<tr>
+<td><code>image_pull_secrets</code></td>
+<td>Required for the XMPro registry. A list holding the application layer's <code>image_pull_secret_name</code> output, <code>[&quot;xmpro-registry&quot;]</code> by default</td>
+</tr>
+<tr>
+<td><code>ds_server_url</code></td>
+<td>Data Stream Designer URL, from the application layer's <code>ds_url</code> output</td>
+</tr>
+</tbody>
+</table>
+<h3 id="define-the-stream-hosts">Define the Stream Hosts</h3>
+<p>Each entry in the <code>stream_hosts</code> map is one Stream Host. The key is a short lowercase identifier used in the Kubernetes and secret resource names.</p>
+<pre><code class="lang-hcl">stream_hosts = {
+  ingest = {
+    collection_id     = &quot;&lt;collection-id-from-DS&gt;&quot;
+    collection_secret = &quot;&lt;collection-secret-from-DS&gt;&quot;
+    gateway_name      = &quot;SH-AKS-site1-ingest&quot;
+  }
+  agg = {
+    collection_id     = &quot;&lt;collection-id-from-DS&gt;&quot;
+    collection_secret = &quot;&lt;collection-secret-from-DS&gt;&quot;
+    resources = {
+      limits   = { cpu = &quot;2000m&quot;, memory = &quot;8Gi&quot; }
+      requests = { cpu = &quot;500m&quot;,  memory = &quot;2Gi&quot; }
+    }
+  }
+}
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>collection_id</code></td>
+<td>Required. The Collection ID from Data Stream Designer.</td>
+</tr>
+<tr>
+<td><code>gateway_name</code></td>
+<td>Display name in Data Stream Designer. Defaults to <code>SH-&lt;name_suffix&gt;-&lt;key&gt;</code> on AKS and <code>SH-EKS-&lt;name_suffix&gt;-&lt;key&gt;</code> on EKS.</td>
+</tr>
+<tr>
+<td><code>collection_secret</code></td>
+<td>Required. The Collection's Secret from Data Stream Designer. The layer stores it in Key Vault (AKS) or Secrets Manager (EKS) and External Secrets Operator delivers it to the pod. If it doesn't match the Collection, Data Stream Designer rejects the Stream Host and the pod restarts.</td>
+</tr>
+<tr>
+<td><code>image_tag</code></td>
+<td>Override the layer-wide <code>image_tag</code> for this instance.</td>
+</tr>
+<tr>
+<td><code>resources</code></td>
+<td>Container CPU and memory. The chart default is <code>500m</code> / <code>1Gi</code> limits and <code>100m</code> / <code>256Mi</code> requests. See <a href="#sizing">Sizing</a>.</td>
+</tr>
+<tr>
+<td><code>enable_app_insights</code></td>
+<td>Send telemetry to Application Insights. Requires <code>app_insights_secret_name</code> at the layer level.</td>
+</tr>
+</tbody>
+</table>
+<p>The AKS layer also accepts, per entry:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>replica_count</code></td>
+<td>Number of pods for this Stream Host. Defaults to <code>1</code>.</td>
+</tr>
+<tr>
+<td><code>image_variant</code></td>
+<td>Image tag suffix for a runtime variant, for example <code>bookworm-slim-python3.12</code>. Appended to the effective tag.</td>
+</tr>
+</tbody>
+</table>
+<p>On EKS each entry runs one pod, and the layer-wide <code>enable_otel</code> and <code>otel_*</code> variables push OTLP telemetry from the Stream Hosts to a collector. See <a href="../../../technical-reference/observability/configure-opentelemetry.html">Configure OpenTelemetry</a>.</p>
+<h3 id="apply">Apply</h3>
+<pre><code class="lang-powershell">terraform init
+terraform apply
+</code></pre>
+<p>Confirm each Stream Host shows <strong>online</strong> in Data Stream Designer under <strong>Stream Hosts</strong>. To add another, add an entry to <code>stream_hosts</code> and apply again. To remove one, delete its entry and apply.</p>
+<h2 id="sizing">Sizing</h2>
+<p>Start at a tier, monitor, then adjust. Actual needs depend on stream count, event rate and aggregation complexity.</p>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th><code>limits</code></th>
+<th><code>requests</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Very Small (chart default)</td>
+<td><code>cpu = &quot;500m&quot;</code>, <code>memory = &quot;1Gi&quot;</code></td>
+<td><code>cpu = &quot;100m&quot;</code>, <code>memory = &quot;256Mi&quot;</code></td>
+</tr>
+<tr>
+<td>Small</td>
+<td><code>cpu = &quot;1000m&quot;</code>, <code>memory = &quot;4Gi&quot;</code></td>
+<td><code>cpu = &quot;250m&quot;</code>, <code>memory = &quot;1Gi&quot;</code></td>
+</tr>
+<tr>
+<td>Medium</td>
+<td><code>cpu = &quot;2000m&quot;</code>, <code>memory = &quot;8Gi&quot;</code></td>
+<td><code>cpu = &quot;500m&quot;</code>, <code>memory = &quot;2Gi&quot;</code></td>
+</tr>
+<tr>
+<td>Large</td>
+<td><code>cpu = &quot;4000m&quot;</code>, <code>memory = &quot;16Gi&quot;</code></td>
+<td><code>cpu = &quot;1000m&quot;</code>, <code>memory = &quot;4Gi&quot;</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="updating">Updating</h2>
+<p>To move Stream Hosts to a new release, change <code>image_tag</code> in <code>terraform.tfvars</code> and apply. The Helm release rolls the pods. Set <code>image_tag</code> on a single entry to move one Stream Host on its own.</p>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<p><strong>Stream Host not online in Data Stream Designer</strong></p>
+<pre><code class="lang-bash">kubectl get pods -n &lt;namespace&gt; -l app=xmpro-sh-&lt;key&gt;-stream-host-sh
+kubectl logs -n &lt;namespace&gt; deployment/xmpro-sh-&lt;key&gt;-stream-host-sh -c sh
+</code></pre>
+<ul>
+<li>Check <code>ds_server_url</code> matches the Data Stream Designer URL and is reachable from the cluster.</li>
+<li>Check the Collection ID exists in Data Stream Designer, and that <code>collection_secret</code> matches the Collection's Secret. <code>Unauthorized</code> in the logs means it doesn't.</li>
+<li><code>kubectl get externalsecret -n &lt;namespace&gt; xmpro-sh-&lt;key&gt;</code> should show <code>SecretSynced</code>. If not, the ClusterSecretStore name is wrong or External Secrets Operator cannot read the secret.</li>
+</ul>
+<p><strong>Stream Host still rejected after you change <code>collection_secret</code></strong></p>
+<p>External Secrets Operator refreshes the pod's secret once an hour, so the pod keeps the old value after an apply. On EKS the layer also doesn't update a secret it has already stored. To push the new value:</p>
+<pre><code class="lang-bash"># EKS only: replace the stored secret so the new value is written
+terraform apply -replace='module.stream_host[&quot;&lt;key&gt;&quot;].aws_secretsmanager_secret_version.collection_secret'
+
+# AKS and EKS: refresh the Kubernetes secret, then restart the pod
+kubectl annotate externalsecret xmpro-sh-&lt;key&gt; -n &lt;namespace&gt; force-sync=$(date +%s) --overwrite
+kubectl rollout restart -n &lt;namespace&gt; deployment/xmpro-sh-&lt;key&gt;-stream-host-sh
+</code></pre>
+<p><strong>Pod stuck in <code>ImagePullBackOff</code></strong></p>
+<p>The registry credential is missing or expired. Confirm <code>image_pull_secrets</code> names the application layer's pull secret and that the secret exists in the namespace.</p>
+<p><strong>Pod restarting</strong></p>
+<p>The container has a read-only root filesystem and runs as a non-root user. Agents can write only to <code>/tmp</code>, <code>/home/app</code> and <code>/app/Cache</code>.</p>
+<h2 id="related">Related</h2>
+<ul>
+<li><a href="../../deployment/aws-kubernetes/index.html">AWS Kubernetes (EKS) Deployment</a></li>
+<li><a href="../../deployment/azure-kubernetes/index.html">Azure Kubernetes (AKS) Deployment</a></li>
+<li><a href="../../../how-tos/data-streams/manage-collections.html">Manage Collections</a></li>
+</ul>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: September 28, 2026</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
