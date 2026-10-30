@@ -1,0 +1,1136 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.4.1.14562",
+      "templateHash": "10516732518043384973"
+    }
+  },
+  "parameters": {
+    "companyName": {
+      "type": "string",
+      "minLength": 1,
+      "metadata": {
+        "description": ""
+      }
+    },
+    "Subscription Manager App Name": {
+      "type": "string",
+      "minLength": 1,
+      "defaultValue": "xmpro-sm"
+    },
+    "Data Stream Designer App Name": {
+      "type": "string",
+      "minLength": 1,
+      "defaultValue": "xmpro-ds"
+    },
+    "App Designer App Name": {
+      "type": "string",
+      "minLength": 1,
+      "defaultValue": "xmpro-ad"
+    },
+    "SQL Server Name": {
+      "type": "string",
+      "minLength": 1,
+      "defaultValue": "xmpro-sql"
+    },
+    "sqlAdministratorLogin": {
+      "type": "string",
+      "defaultValue": "xmadmin",
+      "metadata": {
+        "description": "The admin user of the SQL Server"
+      }
+    },
+    "sqlAdministratorLoginPassword": {
+      "type": "secureString",
+      "metadata": {
+        "description": "The password of the admin user of the SQL Server"
+      }
+    },
+    "AD Encryption Key": {
+      "type": "string",
+      "metadata": {
+        "description": "Provide the encryption key as used in last deployment. It an be found in appSettings.json (xmpro -> appdesigner -> encryptionkey) file from last package OR in the Key Vault secret called xmpro--appDesigner--encryptionKey"
+      }
+    },
+    "EnableEmailNotification": {
+      "type": "bool",
+      "defaultValue": true
+    },
+    "SMTPServer": {
+      "type": "string",
+      "minLength": 1,
+      "defaultValue": "sinprd0310.outlook.com"
+    },
+    "SMTPFromAddress": {
+      "type": "string",
+      "minLength": 1,
+      "defaultValue": "sample@email.com"
+    },
+    "SMTPUsername": {
+      "type": "string",
+      "minLength": 1,
+      "defaultValue": "sample@email.com"
+    },
+    "SMTPPassword": {
+      "type": "SecureString",
+      "minLength": 1,
+      "defaultValue": "-"
+    },
+    "SMTPPort": {
+      "type": "int",
+      "defaultValue": 25
+    },
+    "EnableSSL": {
+      "type": "bool",
+      "defaultValue": "true"
+    }
+  },
+  "functions": [],
+  "variables": {
+    "location": "[resourceGroup().location]",
+    "sqlserverName": "[concat(parameters('SQL Server Name'), uniqueString(resourceGroup().id))]",
+    "smWebsiteName": "[parameters('Subscription Manager App Name')]",
+    "dsWebsiteName": "[parameters('Data Stream Designer App Name')]",
+    "adWebsiteName": "[parameters('App Designer App Name')]",
+    "_artifactsLocation": "https://xmmarketplacestorage.blob.core.windows.net/deploymentpackage/",
+    "_artifactsLocationSasToken": ""
+  },
+  "resources": [
+    {
+      "apiVersion": "2020-06-01",
+      "name": "pid-085dd09a-81e7-486b-8565-ef3ab17e488e-partnercenter",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "resources": []
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Sql/servers",
+      "apiVersion": "2021-02-01-preview",
+      "name": "[variables('sqlserverName')]",
+      "location": "[variables('location')]",
+      "tags": {
+        "displayName": "SQL Server"
+      },
+      "properties": {
+        "administratorLogin": "[parameters('sqlAdministratorLogin')]",
+        "administratorLoginPassword": "[parameters('sqlAdministratorLoginPassword')]",
+        "version": "12.0"
+      }
+    },
+    {
+      "type": "Microsoft.Sql/servers/databases",
+      "apiVersion": "2021-02-01-preview",
+      "name": "[format('{0}/{1}', variables('sqlserverName'), 'SM')]",
+      "location": "[variables('location')]",
+      "tags": {
+        "displayName": "SM Database"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Sql/servers', variables('sqlserverName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Resources/deploymentScripts",
+      "apiVersion": "2020-10-01",
+      "name": "UpgradeDatabase",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Sql/servers/databases', variables('sqlserverName'), 'SM')]",
+        "[resourceId('Microsoft.Web/sites', variables('dsWebsiteName'))]",
+        "[resourceId('Microsoft.Web/sites', variables('adWebsiteName'))]"
+      ],
+      "kind": "AzurePowerShell",
+      "properties": {
+        "azPowerShellVersion": "3.0",
+        "timeout": "PT30M",
+        "arguments": "[format(' -targetServerName {0} -targetUser {1} -targetPassword {2} -smdacpacuri {3} -dsdacpacuri {4} -addacpacuri {5} -sqlpackageinstalleruri {6} -setupProductsScripturi {7} -setupTenantScripturi {8} -setupDSScripturi {9} -DSUrl {10} -ADUrl {11} -CompanyName {12} -FirstName {13} -LastName {14} -UserName {15} -Email {16} -password {17} -adminPassword {18} -licenseuri {19} -adEncryptionKey {20} -cryptoToolOldUri {21} -cryptoToolNewUri {22}' , reference(variables('sqlserverName')).fullyQualifiedDomainName , parameters('sqlAdministratorLogin') , parameters('sqlAdministratorLoginPassword') , uri(variables('_artifactsLocation'), concat('Files/SM.dacpac', variables('_artifactsLocationSasToken'))), uri(variables('_artifactsLocation'), concat('Files/DS.dacpac', variables('_artifactsLocationSasToken'))), uri(variables('_artifactsLocation'), concat('Files/AD.dacpac', variables('_artifactsLocationSasToken'))) , uri(variables('_artifactsLocation'), concat('Files/sqlpackage-linux-x64-en-US-15.0.5084.2.zip', variables('_artifactsLocationSasToken'))) , uri(variables('_artifactsLocation'), concat('Files/SetupProducts.sql', variables('_artifactsLocationSasToken'))) , uri(variables('_artifactsLocation'), concat('Files/SetupTenant.sql', variables('_artifactsLocationSasToken'))) , uri(variables('_artifactsLocation'), concat('Files/SetupDS.sql', variables('_artifactsLocationSasToken'))), concat('https://', reference(resourceId('Microsoft.Web/sites', variables('dsWebsiteName')), '2018-02-01').defaultHostName) , concat('https://', reference(resourceId('Microsoft.Web/sites', variables('adWebsiteName')), '2018-02-01').defaultHostName) , parameters('companyName') , 'x' , 'x' , 'x' , 'x' , 'x' , 'x' , uri(variables('_artifactsLocation'), concat('Files/AzureCoSell.xmpl', variables('_artifactsLocationSasToken'))), parameters('AD Encryption Key')  , uri(variables('_artifactsLocation'), concat('Files/XMCryptoTool_Old', variables('_artifactsLocationSasToken')))  , uri(variables('_artifactsLocation'), concat('Files/XMCryptoTool_New', variables('_artifactsLocationSasToken'))) )]",
+        "primaryScriptUri": "[uri(variables('_artifactsLocation'), concat('Files/UpgradeDatabase.ps1', variables('_artifactsLocationSasToken')))]",
+        "cleanupPreference": "OnSuccess",
+        "retentionInterval": "P1D"
+      }
+    },
+    {
+      "type": "Microsoft.Sql/servers/databases",
+      "apiVersion": "2021-02-01-preview",
+      "name": "[format('{0}/{1}', variables('sqlserverName'), 'DS')]",
+      "location": "[variables('location')]",
+      "tags": {
+        "displayName": "DS Database"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Sql/servers', variables('sqlserverName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Sql/servers/databases",
+      "apiVersion": "2021-02-01-preview",
+      "name": "[format('{0}/{1}', variables('sqlserverName'), 'AD')]",
+      "location": "[variables('location')]",
+      "tags": {
+        "displayName": "AD Database"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Sql/servers', variables('sqlserverName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Sql/servers/firewallRules",
+      "apiVersion": "2021-02-01-preview",
+      "name": "[format('{0}/{1}', variables('sqlserverName'), 'AllowAllWindowsAzureIps')]",
+      "properties": {
+        "startIpAddress": "0.0.0.0",
+        "endIpAddress": "255.255.255.255"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Sql/servers', variables('sqlserverName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Web/serverfarms",
+      "apiVersion": "2020-12-01",
+      "name": "[format('{0}', variables('smWebsiteName'))]",
+      "location": "[variables('location')]",
+      "tags": {
+        "displayName": "SM HostingPlan"
+      }
+    },
+    {
+      "type": "Microsoft.Web/serverfarms",
+      "apiVersion": "2020-12-01",
+      "name": "[format('{0}', variables('dsWebsiteName'))]",
+      "location": "[variables('location')]",
+      "tags": {
+        "displayName": "DS HostingPlan"
+      }
+    },
+    {
+      "type": "Microsoft.Web/serverfarms",
+      "apiVersion": "2020-12-01",
+      "name": "[format('{0}', variables('adWebsiteName'))]",
+      "location": "[variables('location')]",
+      "tags": {
+        "displayName": "AD HostingPlan"
+      }
+    },
+    {
+      "apiVersion": "2019-08-01",
+      "location": "[variables('location')]",
+      "name": "SM-SigningCert",
+      "type": "Microsoft.Web/certificates",
+      "properties": {
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', format('{0}', variables('smWebsiteName')))]",
+        "pfxBlob": "[reference('GenerateCertificate').outputs.pfxBlob]",
+        "password": ""
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', format('{0}', variables('smWebsiteName')))]",
+        "[resourceId('Microsoft.Resources/deploymentScripts', 'GenerateCertificate')]"
+      ]
+    },
+    {
+      "type": "Microsoft.Resources/deploymentScripts",
+      "apiVersion": "2020-10-01",
+      "name": "GenerateCertificate",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Sql/servers/databases', variables('sqlserverName'), 'SM')]"
+      ],
+      "kind": "AzurePowerShell",
+      "properties": {
+        "azPowerShellVersion": "3.0",
+        "timeout": "PT30M",
+        "arguments": "[format(' -smWebsiteName {0}', variables('smWebsiteName'))]",
+        "primaryScriptUri": "[uri(variables('_artifactsLocation'), concat('Files/GenerateCertificate.ps1', variables('_artifactsLocationSasToken')))]",
+        "cleanupPreference": "OnSuccess",
+        "retentionInterval": "P1D"
+      }
+    },
+    {
+      "type": "Microsoft.Web/sites",
+      "apiVersion": "2020-12-01",
+      "name": "[variables('smWebsiteName')]",
+      "location": "[variables('location')]",
+      "identity": {
+        "type": "SystemAssigned"
+      },
+      "tags": {
+        "[format('hidden-related:{0}', resourceId('Microsoft.Web/serverfarms', format('{0}', variables('smWebsiteName'))))]": "empty",
+        "displayName": "SM Website"
+      },
+      "properties": {
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', format('{0}', variables('smWebsiteName')))]",
+        "siteConfig": {
+          "webSocketsEnabled": true,
+          "appSettings": [
+            {
+              "name": "WEBSITE_LOAD_CERTIFICATES",
+              "value": "*"
+            }
+          ]
+        },
+        "httpsOnly": true
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', format('{0}', variables('smWebsiteName')))]"
+      ],
+      "resources": [
+        {
+          "name": "[concat(variables('smWebsiteName'), '/MSDeploy')]",
+          "type": "Microsoft.Web/sites/extensions",
+          "apiVersion": "2015-08-01",
+          "properties": {
+            "packageUri": "[uri(variables('_artifactsLocation'), concat('Files/SM.zip', variables('_artifactsLocationSasToken')))]",
+            "setParameters": {
+              "Vault Name": "[concat(variables('smWebsiteName'), '-vault')]"
+            }
+          },
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/sites', variables('smWebsiteName'))]"
+          ]
+        }
+      ]
+    },
+    {
+      "apiVersion": "2018-02-14",
+      "name": "[concat(variables('smWebsiteName'), '-vault')]",
+      "location": "[resourceGroup().location]",
+      "type": "Microsoft.KeyVault/vaults",
+      "properties": {
+        "accessPolicies": [
+          {
+            "objectId": "[reference(resourceId('Microsoft.Web/sites', variables('smWebsiteName')),'2019-08-01', 'full').identity.principalId]",
+            "tenantId": "[subscription().tenantId]",
+            "permissions": {
+              "keys": [ "Get", "List" ],
+              "secrets": [ "Get", "List" ]
+            }
+          }
+        ],
+        "tenantId": "[subscription().tenantId]",
+        "sku": {
+          "name": "Standard",
+          "family": "A"
+        },
+        "networkAcls": {
+          "defaultAction": "Allow",
+          "bypass": "AzureServices"
+        }
+      },
+      "tags": {
+        "displayName": "xmpro-sm-vault"
+      },
+      "dependsOn": [ "[concat('Microsoft.Web/sites/', variables('smWebsiteName'))]" ]
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('smWebsiteName'), '-vault', '/', 'SQLSERVER')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('smWebsiteName'), '-vault'))]",
+        "[resourceId('Microsoft.Sql/servers', variables('sqlserverName'))]"
+      ],
+      "tags": {
+        "displayName": "sm-secret-sqlserver"
+      },
+      "properties": {
+        "value": "[concat('Data Source=tcp:',reference(variables('sqlserverName')).fullyQualifiedDomainName,';Initial Catalog=SM;User ID=',reference(variables('sqlserverName')).administratorLogin,';Password=',parameters('sqlAdministratorLoginPassword'))]"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('smWebsiteName'), '-vault', '/', 'ServerUUID')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('smWebsiteName'), '-vault'))]",
+        "[resourceId('Microsoft.Resources/deploymentScripts', 'UpgradeDatabase')]"
+      ],
+      "tags": {
+        "displayName": "sm-secret-productid"
+      },
+      "properties": {
+        "value": "[reference('UpgradeDatabase').outputs.SMProductId]"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('smWebsiteName'), '-vault', '/', 'DNSName')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('smWebsiteName'), '-vault'))]",
+        "[resourceId('Microsoft.Web/sites', variables('smWebsiteName'))]"
+      ],
+      "tags": {
+        "displayName": "sm-secret-dns"
+      },
+      "properties": {
+        "value": "[concat('https://', reference(resourceId('Microsoft.Web/sites', variables('smWebsiteName')), '2018-02-01').defaultHostName)]"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('smWebsiteName'), '-vault', '/', 'CERT')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/certificates', 'SM-SigningCert')]",
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('smWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "sm-secret-cert"
+      },
+      "properties": {
+        "value": "[reference('GenerateCertificate').outputs.pfxName]"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('smWebsiteName'), '-vault', '/', 'SALT')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('smWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "sm-secret-salt"
+      },
+      "properties": {
+        "value": "[uniqueString(resourceGroup().id, 'sm-secret-salt')]"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('smWebsiteName'), '-vault', '/', 'AutoScaleEnable')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('smWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "sm-secret-enable-autoscale"
+      },
+      "properties": {
+        "value": "false"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('smWebsiteName'), '-vault', '/', 'REDIS')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('smWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "sm-secret-redis"
+      },
+      "properties": {
+        "value": "-"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('smWebsiteName'), '-vault', '/', 'SMTPENABLE')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('smWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "sm-email-enable"
+      },
+      "properties": {
+        "value": "[parameters('EnableEmailNotification')]"
+      }
+    },
+    {
+      "condition": "[equals(parameters('EnableEmailNotification'), true())]",
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('smWebsiteName'), '-vault', '/', 'SMTPSERVER')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('smWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "sm-email-server"
+      },
+      "properties": {
+        "value": "[parameters('SMTPServer')]"
+      }
+    },
+    {
+      "condition": "[equals(parameters('EnableEmailNotification'), true())]",
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('smWebsiteName'), '-vault', '/', 'SMTPFrom')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('smWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "sm-email-from"
+      },
+      "properties": {
+        "value": "[parameters('SMTPFromAddress')]"
+      }
+    },
+    {
+      "condition": "[equals(parameters('EnableEmailNotification'),true())]",
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('smWebsiteName'), '-vault', '/', 'SMTPUSER')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('smWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "sm-email-username"
+      },
+      "properties": {
+        "value": "[parameters('SMTPUsername')]"
+      }
+    },
+    {
+      "condition": "[equals(parameters('EnableEmailNotification'),true())]",
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('smWebsiteName'), '-vault', '/', 'SMTPPASS')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('smWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "sm-email-password"
+      },
+      "properties": {
+        "value": "[parameters('SMTPPassword')]"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('smWebsiteName'), '-vault', '/', 'SMTPPORT')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('smWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "sm-email-port"
+      },
+      "properties": {
+        "value": "[parameters('SMTPPort')]"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('smWebsiteName'), '-vault', '/', 'SMTPENABLESSL')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('smWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "sm-email-ssl"
+      },
+      "properties": {
+        "value": "[parameters('EnableSSL')]"
+      }
+    },
+    {
+      "type": "Microsoft.Web/sites",
+      "apiVersion": "2020-12-01",
+      "name": "[variables('dsWebsiteName')]",
+      "location": "[variables('location')]",
+      "identity": {
+        "type": "SystemAssigned"
+      },
+      "tags": {
+        "[format('hidden-related:{0}', resourceId('Microsoft.Web/serverfarms', format('{0}', variables('dsWebsiteName'))))]": "empty",
+        "displayName": "DS Website"
+      },
+      "properties": {
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', format('{0}', variables('dsWebsiteName')))]",
+        "siteConfig": {
+          "webSocketsEnabled": true,
+          "appSettings": [
+            {
+              "name": "xm:xmpro:keyVault:name",
+              "value": "[concat(variables('dsWebsiteName'), '-vault')]"
+            },
+            {
+              "name": "xm:xmpro:keyVault:provider",
+              "value": "Azure"
+            }
+          ]
+        },
+        "httpsOnly": true
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', format('{0}', variables('dsWebsiteName')))]"
+      ],
+      "resources": [
+        {
+          "name": "[concat(variables('dsWebsiteName'), '/ZipDeploy')]",
+          "type": "Microsoft.Web/sites/extensions",
+          "apiVersion": "2015-08-01",
+          "properties": {
+            "packageUri": "[uri(variables('_artifactsLocation'), concat('Files/DS.zip', variables('_artifactsLocationSasToken')))]"
+          },
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/sites', variables('dsWebsiteName'))]"
+          ]
+        }
+      ]
+    },
+    {
+      "apiVersion": "2018-02-14",
+      "name": "[concat(variables('dsWebsiteName'), '-vault')]",
+      "location": "[resourceGroup().location]",
+      "type": "Microsoft.KeyVault/vaults",
+      "properties": {
+        "accessPolicies": [
+          {
+            "objectId": "[reference(resourceId('Microsoft.Web/sites', variables('dsWebsiteName')),'2019-08-01', 'full').identity.principalId]",
+            "tenantId": "[subscription().tenantId]",
+            "permissions": {
+              "keys": [ "Get", "List" ],
+              "secrets": [ "Get", "List" ]
+            }
+          }
+        ],
+        "tenantId": "[subscription().tenantId]",
+        "sku": {
+          "name": "Standard",
+          "family": "A"
+        },
+        "networkAcls": {
+          "defaultAction": "Allow",
+          "bypass": "AzureServices"
+        }
+      },
+      "tags": {
+        "displayName": "xmpro-ds-vault"
+      },
+      "dependsOn": [ "[concat('Microsoft.Web/sites/', variables('dsWebsiteName'))]" ]
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('dsWebsiteName'), '-vault', '/', 'xmpro--xmidentity--client--baseUrl')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('dsWebsiteName'), '-vault'))]",
+        "[resourceId('Microsoft.Web/sites', variables('dsWebsiteName'))]"
+      ],
+      "tags": {
+        "displayName": "ds-secret-dns"
+      },
+      "properties": {
+        "value": "[concat('https://', reference(resourceId('Microsoft.Web/sites', variables('dsWebsiteName')), '2018-02-01').defaultHostName)]"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('dsWebsiteName'), '-vault', '/', 'xmpro--xmidentity--server--baseUrl')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('dsWebsiteName'), '-vault'))]",
+        "[resourceId('Microsoft.Web/sites', variables('smWebsiteName'))]"
+      ],
+      "tags": {
+        "displayName": "ds-secret-identityserver"
+      },
+      "properties": {
+        "value": "[concat('https://', reference(resourceId('Microsoft.Web/sites', variables('smWebsiteName')), '2018-02-01').defaultHostName)]"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('dsWebsiteName'), '-vault', '/', 'xmpro--xmidentity--client--id')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+      ],
+      "tags": {
+        "displayName": "ds-secret-productid"
+      },
+      "properties": {
+        "value": "[reference('UpgradeDatabase').outputs.DSProductId]"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('dsWebsiteName'), '-vault', '/', 'xmpro--xmidentity--client--sharedkey')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+      ],
+      "tags": {
+        "displayName": "ds-secret-sharedkey"
+      },
+      "properties": {
+        "value": "[reference('UpgradeDatabase').outputs.DSProductKey]"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('dsWebsiteName'), '-vault', '/', 'xmpro--xmsettings--adminRole')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('dsWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "ds-secret-adminrole"
+      },
+      "properties": {
+        "value": "Administrator"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('dsWebsiteName'), '-vault', '/', 'xmpro--data--connectionString')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('dsWebsiteName'), '-vault'))]",
+        "[resourceId('Microsoft.Sql/servers', variables('sqlserverName'))]"
+      ],
+      "tags": {
+        "displayName": "ds-secret-sqlserver"
+      },
+      "properties": {
+        "value": "[concat('Server=tcp:',reference(variables('sqlserverName')).fullyQualifiedDomainName,';Initial Catalog=DS;persist security info=True;User ID=',reference(variables('sqlserverName')).administratorLogin,';Password=',parameters('sqlAdministratorLoginPassword'))]"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('dsWebsiteName'), '-vault', '/', 'xmpro--xmsettings--data--connectionString')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('dsWebsiteName'), '-vault'))]",
+        "[resourceId('Microsoft.Sql/servers', variables('sqlserverName'))]"
+      ],
+      "tags": {
+        "displayName": "ds-secret-settingssqlserver"
+      },
+      "properties": {
+        "value": "[concat('Server=tcp:',reference(variables('sqlserverName')).fullyQualifiedDomainName,';Initial Catalog=DS;persist security info=True;User ID=',reference(variables('sqlserverName')).administratorLogin,';Password=',parameters('sqlAdministratorLoginPassword'))]"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('dsWebsiteName'), '-vault', '/', 'xmpro--autoScale--enabled')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('dsWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "ds-secret-autoscale"
+      },
+      "properties": {
+        "value": "false"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('dsWebsiteName'), '-vault', '/', 'xmpro--autoScale--connectionString')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('dsWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "ds-secret-autoscaleconnection"
+      },
+      "properties": {
+        "value": "-"
+      }
+    },
+    {
+      "type": "Microsoft.Web/sites",
+      "apiVersion": "2020-12-01",
+      "name": "[variables('adWebsiteName')]",
+      "location": "[variables('location')]",
+      "identity": {
+        "type": "SystemAssigned"
+      },
+      "tags": {
+        "[format('hidden-related:{0}', resourceId('Microsoft.Web/serverfarms', format('{0}', variables('adWebsiteName'))))]": "empty",
+        "displayName": "AD Website"
+      },
+      "properties": {
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', format('{0}', variables('adWebsiteName')))]",
+        "siteConfig": {
+          "webSocketsEnabled": true,
+          "alwaysOn": true,
+          "appSettings": [
+            {
+              "name": "xm:xmpro:keyVault:name",
+              "value": "[concat(variables('adWebsiteName'), '-vault')]"
+            },
+            {
+              "name": "xm:xmpro:keyVault:provider",
+              "value": "Azure"
+            }
+          ]
+        },
+        "httpsOnly": true
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', format('{0}', variables('adWebsiteName')))]"
+      ],
+      "resources": [
+        {
+          "name": "[concat(variables('adWebsiteName'), '/ZipDeploy')]",
+          "type": "Microsoft.Web/sites/extensions",
+          "apiVersion": "2015-08-01",
+          "properties": {
+            "packageUri": "[uri(variables('_artifactsLocation'), concat('Files/AD.zip', variables('_artifactsLocationSasToken')))]"
+          },
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/sites', variables('adWebsiteName'))]",
+            "[resourceId('Microsoft.KeyVault/vaults/secrets', concat(variables('adWebsiteName'), '-vault'), 'xmpro--data--connectionString')]"
+          ]
+        }
+      ]
+    },
+    {
+      "apiVersion": "2018-02-14",
+      "name": "[concat(variables('adWebsiteName'), '-vault')]",
+      "location": "[resourceGroup().location]",
+      "type": "Microsoft.KeyVault/vaults",
+      "properties": {
+        "accessPolicies": [
+          {
+            "objectId": "[reference(resourceId('Microsoft.Web/sites', variables('adWebsiteName')),'2019-08-01', 'full').identity.principalId]",
+            "tenantId": "[subscription().tenantId]",
+            "permissions": {
+              "keys": [ "Get", "List" ],
+              "secrets": [ "Get", "List" ]
+            }
+          }
+        ],
+        "tenantId": "[subscription().tenantId]",
+        "sku": {
+          "name": "Standard",
+          "family": "A"
+        },
+        "networkAcls": {
+          "defaultAction": "Allow",
+          "bypass": "AzureServices"
+        }
+      },
+      "tags": {
+        "displayName": "xmpro-ad-vault"
+      },
+      "dependsOn": [ "[concat('Microsoft.Web/sites/', variables('adWebsiteName'))]" ]
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('adWebsiteName'), '-vault', '/', 'xmpro--xmidentity--client--baseUrl')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('adWebsiteName'), '-vault'))]",
+        "[resourceId('Microsoft.Web/sites', variables('adWebsiteName'))]"
+      ],
+      "tags": {
+        "displayName": "ad-secret-dns"
+      },
+      "properties": {
+        "value": "[concat('https://', reference(resourceId('Microsoft.Web/sites', variables('adWebsiteName')), '2018-02-01').defaultHostName)]"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('adWebsiteName'), '-vault', '/', 'xmpro--xmidentity--server--baseUrl')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('adWebsiteName'), '-vault'))]",
+        "[resourceId('Microsoft.Web/sites', variables('smWebsiteName'))]"
+      ],
+      "tags": {
+        "displayName": "ad-secret-identityserver"
+      },
+      "properties": {
+        "value": "[concat('https://', reference(resourceId('Microsoft.Web/sites', variables('smWebsiteName')), '2018-02-01').defaultHostName)]"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('adWebsiteName'), '-vault', '/', 'xmpro--xmidentity--client--id')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+      ],
+      "tags": {
+        "displayName": "ad-secret-productid"
+      },
+      "properties": {
+        "value": "[reference('UpgradeDatabase').outputs.ADProductId]"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('adWebsiteName'), '-vault', '/', 'xmpro--xmidentity--client--sharedkey')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+      ],
+      "tags": {
+        "displayName": "ad-secret-sharedkey"
+      },
+      "properties": {
+        "value": "[reference('UpgradeDatabase').outputs.ADProductKey]"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('adWebsiteName'), '-vault', '/', 'xmpro--xmsettings--adminRole')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('adWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "ad-secret-adminrole"
+      },
+      "properties": {
+        "value": "Administrator"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('adWebsiteName'), '-vault', '/', 'xmpro--data--connectionString')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('adWebsiteName'), '-vault'))]",
+        "[resourceId('Microsoft.Sql/servers', variables('sqlserverName'))]"
+      ],
+      "tags": {
+        "displayName": "ad-secret-sqlserver"
+      },
+      "properties": {
+        "value": "[concat('Server=tcp:',reference(variables('sqlserverName')).fullyQualifiedDomainName,';Initial Catalog=AD;persist security info=True;User ID=',reference(variables('sqlserverName')).administratorLogin,';Password=',parameters('sqlAdministratorLoginPassword'))]"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('adWebsiteName'), '-vault', '/', 'xmpro--xmsettings--data--connectionString')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('adWebsiteName'), '-vault'))]",
+        "[resourceId('Microsoft.Sql/servers', variables('sqlserverName'))]"
+      ],
+      "tags": {
+        "displayName": "ad-secret-settingssqlserver"
+      },
+      "properties": {
+        "value": "[concat('Server=tcp:',reference(variables('sqlserverName')).fullyQualifiedDomainName,';Initial Catalog=AD;persist security info=True;User ID=',reference(variables('sqlserverName')).administratorLogin,';Password=',parameters('sqlAdministratorLoginPassword'))]"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('adWebsiteName'), '-vault', '/', 'xmpro--autoScale--enabled')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('adWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "ad-secret-autoscale"
+      },
+      "properties": {
+        "value": "false"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('adWebsiteName'), '-vault', '/', 'xmpro--autoScale--connectionString')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('adWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "ad-secret-autoscaleconnection"
+      },
+      "properties": {
+        "value": "-"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('adWebsiteName'), '-vault', '/', 'xmpro--xmnotification--email--enable')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('adWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "ad-email-enable"
+      },
+      "properties": {
+        "value": "[parameters('EnableEmailNotification')]"
+      }
+    },
+    {
+      "condition": "[equals(parameters('EnableEmailNotification'),true())]",
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('adWebsiteName'), '-vault', '/', 'xmpro--xmnotification--email--smtpServer')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('adWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "ad-email-server"
+      },
+      "properties": {
+        "value": "[parameters('SMTPServer')]"
+      }
+    },
+    {
+      "condition": "[equals(parameters('EnableEmailNotification'),true())]",
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('adWebsiteName'), '-vault', '/', 'xmpro--xmnotification--email--fromAddress')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('adWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "ad-email-fromAddress"
+      },
+      "properties": {
+        "value": "[parameters('SMTPFromAddress')]"
+      }
+    },
+    {
+      "condition": "[equals(parameters('EnableEmailNotification'),true())]",
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('adWebsiteName'), '-vault', '/', 'xmpro--xmnotification--email--userName')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('adWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "ad-email-usernane"
+      },
+      "properties": {
+        "value": "[parameters('SMTPUsername')]"
+      }
+    },
+    {
+      "condition": "[equals(parameters('EnableEmailNotification'),true())]",
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('adWebsiteName'), '-vault', '/', 'xmpro--xmnotification--email--password')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('adWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "ad-email-password"
+      },
+      "properties": {
+        "value": "[parameters('SMTPPassword')]"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('adWebsiteName'), '-vault', '/', 'xmpro--xmnotification--email--port')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('adWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "ad-email-port"
+      },
+      "properties": {
+        "value": "[parameters('SMTPPort')]"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('adWebsiteName'), '-vault', '/', 'xmpro--xmnotification--email--enableSsl')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('adWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "ad-email-ssl"
+      },
+      "properties": {
+        "value": "[parameters('EnableSSL')]"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('adWebsiteName'), '-vault', '/', 'xmpro--xmnotification--email--useDefaultCredentials')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('adWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "ad-email-useDefaultCredentials"
+      },
+      "properties": {
+        "value": "false"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('adWebsiteName'), '-vault', '/', 'xmpro--xmnotification--email--webApplication')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('adWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "ad-email-webApplication"
+      },
+      "properties": {
+        "value": "true"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[concat(variables('adWebsiteName'), '-vault', '/', 'xmpro--xmnotification--email--templateFolder')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(variables('adWebsiteName'), '-vault'))]"
+      ],
+      "tags": {
+        "displayName": "ad-email-templateFolder"
+      },
+      "properties": {
+        "value": "Templates"
+      }
+    }
+  ]
+}

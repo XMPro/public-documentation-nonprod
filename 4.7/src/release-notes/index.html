@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>v4.7 Release Notes | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="v4.7 Release Notes | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../images/favicon.png">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/release-notes/index.md&amp;version=GB25835-add-release-notes-470&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="v47-release-notes">v4.7 Release Notes</h1>
+
+<p>This section contains the release notes for XMPro v4.7 and the v4.6 releases it continues, providing information about new features, improvements, and bug fixes across all core products. Key highlights in v4.7.0 include App Designer connector pooling, server-side sort and filter for the Data Grid, and delivery of deployment assets from XMPro GitHub Enterprise. Key highlights in v4.6 include the Streams as Connectors architecture, Stream Host Event-Level Streaming architecture, OAuth SMTP support, and security enhancements across all products.</p>
+<h2 id="known-issues-reported-and-fixed">Known Issues Reported and Fixed</h2>
+<table>
+  <thead>
+    <tr>
+      <th width="120">Product</th>
+      <th>Description</th>
+      <th width="95">Reported</th>
+      <th width="95">Fixed</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>App Designer</td>
+      <td>Ticket ID17911 The selected validation group is not retained: When you reopen a block's properties, the validation group selected on a button is not retained, so the validation configuration has to be reapplied.</td>
+      <td>v4.5.3</td>
+      <td>v5.0.0</td>
+    </tr>
+    <tr>
+      <td>Data Stream Designer</td>
+      <td>Ticket ID17421 Data Stream Designer Hangs on Publish/Unpublish: When you publish or unpublish a Data Stream, the browser occasionally becomes unresponsive and requires a page refresh to recover.</td>
+      <td>v4.5.5</td>
+      <td>v5.0.0</td>
+    </tr>
+    <tr>
+      <td>Data Stream Designer</td>
+      <td>Ticket ID17822 Incorrect Spanish translation in DS: When you use Data Stream Designer with Spanish set as your language, the labels "Save", "Discard", and "Listener" are translated incorrectly (as "Ahorrar", "Desechar", and "Oyentes" - meanings unrelated to the UI action).</td>
+      <td>v4.5.5</td>
+      <td>v4.6.1</td>
+    </tr>
+    <tr>
+      <td>Common</td>
+      <td>Ticket ID18105 Low-risk container vulnerabilities reported in container images: A customer scan reported low-risk findings across the App Designer, Data Stream Designer, and Stream Host images. Most are confirmed false positives or resolved by base-image updates, but CVE-2026-1703 in <code>pip</code> on the Stream Host image remains outstanding.</td>
+      <td>v4.6.0</td>
+      <td>Pending</td>
+    </tr>
+  </tbody>
+</table>
+<h2 id="v470">v4.7.0</h2>
+<p>Date Released: TBC</p>
+<p>v4.7.0 continues the v4.6 line. It includes every change from v4.6.1 and the changes prepared for v4.6.2, which was not released separately. If you are upgrading from v4.6.0, also read the v4.6.1 notes below.</p>
+<h3 id="common">Common</h3>
+<table>
+  <thead>
+    <tr>
+      <th width="120">Change Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Deployment</td>
+      <td>
+        <p><b>Deployment assets delivered from XMPro GitHub Enterprise</b>: From v4.7.0, XMPro delivers deployment assets from XMPro GitHub Enterprise instead of public GitHub.</p>
+        <ul>
+          <li>The Terraform module for Azure App Service and Azure Container Instances (<code>infra-azureac</code>) is synced one way into a private repository that you host. Only content marked final for a release is synced.</li>
+          <li>XMPro container images are no longer pulled from a public XMPro registry. XMPro pushes the release images into a container registry that you host. Set <code>acr_url_product</code> to that registry.</li>
+        </ul>
+        <p>The deployment flow and scripts are unchanged. The Subscription Manager package is still downloaded from <code>download.app.xmpro.com</code>.</p>
+      </td>
+    </tr>
+    <tr>
+      <td>Deployment</td>
+      <td>
+        <p><b>Terraform module changes</b>:</p>
+        <ul>
+          <li>When <code>use_existing_database = true</code>, the Subscription Manager database migration uses the existing database's product IDs and keys instead of the evaluation values. Two new inputs, <code>existing_xmpro_notebook_product_id</code> and <code>existing_xmpro_notebook_product_key</code>, supply the XMPro Notebook pair.</li>
+          <li>The <code>migration4.4</code> example can reuse an existing SQL server (<code>use_existing_database</code>, <code>existing_sql_server_fqdn</code>) and can add extra CNAME and NS records to the custom DNS zone (<code>additional_dns_cname_records</code>, <code>additional_dns_ns_records</code>).</li>
+          <li>The App Designer connector pool cap uses its default of 128. The Terraform module does not expose it in this release. See <a href="../technical-reference/connector-pool-configuration.html">Connector Pool Configuration</a>.</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>Security</td>
+      <td>
+        <p><b>Product security and stability</b>: We've addressed several security vulnerabilities in this release.</p>
+        <p><i>Mitigated:</i></p>
+        <ul>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2026-70159">CVE-2026-70159</a>: Upgraded Microsoft.AspNetCore.SignalR.Common to 8.0.32 in App Designer, Data Stream Designer, XMPro AI and Stream Host.</li>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2026-84008">CVE-2026-84008</a> and <a href="https://www.cve.org/CVERecord?id=CVE-2026-70162">CVE-2026-70162</a>: Upgraded System.Security.Cryptography.Pkcs to 8.0.2 in App Designer and Data Stream Designer.</li>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2026-48109">CVE-2026-48109</a>, <a href="https://www.cve.org/CVERecord?id=CVE-2026-48506">CVE-2026-48506</a>, <a href="https://www.cve.org/CVERecord?id=CVE-2026-48510">CVE-2026-48510</a>, <a href="https://www.cve.org/CVERecord?id=CVE-2026-48511">CVE-2026-48511</a> and <a href="https://www.cve.org/CVERecord?id=CVE-2026-92707">CVE-2026-92707</a>: Upgraded MessagePack from 2.5.187 to 2.5.303 in App Designer and Data Stream Designer, and removed it from XMPro AI, which did not use it.</li>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2021-30246">CVE-2021-30246</a>, <a href="https://www.cve.org/CVERecord?id=CVE-2022-25898">CVE-2022-25898</a> and <a href="https://www.cve.org/CVERecord?id=CVE-2026-4602">CVE-2026-4602</a>: The Subscription Manager sign-in now uses XMPro's maintained oidc-client build, which checks id_token signatures with jsrsasign 11.1.3 instead of the jsrsasign 5.1.0 compiled into oidc-client 1.2.2.</li>
+          <li>Subscription Manager: upgraded fast-uri to 3.1.8 (<a href="https://www.cve.org/CVERecord?id=CVE-2026-6321">CVE-2026-6321</a>, <a href="https://www.cve.org/CVERecord?id=CVE-2026-6322">CVE-2026-6322</a>, <a href="https://www.cve.org/CVERecord?id=CVE-2026-13676">CVE-2026-13676</a>, <a href="https://www.cve.org/CVERecord?id=CVE-2026-16221">CVE-2026-16221</a>, <a href="https://www.cve.org/CVERecord?id=CVE-2026-18446">CVE-2026-18446</a>, <a href="https://www.cve.org/CVERecord?id=CVE-2026-75975">CVE-2026-75975</a>, <a href="https://www.cve.org/CVERecord?id=CVE-2026-76172">CVE-2026-76172</a>), ws to 5.2.7 (<a href="https://www.cve.org/CVERecord?id=CVE-2026-48779">CVE-2026-48779</a>), picomatch to 4.0.7 (<a href="https://www.cve.org/CVERecord?id=CVE-2026-33671">CVE-2026-33671</a>) and form-data to 4.0.6 (<a href="https://www.cve.org/CVERecord?id=CVE-2026-12143">CVE-2026-12143</a>).</li>
+          <li>App Designer: upgraded tsiclient from 1.4.14 to 1.4.28, which removes the npm 6 dependencies it bundled: tar (<a href="https://www.cve.org/CVERecord?id=CVE-2026-26960">CVE-2026-26960</a>, <a href="https://www.cve.org/CVERecord?id=CVE-2026-59873">CVE-2026-59873</a>, <a href="https://www.cve.org/CVERecord?id=CVE-2026-59874">CVE-2026-59874</a>, <a href="https://www.cve.org/CVERecord?id=CVE-2026-73566">CVE-2026-73566</a>), brace-expansion (<a href="https://www.cve.org/CVERecord?id=CVE-2026-14257">CVE-2026-14257</a>, <a href="https://www.cve.org/CVERecord?id=CVE-2026-33750">CVE-2026-33750</a>, <a href="https://www.cve.org/CVERecord?id=CVE-2026-69152">CVE-2026-69152</a>), cross-spawn (<a href="https://www.cve.org/CVERecord?id=CVE-2024-21538">CVE-2024-21538</a>), minimatch (<a href="https://www.cve.org/CVERecord?id=CVE-2026-27904">CVE-2026-27904</a>), form-data (<a href="https://www.cve.org/CVERecord?id=CVE-2026-12143">CVE-2026-12143</a>) and uuid (<a href="https://www.cve.org/CVERecord?id=CVE-2026-41907">CVE-2026-41907</a>).</li>
+          <li>App Designer and Data Stream Designer: upgraded ws to 7.5.13 (<a href="https://www.cve.org/CVERecord?id=CVE-2026-48779">CVE-2026-48779</a>).</li>
+          <li>XMPro AI: upgraded Angular to 20.3.32 (<a href="https://www.cve.org/CVERecord?id=CVE-2026-50170">CVE-2026-50170</a>, <a href="https://www.cve.org/CVERecord?id=CVE-2026-54268">CVE-2026-54268</a>), browserslist to 4.29.1 (<a href="https://www.cve.org/CVERecord?id=CVE-2026-73088">CVE-2026-73088</a>, <a href="https://www.cve.org/CVERecord?id=CVE-2026-73089">CVE-2026-73089</a>) and ws to 7.5.13 (<a href="https://www.cve.org/CVERecord?id=CVE-2026-48779">CVE-2026-48779</a>), and removed the unused uuid dependency (<a href="https://www.cve.org/CVERecord?id=CVE-2026-41907">CVE-2026-41907</a>).</li>
+          <li>App Designer: fixed a live Connector issue where, under concurrent load, one user's request could see another user's identity or access token from the same company. Each request now sees only its own context.</li>
+        </ul>
+        <p><i>Assessed as Mitigated by Design (vulnerable code paths are not reachable in XMPro deployments):</i></p>
+        <ul>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2026-106117">CVE-2026-106117</a>, <a href="https://www.cve.org/CVERecord?id=CVE-2026-106118">CVE-2026-106118</a> and <a href="https://www.cve.org/CVERecord?id=CVE-2026-106116">CVE-2026-106116</a>: SixLabors.ImageSharp 3.1.11 in App Designer, Data Stream Designer and XMPro AI. Uploaded images are now decoded only as PNG, JPEG, GIF, BMP or WebP, so uploads cannot reach the vulnerable TIFF decoders. <a href="https://www.cve.org/CVERecord?id=CVE-2026-106110">CVE-2026-106110</a>, <a href="https://www.cve.org/CVERecord?id=CVE-2026-106113">CVE-2026-106113</a> and <a href="https://www.cve.org/CVERecord?id=CVE-2026-106115">CVE-2026-106115</a> in the same package are also not reachable. The package remains in these products, so scanners will still report it.</li>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2026-50170">CVE-2026-50170</a> and <a href="https://www.cve.org/CVERecord?id=CVE-2026-54268">CVE-2026-54268</a>: @angular/common in App Designer and Data Stream Designer (15.2.10) and Subscription Manager (5.2.11).</li>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2026-41907">CVE-2026-41907</a>: uuid in App Designer (9.0.1) and Subscription Manager (3.4.0).</li>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2022-21986">CVE-2022-21986</a> in Subscription Manager.</li>
+        </ul>
+        <p><i>Container images:</i></p>
+        <ul>
+          <li>The App Designer, Data Stream Designer and XMPro AI images run on .NET 8.0.32 on Alpine 3.24.</li>
+          <li>Root certificates from eMudhra (emSign), whose CA keys were reported compromised on 21 Oct 2026, are no longer trusted in the App Designer, Data Stream Designer, XMPro AI, Stream Host and database migration images. The Python-based Stream Host images also point Python HTTP clients at the cleaned system certificate bundle.</li>
+          <li>curl is removed from the Stream Host and .NET base images, and perl-base and util-linux are removed from the Debian-based Stream Host images.</li>
+          <li>The database migration containers no longer write connection strings to their logs.</li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h3 id="app-designer">App Designer</h3>
+<table>
+  <thead>
+    <tr>
+      <th width="120">Change Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Enhancement</td>
+      <td>
+        <p><b>Connector pooling</b>: App Designer now keeps a pool of loaded Connector handlers and reuses them across requests, instead of loading the Connector for every request. Pages that read from Connectors load faster, and App Designer handles more concurrent users.</p>
+        <ul>
+          <li>Each App Designer instance keeps its own pool, capped at 128 by default. When it is full, the least recently used connection is evicted first. See <a href="../technical-reference/connector-pool-configuration.html">Connector Pool Configuration</a>.</li>
+          <li>Saving or deleting a Connection evicts its pooled handlers on the App Designer instance that handled the save. Other instances are not notified. Live Connector subscriptions that are already open keep running until their last subscriber disconnects.</li>
+          <li>Two new reports on the Settings page, <b>Connector Pool Report</b> and <b>Live Connector Pool Report</b>, show what is in each pool. See <a href="../how-tos/manage-site-settings.html">Manage Site Settings</a>.</li>
+          <li>A Company Admin can clear their company's pooled handlers with the <b>Connector Pool</b> action in the <b>Behavior</b> category of the Settings page. The action applies to the App Designer instance that handles the request.</li>
+          <li>Live connectors are now closed cleanly when App Designer shuts down.</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>Enhancement</td>
+      <td>
+        <p><b>Server-side sort and filter for the Data Grid</b>: A new <b>Enable Remote Sort/Filter</b> setting on the Data Grid block sends sort, filter and grouping to the Connector along with paging, instead of fetching the full dataset when a user sorts or filters. The setting appears when paging is enabled and is off by default.</p>
+        <p><i>No current XMPro Connector handles these parameters, so turning the setting on stops sorting and filtering until the Connector is updated to support them.</i></p>
+        <p>With Enable Remote Sort/Filter on, a Filter set in the designer combines with a user's column filter instead of being replaced by it. The Data Grid also gets an <b>Allow Sorting</b> setting, which can be bound to a variable.</p>
+      </td>
+    </tr>
+    <tr>
+      <td>Enhancement</td>
+      <td>
+        <p><b>Encrypted Power BI Application Secret</b>: The Application Secret on the Power BI block is now stored encrypted, and the secret box stays blank after saving. When Use Variables is on, only secure variables can be selected for the secret.</p>
+        <p>The secret is decrypted on the server and is never returned to the browser.</p>
+      </td>
+    </tr>
+    <tr>
+      <td>Change</td>
+      <td>
+        <p><b>Power BI blocks in Application mode load</b>: Pages that contain a Power BI block in Application authentication mode now get relaxed Cross-Origin-Opener-Policy and Cross-Origin-Embedder-Policy headers, so the Power BI sign-in completes and the report displays. All other pages keep the default headers.</p>
+        <p>Browsers apply these headers to the whole page load, so pages opened by in-app navigation after a Power BI page keep the relaxed headers until the next full page load.</p>
+      </td>
+    </tr>
+    <tr>
+      <td>Change</td>
+      <td>
+        <p><b>Accepted image formats</b>: Icon and thumbnail uploads for apps, widgets, categories, recommendation rules, templates and the block Icon property accept PNG, JPEG, GIF, BMP and WebP. Other formats, including TIFF, are rejected.</p>
+        <ul>
+          <li>A rejected upload shows no message, and the New App form keeps Save disabled until a supported image is uploaded.</li>
+          <li>A template whose existing thumbnail is a TIFF can't be saved until the thumbnail is replaced.</li>
+          <li>The Image block is not affected.</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td><b>Nested Parent expressions rendered blank</b>: <i>Expression bindings using Parent.Parent or deeper rendered blank when the chain reached the top-level data container.</i><br>Nested Parent fields now resolve at every level.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td><b>Power BI block blank in Application mode</b>: <i>A Power BI block using Application authentication mode stayed blank after the embed token was retrieved.</i><br>The block now renders the report.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td><b>App Designer restart under database load</b>: <i>When the database timed out while App Designer was recording a Connector error, App Designer could stop and restart.</i><br>The error is now logged and App Designer keeps running.</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td><b>Office address in emails</b>: Email templates now show the current XMPro office address.</td>
+    </tr>
+  </tbody>
+</table>
+<h3 id="data-stream-designer">Data Stream Designer</h3>
+<table>
+  <thead>
+    <tr>
+      <th width="120">Change Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Change</td>
+      <td>
+        <p><b>Accepted image formats</b>: Icon uploads, including the icons inside agent packages, accept PNG, JPEG, GIF, BMP and WebP. A package whose icon is in another format, including TIFF, is rejected as invalid. A rejected upload shows no message.</p>
+      </td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td><b>Publishing and unpublishing Data Streams from a Collection failed</b>: <i>Publishing or unpublishing Data Streams from a Collection returned a validation error.</i><br>The request now uses the format the server expects.</td>
+    </tr>
+  </tbody>
+</table>
+<h3 id="subscription-manager">Subscription Manager</h3>
+<table>
+  <thead>
+    <tr>
+      <th width="120">Change Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Fix</td>
+      <td><b>Office address in emails</b>: Email templates now show the current XMPro office address.</td>
+    </tr>
+  </tbody>
+</table>
+<h2 id="v461">v4.6.1</h2>
+<p>Date Released: 25 Jun 2026</p>
+<table>
+  <thead>
+    <tr>
+      <th width="120">Change Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Security</td>
+      <td>
+        <p><b>Product security and stability</b>: We've addressed several additional security vulnerabilities in this patch release.</p>
+        <p><i>Mitigated:</i></p>
+        <ul>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2026-4599">CVE-2026-4599</a> and <a href="https://www.cve.org/CVERecord?id=CVE-2026-4600">CVE-2026-4600</a>: Upgraded jsrsasign from 11.0.0 to 11.1.3 in App Designer, XMPro AI, and Data Stream Designer.</li>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2025-13465">CVE-2025-13465</a>: Forced lodash to ^4.18.1 via npm overrides in Subscription Manager, and lodash-es to ^4.18.1 via npm overrides in App Designer.</li>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2026-27903">CVE-2026-27903</a> and <a href="https://www.cve.org/CVERecord?id=CVE-2026-26996">CVE-2026-26996</a>: Forced minimatch to ^5.1.8 via npm overrides in App Designer.</li>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2025-27789">CVE-2025-27789</a>: Forced @babel/helpers to ^7.26.10 via npm overrides in Data Stream Designer.</li>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2022-0235">CVE-2022-0235</a>: Removed the unused aspnet-prerendering dependency (which transitively brought in vulnerable node-fetch 1.7.3) from Data Stream Designer.</li>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2022-21802">CVE-2022-21802</a>: Removed the unused grapesjs 0.16.18 library from Data Stream Designer.</li>
+        </ul>
+        <p><i>Assessed as Mitigated by Design (vulnerable code paths are not reachable in XMPro deployments):</i></p>
+        <ul>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2026-32933">CVE-2026-32933</a>: AutoMapper 5.0.2 stack-overflow DoS in Subscription Manager - only invoked on bounded admin-managed mapping graphs through the IdentityServer3 admin store; durable fix awaits the SM .NET modernisation effort.</li>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2023-28155">CVE-2023-28155</a> (SSRF in <code>request</code> 2.88.2) and <a href="https://www.cve.org/CVERecord?id=CVE-2023-26136">CVE-2023-26136</a> (tough-cookie prototype pollution) in App Designer and Subscription Manager - <code>request</code> appears only as a transitive dependency (via xliffmerge and tsiclient in App Designer; via jsdom in Subscription Manager). No XMPro source code consumes it, and its HTTP-issuing code paths are unreachable in both build-time tooling and browser-targeted runtimes.</li>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2024-29415">CVE-2024-29415</a>: <code>ip</code> 1.1.5 in App Designer - package is bundled inside the tsiclient npm CLI tarball and is not consumed by XMPro code.</li>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2025-69873">CVE-2025-69873</a>: ajv 6.12.3 ReDoS in Data Stream Designer - package is a build-time transitive dependency of DevExtreme Angular schematics and is not shipped in the runtime browser bundle.</li>
+          <li><a href="https://cwe.mitre.org/data/definitions/117.html">CWE-117</a> log-injection findings on five Data Stream Designer controller actions - the logged inputs are strongly-typed (<code>long</code>, <code>Guid</code>, <code>long[]</code>) or already wrapped in <code>WebUtility.UrlEncode</code>, so cannot carry CRLF sequences.</li>
+        </ul>
+        <p>For false positive assessments and container scan results, see the <a href="../resources/container-scan-4-6-1.html">Container Security Scan Report - XMPro 4.6.1</a>.</p>
+      </td>
+    </tr>
+    <tr>
+      <td>Enhancement</td>
+      <td>
+        <p><b>Stream as Connector reliability and security improvements</b>: Targeted enhancements to the <b>Streams as Connectors</b> architecture introduced in v4.6.0.</p>
+        <ul>
+          <li><b>Faster connector requests</b>: Removed the redundant MQTT health check that previously ran before every Stream Connector request, reducing cumulative App Page load times for pages that issue multiple Stream Connector requests in sequence.</li>
+          <li><b>Encrypted context values over MQTT</b>: Sensitive context variables passed from App Designer into a connected Data Stream are now encrypted in transit over MQTT.<br><i>If you are using the SQL Server Connector Agent or Azure SQL Connector Agent with a Stream Connector, upgrade those agents to v2.27+ when applying this patch. Earlier connector agent versions cannot decrypt the new context value payload and the connector request will fail.</i></li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td>Ticket ID17822 <b>Incorrect Spanish translation in DS</b>: <i>When you use Data Stream Designer with Spanish set as your language, the labels "Save", "Discard", and "Listener" are translated incorrectly (as "Ahorrar", "Desechar", and "Oyentes" - meanings unrelated to the UI action).</i><br>Corrected translations: "Save" is now "Guardar", "Discard" is now "Borrar", and "Listener" is now "Escuchadores".</td>
+    </tr>
+  </tbody>
+</table>
+<h2 id="v460">v4.6.0</h2>
+<p>Date Released: 13 Mar 2026</p>
+<h3 id="common-1">Common</h3>
+<table>
+  <thead>
+    <tr>
+      <th width="120">Change Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Feature</td>
+      <td>
+        <p><b>Streams as Connectors</b>: New architecture that allows App Designer applications to use a published Data Stream as a data source.</p>
+        <p>The <b>XMPro Stream Connector</b> is used in App Designer to connect to a published Data Stream, supporting read, insert, update, and delete operations. The backing Data Stream comprises a <b>XMPro Stream Listener</b>, a Connector Agent (new category), and a <b>XMPro Stream Action Agent</b>. Agent configuration values are passed directly into the connected stream at runtime by App Designer. With Connectors now available in both App Designer and Data Stream Designer, attempting to import an integration file (.xmp) into the wrong product returns a clear error identifying which product the file belongs to.</p>
+        <p>Using this new feature results in more resilient App Page page loads and less infrastructure to run the XMPro platform, but does require a MQTT broker to use it.</p>
+        <p><i>If you are upgrading, a migration script is available to transition your existing connections. Contact your XMPro account manager for assistance.</i></p>
+      </td>
+    </tr>
+    <tr>
+      <td>Enhancement</td>
+      <td>
+        <p><b><a href="../technical-reference/oauth-smtp-configuration.html">OAuth SMTP Configuration Support</a></b>: Platform administrators can now configure OAuth 2.0 authentication for XMPro's outbound email notifications instead of username and password credentials.</p>
+        <p>OAuth SMTP authentication is supported across all deployment methods, including the Windows Server installer, Terraform modules, and Docker (xmpro-run). Administrators can configure the OAuth client ID, client secret, and token endpoint to match their email provider's requirements.</p>
+        <p>Modern email providers such as Microsoft 365 and Google Workspace are phasing out basic authentication for SMTP. OAuth support ensures XMPro's email notifications, including recommendation alerts, user invitations, and system notifications, remain fully operational in environments where basic auth has been disabled, while improving the overall security posture of your deployment.</p>
+      </td>
+    </tr>
+    <tr>
+      <td>Deployment</td>
+      <td>
+        <p><b>Azure Container Instance Enhancements</b>: Two improvements to Stream Host deployments using Azure Container Instances (ACI):</p>
+        <ul>
+          <li><b>Virtual Network Integration</b>: ACI deployments can now be connected to an Azure Virtual Network, enabling private networking without public-facing container endpoints and meeting enterprise security and compliance requirements.</li>
+          <li><b>Right-Sized Default Configuration</b>: Default CPU and memory allocations have been updated to better reflect production workload requirements, reducing the need for manual configuration adjustments after initial deployment.</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>Security</td>
+      <td>
+        <p><b>Product security and stability</b>: We've addressed several security vulnerabilities in this release:</p>
+        <ul>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2022-26907">CVE-2022-26907</a>: Upgraded Microsoft.Rest.ClientRuntime from 2.3.20 to 2.3.24 in App Designer and from 2.3.11 to 2.3.24 in Data Stream Designer.</li>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2022-34716">CVE-2022-34716</a>: Upgraded System.Security.Cryptography.Xml from 4.4.2 to 6.0.1 in App Designer.</li>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2023-29331">CVE-2023-29331</a>: Added System.Security.Cryptography.Pkcs 6.0.3 to App Designer.</li>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2025-54575">CVE-2025-54575</a>: Upgraded SixLabors.ImageSharp from 3.1.7 to 3.1.11 in App Designer and Data Stream Designer.</li>
+          <li><a href="https://github.com/advisories/GHSA-4vgm-c2wm-63mw">GHSA-4vgm-c2wm-63mw</a>: Upgraded Microsoft.AspNetCore.App.Runtime.linux-musl-x64 from 8.0.24 to 8.0.25 in Subscription Manager, App Designer, Data Stream Designer, and XMPro AI.</li>
+          <li>Removed unused npm dependencies and overrode transitive package versions in App Designer to resolve Veracode-identified vulnerabilities in tar and tsiclient.npm.</li>
+          <li><a href="https://cwe.mitre.org/data/definitions/117.html">CWE-117</a>: Applied log output sanitization to neutralize CRLF injection in App Designer and Data Stream Designer.</li>
+          <li><a href="https://cwe.mitre.org/data/definitions/285.html">CWE-285</a>: Added class-level [Authorize] attributes in App Designer and Data Stream Designer to enforce authentication by default, with explicit [AllowAnonymous] exemptions for public endpoints such as error pages and silent token renewal.</li>
+        </ul>
+        <p>For false positive assessments and container scan results, see the <a href="../resources/container-scan-4-6-0.html">Container Security Scan Report - XMPro 4.6.0</a>.</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h3 id="data-stream-designer-1">Data Stream Designer</h3>
+<table>
+  <thead>
+    <tr>
+      <th width="120">Change Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Fix</td>
+      <td><b>DropDown and TokenBox Not Displaying When Options Array Is Empty</b>: <i>When a DropDown or TokenBox property on an agent is configured with an empty options array, the control does not render in the agent configuration panel, making the property inaccessible.</i><br>DropDown and TokenBox controls now render correctly regardless of whether the options array is empty at the time the configuration panel is opened.</td>
+    </tr>
+  </tbody>
+</table>
+<h3 id="stream-host">Stream Host</h3>
+<table>
+  <thead>
+    <tr>
+      <th width="120">Change Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Feature</td>
+      <td>
+        <p>This release introduces a set of improvements that together deliver a more reliable, efficient, and upgrade-friendly Stream Host:</p>
+        <ul>
+          <li><b>Memory Optimisation</b>: Rearchitected with <a href="../concepts/agent/event-level-streaming-vs-agent-level-streaming.html">Event-Level Streaming Architecture</a>, processing data one event at a time through a chain of agents rather than accumulating large in-memory batches.
+  <ul>
+  <li>Each agent releases memory as soon as it forwards an event, preventing unnecessary retention of intermediate results and significantly reducing RAM usage.</li>
+  <li>Downstream agents begin processing immediately upon receiving each event, without waiting for the full batch from the preceding agent.</li>
+  <li>Supports both event-level and batch processing: Event-Level Streaming for agents that can process each event independently and Agent-Level Streaming retained for agents that require full datasets (e.g. time-series for model-based analysis).</li>
+  </ul>
+  </li>
+          <li><b>Backward Compatibility</b>: Event-Level Streaming-enabled agents can run on pre 4.6 Stream Host instances, enabling rolling upgrades without downtime, but they will revert to Agent-Level Streaming behavior.</li>
+          <li><b>Process Isolation</b>: Errors in a data stream are contained and no longer affect other streams running on the same Stream Host instance.</li>
+          <li><b>Stable Assembly Versions</b>: Agent DLLs now maintain a consistent assembly version across builds, so developers no longer need to recompile custom agents after a Stream Host update.</li>
+        </ul>
+        <p>Process isolation and some memory improvements apply immediately without any changes to existing agents. To take full advantage of Event-Level Streaming, agents must be updated to implement the new async methods and overloads - see XMPro.IOT.Framework under NuGet Packages below.</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h3 id="subscription-manager-1">Subscription Manager</h3>
+<p>No changes in this release.</p>
+<h3 id="package-manager">Package Manager</h3>
+<table>
+  <thead>
+    <tr>
+      <th width="120">Change Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Enhancement</td>
+      <td><b>Connector Category Support for Agent Packaging</b>: Agents can now be packaged using the new Connector category for use in Data Stream Designer. This category supports the <b>Streams as Connectors</b> feature - see Common above.</td>
+    </tr>
+  </tbody>
+</table>
+<h3 id="nuget-packages">NuGet Packages</h3>
+<h4 id="agent-development">Agent Development</h4>
+<h5 id="xmproiotframework">XMPro.IOT.Framework</h5>
+<table>
+  <thead>
+    <tr>
+      <th width="120">Change Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Enhancement</td>
+      <td>
+        <p>The following async methods and constructor overloads were added to existing interfaces and args classes to support <b>Event-Level Streaming</b> feature - see Stream Hosts above:</p>
+        <ul>
+          <li><code>IPollingAgent</code>: new <code>PollAsync()</code> overload for async polling.</li>
+          <li><code>IReceivingAgent</code>: new <code>ReceiveAsync(string, IAsyncEnumerable&lt;byte[]&gt;)</code> overload for continuous stream ingestion.</li>
+          <li><code>IMapAndReceiveAgent</code>: new <code>ReceiveAsync(string, IAsyncEnumerable<(byte[], byte[])>)</code> overload for Agents that receive a mapped/typed stream of data evenets.</li>
+          <li><code>OnPublishArgs</code>: new constructors accepting <code>IAsyncEnumerable&lt;byte[]&gt;</code> and <code>IAsyncEnumerable&lt;string&gt;</code> for streaming event publishing.</li>
+          <li><code>OnErrorArgs</code>: new constructor accepting <code>IEnumerable&lt;JToken&gt;</code> for streaming error data.</li>
+        </ul>
+        <p>Agents that do not implement the async methods and overloads continue to work without any changes.</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h4 id="connector-development">Connector Development</h4>
+<p>No changes to XMPro.Integration.Framework, XMPro.Integration.Helpers, or XMPro.Integration.Settings.</p>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: October 30, 2026</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

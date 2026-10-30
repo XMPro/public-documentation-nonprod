@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Advanced Configuration | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Advanced Configuration | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../../../images/favicon.png">
+      <link rel="stylesheet" href="../../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../../toc.html">
+      <meta name="docfx:tocrel" content="../../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/deployment/azure-terraform/advanced-configuration.md&amp;version=GB25835-add-release-notes-470&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../../index.html">
+            <img id="logo" class="svg" src="../../../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="advanced-configuration">Advanced Configuration</h1>
+
+<p>This page covers optional features that are automatically configured in your XMPro deployment. Most users don't need to change these settings.</p>
+<h2 id="health-monitoring-automatically-configured">Health Monitoring (Automatically Configured)</h2>
+<p>Health monitoring is automatically enabled for all XMPro services. No configuration needed!</p>
+<h3 id="whats-included">What's Included</h3>
+<p>✅ <strong>Real-time health checks</strong> - Services monitor each other automatically<br>
+✅ <strong>Health dashboard</strong> - Visual status at <code>/health-ui</code> on App Designer and Data Stream Designer<br>
+✅ <strong>Application Insights</strong> - Full monitoring and alerting in Azure Portal</p>
+<h3 id="viewing-health-status">Viewing Health Status</h3>
+<p><strong>Option 1: Health Dashboard (Recommended)</strong></p>
+<p>Access the built-in health dashboard UI:</p>
+<ul>
+<li>App Designer: <code>https://ad-yourcompany.azurewebsites.net/health-ui</code></li>
+<li>Data Stream Designer: <code>https://ds-yourcompany.azurewebsites.net/health-ui</code></li>
+</ul>
+<p>This provides a visual dashboard showing the real-time status of all components.</p>
+<p><strong>Option 2: Application Insights</strong></p>
+<p>For detailed monitoring and historical data:</p>
+<ol>
+<li>Go to Azure Portal</li>
+<li>Open your resource group</li>
+<li>Click on Application Insights</li>
+<li>View the Application Map to see all services and dependencies</li>
+</ol>
+<p><strong>Option 3: Direct API Endpoints</strong></p>
+<p>For programmatic access or troubleshooting:</p>
+<ul>
+<li>App Designer: <code>https://ad-yourcompany.azurewebsites.net/health</code></li>
+<li>Data Stream Designer: <code>https://ds-yourcompany.azurewebsites.net/health</code></li>
+<li>Subscription Manager: <code>https://sm-yourcompany.azurewebsites.net/version</code></li>
+</ul>
+<h2 id="logging-automatically-configured">Logging (Automatically Configured)</h2>
+<p>All logging is automatically set up. No configuration needed!</p>
+<h3 id="whats-included-1">What's Included</h3>
+<p>✅ <strong>Application Insights</strong> - Logs and metrics for App Designer (AD) and Data Stream Designer (DS)<br>
+✅ <strong>File-based logging</strong> - Subscription Manager (SM) logs to files via Serilog<br>
+✅ <strong>Log Analytics</strong> - Query and analyze Application Insights data</p>
+<h3 id="viewing-logs">Viewing Logs</h3>
+<p><strong>For AD and DS (Application Insights):</strong></p>
+<ol>
+<li>Go to your resource group in Azure Portal</li>
+<li>Click on Application Insights</li>
+<li>Click &quot;Logs&quot; to search logs</li>
+<li>Click &quot;Failures&quot; to see errors</li>
+</ol>
+<p><strong>For SM (File Logs):</strong></p>
+<ol>
+<li>Go to your SM App Service in Azure Portal</li>
+<li>Navigate to Advanced Tools (Kudu)</li>
+<li>Browse to <code>C:\home\LogFiles\Application\</code></li>
+<li>View the <code>sm-log-*.txt</code> files</li>
+</ol>
+<div class="TIP">
+<h5>Tip</h5>
+<p>Need help with specific log types? See:</p>
+<ul>
+<li><a href="../../../how-tos/data-streams/check-data-stream-logs.html">Data Stream Logs</a></li>
+<li><a href="../../../how-tos/apps/check-connector-logs.html">Connector Logs</a></li>
+</ul>
+</div>
+<h2 id="smtp-email-configuration">SMTP Email Configuration</h2>
+<p>XMPro supports email notifications for password resets, user invitations, and system alerts. Configure SMTP in your <code>terraform.tfvars</code> file.</p>
+<h3 id="basic-smtp-configuration">Basic SMTP Configuration</h3>
+<p>Add these variables to enable email notifications:</p>
+<pre><code class="lang-hcl"># Enable email notifications (required - defaults to false)
+enable_email_notification = true
+
+# SMTP server settings
+email_server     = &quot;smtp.gmail.com&quot;  # or smtp.office365.com
+email_server_ssl = true
+email_server_port = 587
+
+# Email credentials
+email_username     = &quot;notifications@yourcompany.com&quot;
+email_password     = &quot;your-smtp-password&quot;
+email_from_address = &quot;notifications@yourcompany.com&quot;
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>SMTP is required for password resets and user invitations. Without SMTP configured, users cannot reset forgotten passwords or receive invitation emails.</p>
+</div>
+<h3 id="oauth-smtp-configuration-microsoft-365">OAuth SMTP Configuration (Microsoft 365)</h3>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p><strong>Microsoft 365 Users:</strong> Microsoft is deprecating Basic Authentication for SMTP by <strong>March 2026</strong>. You must configure OAuth 2.0 authentication to continue using Microsoft 365 SMTP.</p>
+</div>
+<p>For Microsoft 365 or Office 365 SMTP, use OAuth 2.0 authentication:</p>
+<pre><code class="lang-hcl"># Enable email notifications (required - defaults to false)
+enable_email_notification = true
+
+# Enable OAuth SMTP
+enable_email_oauth = true
+
+# OAuth token endpoint (replace {tenant-id} with your Azure AD tenant ID)
+email_oauth_token_endpoint = &quot;https://login.microsoftonline.com/{tenant-id}/oauth2/v2.0/token&quot;
+
+# Azure AD application credentials
+email_oauth_token_client_id     = &quot;your-application-client-id&quot;
+email_oauth_token_client_secret = &quot;your-client-secret-value&quot;
+
+# OAuth scope (use this exact value for Microsoft 365)
+email_oauth_token_scope = &quot;https://outlook.office365.com/.default&quot;
+
+# Basic SMTP settings (still required with OAuth)
+email_server       = &quot;smtp.office365.com&quot;
+email_server_ssl   = true
+email_server_port  = 587
+email_username     = &quot;notifications@yourcompany.com&quot;
+email_from_address = &quot;notifications@yourcompany.com&quot;
+# Note: email_password is not used when OAuth is enabled
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p><strong>Prerequisites for OAuth SMTP:</strong> Before configuring OAuth, you must create an Azure AD app registration with SMTP.SendAsApp and Mail.Send permissions.</p>
+<p>See the complete <a href="../../../technical-reference/oauth-smtp-configuration.html">OAuth SMTP Configuration Guide</a> for step-by-step Azure AD setup instructions.</p>
+</div>
+<h3 id="additional-smtp-settings">Additional SMTP Settings</h3>
+<p>For more advanced SMTP configuration options, see the <a href="{{TERRAFORM_MODULE_URL}}#smtp-configuration" target="_blank">Terraform module SMTP documentation</a>.</p>
+<h2 id="production-considerations">Production Considerations</h2>
+<p>For production deployments, you may want to:</p>
+<ul>
+<li><strong>Set up alerts</strong> in Application Insights for errors or performance issues</li>
+<li><strong>Configure backups</strong> for your SQL databases</li>
+<li><strong>Review security settings</strong> in Azure Portal</li>
+<li><strong>Set up custom domains</strong> (see <a href="{{TERRAFORM_MODULE_URL}}#dns-and-domain-configuration" target="_blank">GitHub documentation</a>)</li>
+</ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p>For all other advanced configurations like SMTP, custom domains, and production settings, see the <a href="{{TERRAFORM_MODULE_URL}}" target="_blank">complete module documentation</a>.</p>
+</div>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: October 30, 2026</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
