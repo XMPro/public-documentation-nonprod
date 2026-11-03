@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../../../">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/deployment/windows-server-2022/index.md&amp;version=GB25835-add-release-notes-470&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/deployment/windows-server-2022/index.md&amp;version=GBrelease-4.7&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -96,6 +96,10 @@
 <div class="TIP">
 <h5>Tip</h5>
 <p>This guide deploys all XMPro products to a single server by default. This is suitable for development and evaluation. For production sizing recommendations based on your workload, see the <a href="windows-sizing.html">Sizing Guideline</a>.</p>
+</div>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>Windows installations of XMPro use the Windows certificate store, so the eMudhra CA compromise is fixed by Microsoft's root certificate updates, not by an XMPro update. Make sure your XMPro servers receive those updates, or apply them manually if the servers are offline or automatic root certificate updates are turned off. See the <a href="../../../resources/security-advisory-2026-10-emudhra.html">Security Advisory: eMudhra CA Compromise</a>.</p>
 </div>
 <h2 id="single-server-architecture">Single-Server Architecture</h2>
 <p><img src="../../../images/xmpro-single-server-deployment-architecture.jpg" alt="XMPro Single-Server Deployment Architecture"></p>
@@ -772,7 +776,7 @@
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: October 30, 2026</em></small></p>
+    <p><small><em>Last modified: November 03, 2026</em></small></p>
   </div>
 </article>
 

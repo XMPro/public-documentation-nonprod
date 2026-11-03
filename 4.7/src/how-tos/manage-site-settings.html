@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/how-tos/manage-site-settings.md&amp;version=GB25835-add-release-notes-470&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/how-tos/manage-site-settings.md&amp;version=GBrelease-4.7&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -167,8 +167,8 @@
 <p>This report shows the Applications in which a Connector version has been used. Additional information includes the Application's owner and category.</p>
 <p>This detailed report assists in gauging the impact of upgrading one or more Connector versions.</p>
 <h4 id="connector-pool-report">Connector Pool Report</h4>
-<p>This report lists the Connector handlers your company currently has in the <a href="../concepts/connector.html#connector-pooling">pool</a>, and shows how many of the shared pool slots are in use across all companies. For each pooled handler it shows the Connector Name, Connector Version, Application Name, Application Version, Connection Name, Last Used time, and Eviction Order.</p>
-<p>The pool has a fixed number of slots shared across the whole deployment (see <a href="../technical-reference/connector-pool-configuration.html">Connector Pool Configuration</a>). When the pool is full, the least recently used handler is evicted first. The row with an <strong>Eviction Order</strong> of 1 is next to be removed.</p>
+<p>This report lists the Connector handlers your company currently has in the <a href="../concepts/connector.html#connector-pooling">pool</a>, and shows how many of the pool slots are in use across all companies on the App Designer instance that handles the request. For each pooled handler it shows the Connector Name, Connector Version, Application Name, Application Version, Connection Name, Last Used time, and Eviction Order.</p>
+<p>Each App Designer instance has its own pool with a fixed number of slots (see <a href="../technical-reference/connector-pool-configuration.html">Connector Pool Configuration</a>). When the pool is full, the least recently used handler is evicted first. The row with an <strong>Eviction Order</strong> of 1 is next to be removed.</p>
 <h4 id="live-connector-pool-report">Live Connector Pool Report</h4>
 <p>This report lists the <a href="../concepts/connector.html#connector-pooling">pooled</a> handlers that back live Connectors, which are those actively pushing data. For each one it shows the Connector Name, Connector Version, Application Name, Application Version, Connection Name, Last Push time, and the number of Subscriptions.</p>
 <p>Live Connectors are released when their last subscriber disconnects. Data Stream Connectors, however, stay resident even with zero subscriptions until App Designer restarts, so they are not automatically evicted.</p>
@@ -325,7 +325,7 @@
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: October 30, 2026</em></small></p>
+    <p><small><em>Last modified: November 03, 2026</em></small></p>
   </div>
 </article>
 

@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/release-notes/index.md&amp;version=GB25835-add-release-notes-470&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/release-notes/index.md&amp;version=GBrelease-4.7&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -87,7 +87,16 @@
         <article data-uid="">
 <h1 id="v47-release-notes">v4.7 Release Notes</h1>
 
-<p>This section contains the release notes for XMPro v4.7 and the v4.6 releases it continues, providing information about new features, improvements, and bug fixes across all core products. Key highlights in v4.7.0 include App Designer connector pooling, server-side sort and filter for the Data Grid, and delivery of deployment assets from XMPro GitHub Enterprise. Key highlights in v4.6 include the Streams as Connectors architecture, Stream Host Event-Level Streaming architecture, OAuth SMTP support, and security enhancements across all products.</p>
+<p>This section contains the release notes for XMPro v4.7, the latest release of XMPro v4, providing information about new features, improvements, and bug fixes across all core products. Key highlights in v4.7.0 include App Designer connector pooling, server-side sort and filter for the Data Grid, and delivery of deployment assets from XMPro GitHub Enterprise.</p>
+<div class="WARNING">
+<h5>Warning</h5>
+<p><strong>Security update</strong>: XMPro container images before v4.7.0 trust compromised eMudhra certificate authorities. Upgrade to v4.7.0 or later. See the <a href="../resources/security-advisory-2026-10-emudhra.html">Security Advisory: eMudhra CA Compromise</a>.</p>
+<p><strong>Behaviour changes</strong>: Check each one against your deployment before upgrading.</p>
+<ul>
+<li><strong>eMudhra and emSign certificates</strong>: XMPro containers no longer connect to services whose certificates come from eMudhra or emSign, because those root certificates are removed entirely.</li>
+<li><strong>Image uploads</strong>: App Designer, Data Stream Designer and XMPro AI now accept only PNG, JPEG, GIF, BMP and WebP images. TIFF, TGA, PBM and QOI uploads are rejected, including application thumbnails and the icons inside Data Stream Designer agent packages.</li>
+</ul>
+</div>
 <h2 id="known-issues-reported-and-fixed">Known Issues Reported and Fixed</h2>
 <table>
   <thead>
@@ -100,34 +109,15 @@
   </thead>
   <tbody>
     <tr>
-      <td>App Designer</td>
-      <td>Ticket ID17911 The selected validation group is not retained: When you reopen a block's properties, the validation group selected on a button is not retained, so the validation configuration has to be reapplied.</td>
-      <td>v4.5.3</td>
-      <td>v5.0.0</td>
-    </tr>
-    <tr>
       <td>Data Stream Designer</td>
-      <td>Ticket ID17421 Data Stream Designer Hangs on Publish/Unpublish: When you publish or unpublish a Data Stream, the browser occasionally becomes unresponsive and requires a page refresh to recover.</td>
+      <td>Data Stream Designer Hangs on Publish/Unpublish: When you publish or unpublish a Data Stream, the browser occasionally becomes unresponsive and requires a page refresh to recover.</td>
       <td>v4.5.5</td>
-      <td>v5.0.0</td>
-    </tr>
-    <tr>
-      <td>Data Stream Designer</td>
-      <td>Ticket ID17822 Incorrect Spanish translation in DS: When you use Data Stream Designer with Spanish set as your language, the labels "Save", "Discard", and "Listener" are translated incorrectly (as "Ahorrar", "Desechar", and "Oyentes" - meanings unrelated to the UI action).</td>
-      <td>v4.5.5</td>
-      <td>v4.6.1</td>
-    </tr>
-    <tr>
-      <td>Common</td>
-      <td>Ticket ID18105 Low-risk container vulnerabilities reported in container images: A customer scan reported low-risk findings across the App Designer, Data Stream Designer, and Stream Host images. Most are confirmed false positives or resolved by base-image updates, but CVE-2026-1703 in <code>pip</code> on the Stream Host image remains outstanding.</td>
-      <td>v4.6.0</td>
-      <td>Pending</td>
+      <td>v4.7.0</td>
     </tr>
   </tbody>
 </table>
 <h2 id="v470">v4.7.0</h2>
-<p>Date Released: TBC</p>
-<p>v4.7.0 continues the v4.6 line. It includes every change from v4.6.1 and the changes prepared for v4.6.2, which was not released separately. If you are upgrading from v4.6.0, also read the v4.6.1 notes below.</p>
+<p>Date Released: 2 Nov 2026</p>
 <h3 id="common">Common</h3>
 <table>
   <thead>
@@ -177,7 +167,7 @@
         </ul>
         <p><i>Assessed as Mitigated by Design (vulnerable code paths are not reachable in XMPro deployments):</i></p>
         <ul>
-          <li><a href="https://www.cve.org/CVERecord?id=CVE-2026-106117">CVE-2026-106117</a>, <a href="https://www.cve.org/CVERecord?id=CVE-2026-106118">CVE-2026-106118</a> and <a href="https://www.cve.org/CVERecord?id=CVE-2026-106116">CVE-2026-106116</a>: SixLabors.ImageSharp 3.1.11 in App Designer, Data Stream Designer and XMPro AI. Uploaded images are now decoded only as PNG, JPEG, GIF, BMP or WebP, so uploads cannot reach the vulnerable TIFF decoders. <a href="https://www.cve.org/CVERecord?id=CVE-2026-106110">CVE-2026-106110</a>, <a href="https://www.cve.org/CVERecord?id=CVE-2026-106113">CVE-2026-106113</a> and <a href="https://www.cve.org/CVERecord?id=CVE-2026-106115">CVE-2026-106115</a> in the same package are also not reachable. The package remains in these products, so scanners will still report it.</li>
+          <li><a href="https://www.cve.org/CVERecord?id=CVE-2026-106117">CVE-2026-106117</a>, <a href="https://www.cve.org/CVERecord?id=CVE-2026-106118">CVE-2026-106118</a> and <a href="https://www.cve.org/CVERecord?id=CVE-2026-106116">CVE-2026-106116</a>: SixLabors.ImageSharp 3.1.11 in App Designer, Data Stream Designer and XMPro AI. Uploaded images are now decoded only as PNG, JPEG, GIF, BMP or WebP, so uploads cannot reach the vulnerable TIFF decoders. <a href="https://www.cve.org/CVERecord?id=CVE-2026-106110">CVE-2026-106110</a>, <a href="https://www.cve.org/CVERecord?id=CVE-2026-106113">CVE-2026-106113</a> and <a href="https://www.cve.org/CVERecord?id=CVE-2026-106115">CVE-2026-106115</a> in the same package are also not reachable. <a href="https://www.cve.org/CVERecord?id=CVE-2026-106114">CVE-2026-106114</a> in the same package is not reachable either: in 3.1.11 the faulty ICC profile parser runs only when code reads an image's ICC profile entries, and XMPro does not. The package remains in these products, so scanners will still report it.</li>
           <li><a href="https://www.cve.org/CVERecord?id=CVE-2026-50170">CVE-2026-50170</a> and <a href="https://www.cve.org/CVERecord?id=CVE-2026-54268">CVE-2026-54268</a>: @angular/common in App Designer and Data Stream Designer (15.2.10) and Subscription Manager (5.2.11).</li>
           <li><a href="https://www.cve.org/CVERecord?id=CVE-2026-41907">CVE-2026-41907</a>: uuid in App Designer (9.0.1) and Subscription Manager (3.4.0).</li>
           <li><a href="https://www.cve.org/CVERecord?id=CVE-2022-21986">CVE-2022-21986</a> in Subscription Manager.</li>
@@ -206,6 +196,7 @@
       <td>Enhancement</td>
       <td>
         <p><b>Connector pooling</b>: App Designer now keeps a pool of loaded Connector handlers and reuses them across requests, instead of loading the Connector for every request. Pages that read from Connectors load faster, and App Designer handles more concurrent users.</p>
+        <p>The Azure SQL Connector and SQL Server Connector v2.29+ also resolve the current user from the request token instead of calling App Designer for it on every read, so upgrade those Connectors to see the full benefit.</p>
         <ul>
           <li>Each App Designer instance keeps its own pool, capped at 128 by default. When it is full, the least recently used connection is evicted first. See <a href="../technical-reference/connector-pool-configuration.html">Connector Pool Configuration</a>.</li>
           <li>Saving or deleting a Connection evicts its pooled handlers on the App Designer instance that handled the save. Other instances are not notified. Live Connector subscriptions that are already open keep running until their last subscriber disconnects.</li>
@@ -504,7 +495,7 @@
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: October 30, 2026</em></small></p>
+    <p><small><em>Last modified: November 03, 2026</em></small></p>
   </div>
 </article>
 

@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../../../">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/deployment/azure-terraform/implementation-guide.md&amp;version=GB25835-add-release-notes-470&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/deployment/azure-terraform/implementation-guide.md&amp;version=GBrelease-4.7&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -88,7 +88,11 @@
 <h1 id="implementation-guide">Implementation Guide</h1>
 
 <h2 id="introduction">Introduction</h2>
-<p>This guide provides step-by-step instructions for deploying XMPro on Azure using the Terraform module. For detailed technical specifications, configuration options, and module documentation, please refer to the <a href="https://github.com/XMPro/terraform-xmpro-azure">GitHub README</a>.</p>
+<p>This guide provides step-by-step instructions for deploying XMPro on Azure using the Terraform module. For detailed technical specifications, configuration options, and module documentation, please refer to the <code>README.md</code> in your infra-azureac repository.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>From v4.7.0, XMPro syncs the Terraform module, <code>infra-azureac</code>, into a Git repository your organization hosts. The repository URL <code>{{TERRAFORM_MODULE_URL}}</code> on this page is an example. Replace it with your own.</p>
+</div>
 <h2 id="prerequisites">Prerequisites</h2>
 <p>Before starting, ensure you have:</p>
 <ul>
@@ -96,12 +100,12 @@
 <li>Completed all <a href="../../azure-terraform-preparation.html">Azure-specific requirements</a></li>
 </ul>
 <h2 id="deployment-options">Deployment Options</h2>
-<p>The XMPro Terraform module provides several deployment examples:</p>
-<h3 id="option-1-basic-deployment-recommended-for-getting-started">Option 1: Basic Deployment (Recommended for Getting Started)</h3>
+<p>The infra-azureac repository provides two deployment examples: <code>examples/layered</code> for a new deployment, and <code>examples/migration4.4</code> for migrating an existing v4.4 deployment.</p>
+<h3 id="option-1-layered-deployment-recommended">Option 1: Layered Deployment (Recommended)</h3>
 <ol>
-<li><p><strong>Clone the repository and use the basic example:</strong></p>
-<pre><code class="lang-bash">git clone https://github.com/XMPro/terraform-xmpro-azure.git
-cd terraform-xmpro-azure/examples/basic
+<li><p><strong>Clone the repository and use the layered example, starting with the infrastructure layer:</strong></p>
+<pre><code class="lang-bash">git clone {{TERRAFORM_MODULE_URL}}.git
+cd infra-azureac/examples/layered/infra
 </code></pre>
 </li>
 <li><p><strong>Copy and customize the configuration:</strong></p>
@@ -114,19 +118,20 @@ copy terraform.tfvars.example terraform.tfvars
 # Edit terraform.tfvars with your values
 </code></pre>
 </li>
-<li><p><strong>Review the example configuration</strong> in the <a href="https://github.com/XMPro/terraform-xmpro-azure#basic-usage">Basic Usage section</a> of the README.</p>
+<li><p><strong>Deploy the infrastructure layer, then repeat for <code>examples/layered/app</code>.</strong> The <a href="index.html">Deploy XMPro on Azure</a> guide walks through both layers, and the <em>Quick start</em> and <em>Deployment guide</em> sections of the README cover each setting.</p>
 </li>
 </ol>
 <h3 id="option-2-production-deployment">Option 2: Production Deployment</h3>
-<p>For production deployments, refer to the <a href="https://github.com/XMPro/terraform-xmpro-azure#using-custom-company-name-for-production-workloads">Using Custom Company Name for Production Workloads</a> section in the README which covers:</p>
+<p>For production deployments, see these sections of the README:</p>
 <ul>
-<li>Production-grade App Service SKUs</li>
-<li>Custom domain configuration</li>
-<li>Email notification setup</li>
-<li>Existing database integration</li>
+<li><em>Evaluation and production mode</em></li>
+<li><em>App Service plan SKUs</em> for production-grade App Service SKUs</li>
+<li><em>Infrastructure layer inputs</em> for custom domains (<code>dns_zone_name</code>)</li>
+<li><em>Application layer inputs</em> for email notification setup</li>
+<li><em>Existing SQL Server and databases</em> for existing database integration</li>
 </ul>
 <h3 id="option-3-custom-implementation">Option 3: Custom Implementation</h3>
-<p>Create your own Terraform configuration using the module directly. See the <a href="https://github.com/XMPro/terraform-xmpro-azure#module-source-options">Module Source Options</a> in the README for different ways to reference the module.</p>
+<p>Create your own Terraform configuration using the module directly. See the <em>Module source</em> section of the README for how to reference the module.</p>
 <h2 id="deployment-process">Deployment Process</h2>
 <h3 id="step-1-initialize-terraform">Step 1: Initialize Terraform</h3>
 <pre><code class="lang-bash">terraform init
@@ -143,24 +148,24 @@ copy terraform.tfvars.example terraform.tfvars
 </code></pre>
 <div class="TIP">
 <h5>Tip</h5>
-<p>For detailed deployment instructions and troubleshooting, see the <a href="https://github.com/XMPro/terraform-xmpro-azure">GitHub README</a>.</p>
+<p>For detailed deployment instructions and troubleshooting, see the <code>README.md</code> in your infra-azureac repository.</p>
 </div>
 <h2 id="configuration-reference">Configuration Reference</h2>
-<p>The module supports extensive configuration options. Key areas include:</p>
+<p>The module supports extensive configuration options. Key areas, by section of the README, include:</p>
 <ul>
-<li><strong>Required Variables</strong>: See <a href="https://github.com/XMPro/terraform-xmpro-azure#required-variables">Required Variables</a></li>
-<li><strong>Basic Configuration</strong>: See <a href="https://github.com/XMPro/terraform-xmpro-azure#basic-configuration">Basic Configuration</a></li>
-<li><strong>Database Options</strong>: See <a href="https://github.com/XMPro/terraform-xmpro-azure#database-configuration">Database Configuration</a></li>
-<li><strong>Container Registry</strong>: See <a href="https://github.com/XMPro/terraform-xmpro-azure#container-registry">Container Registry</a></li>
-<li><strong>Service Sizing</strong>: See <a href="https://github.com/XMPro/terraform-xmpro-azure#service-configuration">Service Configuration</a></li>
+<li><strong>Required Variables</strong>: see <em>Infrastructure layer inputs</em> and <em>Application layer inputs</em></li>
+<li><strong>Basic Configuration</strong>: see <em>Deployment guide</em></li>
+<li><strong>Database Options</strong>: see <em>Custom database names</em> and <em>Existing SQL Server and databases</em></li>
+<li><strong>Container Registry</strong>: see <em>Container registry setup</em></li>
+<li><strong>Service Sizing</strong>: see <em>App Service plan SKUs</em></li>
 </ul>
 <h2 id="deployment-scenarios">Deployment Scenarios</h2>
 <h3 id="evaluation-mode-vs-for-production-workloads">Evaluation Mode vs For Production Workloads</h3>
-<p>The module supports two deployment modes. See <a href="https://github.com/XMPro/terraform-xmpro-azure#-evaluation-vs-for-production-workloads">Evaluation vs For Production Workloads</a> in the README for detailed explanation.</p>
+<p>The module supports two deployment modes. See the <em>Evaluation and production mode</em> section of the README for a detailed explanation.</p>
 <h3 id="using-existing-database">Using Existing Database</h3>
-<p>For scenarios where you have an existing SQL Server, see <a href="https://github.com/XMPro/terraform-xmpro-azure#%EF%B8%8F-existing-database-support">Existing Database Support</a>.</p>
+<p>For scenarios where you have an existing SQL Server, see the <em>Existing SQL Server and databases</em> section of the README.</p>
 <h3 id="custom-domain-configuration">Custom Domain Configuration</h3>
-<p>To configure custom domains with automatic SSL certificates, refer to the <a href="https://github.com/XMPro/terraform-xmpro-azure#dns-and-domain-configuration">DNS and Domain Configuration</a> section.</p>
+<p>To configure custom domains with automatic SSL certificates, set <code>dns_zone_name</code> as described in the <em>Infrastructure layer inputs</em> section of the README.</p>
 <h3 id="configure-autoscale">Configure Autoscale</h3>
 <p>The module supports distributed caching via Redis for improved performance and scalability. Autoscale is disabled by default.</p>
 <div class="NOTE">
@@ -368,13 +373,13 @@ curl -f &quot;$(terraform output -raw sm_app_url)/version&quot;
 </ol>
 <div class="NOTE">
 <h5>Note</h5>
-<p>License requests require SMTP configuration to be enabled during deployment. See the <a href="https://github.com/XMPro/terraform-xmpro-azure#email-configuration">Module Documentation</a> for SMTP setup.</p>
+<p>License requests require SMTP configuration to be enabled during deployment. See the email and SMTP OAuth settings in the <em>Deployment guide</em> section of the README for SMTP setup.</p>
 </div>
 <h2 id="troubleshooting">Troubleshooting</h2>
 <p>For common deployment issues and solutions, see:</p>
 <ul>
 <li><a href="troubleshooting.html">Troubleshooting Guide</a> in this documentation</li>
-<li><a href="https://github.com/XMPro/terraform-xmpro-azure#-troubleshooting">Troubleshooting section</a> in the GitHub README</li>
+<li>The <em>Troubleshooting</em> section of the README in your infra-azureac repository</li>
 </ul>
 <h2 id="cleanup">Cleanup</h2>
 <p>To remove all deployed resources:</p>
@@ -415,7 +420,7 @@ curl -f &quot;$(terraform output -raw sm_app_url)/version&quot;
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: October 30, 2026</em></small></p>
+    <p><small><em>Last modified: November 03, 2026</em></small></p>
   </div>
 </article>
 

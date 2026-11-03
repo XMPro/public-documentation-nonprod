@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../../../">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/deployment/azure-terraform/advanced-configuration.md&amp;version=GB25835-add-release-notes-470&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/deployment/azure-terraform/advanced-configuration.md&amp;version=GBrelease-4.7&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -203,24 +203,24 @@ email_from_address = &quot;notifications@yourcompany.com&quot;
 <p>See the complete <a href="../../../technical-reference/oauth-smtp-configuration.html">OAuth SMTP Configuration Guide</a> for step-by-step Azure AD setup instructions.</p>
 </div>
 <h3 id="additional-smtp-settings">Additional SMTP Settings</h3>
-<p>For more advanced SMTP configuration options, see the <a href="{{TERRAFORM_MODULE_URL}}#smtp-configuration" target="_blank">Terraform module SMTP documentation</a>.</p>
+<p>For more advanced SMTP configuration options, see the email and SMTP OAuth settings in the <em>Deployment guide</em> section of the <code>README.md</code> in your infra-azureac repository.</p>
 <h2 id="production-considerations">Production Considerations</h2>
 <p>For production deployments, you may want to:</p>
 <ul>
 <li><strong>Set up alerts</strong> in Application Insights for errors or performance issues</li>
 <li><strong>Configure backups</strong> for your SQL databases</li>
 <li><strong>Review security settings</strong> in Azure Portal</li>
-<li><strong>Set up custom domains</strong> (see <a href="{{TERRAFORM_MODULE_URL}}#dns-and-domain-configuration" target="_blank">GitHub documentation</a>)</li>
+<li><strong>Set up custom domains</strong> (see <code>dns_zone_name</code> in the <em>Infrastructure layer inputs</em> section of the README)</li>
 </ul>
 <div class="NOTE">
 <h5>Note</h5>
-<p>For all other advanced configurations like SMTP, custom domains, and production settings, see the <a href="{{TERRAFORM_MODULE_URL}}" target="_blank">complete module documentation</a>.</p>
+<p>For all other advanced configurations like SMTP, custom domains, and production settings, see the <code>README.md</code> in your infra-azureac repository.</p>
 </div>
 
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: October 30, 2026</em></small></p>
+    <p><small><em>Last modified: November 03, 2026</em></small></p>
   </div>
 </article>
 

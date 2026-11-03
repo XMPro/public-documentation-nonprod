@@ -31178,6 +31178,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "src/resources/security-advisory-2026-10-emudhra.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/resources/security-advisory-2026-10-emudhra.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "src/technical-reference/connector-pool-configuration.md",
       "output": {
         ".html": {

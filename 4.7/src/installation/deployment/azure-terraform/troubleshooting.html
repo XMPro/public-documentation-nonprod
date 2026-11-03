@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../../../">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/deployment/azure-terraform/troubleshooting.md&amp;version=GB25835-add-release-notes-470&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/deployment/azure-terraform/troubleshooting.md&amp;version=GBrelease-4.7&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -93,7 +93,7 @@
 <p><strong>Most issues are solved by:</strong></p>
 <ul>
 <li>Running <code>az login</code> to refresh your Azure authentication</li>
-<li>Making sure you're in the right directory (<code>terraform-xmpro-azure/examples/layered/infra</code> or <code>.../app</code>)</li>
+<li>Making sure you're in the right directory (<code>infra-azureac/examples/layered/infra</code> or <code>.../app</code>)</li>
 <li>Using a different Azure region if you get &quot;quota exceeded&quot; errors</li>
 </ul>
 </div>
@@ -317,7 +317,7 @@ az resource list --resource-group $(terraform output -raw resource_group_name) -
 <ol>
 <li><p><strong>Double-check the basics:</strong></p>
 <ul>
-<li>Are you in the right directory? (<code>terraform-xmpro-azure/examples/layered/infra</code> or <code>.../app</code>)</li>
+<li>Are you in the right directory? (<code>infra-azureac/examples/layered/infra</code> or <code>.../app</code>)</li>
 <li>Did you run <code>terraform init</code> first?</li>
 <li>Is your <code>terraform.tfvars</code> file saved?</li>
 </ul>
@@ -342,13 +342,13 @@ location = &quot;eastus2&quot;  # or &quot;westeurope&quot;, &quot;southeastasia
 </ol>
 <div class="NOTE">
 <h5>Note</h5>
-<p>For advanced troubleshooting and detailed technical issues, see the <a href="{{TERRAFORM_MODULE_URL}}" target="_blank">complete module documentation</a>.</p>
+<p>For advanced troubleshooting and detailed technical issues, see the <em>Troubleshooting</em> section of the <code>README.md</code> in your infra-azureac repository.</p>
 </div>
 
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: October 30, 2026</em></small></p>
+    <p><small><em>Last modified: November 03, 2026</em></small></p>
   </div>
 </article>
 

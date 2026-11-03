@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../../../">
       
       
-      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/deployment/azure-terraform/index.md&amp;version=GB25835-add-release-notes-470&amp;line=1">
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/installation/deployment/azure-terraform/index.md&amp;version=GBrelease-4.7&amp;line=1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -91,6 +91,10 @@
 <p>Get your XMPro intelligent digital twin platform running on Microsoft Azure quickly and reliably with Terraform automation. You'll deploy in two simple steps - first the infrastructure (databases, storage, networks), then the applications. This two-step approach lets you update applications without touching your infrastructure.</p>
 <div class="NOTE">
 <h5>Note</h5>
+<p>From v4.7.0, XMPro syncs the Terraform module, <code>infra-azureac</code>, into a Git repository your organization hosts, and pushes the container images into your own container registry. The repository URL <code>{{TERRAFORM_MODULE_URL}}</code> and the registry <code>{{ACR_URL}}</code> on this page are examples. Replace them with your own.</p>
+</div>
+<div class="NOTE">
+<h5>Note</h5>
 <p>This guide works on <strong>Windows</strong>, <strong>Mac</strong>, and <strong>Linux</strong>. Windows users should use Command Prompt or PowerShell.</p>
 </div>
 <h3 id="provision-infrastructure-your-own-way">Provision Infrastructure Your Own Way?</h3>
@@ -147,6 +151,10 @@
 <p>Once you've created these resources, you can skip to <a href="#5-deploy-application-layer">Step 5: Deploy Application Layer</a> and provide the infrastructure details in your configuration.</p>
 <h2 id="architecture">Architecture</h2>
 <p><img src="../../../images/stream-connector-azure-architecture.png" alt="Azure Terraform Architecture"></p>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>XMPro container images before v4.7.0 trust compromised eMudhra certificate authorities. Deploy v4.7.0 or later. See the <a href="../../../resources/security-advisory-2026-10-emudhra.html">Security Advisory: eMudhra CA Compromise</a>.</p>
+</div>
 <h2 id="prerequisites">Prerequisites</h2>
 <p>You need:</p>
 <ul>
@@ -205,7 +213,7 @@ export ARM_CLIENT_SECRET=&quot;your-service-principal-password&quot;
 <p><strong>Windows (PowerShell):</strong></p>
 <pre><code class="lang-powershell"># Download the deployment configuration
 git clone {{TERRAFORM_MODULE_URL}}.git
-cd terraform-xmpro-azure\examples\layered\infra
+cd infra-azureac\examples\layered\infra
 
 # Create your configuration
 Copy-Item terraform.tfvars.example terraform.tfvars
@@ -213,7 +221,7 @@ Copy-Item terraform.tfvars.example terraform.tfvars
 <p><strong>Windows (Command Prompt):</strong></p>
 <pre><code class="lang-cmd"># Download the deployment configuration
 git clone {{TERRAFORM_MODULE_URL}}.git
-cd terraform-xmpro-azure\examples\layered\infra
+cd infra-azureac\examples\layered\infra
 
 # Create your configuration
 copy terraform.tfvars.example terraform.tfvars
@@ -221,12 +229,12 @@ copy terraform.tfvars.example terraform.tfvars
 <p><strong>Mac/Linux:</strong></p>
 <pre><code class="lang-bash"># Download the deployment configuration
 git clone {{TERRAFORM_MODULE_URL}}.git
-cd terraform-xmpro-azure/examples/layered/infra
+cd infra-azureac/examples/layered/infra
 
 # Create your configuration
 cp terraform.tfvars.example terraform.tfvars
 </code></pre>
-<p>The infrastructure layer uses sensible defaults. You can deploy as-is or customize settings in <code>terraform.tfvars.example</code> - see the <a href="{{TERRAFORM_MODULE_URL}}" target="_blank">GitHub documentation</a> for all available options.</p>
+<p>The infrastructure layer uses sensible defaults. You can deploy as-is or customize settings in <code>terraform.tfvars.example</code> - see the <code>README.md</code> in your infra-azureac repository for all available options.</p>
 <h3 id="4-deploy-infrastructure-layer">4. Deploy Infrastructure Layer</h3>
 <p><strong>All platforms:</strong></p>
 <pre><code class="lang-powershell">terraform init    # Prepare Terraform
@@ -348,7 +356,7 @@ terraform apply   # Deploy applications (type 'yes' when asked)
 <li><a href="azure-sizing.html">Sizing Guideline</a> - Production sizing guideline</li>
 <li><a href="troubleshooting.html">Troubleshooting Guide</a> - Fix common problems</li>
 <li><a href="advanced-configuration.html">Advanced Configuration</a> - Production settings</li>
-<li><a href="{{TERRAFORM_MODULE_URL}}" target="_blank">Complete Documentation</a></li>
+<li>Complete documentation: the <code>README.md</code> in your infra-azureac repository</li>
 </ul>
 <h2 id="next-steps">Next Steps</h2>
 <p>After completing your infrastructure deployment, proceed to:</p>
@@ -361,13 +369,13 @@ terraform apply   # Deploy applications (type 'yes' when asked)
 <hr>
 <div class="NOTE">
 <h5>Note</h5>
-<p>For advanced features like custom domains, SMTP, existing databases, and multiple stream hosts, see the <a href="advanced-configuration.html">Advanced Configuration Guide</a> or the <a href="{{TERRAFORM_MODULE_URL}}" target="_blank">GitHub documentation</a>.</p>
+<p>For advanced features like custom domains, SMTP, existing databases, and multiple stream hosts, see the <a href="advanced-configuration.html">Advanced Configuration Guide</a> or the <code>README.md</code> in your infra-azureac repository.</p>
 </div>
 
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: October 30, 2026</em></small></p>
+    <p><small><em>Last modified: November 03, 2026</em></small></p>
   </div>
 </article>
 
