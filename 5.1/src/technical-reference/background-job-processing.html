@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Background Job Processing | XMPro </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Background Job Processing | XMPro ">
+      <meta name="description" content="XMPro official documentation - Learn how to use XMPro&#39;s intelligent digital twin suite for real-time operational intelligence and automated decision-making.">
+      
+      <link rel="icon" href="../../images/favicon.png">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://xmpro.visualstudio.com/XMPro%20Development/_git/xmpro-development?path=docs/src/technical-reference/background-job-processing.md&amp;version=GBmain&amp;line=1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/logo-light.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="background-job-processing">Background Job Processing</h1>
+
+<div class="NOTE">
+<h5>Note</h5>
+<p>For Kubernetes deployments, these defaults are pre-configured and can be overridden via Helm values or environment variables.</p>
+</div>
+<h2 id="overview">Overview</h2>
+<p>XMPro uses HangFire to process background jobs for email notifications and system maintenance tasks. HangFire automatically handles job scheduling, retry logic, and execution across multiple server instances.</p>
+<p>This feature is only available in <strong>App Designer (AD)</strong>. Data Stream Designer (DS) and Subscription Manager (SM) do not use HangFire for background job processing.</p>
+<h2 id="configuration-variables">Configuration Variables</h2>
+<p>These settings are pre-configured in <code>appsettings.json</code> and can be overridden via environment variables or Azure App Service settings:</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>HangFire:WorkerCount</code></td>
+<td>5</td>
+<td>Number of concurrent background workers (HangFire default is 20)</td>
+</tr>
+<tr>
+<td><code>HangFire:SchedulePollingIntervalSeconds</code></td>
+<td>15</td>
+<td>How often to check for scheduled jobs</td>
+</tr>
+<tr>
+<td><code>HangFire:ServerCheckIntervalSeconds</code></td>
+<td>60</td>
+<td>Server heartbeat interval</td>
+</tr>
+<tr>
+<td><code>HangFire:QueuePollIntervalSeconds</code></td>
+<td>15</td>
+<td>Queue polling frequency</td>
+</tr>
+<tr>
+<td><code>HangFire:SlidingInvisibilityTimeoutMinutes</code></td>
+<td>5</td>
+<td>Job visibility timeout</td>
+</tr>
+<tr>
+<td><code>HangFire:UseRecommendedIsolationLevel</code></td>
+<td>true</td>
+<td>Use optimized SQL isolation level</td>
+</tr>
+<tr>
+<td><code>HangFire:DisableGlobalLocks</code></td>
+<td>true</td>
+<td>Disable global locks for better performance</td>
+</tr>
+<tr>
+<td><code>HangFire:EnableDashboard</code></td>
+<td>false</td>
+<td>Enable/disable HangFire dashboard at <code>/hangfire</code> endpoint. <br><strong>Warning:</strong> Intended for Dev/QA environments only. The dashboard exposes job history, server status, and retry controls. Production use requires configuring an authorization policy to restrict access.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="customizing-configuration">Customizing Configuration</h2>
+<h3 id="via-helm-values-kubernetes">Via Helm Values (Kubernetes)</h3>
+<pre><code class="lang-yaml"># Add to your values.yaml or use --set flags
+ad:
+  env:
+    HangFire__WorkerCount: &quot;10&quot;
+    HangFire__SchedulePollingIntervalSeconds: &quot;30&quot;
+</code></pre>
+<h3 id="via-environment-variables">Via Environment Variables</h3>
+<pre><code class="lang-bash"># For local development or manual deployment
+export HangFire__WorkerCount=10
+export HangFire__SchedulePollingIntervalSeconds=30
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Double underscore (<code>__</code>) is used in environment variable names to represent the colon (<code>:</code>) in configuration paths. This is standard .NET configuration convention.</p>
+</div>
+<h2 id="when-to-customize">When to Customize</h2>
+<p>The default settings are optimized for most deployments. Consider adjusting if:</p>
+<ul>
+<li><strong>High job volume</strong>: Increase <code>WorkerCount</code> (but monitor database connections)</li>
+<li><strong>Idle systems</strong>: Increase polling intervals to further reduce database load</li>
+<li><strong>Real-time requirements</strong>: Decrease <code>SchedulePollingIntervalSeconds</code> for faster job execution</li>
+</ul>
+<div class="TIP">
+<h5>Tip</h5>
+<p>Monitor your database query metrics before and after changes to verify the impact.</p>
+</div>
+
+
+  <div class="last-modified">
+    <hr />
+    <p><small><em>Last modified: November 16, 2026</em></small></p>
+  </div>
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2025 XMPro. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

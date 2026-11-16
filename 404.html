@@ -124,18 +124,18 @@
             const queryString = window.location.search;
             const hash = window.location.hash;
             const hostname = window.location.hostname;
-            
+
             // Check if this is a PR site (not .xmpro.com)
             const isPRSite = !hostname.includes('.xmpro.com');
-            
+
             // Split path and remove empty strings
             const pathParts = currentPath.split('/').filter(p => p);
-            
+
             // Remove repository name if present (e.g., "public-documentation-nonprod")
             if (pathParts.length > 0 && pathParts[0].includes('public-documentation')) {
                 pathParts.shift();
             }
-            
+
             // Define URL mappings
             const urlMappings = [
                 {
@@ -164,16 +164,16 @@
                     description: 'Fallback URL for old structure'
                 }
             ];
-            
+
             // Reconstruct the full path for matching
             let fullPath = '/' + pathParts.join('/');
-            
+
             // Stage 1: Check for specific URL mappings first (with trailing slash for pattern matching)
             let pathForMatching = fullPath;
             if (pathForMatching !== '/' && !pathForMatching.endsWith('/')) {
                 pathForMatching += '/';
             }
-            
+
             for (const mapping of urlMappings) {
                 if (mapping.pattern.test(pathForMatching)) {
                     // Replace pattern, maintaining the rest of the path after the pattern
@@ -188,11 +188,11 @@
                     return;
                 }
             }
-            
+
             // Check if path already starts with a version (e.g., "4.4", "4.5", "5.0")
             const versionPattern = /^[0-9]+\.[0-9]+$/;
             const isVersioned = pathParts.length > 0 && versionPattern.test(pathParts[0]);
-            
+
             if (isVersioned) {
                 // Stage 3: Already versioned - only add trailing slash if missing and not a file
                 if (!currentPath.endsWith('/') && !currentPath.endsWith('.html')) {
@@ -223,38 +223,38 @@
                 }
             }
         }
-        
+
         function redirectToVersionedPage(targetUrl, originalPath) {
             // Show redirect UI
             const redirectContainer = document.querySelector('.redirect-container');
             const manualLink = document.getElementById('manual-link');
             const originalPathSpan = document.getElementById('original-path');
             const targetPathSpan = document.getElementById('target-path');
-            
+
             if (redirectContainer) {
                 redirectContainer.classList.add('show');
                 if (manualLink) manualLink.href = targetUrl;
                 if (originalPathSpan) originalPathSpan.textContent = originalPath;
                 if (targetPathSpan) targetPathSpan.textContent = targetUrl;
             }
-            
+
             // Perform redirect after brief delay
             setTimeout(() => {
                 window.location.replace(targetUrl);
             }, 1500);
         }
-        
+
         function showNotFoundPage(currentPath) {
             // Show 404 UI
             const notFoundContainer = document.querySelector('.not-found-container');
             const currentPathSpan = document.getElementById('current-path');
-            
+
             if (notFoundContainer) {
                 notFoundContainer.classList.add('show');
                 if (currentPathSpan) currentPathSpan.textContent = currentPath;
             }
         }
-        
+
         // Handle page load
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', handlePageNotFound);
@@ -278,7 +278,7 @@
             </div>
             <p>If you are not redirected automatically, <a id="manual-link" href="#">click here</a>.</p>
         </div>
-        
+
         <!-- 404 UI (for versioned paths) -->
         <div class="not-found-container">
             <img src="/images/logo-light.png" alt="XMPro" class="logo" onerror="this.style.display='none'">

@@ -65,46 +65,46 @@
     </style>
     <script>
         function redirectToLatest() {
-            const latestVersion = '5.0';
+            const latestVersion = '5.1';
             let targetUrl = './' + latestVersion + '/';
-            
+
             // Get the current location details
             const currentPath = window.location.pathname;
             const queryString = window.location.search;
             const hash = window.location.hash;
-            
+
             // Handle GitHub Pages subdirectory deployment
             const pathParts = currentPath.split('/').filter(p => p);
-            
+
             // Remove repository name if present (e.g., "public-documentation-nonprod")
             if (pathParts.length > 0 && pathParts[0].includes('public-documentation')) {
                 pathParts.shift(); // Remove first element
             }
-            
+
             // Remove index.html if present
             if (pathParts[pathParts.length - 1] === 'index.html') {
                 pathParts.pop();
             }
-            
+
             // Build the preserved path
             const pathToPreserve = pathParts.join('/');
             if (pathToPreserve) {
                 targetUrl += pathToPreserve;
             }
-            
+
             // Add query string and hash if they exist
             targetUrl += queryString + hash;
-            
+
             // Update the manual link
             const manualLink = document.getElementById('manual-link');
             if (manualLink) {
                 manualLink.href = targetUrl;
             }
-            
+
             // Perform the redirect
             window.location.replace(targetUrl);
         }
-        
+
         // Redirect immediately when the page loads
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', redirectToLatest);
@@ -113,15 +113,15 @@
         }
     </script>
     <!-- Meta refresh as fallback -->
-    <meta http-equiv="refresh" content="1; url=./5.0/">
+    <meta http-equiv="refresh" content="1; url=./5.1/">
 </head>
 <body>
     <div class="container">
         <div class="spinner"></div>
         <h1>XMPro Documentation</h1>
         <p>Redirecting to the latest documentation version...</p>
-        <div class="version-info">v5.0</div>
-        <p>If you are not redirected automatically, <a id="manual-link" href="./5.0/">click here</a>.</p>
+        <div class="version-info">v5.1</div>
+        <p>If you are not redirected automatically, <a id="manual-link" href="./5.1/">click here</a>.</p>
     </div>
 </body>
 </html>
