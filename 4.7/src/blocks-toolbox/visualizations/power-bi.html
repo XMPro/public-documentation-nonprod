@@ -111,11 +111,16 @@
 <p>User authentication is used when you want to embed the report for your organization. The users will be required to sign in and have a Power BI account. This will also require you to have a Power BI embedded license for this.</p>
 <p>Application authentication will embed the contents of the Power BI report into the page and the user will not be asked to sign in to view the report. In order to set up application authentication, the <em>group Id, tenant Id, Application Id</em>, and <em>Application secret</em> of your report need to be entered. For more information about where to find the value for these fields, <a href="https://docs.microsoft.com/en-us/power-bi/developer/embedded/embed-sample-for-your-organization?tabs=net-core">read the official Microsoft Documentation</a>.</p>
 <p>If the Authentication mode is set to 'Application', the Group Id, Tenant Id, Application Id, and Application Secret properties are required for the Power BI Block.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Pages with a Power BI Block set to the Application authentication mode use relaxed browser security headers so the report can sign in: <code>Cross-Origin-Opener-Policy: same-origin-allow-popups</code> and no <code>Cross-Origin-Embedder-Policy</code>. All other pages keep the default headers (<code>same-origin</code> and <code>credentialless</code>).</p>
+<p>Opening such a page from another page in the app reloads it once. The relaxed headers then stay until the next full page load, such as a browser refresh.</p>
+</div>
 
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: November 03, 2026</em></small></p>
+    <p><small><em>Last modified: November 18, 2026</em></small></p>
   </div>
 </article>
 
