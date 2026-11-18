@@ -96,7 +96,7 @@
 <p><a href="../common-properties.html#appearance">See the Common Properties article for more details on common appearance properties.</a></p>
 <h3 id="behavior">Behavior</h3>
 <h4 id="use-variables">Use Variables</h4>
-<p>This allows you to choose between manually entering a value for the <em>Report ID</em> or selecting from a static variable. If the Application Mode is set to 'Application', Use Variables will also allow you to select a static variable for the <em>Group Id, Tenant Id, Application Id, and Application Secret.</em></p>
+<p>This allows you to choose between manually entering a value for the <em>Report ID</em> or selecting from a static variable. If the Authentication Mode is set to 'Application', Use Variables will also allow you to select a static variable for the <em>Group Id, Tenant Id, and Application Id</em>, and an encrypted variable for the <em>Application Secret</em> (see <a href="#application-secret">Application Secret</a>).</p>
 <p><img src="../../images/power-bi-1.gif" alt=""></p>
 <h4 id="report-id">Report Id</h4>
 <p>The report Id can be found inside the URL of the report you want to embed. To find the report's Id:</p>
@@ -116,6 +116,9 @@
 <p>Pages with a Power BI Block set to the Application authentication mode use relaxed browser security headers so the report can sign in: <code>Cross-Origin-Opener-Policy: same-origin-allow-popups</code> and no <code>Cross-Origin-Embedder-Policy</code>. All other pages keep the default headers (<code>same-origin</code> and <code>credentialless</code>).</p>
 <p>Opening such a page from another page in the app reloads it once. The relaxed headers then stay until the next full page load, such as a browser refresh.</p>
 </div>
+<h4 id="application-secret">Application Secret</h4>
+<p>For the Application Secret, <strong>only encrypted variables are available</strong>. To create one, select <a href="../../concepts/variable.html#encrypt-value">Encrypt Value</a> when you create the variable. An application from an earlier version that uses a variable that is not encrypted keeps working. To change it, select an encrypted variable and save the application.</p>
+<p>If you enter the secret directly, it is stored encrypted, so the property is empty when you reopen the application. Leave it empty to keep the current secret, or enter a new value to replace it. A plain-text secret from an earlier version is encrypted when you open the Power BI Block's properties. Save the application to keep the change.</p>
 
 
   <div class="last-modified">
