@@ -115,10 +115,29 @@
 <h4 id="enable-paging">Enable Paging</h4>
 <p>The default option is to show all the results. The user can specify how many items should be displayed per page and pages will be displayed under the grid.</p>
 <p><img src="../../images/image-375.png" alt="Enable Paging"></p>
+<h4 id="enable-remote-sortfilter">Enable Remote Sort/Filter</h4>
+<p>This option appears once <a href="#enable-paging">Enable Paging</a> is turned on.</p>
+<p>For large datasets, loading every row into the browser just to sort or filter it can be slow. Turning this on sends your sort and filter choices to the connector along with the current page of data, instead of sorting and filtering everything in the browser.</p>
+<p>This is off by default, so existing apps keep working exactly as they do today unless you turn it on.</p>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>This setting sends your sort and filter choices to the connector. The connector must be built to use them — check with your connector provider to confirm support. If it isn't supported, the grid may still look sorted or filtered, but the rows won't actually change. Paging is not affected by this setting.</p>
+</div>
+<div class="NOTE">
+<h5>Note</h5>
+<p>If the Data Source's <em>sort</em> property (see <a href="../common-properties.html#data-source">Common Properties</a>) is also set, clicking a column header to change the sort has no effect while this option is on — the grid keeps using the configured sort. Leave the Data Source sort empty if you want users to control sorting from the column headers.</p>
+</div>
 <h3 id="behavior">Behavior</h3>
 <h4 id="common-properties-1">Common Properties</h4>
 <p>The <em>disabled</em> property is common to most Blocks;</p>
 <p><a href="../common-properties.html#behavior">See the Common Properties article for more details on common behavior properties.</a></p>
+<h4 id="allow-sorting">Allow Sorting</h4>
+<p>Allows the user to sort the grid by clicking a column header. Turn this off to disable column-header sorting entirely.</p>
+<p>This is on by default, so existing Data Grids keep sorting exactly as they do today.</p>
+<div class="TIP">
+<h5>Tip</h5>
+<p>This property can be set to a dynamic value, such as a <a href="../../concepts/application/variables-and-expressions.html#variables">Variable</a>, the same way as other properties on this page.</p>
+</div>
 <h4 id="allow-selection">Allow Selection</h4>
 <p>Allows the user to select an item from the grid.</p>
 <p><img src="../../images/image-165.png" alt="Allow Selection"></p>
