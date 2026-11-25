@@ -129,7 +129,7 @@
 <tr>
 <td>xm__xmpro__Gateway__Id</td>
 <td>Optional</td>
-<td>Unique GUID identifier for this Stream Host instance.<br><em>Default: A new GUID</em></td>
+<td>Unique GUID identifier for this Stream Host instance. A non-empty value is used as is; an empty value counts as not set.<br><em>Default: derived from the Collection ID, Server URL (ignoring a trailing slash) and Name when xm__xmpro__Gateway__Name is set, so a recreated container keeps the same ID; otherwise a new GUID on every start.</em><br><br>Stream Hosts with the same Collection ID, Server URL and Name share one derived ID.<br><br>A named Stream Host without an explicit ID gets a new, stable ID once when it moves to an image with this behaviour. Its previous entry stays in Data Stream Designer and can be deleted.</td>
 </tr>
 <tr>
 <td>xm__xmpro__Gateway__Name</td>
@@ -360,7 +360,7 @@ volumes:
 
   <div class="last-modified">
     <hr />
-    <p><small><em>Last modified: November 19, 2026</em></small></p>
+    <p><small><em>Last modified: November 25, 2026</em></small></p>
   </div>
 </article>
 
